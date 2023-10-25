@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    /// <summary> Time series instance that is returned by instances search call. Returned instance matched the search request and contains highlighted text to be displayed to the user if it is set to &apos;true&apos;. </summary>
+    /// <summary> Time series instance that is returned by instances search call. Returned instance matched the search request and contains highlighted text to be displayed to the user if it is set to 'true'. </summary>
     internal partial class InstanceHit
     {
         /// <summary> Initializes a new instance of InstanceHit. </summary>

@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static WebApplicationCustomRule DeserializeWebApplicationCustomRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             int priority = default;
             Optional<CustomRuleEnabledState> enabledState = default;
@@ -78,7 +82,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enabledState = new CustomRuleEnabledState(property.Value.GetString());
@@ -93,7 +96,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rateLimitDurationInMinutes = property.Value.GetInt32();
@@ -103,7 +105,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rateLimitThreshold = property.Value.GetInt32();

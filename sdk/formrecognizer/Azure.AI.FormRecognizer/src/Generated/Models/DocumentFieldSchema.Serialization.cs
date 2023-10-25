@@ -15,6 +15,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         internal static DocumentFieldSchema DeserializeDocumentFieldSchema(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DocumentFieldType type = default;
             Optional<string> description = default;
             Optional<string> example = default;
@@ -41,7 +45,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     items = DeserializeDocumentFieldSchema(property.Value);
@@ -51,7 +54,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, DocumentFieldSchema> dictionary = new Dictionary<string, DocumentFieldSchema>();

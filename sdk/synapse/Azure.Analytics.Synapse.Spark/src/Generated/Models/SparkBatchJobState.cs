@@ -18,13 +18,13 @@ namespace Azure.Analytics.Synapse.Spark.Models
         }
 
         /// <summary> Initializes a new instance of SparkBatchJobState. </summary>
-        /// <param name="notStartedAt"> the time that at which &quot;not_started&quot; livy state was first seen. </param>
-        /// <param name="startingAt"> the time that at which &quot;starting&quot; livy state was first seen. </param>
-        /// <param name="runningAt"> the time that at which &quot;running&quot; livy state was first seen. </param>
-        /// <param name="deadAt"> time that at which &quot;dead&quot; livy state was first seen. </param>
-        /// <param name="successAt"> the time that at which &quot;success&quot; livy state was first seen. </param>
-        /// <param name="terminatedAt"> the time that at which &quot;killed&quot; livy state was first seen. </param>
-        /// <param name="recoveringAt"> the time that at which &quot;recovering&quot; livy state was first seen. </param>
+        /// <param name="notStartedAt"> the time that at which "not_started" livy state was first seen. </param>
+        /// <param name="startingAt"> the time that at which "starting" livy state was first seen. </param>
+        /// <param name="runningAt"> the time that at which "running" livy state was first seen. </param>
+        /// <param name="deadAt"> time that at which "dead" livy state was first seen. </param>
+        /// <param name="successAt"> the time that at which "success" livy state was first seen. </param>
+        /// <param name="terminatedAt"> the time that at which "killed" livy state was first seen. </param>
+        /// <param name="recoveringAt"> the time that at which "recovering" livy state was first seen. </param>
         /// <param name="currentState"> the Spark job state. </param>
         /// <param name="jobCreationRequest"></param>
         internal SparkBatchJobState(DateTimeOffset? notStartedAt, DateTimeOffset? startingAt, DateTimeOffset? runningAt, DateTimeOffset? deadAt, DateTimeOffset? successAt, DateTimeOffset? terminatedAt, DateTimeOffset? recoveringAt, string currentState, SparkRequest jobCreationRequest)
@@ -40,19 +40,19 @@ namespace Azure.Analytics.Synapse.Spark.Models
             JobCreationRequest = jobCreationRequest;
         }
 
-        /// <summary> the time that at which &quot;not_started&quot; livy state was first seen. </summary>
+        /// <summary> the time that at which "not_started" livy state was first seen. </summary>
         public DateTimeOffset? NotStartedAt { get; }
-        /// <summary> the time that at which &quot;starting&quot; livy state was first seen. </summary>
+        /// <summary> the time that at which "starting" livy state was first seen. </summary>
         public DateTimeOffset? StartingAt { get; }
-        /// <summary> the time that at which &quot;running&quot; livy state was first seen. </summary>
+        /// <summary> the time that at which "running" livy state was first seen. </summary>
         public DateTimeOffset? RunningAt { get; }
-        /// <summary> time that at which &quot;dead&quot; livy state was first seen. </summary>
+        /// <summary> time that at which "dead" livy state was first seen. </summary>
         public DateTimeOffset? DeadAt { get; }
-        /// <summary> the time that at which &quot;success&quot; livy state was first seen. </summary>
+        /// <summary> the time that at which "success" livy state was first seen. </summary>
         public DateTimeOffset? SuccessAt { get; }
-        /// <summary> the time that at which &quot;killed&quot; livy state was first seen. </summary>
+        /// <summary> the time that at which "killed" livy state was first seen. </summary>
         public DateTimeOffset? TerminatedAt { get; }
-        /// <summary> the time that at which &quot;recovering&quot; livy state was first seen. </summary>
+        /// <summary> the time that at which "recovering" livy state was first seen. </summary>
         public DateTimeOffset? RecoveringAt { get; }
         /// <summary> the Spark job state. </summary>
         public string CurrentState { get; }

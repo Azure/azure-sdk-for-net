@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static RecoveryPointTierInformation DeserializeRecoveryPointTierInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<RecoveryPointTierType> type = default;
             Optional<RecoveryPointTierStatus> status = default;
             Optional<IDictionary<string, string>> extendedInfo = default;
@@ -51,7 +55,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = property.Value.GetString().ToRecoveryPointTierType();
@@ -61,7 +64,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = property.Value.GetString().ToRecoveryPointTierStatus();
@@ -71,7 +73,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();

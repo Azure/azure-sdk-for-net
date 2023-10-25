@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         internal static KeyVaultSecretReferenceSecretInfo DeserializeKeyVaultSecretReferenceSecretInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> version = default;
             LinkerSecretType secretType = default;

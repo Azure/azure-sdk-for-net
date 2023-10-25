@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         public static ApiManagementSkuRestrictionsType ToApiManagementSkuRestrictionsType(this string value)
         {
-            if (string.Equals(value, "Location", StringComparison.InvariantCultureIgnoreCase)) return ApiManagementSkuRestrictionsType.Location;
-            if (string.Equals(value, "Zone", StringComparison.InvariantCultureIgnoreCase)) return ApiManagementSkuRestrictionsType.Zone;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Location")) return ApiManagementSkuRestrictionsType.Location;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Zone")) return ApiManagementSkuRestrictionsType.Zone;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ApiManagementSkuRestrictionsType value.");
         }
     }

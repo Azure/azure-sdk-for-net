@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of ProtectionContainerMappingProperties. </summary>
         internal ProtectionContainerMappingProperties()
         {
-            HealthErrorDetails = new ChangeTrackingList<HealthError>();
+            HealthErrorDetails = new ChangeTrackingList<SiteRecoveryHealthError>();
         }
 
         /// <summary> Initializes a new instance of ProtectionContainerMappingProperties. </summary>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="sourceFabricFriendlyName"> Friendly name of source fabric. </param>
         /// <param name="targetFabricFriendlyName"> Friendly name of target fabric. </param>
         /// <param name="policyFriendlyName"> Friendly name of replication policy. </param>
-        internal ProtectionContainerMappingProperties(string targetProtectionContainerId, string targetProtectionContainerFriendlyName, ProtectionContainerMappingProviderSpecificDetails providerSpecificDetails, string health, IReadOnlyList<HealthError> healthErrorDetails, string policyId, string state, string sourceProtectionContainerFriendlyName, string sourceFabricFriendlyName, string targetFabricFriendlyName, string policyFriendlyName)
+        internal ProtectionContainerMappingProperties(ResourceIdentifier targetProtectionContainerId, string targetProtectionContainerFriendlyName, ProtectionContainerMappingProviderSpecificDetails providerSpecificDetails, string health, IReadOnlyList<SiteRecoveryHealthError> healthErrorDetails, ResourceIdentifier policyId, string state, string sourceProtectionContainerFriendlyName, string sourceFabricFriendlyName, string targetFabricFriendlyName, string policyFriendlyName)
         {
             TargetProtectionContainerId = targetProtectionContainerId;
             TargetProtectionContainerFriendlyName = targetProtectionContainerFriendlyName;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Paired protection container ARM ID. </summary>
-        public string TargetProtectionContainerId { get; }
+        public ResourceIdentifier TargetProtectionContainerId { get; }
         /// <summary> Friendly name of paired container. </summary>
         public string TargetProtectionContainerFriendlyName { get; }
         /// <summary>
@@ -63,9 +63,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Health of pairing. </summary>
         public string Health { get; }
         /// <summary> Health error. </summary>
-        public IReadOnlyList<HealthError> HealthErrorDetails { get; }
+        public IReadOnlyList<SiteRecoveryHealthError> HealthErrorDetails { get; }
         /// <summary> Policy ARM Id. </summary>
-        public string PolicyId { get; }
+        public ResourceIdentifier PolicyId { get; }
         /// <summary> Association Status. </summary>
         public string State { get; }
         /// <summary> Friendly name of source protection container. </summary>

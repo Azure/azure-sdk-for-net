@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -15,6 +14,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static MachineLearningEstimatedVmPrices DeserializeMachineLearningEstimatedVmPrices(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             MachineLearningBillingCurrency billingCurrency = default;
             MachineLearningUnitOfMeasure unitOfMeasure = default;
             IReadOnlyList<MachineLearningEstimatedVmPrice> values = default;

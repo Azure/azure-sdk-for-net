@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static ManagedRuleExclusion DeserializeManagedRuleExclusion(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ManagedRuleExclusionMatchVariable matchVariable = default;
             ManagedRuleExclusionSelectorMatchOperator selectorMatchOperator = default;
             string selector = default;

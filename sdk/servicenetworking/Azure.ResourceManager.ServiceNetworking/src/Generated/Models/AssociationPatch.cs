@@ -7,6 +7,7 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ServiceNetworking.Models
 {
@@ -21,7 +22,20 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> The updatable properties of the Association. </summary>
-        public AssociationUpdateProperties Properties { get; set; }
+        /// <summary> Association Type. </summary>
+        public AssociationType? AssociationType { get; set; }
+        /// <summary> Association Subnet. </summary>
+        internal WritableSubResource Subnet { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier SubnetId
+        {
+            get => Subnet is null ? default : Subnet.Id;
+            set
+            {
+                if (Subnet is null)
+                    Subnet = new WritableSubResource();
+                Subnet.Id = value;
+            }
+        }
     }
 }

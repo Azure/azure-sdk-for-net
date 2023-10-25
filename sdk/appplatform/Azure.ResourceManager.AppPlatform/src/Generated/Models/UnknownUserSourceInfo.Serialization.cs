@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static UnknownUserSourceInfo DeserializeUnknownUserSourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = "Unknown";
             Optional<string> version = default;
             foreach (var property in element.EnumerateObject())

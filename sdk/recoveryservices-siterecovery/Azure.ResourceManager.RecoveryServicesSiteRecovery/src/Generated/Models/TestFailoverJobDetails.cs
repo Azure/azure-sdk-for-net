@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> This class represents the details for a test failover job. </summary>
-    public partial class TestFailoverJobDetails : JobDetails
+    public partial class TestFailoverJobDetails : SiteRecoveryJobDetails
     {
         /// <summary> Initializes a new instance of TestFailoverJobDetails. </summary>
         internal TestFailoverJobDetails()

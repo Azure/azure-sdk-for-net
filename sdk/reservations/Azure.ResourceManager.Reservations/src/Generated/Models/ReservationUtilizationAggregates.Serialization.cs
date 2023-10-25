@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static ReservationUtilizationAggregates DeserializeReservationUtilizationAggregates(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<float> grain = default;
             Optional<string> grainUnit = default;
             Optional<float> value = default;
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.Reservations.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     grain = property.Value.GetSingle();
@@ -39,7 +42,6 @@ namespace Azure.ResourceManager.Reservations.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     value = property.Value.GetSingle();

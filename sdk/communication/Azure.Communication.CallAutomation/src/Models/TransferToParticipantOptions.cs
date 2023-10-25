@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -13,27 +14,38 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Creates a new TransferToParticipantOptions object.
         /// </summary>
-        /// <param name="targetParticipant"></param>
-        public TransferToParticipantOptions(CommunicationIdentifier targetParticipant)
+        /// <param name="targetPhoneNumberIdentity"> The target to transfer the call to. </param>
+        public TransferToParticipantOptions(PhoneNumberIdentifier targetPhoneNumberIdentity)
         {
-            TargetParticipant = targetParticipant;
-            RepeatabilityHeaders = new RepeatabilityHeaders();
+            Target = targetPhoneNumberIdentity;
+            CustomContext = new CustomContext(sipHeaders: new Dictionary<string, string>(), null);
         }
 
         /// <summary>
-        /// The target participant to transfer the call to.
+        /// Creates a new TransferToParticipantOptions object.
         /// </summary>
-        public CommunicationIdentifier TargetParticipant { get; }
+        /// <param name="targetIdentity"> The target to transfer the call to. </param>
+        public TransferToParticipantOptions(CommunicationUserIdentifier targetIdentity)
+        {
+            Target = targetIdentity;
+            CustomContext = new CustomContext(sipHeaders: null, voipHeaders: new Dictionary<string, string>());
+        }
 
         /// <summary>
-        /// The caller id of the source.
+        /// Creates a new TransferToParticipantOptions object.
         /// </summary>
-        public PhoneNumberIdentifier SourceCallerId { get; set; }
+        /// <param name="targetIdentity"> The target to transfer the call to. </param>
+        public TransferToParticipantOptions(MicrosoftTeamsUserIdentifier targetIdentity)
+        {
+            Target = targetIdentity;
+            CustomContext = new CustomContext(sipHeaders: null, voipHeaders: new Dictionary<string, string>());
+        }
 
         /// <summary>
-        /// The UserToUserInformation.
+        /// The target callee.
         /// </summary>
-        public string UserToUserInformation { get; set; }
+        /// <value></value>
+        public CommunicationIdentifier Target { get; }
 
         /// <summary>
         /// The operationContext for this transfer call.
@@ -41,8 +53,18 @@ namespace Azure.Communication.CallAutomation
         public string OperationContext { get; set; }
 
         /// <summary>
-        /// Repeatability Headers.
+        /// The Custom Context which contains SIP and voip headers
         /// </summary>
-        public RepeatabilityHeaders RepeatabilityHeaders { get; set; }
+        public CustomContext CustomContext { get; }
+
+        /// <summary>
+        /// The callee that being transferred
+        /// </summary>
+        public CommunicationIdentifier Transferee { get; set; }
+
+        /// <summary>
+        /// The callback URI override for this transfer call request.
+        /// </summary>
+        public Uri CallbackUri { get; set; }
     }
 }

@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
 
         internal static ServiceAuthConfiguration DeserializeServiceAuthConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string primaryAuthKeyHash = default;
             string secondaryAuthKeyHash = default;
             foreach (var property in element.EnumerateObject())

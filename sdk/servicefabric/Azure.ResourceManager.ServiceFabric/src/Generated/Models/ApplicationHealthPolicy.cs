@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary>
     /// Defines a health policy used to evaluate the health of an application or one of its children entities.
-    /// 
+    ///
     /// </summary>
     public partial class ApplicationHealthPolicy
     {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         internal ServiceTypeHealthPolicy DefaultServiceTypeHealthPolicy { get; set; }
         /// <summary>
         /// The maximum percentage of services allowed to be unhealthy before your application is considered in error.
-        /// 
+        ///
         /// </summary>
         public int? MaxPercentUnhealthyServices
         {

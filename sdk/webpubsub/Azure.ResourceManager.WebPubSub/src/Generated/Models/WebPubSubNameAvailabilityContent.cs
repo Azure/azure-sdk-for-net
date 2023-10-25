@@ -14,8 +14,8 @@ namespace Azure.ResourceManager.WebPubSub.Models
     public partial class WebPubSubNameAvailabilityContent
     {
         /// <summary> Initializes a new instance of WebPubSubNameAvailabilityContent. </summary>
-        /// <param name="resourceType"> The resource type. Can be &quot;Microsoft.SignalRService/SignalR&quot; or &quot;Microsoft.SignalRService/webPubSub&quot;. </param>
-        /// <param name="name"> The resource name to validate. e.g.&quot;my-resource-name&quot;. </param>
+        /// <param name="resourceType"> The resource type. Can be "Microsoft.SignalRService/SignalR" or "Microsoft.SignalRService/webPubSub". </param>
+        /// <param name="name"> The resource name to validate. e.g."my-resource-name". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceType"/> or <paramref name="name"/> is null. </exception>
         public WebPubSubNameAvailabilityContent(string resourceType, string name)
         {
@@ -26,9 +26,9 @@ namespace Azure.ResourceManager.WebPubSub.Models
             Name = name;
         }
 
-        /// <summary> The resource type. Can be &quot;Microsoft.SignalRService/SignalR&quot; or &quot;Microsoft.SignalRService/webPubSub&quot;. </summary>
+        /// <summary> The resource type. Can be "Microsoft.SignalRService/SignalR" or "Microsoft.SignalRService/webPubSub". </summary>
         public string ResourceType { get; }
-        /// <summary> The resource name to validate. e.g.&quot;my-resource-name&quot;. </summary>
+        /// <summary> The resource name to validate. e.g."my-resource-name". </summary>
         public string Name { get; }
     }
 }

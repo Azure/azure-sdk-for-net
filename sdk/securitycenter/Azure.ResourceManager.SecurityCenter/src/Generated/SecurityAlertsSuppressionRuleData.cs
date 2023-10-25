@@ -13,7 +13,10 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary> A class representing the SecurityAlertsSuppressionRule data model. </summary>
+    /// <summary>
+    /// A class representing the SecurityAlertsSuppressionRule data model.
+    /// Describes the suppression rule
+    /// </summary>
     public partial class SecurityAlertsSuppressionRuleData : ResourceData
     {
         /// <summary> Initializes a new instance of SecurityAlertsSuppressionRuleData. </summary>
@@ -26,7 +29,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="alertType"> Type of the alert to automatically suppress. For all alert types, use &apos;*&apos;. </param>
+        /// <param name="alertType"> Type of the alert to automatically suppress. For all alert types, use '*'. </param>
         /// <param name="lastModifiedOn"> The last time this rule was modified. </param>
         /// <param name="expireOn"> Expiration date of the rule, if value is not provided or provided as null this field will default to the maximum allowed expiration date. </param>
         /// <param name="reason"> The reason for dismissing the alert. </param>
@@ -44,7 +47,7 @@ namespace Azure.ResourceManager.SecurityCenter
             SuppressionAlertsScope = suppressionAlertsScope;
         }
 
-        /// <summary> Type of the alert to automatically suppress. For all alert types, use &apos;*&apos;. </summary>
+        /// <summary> Type of the alert to automatically suppress. For all alert types, use '*'. </summary>
         public string AlertType { get; set; }
         /// <summary> The last time this rule was modified. </summary>
         public DateTimeOffset? LastModifiedOn { get; }

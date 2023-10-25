@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Batch.Models
         }
 
         /// <summary> Initializes a new instance of BatchDeploymentConfiguration. </summary>
-        /// <param name="cloudServiceConfiguration"> This property and virtualMachineConfiguration are mutually exclusive and one of the properties must be specified. This property cannot be specified if the Batch account was created with its poolAllocationMode property set to &apos;UserSubscription&apos;. </param>
+        /// <param name="cloudServiceConfiguration"> This property and virtualMachineConfiguration are mutually exclusive and one of the properties must be specified. This property cannot be specified if the Batch account was created with its poolAllocationMode property set to 'UserSubscription'. </param>
         /// <param name="vmConfiguration"> This property and cloudServiceConfiguration are mutually exclusive and one of the properties must be specified. </param>
         internal BatchDeploymentConfiguration(BatchCloudServiceConfiguration cloudServiceConfiguration, BatchVmConfiguration vmConfiguration)
         {
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Batch.Models
             VmConfiguration = vmConfiguration;
         }
 
-        /// <summary> This property and virtualMachineConfiguration are mutually exclusive and one of the properties must be specified. This property cannot be specified if the Batch account was created with its poolAllocationMode property set to &apos;UserSubscription&apos;. </summary>
+        /// <summary> This property and virtualMachineConfiguration are mutually exclusive and one of the properties must be specified. This property cannot be specified if the Batch account was created with its poolAllocationMode property set to 'UserSubscription'. </summary>
         public BatchCloudServiceConfiguration CloudServiceConfiguration { get; set; }
         /// <summary> This property and cloudServiceConfiguration are mutually exclusive and one of the properties must be specified. </summary>
         public BatchVmConfiguration VmConfiguration { get; set; }

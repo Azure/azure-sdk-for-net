@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.StoragePool.Models
     public partial class ManagedDiskIscsiLun
     {
         /// <summary> Initializes a new instance of ManagedDiskIscsiLun. </summary>
-        /// <param name="name"> User defined name for iSCSI LUN; example: &quot;lun0&quot;. </param>
+        /// <param name="name"> User defined name for iSCSI LUN; example: "lun0". </param>
         /// <param name="managedDiskAzureResourceId"> Azure Resource ID of the Managed Disk. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="managedDiskAzureResourceId"/> is null. </exception>
         public ManagedDiskIscsiLun(string name, ResourceIdentifier managedDiskAzureResourceId)
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.StoragePool.Models
         }
 
         /// <summary> Initializes a new instance of ManagedDiskIscsiLun. </summary>
-        /// <param name="name"> User defined name for iSCSI LUN; example: &quot;lun0&quot;. </param>
+        /// <param name="name"> User defined name for iSCSI LUN; example: "lun0". </param>
         /// <param name="managedDiskAzureResourceId"> Azure Resource ID of the Managed Disk. </param>
         /// <param name="lun"> Specifies the Logical Unit Number of the iSCSI LUN. </param>
         internal ManagedDiskIscsiLun(string name, ResourceIdentifier managedDiskAzureResourceId, int? lun)
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             Lun = lun;
         }
 
-        /// <summary> User defined name for iSCSI LUN; example: &quot;lun0&quot;. </summary>
+        /// <summary> User defined name for iSCSI LUN; example: "lun0". </summary>
         public string Name { get; set; }
         /// <summary> Azure Resource ID of the Managed Disk. </summary>
         public ResourceIdentifier ManagedDiskAzureResourceId { get; set; }

@@ -23,11 +23,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="serializer"> Serializer. Type: string (or Expression with resultType string). </param>
         /// <param name="deserializer"> Deserializer. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <param name="filePattern"> File pattern of JSON. To be more specific, the way of separating a collection of JSON objects. The default value is &apos;setOfObjects&apos;. It is case-sensitive. </param>
-        /// <param name="nestingSeparator"> The character used to separate nesting levels. Default value is &apos;.&apos; (dot). Type: string (or Expression with resultType string). </param>
-        /// <param name="encodingName"> The code page name of the preferred encoding. If not provided, the default value is &apos;utf-8&apos;, unless the byte order mark (BOM) denotes another Unicode encoding. The full list of supported values can be found in the &apos;Name&apos; column of the table of encodings in the following reference: https://go.microsoft.com/fwlink/?linkid=861078. Type: string (or Expression with resultType string). </param>
-        /// <param name="jsonNodeReference"> The JSONPath of the JSON array element to be flattened. Example: &quot;$.ArrayPath&quot;. Type: string (or Expression with resultType string). </param>
-        /// <param name="jsonPathDefinition"> The JSONPath definition for each column mapping with a customized column name to extract data from JSON file. For fields under root object, start with &quot;$&quot;; for fields inside the array chosen by jsonNodeReference property, start from the array element. Example: {&quot;Column1&quot;: &quot;$.Column1Path&quot;, &quot;Column2&quot;: &quot;Column2PathInArray&quot;}. Type: object (or Expression with resultType object). </param>
+        /// <param name="filePattern"> File pattern of JSON. To be more specific, the way of separating a collection of JSON objects. The default value is 'setOfObjects'. It is case-sensitive. </param>
+        /// <param name="nestingSeparator"> The character used to separate nesting levels. Default value is '.' (dot). Type: string (or Expression with resultType string). </param>
+        /// <param name="encodingName"> The code page name of the preferred encoding. If not provided, the default value is 'utf-8', unless the byte order mark (BOM) denotes another Unicode encoding. The full list of supported values can be found in the 'Name' column of the table of encodings in the following reference: https://go.microsoft.com/fwlink/?linkid=861078. Type: string (or Expression with resultType string). </param>
+        /// <param name="jsonNodeReference"> The JSONPath of the JSON array element to be flattened. Example: "$.ArrayPath". Type: string (or Expression with resultType string). </param>
+        /// <param name="jsonPathDefinition"> The JSONPath definition for each column mapping with a customized column name to extract data from JSON file. For fields under root object, start with "$"; for fields inside the array chosen by jsonNodeReference property, start from the array element. Example: {"Column1": "$.Column1Path", "Column2": "Column2PathInArray"}. Type: object (or Expression with resultType object). </param>
         internal JsonFormat(string type, object serializer, object deserializer, IDictionary<string, object> additionalProperties, object filePattern, object nestingSeparator, object encodingName, object jsonNodeReference, object jsonPathDefinition) : base(type, serializer, deserializer, additionalProperties)
         {
             FilePattern = filePattern;
@@ -38,15 +38,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = type ?? "JsonFormat";
         }
 
-        /// <summary> File pattern of JSON. To be more specific, the way of separating a collection of JSON objects. The default value is &apos;setOfObjects&apos;. It is case-sensitive. </summary>
+        /// <summary> File pattern of JSON. To be more specific, the way of separating a collection of JSON objects. The default value is 'setOfObjects'. It is case-sensitive. </summary>
         public object FilePattern { get; set; }
-        /// <summary> The character used to separate nesting levels. Default value is &apos;.&apos; (dot). Type: string (or Expression with resultType string). </summary>
+        /// <summary> The character used to separate nesting levels. Default value is '.' (dot). Type: string (or Expression with resultType string). </summary>
         public object NestingSeparator { get; set; }
-        /// <summary> The code page name of the preferred encoding. If not provided, the default value is &apos;utf-8&apos;, unless the byte order mark (BOM) denotes another Unicode encoding. The full list of supported values can be found in the &apos;Name&apos; column of the table of encodings in the following reference: https://go.microsoft.com/fwlink/?linkid=861078. Type: string (or Expression with resultType string). </summary>
+        /// <summary> The code page name of the preferred encoding. If not provided, the default value is 'utf-8', unless the byte order mark (BOM) denotes another Unicode encoding. The full list of supported values can be found in the 'Name' column of the table of encodings in the following reference: https://go.microsoft.com/fwlink/?linkid=861078. Type: string (or Expression with resultType string). </summary>
         public object EncodingName { get; set; }
-        /// <summary> The JSONPath of the JSON array element to be flattened. Example: &quot;$.ArrayPath&quot;. Type: string (or Expression with resultType string). </summary>
+        /// <summary> The JSONPath of the JSON array element to be flattened. Example: "$.ArrayPath". Type: string (or Expression with resultType string). </summary>
         public object JsonNodeReference { get; set; }
-        /// <summary> The JSONPath definition for each column mapping with a customized column name to extract data from JSON file. For fields under root object, start with &quot;$&quot;; for fields inside the array chosen by jsonNodeReference property, start from the array element. Example: {&quot;Column1&quot;: &quot;$.Column1Path&quot;, &quot;Column2&quot;: &quot;Column2PathInArray&quot;}. Type: object (or Expression with resultType object). </summary>
+        /// <summary> The JSONPath definition for each column mapping with a customized column name to extract data from JSON file. For fields under root object, start with "$"; for fields inside the array chosen by jsonNodeReference property, start from the array element. Example: {"Column1": "$.Column1Path", "Column2": "Column2PathInArray"}. Type: object (or Expression with resultType object). </summary>
         public object JsonPathDefinition { get; set; }
     }
 }

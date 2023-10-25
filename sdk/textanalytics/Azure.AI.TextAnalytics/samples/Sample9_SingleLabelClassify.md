@@ -1,87 +1,74 @@
-# Perform Custom Single Label Classification on Documents
-This sample demonstrates how to run a single label classification action in one or more documents. In order to use this feature, you need to train a model with your own data. For more information on how to do the training, see [train model][train_model].
+# Perform custom single-label classification
 
-## Creating a `TextAnalyticsClient`
+This sample demonstrates how to perform custom single-label classification on one or more documents. In order to use this feature, you need to train a model with your own data. For more information on how to do the training, see [train model][train_model].
 
-To create a new `TextAnalyticsClient` to perform a single label classify on a document, you need a Cognitive Services or Language service endpoint and credentials.  You can use the [DefaultAzureCredential][DefaultAzureCredential] to try a number of common authentication methods optimized for both running as a service and development.  In the sample below, however, you'll use a Language service API key credential by creating an `AzureKeyCredential` object, that if needed, will allow you to update the API key without creating a new client. See [README][README] for links and instructions.
+## Create a `TextAnalyticsClient`
 
-You can set `endpoint` and `apiKey` based on an environment variable, a configuration setting, or any way that works for your application.
+To create a new `TextAnalyticsClient`, you will need the service endpoint and credentials of your Language resource. To authenticate, you can use the [`DefaultAzureCredential`][DefaultAzureCredential], which combines credentials commonly used to authenticate when deployed on Azure, with credentials used to authenticate in a development environment. In this sample, however, you will use an `AzureKeyCredential`, which you can create with an API key.
 
 ```C# Snippet:CreateTextAnalyticsClient
-string endpoint = "<endpoint>";
-string apiKey = "<apiKey>";
-TextAnalyticsClient client = new(new Uri(endpoint), new AzureKeyCredential(apiKey));
+Uri endpoint = new("<endpoint>");
+AzureKeyCredential credential = new("<apiKey>");
+TextAnalyticsClient client = new(endpoint, credential);
 ```
 
-## Performing Single Label Classify on one or multiple documents
+The values of the `endpoint` and `apiKey` variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
 
-To perform Custom Single Label Classification in one or multiple documents, set up a `SingleLabelClassifyAction` and call `StartAnalyzeActionsAsync` on the documents. The result is a Long Running Operation of type `AnalyzeActionsOperation` which polls for the results from the API.
+## Perform custom single-label classification on one or more text documents
 
-```C# Snippet:TextAnalyticsSingleLabelClassifyAsync
-// Get input document.
-string document = @"I need a reservation for an indoor restaurant in China. Please don't stop the music. Play music and add it to my playlist.";
+To perform custom single-label classification one or more text documents, call `SingleLabelClassifyAsync` on the `TextAnalyticsClient` by passing the documents as either an `IEnumerable<string>` parameter or an `IEnumerable<TextDocumentInput>` parameter. This returns a `ClassifyDocumentOperation`.
 
-// Prepare analyze operation input. You can add multiple documents to this list and perform the same
-// operation to all of them.
-var batchInput = new List<string>
+```C# Snippet:Sample9_SingleLabelClassifyConvenienceAsync
+string document =
+    "I need a reservation for an indoor restaurant in China. Please don't stop the music. Play music and"
+    + " add it to my playlist.";
+
+// Prepare the input of the text analysis operation. You can add multiple documents to this list and
+// perform the same operation on all of them simultaneously.
+List<string> batchedDocuments = new()
 {
     document
 };
 
-// Set project and deployment names of the target model
-// To train a model to classify your documents, see https://aka.ms/azsdk/textanalytics/customfunctionalities
+// Specify the project and deployment names of the desired custom model. To train your own custom model to
+// classify your documents, see https://aka.ms/azsdk/textanalytics/customfunctionalities.
 string projectName = "<projectName>";
 string deploymentName = "<deploymentName>";
 
-var singleLabelClassifyAction = new SingleLabelClassifyAction(projectName, deploymentName);
-
-TextAnalyticsActions actions = new TextAnalyticsActions()
-{
-    SingleLabelClassifyActions = new List<SingleLabelClassifyAction>() { singleLabelClassifyAction }
-};
-
-// Start analysis process.
-AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(batchInput, actions);
-
-await operation.WaitForCompletionAsync();
+// Perform the text analysis operation.
+ClassifyDocumentOperation operation = await client.SingleLabelClassifyAsync(WaitUntil.Completed, batchedDocuments, projectName, deploymentName);
 ```
 
-The returned `AnalyzeActionsOperation` contains general information about the status of the operation. It can be requested while the operation is running or when it has completed. For example:
+Using `WaitUntil.Completed` means that the long-running operation will be automatically polled until it has completed. You can then view the results of the custom single-label classification, including any errors that might have occurred:
 
-```C# Snippet:TextAnalyticsSingleLabelClassifyOperationStatus
-// View operation status.
-Console.WriteLine($"AnalyzeActions operation has completed");
-Console.WriteLine();
-
-Console.WriteLine($"Created On   : {operation.CreatedOn}");
-Console.WriteLine($"Expires On   : {operation.ExpiresOn}");
-Console.WriteLine($"Id           : {operation.Id}");
-Console.WriteLine($"Status       : {operation.Status}");
-Console.WriteLine($"Last Modified: {operation.LastModified}");
-Console.WriteLine();
-```
-
-To view the final results of the long-running operation:
-
-```C# Snippet:TextAnalyticsSingleLabelClassifyAsyncViewResults
-// View operation results.
-await foreach (AnalyzeActionsResult documentsInPage in operation.Value)
+```C# Snippet:Sample9_SingleLabelClassifyConvenienceAsync_ViewResults
+// View the operation results.
+await foreach (ClassifyDocumentResultCollection documentsInPage in operation.Value)
 {
-    IReadOnlyCollection<SingleLabelClassifyActionResult> singleClassificationActionResults = documentsInPage.SingleLabelClassifyResults;
-
-    foreach (SingleLabelClassifyActionResult classificationActionResults in singleClassificationActionResults)
+    foreach (ClassifyDocumentResult documentResult in documentsInPage)
     {
-        Console.WriteLine($" Action name: {classificationActionResults.ActionName}");
-        foreach (ClassifyDocumentResult documentResults in classificationActionResults.DocumentsResults)
+        if (documentResult.HasError)
         {
-            ClassificationCategory classification = documentResults.ClassificationCategories.First();
+            Console.WriteLine($"  Error!");
+            Console.WriteLine($"  Document error code: {documentResult.Error.ErrorCode}");
+            Console.WriteLine($"  Message: {documentResult.Error.Message}");
+            continue;
+        }
 
-            Console.WriteLine($"  Class label \"{classification.Category}\" predicted with a confidence score of {classification.ConfidenceScore}.");
+        Console.WriteLine($"  Predicted the following class:");
+        Console.WriteLine();
+
+        foreach (ClassificationCategory classification in documentResult.ClassificationCategories)
+        {
+            Console.WriteLine($"  Category: {classification.Category}");
+            Console.WriteLine($"  Confidence score: {classification.ConfidenceScore}");
             Console.WriteLine();
         }
     }
 }
 ```
+
+See the [README] of the Text Analytics client library for more information, including useful links and instructions.
 
 [train_model]: https://aka.ms/azsdk/textanalytics/customfunctionalities
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md

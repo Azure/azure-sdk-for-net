@@ -78,9 +78,17 @@ namespace Azure.Security.ConfidentialLedger
                     Array.Empty<HttpPipelinePolicy>() :
                     new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) },
                 transportOptions,
-                new ResponseClassifier());
+                new ConfidentialLedgerResponseClassifier());
             _ledgerEndpoint = ledgerEndpoint;
             _apiVersion = actualOptions.Version;
+        }
+
+        internal class ConfidentialLedgerResponseClassifier : ResponseClassifier
+        {
+            public override bool IsRetriableResponse(HttpMessage message)
+            {
+                return base.IsRetriableResponse(message) || message.Response.Status == 404;
+            }
         }
 
         /// <summary> Posts a new entry to the ledger. A collection id may optionally be specified. </summary>

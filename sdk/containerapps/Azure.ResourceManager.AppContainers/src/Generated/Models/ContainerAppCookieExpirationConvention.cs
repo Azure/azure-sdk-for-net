@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    /// <summary> The convention used when determining the session cookie&apos;s expiration. </summary>
+    /// <summary> The convention used when determining the session cookie's expiration. </summary>
     public enum ContainerAppCookieExpirationConvention
     {
         /// <summary> FixedTime. </summary>

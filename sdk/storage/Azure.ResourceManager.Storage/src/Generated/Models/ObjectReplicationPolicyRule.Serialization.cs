@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static ObjectReplicationPolicyRule DeserializeObjectReplicationPolicyRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> ruleId = default;
             string sourceContainer = default;
             string destinationContainer = default;
@@ -59,7 +63,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     filters = ObjectReplicationPolicyFilter.DeserializeObjectReplicationPolicyFilter(property.Value);

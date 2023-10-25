@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.3.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,49 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0 (2023-09-15)
+
+### Features Added
+
+- Compute RP to `2023-03-01` (AvailabilitySets, VirtualMachines, VirtualMachineScaleSets, etc)
+  - Added new parameter `DomainNameLabelScope` to VM and VMSS Public IP Dns Settings.
+  - Added new parameter `TimeCreated` to VMSS VM properties.
+  - Added new parameters `AuxiliaryMode` and `AuxiliarySku` to VM and VMSS Network Configuration Properties.
+
+## 1.2.0-beta.2 (2023-07-28)
+
+### Features Added
+
+- Disk RP to `2023-01-02`
+    - Added new property class `DiskImageFileFormat` to `GrantAccessData` class
+
+## 1.2.0-beta.1 (2023-06-01)
+
+### Features Added
+
+- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+- Added new properties `ComputerName`, `OSName`, `OSVersion` and `HyperVGeneration` to `VirtualMachineScaleSetVmInstanceView` class
+- Added new value `StandardSsdLrs` to `ImageStorageAccountType`
+- Compute RP to `2023-03-01` (AvailabilitySets, VirtualMachines, VirtualMachineScaleSets, etc)
+  - Added new method `Reapply` for `VirtualMachineScaleSet` class.
+  - Added new method `ListAvailabeSizes` for `DedicatedHost` class.
+  - Added new parameter `expand` for `VirtualMachine` List methods.
+  - Added new parameter `hibernate` for `VirtualMachineScaleSet` deallocate methods.
+  - Added new parameters `PriorityMixPolicy` and `SpotRestorePolicy` for `VirtualMachineScaleSet` update methods.
+  - Added new property `BypassPlatformSafetyChecksOnUserSchedule` for `VirtualMachine` class.
+  - Added new property `SecurityPostureReference` to `VirtualMachineScaleSet` class.
+  - Added new properties `OutputBlobManagedIdentity` and `ErrorBlobManagedIdentity` to `RunCommand` class.
+  - Added new properties `RestorePointEncryption`, `SourceDiskRestorePoint` , `HyperVGeneration` and `WriteAcceleratorEnabled` for `RestorePoint` class.
+
+### Breaking Changes
+
+- Class `VirtualMachineScaleSetNetworkConfiguration` and `VirtualMachineScaleSetIPConfiguration` no longer have the property `Id`
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to 1.32.0.
+- Upgraded dependent `Azure.ResourceManager` to 1.6.0.
 
 ## 1.1.0 (2023-02-16)
 

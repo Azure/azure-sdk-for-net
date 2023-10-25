@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static MachineLearningWorkspaceGetNotebookKeysResult DeserializeMachineLearningWorkspaceGetNotebookKeysResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> primaryAccessKey = default;
             Optional<string> secondaryAccessKey = default;
             foreach (var property in element.EnumerateObject())

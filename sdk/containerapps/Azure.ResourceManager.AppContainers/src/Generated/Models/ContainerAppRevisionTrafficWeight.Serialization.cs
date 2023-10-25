@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppRevisionTrafficWeight DeserializeContainerAppRevisionTrafficWeight(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> revisionName = default;
             Optional<int> weight = default;
             Optional<bool> latestRevision = default;
@@ -55,7 +59,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     weight = property.Value.GetInt32();
@@ -65,7 +68,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     latestRevision = property.Value.GetBoolean();

@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <summary>
-        /// Trigger adhoc backup 
+        /// Trigger adhoc backup
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         }
 
         /// <summary>
-        /// Trigger adhoc backup 
+        /// Trigger adhoc backup
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

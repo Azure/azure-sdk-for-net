@@ -158,10 +158,51 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("federatedClientId"u8);
                 writer.WriteStringValue(FederatedClientId.Value);
             }
+            if (Optional.IsCollectionDefined(Keys))
+            {
+                writer.WritePropertyName("keys"u8);
+                writer.WriteStartObject();
+                foreach (var item in Keys)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(EncryptionProtector))
+            {
+                writer.WritePropertyName("encryptionProtector"u8);
+                writer.WriteStringValue(EncryptionProtector);
+            }
             if (Optional.IsDefined(PreferredEnclaveType))
             {
                 writer.WritePropertyName("preferredEnclaveType"u8);
                 writer.WriteStringValue(PreferredEnclaveType.Value.ToString());
+            }
+            if (Optional.IsDefined(UseFreeLimit))
+            {
+                writer.WritePropertyName("useFreeLimit"u8);
+                writer.WriteBooleanValue(UseFreeLimit.Value);
+            }
+            if (Optional.IsDefined(FreeLimitExhaustionBehavior))
+            {
+                writer.WritePropertyName("freeLimitExhaustionBehavior"u8);
+                writer.WriteStringValue(FreeLimitExhaustionBehavior.Value.ToString());
+            }
+            if (Optional.IsDefined(ManualCutover))
+            {
+                writer.WritePropertyName("manualCutover"u8);
+                writer.WriteBooleanValue(ManualCutover.Value);
+            }
+            if (Optional.IsDefined(PerformCutover))
+            {
+                writer.WritePropertyName("performCutover"u8);
+                writer.WriteBooleanValue(PerformCutover.Value);
+            }
+            if (Optional.IsDefined(EncryptionProtectorAutoRotation))
+            {
+                writer.WritePropertyName("encryptionProtectorAutoRotation"u8);
+                writer.WriteBooleanValue(EncryptionProtectorAutoRotation.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

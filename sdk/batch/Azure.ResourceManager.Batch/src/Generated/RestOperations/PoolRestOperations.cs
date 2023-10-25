@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Batch
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-10-01";
+            _apiVersion = apiVersion ?? "2023-05-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.Batch
         /// <param name="resourceGroupName"> The name of the resource group that contains the Batch account. </param>
         /// <param name="accountName"> The name of the Batch account. </param>
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
-        /// <param name="select"> Comma separated list of properties that should be returned. e.g. &quot;properties/provisioningState&quot;. Only top level properties under properties/ are valid for selection. </param>
+        /// <param name="select"> Comma separated list of properties that should be returned. e.g. "properties/provisioningState". Only top level properties under properties/ are valid for selection. </param>
         /// <param name="filter">
         /// OData filter expression. Valid properties for filtering are:
-        /// 
+        ///
         ///  name
         ///  properties/allocationState
         ///  properties/allocationStateTransitionTime
@@ -121,10 +121,10 @@ namespace Azure.ResourceManager.Batch
         /// <param name="resourceGroupName"> The name of the resource group that contains the Batch account. </param>
         /// <param name="accountName"> The name of the Batch account. </param>
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
-        /// <param name="select"> Comma separated list of properties that should be returned. e.g. &quot;properties/provisioningState&quot;. Only top level properties under properties/ are valid for selection. </param>
+        /// <param name="select"> Comma separated list of properties that should be returned. e.g. "properties/provisioningState". Only top level properties under properties/ are valid for selection. </param>
         /// <param name="filter">
         /// OData filter expression. Valid properties for filtering are:
-        /// 
+        ///
         ///  name
         ///  properties/allocationState
         ///  properties/allocationStateTransitionTime
@@ -202,8 +202,8 @@ namespace Azure.ResourceManager.Batch
         /// <param name="accountName"> The name of the Batch account. </param>
         /// <param name="poolName"> The pool name. This must be unique within the account. </param>
         /// <param name="data"> Additional parameters for pool creation. </param>
-        /// <param name="ifMatch"> The entity state (ETag) version of the pool to update. A value of &quot;*&quot; can be used to apply the operation only if the pool already exists. If omitted, this operation will always be applied. </param>
-        /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new pool to be created, but to prevent updating an existing pool. Other values will be ignored. </param>
+        /// <param name="ifMatch"> The entity state (ETag) version of the pool to update. A value of "*" can be used to apply the operation only if the pool already exists. If omitted, this operation will always be applied. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new pool to be created, but to prevent updating an existing pool. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -237,8 +237,8 @@ namespace Azure.ResourceManager.Batch
         /// <param name="accountName"> The name of the Batch account. </param>
         /// <param name="poolName"> The pool name. This must be unique within the account. </param>
         /// <param name="data"> Additional parameters for pool creation. </param>
-        /// <param name="ifMatch"> The entity state (ETag) version of the pool to update. A value of &quot;*&quot; can be used to apply the operation only if the pool already exists. If omitted, this operation will always be applied. </param>
-        /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new pool to be created, but to prevent updating an existing pool. Other values will be ignored. </param>
+        /// <param name="ifMatch"> The entity state (ETag) version of the pool to update. A value of "*" can be used to apply the operation only if the pool already exists. If omitted, this operation will always be applied. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new pool to be created, but to prevent updating an existing pool. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Batch
         /// <param name="accountName"> The name of the Batch account. </param>
         /// <param name="poolName"> The pool name. This must be unique within the account. </param>
         /// <param name="data"> Pool properties that should be updated. Properties that are supplied will be updated, any property not supplied will be unchanged. </param>
-        /// <param name="ifMatch"> The entity state (ETag) version of the pool to update. This value can be omitted or set to &quot;*&quot; to apply the operation unconditionally. </param>
+        /// <param name="ifMatch"> The entity state (ETag) version of the pool to update. This value can be omitted or set to "*" to apply the operation unconditionally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Batch
         /// <param name="accountName"> The name of the Batch account. </param>
         /// <param name="poolName"> The pool name. This must be unique within the account. </param>
         /// <param name="data"> Pool properties that should be updated. Properties that are supplied will be updated, any property not supplied will be unchanged. </param>
-        /// <param name="ifMatch"> The entity state (ETag) version of the pool to update. This value can be omitted or set to &quot;*&quot; to apply the operation unconditionally. </param>
+        /// <param name="ifMatch"> The entity state (ETag) version of the pool to update. This value can be omitted or set to "*" to apply the operation unconditionally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/>, <paramref name="poolName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -720,10 +720,10 @@ namespace Azure.ResourceManager.Batch
         /// <param name="resourceGroupName"> The name of the resource group that contains the Batch account. </param>
         /// <param name="accountName"> The name of the Batch account. </param>
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
-        /// <param name="select"> Comma separated list of properties that should be returned. e.g. &quot;properties/provisioningState&quot;. Only top level properties under properties/ are valid for selection. </param>
+        /// <param name="select"> Comma separated list of properties that should be returned. e.g. "properties/provisioningState". Only top level properties under properties/ are valid for selection. </param>
         /// <param name="filter">
         /// OData filter expression. Valid properties for filtering are:
-        /// 
+        ///
         ///  name
         ///  properties/allocationState
         ///  properties/allocationStateTransitionTime
@@ -768,10 +768,10 @@ namespace Azure.ResourceManager.Batch
         /// <param name="resourceGroupName"> The name of the resource group that contains the Batch account. </param>
         /// <param name="accountName"> The name of the Batch account. </param>
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
-        /// <param name="select"> Comma separated list of properties that should be returned. e.g. &quot;properties/provisioningState&quot;. Only top level properties under properties/ are valid for selection. </param>
+        /// <param name="select"> Comma separated list of properties that should be returned. e.g. "properties/provisioningState". Only top level properties under properties/ are valid for selection. </param>
         /// <param name="filter">
         /// OData filter expression. Valid properties for filtering are:
-        /// 
+        ///
         ///  name
         ///  properties/allocationState
         ///  properties/allocationStateTransitionTime

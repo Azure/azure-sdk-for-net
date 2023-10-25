@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Advisor
 {
-    /// <summary> A class representing the SuppressionContract data model. </summary>
+    /// <summary>
+    /// A class representing the SuppressionContract data model.
+    /// The details of the snoozed or dismissed rule; for example, the duration, name, and GUID associated with the rule.
+    /// </summary>
     public partial class SuppressionContractData : ResourceData
     {
         /// <summary> Initializes a new instance of SuppressionContractData. </summary>

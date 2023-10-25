@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.BotService.Models
         /// <summary> The list of Direct Line sites. </summary>
         public IList<DirectLineSite> Sites { get; }
         /// <summary> The extensionKey1. </summary>
-        public string ExtensionKey1 { get; }
+        public string ExtensionKey1 { get; set; }
         /// <summary> The extensionKey2. </summary>
-        public string ExtensionKey2 { get; }
+        public string ExtensionKey2 { get; set; }
         /// <summary> Direct Line embed code of the resource. </summary>
         public string DirectLineEmbedCode { get; set; }
     }

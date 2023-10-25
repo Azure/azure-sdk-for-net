@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.Datadog.Models
 
         internal static DatadogApiKey DeserializeDatadogApiKey(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> createdBy = default;
             Optional<string> name = default;
             string key = default;

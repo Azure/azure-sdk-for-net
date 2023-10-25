@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static SsisVariable DeserializeSsisVariable(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> id = default;
             Optional<string> name = default;
             Optional<string> description = default;
@@ -27,7 +31,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = property.Value.GetInt64();
@@ -52,7 +55,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sensitive = property.Value.GetBoolean();

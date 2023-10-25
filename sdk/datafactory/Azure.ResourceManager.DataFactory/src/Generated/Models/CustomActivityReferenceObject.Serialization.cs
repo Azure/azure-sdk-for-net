@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in LinkedServices)
                 {
-                    writer.WriteObjectValue(item);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -41,7 +42,11 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static CustomActivityReferenceObject DeserializeCustomActivityReferenceObject(JsonElement element)
         {
-            Optional<IList<FactoryLinkedServiceReference>> linkedServices = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IList<DataFactoryLinkedServiceReference>> linkedServices = default;
             Optional<IList<DatasetReference>> datasets = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -49,13 +54,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<FactoryLinkedServiceReference> array = new List<FactoryLinkedServiceReference>();
+                    List<DataFactoryLinkedServiceReference> array = new List<DataFactoryLinkedServiceReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(item));
+                        array.Add(JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(item.GetRawText()));
                     }
                     linkedServices = array;
                     continue;
@@ -64,7 +68,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DatasetReference> array = new List<DatasetReference>();

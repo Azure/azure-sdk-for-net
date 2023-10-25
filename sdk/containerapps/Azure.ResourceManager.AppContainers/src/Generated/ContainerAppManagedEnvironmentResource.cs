@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -256,7 +257,60 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentDetectorResourcePropertyResource" /> object. </returns>
         public virtual ContainerAppManagedEnvironmentDetectorResourcePropertyResource GetContainerAppManagedEnvironmentDetectorResourceProperty()
         {
-            return new ContainerAppManagedEnvironmentDetectorResourcePropertyResource(Client, new ResourceIdentifier(Id.ToString() + "/detectorProperties/rootApi"));
+            return new ContainerAppManagedEnvironmentDetectorResourcePropertyResource(Client, Id.AppendChildResource("detectorProperties", "rootApi"));
+        }
+
+        /// <summary> Gets a collection of ContainerAppManagedCertificateResources in the ContainerAppManagedEnvironment. </summary>
+        /// <returns> An object representing collection of ContainerAppManagedCertificateResources and their operations over a ContainerAppManagedCertificateResource. </returns>
+        public virtual ContainerAppManagedCertificateCollection GetContainerAppManagedCertificates()
+        {
+            return GetCachedClient(Client => new ContainerAppManagedCertificateCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Get the specified Managed Certificate.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/managedCertificates/{managedCertificateName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedCertificates_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="managedCertificateName"> Name of the Managed Certificate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="managedCertificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="managedCertificateName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ContainerAppManagedCertificateResource>> GetContainerAppManagedCertificateAsync(string managedCertificateName, CancellationToken cancellationToken = default)
+        {
+            return await GetContainerAppManagedCertificates().GetAsync(managedCertificateName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get the specified Managed Certificate.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/managedCertificates/{managedCertificateName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedCertificates_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="managedCertificateName"> Name of the Managed Certificate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="managedCertificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="managedCertificateName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ContainerAppManagedCertificateResource> GetContainerAppManagedCertificate(string managedCertificateName, CancellationToken cancellationToken = default)
+        {
+            return GetContainerAppManagedCertificates().Get(managedCertificateName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ContainerAppManagedEnvironmentStorageResources in the ContainerAppManagedEnvironment. </summary>
@@ -581,7 +635,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get all workload Profile States for a Premium Managed Environment.
+        /// Get all workload Profile States for a Managed Environment.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -599,11 +653,11 @@ namespace Azure.ResourceManager.AppContainers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppManagedEnvironmentManagedEnvironmentsRestClient.CreateListWorkloadProfileStatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppManagedEnvironmentManagedEnvironmentsRestClient.CreateListWorkloadProfileStatesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ContainerAppWorkloadProfileState.DeserializeContainerAppWorkloadProfileState, _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics, Pipeline, "ContainerAppManagedEnvironmentResource.GetWorkloadProfileStates", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ContainerAppWorkloadProfileState.DeserializeContainerAppWorkloadProfileState, _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics, Pipeline, "ContainerAppManagedEnvironmentResource.GetWorkloadProfileStates", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Get all workload Profile States for a Premium Managed Environment.
+        /// Get all workload Profile States for a Managed Environment.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -621,7 +675,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppManagedEnvironmentManagedEnvironmentsRestClient.CreateListWorkloadProfileStatesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerAppManagedEnvironmentManagedEnvironmentsRestClient.CreateListWorkloadProfileStatesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ContainerAppWorkloadProfileState.DeserializeContainerAppWorkloadProfileState, _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics, Pipeline, "ContainerAppManagedEnvironmentResource.GetWorkloadProfileStates", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ContainerAppWorkloadProfileState.DeserializeContainerAppWorkloadProfileState, _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics, Pipeline, "ContainerAppManagedEnvironmentResource.GetWorkloadProfileStates", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

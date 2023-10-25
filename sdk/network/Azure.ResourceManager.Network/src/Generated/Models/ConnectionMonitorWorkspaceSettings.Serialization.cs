@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ConnectionMonitorWorkspaceSettings DeserializeConnectionMonitorWorkspaceSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> workspaceResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -32,7 +36,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     workspaceResourceId = new ResourceIdentifier(property.Value.GetString());

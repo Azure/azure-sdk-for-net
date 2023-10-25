@@ -11,7 +11,10 @@ using Azure.ResourceManager.ProviderHub.Models;
 
 namespace Azure.ResourceManager.ProviderHub
 {
-    /// <summary> A class representing the NotificationRegistration data model. </summary>
+    /// <summary>
+    /// A class representing the NotificationRegistration data model.
+    /// The notification registration definition.
+    /// </summary>
     public partial class NotificationRegistrationData : ResourceData
     {
         /// <summary> Initializes a new instance of NotificationRegistrationData. </summary>
@@ -25,7 +28,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"></param>
-        internal NotificationRegistrationData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, NotificationRegistrationProperties properties) : base(id, name, resourceType, systemData)
+        internal NotificationRegistrationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NotificationRegistrationProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }

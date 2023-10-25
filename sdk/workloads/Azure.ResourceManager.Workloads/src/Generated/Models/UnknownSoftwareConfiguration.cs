@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> The UnknownSoftwareConfiguration. </summary>
-    internal partial class UnknownSoftwareConfiguration : SoftwareConfiguration
+    internal partial class UnknownSoftwareConfiguration : SapSoftwareConfiguration
     {
         /// <summary> Initializes a new instance of UnknownSoftwareConfiguration. </summary>
         /// <param name="softwareInstallationType"> The SAP software installation Type. </param>

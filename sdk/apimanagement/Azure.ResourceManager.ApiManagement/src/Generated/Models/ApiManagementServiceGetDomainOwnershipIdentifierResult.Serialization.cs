@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static ApiManagementServiceGetDomainOwnershipIdentifierResult DeserializeApiManagementServiceGetDomainOwnershipIdentifierResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> domainOwnershipIdentifier = default;
             foreach (var property in element.EnumerateObject())
             {

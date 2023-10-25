@@ -64,7 +64,10 @@ namespace Azure.ResourceManager.Blueprint
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Versions);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Versions.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(Versions))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
@@ -73,6 +76,10 @@ namespace Azure.ResourceManager.Blueprint
 
         internal static BlueprintData DeserializeBlueprintData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -106,7 +113,6 @@ namespace Azure.ResourceManager.Blueprint
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -135,7 +141,6 @@ namespace Azure.ResourceManager.Blueprint
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             status = BlueprintStatus.DeserializeBlueprintStatus(property0.Value);
@@ -145,7 +150,6 @@ namespace Azure.ResourceManager.Blueprint
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             targetScope = new BlueprintTargetScope(property0.Value.GetString());
@@ -155,7 +159,6 @@ namespace Azure.ResourceManager.Blueprint
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, ParameterDefinition> dictionary = new Dictionary<string, ParameterDefinition>();
@@ -170,7 +173,6 @@ namespace Azure.ResourceManager.Blueprint
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, ResourceGroupDefinition> dictionary = new Dictionary<string, ResourceGroupDefinition>();
@@ -185,7 +187,6 @@ namespace Azure.ResourceManager.Blueprint
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             versions = BinaryData.FromString(property0.Value.GetRawText());
@@ -195,7 +196,6 @@ namespace Azure.ResourceManager.Blueprint
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             layout = BinaryData.FromString(property0.Value.GetRawText());

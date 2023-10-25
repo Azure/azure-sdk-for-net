@@ -64,21 +64,23 @@ namespace Azure.Storage
         /// Get an authentication policy to sign Storage requests.
         /// </summary>
         /// <param name="credential">Credential to use.</param>
+        /// <param name="scope">Scope to use.</param>
         /// <param name="options"> The <see cref="ISupportsTenantIdChallenges"/> to apply to the credential. </param>
         /// <returns>An authentication policy.</returns>
-        public static HttpPipelinePolicy AsPolicy(this TokenCredential credential, ClientOptions options) =>
+        public static HttpPipelinePolicy AsPolicy(this TokenCredential credential, string scope, ClientOptions options) =>
             new StorageBearerTokenChallengeAuthorizationPolicy(
                 credential ?? throw Errors.ArgumentNull(nameof(credential)),
-                StorageScope,
+                scope ?? StorageScope,
                 options is ISupportsTenantIdChallenges { EnableTenantDiscovery: true });
 
         /// <summary>
         /// Get an optional authentication policy to sign Storage requests.
         /// </summary>
         /// <param name="credentials">Optional credentials to use.</param>
+        /// <param name="scope">Optional scope</param>
         /// <param name="options"> The <see cref="ClientOptions"/> </param>
         /// <returns>An optional authentication policy.</returns>
-        public static HttpPipelinePolicy GetAuthenticationPolicy(object credentials = null, ClientOptions options = null)
+        public static HttpPipelinePolicy GetAuthenticationPolicy(object credentials = null, string scope = default, ClientOptions options = null)
         {
             // Use the credentials to decide on the authentication policy
             switch (credentials)
@@ -89,7 +91,7 @@ namespace Azure.Storage
                 case StorageSharedKeyCredential sharedKey:
                     return sharedKey.AsPolicy();
                 case TokenCredential token:
-                    return token.AsPolicy(options);
+                    return token.AsPolicy(scope, options);
                 default:
                     throw Errors.InvalidCredentials(credentials.GetType().FullName);
             }
@@ -108,6 +110,8 @@ namespace Azure.Storage
             var pipelineOptions = new HttpPipelineOptions(options)
             {
                 PerCallPolicies = { StorageServerTimeoutPolicy.Shared },
+                // needed *after* core applies the user agent; can't have that without going per-retry
+                PerRetryPolicies = { StorageTelemetryPolicy.Shared },
                 ResponseClassifier = classifier,
                 RequestFailedDetailsParser = new StorageRequestFailedDetailsParser()
             };

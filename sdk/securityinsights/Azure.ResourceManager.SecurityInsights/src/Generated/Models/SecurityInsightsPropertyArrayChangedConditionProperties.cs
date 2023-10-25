@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Describes an automation rule condition that evaluates an array property&apos;s value change. </summary>
+    /// <summary> Describes an automation rule condition that evaluates an array property's value change. </summary>
     public partial class SecurityInsightsPropertyArrayChangedConditionProperties : SecurityInsightsAutomationRuleCondition
     {
         /// <summary> Initializes a new instance of SecurityInsightsPropertyArrayChangedConditionProperties. </summary>

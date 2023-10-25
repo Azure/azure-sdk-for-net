@@ -13,11 +13,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static NetworkMappingFabricSpecificSettings DeserializeNetworkMappingFabricSpecificSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("instanceType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureToAzure": return AzureToAzureNetworkMappingSettings.DeserializeAzureToAzureNetworkMappingSettings(element);
+                    case "AzureToAzure": return A2ANetworkMappingSettings.DeserializeA2ANetworkMappingSettings(element);
                     case "VmmToAzure": return VmmToAzureNetworkMappingSettings.DeserializeVmmToAzureNetworkMappingSettings(element);
                     case "VmmToVmm": return VmmToVmmNetworkMappingSettings.DeserializeVmmToVmmNetworkMappingSettings(element);
                 }

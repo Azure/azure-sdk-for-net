@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
     {
         internal static SqlVmListResult DeserializeSqlVmListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SqlVmData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SqlVmData> array = new List<SqlVmData>();

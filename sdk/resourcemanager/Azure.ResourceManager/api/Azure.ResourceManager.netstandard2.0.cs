@@ -135,6 +135,8 @@ namespace Azure.ResourceManager.ManagementGroups
         public virtual Azure.Pageable<Azure.ResourceManager.ManagementGroups.ManagementGroupResource> GetAll(string cacheControl = null, string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ManagementGroups.ManagementGroupResource> GetAllAsync(string cacheControl = null, string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagementGroups.ManagementGroupResource>> GetAsync(string groupId, Azure.ResourceManager.ManagementGroups.Models.ManagementGroupExpandType? expand = default(Azure.ResourceManager.ManagementGroups.Models.ManagementGroupExpandType?), bool? recurse = default(bool?), string filter = null, string cacheControl = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ManagementGroups.ManagementGroupResource> GetIfExists(string groupId, Azure.ResourceManager.ManagementGroups.Models.ManagementGroupExpandType? expand = default(Azure.ResourceManager.ManagementGroups.Models.ManagementGroupExpandType?), bool? recurse = default(bool?), string filter = null, string cacheControl = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ManagementGroups.ManagementGroupResource>> GetIfExistsAsync(string groupId, Azure.ResourceManager.ManagementGroups.Models.ManagementGroupExpandType? expand = default(Azure.ResourceManager.ManagementGroups.Models.ManagementGroupExpandType?), bool? recurse = default(bool?), string filter = null, string cacheControl = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ManagementGroups.ManagementGroupResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ManagementGroups.ManagementGroupResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ManagementGroups.ManagementGroupResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagementGroups.ManagementGroupResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -457,8 +459,53 @@ namespace Azure.ResourceManager.Models
     }
     public static partial class ResourceManagerModelFactory
     {
+        public static Azure.ResourceManager.Resources.Models.ApiProfile ApiProfile(string profileVersion = null, string apiVersion = null) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.AvailabilityZoneMappings AvailabilityZoneMappings(string logicalZone = null, string physicalZone = null) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.AzureRoleDefinition AzureRoleDefinition(string id = null, string name = null, bool? isServiceRole = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.Permission> permissions = null, System.Collections.Generic.IEnumerable<string> scopes = null) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.DataManifestCustomResourceFunctionDefinition DataManifestCustomResourceFunctionDefinition(string name = null, Azure.Core.ResourceType? fullyQualifiedResourceType = default(Azure.Core.ResourceType?), System.Collections.Generic.IEnumerable<string> defaultProperties = null, bool? allowCustomProperties = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.Resources.DataPolicyManifestData DataPolicyManifestData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<string> namespaces = null, string policyMode = null, bool? isBuiltInOnly = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.ResourceTypeAliases> resourceTypeAliases = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.DataPolicyManifestEffect> effects = null, System.Collections.Generic.IEnumerable<string> fieldValues = null, System.Collections.Generic.IEnumerable<string> standard = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.DataManifestCustomResourceFunctionDefinition> customDefinitions = null) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.DataPolicyManifestEffect DataPolicyManifestEffect(string name = null, System.BinaryData detailsSchema = null) { throw null; }
+        public static Azure.ResourceManager.ManagementGroups.Models.DescendantData DescendantData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, Azure.Core.ResourceIdentifier parentId = null) { throw null; }
+        public static Azure.ResourceManager.Resources.FeatureData FeatureData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string featureState = null) { throw null; }
+        public static Azure.ResourceManager.Resources.GenericResourceData GenericResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null, Azure.ResourceManager.Models.ArmPlan plan = null, System.BinaryData properties = null, string kind = null, string managedBy = null, Azure.ResourceManager.Resources.Models.ResourcesSku sku = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? changedOn = default(System.DateTimeOffset?), string provisioningState = null) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.LocationExpanded LocationExpanded(string id, string subscriptionId, string name, Azure.ResourceManager.Resources.Models.LocationType? locationType, string displayName, string regionalDisplayName, Azure.ResourceManager.Resources.Models.LocationMetadata metadata) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.LocationExpanded LocationExpanded(string id = null, string subscriptionId = null, string name = null, Azure.ResourceManager.Resources.Models.LocationType? locationType = default(Azure.ResourceManager.Resources.Models.LocationType?), string displayName = null, string regionalDisplayName = null, Azure.ResourceManager.Resources.Models.LocationMetadata metadata = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.AvailabilityZoneMappings> availabilityZoneMappings = null) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.ManagedByTenant ManagedByTenant(System.Guid? tenantId = default(System.Guid?)) { throw null; }
+        public static Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildInfo ManagementGroupChildInfo(Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildType? childType = default(Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildType?), string id = null, string name = null, string displayName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildInfo> children = null) { throw null; }
+        public static Azure.ResourceManager.ManagementGroups.ManagementGroupData ManagementGroupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Guid? tenantId = default(System.Guid?), string displayName = null, Azure.ResourceManager.ManagementGroups.Models.ManagementGroupInfo details = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupChildInfo> children = null) { throw null; }
+        public static Azure.ResourceManager.ManagementGroups.Models.ManagementGroupInfo ManagementGroupInfo(int? version = default(int?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), string updatedBy = null, Azure.ResourceManager.ManagementGroups.Models.ParentManagementGroupInfo parent = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupPathElement> path = null, System.Collections.Generic.IEnumerable<string> managementGroupAncestors = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagementGroups.Models.ManagementGroupPathElement> managementGroupAncestorChain = null) { throw null; }
+        public static Azure.ResourceManager.ManagementGroups.Models.ManagementGroupNameAvailabilityResult ManagementGroupNameAvailabilityResult(bool? nameAvailable = default(bool?), Azure.ResourceManager.ManagementGroups.Models.ManagementGroupNameUnavailableReason? reason = default(Azure.ResourceManager.ManagementGroups.Models.ManagementGroupNameUnavailableReason?), string message = null) { throw null; }
+        public static Azure.ResourceManager.ManagementGroups.Models.ManagementGroupPathElement ManagementGroupPathElement(string name = null, string displayName = null) { throw null; }
+        public static Azure.ResourceManager.Resources.ManagementLockData ManagementLockData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Resources.Models.ManagementLockLevel level = default(Azure.ResourceManager.Resources.Models.ManagementLockLevel), string notes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.ManagementLockOwner> owners = null) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.PairedRegion PairedRegion(string name = null, string id = null, string subscriptionId = null) { throw null; }
+        public static Azure.ResourceManager.ManagementGroups.Models.ParentManagementGroupInfo ParentManagementGroupInfo(string id = null, string name = null, string displayName = null) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.Permission Permission(System.Collections.Generic.IEnumerable<string> allowedActions = null, System.Collections.Generic.IEnumerable<string> deniedActions = null, System.Collections.Generic.IEnumerable<string> allowedDataActions = null, System.Collections.Generic.IEnumerable<string> deniedDataActions = null) { throw null; }
+        public static Azure.ResourceManager.Resources.PolicyAssignmentData PolicyAssignmentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.Models.ManagedServiceIdentity managedIdentity = null, string displayName = null, string policyDefinitionId = null, string scope = null, System.Collections.Generic.IEnumerable<string> excludedScopes = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Resources.Models.ArmPolicyParameterValue> parameters = null, string description = null, System.BinaryData metadata = null, Azure.ResourceManager.Resources.Models.EnforcementMode? enforcementMode = default(Azure.ResourceManager.Resources.Models.EnforcementMode?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.NonComplianceMessage> nonComplianceMessages = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.ResourceSelector> resourceSelectors = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.PolicyOverride> overrides = null) { throw null; }
+        public static Azure.ResourceManager.Resources.PolicyDefinitionData PolicyDefinitionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Resources.Models.PolicyType? policyType = default(Azure.ResourceManager.Resources.Models.PolicyType?), string mode = null, string displayName = null, string description = null, System.BinaryData policyRule = null, System.BinaryData metadata = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Resources.Models.ArmPolicyParameter> parameters = null) { throw null; }
+        public static Azure.ResourceManager.Resources.PolicySetDefinitionData PolicySetDefinitionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Resources.Models.PolicyType? policyType = default(Azure.ResourceManager.Resources.Models.PolicyType?), string displayName = null, string description = null, System.BinaryData metadata = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Resources.Models.ArmPolicyParameter> parameters = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.PolicyDefinitionReference> policyDefinitions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.PolicyDefinitionGroup> policyDefinitionGroups = null) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.PredefinedTag PredefinedTag(string id = null, string tagName = null, Azure.ResourceManager.Resources.Models.PredefinedTagCount count = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.PredefinedTagValue> values = null) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.PredefinedTagCount PredefinedTagCount(string predefinedTagCountType = null, int? value = default(int?)) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.PredefinedTagValue PredefinedTagValue(string id = null, string tagValue = null, Azure.ResourceManager.Resources.Models.PredefinedTagCount count = null) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.ProviderExtendedLocation ProviderExtendedLocation(Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string providerExtendedLocationType = null, System.Collections.Generic.IEnumerable<string> extendedLocations = null) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.ProviderPermission ProviderPermission(string applicationId = null, Azure.ResourceManager.Resources.Models.AzureRoleDefinition roleDefinition = null, Azure.ResourceManager.Resources.Models.AzureRoleDefinition managedByRoleDefinition = null, Azure.ResourceManager.Resources.Models.ProviderAuthorizationConsentState? providerAuthorizationConsentState = default(Azure.ResourceManager.Resources.Models.ProviderAuthorizationConsentState?)) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.ProviderResourceType ProviderResourceType(string resourceType = null, System.Collections.Generic.IEnumerable<string> locations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.ProviderExtendedLocation> locationMappings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.ResourceTypeAlias> aliases = null, System.Collections.Generic.IEnumerable<string> apiVersions = null, string defaultApiVersion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.ZoneMapping> zoneMappings = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.ApiProfile> apiProfiles = null, string capabilities = null, System.Collections.Generic.IReadOnlyDictionary<string, string> properties = null) { throw null; }
+        public static Azure.ResourceManager.Resources.ResourceGroupData ResourceGroupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string resourceGroupProvisioningState = null, string managedBy = null) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.ResourceGroupExportResult ResourceGroupExportResult(System.BinaryData template = null, Azure.ResponseError error = null) { throw null; }
+        public static Azure.ResourceManager.Resources.ResourceProviderData ResourceProviderData(Azure.Core.ResourceIdentifier id = null, string @namespace = null, string registrationState = null, string registrationPolicy = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.ProviderResourceType> resourceTypes = null, Azure.ResourceManager.Resources.Models.ProviderAuthorizationConsentState? providerAuthorizationConsentState = default(Azure.ResourceManager.Resources.Models.ProviderAuthorizationConsentState?)) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.ResourceTypeAlias ResourceTypeAlias(string name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.ResourceTypeAliasPath> paths = null, Azure.ResourceManager.Resources.Models.ResourceTypeAliasType? aliasType = default(Azure.ResourceManager.Resources.Models.ResourceTypeAliasType?), string defaultPath = null, Azure.ResourceManager.Resources.Models.ResourceTypeAliasPattern defaultPattern = null, Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathMetadata defaultMetadata = null) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.ResourceTypeAliases ResourceTypeAliases(string resourceType = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.ResourceTypeAlias> aliases = null) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.ResourceTypeAliasPath ResourceTypeAliasPath(string path = null, System.Collections.Generic.IEnumerable<string> apiVersions = null, Azure.ResourceManager.Resources.Models.ResourceTypeAliasPattern pattern = null, Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathMetadata metadata = null) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathMetadata ResourceTypeAliasPathMetadata(Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathTokenType? tokenType = default(Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathTokenType?), Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathAttributes? attributes = default(Azure.ResourceManager.Resources.Models.ResourceTypeAliasPathAttributes?)) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.ResourceTypeAliasPattern ResourceTypeAliasPattern(string phrase = null, string variable = null, Azure.ResourceManager.Resources.Models.ResourceTypeAliasPatternType? patternType = default(Azure.ResourceManager.Resources.Models.ResourceTypeAliasPatternType?)) { throw null; }
         public static Azure.ResourceManager.Resources.Models.SubResource SubResource(Azure.Core.ResourceIdentifier id = null) { throw null; }
+        public static Azure.ResourceManager.Resources.SubscriptionData SubscriptionData(Azure.Core.ResourceIdentifier id = null, string subscriptionId = null, string displayName = null, System.Guid? tenantId = default(System.Guid?), Azure.ResourceManager.Resources.Models.SubscriptionState? state = default(Azure.ResourceManager.Resources.Models.SubscriptionState?), Azure.ResourceManager.Resources.Models.SubscriptionPolicies subscriptionPolicies = null, string authorizationSource = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.ManagedByTenant> managedByTenants = null, System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.SubscriptionPolicies SubscriptionPolicies(string locationPlacementId = null, string quotaId = null, Azure.ResourceManager.Resources.Models.SpendingLimit? spendingLimit = default(Azure.ResourceManager.Resources.Models.SpendingLimit?)) { throw null; }
+        public static Azure.ResourceManager.Resources.TagResourceData TagResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tagValues = null) { throw null; }
+        public static Azure.ResourceManager.Resources.TenantData TenantData(string id = null, System.Guid? tenantId = default(System.Guid?), Azure.ResourceManager.Resources.Models.TenantCategory? tenantCategory = default(Azure.ResourceManager.Resources.Models.TenantCategory?), string country = null, string countryCode = null, string displayName = null, System.Collections.Generic.IEnumerable<string> domains = null, string defaultDomain = null, string tenantType = null, System.Uri tenantBrandingLogoUri = null) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.TenantResourceProvider TenantResourceProvider(string @namespace = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.ProviderResourceType> resourceTypes = null) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.TrackedResourceExtendedData TrackedResourceExtendedData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation = null) { throw null; }
         public static Azure.ResourceManager.Resources.Models.WritableSubResource WritableSubResource(Azure.Core.ResourceIdentifier id = null) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.ZoneMapping ZoneMapping(Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IEnumerable<string> zones = null) { throw null; }
     }
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     [System.ObsoleteAttribute("This type is obsolete and will be removed in a future release.", false)]
@@ -501,6 +548,7 @@ namespace Azure.ResourceManager.Models
     }
     public abstract partial class TrackedResourceData : Azure.ResourceManager.Models.ResourceData
     {
+        protected TrackedResourceData() { }
         protected TrackedResourceData(Azure.Core.AzureLocation location) { }
         protected TrackedResourceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location) { }
         public Azure.Core.AzureLocation Location { get { throw null; } set { } }
@@ -533,6 +581,8 @@ namespace Azure.ResourceManager.Resources
         public virtual Azure.Pageable<Azure.ResourceManager.Resources.DataPolicyManifestResource> GetAll(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.DataPolicyManifestResource> GetAllAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.DataPolicyManifestResource>> GetAsync(string policyMode, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Resources.DataPolicyManifestResource> GetIfExists(string policyMode, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Resources.DataPolicyManifestResource>> GetIfExistsAsync(string policyMode, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Resources.DataPolicyManifestResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.DataPolicyManifestResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.DataPolicyManifestResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.DataPolicyManifestResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -568,6 +618,8 @@ namespace Azure.ResourceManager.Resources
         public virtual Azure.Pageable<Azure.ResourceManager.Resources.FeatureResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.FeatureResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.FeatureResource>> GetAsync(string featureName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Resources.FeatureResource> GetIfExists(string featureName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Resources.FeatureResource>> GetIfExistsAsync(string featureName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Resources.FeatureResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.FeatureResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.FeatureResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.FeatureResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -643,6 +695,8 @@ namespace Azure.ResourceManager.Resources
         public virtual Azure.Pageable<Azure.ResourceManager.Resources.ManagementGroupPolicyDefinitionResource> GetAll(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.ManagementGroupPolicyDefinitionResource> GetAllAsync(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.ManagementGroupPolicyDefinitionResource>> GetAsync(string policyDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Resources.ManagementGroupPolicyDefinitionResource> GetIfExists(string policyDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Resources.ManagementGroupPolicyDefinitionResource>> GetIfExistsAsync(string policyDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Resources.ManagementGroupPolicyDefinitionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.ManagementGroupPolicyDefinitionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.ManagementGroupPolicyDefinitionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.ManagementGroupPolicyDefinitionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -672,6 +726,8 @@ namespace Azure.ResourceManager.Resources
         public virtual Azure.Pageable<Azure.ResourceManager.Resources.ManagementGroupPolicySetDefinitionResource> GetAll(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.ManagementGroupPolicySetDefinitionResource> GetAllAsync(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.ManagementGroupPolicySetDefinitionResource>> GetAsync(string policySetDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Resources.ManagementGroupPolicySetDefinitionResource> GetIfExists(string policySetDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Resources.ManagementGroupPolicySetDefinitionResource>> GetIfExistsAsync(string policySetDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Resources.ManagementGroupPolicySetDefinitionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.ManagementGroupPolicySetDefinitionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.ManagementGroupPolicySetDefinitionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.ManagementGroupPolicySetDefinitionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -701,6 +757,8 @@ namespace Azure.ResourceManager.Resources
         public virtual Azure.Pageable<Azure.ResourceManager.Resources.ManagementLockResource> GetAll(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.ManagementLockResource> GetAllAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.ManagementLockResource>> GetAsync(string lockName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Resources.ManagementLockResource> GetIfExists(string lockName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Resources.ManagementLockResource>> GetIfExistsAsync(string lockName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Resources.ManagementLockResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.ManagementLockResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.ManagementLockResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.ManagementLockResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -737,6 +795,8 @@ namespace Azure.ResourceManager.Resources
         public virtual Azure.Pageable<Azure.ResourceManager.Resources.PolicyAssignmentResource> GetAll(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.PolicyAssignmentResource> GetAllAsync(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.PolicyAssignmentResource>> GetAsync(string policyAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Resources.PolicyAssignmentResource> GetIfExists(string policyAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Resources.PolicyAssignmentResource>> GetIfExistsAsync(string policyAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Resources.PolicyAssignmentResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.PolicyAssignmentResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.PolicyAssignmentResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.PolicyAssignmentResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -755,8 +815,10 @@ namespace Azure.ResourceManager.Resources
         public Azure.ResourceManager.Models.ManagedServiceIdentity ManagedIdentity { get { throw null; } set { } }
         public System.BinaryData Metadata { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.NonComplianceMessage> NonComplianceMessages { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.PolicyOverride> Overrides { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Resources.Models.ArmPolicyParameterValue> Parameters { get { throw null; } }
         public string PolicyDefinitionId { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.ResourceSelector> ResourceSelectors { get { throw null; } }
         public string Scope { get { throw null; } }
     }
     public partial class PolicyAssignmentResource : Azure.ResourceManager.ArmResource
@@ -770,7 +832,9 @@ namespace Azure.ResourceManager.Resources
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Resources.PolicyAssignmentResource>> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.PolicyAssignmentResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.PolicyAssignmentResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Resources.PolicyAssignmentResource> Update(Azure.ResourceManager.Resources.Models.PolicyAssignmentPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Resources.PolicyAssignmentResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Resources.PolicyAssignmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.PolicyAssignmentResource>> UpdateAsync(Azure.ResourceManager.Resources.Models.PolicyAssignmentPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Resources.PolicyAssignmentResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Resources.PolicyAssignmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class PolicyDefinitionData : Azure.ResourceManager.Models.ResourceData
@@ -806,13 +870,15 @@ namespace Azure.ResourceManager.Resources
         public virtual Azure.Pageable<Azure.ResourceManager.Resources.ResourceGroupResource> GetAll(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.ResourceGroupResource> GetAllAsync(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.ResourceGroupResource>> GetAsync(string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Resources.ResourceGroupResource> GetIfExists(string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Resources.ResourceGroupResource>> GetIfExistsAsync(string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Resources.ResourceGroupResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.ResourceGroupResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.ResourceGroupResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.ResourceGroupResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class ResourceGroupData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ResourceGroupData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ResourceGroupData(Azure.Core.AzureLocation location) { }
         public string ManagedBy { get { throw null; } set { } }
         public string ResourceGroupProvisioningState { get { throw null; } }
     }
@@ -859,6 +925,8 @@ namespace Azure.ResourceManager.Resources
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.ResourceProviderResource> GetAllAsync(int? top, string expand, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.ResourceProviderResource> GetAllAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.ResourceProviderResource>> GetAsync(string resourceProviderNamespace, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Resources.ResourceProviderResource> GetIfExists(string resourceProviderNamespace, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Resources.ResourceProviderResource>> GetIfExistsAsync(string resourceProviderNamespace, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Resources.ResourceProviderResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.ResourceProviderResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.ResourceProviderResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.ResourceProviderResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -903,6 +971,8 @@ namespace Azure.ResourceManager.Resources
         public virtual Azure.Pageable<Azure.ResourceManager.Resources.SubscriptionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.SubscriptionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.SubscriptionResource>> GetAsync(string subscriptionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Resources.SubscriptionResource> GetIfExists(string subscriptionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Resources.SubscriptionResource>> GetIfExistsAsync(string subscriptionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Resources.SubscriptionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.SubscriptionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.SubscriptionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.SubscriptionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -931,6 +1001,8 @@ namespace Azure.ResourceManager.Resources
         public virtual Azure.Pageable<Azure.ResourceManager.Resources.SubscriptionPolicyDefinitionResource> GetAll(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.SubscriptionPolicyDefinitionResource> GetAllAsync(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.SubscriptionPolicyDefinitionResource>> GetAsync(string policyDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Resources.SubscriptionPolicyDefinitionResource> GetIfExists(string policyDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Resources.SubscriptionPolicyDefinitionResource>> GetIfExistsAsync(string policyDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Resources.SubscriptionPolicyDefinitionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.SubscriptionPolicyDefinitionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.SubscriptionPolicyDefinitionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.SubscriptionPolicyDefinitionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -960,6 +1032,8 @@ namespace Azure.ResourceManager.Resources
         public virtual Azure.Pageable<Azure.ResourceManager.Resources.SubscriptionPolicySetDefinitionResource> GetAll(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.SubscriptionPolicySetDefinitionResource> GetAllAsync(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.SubscriptionPolicySetDefinitionResource>> GetAsync(string policySetDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Resources.SubscriptionPolicySetDefinitionResource> GetIfExists(string policySetDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Resources.SubscriptionPolicySetDefinitionResource>> GetIfExistsAsync(string policySetDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Resources.SubscriptionPolicySetDefinitionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.SubscriptionPolicySetDefinitionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.SubscriptionPolicySetDefinitionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.SubscriptionPolicySetDefinitionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -1076,6 +1150,8 @@ namespace Azure.ResourceManager.Resources
         public virtual Azure.Pageable<Azure.ResourceManager.Resources.TenantPolicyDefinitionResource> GetAll(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.TenantPolicyDefinitionResource> GetAllAsync(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.TenantPolicyDefinitionResource>> GetAsync(string policyDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Resources.TenantPolicyDefinitionResource> GetIfExists(string policyDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Resources.TenantPolicyDefinitionResource>> GetIfExistsAsync(string policyDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Resources.TenantPolicyDefinitionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.TenantPolicyDefinitionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.TenantPolicyDefinitionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.TenantPolicyDefinitionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -1099,6 +1175,8 @@ namespace Azure.ResourceManager.Resources
         public virtual Azure.Pageable<Azure.ResourceManager.Resources.TenantPolicySetDefinitionResource> GetAll(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.TenantPolicySetDefinitionResource> GetAllAsync(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.TenantPolicySetDefinitionResource>> GetAsync(string policySetDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Resources.TenantPolicySetDefinitionResource> GetIfExists(string policySetDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Resources.TenantPolicySetDefinitionResource>> GetIfExistsAsync(string policySetDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Resources.TenantPolicySetDefinitionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.TenantPolicySetDefinitionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.TenantPolicySetDefinitionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.TenantPolicySetDefinitionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -1203,6 +1281,12 @@ namespace Azure.ResourceManager.Resources.Models
         public string Provider { get { throw null; } }
         public string Resource { get { throw null; } }
     }
+    public partial class AvailabilityZoneMappings
+    {
+        internal AvailabilityZoneMappings() { }
+        public string LogicalZone { get { throw null; } }
+        public string PhysicalZone { get { throw null; } }
+    }
     public partial class AzureRoleDefinition
     {
         internal AzureRoleDefinition() { }
@@ -1276,6 +1360,7 @@ namespace Azure.ResourceManager.Resources.Models
     public partial class LocationExpanded
     {
         internal LocationExpanded() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.AvailabilityZoneMappings> AvailabilityZoneMappings { get { throw null; } }
         public string DisplayName { get { throw null; } }
         public string Id { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.LocationType? LocationType { get { throw null; } }
@@ -1361,6 +1446,14 @@ namespace Azure.ResourceManager.Resources.Models
         public System.Collections.Generic.IReadOnlyList<string> DeniedActions { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> DeniedDataActions { get { throw null; } }
     }
+    public partial class PolicyAssignmentPatch
+    {
+        public PolicyAssignmentPatch() { }
+        public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.PolicyOverride> Overrides { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.ResourceSelector> ResourceSelectors { get { throw null; } }
+    }
     public partial class PolicyDefinitionGroup
     {
         public PolicyDefinitionGroup(string name) { }
@@ -1377,6 +1470,30 @@ namespace Azure.ResourceManager.Resources.Models
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Resources.Models.ArmPolicyParameterValue> Parameters { get { throw null; } }
         public string PolicyDefinitionId { get { throw null; } set { } }
         public string PolicyDefinitionReferenceId { get { throw null; } set { } }
+    }
+    public partial class PolicyOverride
+    {
+        public PolicyOverride() { }
+        public Azure.ResourceManager.Resources.Models.PolicyOverrideKind? Kind { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.ResourceSelectorExpression> Selectors { get { throw null; } }
+        public string Value { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PolicyOverrideKind : System.IEquatable<Azure.ResourceManager.Resources.Models.PolicyOverrideKind>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PolicyOverrideKind(string value) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.PolicyOverrideKind PolicyEffect { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Resources.Models.PolicyOverrideKind other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Resources.Models.PolicyOverrideKind left, Azure.ResourceManager.Resources.Models.PolicyOverrideKind right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Resources.Models.PolicyOverrideKind (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Resources.Models.PolicyOverrideKind left, Azure.ResourceManager.Resources.Models.PolicyOverrideKind right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PolicyType : System.IEquatable<Azure.ResourceManager.Resources.Models.PolicyType>
@@ -1524,11 +1641,46 @@ namespace Azure.ResourceManager.Resources.Models
         public string ResourceGroupProvisioningState { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
+    public partial class ResourceSelector
+    {
+        public ResourceSelector() { }
+        public string Name { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.ResourceSelectorExpression> Selectors { get { throw null; } }
+    }
+    public partial class ResourceSelectorExpression
+    {
+        public ResourceSelectorExpression() { }
+        public System.Collections.Generic.IList<string> In { get { throw null; } }
+        public Azure.ResourceManager.Resources.Models.ResourceSelectorKind? Kind { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> NotIn { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ResourceSelectorKind : System.IEquatable<Azure.ResourceManager.Resources.Models.ResourceSelectorKind>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ResourceSelectorKind(string value) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.ResourceSelectorKind PolicyDefinitionReferenceId { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.ResourceSelectorKind ResourceLocation { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.ResourceSelectorKind ResourceType { get { throw null; } }
+        public static Azure.ResourceManager.Resources.Models.ResourceSelectorKind ResourceWithoutLocation { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Resources.Models.ResourceSelectorKind other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Resources.Models.ResourceSelectorKind left, Azure.ResourceManager.Resources.Models.ResourceSelectorKind right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Resources.Models.ResourceSelectorKind (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Resources.Models.ResourceSelectorKind left, Azure.ResourceManager.Resources.Models.ResourceSelectorKind right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class ResourcesMoveContent
     {
         public ResourcesMoveContent() { }
         public System.Collections.Generic.IList<string> Resources { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string TargetResourceGroup { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier TargetResourceGroupId { get { throw null; } set { } }
     }
     public partial class ResourcesSku
     {
@@ -1701,7 +1853,7 @@ namespace Azure.ResourceManager.Resources.Models
     }
     public partial class TrackedResourceExtendedData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public TrackedResourceExtendedData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public TrackedResourceExtendedData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
     }
     public partial class WritableSubResource
@@ -1715,5 +1867,13 @@ namespace Azure.ResourceManager.Resources.Models
         internal ZoneMapping() { }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Zones { get { throw null; } }
+    }
+}
+namespace Microsoft.Extensions.Azure
+{
+    public static partial class ArmClientBuilderExtensions
+    {
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.ResourceManager.ArmClient, Azure.ResourceManager.ArmClientOptions> AddArmClient<TBuilder>(this TBuilder builder, string defaultSubscription) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.ResourceManager.ArmClient, Azure.ResourceManager.ArmClientOptions> AddArmClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }

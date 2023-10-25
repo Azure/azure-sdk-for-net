@@ -1,6 +1,6 @@
 # Release History
 
-## 0.1.0-preview.25 (Unreleased)
+## 0.1.0-preview.31 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,76 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 0.1.0-preview.30 (2023-09-07)
+
+### Breaking Changes
+
+- Changed default location of `cloudmachine.json` passed to `CloudMachine` constructor.
+- Renamed `Azure.Value` to `Azure.Variant`.
+- Added cast operators to/from string to `Variant`.
+- Added `Variant.Null` and `variant.IsNull` APIs to `Variant`.
+- Added `ToString` implementation to `Variant`.
+
+## 0.1.0-preview.29 (2023-08-07)
+
+### Features Added
+
+- Added SchemaValidator and LruCache types for use with Azure.Data.SchemaRegistry preview library.
+- Added CloudMachine and ProvisionableTemplateAttribute types for use with CloudMachine.
+
+## 0.1.0-preview.28 (2023-07-11)
+
+### Breaking Changes
+
+- Removed `DynamicData` type.
+
+## 0.1.0-preview.27 (2023-05-09)
+
+### Features Added
+
+- Added support for `== null` and value equality for primitives to `DynamicData`.
+- Added support for `Length` property on `DynamicData` arrays.
+- Made name mappings from PascalCase in C# to camelCase in JSON the default for `DynamicData`.
+- Added implicit casts to primitives supported by `JsonElement` and explicit casts for supported reference types.
+
+### Breaking Changes
+
+- Made `MutableJsonDocument` and `MutableJsonElement` internal.
+- Moved `ToDynamicFromJson()` extension method on `BinaryData` to the `Azure` namespace.
+- Removed `DynamicJsonOptions`, `DynamicDataNameMapping` and the `BinaryData` extensions that took parameters of those types.
+- Removed `DynamicDataProperty`.
+
+## 0.1.0-preview.26 (2023-04-10)
+
+### Features Added
+
+- Added basic debugger support for DynamicData
+
+### Breaking Changes
+
+- Removed `DynamicJson` type, and moved its functionality into `DynamicData`.
+- Sealed the `DynamicData` type.
+- Renamed `DynamicJsonNameMapping` enum to `DynamicDataNameMapping`.
+- Renamed `DynamicJsonProperty` to `DynamicDataProperty`.
+- Renamed `ToDynamic()` extension method on `BinaryData` to `ToDynamicFromJson()`.
+- Removed `DynamicJson.ArrayEnumerator` and `DynamicJson.ObjectEnumerator` types.
+### Bugs Fixed
+
+- Use root `DynamicJsonOptions` in child elements, arrays, and object enumerators.
+
+## 0.1.0-preview.25 (2023-03-02)
+
+### Features Added
+
+- Made `DynamicJson` and `MutableJsonDocument` disposable.
+- Enabled enumerating over object properties in `DynamicJson` and `MutableJsonElement`.
+- Made it possible to use PascalCase accessors with `DynamicJson` properties.
+- Enabled checking for null to determine if property is present in `DynamicJson`.
+
+### Breaking Changes
+
+- Moved `MutableJsonDocument` and `MutableJsonElement` into namespace `Azure.Core.Json`.
 
 ## 0.1.0-preview.24 (2023-02-06)
 

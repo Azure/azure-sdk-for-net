@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     {
         internal static ContainerRegistryWebhookCallbackConfig DeserializeContainerRegistryWebhookCallbackConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Uri serviceUri = default;
             Optional<IReadOnlyDictionary<string, string>> customHeaders = default;
             foreach (var property in element.EnumerateObject())
@@ -29,7 +33,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();

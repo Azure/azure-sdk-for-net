@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Media
 {
-    /// <summary> A class representing the MediaAssetFilter data model. </summary>
+    /// <summary>
+    /// A class representing the MediaAssetFilter data model.
+    /// An Asset Filter.
+    /// </summary>
     public partial class MediaAssetFilterData : ResourceData
     {
         /// <summary> Initializes a new instance of MediaAssetFilterData. </summary>

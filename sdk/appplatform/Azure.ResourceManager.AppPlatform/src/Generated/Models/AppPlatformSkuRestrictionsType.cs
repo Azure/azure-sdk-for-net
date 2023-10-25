@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    /// <summary> Gets the type of restrictions. Possible values include: &apos;Location&apos;, &apos;Zone&apos;. </summary>
+    /// <summary> Gets the type of restrictions. Possible values include: 'Location', 'Zone'. </summary>
     public readonly partial struct AppPlatformSkuRestrictionsType : IEquatable<AppPlatformSkuRestrictionsType>
     {
         private readonly string _value;

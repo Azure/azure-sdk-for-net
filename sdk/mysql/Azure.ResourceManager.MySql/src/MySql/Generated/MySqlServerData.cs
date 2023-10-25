@@ -13,7 +13,10 @@ using Azure.ResourceManager.MySql.Models;
 
 namespace Azure.ResourceManager.MySql
 {
-    /// <summary> A class representing the MySqlServer data model. </summary>
+    /// <summary>
+    /// A class representing the MySqlServer data model.
+    /// Represents a server.
+    /// </summary>
     public partial class MySqlServerData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of MySqlServerData. </summary>
@@ -32,7 +35,7 @@ namespace Azure.ResourceManager.MySql
         /// <param name="location"> The location. </param>
         /// <param name="identity"> The Azure Active Directory identity of the server. Current supported identity types: SystemAssigned. </param>
         /// <param name="sku"> The SKU (pricing tier) of the server. </param>
-        /// <param name="administratorLogin"> The administrator&apos;s login name of a server. Can only be specified when the server is being created (and is required for creation). </param>
+        /// <param name="administratorLogin"> The administrator's login name of a server. Can only be specified when the server is being created (and is required for creation). </param>
         /// <param name="version"> Server version. </param>
         /// <param name="sslEnforcement"> Enable ssl enforcement or not when connect to server. </param>
         /// <param name="minimalTlsVersion"> Enforce a minimal Tls version for the server. </param>
@@ -45,7 +48,7 @@ namespace Azure.ResourceManager.MySql
         /// <param name="replicationRole"> The replication role of the server. </param>
         /// <param name="masterServerId"> The master server id of a replica server. </param>
         /// <param name="replicaCapacity"> The maximum number of replicas that a master server can have. </param>
-        /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos;. </param>
+        /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections on a server. </param>
         internal MySqlServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, MySqlSku sku, string administratorLogin, MySqlServerVersion? version, MySqlSslEnforcementEnum? sslEnforcement, MySqlMinimalTlsVersionEnum? minimalTlsVersion, string byokEnforcement, MySqlInfrastructureEncryption? infrastructureEncryption, MySqlServerState? userVisibleState, string fullyQualifiedDomainName, DateTimeOffset? earliestRestoreOn, MySqlStorageProfile storageProfile, string replicationRole, ResourceIdentifier masterServerId, int? replicaCapacity, MySqlPublicNetworkAccessEnum? publicNetworkAccess, IReadOnlyList<MySqlServerPrivateEndpointConnection> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -72,7 +75,7 @@ namespace Azure.ResourceManager.MySql
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The SKU (pricing tier) of the server. </summary>
         public MySqlSku Sku { get; set; }
-        /// <summary> The administrator&apos;s login name of a server. Can only be specified when the server is being created (and is required for creation). </summary>
+        /// <summary> The administrator's login name of a server. Can only be specified when the server is being created (and is required for creation). </summary>
         public string AdministratorLogin { get; set; }
         /// <summary> Server version. </summary>
         public MySqlServerVersion? Version { get; set; }
@@ -98,7 +101,7 @@ namespace Azure.ResourceManager.MySql
         public ResourceIdentifier MasterServerId { get; set; }
         /// <summary> The maximum number of replicas that a master server can have. </summary>
         public int? ReplicaCapacity { get; set; }
-        /// <summary> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
+        /// <summary> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </summary>
         public MySqlPublicNetworkAccessEnum? PublicNetworkAccess { get; set; }
         /// <summary> List of private endpoint connections on a server. </summary>
         public IReadOnlyList<MySqlServerPrivateEndpointConnection> PrivateEndpointConnections { get; }

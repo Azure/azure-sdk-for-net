@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static IntegrationAccountSku DeserializeIntegrationAccountSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IntegrationAccountSkuName name = default;
             foreach (var property in element.EnumerateObject())
             {

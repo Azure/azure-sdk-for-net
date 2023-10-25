@@ -46,7 +46,10 @@ namespace Azure.ResourceManager.Blueprint.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Template);
 #else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(Template.ToString()).RootElement);
+            using (JsonDocument document = JsonDocument.Parse(Template))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
 #endif
             if (Optional.IsDefined(ResourceGroup))
             {
@@ -67,6 +70,10 @@ namespace Azure.ResourceManager.Blueprint.Models
 
         internal static TemplateArtifact DeserializeTemplateArtifact(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ArtifactKind kind = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -104,7 +111,6 @@ namespace Azure.ResourceManager.Blueprint.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -133,7 +139,6 @@ namespace Azure.ResourceManager.Blueprint.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();

@@ -12,7 +12,10 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the InstanceFailoverGroup data model. </summary>
+    /// <summary>
+    /// A class representing the InstanceFailoverGroup data model.
+    /// An instance failover group.
+    /// </summary>
     public partial class InstanceFailoverGroupData : ResourceData
     {
         /// <summary> Initializes a new instance of InstanceFailoverGroupData. </summary>
@@ -27,14 +30,16 @@ namespace Azure.ResourceManager.Sql
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="secondaryType"> Type of the geo-secondary instance. Set 'Standby' if the instance is used as a DR option only. </param>
         /// <param name="readWriteEndpoint"> Read-write endpoint of the failover group instance. </param>
         /// <param name="readOnlyEndpoint"> Read-only endpoint of the failover group instance. </param>
         /// <param name="replicationRole"> Local replication role of the failover group instance. </param>
         /// <param name="replicationState"> Replication state of the failover group instance. </param>
         /// <param name="partnerRegions"> Partner region information for the failover group. </param>
         /// <param name="managedInstancePairs"> List of managed instance pairs in the failover group. </param>
-        internal InstanceFailoverGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, InstanceFailoverGroupReadWriteEndpoint readWriteEndpoint, InstanceFailoverGroupReadOnlyEndpoint readOnlyEndpoint, InstanceFailoverGroupReplicationRole? replicationRole, string replicationState, IList<PartnerRegionInfo> partnerRegions, IList<ManagedInstancePairInfo> managedInstancePairs) : base(id, name, resourceType, systemData)
+        internal InstanceFailoverGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GeoSecondaryInstanceType? secondaryType, InstanceFailoverGroupReadWriteEndpoint readWriteEndpoint, InstanceFailoverGroupReadOnlyEndpoint readOnlyEndpoint, InstanceFailoverGroupReplicationRole? replicationRole, string replicationState, IList<PartnerRegionInfo> partnerRegions, IList<ManagedInstancePairInfo> managedInstancePairs) : base(id, name, resourceType, systemData)
         {
+            SecondaryType = secondaryType;
             ReadWriteEndpoint = readWriteEndpoint;
             ReadOnlyEndpoint = readOnlyEndpoint;
             ReplicationRole = replicationRole;
@@ -43,6 +48,8 @@ namespace Azure.ResourceManager.Sql
             ManagedInstancePairs = managedInstancePairs;
         }
 
+        /// <summary> Type of the geo-secondary instance. Set 'Standby' if the instance is used as a DR option only. </summary>
+        public GeoSecondaryInstanceType? SecondaryType { get; set; }
         /// <summary> Read-write endpoint of the failover group instance. </summary>
         public InstanceFailoverGroupReadWriteEndpoint ReadWriteEndpoint { get; set; }
         /// <summary> Read-only endpoint of the failover group instance. </summary>

@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.Batch.Models
     public partial class BatchVmConfiguration
     {
         /// <summary> Initializes a new instance of BatchVmConfiguration. </summary>
-        /// <param name="imageReference"> A reference to an Azure Virtual Machines Marketplace image or the Azure Image resource of a custom Virtual Machine. To get the list of all imageReferences verified by Azure Batch, see the &apos;List supported node agent SKUs&apos; operation. </param>
-        /// <param name="nodeAgentSkuId"> The Batch node agent is a program that runs on each node in the pool, and provides the command-and-control interface between the node and the Batch service. There are different implementations of the node agent, known as SKUs, for different operating systems. You must specify a node agent SKU which matches the selected image reference. To get the list of supported node agent SKUs along with their list of verified image references, see the &apos;List supported node agent SKUs&apos; operation. </param>
+        /// <param name="imageReference"> A reference to an Azure Virtual Machines Marketplace image or the Azure Image resource of a custom Virtual Machine. To get the list of all imageReferences verified by Azure Batch, see the 'List supported node agent SKUs' operation. </param>
+        /// <param name="nodeAgentSkuId"> The Batch node agent is a program that runs on each node in the pool, and provides the command-and-control interface between the node and the Batch service. There are different implementations of the node agent, known as SKUs, for different operating systems. You must specify a node agent SKU which matches the selected image reference. To get the list of supported node agent SKUs along with their list of verified image references, see the 'List supported node agent SKUs' operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="imageReference"/> or <paramref name="nodeAgentSkuId"/> is null. </exception>
         public BatchVmConfiguration(BatchImageReference imageReference, string nodeAgentSkuId)
         {
@@ -30,16 +30,16 @@ namespace Azure.ResourceManager.Batch.Models
         }
 
         /// <summary> Initializes a new instance of BatchVmConfiguration. </summary>
-        /// <param name="imageReference"> A reference to an Azure Virtual Machines Marketplace image or the Azure Image resource of a custom Virtual Machine. To get the list of all imageReferences verified by Azure Batch, see the &apos;List supported node agent SKUs&apos; operation. </param>
-        /// <param name="nodeAgentSkuId"> The Batch node agent is a program that runs on each node in the pool, and provides the command-and-control interface between the node and the Batch service. There are different implementations of the node agent, known as SKUs, for different operating systems. You must specify a node agent SKU which matches the selected image reference. To get the list of supported node agent SKUs along with their list of verified image references, see the &apos;List supported node agent SKUs&apos; operation. </param>
+        /// <param name="imageReference"> A reference to an Azure Virtual Machines Marketplace image or the Azure Image resource of a custom Virtual Machine. To get the list of all imageReferences verified by Azure Batch, see the 'List supported node agent SKUs' operation. </param>
+        /// <param name="nodeAgentSkuId"> The Batch node agent is a program that runs on each node in the pool, and provides the command-and-control interface between the node and the Batch service. There are different implementations of the node agent, known as SKUs, for different operating systems. You must specify a node agent SKU which matches the selected image reference. To get the list of supported node agent SKUs along with their list of verified image references, see the 'List supported node agent SKUs' operation. </param>
         /// <param name="windowsConfiguration"> This property must not be specified if the imageReference specifies a Linux OS image. </param>
         /// <param name="dataDisks"> This property must be specified if the compute nodes in the pool need to have empty data disks attached to them. </param>
         /// <param name="licenseType">
         /// This only applies to images that contain the Windows operating system, and should only be used when you hold valid on-premises licenses for the nodes which will be deployed. If omitted, no on-premises licensing discount is applied. Values are:
-        /// 
+        ///
         ///  Windows_Server - The on-premises license is for Windows Server.
         ///  Windows_Client - The on-premises license is for Windows Client.
-        /// 
+        ///
         /// </param>
         /// <param name="containerConfiguration"> If specified, setup is performed on each node in the pool to allow tasks to run in containers. All regular tasks and job manager tasks run on this pool must specify the containerSettings property, and all other tasks may specify it. </param>
         /// <param name="diskEncryptionConfiguration"> If specified, encryption is performed on each node in the pool during node provisioning. </param>
@@ -60,9 +60,9 @@ namespace Azure.ResourceManager.Batch.Models
             OSDisk = osDisk;
         }
 
-        /// <summary> A reference to an Azure Virtual Machines Marketplace image or the Azure Image resource of a custom Virtual Machine. To get the list of all imageReferences verified by Azure Batch, see the &apos;List supported node agent SKUs&apos; operation. </summary>
+        /// <summary> A reference to an Azure Virtual Machines Marketplace image or the Azure Image resource of a custom Virtual Machine. To get the list of all imageReferences verified by Azure Batch, see the 'List supported node agent SKUs' operation. </summary>
         public BatchImageReference ImageReference { get; set; }
-        /// <summary> The Batch node agent is a program that runs on each node in the pool, and provides the command-and-control interface between the node and the Batch service. There are different implementations of the node agent, known as SKUs, for different operating systems. You must specify a node agent SKU which matches the selected image reference. To get the list of supported node agent SKUs along with their list of verified image references, see the &apos;List supported node agent SKUs&apos; operation. </summary>
+        /// <summary> The Batch node agent is a program that runs on each node in the pool, and provides the command-and-control interface between the node and the Batch service. There are different implementations of the node agent, known as SKUs, for different operating systems. You must specify a node agent SKU which matches the selected image reference. To get the list of supported node agent SKUs along with their list of verified image references, see the 'List supported node agent SKUs' operation. </summary>
         public string NodeAgentSkuId { get; set; }
         /// <summary> This property must not be specified if the imageReference specifies a Linux OS image. </summary>
         internal WindowsConfiguration WindowsConfiguration { get; set; }
@@ -82,17 +82,17 @@ namespace Azure.ResourceManager.Batch.Models
         public IList<BatchVmDataDisk> DataDisks { get; }
         /// <summary>
         /// This only applies to images that contain the Windows operating system, and should only be used when you hold valid on-premises licenses for the nodes which will be deployed. If omitted, no on-premises licensing discount is applied. Values are:
-        /// 
+        ///
         ///  Windows_Server - The on-premises license is for Windows Server.
         ///  Windows_Client - The on-premises license is for Windows Client.
-        /// 
+        ///
         /// </summary>
         public string LicenseType { get; set; }
         /// <summary> If specified, setup is performed on each node in the pool to allow tasks to run in containers. All regular tasks and job manager tasks run on this pool must specify the containerSettings property, and all other tasks may specify it. </summary>
         public BatchVmContainerConfiguration ContainerConfiguration { get; set; }
         /// <summary> If specified, encryption is performed on each node in the pool during node provisioning. </summary>
         internal DiskEncryptionConfiguration DiskEncryptionConfiguration { get; set; }
-        /// <summary> On Linux pool, only &quot;TemporaryDisk&quot; is supported; on Windows pool, &quot;OsDisk&quot; and &quot;TemporaryDisk&quot; must be specified. </summary>
+        /// <summary> On Linux pool, only "TemporaryDisk" is supported; on Windows pool, "OsDisk" and "TemporaryDisk" must be specified. </summary>
         public IList<BatchDiskEncryptionTarget> DiskEncryptionTargets
         {
             get

@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
-    /// <summary> A class representing the MachineExtension data model. </summary>
+    /// <summary>
+    /// A class representing the MachineExtension data model.
+    /// Describes a Machine Extension.
+    /// </summary>
     public partial class MachineExtensionData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of MachineExtensionData. </summary>
@@ -31,7 +34,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="location"> The location. </param>
         /// <param name="forceUpdateTag"> How the extension handler should be forced to update even if the extension configuration has not changed. </param>
         /// <param name="publisher"> The name of the extension handler publisher. </param>
-        /// <param name="machineExtensionType"> Specifies the type of the extension; an example is &quot;CustomScriptExtension&quot;. </param>
+        /// <param name="machineExtensionType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
         /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
         /// <param name="autoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
         /// <param name="settings"> Json formatted public settings for the extension. </param>
@@ -55,7 +58,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         public string ForceUpdateTag { get; set; }
         /// <summary> The name of the extension handler publisher. </summary>
         public string Publisher { get; set; }
-        /// <summary> Specifies the type of the extension; an example is &quot;CustomScriptExtension&quot;. </summary>
+        /// <summary> Specifies the type of the extension; an example is "CustomScriptExtension". </summary>
         public string MachineExtensionType { get; set; }
         /// <summary> Specifies the version of the script handler. </summary>
         public string TypeHandlerVersion { get; set; }

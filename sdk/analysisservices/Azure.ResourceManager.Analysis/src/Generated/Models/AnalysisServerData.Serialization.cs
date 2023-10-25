@@ -64,12 +64,12 @@ namespace Azure.ResourceManager.Analysis
             if (Optional.IsDefined(ManagedMode))
             {
                 writer.WritePropertyName("managedMode"u8);
-                writer.WriteStringValue(ManagedMode.Value.ToString());
+                writer.WriteNumberValue(ManagedMode.Value.ToSerialInt32());
             }
             if (Optional.IsDefined(ServerMonitorMode))
             {
                 writer.WritePropertyName("serverMonitorMode"u8);
-                writer.WriteStringValue(ServerMonitorMode.Value.ToString());
+                writer.WriteNumberValue(ServerMonitorMode.Value.ToSerialInt32());
             }
             if (Optional.IsDefined(AnalysisServerSku))
             {
@@ -82,6 +82,10 @@ namespace Azure.ResourceManager.Analysis
 
         internal static AnalysisServerData DeserializeAnalysisServerData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AnalysisResourceSku sku = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -111,7 +115,6 @@ namespace Azure.ResourceManager.Analysis
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -146,7 +149,6 @@ namespace Azure.ResourceManager.Analysis
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -165,7 +167,6 @@ namespace Azure.ResourceManager.Analysis
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             asAdministrators = ServerAdministrators.DeserializeServerAdministrators(property0.Value);
@@ -175,7 +176,6 @@ namespace Azure.ResourceManager.Analysis
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                backupBlobContainerUri = null;
                                 continue;
                             }
                             backupBlobContainerUri = new Uri(property0.Value.GetString());
@@ -185,7 +185,6 @@ namespace Azure.ResourceManager.Analysis
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             gatewayDetails = AnalysisGatewayDetails.DeserializeAnalysisGatewayDetails(property0.Value);
@@ -195,7 +194,6 @@ namespace Azure.ResourceManager.Analysis
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             ipV4FirewallSettings = AnalysisIPv4FirewallSettings.DeserializeAnalysisIPv4FirewallSettings(property0.Value);
@@ -205,7 +203,6 @@ namespace Azure.ResourceManager.Analysis
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             querypoolConnectionMode = property0.Value.GetString().ToAnalysisConnectionMode();
@@ -215,7 +212,6 @@ namespace Azure.ResourceManager.Analysis
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             managedMode = new AnalysisManagedMode(property0.Value.GetInt32());
@@ -225,7 +221,6 @@ namespace Azure.ResourceManager.Analysis
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             serverMonitorMode = new ServerMonitorMode(property0.Value.GetInt32());
@@ -235,7 +230,6 @@ namespace Azure.ResourceManager.Analysis
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             state = new AnalysisState(property0.Value.GetString());
@@ -245,7 +239,6 @@ namespace Azure.ResourceManager.Analysis
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new AnalysisProvisioningState(property0.Value.GetString());
@@ -260,7 +253,6 @@ namespace Azure.ResourceManager.Analysis
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sku0 = AnalysisResourceSku.DeserializeAnalysisResourceSku(property0.Value);

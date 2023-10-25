@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static EmailNotification DeserializeEmailNotification(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> sendToSubscriptionAdministrator = default;
             Optional<bool> sendToSubscriptionCoAdministrators = default;
             Optional<IList<string>> customEmails = default;
@@ -50,7 +54,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sendToSubscriptionAdministrator = property.Value.GetBoolean();
@@ -60,7 +63,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sendToSubscriptionCoAdministrators = property.Value.GetBoolean();
@@ -70,7 +72,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

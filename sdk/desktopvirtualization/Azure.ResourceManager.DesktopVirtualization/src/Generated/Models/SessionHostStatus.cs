@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 
         /// <summary> Session Host has passed all the health checks and is available to handle connections. </summary>
         public static SessionHostStatus Available { get; } = new SessionHostStatus(AvailableValue);
-        /// <summary> Session Host is either turned off or has failed critical health checks which is causing service not to be able to route connections to this session host. Note this replaces previous &apos;NoHeartBeat&apos; status. </summary>
+        /// <summary> Session Host is either turned off or has failed critical health checks which is causing service not to be able to route connections to this session host. Note this replaces previous 'NoHeartBeat' status. </summary>
         public static SessionHostStatus Unavailable { get; } = new SessionHostStatus(UnavailableValue);
         /// <summary> Session Host is shutdown - RD Agent reported session host to be stopped or deallocated. </summary>
         public static SessionHostStatus Shutdown { get; } = new SessionHostStatus(ShutdownValue);
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public static SessionHostStatus NoHeartbeat { get; } = new SessionHostStatus(NoHeartbeatValue);
         /// <summary> SessionHost is not joined to domain. </summary>
         public static SessionHostStatus NotJoinedToDomain { get; } = new SessionHostStatus(NotJoinedToDomainValue);
-        /// <summary> SessionHost&apos;s domain trust relationship lost. </summary>
+        /// <summary> SessionHost's domain trust relationship lost. </summary>
         public static SessionHostStatus DomainTrustRelationshipLost { get; } = new SessionHostStatus(DomainTrustRelationshipLostValue);
         /// <summary> SxS stack installed on the SessionHost is not ready to receive connections. </summary>
         public static SessionHostStatus SxsStackListenerNotReady { get; } = new SessionHostStatus(SxsStackListenerNotReadyValue);

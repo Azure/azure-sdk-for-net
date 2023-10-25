@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             BindingType = "Microsoft.StreamAnalytics/JavascriptUdf";
         }
 
-        /// <summary> The JavaScript code containing a single function definition. For example: &apos;function (x, y) { return x + y; }&apos;. </summary>
+        /// <summary> The JavaScript code containing a single function definition. For example: 'function (x, y) { return x + y; }'. </summary>
         public string Script { get; set; }
         /// <summary> The function type. </summary>
         public StreamingJobFunctionUdfType? UdfType { get; set; }

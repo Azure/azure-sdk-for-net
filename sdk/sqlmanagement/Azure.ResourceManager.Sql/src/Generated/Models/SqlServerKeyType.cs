@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> The encryption protector type like &apos;ServiceManaged&apos;, &apos;AzureKeyVault&apos;. </summary>
+    /// <summary> The encryption protector type like 'ServiceManaged', 'AzureKeyVault'. </summary>
     public readonly partial struct SqlServerKeyType : IEquatable<SqlServerKeyType>
     {
         private readonly string _value;

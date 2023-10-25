@@ -61,6 +61,10 @@ namespace Azure.ResourceManager.Peering.Models
 
         internal static ExchangePeeringFacility DeserializeExchangePeeringFacility(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> exchangeName = default;
             Optional<int> bandwidthInMbps = default;
             Optional<IPAddress> microsoftIPv4Address = default;
@@ -80,7 +84,6 @@ namespace Azure.ResourceManager.Peering.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     bandwidthInMbps = property.Value.GetInt32();
@@ -88,9 +91,8 @@ namespace Azure.ResourceManager.Peering.Models
                 }
                 if (property.NameEquals("microsoftIPv4Address"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     microsoftIPv4Address = IPAddress.Parse(property.Value.GetString());
@@ -98,9 +100,8 @@ namespace Azure.ResourceManager.Peering.Models
                 }
                 if (property.NameEquals("microsoftIPv6Address"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     microsoftIPv6Address = IPAddress.Parse(property.Value.GetString());
@@ -120,7 +121,6 @@ namespace Azure.ResourceManager.Peering.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     peeringDBFacilityId = property.Value.GetInt32();

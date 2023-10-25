@@ -33,6 +33,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SecurityAutomationActionLogicApp DeserializeSecurityAutomationActionLogicApp(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> logicAppResourceId = default;
             Optional<Uri> uri = default;
             ActionType actionType = default;
@@ -42,7 +46,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     logicAppResourceId = new ResourceIdentifier(property.Value.GetString());
@@ -52,7 +55,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        uri = null;
                         continue;
                     }
                     uri = new Uri(property.Value.GetString());

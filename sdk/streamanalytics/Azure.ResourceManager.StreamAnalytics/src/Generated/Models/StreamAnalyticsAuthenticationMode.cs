@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    /// <summary> Authentication Mode. Valid modes are `ConnectionString`, `Msi` and &apos;UserToken&apos;. </summary>
+    /// <summary> Authentication Mode. Valid modes are `ConnectionString`, `Msi` and 'UserToken'. </summary>
     public readonly partial struct StreamAnalyticsAuthenticationMode : IEquatable<StreamAnalyticsAuthenticationMode>
     {
         private readonly string _value;

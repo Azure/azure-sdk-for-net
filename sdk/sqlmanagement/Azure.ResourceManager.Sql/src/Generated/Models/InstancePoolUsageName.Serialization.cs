@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static InstancePoolUsageName DeserializeInstancePoolUsageName(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> value = default;
             Optional<string> localizedValue = default;
             foreach (var property in element.EnumerateObject())

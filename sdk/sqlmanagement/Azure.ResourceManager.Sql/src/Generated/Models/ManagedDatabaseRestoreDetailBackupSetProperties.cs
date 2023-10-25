@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> The managed database&apos;s restore details backup set properties. </summary>
+    /// <summary> The managed database's restore details backup set properties. </summary>
     public partial class ManagedDatabaseRestoreDetailBackupSetProperties
     {
         /// <summary> Initializes a new instance of ManagedDatabaseRestoreDetailBackupSetProperties. </summary>

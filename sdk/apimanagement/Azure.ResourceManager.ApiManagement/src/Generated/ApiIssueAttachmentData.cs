@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary> A class representing the ApiIssueAttachment data model. </summary>
+    /// <summary>
+    /// A class representing the ApiIssueAttachment data model.
+    /// Issue Attachment Contract details.
+    /// </summary>
     public partial class ApiIssueAttachmentData : ResourceData
     {
         /// <summary> Initializes a new instance of ApiIssueAttachmentData. </summary>
@@ -24,7 +27,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="title"> Filename by which the binary data will be saved. </param>
-        /// <param name="contentFormat"> Either &apos;link&apos; if content is provided via an HTTP link or the MIME type of the Base64-encoded binary data provided in the &apos;content&apos; property. </param>
+        /// <param name="contentFormat"> Either 'link' if content is provided via an HTTP link or the MIME type of the Base64-encoded binary data provided in the 'content' property. </param>
         /// <param name="content"> An HTTP link or Base64-encoded binary data. </param>
         internal ApiIssueAttachmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string title, string contentFormat, string content) : base(id, name, resourceType, systemData)
         {
@@ -35,7 +38,7 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Filename by which the binary data will be saved. </summary>
         public string Title { get; set; }
-        /// <summary> Either &apos;link&apos; if content is provided via an HTTP link or the MIME type of the Base64-encoded binary data provided in the &apos;content&apos; property. </summary>
+        /// <summary> Either 'link' if content is provided via an HTTP link or the MIME type of the Base64-encoded binary data provided in the 'content' property. </summary>
         public string ContentFormat { get; set; }
         /// <summary> An HTTP link or Base64-encoded binary data. </summary>
         public string Content { get; set; }

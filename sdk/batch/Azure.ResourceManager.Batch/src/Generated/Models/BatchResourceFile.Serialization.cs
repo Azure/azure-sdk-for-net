@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchResourceFile DeserializeBatchResourceFile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> autoStorageContainerName = default;
             Optional<Uri> storageContainerUrl = default;
             Optional<Uri> httpUrl = default;
@@ -74,7 +78,6 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        storageContainerUrl = null;
                         continue;
                     }
                     storageContainerUrl = new Uri(property.Value.GetString());
@@ -84,7 +87,6 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        httpUrl = null;
                         continue;
                     }
                     httpUrl = new Uri(property.Value.GetString());
@@ -109,7 +111,6 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identityReference = ComputeNodeIdentityReference.DeserializeComputeNodeIdentityReference(property.Value);

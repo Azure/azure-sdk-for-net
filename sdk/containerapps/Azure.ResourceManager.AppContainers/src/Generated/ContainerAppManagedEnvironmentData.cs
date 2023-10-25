@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    /// <summary> A class representing the ContainerAppManagedEnvironment data model. </summary>
+    /// <summary>
+    /// A class representing the ContainerAppManagedEnvironment data model.
+    /// An environment for hosting container apps
+    /// </summary>
     public partial class ContainerAppManagedEnvironmentData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ContainerAppManagedEnvironmentData. </summary>
@@ -31,7 +34,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="kind"> Kind of the Environment. </param>
-        /// <param name="sku"> SKU properties of the Environment. </param>
         /// <param name="provisioningState"> Provisioning state of the Environment. </param>
         /// <param name="daprAIInstrumentationKey"> Azure Monitor instrumentation key used by Dapr to export Service to Service communication telemetry. </param>
         /// <param name="daprAIConnectionString"> Application Insights connection string used by Dapr to export Service to Service communication telemetry. </param>
@@ -41,17 +43,20 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="staticIP"> Static IP of the Environment. </param>
         /// <param name="appLogsConfiguration">
         /// Cluster configuration which enables the log daemon to export
-        /// app logs to a destination. Currently only &quot;log-analytics&quot; is
+        /// app logs to a destination. Currently only "log-analytics" is
         /// supported
         /// </param>
         /// <param name="isZoneRedundant"> Whether or not this Managed Environment is zone-redundant. </param>
         /// <param name="customDomainConfiguration"> Custom domain configuration for the environment. </param>
         /// <param name="eventStreamEndpoint"> The endpoint of the eventstream of the Environment. </param>
         /// <param name="workloadProfiles"> Workload profiles configured for the Managed Environment. </param>
-        internal ContainerAppManagedEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, EnvironmentSkuProperties sku, ContainerAppEnvironmentProvisioningState? provisioningState, string daprAIInstrumentationKey, string daprAIConnectionString, ContainerAppVnetConfiguration vnetConfiguration, string deploymentErrors, string defaultDomain, IPAddress staticIP, ContainerAppLogsConfiguration appLogsConfiguration, bool? isZoneRedundant, ContainerAppCustomDomainConfiguration customDomainConfiguration, string eventStreamEndpoint, IList<ContainerAppWorkloadProfile> workloadProfiles) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="kedaConfiguration"> The configuration of Keda component. </param>
+        /// <param name="daprConfiguration"> The configuration of Dapr component. </param>
+        /// <param name="infrastructureResourceGroup"> Name of the platform-managed resource group created for the Managed Environment to host infrastructure resources. If a subnet ID is provided, this resource group will be created in the same subscription as the subnet. </param>
+        /// <param name="peerAuthentication"> Peer authentication settings for the Managed Environment. </param>
+        internal ContainerAppManagedEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, ContainerAppEnvironmentProvisioningState? provisioningState, string daprAIInstrumentationKey, string daprAIConnectionString, ContainerAppVnetConfiguration vnetConfiguration, string deploymentErrors, string defaultDomain, IPAddress staticIP, ContainerAppLogsConfiguration appLogsConfiguration, bool? isZoneRedundant, ContainerAppCustomDomainConfiguration customDomainConfiguration, string eventStreamEndpoint, IList<ContainerAppWorkloadProfile> workloadProfiles, KedaConfiguration kedaConfiguration, DaprConfiguration daprConfiguration, string infrastructureResourceGroup, ManagedEnvironmentPropertiesPeerAuthentication peerAuthentication) : base(id, name, resourceType, systemData, tags, location)
         {
             Kind = kind;
-            Sku = sku;
             ProvisioningState = provisioningState;
             DaprAIInstrumentationKey = daprAIInstrumentationKey;
             DaprAIConnectionString = daprAIConnectionString;
@@ -64,22 +69,14 @@ namespace Azure.ResourceManager.AppContainers
             CustomDomainConfiguration = customDomainConfiguration;
             EventStreamEndpoint = eventStreamEndpoint;
             WorkloadProfiles = workloadProfiles;
+            KedaConfiguration = kedaConfiguration;
+            DaprConfiguration = daprConfiguration;
+            InfrastructureResourceGroup = infrastructureResourceGroup;
+            PeerAuthentication = peerAuthentication;
         }
 
         /// <summary> Kind of the Environment. </summary>
         public string Kind { get; set; }
-        /// <summary> SKU properties of the Environment. </summary>
-        internal EnvironmentSkuProperties Sku { get; set; }
-        /// <summary> Name of the Sku. </summary>
-        public AppContainersSkuName? SkuName
-        {
-            get => Sku is null ? default(AppContainersSkuName?) : Sku.Name;
-            set
-            {
-                Sku = value.HasValue ? new EnvironmentSkuProperties(value.Value) : null;
-            }
-        }
-
         /// <summary> Provisioning state of the Environment. </summary>
         public ContainerAppEnvironmentProvisioningState? ProvisioningState { get; }
         /// <summary> Azure Monitor instrumentation key used by Dapr to export Service to Service communication telemetry. </summary>
@@ -96,7 +93,7 @@ namespace Azure.ResourceManager.AppContainers
         public IPAddress StaticIP { get; }
         /// <summary>
         /// Cluster configuration which enables the log daemon to export
-        /// app logs to a destination. Currently only &quot;log-analytics&quot; is
+        /// app logs to a destination. Currently only "log-analytics" is
         /// supported
         /// </summary>
         public ContainerAppLogsConfiguration AppLogsConfiguration { get; set; }
@@ -108,5 +105,36 @@ namespace Azure.ResourceManager.AppContainers
         public string EventStreamEndpoint { get; }
         /// <summary> Workload profiles configured for the Managed Environment. </summary>
         public IList<ContainerAppWorkloadProfile> WorkloadProfiles { get; }
+        /// <summary> The configuration of Keda component. </summary>
+        internal KedaConfiguration KedaConfiguration { get; set; }
+        /// <summary> The version of Keda. </summary>
+        public string KedaVersion
+        {
+            get => KedaConfiguration is null ? default : KedaConfiguration.Version;
+        }
+
+        /// <summary> The configuration of Dapr component. </summary>
+        internal DaprConfiguration DaprConfiguration { get; set; }
+        /// <summary> The version of Dapr. </summary>
+        public string DaprVersion
+        {
+            get => DaprConfiguration is null ? default : DaprConfiguration.Version;
+        }
+
+        /// <summary> Name of the platform-managed resource group created for the Managed Environment to host infrastructure resources. If a subnet ID is provided, this resource group will be created in the same subscription as the subnet. </summary>
+        public string InfrastructureResourceGroup { get; set; }
+        /// <summary> Peer authentication settings for the Managed Environment. </summary>
+        internal ManagedEnvironmentPropertiesPeerAuthentication PeerAuthentication { get; set; }
+        /// <summary> Boolean indicating whether the mutual TLS authentication is enabled. </summary>
+        public bool? IsMtlsEnabled
+        {
+            get => PeerAuthentication is null ? default : PeerAuthentication.IsMtlsEnabled;
+            set
+            {
+                if (PeerAuthentication is null)
+                    PeerAuthentication = new ManagedEnvironmentPropertiesPeerAuthentication();
+                PeerAuthentication.IsMtlsEnabled = value;
+            }
+        }
     }
 }

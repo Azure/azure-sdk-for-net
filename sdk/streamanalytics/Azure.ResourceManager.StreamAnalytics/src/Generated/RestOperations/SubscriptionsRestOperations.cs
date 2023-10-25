@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             return message;
         }
 
-        /// <summary> Retrieves the subscription&apos;s current quota information in a particular region. </summary>
+        /// <summary> Retrieves the subscription's current quota information in a particular region. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             }
         }
 
-        /// <summary> Retrieves the subscription&apos;s current quota information in a particular region. </summary>
+        /// <summary> Retrieves the subscription's current quota information in a particular region. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="location"> The region to which the request is sent. You can find out which regions Azure Stream Analytics is supported in here: https://azure.microsoft.com/en-us/regions/. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

@@ -15,6 +15,10 @@ namespace Azure.AI.TextAnalytics.Legacy
     {
         internal static HealthcareLinkingProperties DeserializeHealthcareLinkingProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<HealthcareAssertion> assertion = default;
             Optional<string> name = default;
             Optional<IReadOnlyList<HealthcareEntityLink>> links = default;
@@ -24,7 +28,6 @@ namespace Azure.AI.TextAnalytics.Legacy
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     assertion = HealthcareAssertion.DeserializeHealthcareAssertion(property.Value);
@@ -39,7 +42,6 @@ namespace Azure.AI.TextAnalytics.Legacy
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<HealthcareEntityLink> array = new List<HealthcareEntityLink>();

@@ -20,8 +20,8 @@ namespace Azure.Storage.Blobs.Models
 
         public static BlobDeleteType ToBlobDeleteType(this string value)
         {
-            if (string.Equals(value, "None", StringComparison.InvariantCultureIgnoreCase)) return BlobDeleteType.None;
-            if (string.Equals(value, "Permanent", StringComparison.InvariantCultureIgnoreCase)) return BlobDeleteType.Permanent;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return BlobDeleteType.None;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Permanent")) return BlobDeleteType.Permanent;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BlobDeleteType value.");
         }
     }

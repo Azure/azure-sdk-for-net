@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Subscription
             return message;
         }
 
-        /// <summary> Create or Update Subscription tenant policy for user&apos;s tenant. </summary>
+        /// <summary> Create or Update Subscription tenant policy for user's tenant. </summary>
         /// <param name="content"> The TenantPolicyCreateOrUpdateContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Subscription
             }
         }
 
-        /// <summary> Create or Update Subscription tenant policy for user&apos;s tenant. </summary>
+        /// <summary> Create or Update Subscription tenant policy for user's tenant. </summary>
         /// <param name="content"> The TenantPolicyCreateOrUpdateContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Subscription
             return message;
         }
 
-        /// <summary> Get the subscription tenant policy for the user&apos;s tenant. </summary>
+        /// <summary> Get the subscription tenant policy for the user's tenant. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<TenantPolicyData>> GetPolicyForTenantAsync(CancellationToken cancellationToken = default)
         {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Subscription
             }
         }
 
-        /// <summary> Get the subscription tenant policy for the user&apos;s tenant. </summary>
+        /// <summary> Get the subscription tenant policy for the user's tenant. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<TenantPolicyData> GetPolicyForTenant(CancellationToken cancellationToken = default)
         {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Subscription
             return message;
         }
 
-        /// <summary> Get the subscription tenant policy for the user&apos;s tenant. </summary>
+        /// <summary> Get the subscription tenant policy for the user's tenant. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<TenantPoliciesResult>> ListPolicyForTenantAsync(CancellationToken cancellationToken = default)
         {
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Subscription
             }
         }
 
-        /// <summary> Get the subscription tenant policy for the user&apos;s tenant. </summary>
+        /// <summary> Get the subscription tenant policy for the user's tenant. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<TenantPoliciesResult> ListPolicyForTenant(CancellationToken cancellationToken = default)
         {
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Subscription
             return message;
         }
 
-        /// <summary> Get the subscription tenant policy for the user&apos;s tenant. </summary>
+        /// <summary> Get the subscription tenant policy for the user's tenant. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Subscription
             }
         }
 
-        /// <summary> Get the subscription tenant policy for the user&apos;s tenant. </summary>
+        /// <summary> Get the subscription tenant policy for the user's tenant. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>

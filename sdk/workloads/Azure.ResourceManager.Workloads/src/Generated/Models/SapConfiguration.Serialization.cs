@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static SapConfiguration DeserializeSapConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("configurationType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

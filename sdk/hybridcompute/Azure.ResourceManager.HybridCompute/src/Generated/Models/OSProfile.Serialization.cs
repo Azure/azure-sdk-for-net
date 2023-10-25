@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         internal static OSProfile DeserializeOSProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> computerName = default;
             Optional<OSProfileWindowsConfiguration> windowsConfiguration = default;
             Optional<OSProfileLinuxConfiguration> linuxConfiguration = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     windowsConfiguration = OSProfileWindowsConfiguration.DeserializeOSProfileWindowsConfiguration(property.Value);
@@ -54,7 +57,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     linuxConfiguration = OSProfileLinuxConfiguration.DeserializeOSProfileLinuxConfiguration(property.Value);

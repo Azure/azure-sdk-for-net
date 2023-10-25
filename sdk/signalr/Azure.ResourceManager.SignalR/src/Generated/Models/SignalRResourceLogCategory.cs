@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SignalR.Models
 
         /// <summary> Initializes a new instance of SignalRResourceLogCategory. </summary>
         /// <param name="name">
-        /// Gets or sets the resource log category&apos;s name.
+        /// Gets or sets the resource log category's name.
         /// Available values: ConnectivityLogs, MessagingLogs.
         /// Case insensitive.
         /// </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SignalR.Models
         }
 
         /// <summary>
-        /// Gets or sets the resource log category&apos;s name.
+        /// Gets or sets the resource log category's name.
         /// Available values: ConnectivityLogs, MessagingLogs.
         /// Case insensitive.
         /// </summary>

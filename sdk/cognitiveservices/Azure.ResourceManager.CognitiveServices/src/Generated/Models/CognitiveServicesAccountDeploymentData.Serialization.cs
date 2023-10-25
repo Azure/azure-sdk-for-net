@@ -18,6 +18,11 @@ namespace Azure.ResourceManager.CognitiveServices
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Sku))
+            {
+                writer.WritePropertyName("sku"u8);
+                writer.WriteObjectValue(Sku);
+            }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
@@ -28,6 +33,11 @@ namespace Azure.ResourceManager.CognitiveServices
 
         internal static CognitiveServicesAccountDeploymentData DeserializeCognitiveServicesAccountDeploymentData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<CognitiveServicesSku> sku = default;
             Optional<ETag> etag = default;
             Optional<CognitiveServicesAccountDeploymentProperties> properties = default;
             ResourceIdentifier id = default;
@@ -36,11 +46,19 @@ namespace Azure.ResourceManager.CognitiveServices
             Optional<SystemData> systemData = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("sku"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sku = CognitiveServicesSku.DeserializeCognitiveServicesSku(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -50,7 +68,6 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = CognitiveServicesAccountDeploymentProperties.DeserializeCognitiveServicesAccountDeploymentProperties(property.Value);
@@ -75,14 +92,13 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
             }
-            return new CognitiveServicesAccountDeploymentData(id, name, type, systemData.Value, Optional.ToNullable(etag), properties.Value);
+            return new CognitiveServicesAccountDeploymentData(id, name, type, systemData.Value, sku.Value, Optional.ToNullable(etag), properties.Value);
         }
     }
 }

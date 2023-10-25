@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static LongTermRetentionBackupOperationResult DeserializeLongTermRetentionBackupOperationResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -57,7 +61,6 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -76,7 +79,6 @@ namespace Azure.ResourceManager.Sql.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             requestId = property0.Value.GetGuid();
@@ -91,7 +93,6 @@ namespace Azure.ResourceManager.Sql.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             fromBackupResourceId = new ResourceIdentifier(property0.Value.GetString());
@@ -101,7 +102,6 @@ namespace Azure.ResourceManager.Sql.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             toBackupResourceId = new ResourceIdentifier(property0.Value.GetString());
@@ -111,7 +111,6 @@ namespace Azure.ResourceManager.Sql.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             targetBackupStorageRedundancy = new SqlBackupStorageRedundancy(property0.Value.GetString());

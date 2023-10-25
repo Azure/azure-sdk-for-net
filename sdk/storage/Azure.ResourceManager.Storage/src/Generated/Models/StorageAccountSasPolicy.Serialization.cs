@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static StorageAccountSasPolicy DeserializeStorageAccountSasPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string sasExpirationPeriod = default;
             ExpirationAction expirationAction = default;
             foreach (var property in element.EnumerateObject())

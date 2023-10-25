@@ -44,6 +44,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningEndpointAuthKeys DeserializeMachineLearningEndpointAuthKeys(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> primaryKey = default;
             Optional<string> secondaryKey = default;
             foreach (var property in element.EnumerateObject())

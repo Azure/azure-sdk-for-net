@@ -18,7 +18,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("sourceVault"u8);
-            JsonSerializer.Serialize(writer, SourceVault); writer.WritePropertyName("vaultCertificates"u8);
+            JsonSerializer.Serialize(writer, SourceVault);
+            writer.WritePropertyName("vaultCertificates"u8);
             writer.WriteStartArray();
             foreach (var item in VaultCertificates)
             {
@@ -30,6 +31,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static NodeTypeVaultSecretGroup DeserializeNodeTypeVaultSecretGroup(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             WritableSubResource sourceVault = default;
             IList<NodeTypeVaultCertificate> vaultCertificates = default;
             foreach (var property in element.EnumerateObject())

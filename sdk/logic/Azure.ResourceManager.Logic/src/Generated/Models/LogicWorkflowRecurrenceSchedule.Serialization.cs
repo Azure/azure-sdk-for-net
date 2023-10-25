@@ -71,6 +71,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static LogicWorkflowRecurrenceSchedule DeserializeLogicWorkflowRecurrenceSchedule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<int>> minutes = default;
             Optional<IList<int>> hours = default;
             Optional<IList<LogicWorkflowDayOfWeek>> weekDays = default;
@@ -82,7 +86,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<int> array = new List<int>();
@@ -97,7 +100,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<int> array = new List<int>();
@@ -112,7 +114,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<LogicWorkflowDayOfWeek> array = new List<LogicWorkflowDayOfWeek>();
@@ -127,7 +128,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<int> array = new List<int>();
@@ -142,7 +142,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<LogicWorkflowRecurrenceScheduleOccurrence> array = new List<LogicWorkflowRecurrenceScheduleOccurrence>();

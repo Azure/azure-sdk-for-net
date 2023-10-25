@@ -15,7 +15,11 @@ namespace Azure.ResourceManager.Datadog.Models
     {
         internal static DatadogAgreementResourceListResponse DeserializeDatadogAgreementResourceListResponse(JsonElement element)
         {
-            Optional<IReadOnlyList<DatadogAgreementResource>> value = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IReadOnlyList<DatadogAgreementResourceProperties>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -23,13 +27,12 @@ namespace Azure.ResourceManager.Datadog.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DatadogAgreementResource> array = new List<DatadogAgreementResource>();
+                    List<DatadogAgreementResourceProperties> array = new List<DatadogAgreementResourceProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DatadogAgreementResource.DeserializeDatadogAgreementResource(item));
+                        array.Add(DatadogAgreementResourceProperties.DeserializeDatadogAgreementResourceProperties(item));
                     }
                     value = array;
                     continue;

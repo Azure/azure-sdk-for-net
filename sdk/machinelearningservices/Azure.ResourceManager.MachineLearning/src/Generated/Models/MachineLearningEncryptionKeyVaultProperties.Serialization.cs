@@ -15,28 +15,32 @@ namespace Azure.ResourceManager.MachineLearning.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("keyVaultArmId"u8);
-            writer.WriteStringValue(KeyVaultArmId);
-            writer.WritePropertyName("keyIdentifier"u8);
-            writer.WriteStringValue(KeyIdentifier);
             if (Optional.IsDefined(IdentityClientId))
             {
                 writer.WritePropertyName("identityClientId"u8);
                 writer.WriteStringValue(IdentityClientId);
             }
+            writer.WritePropertyName("keyIdentifier"u8);
+            writer.WriteStringValue(KeyIdentifier);
+            writer.WritePropertyName("keyVaultArmId"u8);
+            writer.WriteStringValue(KeyVaultArmId);
             writer.WriteEndObject();
         }
 
         internal static MachineLearningEncryptionKeyVaultProperties DeserializeMachineLearningEncryptionKeyVaultProperties(JsonElement element)
         {
-            ResourceIdentifier keyVaultArmId = default;
-            string keyIdentifier = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> identityClientId = default;
+            string keyIdentifier = default;
+            ResourceIdentifier keyVaultArmId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("keyVaultArmId"u8))
+                if (property.NameEquals("identityClientId"u8))
                 {
-                    keyVaultArmId = new ResourceIdentifier(property.Value.GetString());
+                    identityClientId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("keyIdentifier"u8))
@@ -44,13 +48,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     keyIdentifier = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("identityClientId"u8))
+                if (property.NameEquals("keyVaultArmId"u8))
                 {
-                    identityClientId = property.Value.GetString();
+                    keyVaultArmId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }
-            return new MachineLearningEncryptionKeyVaultProperties(keyVaultArmId, keyIdentifier, identityClientId.Value);
+            return new MachineLearningEncryptionKeyVaultProperties(identityClientId.Value, keyIdentifier, keyVaultArmId);
         }
     }
 }

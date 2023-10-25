@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    /// <summary> Operational status of the Front Door load balancer. Permitted values are &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
+    /// <summary> Operational status of the Front Door load balancer. Permitted values are 'Enabled' or 'Disabled'. </summary>
     public readonly partial struct FrontDoorEnabledState : IEquatable<FrontDoorEnabledState>
     {
         private readonly string _value;

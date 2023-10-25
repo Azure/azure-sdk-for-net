@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ProviderHub.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_ProviderRegistrationsGet()
         {
-            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/preview/2021-09-01-preview/examples/ProviderRegistrations_Get.json
+            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/ProviderRegistrations_Get.json
             // this example is just showing the usage of "ProviderRegistrations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ProviderHub.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_ProviderRegistrationsGet()
         {
-            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/preview/2021-09-01-preview/examples/ProviderRegistrations_Get.json
+            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/ProviderRegistrations_Get.json
             // this example is just showing the usage of "ProviderRegistrations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -81,12 +81,53 @@ namespace Azure.ResourceManager.ProviderHub.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
+        // ProviderRegistrations_Get
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_ProviderRegistrationsGet()
+        {
+            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/ProviderRegistrations_Get.json
+            // this example is just showing the usage of "ProviderRegistrations_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "ab7a8701-f7ef-471a-a2f4-d0ebbf494f77";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // get the collection of this ProviderRegistrationResource
+            ProviderRegistrationCollection collection = subscriptionResource.GetProviderRegistrations();
+
+            // invoke the operation
+            string providerNamespace = "Microsoft.Contoso";
+            NullableResponse<ProviderRegistrationResource> response = await collection.GetIfExistsAsync(providerNamespace);
+            ProviderRegistrationResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ProviderRegistrationData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
         // ProviderRegistrations_CreateOrUpdate
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_ProviderRegistrationsCreateOrUpdate()
         {
-            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/preview/2021-09-01-preview/examples/ProviderRegistrations_CreateOrUpdate.json
+            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/ProviderRegistrations_CreateOrUpdate.json
             // this example is just showing the usage of "ProviderRegistrations_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -111,20 +152,11 @@ namespace Azure.ResourceManager.ProviderHub.Samples
                 {
                     ProviderVersion = "2.0",
                     ProviderType = ResourceProviderType.Internal,
-                    Management = new ResourceProviderManifestPropertiesManagement()
+                    Management = new ResourceProviderManagement()
                     {
                         IncidentRoutingService = "Contoso Resource Provider",
                         IncidentRoutingTeam = "Contoso Triage",
                         IncidentContactEmail = "helpme@contoso.com",
-                        ServiceTreeInfos =
-{
-new ServiceTreeInfo()
-{
-ServiceId = "d1b7d8ba-05e2-48e6-90d6-d781b99c6e69",
-ComponentId = "d1b7d8ba-05e2-48e6-90d6-d781b99c6e69",
-Readiness = Readiness.InDevelopment,
-}
-},
                     },
                     Capabilities =
 {
@@ -147,7 +179,7 @@ new ResourceProviderCapabilities("CSP_2015-05-01",ResourceProviderCapabilitiesEf
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ProviderRegistrationsList()
         {
-            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/preview/2021-09-01-preview/examples/ProviderRegistrations_List.json
+            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/ProviderRegistrations_List.json
             // this example is just showing the usage of "ProviderRegistrations_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

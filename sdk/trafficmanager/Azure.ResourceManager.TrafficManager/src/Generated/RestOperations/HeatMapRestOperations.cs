@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.TrafficManager
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-04-01-preview";
+            _apiVersion = apiVersion ?? "2022-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -53,11 +53,11 @@ namespace Azure.ResourceManager.TrafficManager
             uri.AppendPath(profileName, true);
             uri.AppendPath("/heatMaps/", false);
             uri.AppendPath(heatMapType.ToString(), true);
-            if (topLeft != null)
+            if (topLeft != null && Optional.IsCollectionDefined(topLeft))
             {
                 uri.AppendQueryDelimited("topLeft", topLeft, ",", true);
             }
-            if (botRight != null)
+            if (botRight != null && Optional.IsCollectionDefined(botRight))
             {
                 uri.AppendQueryDelimited("botRight", botRight, ",", true);
             }

@@ -2,7 +2,7 @@
 
 This sample demonstrates how to analyze text, field values, selection marks, and table data from custom documents. Custom models are trained with your own data, so they're tailored to your documents. For more information on how to do the training, see [build a model][build_a_model].
 
-To get started you'll need a Cognitive Services resource or a Form Recognizer resource.  See [README][README] for prerequisites and instructions.
+To get started you'll need a Cognitive Services resource or a Form Recognizer resource. See [README][README] for prerequisites and instructions.
 
 ## Creating a `DocumentAnalysisClient`
 

@@ -14,7 +14,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataMigration
 {
-    /// <summary> A class representing the Project data model. </summary>
+    /// <summary>
+    /// A class representing the Project data model.
+    /// A project resource
+    /// </summary>
     public partial class ProjectData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ProjectData. </summary>
@@ -47,7 +50,7 @@ namespace Azure.ResourceManager.DataMigration
         /// The available derived classes include <see cref="MISqlConnectionInfo"/>, <see cref="MongoDBConnectionInfo"/>, <see cref="MySqlConnectionInfo"/>, <see cref="OracleConnectionInfo"/>, <see cref="PostgreSqlConnectionInfo"/> and <see cref="SqlConnectionInfo"/>.
         /// </param>
         /// <param name="databasesInfo"> List of DatabaseInfo. </param>
-        /// <param name="provisioningState"> The project&apos;s provisioning state. </param>
+        /// <param name="provisioningState"> The project's provisioning state. </param>
         internal ProjectData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ProjectSourcePlatform? sourcePlatform, AzureActiveDirectoryApp azureAuthenticationInfo, ProjectTargetPlatform? targetPlatform, DateTimeOffset? createdOn, ConnectionInfo sourceConnectionInfo, ConnectionInfo targetConnectionInfo, IList<DatabaseInfo> databasesInfo, ProjectProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
@@ -85,7 +88,7 @@ namespace Azure.ResourceManager.DataMigration
         public ConnectionInfo TargetConnectionInfo { get; set; }
         /// <summary> List of DatabaseInfo. </summary>
         public IList<DatabaseInfo> DatabasesInfo { get; }
-        /// <summary> The project&apos;s provisioning state. </summary>
+        /// <summary> The project's provisioning state. </summary>
         public ProjectProvisioningState? ProvisioningState { get; }
     }
 }

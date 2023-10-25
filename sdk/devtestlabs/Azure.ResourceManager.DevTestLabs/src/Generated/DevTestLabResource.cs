@@ -11,6 +11,7 @@ using System.Globalization;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -120,7 +121,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the schedule. </param>
-        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=status)&apos;. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the schedule. </param>
-        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=status)&apos;. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -175,7 +176,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the artifact source. </param>
-        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=displayName)&apos;. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=displayName)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -199,7 +200,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the artifact source. </param>
-        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=displayName)&apos;. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=displayName)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -230,7 +231,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the cost. </param>
-        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($expand=labCostDetails)&apos;. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($expand=labCostDetails)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -254,7 +255,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the cost. </param>
-        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($expand=labCostDetails)&apos;. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($expand=labCostDetails)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -285,7 +286,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the custom image. </param>
-        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=vm)&apos;. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=vm)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -309,7 +310,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the custom image. </param>
-        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=vm)&apos;. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=vm)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -340,7 +341,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the formula. </param>
-        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=description)&apos;. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=description)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -364,7 +365,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the formula. </param>
-        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=description)&apos;. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=description)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -395,7 +396,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the notification channel. </param>
-        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=webHookUrl)&apos;. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=webHookUrl)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -419,7 +420,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the notification channel. </param>
-        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=webHookUrl)&apos;. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=webHookUrl)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -456,7 +457,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </summary>
         /// <param name="policySetName"> The name of the policy set. </param>
         /// <param name="name"> The name of the policy. </param>
-        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=description)&apos;. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=description)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policySetName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policySetName"/> or <paramref name="name"/> is null. </exception>
@@ -481,7 +482,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </summary>
         /// <param name="policySetName"> The name of the policy set. </param>
         /// <param name="name"> The name of the policy. </param>
-        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=description)&apos;. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=description)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="policySetName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policySetName"/> or <paramref name="name"/> is null. </exception>
@@ -565,7 +566,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the user profile. </param>
-        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=identity)&apos;. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=identity)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -589,7 +590,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the user profile. </param>
-        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=identity)&apos;. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=identity)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -620,7 +621,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the virtual machine. </param>
-        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($expand=artifacts,computeVm,networkInterface,applicableSchedule)&apos;. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($expand=artifacts,computeVm,networkInterface,applicableSchedule)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -644,7 +645,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the virtual machine. </param>
-        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($expand=artifacts,computeVm,networkInterface,applicableSchedule)&apos;. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($expand=artifacts,computeVm,networkInterface,applicableSchedule)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -675,7 +676,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the virtual network. </param>
-        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($expand=externalSubnets)&apos;. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($expand=externalSubnets)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -699,7 +700,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the virtual network. </param>
-        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($expand=externalSubnets)&apos;. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($expand=externalSubnets)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -722,7 +723,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=defaultStorageAccount)&apos;. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=defaultStorageAccount)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DevTestLabResource>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
         {
@@ -755,7 +756,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=defaultStorageAccount)&apos;. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=defaultStorageAccount)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DevTestLabResource> Get(string expand = null, CancellationToken cancellationToken = default)
         {
@@ -1294,7 +1295,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabLabsRestClient.CreateListVhdsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabLabsRestClient.CreateListVhdsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => JsonSerializer.Deserialize<SubResource>(e.GetRawText()), _devTestLabLabsClientDiagnostics, Pipeline, "DevTestLabResource.GetVhds", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => JsonSerializer.Deserialize<SubResource>(e.GetRawText()), _devTestLabLabsClientDiagnostics, Pipeline, "DevTestLabResource.GetVhds", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1316,7 +1317,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabLabsRestClient.CreateListVhdsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _devTestLabLabsRestClient.CreateListVhdsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => JsonSerializer.Deserialize<SubResource>(e.GetRawText()), _devTestLabLabsClientDiagnostics, Pipeline, "DevTestLabResource.GetVhds", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => JsonSerializer.Deserialize<SubResource>(e.GetRawText()), _devTestLabLabsClientDiagnostics, Pipeline, "DevTestLabResource.GetVhds", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1332,17 +1333,17 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=author)&apos;. </param>
-        /// <param name="filter"> The filter to apply to the operation. Example: &apos;$filter=contains(name,&apos;myName&apos;). </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
-        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: &apos;$orderby=name desc&apos;. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=author)'. </param>
+        /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DevTestLabGalleryImage" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DevTestLabGalleryImage> GetGalleryImagesAsync(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _galleryImagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _galleryImagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DevTestLabGalleryImage.DeserializeDevTestLabGalleryImage, _galleryImagesClientDiagnostics, Pipeline, "DevTestLabResource.GetGalleryImages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DevTestLabGalleryImage.DeserializeDevTestLabGalleryImage, _galleryImagesClientDiagnostics, Pipeline, "DevTestLabResource.GetGalleryImages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1358,17 +1359,17 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=author)&apos;. </param>
-        /// <param name="filter"> The filter to apply to the operation. Example: &apos;$filter=contains(name,&apos;myName&apos;). </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
-        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: &apos;$orderby=name desc&apos;. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=author)'. </param>
+        /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DevTestLabGalleryImage" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DevTestLabGalleryImage> GetGalleryImages(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _galleryImagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _galleryImagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, filter, top, orderby);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DevTestLabGalleryImage.DeserializeDevTestLabGalleryImage, _galleryImagesClientDiagnostics, Pipeline, "DevTestLabResource.GetGalleryImages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DevTestLabGalleryImage.DeserializeDevTestLabGalleryImage, _galleryImagesClientDiagnostics, Pipeline, "DevTestLabResource.GetGalleryImages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

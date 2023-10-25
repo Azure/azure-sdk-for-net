@@ -3,7 +3,7 @@
 
 using NUnit.Framework;
 
-namespace Azure
+namespace Azure.Core.Experimental.Tests
 {
     public class StoringULong
     {
@@ -12,7 +12,7 @@ namespace Azure
         [TestCase(ulong.MaxValue)]
         public void ULongImplicit(ulong testValue)
         {
-            Value value = testValue;
+            Variant value = testValue;
             Assert.AreEqual(testValue, value.As<ulong>());
             Assert.AreEqual(typeof(ulong), value.Type);
 
@@ -27,10 +27,10 @@ namespace Azure
         [TestCase(ulong.MaxValue)]
         public void ULongCreate(ulong testValue)
         {
-            Value value;
+            Variant value;
             using (MemoryWatch.Create())
             {
-                value = Value.Create(testValue);
+                value = Variant.Create(testValue);
             }
 
             Assert.AreEqual(testValue, value.As<ulong>());
@@ -40,7 +40,7 @@ namespace Azure
 
             using (MemoryWatch.Create())
             {
-                value = Value.Create(source);
+                value = Variant.Create(source);
             }
 
             Assert.AreEqual(source, value.As<ulong?>());
@@ -52,7 +52,7 @@ namespace Azure
         [TestCase(ulong.MaxValue)]
         public void ULongInOut(ulong testValue)
         {
-            Value value = new(testValue);
+            Variant value = new(testValue);
             bool success = value.TryGetValue(out ulong result);
             Assert.True(success);
             Assert.AreEqual(testValue, result);
@@ -67,7 +67,7 @@ namespace Azure
         public void NullableULongInULongOut(ulong? testValue)
         {
             ulong? source = testValue;
-            Value value = new(source);
+            Variant value = new(source);
 
             bool success = value.TryGetValue(out ulong result);
             Assert.True(success);
@@ -84,7 +84,7 @@ namespace Azure
         public void ULongInNullableULongOut(ulong testValue)
         {
             ulong source = testValue;
-            Value value = new(source);
+            Variant value = new(source);
             bool success = value.TryGetValue(out ulong? result);
             Assert.True(success);
             Assert.AreEqual(testValue, result);
@@ -99,7 +99,7 @@ namespace Azure
         {
             ulong i = testValue;
             object o = i;
-            Value value = new(o);
+            Variant value = new(o);
 
             Assert.AreEqual(typeof(ulong), value.Type);
             Assert.True(value.TryGetValue(out ulong result));
@@ -122,7 +122,7 @@ namespace Azure
         public void NullULong()
         {
             ulong? source = null;
-            Value value = source;
+            Variant value = source;
             Assert.Null(value.Type);
             Assert.AreEqual(source, value.As<ulong?>());
             Assert.False(value.As<ulong?>().HasValue);
@@ -133,7 +133,7 @@ namespace Azure
         [TestCase(ulong.MaxValue)]
         public void OutAsObject(ulong testValue)
         {
-            Value value = new(testValue);
+            Variant value = new(testValue);
             object o = value.As<object>();
             Assert.AreEqual(typeof(ulong), o.GetType());
             Assert.AreEqual(testValue, (ulong)o);

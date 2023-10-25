@@ -47,7 +47,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static WeeklyRetentionSchedule DeserializeWeeklyRetentionSchedule(JsonElement element)
         {
-            Optional<IList<DayOfWeek>> daysOfTheWeek = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IList<BackupDayOfWeek>> daysOfTheWeek = default;
             Optional<IList<DateTimeOffset>> retentionTimes = default;
             Optional<RetentionDuration> retentionDuration = default;
             foreach (var property in element.EnumerateObject())
@@ -56,13 +60,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DayOfWeek> array = new List<DayOfWeek>();
+                    List<BackupDayOfWeek> array = new List<BackupDayOfWeek>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString().ToDayOfWeek());
+                        array.Add(item.GetString().ToBackupDayOfWeek());
                     }
                     daysOfTheWeek = array;
                     continue;
@@ -71,7 +74,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DateTimeOffset> array = new List<DateTimeOffset>();
@@ -86,7 +88,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     retentionDuration = RetentionDuration.DeserializeRetentionDuration(property.Value);

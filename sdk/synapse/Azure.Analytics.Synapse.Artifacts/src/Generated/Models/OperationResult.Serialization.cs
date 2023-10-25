@@ -18,6 +18,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static OperationResult DeserializeOperationResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> status = default;
             Optional<string> code = default;
             Optional<string> message = default;
@@ -58,7 +62,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<CloudError> array = new List<CloudError>();

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static RoleInstanceNetworkProfile DeserializeRoleInstanceNetworkProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<WritableSubResource>> networkInterfaces = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<WritableSubResource> array = new List<WritableSubResource>();

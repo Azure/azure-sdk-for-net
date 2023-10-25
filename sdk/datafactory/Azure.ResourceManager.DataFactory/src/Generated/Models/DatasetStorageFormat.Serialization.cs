@@ -20,20 +20,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Serializer))
             {
                 writer.WritePropertyName("serializer"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Serializer);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Serializer.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Serializer);
             }
             if (Optional.IsDefined(Deserializer))
             {
                 writer.WritePropertyName("deserializer"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Deserializer);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Deserializer.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Deserializer);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -41,7 +33,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
@@ -49,6 +44,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DatasetStorageFormat DeserializeDatasetStorageFormat(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

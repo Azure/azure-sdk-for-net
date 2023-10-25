@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static ContainerRegistryKeyVaultProperties DeserializeContainerRegistryKeyVaultProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> keyIdentifier = default;
             Optional<string> versionedKeyIdentifier = default;
             Optional<string> identity = default;
@@ -57,7 +61,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     keyRotationEnabled = property.Value.GetBoolean();
@@ -67,7 +70,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastKeyRotationTimestamp = property.Value.GetDateTimeOffset("O");

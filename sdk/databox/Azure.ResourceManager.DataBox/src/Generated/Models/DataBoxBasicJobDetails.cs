@@ -43,9 +43,10 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="dataExportDetails"> Details of the data to be exported from azure. </param>
         /// <param name="jobDetailsType"> Indicates the type of job details. </param>
         /// <param name="preferences"> Preferences for the order. </param>
+        /// <param name="reverseShippingDetails"> Optional Reverse Shipping details for order. </param>
         /// <param name="copyLogDetails">
         /// List of copy log details.
-        /// Please note <see cref="CopyLogDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.CopyLogDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DataBoxAccountCopyLogDetails"/>, <see cref="DataBoxCustomerDiskCopyLogDetails"/>, <see cref="DataBoxDiskCopyLogDetails"/> and <see cref="DataBoxHeavyAccountCopyLogDetails"/>.
         /// </param>
         /// <param name="reverseShipmentLabelSasKey"> Shared access key to download the return shipment label. </param>
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// The available derived classes include <see cref="DataCenterAddressInstructionResult"/> and <see cref="DataCenterAddressLocationResult"/>.
         /// </param>
         /// <param name="dataCenterCode"> DataCenter code. </param>
-        internal DataBoxBasicJobDetails(IReadOnlyList<DataBoxJobStage> jobStages, DataBoxContactDetails contactDetails, DataBoxShippingAddress shippingAddress, PackageShippingDetails deliveryPackage, PackageShippingDetails returnPackage, IList<DataImportDetails> dataImportDetails, IList<DataExportDetails> dataExportDetails, DataBoxOrderType jobDetailsType, DataBoxOrderPreferences preferences, IReadOnlyList<CopyLogDetails> copyLogDetails, string reverseShipmentLabelSasKey, string chainOfCustodySasKey, DeviceErasureDetails deviceErasureDetails, DataBoxKeyEncryptionKey keyEncryptionKey, int? expectedDataSizeInTerabytes, IReadOnlyList<CustomerResolutionCode> actions, LastMitigationActionOnJob lastMitigationActionOnJob, DataCenterAddressResult dataCenterAddress, DataCenterCode? dataCenterCode)
+        internal DataBoxBasicJobDetails(IReadOnlyList<DataBoxJobStage> jobStages, DataBoxContactDetails contactDetails, DataBoxShippingAddress shippingAddress, PackageShippingDetails deliveryPackage, PackageShippingDetails returnPackage, IList<DataImportDetails> dataImportDetails, IList<DataExportDetails> dataExportDetails, DataBoxOrderType jobDetailsType, DataBoxOrderPreferences preferences, ReverseShippingDetails reverseShippingDetails, IReadOnlyList<CopyLogDetails> copyLogDetails, string reverseShipmentLabelSasKey, string chainOfCustodySasKey, DeviceErasureDetails deviceErasureDetails, DataBoxKeyEncryptionKey keyEncryptionKey, int? expectedDataSizeInTerabytes, IReadOnlyList<CustomerResolutionCode> actions, LastMitigationActionOnJob lastMitigationActionOnJob, DataCenterAddressResult dataCenterAddress, DataCenterCode? dataCenterCode)
         {
             JobStages = jobStages;
             ContactDetails = contactDetails;
@@ -72,6 +73,7 @@ namespace Azure.ResourceManager.DataBox.Models
             DataExportDetails = dataExportDetails;
             JobDetailsType = jobDetailsType;
             Preferences = preferences;
+            ReverseShippingDetails = reverseShippingDetails;
             CopyLogDetails = copyLogDetails;
             ReverseShipmentLabelSasKey = reverseShipmentLabelSasKey;
             ChainOfCustodySasKey = chainOfCustodySasKey;
@@ -102,9 +104,11 @@ namespace Azure.ResourceManager.DataBox.Models
         internal DataBoxOrderType JobDetailsType { get; set; }
         /// <summary> Preferences for the order. </summary>
         public DataBoxOrderPreferences Preferences { get; set; }
+        /// <summary> Optional Reverse Shipping details for order. </summary>
+        public ReverseShippingDetails ReverseShippingDetails { get; set; }
         /// <summary>
         /// List of copy log details.
-        /// Please note <see cref="CopyLogDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.CopyLogDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DataBoxAccountCopyLogDetails"/>, <see cref="DataBoxCustomerDiskCopyLogDetails"/>, <see cref="DataBoxDiskCopyLogDetails"/> and <see cref="DataBoxHeavyAccountCopyLogDetails"/>.
         /// </summary>
         public IReadOnlyList<CopyLogDetails> CopyLogDetails { get; }

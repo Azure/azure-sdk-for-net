@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static DataProtectionBackupVaultProperties DeserializeDataProtectionBackupVaultProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MonitoringSettings> monitoringSettings = default;
             Optional<DataProtectionBackupProvisioningState> provisioningState = default;
             Optional<BackupVaultResourceMoveState> resourceMoveState = default;
@@ -50,14 +54,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Optional<BackupVaultSecuritySettings> securitySettings = default;
             IList<DataProtectionBackupStorageSetting> storageSettings = default;
             Optional<bool> isVaultProtectedByResourceGuard = default;
-            Optional<FeatureSettings> featureSettings = default;
+            Optional<BackupVaultFeatureSettings> featureSettings = default;
+            Optional<BackupVaultSecureScoreLevel> secureScore = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("monitoringSettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     monitoringSettings = MonitoringSettings.DeserializeMonitoringSettings(property.Value);
@@ -67,7 +71,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new DataProtectionBackupProvisioningState(property.Value.GetString());
@@ -77,7 +80,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resourceMoveState = new BackupVaultResourceMoveState(property.Value.GetString());
@@ -87,7 +89,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resourceMoveDetails = BackupVaultResourceMoveDetails.DeserializeBackupVaultResourceMoveDetails(property.Value);
@@ -97,7 +98,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     securitySettings = BackupVaultSecuritySettings.DeserializeBackupVaultSecuritySettings(property.Value);
@@ -117,7 +117,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isVaultProtectedByResourceGuard = property.Value.GetBoolean();
@@ -127,14 +126,22 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    featureSettings = FeatureSettings.DeserializeFeatureSettings(property.Value);
+                    featureSettings = BackupVaultFeatureSettings.DeserializeBackupVaultFeatureSettings(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("secureScore"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    secureScore = new BackupVaultSecureScoreLevel(property.Value.GetString());
                     continue;
                 }
             }
-            return new DataProtectionBackupVaultProperties(monitoringSettings.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(resourceMoveState), resourceMoveDetails.Value, securitySettings.Value, storageSettings, Optional.ToNullable(isVaultProtectedByResourceGuard), featureSettings.Value);
+            return new DataProtectionBackupVaultProperties(monitoringSettings.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(resourceMoveState), resourceMoveDetails.Value, securitySettings.Value, storageSettings, Optional.ToNullable(isVaultProtectedByResourceGuard), featureSettings.Value, Optional.ToNullable(secureScore));
         }
     }
 }

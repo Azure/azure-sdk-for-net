@@ -63,6 +63,10 @@ namespace Azure.ResourceManager.IotHub.Models
 
         internal static RoutingEventHubProperties DeserializeRoutingEventHubProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> id = default;
             Optional<string> connectionString = default;
             Optional<string> endpointUri = default;
@@ -78,7 +82,6 @@ namespace Azure.ResourceManager.IotHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = property.Value.GetGuid();
@@ -103,7 +106,6 @@ namespace Azure.ResourceManager.IotHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     authenticationType = new IotHubAuthenticationType(property.Value.GetString());
@@ -113,7 +115,6 @@ namespace Azure.ResourceManager.IotHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = ManagedIdentity.DeserializeManagedIdentity(property.Value);

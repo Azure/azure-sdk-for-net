@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> Initializes a new instance of NameAvailabilityResponse. </summary>
-        /// <param name="nameAvailable"> If true, the name is valid and available. If false, &apos;reason&apos; describes why not. </param>
+        /// <param name="nameAvailable"> If true, the name is valid and available. If false, 'reason' describes why not. </param>
         /// <param name="reason"> The reason why the name is not available, if nameAvailable is false. </param>
         /// <param name="message"> The localized reason why the name is not available, if nameAvailable is false. </param>
         internal NameAvailabilityResponse(bool? nameAvailable, NameCheckFailureReason? reason, string message)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Message = message;
         }
 
-        /// <summary> If true, the name is valid and available. If false, &apos;reason&apos; describes why not. </summary>
+        /// <summary> If true, the name is valid and available. If false, 'reason' describes why not. </summary>
         public bool? NameAvailable { get; }
         /// <summary> The reason why the name is not available, if nameAvailable is false. </summary>
         public NameCheckFailureReason? Reason { get; }

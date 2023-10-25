@@ -76,12 +76,26 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("deleteOption"u8);
                 writer.WriteStringValue(DeleteOption.Value.ToString());
             }
+            if (Optional.IsDefined(AuxiliaryMode))
+            {
+                writer.WritePropertyName("auxiliaryMode"u8);
+                writer.WriteStringValue(AuxiliaryMode.Value.ToString());
+            }
+            if (Optional.IsDefined(AuxiliarySku))
+            {
+                writer.WritePropertyName("auxiliarySku"u8);
+                writer.WriteStringValue(AuxiliarySku.Value.ToString());
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static VirtualMachineScaleSetNetworkConfiguration DeserializeVirtualMachineScaleSetNetworkConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<ResourceIdentifier> id = default;
             Optional<bool> primary = default;
@@ -93,6 +107,8 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<IList<VirtualMachineScaleSetIPConfiguration>> ipConfigurations = default;
             Optional<bool> enableIPForwarding = default;
             Optional<ComputeDeleteOption> deleteOption = default;
+            Optional<ComputeNetworkInterfaceAuxiliaryMode> auxiliaryMode = default;
+            Optional<ComputeNetworkInterfaceAuxiliarySku> auxiliarySku = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -104,7 +120,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -123,7 +138,6 @@ namespace Azure.ResourceManager.Compute.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             primary = property0.Value.GetBoolean();
@@ -133,7 +147,6 @@ namespace Azure.ResourceManager.Compute.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableAcceleratedNetworking = property0.Value.GetBoolean();
@@ -143,7 +156,6 @@ namespace Azure.ResourceManager.Compute.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             disableTcpStateTracking = property0.Value.GetBoolean();
@@ -153,7 +165,6 @@ namespace Azure.ResourceManager.Compute.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableFpga = property0.Value.GetBoolean();
@@ -163,7 +174,6 @@ namespace Azure.ResourceManager.Compute.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             networkSecurityGroup = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
@@ -173,7 +183,6 @@ namespace Azure.ResourceManager.Compute.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             dnsSettings = VirtualMachineScaleSetNetworkConfigurationDnsSettings.DeserializeVirtualMachineScaleSetNetworkConfigurationDnsSettings(property0.Value);
@@ -183,7 +192,6 @@ namespace Azure.ResourceManager.Compute.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<VirtualMachineScaleSetIPConfiguration> array = new List<VirtualMachineScaleSetIPConfiguration>();
@@ -198,7 +206,6 @@ namespace Azure.ResourceManager.Compute.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableIPForwarding = property0.Value.GetBoolean();
@@ -208,17 +215,34 @@ namespace Azure.ResourceManager.Compute.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             deleteOption = new ComputeDeleteOption(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("auxiliaryMode"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            auxiliaryMode = new ComputeNetworkInterfaceAuxiliaryMode(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("auxiliarySku"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            auxiliarySku = new ComputeNetworkInterfaceAuxiliarySku(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetNetworkConfiguration(id.Value, name, Optional.ToNullable(primary), Optional.ToNullable(enableAcceleratedNetworking), Optional.ToNullable(disableTcpStateTracking), Optional.ToNullable(enableFpga), networkSecurityGroup, dnsSettings.Value, Optional.ToList(ipConfigurations), Optional.ToNullable(enableIPForwarding), Optional.ToNullable(deleteOption));
+            return new VirtualMachineScaleSetNetworkConfiguration(id.Value, name, Optional.ToNullable(primary), Optional.ToNullable(enableAcceleratedNetworking), Optional.ToNullable(disableTcpStateTracking), Optional.ToNullable(enableFpga), networkSecurityGroup, dnsSettings.Value, Optional.ToList(ipConfigurations), Optional.ToNullable(enableIPForwarding), Optional.ToNullable(deleteOption), Optional.ToNullable(auxiliaryMode), Optional.ToNullable(auxiliarySku));
         }
     }
 }

@@ -5,8 +5,8 @@
 
 #nullable disable
 
-using System;
 using System.Threading;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.AppContainers
         private ConnectedEnvironmentsRestOperations _containerAppConnectedEnvironmentConnectedEnvironmentsRestClient;
         private ClientDiagnostics _containerAppClientDiagnostics;
         private ContainerAppsRestOperations _containerAppRestClient;
+        private ClientDiagnostics _containerAppJobJobsClientDiagnostics;
+        private JobsRestOperations _containerAppJobJobsRestClient;
         private ClientDiagnostics _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics;
         private ManagedEnvironmentsRestOperations _containerAppManagedEnvironmentManagedEnvironmentsRestClient;
 
@@ -49,6 +51,8 @@ namespace Azure.ResourceManager.AppContainers
         private ConnectedEnvironmentsRestOperations ContainerAppConnectedEnvironmentConnectedEnvironmentsRestClient => _containerAppConnectedEnvironmentConnectedEnvironmentsRestClient ??= new ConnectedEnvironmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ContainerAppConnectedEnvironmentResource.ResourceType));
         private ClientDiagnostics ContainerAppClientDiagnostics => _containerAppClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppResource.ResourceType.Namespace, Diagnostics);
         private ContainerAppsRestOperations ContainerAppRestClient => _containerAppRestClient ??= new ContainerAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ContainerAppResource.ResourceType));
+        private ClientDiagnostics ContainerAppJobJobsClientDiagnostics => _containerAppJobJobsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppJobResource.ResourceType.Namespace, Diagnostics);
+        private JobsRestOperations ContainerAppJobJobsRestClient => _containerAppJobJobsRestClient ??= new JobsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ContainerAppJobResource.ResourceType));
         private ClientDiagnostics ContainerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics => _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppManagedEnvironmentResource.ResourceType.Namespace, Diagnostics);
         private ManagedEnvironmentsRestOperations ContainerAppManagedEnvironmentManagedEnvironmentsRestClient => _containerAppManagedEnvironmentManagedEnvironmentsRestClient ??= new ManagedEnvironmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ContainerAppManagedEnvironmentResource.ResourceType));
 
@@ -78,7 +82,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableWorkloadProfilesRestClient.CreateGetRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableWorkloadProfilesRestClient.CreateGetNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ContainerAppAvailableWorkloadProfile.DeserializeContainerAppAvailableWorkloadProfile, AvailableWorkloadProfilesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvailableWorkloadProfiles", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ContainerAppAvailableWorkloadProfile.DeserializeContainerAppAvailableWorkloadProfile, AvailableWorkloadProfilesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvailableWorkloadProfiles", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -101,7 +105,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableWorkloadProfilesRestClient.CreateGetRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableWorkloadProfilesRestClient.CreateGetNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ContainerAppAvailableWorkloadProfile.DeserializeContainerAppAvailableWorkloadProfile, AvailableWorkloadProfilesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvailableWorkloadProfiles", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ContainerAppAvailableWorkloadProfile.DeserializeContainerAppAvailableWorkloadProfile, AvailableWorkloadProfilesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvailableWorkloadProfiles", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -123,7 +127,7 @@ namespace Azure.ResourceManager.AppContainers
         public virtual AsyncPageable<ContainerAppBillingMeter> GetBillingMetersAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BillingMetersRestClient.CreateGetRequest(Id.SubscriptionId, location);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ContainerAppBillingMeter.DeserializeContainerAppBillingMeter, BillingMetersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetBillingMeters", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ContainerAppBillingMeter.DeserializeContainerAppBillingMeter, BillingMetersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetBillingMeters", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -145,7 +149,7 @@ namespace Azure.ResourceManager.AppContainers
         public virtual Pageable<ContainerAppBillingMeter> GetBillingMeters(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BillingMetersRestClient.CreateGetRequest(Id.SubscriptionId, location);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, ContainerAppBillingMeter.DeserializeContainerAppBillingMeter, BillingMetersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetBillingMeters", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ContainerAppBillingMeter.DeserializeContainerAppBillingMeter, BillingMetersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetBillingMeters", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +171,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerAppConnectedEnvironmentConnectedEnvironmentsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerAppConnectedEnvironmentConnectedEnvironmentsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerAppConnectedEnvironmentResource(Client, ContainerAppConnectedEnvironmentData.DeserializeContainerAppConnectedEnvironmentData(e)), ContainerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetContainerAppConnectedEnvironments", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerAppConnectedEnvironmentResource(Client, ContainerAppConnectedEnvironmentData.DeserializeContainerAppConnectedEnvironmentData(e)), ContainerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetContainerAppConnectedEnvironments", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -189,7 +193,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerAppConnectedEnvironmentConnectedEnvironmentsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerAppConnectedEnvironmentConnectedEnvironmentsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerAppConnectedEnvironmentResource(Client, ContainerAppConnectedEnvironmentData.DeserializeContainerAppConnectedEnvironmentData(e)), ContainerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetContainerAppConnectedEnvironments", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerAppConnectedEnvironmentResource(Client, ContainerAppConnectedEnvironmentData.DeserializeContainerAppConnectedEnvironmentData(e)), ContainerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetContainerAppConnectedEnvironments", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -211,7 +215,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerAppRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerAppRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerAppResource(Client, ContainerAppData.DeserializeContainerAppData(e)), ContainerAppClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetContainerApps", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerAppResource(Client, ContainerAppData.DeserializeContainerAppData(e)), ContainerAppClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetContainerApps", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -233,7 +237,51 @@ namespace Azure.ResourceManager.AppContainers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerAppRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerAppRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerAppResource(Client, ContainerAppData.DeserializeContainerAppData(e)), ContainerAppClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetContainerApps", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerAppResource(Client, ContainerAppData.DeserializeContainerAppData(e)), ContainerAppClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetContainerApps", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the Container Apps Jobs in a given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/jobs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Jobs_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ContainerAppJobResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ContainerAppJobResource> GetContainerAppJobsAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerAppJobJobsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerAppJobJobsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerAppJobResource(Client, ContainerAppJobData.DeserializeContainerAppJobData(e)), ContainerAppJobJobsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetContainerAppJobs", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the Container Apps Jobs in a given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/jobs</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Jobs_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ContainerAppJobResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ContainerAppJobResource> GetContainerAppJobs(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerAppJobJobsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerAppJobJobsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerAppJobResource(Client, ContainerAppJobData.DeserializeContainerAppJobData(e)), ContainerAppJobJobsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetContainerAppJobs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -255,7 +303,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerAppManagedEnvironmentManagedEnvironmentsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerAppManagedEnvironmentManagedEnvironmentsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerAppManagedEnvironmentResource(Client, ContainerAppManagedEnvironmentData.DeserializeContainerAppManagedEnvironmentData(e)), ContainerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetContainerAppManagedEnvironments", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerAppManagedEnvironmentResource(Client, ContainerAppManagedEnvironmentData.DeserializeContainerAppManagedEnvironmentData(e)), ContainerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetContainerAppManagedEnvironments", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -277,7 +325,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerAppManagedEnvironmentManagedEnvironmentsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerAppManagedEnvironmentManagedEnvironmentsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerAppManagedEnvironmentResource(Client, ContainerAppManagedEnvironmentData.DeserializeContainerAppManagedEnvironmentData(e)), ContainerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetContainerAppManagedEnvironments", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerAppManagedEnvironmentResource(Client, ContainerAppManagedEnvironmentData.DeserializeContainerAppManagedEnvironmentData(e)), ContainerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetContainerAppManagedEnvironments", "value", "nextLink", cancellationToken);
         }
     }
 }

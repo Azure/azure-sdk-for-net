@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,21 +21,24 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStringValue(Level.Value.ToSerialString());
             }
             writer.WritePropertyName("sasUrl"u8);
-            writer.WriteStringValue(SasUri.AbsoluteUri);
+            writer.WriteStringValue(SasUriString);
             writer.WriteEndObject();
         }
 
         internal static AppServiceTableStorageApplicationLogsConfig DeserializeAppServiceTableStorageApplicationLogsConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<WebAppLogLevel> level = default;
-            Uri sasUrl = default;
+            string sasUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("level"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     level = property.Value.GetString().ToWebAppLogLevel();
@@ -44,7 +46,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("sasUrl"u8))
                 {
-                    sasUrl = new Uri(property.Value.GetString());
+                    sasUrl = property.Value.GetString();
                     continue;
                 }
             }

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteBastionHost()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/BastionHostDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-05-01/examples/BastionHostDelete.json
             // this example is just showing the usage of "BastionHosts_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -46,12 +46,39 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded");
         }
 
+        // Delete Developer Bastion Host
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Delete_DeleteDeveloperBastionHost()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-05-01/examples/BastionHostDeveloperDelete.json
+            // this example is just showing the usage of "BastionHosts_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BastionHostResource created on azure
+            // for more information of creating BastionHostResource, please refer to the document of BastionHostResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg2";
+            string bastionHostName = "bastionhostdeveloper";
+            ResourceIdentifier bastionHostResourceId = BastionHostResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, bastionHostName);
+            BastionHostResource bastionHost = client.GetBastionHostResource(bastionHostResourceId);
+
+            // invoke the operation
+            await bastionHost.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine($"Succeeded");
+        }
+
         // Get Bastion Host
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetBastionHost()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/BastionHostGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-05-01/examples/BastionHostGet.json
             // this example is just showing the usage of "BastionHosts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -77,13 +104,44 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Bastion Host
+        // Get Developer Bastion Host
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_CreateBastionHost()
+        public async Task Get_GetDeveloperBastionHost()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/BastionHostPut.json
-            // this example is just showing the usage of "BastionHosts_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-05-01/examples/BastionHostDeveloperGet.json
+            // this example is just showing the usage of "BastionHosts_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BastionHostResource created on azure
+            // for more information of creating BastionHostResource, please refer to the document of BastionHostResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            string bastionHostName = "bastionhostdeveloper'";
+            ResourceIdentifier bastionHostResourceId = BastionHostResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, bastionHostName);
+            BastionHostResource bastionHost = client.GetBastionHostResource(bastionHostResourceId);
+
+            // invoke the operation
+            BastionHostResource result = await bastionHost.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            BastionHostData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Patch Bastion Host
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Update_PatchBastionHost()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-05-01/examples/BastionHostPatch.json
+            // this example is just showing the usage of "BastionHosts_UpdateTags" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -99,19 +157,15 @@ namespace Azure.ResourceManager.Network.Samples
             BastionHostResource bastionHost = client.GetBastionHostResource(bastionHostResourceId);
 
             // invoke the operation
-            BastionHostData data = new BastionHostData()
+            NetworkTagsObject networkTagsObject = new NetworkTagsObject()
             {
-                IPConfigurations =
+                Tags =
 {
-new BastionHostIPConfiguration()
-{
-SubnetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnet2/subnets/BastionHostSubnet"),
-PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/publicIPAddresses/pipName"),
-Name = "bastionHostIpConfiguration",
-}
+["tag1"] = "value1",
+["tag2"] = "value2",
 },
             };
-            ArmOperation<BastionHostResource> lro = await bastionHost.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<BastionHostResource> lro = await bastionHost.UpdateAsync(WaitUntil.Completed, networkTagsObject);
             BastionHostResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -126,7 +180,7 @@ Name = "bastionHostIpConfiguration",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetBastionHosts_ListAllBastionHostsForAGivenSubscription()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/BastionHostListBySubscription.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-05-01/examples/BastionHostListBySubscription.json
             // this example is just showing the usage of "BastionHosts_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

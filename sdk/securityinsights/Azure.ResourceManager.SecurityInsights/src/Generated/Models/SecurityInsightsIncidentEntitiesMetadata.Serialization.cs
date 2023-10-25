@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -14,16 +13,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     {
         internal static SecurityInsightsIncidentEntitiesMetadata DeserializeSecurityInsightsIncidentEntitiesMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int count = default;
             SecurityInsightsEntityKind entityKind = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("count"))
+                if (property.NameEquals("count"u8))
                 {
                     count = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("entityKind"))
+                if (property.NameEquals("entityKind"u8))
                 {
                     entityKind = new SecurityInsightsEntityKind(property.Value.GetString());
                     continue;

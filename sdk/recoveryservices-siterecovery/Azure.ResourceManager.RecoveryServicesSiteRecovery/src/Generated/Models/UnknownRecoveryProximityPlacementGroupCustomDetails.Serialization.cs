@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static UnknownRecoveryProximityPlacementGroupCustomDetails DeserializeUnknownRecoveryProximityPlacementGroupCustomDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string resourceType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {

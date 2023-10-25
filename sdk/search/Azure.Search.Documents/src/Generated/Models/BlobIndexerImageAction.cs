@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Determines how to process embedded images and image files in Azure blob storage.  Setting the &quot;imageAction&quot; configuration to any value other than &quot;none&quot; requires that a skillset also be attached to that indexer. </summary>
+    /// <summary> Determines how to process embedded images and image files in Azure blob storage.  Setting the "imageAction" configuration to any value other than "none" requires that a skillset also be attached to that indexer. </summary>
     public readonly partial struct BlobIndexerImageAction : IEquatable<BlobIndexerImageAction>
     {
         private readonly string _value;
@@ -28,9 +28,9 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Ignores embedded images or image files in the data set.  This is the default. </summary>
         public static BlobIndexerImageAction None { get; } = new BlobIndexerImageAction(NoneValue);
-        /// <summary> Extracts text from images (for example, the word &quot;STOP&quot; from a traffic stop sign), and embeds it into the content field.  This action requires that &quot;dataToExtract&quot; is set to &quot;contentAndMetadata&quot;.  A normalized image refers to additional processing resulting in uniform image output, sized and rotated to promote consistent rendering when you include images in visual search results. This information is generated for each image when you use this option. </summary>
+        /// <summary> Extracts text from images (for example, the word "STOP" from a traffic stop sign), and embeds it into the content field.  This action requires that "dataToExtract" is set to "contentAndMetadata".  A normalized image refers to additional processing resulting in uniform image output, sized and rotated to promote consistent rendering when you include images in visual search results. This information is generated for each image when you use this option. </summary>
         public static BlobIndexerImageAction GenerateNormalizedImages { get; } = new BlobIndexerImageAction(GenerateNormalizedImagesValue);
-        /// <summary> Extracts text from images (for example, the word &quot;STOP&quot; from a traffic stop sign), and embeds it into the content field, but treats PDF files differently in that each page will be rendered as an image and normalized accordingly, instead of extracting embedded images.  Non-PDF file types will be treated the same as if &quot;generateNormalizedImages&quot; was set. </summary>
+        /// <summary> Extracts text from images (for example, the word "STOP" from a traffic stop sign), and embeds it into the content field, but treats PDF files differently in that each page will be rendered as an image and normalized accordingly, instead of extracting embedded images.  Non-PDF file types will be treated the same as if "generateNormalizedImages" was set. </summary>
         public static BlobIndexerImageAction GenerateNormalizedImagePerPage { get; } = new BlobIndexerImageAction(GenerateNormalizedImagePerPageValue);
         /// <summary> Determines if two <see cref="BlobIndexerImageAction"/> values are the same. </summary>
         public static bool operator ==(BlobIndexerImageAction left, BlobIndexerImageAction right) => left.Equals(right);

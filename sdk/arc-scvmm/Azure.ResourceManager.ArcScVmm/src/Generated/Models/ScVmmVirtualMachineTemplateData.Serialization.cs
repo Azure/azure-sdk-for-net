@@ -20,7 +20,8 @@ namespace Azure.ResourceManager.ArcScVmm
         {
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
-            JsonSerializer.Serialize(writer, ExtendedLocation); if (Optional.IsCollectionDefined(Tags))
+            JsonSerializer.Serialize(writer, ExtendedLocation);
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,6 +57,10 @@ namespace Azure.ResourceManager.ArcScVmm
 
         internal static ScVmmVirtualMachineTemplateData DeserializeScVmmVirtualMachineTemplateData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ExtendedLocation extendedLocation = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -92,7 +97,6 @@ namespace Azure.ResourceManager.ArcScVmm
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -127,7 +131,6 @@ namespace Azure.ResourceManager.ArcScVmm
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -161,7 +164,6 @@ namespace Azure.ResourceManager.ArcScVmm
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             osType = new OSType(property0.Value.GetString());
@@ -181,7 +183,6 @@ namespace Azure.ResourceManager.ArcScVmm
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             memoryMB = property0.Value.GetInt32();
@@ -191,7 +192,6 @@ namespace Azure.ResourceManager.ArcScVmm
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             cpuCount = property0.Value.GetInt32();
@@ -201,7 +201,6 @@ namespace Azure.ResourceManager.ArcScVmm
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             limitCpuForMigration = new LimitCpuForMigration(property0.Value.GetString());
@@ -211,7 +210,6 @@ namespace Azure.ResourceManager.ArcScVmm
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             dynamicMemoryEnabled = new DynamicMemoryEnabled(property0.Value.GetString());
@@ -221,7 +219,6 @@ namespace Azure.ResourceManager.ArcScVmm
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isCustomizable = new IsCustomizable(property0.Value.GetString());
@@ -231,7 +228,6 @@ namespace Azure.ResourceManager.ArcScVmm
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             dynamicMemoryMaxMB = property0.Value.GetInt32();
@@ -241,7 +237,6 @@ namespace Azure.ResourceManager.ArcScVmm
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             dynamicMemoryMinMB = property0.Value.GetInt32();
@@ -256,7 +251,6 @@ namespace Azure.ResourceManager.ArcScVmm
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             generation = property0.Value.GetInt32();
@@ -266,7 +260,6 @@ namespace Azure.ResourceManager.ArcScVmm
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<NetworkInterfaces> array = new List<NetworkInterfaces>();
@@ -281,7 +274,6 @@ namespace Azure.ResourceManager.ArcScVmm
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<VirtualDisk> array = new List<VirtualDisk>();

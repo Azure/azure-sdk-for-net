@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Update existing rule or create new rule if it doesn&apos;t exist
+        /// Update existing rule or create new rule if it doesn't exist
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// Update existing rule or create new rule if it doesn&apos;t exist
+        /// Update existing rule or create new rule if it doesn't exist
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

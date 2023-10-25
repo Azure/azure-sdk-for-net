@@ -25,12 +25,39 @@ namespace Azure.ResourceManager.MachineLearning.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ComponentSpec);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(ComponentSpec.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(ComponentSpec))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
                 else
                 {
                     writer.WriteNull("componentSpec");
+                }
+            }
+            if (Optional.IsDefined(Stage))
+            {
+                if (Stage != null)
+                {
+                    writer.WritePropertyName("stage"u8);
+                    writer.WriteStringValue(Stage);
+                }
+                else
+                {
+                    writer.WriteNull("stage");
+                }
+            }
+            if (Optional.IsDefined(AutoDeleteSetting))
+            {
+                if (AutoDeleteSetting != null)
+                {
+                    writer.WritePropertyName("autoDeleteSetting"u8);
+                    writer.WriteObjectValue(AutoDeleteSetting);
+                }
+                else
+                {
+                    writer.WriteNull("autoDeleteSetting");
                 }
             }
             if (Optional.IsDefined(IsAnonymous))
@@ -96,7 +123,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningComponentVersionProperties DeserializeMachineLearningComponentVersionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> componentSpec = default;
+            Optional<RegistryAssetProvisioningState> provisioningState = default;
+            Optional<string> stage = default;
+            Optional<AutoDeleteSetting> autoDeleteSetting = default;
             Optional<bool> isAnonymous = default;
             Optional<bool> isArchived = default;
             Optional<string> description = default;
@@ -114,11 +148,39 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     componentSpec = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
+                if (property.NameEquals("provisioningState"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisioningState = new RegistryAssetProvisioningState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("stage"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        stage = null;
+                        continue;
+                    }
+                    stage = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("autoDeleteSetting"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        autoDeleteSetting = null;
+                        continue;
+                    }
+                    autoDeleteSetting = AutoDeleteSetting.DeserializeAutoDeleteSetting(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("isAnonymous"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isAnonymous = property.Value.GetBoolean();
@@ -128,7 +190,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isArchived = property.Value.GetBoolean();
@@ -154,14 +215,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     properties = dictionary;
                     continue;
@@ -176,20 +230,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
                     continue;
                 }
             }
-            return new MachineLearningComponentVersionProperties(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), Optional.ToNullable(isAnonymous), Optional.ToNullable(isArchived), componentSpec.Value);
+            return new MachineLearningComponentVersionProperties(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), autoDeleteSetting.Value, Optional.ToNullable(isAnonymous), Optional.ToNullable(isArchived), componentSpec.Value, Optional.ToNullable(provisioningState), stage.Value);
         }
     }
 }

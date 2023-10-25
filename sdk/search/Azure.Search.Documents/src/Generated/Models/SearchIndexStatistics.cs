@@ -13,15 +13,19 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of SearchIndexStatistics. </summary>
         /// <param name="documentCount"> The number of documents in the index. </param>
         /// <param name="storageSize"> The amount of storage in bytes consumed by the index. </param>
-        internal SearchIndexStatistics(long documentCount, long storageSize)
+        /// <param name="vectorIndexSize"> The amount of memory in bytes consumed by vectors in the index. </param>
+        internal SearchIndexStatistics(long documentCount, long storageSize, long vectorIndexSize)
         {
             DocumentCount = documentCount;
             StorageSize = storageSize;
+            VectorIndexSize = vectorIndexSize;
         }
 
         /// <summary> The number of documents in the index. </summary>
         public long DocumentCount { get; }
         /// <summary> The amount of storage in bytes consumed by the index. </summary>
         public long StorageSize { get; }
+        /// <summary> The amount of memory in bytes consumed by vectors in the index. </summary>
+        public long VectorIndexSize { get; }
     }
 }

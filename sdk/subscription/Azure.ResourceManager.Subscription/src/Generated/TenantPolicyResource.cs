@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Subscription
         }
 
         /// <summary>
-        /// Get the subscription tenant policy for the user&apos;s tenant.
+        /// Get the subscription tenant policy for the user's tenant.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Subscription
         }
 
         /// <summary>
-        /// Get the subscription tenant policy for the user&apos;s tenant.
+        /// Get the subscription tenant policy for the user's tenant.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Subscription
         }
 
         /// <summary>
-        /// Create or Update Subscription tenant policy for user&apos;s tenant.
+        /// Create or Update Subscription tenant policy for user's tenant.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Subscription
         }
 
         /// <summary>
-        /// Create or Update Subscription tenant policy for user&apos;s tenant.
+        /// Create or Update Subscription tenant policy for user's tenant.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

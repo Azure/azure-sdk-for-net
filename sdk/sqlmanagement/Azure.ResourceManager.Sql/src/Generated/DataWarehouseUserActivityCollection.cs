@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -138,7 +139,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataWarehouseUserActivityRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataWarehouseUserActivityRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataWarehouseUserActivityResource(Client, DataWarehouseUserActivityData.DeserializeDataWarehouseUserActivityData(e)), _dataWarehouseUserActivityClientDiagnostics, Pipeline, "DataWarehouseUserActivityCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataWarehouseUserActivityResource(Client, DataWarehouseUserActivityData.DeserializeDataWarehouseUserActivityData(e)), _dataWarehouseUserActivityClientDiagnostics, Pipeline, "DataWarehouseUserActivityCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -160,7 +161,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataWarehouseUserActivityRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataWarehouseUserActivityRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataWarehouseUserActivityResource(Client, DataWarehouseUserActivityData.DeserializeDataWarehouseUserActivityData(e)), _dataWarehouseUserActivityClientDiagnostics, Pipeline, "DataWarehouseUserActivityCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataWarehouseUserActivityResource(Client, DataWarehouseUserActivityData.DeserializeDataWarehouseUserActivityData(e)), _dataWarehouseUserActivityClientDiagnostics, Pipeline, "DataWarehouseUserActivityCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -217,6 +218,72 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _dataWarehouseUserActivityRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataWarehouseUserActivityName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataWarehouseUserActivities/{dataWarehouseUserActivityName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataWarehouseUserActivities_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dataWarehouseUserActivityName"> The activity name of the data warehouse. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<DataWarehouseUserActivityResource>> GetIfExistsAsync(DataWarehouseUserActivityName dataWarehouseUserActivityName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _dataWarehouseUserActivityClientDiagnostics.CreateScope("DataWarehouseUserActivityCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _dataWarehouseUserActivityRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataWarehouseUserActivityName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DataWarehouseUserActivityResource>(response.GetRawResponse());
+                return Response.FromValue(new DataWarehouseUserActivityResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/dataWarehouseUserActivities/{dataWarehouseUserActivityName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataWarehouseUserActivities_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dataWarehouseUserActivityName"> The activity name of the data warehouse. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<DataWarehouseUserActivityResource> GetIfExists(DataWarehouseUserActivityName dataWarehouseUserActivityName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _dataWarehouseUserActivityClientDiagnostics.CreateScope("DataWarehouseUserActivityCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _dataWarehouseUserActivityRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataWarehouseUserActivityName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DataWarehouseUserActivityResource>(response.GetRawResponse());
+                return Response.FromValue(new DataWarehouseUserActivityResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

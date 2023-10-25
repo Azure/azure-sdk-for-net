@@ -15,9 +15,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static HealthErrorSummary DeserializeHealthErrorSummary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> summaryCode = default;
             Optional<HealthErrorCategory> category = default;
-            Optional<Severity> severity = default;
+            Optional<SiteRecoveryErrorSeverity> severity = default;
             Optional<string> summaryMessage = default;
             Optional<string> affectedResourceType = default;
             Optional<string> affectedResourceSubtype = default;
@@ -33,7 +37,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     category = new HealthErrorCategory(property.Value.GetString());
@@ -43,10 +46,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    severity = new Severity(property.Value.GetString());
+                    severity = new SiteRecoveryErrorSeverity(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("summaryMessage"u8))
@@ -68,7 +70,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

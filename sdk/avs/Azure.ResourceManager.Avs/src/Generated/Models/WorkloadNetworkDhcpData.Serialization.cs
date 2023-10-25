@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.Avs
 
         internal static WorkloadNetworkDhcpData DeserializeWorkloadNetworkDhcpData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<WorkloadNetworkDhcpEntity> properties = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.Avs
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = WorkloadNetworkDhcpEntity.DeserializeWorkloadNetworkDhcpEntity(property.Value);
@@ -63,7 +66,6 @@ namespace Azure.ResourceManager.Avs
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

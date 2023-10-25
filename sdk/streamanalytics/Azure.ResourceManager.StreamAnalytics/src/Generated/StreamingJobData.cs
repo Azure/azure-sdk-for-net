@@ -14,7 +14,10 @@ using Azure.ResourceManager.StreamAnalytics.Models;
 
 namespace Azure.ResourceManager.StreamAnalytics
 {
-    /// <summary> A class representing the StreamingJob data model. </summary>
+    /// <summary>
+    /// A class representing the StreamingJob data model.
+    /// A streaming job object, containing all information associated with the named streaming job.
+    /// </summary>
     public partial class StreamingJobData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of StreamingJobData. </summary>
@@ -38,7 +41,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="jobId"> A GUID uniquely identifying the streaming job. This GUID is generated upon creation of the streaming job. </param>
         /// <param name="provisioningState"> Describes the provisioning status of the streaming job. </param>
         /// <param name="jobState"> Describes the state of the streaming job. </param>
-        /// <param name="jobType"> Describes the type of the job. Valid modes are `Cloud` and &apos;Edge&apos;. </param>
+        /// <param name="jobType"> Describes the type of the job. Valid modes are `Cloud` and 'Edge'. </param>
         /// <param name="outputStartMode"> This property should only be utilized when it is desired that the job be started immediately upon creation. Value may be JobStartTime, CustomTime, or LastOutputEventTime to indicate whether the starting point of the output event stream should start whenever the job is started, start at a custom user time stamp specified via the outputStartTime property, or start from the last event output time. </param>
         /// <param name="outputStartOn"> Value is either an ISO-8601 formatted time stamp that indicates the starting point of the output event stream, or null to indicate that the output event stream will start whenever the streaming job is started. This property must have a value if outputStartMode is set to CustomTime. </param>
         /// <param name="lastOutputEventOn"> Value is either an ISO-8601 formatted timestamp indicating the last output event time of the streaming job or null indicating that output has not yet been produced. In case of multiple outputs or multiple streams, this shows the latest value in that set. </param>
@@ -46,7 +49,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="outputErrorPolicy"> Indicates the policy to apply to events that arrive at the output and cannot be written to the external storage due to being malformed (missing column values, column values of wrong type or size). </param>
         /// <param name="eventsOutOfOrderMaxDelayInSeconds"> The maximum tolerable delay in seconds where out-of-order events can be adjusted to be back in order. </param>
         /// <param name="eventsLateArrivalMaxDelayInSeconds"> The maximum tolerable delay in seconds where events arriving late could be included.  Supported range is -1 to 1814399 (20.23:59:59 days) and -1 is used to specify wait indefinitely. If the property is absent, it is interpreted to have a value of -1. </param>
-        /// <param name="dataLocalion"> The data locale of the stream analytics job. Value should be the name of a supported .NET Culture from the set https://msdn.microsoft.com/en-us/library/system.globalization.culturetypes(v=vs.110).aspx. Defaults to &apos;en-US&apos; if none specified. </param>
+        /// <param name="dataLocalion"> The data locale of the stream analytics job. Value should be the name of a supported .NET Culture from the set https://msdn.microsoft.com/en-us/library/system.globalization.culturetypes(v=vs.110).aspx. Defaults to 'en-US' if none specified. </param>
         /// <param name="compatibilityLevel"> Controls certain runtime behaviors of the streaming job. </param>
         /// <param name="createdOn"> Value is an ISO-8601 formatted UTC timestamp indicating when the streaming job was created. </param>
         /// <param name="inputs"> A list of one or more inputs to the streaming job. The name property for each input is required when specifying this property in a PUT request. This property cannot be modify via a PATCH operation. You must use the PATCH API available for the individual input. </param>
@@ -109,7 +112,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         public string ProvisioningState { get; }
         /// <summary> Describes the state of the streaming job. </summary>
         public string JobState { get; }
-        /// <summary> Describes the type of the job. Valid modes are `Cloud` and &apos;Edge&apos;. </summary>
+        /// <summary> Describes the type of the job. Valid modes are `Cloud` and 'Edge'. </summary>
         public StreamingJobType? JobType { get; set; }
         /// <summary> This property should only be utilized when it is desired that the job be started immediately upon creation. Value may be JobStartTime, CustomTime, or LastOutputEventTime to indicate whether the starting point of the output event stream should start whenever the job is started, start at a custom user time stamp specified via the outputStartTime property, or start from the last event output time. </summary>
         public StreamingJobOutputStartMode? OutputStartMode { get; set; }
@@ -125,7 +128,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         public int? EventsOutOfOrderMaxDelayInSeconds { get; set; }
         /// <summary> The maximum tolerable delay in seconds where events arriving late could be included.  Supported range is -1 to 1814399 (20.23:59:59 days) and -1 is used to specify wait indefinitely. If the property is absent, it is interpreted to have a value of -1. </summary>
         public int? EventsLateArrivalMaxDelayInSeconds { get; set; }
-        /// <summary> The data locale of the stream analytics job. Value should be the name of a supported .NET Culture from the set https://msdn.microsoft.com/en-us/library/system.globalization.culturetypes(v=vs.110).aspx. Defaults to &apos;en-US&apos; if none specified. </summary>
+        /// <summary> The data locale of the stream analytics job. Value should be the name of a supported .NET Culture from the set https://msdn.microsoft.com/en-us/library/system.globalization.culturetypes(v=vs.110).aspx. Defaults to 'en-US' if none specified. </summary>
         public AzureLocation? DataLocalion { get; set; }
         /// <summary> Controls certain runtime behaviors of the streaming job. </summary>
         public StreamingJobCompatibilityLevel? CompatibilityLevel { get; set; }

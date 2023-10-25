@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of ResumeReplicationContent. </summary>
         /// <param name="properties"> Resume replication input properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public ResumeReplicationContent(ResumeReplicationInputProperties properties)
+        public ResumeReplicationContent(ResumeReplicationProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Resume replication input properties. </summary>
-        internal ResumeReplicationInputProperties Properties { get; }
+        internal ResumeReplicationProperties Properties { get; }
         /// <summary>
         /// The provider specific input for resume replication.
-        /// Please note <see cref="ResumeReplicationProviderSpecificInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="VMwareCbtResumeReplicationInput"/>.
+        /// Please note <see cref="ResumeReplicationProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="VMwareCbtResumeReplicationContent"/>.
         /// </summary>
-        public ResumeReplicationProviderSpecificInput ResumeReplicationInputProviderSpecificDetails
+        public ResumeReplicationProviderSpecificContent ResumeReplicationProviderSpecificDetails
         {
             get => Properties?.ProviderSpecificDetails;
         }

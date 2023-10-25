@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static NewRecoveryVirtualNetwork DeserializeNewRecoveryVirtualNetwork(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> recoveryVirtualNetworkResourceGroupName = default;
             Optional<string> recoveryVirtualNetworkName = default;
             string resourceType = default;

@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("collation"u8);
                 writer.WriteStringValue(Collation);
             }
-            if (Optional.IsDefined(DnsZonePartner))
+            if (Optional.IsDefined(ManagedDnsZonePartner))
             {
                 writer.WritePropertyName("dnsZonePartner"u8);
-                writer.WriteStringValue(DnsZonePartner);
+                writer.WriteStringValue(ManagedDnsZonePartner);
             }
             if (Optional.IsDefined(IsPublicDataEndpointEnabled))
             {

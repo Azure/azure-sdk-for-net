@@ -70,7 +70,7 @@ namespace Azure.Monitor.Query
         }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="MetricsQueryClient"/> for mocking.
+        /// Creates an instance of <see cref="MetricsQueryClient"/> to support <see href="https://aka.ms/azsdk/net/mocking">mocking</see>.
         /// </summary>
         protected MetricsQueryClient()
         {
@@ -90,7 +90,7 @@ namespace Azure.Monitor.Query
         ///
         /// Response&lt;MetricsQueryResult&gt; results = await client.QueryResourceAsync(
         ///     resourceId,
-        ///     new[] { &quot;SuccessfulCalls&quot;, &quot;TotalCalls&quot; }
+        ///     new[] { &quot;AvailabilityRate_Query&quot;, &quot;Query Count&quot; }
         /// );
         ///
         /// foreach (MetricResult metric in results.Value.Metrics)
@@ -151,7 +151,7 @@ namespace Azure.Monitor.Query
         ///
         /// Response&lt;MetricsQueryResult&gt; results = await client.QueryResourceAsync(
         ///     resourceId,
-        ///     new[] { &quot;SuccessfulCalls&quot;, &quot;TotalCalls&quot; }
+        ///     new[] { &quot;AvailabilityRate_Query&quot;, &quot;Query Count&quot; }
         /// );
         ///
         /// foreach (MetricResult metric in results.Value.Metrics)

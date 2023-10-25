@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <summary> Initializes a new instance of NodeTypeVmssExtension. </summary>
         /// <param name="name"> The name of the extension. </param>
         /// <param name="publisher"> The name of the extension handler publisher. </param>
-        /// <param name="vmssExtensionPropertiesType"> Specifies the type of the extension; an example is &quot;CustomScriptExtension&quot;. </param>
+        /// <param name="vmssExtensionPropertiesType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
         /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="publisher"/>, <paramref name="vmssExtensionPropertiesType"/> or <paramref name="typeHandlerVersion"/> is null. </exception>
         public NodeTypeVmssExtension(string name, string publisher, string vmssExtensionPropertiesType, string typeHandlerVersion)
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <summary> Initializes a new instance of NodeTypeVmssExtension. </summary>
         /// <param name="name"> The name of the extension. </param>
         /// <param name="publisher"> The name of the extension handler publisher. </param>
-        /// <param name="vmssExtensionPropertiesType"> Specifies the type of the extension; an example is &quot;CustomScriptExtension&quot;. </param>
+        /// <param name="vmssExtensionPropertiesType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
         /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
         /// <param name="autoUpgradeMinorVersion"> Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. </param>
         /// <param name="settings"> Json formatted public settings for the extension. </param>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public string Name { get; set; }
         /// <summary> The name of the extension handler publisher. </summary>
         public string Publisher { get; set; }
-        /// <summary> Specifies the type of the extension; an example is &quot;CustomScriptExtension&quot;. </summary>
+        /// <summary> Specifies the type of the extension; an example is "CustomScriptExtension". </summary>
         public string VmssExtensionPropertiesType { get; set; }
         /// <summary> Specifies the version of the script handler. </summary>
         public string TypeHandlerVersion { get; set; }

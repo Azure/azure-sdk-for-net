@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     {
         internal static VirtualNetworksPropertiesStatus DeserializeVirtualNetworksPropertiesStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<VirtualNetworksPropertiesStatusProvisioningStatus> provisioningStatus = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -21,7 +25,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningStatus = VirtualNetworksPropertiesStatusProvisioningStatus.DeserializeVirtualNetworksPropertiesStatusProvisioningStatus(property.Value);

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Marketplace.Models
     {
         internal static PrivateStoreNotificationsState DeserializePrivateStoreNotificationsState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<StopSellNotifications>> stopSellNotifications = default;
             Optional<IReadOnlyList<NewPlanNotification>> newNotifications = default;
             Optional<IReadOnlyList<RequestApprovalsDetails>> approvalRequests = default;
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.Marketplace.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<StopSellNotifications> array = new List<StopSellNotifications>();
@@ -39,7 +42,6 @@ namespace Azure.ResourceManager.Marketplace.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<NewPlanNotification> array = new List<NewPlanNotification>();
@@ -54,7 +56,6 @@ namespace Azure.ResourceManager.Marketplace.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RequestApprovalsDetails> array = new List<RequestApprovalsDetails>();

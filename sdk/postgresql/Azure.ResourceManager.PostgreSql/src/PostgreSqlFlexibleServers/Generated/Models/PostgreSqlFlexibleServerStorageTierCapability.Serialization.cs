@@ -14,11 +14,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     {
         internal static PostgreSqlFlexibleServerStorageTierCapability DeserializePostgreSqlFlexibleServerStorageTierCapability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
-            Optional<string> tierName = default;
             Optional<long> iops = default;
-            Optional<bool> isBaseline = default;
-            Optional<string> status = default;
+            Optional<PostgreSqlFlexbileServerCapabilityStatus> status = default;
+            Optional<string> reason = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -26,38 +29,31 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("tierName"u8))
-                {
-                    tierName = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("iops"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     iops = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("isBaseline"u8))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    isBaseline = property.Value.GetBoolean();
+                    status = property.Value.GetString().ToPostgreSqlFlexbileServerCapabilityStatus();
                     continue;
                 }
-                if (property.NameEquals("status"u8))
+                if (property.NameEquals("reason"u8))
                 {
-                    status = property.Value.GetString();
+                    reason = property.Value.GetString();
                     continue;
                 }
             }
-            return new PostgreSqlFlexibleServerStorageTierCapability(name.Value, tierName.Value, Optional.ToNullable(iops), Optional.ToNullable(isBaseline), status.Value);
+            return new PostgreSqlFlexibleServerStorageTierCapability(Optional.ToNullable(status), reason.Value, name.Value, Optional.ToNullable(iops));
         }
     }
 }

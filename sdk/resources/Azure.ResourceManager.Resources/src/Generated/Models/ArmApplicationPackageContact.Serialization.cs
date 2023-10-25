@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static ArmApplicationPackageContact DeserializeArmApplicationPackageContact(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> contactName = default;
             string email = default;
             string phone = default;

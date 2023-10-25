@@ -27,7 +27,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Configuration);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Configuration.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(Configuration))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
@@ -35,6 +38,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static DefenderForServersGcpOfferingMdeAutoProvisioning DeserializeDefenderForServersGcpOfferingMdeAutoProvisioning(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enabled = default;
             Optional<BinaryData> configuration = default;
             foreach (var property in element.EnumerateObject())
@@ -43,7 +50,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enabled = property.Value.GetBoolean();
@@ -53,7 +59,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     configuration = BinaryData.FromString(property.Value.GetRawText());

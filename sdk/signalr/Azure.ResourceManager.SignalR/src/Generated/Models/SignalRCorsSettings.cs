@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.SignalR.Models
         }
 
         /// <summary> Initializes a new instance of SignalRCorsSettings. </summary>
-        /// <param name="allowedOrigins"> Gets or sets the list of origins that should be allowed to make cross-origin calls (for example: http://example.com:12345). Use &quot;*&quot; to allow all. If omitted, allow all by default. </param>
+        /// <param name="allowedOrigins"> Gets or sets the list of origins that should be allowed to make cross-origin calls (for example: http://example.com:12345). Use "*" to allow all. If omitted, allow all by default. </param>
         internal SignalRCorsSettings(IList<string> allowedOrigins)
         {
             AllowedOrigins = allowedOrigins;
         }
 
-        /// <summary> Gets or sets the list of origins that should be allowed to make cross-origin calls (for example: http://example.com:12345). Use &quot;*&quot; to allow all. If omitted, allow all by default. </summary>
+        /// <summary> Gets or sets the list of origins that should be allowed to make cross-origin calls (for example: http://example.com:12345). Use "*" to allow all. If omitted, allow all by default. </summary>
         public IList<string> AllowedOrigins { get; }
     }
 }

@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -36,9 +34,14 @@ namespace Azure.Communication.JobRouter
         /// <summary>
         /// The amount of time before an offer expires.
         /// </summary>
-        public TimeSpan OfferTtl { get; set; }
+        public TimeSpan OfferExpiresAfter { get; set; }
 
         /// <summary> Abstract base class for defining a distribution mode. </summary>
         public DistributionMode Mode { get; set; }
+
+        /// <summary>
+        /// The content to send as the request conditions of the request.
+        /// </summary>
+        public RequestConditions RequestConditions { get; set; } = new();
     }
 }

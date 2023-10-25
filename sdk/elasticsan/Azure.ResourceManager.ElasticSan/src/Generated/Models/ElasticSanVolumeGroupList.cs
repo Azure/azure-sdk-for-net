@@ -5,9 +5,7 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.ElasticSan;
 
@@ -17,13 +15,9 @@ namespace Azure.ResourceManager.ElasticSan.Models
     internal partial class ElasticSanVolumeGroupList
     {
         /// <summary> Initializes a new instance of ElasticSanVolumeGroupList. </summary>
-        /// <param name="value"> An array of Volume Groups objects. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ElasticSanVolumeGroupList(IEnumerable<ElasticSanVolumeGroupData> value)
+        internal ElasticSanVolumeGroupList()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
+            Value = new ChangeTrackingList<ElasticSanVolumeGroupData>();
         }
 
         /// <summary> Initializes a new instance of ElasticSanVolumeGroupList. </summary>

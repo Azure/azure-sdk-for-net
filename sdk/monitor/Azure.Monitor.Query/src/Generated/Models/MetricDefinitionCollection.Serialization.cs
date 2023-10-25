@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -15,6 +14,10 @@ namespace Azure.Monitor.Query.Models
     {
         internal static MetricDefinitionCollection DeserializeMetricDefinitionCollection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<MetricDefinition> value = default;
             foreach (var property in element.EnumerateObject())
             {

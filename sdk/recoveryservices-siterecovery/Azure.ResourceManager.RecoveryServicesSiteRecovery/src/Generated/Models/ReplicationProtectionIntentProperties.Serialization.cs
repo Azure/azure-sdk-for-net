@@ -14,8 +14,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static ReplicationProtectionIntentProperties DeserializeReplicationProtectionIntentProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> friendlyName = default;
-            Optional<string> jobId = default;
+            Optional<ResourceIdentifier> jobId = default;
             Optional<string> jobState = default;
             Optional<bool> isActive = default;
             Optional<string> creationTimeUTC = default;
@@ -29,7 +33,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("jobId"u8))
                 {
-                    jobId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    jobId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("jobState"u8))
@@ -41,7 +49,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isActive = property.Value.GetBoolean();
@@ -56,7 +63,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     providerSpecificDetails = ReplicationProtectionIntentProviderSpecificSettings.DeserializeReplicationProtectionIntentProviderSpecificSettings(property.Value);

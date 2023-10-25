@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static AgentPoolProvisioningStatusStatus DeserializeAgentPoolProvisioningStatusStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> errorMessage = default;
             Optional<AgentPoolProvisioningStatusStatusProvisioningStatus> provisioningStatus = default;
             Optional<int> readyReplicas = default;
@@ -55,7 +59,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningStatus = AgentPoolProvisioningStatusStatusProvisioningStatus.DeserializeAgentPoolProvisioningStatusStatusProvisioningStatus(property.Value);
@@ -65,7 +68,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     readyReplicas = property.Value.GetInt32();
@@ -75,7 +77,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     replicas = property.Value.GetInt32();

@@ -19,11 +19,16 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WritePropertyName("typeName"u8);
             writer.WriteStringValue(ActionType.ToString());
             writer.WritePropertyName("originGroup"u8);
-            JsonSerializer.Serialize(writer, OriginGroup); writer.WriteEndObject();
+            JsonSerializer.Serialize(writer, OriginGroup);
+            writer.WriteEndObject();
         }
 
         internal static OriginGroupOverrideActionProperties DeserializeOriginGroupOverrideActionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             OriginGroupOverrideActionType typeName = default;
             WritableSubResource originGroup = default;
             foreach (var property in element.EnumerateObject())

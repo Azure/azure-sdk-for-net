@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(LinkedService))
             {
                 writer.WritePropertyName("linkedService"u8);
-                writer.WriteObjectValue(LinkedService);
+                JsonSerializer.Serialize(writer, LinkedService);
             }
             if (Optional.IsDefined(Flowlet))
             {
@@ -42,10 +43,14 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DataFlowTransformation DeserializeDataFlowTransformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<string> description = default;
             Optional<DatasetReference> dataset = default;
-            Optional<FactoryLinkedServiceReference> linkedService = default;
+            Optional<DataFactoryLinkedServiceReference> linkedService = default;
             Optional<DataFlowReference> flowlet = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -63,7 +68,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dataset = DatasetReference.DeserializeDatasetReference(property.Value);
@@ -73,24 +77,22 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    linkedService = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
+                    linkedService = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("flowlet"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     flowlet = DataFlowReference.DeserializeDataFlowReference(property.Value);
                     continue;
                 }
             }
-            return new DataFlowTransformation(name, description.Value, dataset.Value, linkedService.Value, flowlet.Value);
+            return new DataFlowTransformation(name, description.Value, dataset.Value, linkedService, flowlet.Value);
         }
     }
 }

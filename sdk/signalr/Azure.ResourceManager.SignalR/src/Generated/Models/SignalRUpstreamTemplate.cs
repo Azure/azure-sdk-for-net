@@ -33,23 +33,23 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <param name="hubPattern">
         /// Gets or sets the matching pattern for hub names. If not set, it matches any hub.
         /// There are 3 kind of patterns supported:
-        ///     1. &quot;*&quot;, it to matches any hub name.
-        ///     2. Combine multiple hubs with &quot;,&quot;, for example &quot;hub1,hub2&quot;, it matches &quot;hub1&quot; and &quot;hub2&quot;.
-        ///     3. The single hub name, for example, &quot;hub1&quot;, it matches &quot;hub1&quot;.
+        ///     1. "*", it to matches any hub name.
+        ///     2. Combine multiple hubs with ",", for example "hub1,hub2", it matches "hub1" and "hub2".
+        ///     3. The single hub name, for example, "hub1", it matches "hub1".
         /// </param>
         /// <param name="eventPattern">
         /// Gets or sets the matching pattern for event names. If not set, it matches any event.
         /// There are 3 kind of patterns supported:
-        ///     1. &quot;*&quot;, it to matches any event name.
-        ///     2. Combine multiple events with &quot;,&quot;, for example &quot;connect,disconnect&quot;, it matches event &quot;connect&quot; and &quot;disconnect&quot;.
-        ///     3. The single event name, for example, &quot;connect&quot;, it matches &quot;connect&quot;.
+        ///     1. "*", it to matches any event name.
+        ///     2. Combine multiple events with ",", for example "connect,disconnect", it matches event "connect" and "disconnect".
+        ///     3. The single event name, for example, "connect", it matches "connect".
         /// </param>
         /// <param name="categoryPattern">
         /// Gets or sets the matching pattern for category names. If not set, it matches any category.
         /// There are 3 kind of patterns supported:
-        ///     1. &quot;*&quot;, it to matches any category name.
-        ///     2. Combine multiple categories with &quot;,&quot;, for example &quot;connections,messages&quot;, it matches category &quot;connections&quot; and &quot;messages&quot;.
-        ///     3. The single category name, for example, &quot;connections&quot;, it matches the category &quot;connections&quot;.
+        ///     1. "*", it to matches any category name.
+        ///     2. Combine multiple categories with ",", for example "connections,messages", it matches category "connections" and "messages".
+        ///     3. The single category name, for example, "connections", it matches the category "connections".
         /// </param>
         /// <param name="urlTemplate">
         /// Gets or sets the Upstream URL template. You can use 3 predefined parameters {hub}, {category} {event} inside the template, the value of the Upstream URL is dynamically calculated when the client request comes in.
@@ -68,25 +68,25 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <summary>
         /// Gets or sets the matching pattern for hub names. If not set, it matches any hub.
         /// There are 3 kind of patterns supported:
-        ///     1. &quot;*&quot;, it to matches any hub name.
-        ///     2. Combine multiple hubs with &quot;,&quot;, for example &quot;hub1,hub2&quot;, it matches &quot;hub1&quot; and &quot;hub2&quot;.
-        ///     3. The single hub name, for example, &quot;hub1&quot;, it matches &quot;hub1&quot;.
+        ///     1. "*", it to matches any hub name.
+        ///     2. Combine multiple hubs with ",", for example "hub1,hub2", it matches "hub1" and "hub2".
+        ///     3. The single hub name, for example, "hub1", it matches "hub1".
         /// </summary>
         public string HubPattern { get; set; }
         /// <summary>
         /// Gets or sets the matching pattern for event names. If not set, it matches any event.
         /// There are 3 kind of patterns supported:
-        ///     1. &quot;*&quot;, it to matches any event name.
-        ///     2. Combine multiple events with &quot;,&quot;, for example &quot;connect,disconnect&quot;, it matches event &quot;connect&quot; and &quot;disconnect&quot;.
-        ///     3. The single event name, for example, &quot;connect&quot;, it matches &quot;connect&quot;.
+        ///     1. "*", it to matches any event name.
+        ///     2. Combine multiple events with ",", for example "connect,disconnect", it matches event "connect" and "disconnect".
+        ///     3. The single event name, for example, "connect", it matches "connect".
         /// </summary>
         public string EventPattern { get; set; }
         /// <summary>
         /// Gets or sets the matching pattern for category names. If not set, it matches any category.
         /// There are 3 kind of patterns supported:
-        ///     1. &quot;*&quot;, it to matches any category name.
-        ///     2. Combine multiple categories with &quot;,&quot;, for example &quot;connections,messages&quot;, it matches category &quot;connections&quot; and &quot;messages&quot;.
-        ///     3. The single category name, for example, &quot;connections&quot;, it matches the category &quot;connections&quot;.
+        ///     1. "*", it to matches any category name.
+        ///     2. Combine multiple categories with ",", for example "connections,messages", it matches category "connections" and "messages".
+        ///     3. The single category name, for example, "connections", it matches the category "connections".
         /// </summary>
         public string CategoryPattern { get; set; }
         /// <summary>

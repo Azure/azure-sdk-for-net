@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 
         internal static AssignmentReportResourceInfo DeserializeAssignmentReportResourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AssignedGuestConfigurationMachineComplianceStatus> complianceStatus = default;
             Optional<string> resourceId = default;
             Optional<IList<AssignmentReportResourceComplianceReason>> reasons = default;
@@ -42,7 +46,6 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     complianceStatus = new AssignedGuestConfigurationMachineComplianceStatus(property.Value.GetString());
@@ -57,7 +60,6 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AssignmentReportResourceComplianceReason> array = new List<AssignmentReportResourceComplianceReason>();
@@ -72,7 +74,6 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = BinaryData.FromString(property.Value.GetRawText());

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -15,6 +14,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static MongoDBShardKeyInfo DeserializeMongoDBShardKeyInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<MongoDBShardKeyField> fields = default;
             bool isUnique = default;
             foreach (var property in element.EnumerateObject())

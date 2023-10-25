@@ -30,7 +30,10 @@ namespace Azure.ResourceManager.Synapse.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
@@ -38,6 +41,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static UnknownIntegrationRuntime DeserializeUnknownIntegrationRuntime(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IntegrationRuntimeType type = "Unknown";
             Optional<string> description = default;
             IDictionary<string, BinaryData> additionalProperties = default;

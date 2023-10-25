@@ -306,10 +306,10 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="timespan"> The timespan of the query. It is a string with the following format &apos;startDateTime_ISO/endDateTime_ISO&apos;. </param>
+        /// <param name="timespan"> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </param>
         /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
         /// <param name="metricNamespace"> Metric namespace to query metric definitions for. </param>
-        /// <param name="metricName"> The names of the metrics (comma separated) to retrieve. Special case: If a metricname itself has a comma in it then use %2 to indicate it. Eg: &apos;Metric,Name1&apos; should be **&apos;Metric%2Name1&apos;**. </param>
+        /// <param name="metricName"> The names of the metrics (comma separated) to retrieve. Special case: If a metricname itself has a comma in it then use %2 to indicate it. Eg: 'Metric,Name1' should be **'Metric%2Name1'**. </param>
         /// <param name="aggregation"> The list of aggregation types (comma separated) to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="timespan"/>, <paramref name="metricNamespace"/>, <paramref name="metricName"/> or <paramref name="aggregation"/> is null. </exception>
@@ -347,10 +347,10 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="timespan"> The timespan of the query. It is a string with the following format &apos;startDateTime_ISO/endDateTime_ISO&apos;. </param>
+        /// <param name="timespan"> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </param>
         /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
         /// <param name="metricNamespace"> Metric namespace to query metric definitions for. </param>
-        /// <param name="metricName"> The names of the metrics (comma separated) to retrieve. Special case: If a metricname itself has a comma in it then use %2 to indicate it. Eg: &apos;Metric,Name1&apos; should be **&apos;Metric%2Name1&apos;**. </param>
+        /// <param name="metricName"> The names of the metrics (comma separated) to retrieve. Special case: If a metricname itself has a comma in it then use %2 to indicate it. Eg: 'Metric,Name1' should be **'Metric%2Name1'**. </param>
         /// <param name="aggregation"> The list of aggregation types (comma separated) to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="timespan"/>, <paramref name="metricNamespace"/>, <paramref name="metricName"/> or <paramref name="aggregation"/> is null. </exception>

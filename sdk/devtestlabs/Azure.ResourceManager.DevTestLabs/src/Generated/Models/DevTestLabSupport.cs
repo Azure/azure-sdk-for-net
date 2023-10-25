@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> Properties of a lab&apos;s support banner. </summary>
+    /// <summary> Properties of a lab's support banner. </summary>
     public partial class DevTestLabSupport
     {
         /// <summary> Initializes a new instance of DevTestLabSupport. </summary>

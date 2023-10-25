@@ -66,6 +66,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchAccountPoolStartTask DeserializeBatchAccountPoolStartTask(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> commandLine = default;
             Optional<IList<BatchResourceFile>> resourceFiles = default;
             Optional<IList<BatchEnvironmentSetting>> environmentSettings = default;
@@ -84,7 +88,6 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<BatchResourceFile> array = new List<BatchResourceFile>();
@@ -99,7 +102,6 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<BatchEnvironmentSetting> array = new List<BatchEnvironmentSetting>();
@@ -114,7 +116,6 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     userIdentity = BatchUserIdentity.DeserializeBatchUserIdentity(property.Value);
@@ -124,7 +125,6 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxTaskRetryCount = property.Value.GetInt32();
@@ -134,7 +134,6 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     waitForSuccess = property.Value.GetBoolean();
@@ -144,7 +143,6 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     containerSettings = BatchTaskContainerSettings.DeserializeBatchTaskContainerSettings(property.Value);

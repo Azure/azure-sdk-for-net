@@ -11,7 +11,7 @@ using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> A list of the server&apos;s Advanced Threat Protection configurations. </summary>
+    /// <summary> A list of the server's Advanced Threat Protection configurations. </summary>
     internal partial class LogicalServerAdvancedThreatProtectionListResult
     {
         /// <summary> Initializes a new instance of LogicalServerAdvancedThreatProtectionListResult. </summary>

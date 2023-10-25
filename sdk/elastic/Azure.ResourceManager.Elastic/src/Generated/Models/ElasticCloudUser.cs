@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
-    /// <summary> Details of the user&apos;s elastic account. </summary>
+    /// <summary> Details of the user's elastic account. </summary>
     public partial class ElasticCloudUser
     {
         /// <summary> Initializes a new instance of ElasticCloudUser. </summary>

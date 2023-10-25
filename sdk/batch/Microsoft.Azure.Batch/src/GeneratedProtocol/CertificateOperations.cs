@@ -54,6 +54,12 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <summary>
         /// Adds a Certificate to the specified Account.
         /// </summary>
+        /// <remarks>
+        /// Warning: This operation is deprecated and will be removed after February,
+        /// 2024. Please use the [Azure KeyVault
+        /// Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide)
+        /// instead.
+        /// </remarks>
         /// <param name='certificate'>
         /// The Certificate to be added.
         /// </param>
@@ -78,6 +84,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
+        [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
         public async Task<AzureOperationHeaderResponse<CertificateAddHeaders>> AddWithHttpMessagesAsync(CertificateAddParameter certificate, CertificateAddOptions certificateAddOptions = default(CertificateAddOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.BatchUrl == null)
@@ -289,6 +296,12 @@ namespace Microsoft.Azure.Batch.Protocol
         /// Lists all of the Certificates that have been added to the specified
         /// Account.
         /// </summary>
+        /// <remarks>
+        /// Warning: This operation is deprecated and will be removed after February,
+        /// 2024. Please use the [Azure KeyVault
+        /// Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide)
+        /// instead.
+        /// </remarks>
         /// <param name='certificateListOptions'>
         /// Additional parameters for the operation
         /// </param>
@@ -313,6 +326,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
+        [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
         public async Task<AzureOperationResponse<IPage<Certificate>,CertificateListHeaders>> ListWithHttpMessagesAsync(CertificateListOptions certificateListOptions = default(CertificateListOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.BatchUrl == null)
@@ -568,6 +582,11 @@ namespace Microsoft.Azure.Batch.Protocol
         /// delete the Certificate, you do not need to run this operation after the
         /// deletion failed. You must make sure that the Certificate is not being used
         /// by any resources, and then you can try again to delete the Certificate.
+        ///
+        /// Warning: This operation is deprecated and will be removed after February,
+        /// 2024. Please use the [Azure KeyVault
+        /// Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide)
+        /// instead.
         /// </remarks>
         /// <param name='thumbprintAlgorithm'>
         /// The algorithm used to derive the thumbprint parameter. This must be sha1.
@@ -596,6 +615,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
+        [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
         public async Task<AzureOperationHeaderResponse<CertificateCancelDeletionHeaders>> CancelDeletionWithHttpMessagesAsync(string thumbprintAlgorithm, string thumbprint, CertificateCancelDeletionOptions certificateCancelDeletionOptions = default(CertificateCancelDeletionOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.BatchUrl == null)
@@ -818,6 +838,11 @@ namespace Microsoft.Azure.Batch.Protocol
         /// Certificate status changes to deleteFailed. You can use Cancel Delete
         /// Certificate to set the status back to active if you decide that you want to
         /// continue using the Certificate.
+        ///
+        /// Warning: This operation is deprecated and will be removed after February,
+        /// 2024. Please use the [Azure KeyVault
+        /// Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide)
+        /// instead.
         /// </remarks>
         /// <param name='thumbprintAlgorithm'>
         /// The algorithm used to derive the thumbprint parameter. This must be sha1.
@@ -846,6 +871,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
+        [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
         public async Task<AzureOperationHeaderResponse<CertificateDeleteHeaders>> DeleteWithHttpMessagesAsync(string thumbprintAlgorithm, string thumbprint, CertificateDeleteOptions certificateDeleteOptions = default(CertificateDeleteOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.BatchUrl == null)
@@ -1057,6 +1083,12 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <summary>
         /// Gets information about the specified Certificate.
         /// </summary>
+        /// <remarks>
+        /// Warning: This operation is deprecated and will be removed after February,
+        /// 2024. Please use the [Azure KeyVault
+        /// Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide)
+        /// instead.
+        /// </remarks>
         /// <param name='thumbprintAlgorithm'>
         /// The algorithm used to derive the thumbprint parameter. This must be sha1.
         /// </param>
@@ -1087,6 +1119,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
+        [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
         public async Task<AzureOperationResponse<Certificate,CertificateGetHeaders>> GetWithHttpMessagesAsync(string thumbprintAlgorithm, string thumbprint, CertificateGetOptions certificateGetOptions = default(CertificateGetOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.BatchUrl == null)
@@ -1327,6 +1360,12 @@ namespace Microsoft.Azure.Batch.Protocol
         /// Lists all of the Certificates that have been added to the specified
         /// Account.
         /// </summary>
+        /// <remarks>
+        /// Warning: This operation is deprecated and will be removed after February,
+        /// 2024. Please use the [Azure KeyVault
+        /// Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide)
+        /// instead.
+        /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
         /// </param>
@@ -1354,6 +1393,7 @@ namespace Microsoft.Azure.Batch.Protocol
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
+        [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
         public async Task<AzureOperationResponse<IPage<Certificate>,CertificateListHeaders>> ListNextWithHttpMessagesAsync(string nextPageLink, CertificateListNextOptions certificateListNextOptions = default(CertificateListNextOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)

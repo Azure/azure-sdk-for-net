@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    /// <summary> A class representing the ScriptPackage data model. </summary>
+    /// <summary>
+    /// A class representing the ScriptPackage data model.
+    /// Script Package resources available for execution
+    /// </summary>
     public partial class ScriptPackageData : ResourceData
     {
         /// <summary> Initializes a new instance of ScriptPackageData. </summary>

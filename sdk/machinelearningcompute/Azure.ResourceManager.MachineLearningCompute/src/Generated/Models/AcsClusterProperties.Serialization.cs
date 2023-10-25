@@ -53,6 +53,10 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
 
         internal static AcsClusterProperties DeserializeAcsClusterProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> clusterFqdn = default;
             OrchestratorType orchestratorType = default;
             Optional<KubernetesClusterProperties> orchestratorProperties = default;
@@ -76,7 +80,6 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     orchestratorProperties = KubernetesClusterProperties.DeserializeKubernetesClusterProperties(property.Value);
@@ -86,7 +89,6 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SystemService> array = new List<SystemService>();
@@ -101,7 +103,6 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     masterCount = property.Value.GetInt32();
@@ -111,7 +112,6 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     agentCount = property.Value.GetInt32();
@@ -121,7 +121,6 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     agentVmSize = new AgentVmSizeType(property.Value.GetString());

@@ -27,7 +27,8 @@ namespace Azure.ResourceManager.EventGrid.Tests
         [SetUp]
         public async Task TestSetUp()
         {
-            _resourceGroup = await CreateResourceGroupAsync();
+            AzureLocation location = new AzureLocation("eastus2euap", "eastus2euap");
+            _resourceGroup = await CreateResourceGroupAsync(location);
             _eventGridTopicCollection = _resourceGroup.GetEventGridTopics();
         }
 

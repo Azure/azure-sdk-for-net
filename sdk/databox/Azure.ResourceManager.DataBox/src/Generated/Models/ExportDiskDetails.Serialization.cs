@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static ExportDiskDetails DeserializeExportDiskDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> manifestFile = default;
             Optional<string> manifestHash = default;
             Optional<string> backupManifestCloudPath = default;

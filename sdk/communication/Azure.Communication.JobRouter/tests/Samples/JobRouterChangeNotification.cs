@@ -13,7 +13,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
     public class JobRouterChangeNotification : SamplesBase<RouterTestEnvironment>
     {
         // Example JSON payloads
-        private readonly string jsonPayloadSampleOne = "{\"id\":\"1027db4a-17fe-4a7f-ae67-276c3120a29f\",\"topic\":\"/subscriptions/{subscription-id}/resourceGroups/{group-name}/providers/Microsoft.Communication/communicationServices/{communication-services-resource-name}\",\"subject\":\"worker/{worker-id}/job/{job-id}\",\"data\":{\"workerId\":\"w100\",\"jobId\":\"7f1df17b-570b-4ae5-9cf5-fe6ff64cc712\",\"channelReference\":\"test-abc\",\"channelId\":\"FooVoiceChannelId\",\"queueId\":\"625fec06-ab81-4e60-b780-f364ed96ade1\",\"offerId\":\"525fec06-ab81-4e60-b780-f364ed96ade1\",\"offerTimeUtc\":\"2021-06-23T02:43:30.3847144Z\",\"expiryTimeUtc\":\"2021-06-23T02:44:30.3847674Z\",\"jobPriority\":5,\"jobLabels\":{\"Locale\":\"en-us\",\"Segment\":\"Enterprise\",\"Token\":\"FooToken\"},\"jobTags\":{\"Locale\":\"en-us\",\"Segment\":\"Enterprise\",\"Token\":\"FooToken\"}},\"eventType\":\"Microsoft.Communication.RouterWorkerOfferIssued\",\"dataVersion\":\"1.0\",\"metadataVersion\":\"1\",\"eventTime\":\"2022-02-17T00:55:25.1736293Z\"}";
+        private readonly string jsonPayloadSampleOne = "{\"id\":\"1027db4a-17fe-4a7f-ae67-276c3120a29f\",\"topic\":\"/subscriptions/{subscription-id}/resourceGroups/{group-name}/providers/Microsoft.Communication/communicationServices/{communication-services-resource-name}\",\"subject\":\"worker/{worker-id}/job/{job-id}\",\"data\":{\"workerId\":\"w100\",\"jobId\":\"7f1df17b-570b-4ae5-9cf5-fe6ff64cc712\",\"channelReference\":\"test-abc\",\"channelId\":\"FooVoiceChannelId\",\"queueId\":\"625fec06-ab81-4e60-b780-f364ed96ade1\",\"offerId\":\"525fec06-ab81-4e60-b780-f364ed96ade1\",\"offerTimeUtc\":\"2021-06-23T02:43:30.3847144Z\",\"expiryTimeUtc\":\"2021-06-23T02:44:30.3847674Z\",\"jobPriority\":5,\"jobLabels\":{\"Locale\":\"en-us\",\"Segment\":\"Enterprise\",\"Token\":\"FooToken\"},\"jobTags\":{\"Locale\":\"en-us\",\"Segment\":\"Enterprise\",\"Token\":\"FooToken\"}},\"eventType\":\"Microsoft.Communication.WorkerOfferIssued\",\"dataVersion\":\"1.0\",\"metadataVersion\":\"1\",\"eventTime\":\"2022-02-17T00:55:25.1736293Z\"}";
 
         // This is a temporary fix before Router events are on-boarded as system events
         internal class AcsRouterWorkerOfferIssuedEventData
@@ -61,7 +61,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 // This is a temporary fix before Router events are on-boarded as system events
                 switch (egEvent.EventType)
                 {
-                    case "Microsoft.Communication.RouterWorkerOfferIssued":
+                    case "Microsoft.Communication.WorkerOfferIssued":
                         AcsRouterWorkerOfferIssuedEventData deserializedEventData =
                             egEvent.Data.ToObjectFromJson<AcsRouterWorkerOfferIssuedEventData>();
                         Console.Write(deserializedEventData.OfferId); // Offer Id

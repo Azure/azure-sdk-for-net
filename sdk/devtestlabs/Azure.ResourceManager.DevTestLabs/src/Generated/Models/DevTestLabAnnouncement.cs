@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> Properties of a lab&apos;s announcement banner. </summary>
+    /// <summary> Properties of a lab's announcement banner. </summary>
     public partial class DevTestLabAnnouncement
     {
         /// <summary> Initializes a new instance of DevTestLabAnnouncement. </summary>

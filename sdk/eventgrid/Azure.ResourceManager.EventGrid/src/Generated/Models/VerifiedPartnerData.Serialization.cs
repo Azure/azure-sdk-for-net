@@ -40,6 +40,11 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WritePropertyName("partnerTopicDetails"u8);
                 writer.WriteObjectValue(PartnerTopicDetails);
             }
+            if (Optional.IsDefined(PartnerDestinationDetails))
+            {
+                writer.WritePropertyName("partnerDestinationDetails"u8);
+                writer.WriteObjectValue(PartnerDestinationDetails);
+            }
             if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -51,6 +56,10 @@ namespace Azure.ResourceManager.EventGrid
 
         internal static VerifiedPartnerData DeserializeVerifiedPartnerData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -59,6 +68,7 @@ namespace Azure.ResourceManager.EventGrid
             Optional<string> organizationName = default;
             Optional<string> partnerDisplayName = default;
             Optional<PartnerDetails> partnerTopicDetails = default;
+            Optional<PartnerDetails> partnerDestinationDetails = default;
             Optional<VerifiedPartnerProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -81,7 +91,6 @@ namespace Azure.ResourceManager.EventGrid
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -100,7 +109,6 @@ namespace Azure.ResourceManager.EventGrid
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             partnerRegistrationImmutableId = property0.Value.GetGuid();
@@ -120,17 +128,24 @@ namespace Azure.ResourceManager.EventGrid
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             partnerTopicDetails = PartnerDetails.DeserializePartnerDetails(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("partnerDestinationDetails"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            partnerDestinationDetails = PartnerDetails.DeserializePartnerDetails(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new VerifiedPartnerProvisioningState(property0.Value.GetString());
@@ -140,7 +155,7 @@ namespace Azure.ResourceManager.EventGrid
                     continue;
                 }
             }
-            return new VerifiedPartnerData(id, name, type, systemData.Value, Optional.ToNullable(partnerRegistrationImmutableId), organizationName.Value, partnerDisplayName.Value, partnerTopicDetails.Value, Optional.ToNullable(provisioningState));
+            return new VerifiedPartnerData(id, name, type, systemData.Value, Optional.ToNullable(partnerRegistrationImmutableId), organizationName.Value, partnerDisplayName.Value, partnerTopicDetails.Value, partnerDestinationDetails.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

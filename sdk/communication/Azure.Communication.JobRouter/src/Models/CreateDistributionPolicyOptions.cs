@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -17,17 +15,17 @@ namespace Azure.Communication.JobRouter
         /// Public constructor.
         /// </summary>
         /// <param name="distributionPolicyId"> Id of the policy. </param>
-        /// <param name="offerTtl"> The amount of time before an offer expires. </param>
+        /// <param name="offerExpiresAfter"> The amount of time before an offer expires. </param>
         /// <param name="mode"> The amount of time before an offer expires. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="distributionPolicyId"/> is null. </exception>
-        public CreateDistributionPolicyOptions(string distributionPolicyId, TimeSpan offerTtl, DistributionMode mode)
+        public CreateDistributionPolicyOptions(string distributionPolicyId, TimeSpan offerExpiresAfter, DistributionMode mode)
         {
             Argument.AssertNotNullOrWhiteSpace(distributionPolicyId, nameof(distributionPolicyId));
-            Argument.AssertNotNull(offerTtl, nameof(offerTtl));
+            Argument.AssertNotNull(offerExpiresAfter, nameof(offerExpiresAfter));
             Argument.AssertNotNull(mode, nameof(mode));
 
             DistributionPolicyId = distributionPolicyId;
-            OfferTtl = offerTtl;
+            OfferExpiresAfter = offerExpiresAfter;
             Mode = mode;
         }
 
@@ -39,7 +37,7 @@ namespace Azure.Communication.JobRouter
         /// <summary>
         /// The amount of time before an offer expires.
         /// </summary>
-        public TimeSpan OfferTtl { get; }
+        public TimeSpan OfferExpiresAfter { get; }
 
         /// <summary>
         /// The policy governing the specific distribution method.
@@ -48,5 +46,10 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> The human readable name of the policy. </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// The content to send as the request conditions of the request.
+        /// </summary>
+        public RequestConditions RequestConditions { get; set; } = new();
     }
 }

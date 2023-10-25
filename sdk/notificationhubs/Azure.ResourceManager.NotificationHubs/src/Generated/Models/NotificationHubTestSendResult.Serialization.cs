@@ -54,7 +54,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Results);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Results.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(Results))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
@@ -63,6 +66,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 
         internal static NotificationHubTestSendResult DeserializeNotificationHubTestSendResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<NotificationHubSku> sku = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -79,7 +86,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sku = NotificationHubSku.DeserializeNotificationHubSku(property.Value);
@@ -89,7 +95,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -124,7 +129,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -143,7 +147,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             success = property0.Value.GetInt32();
@@ -153,7 +156,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             failure = property0.Value.GetInt32();
@@ -163,7 +165,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             results = BinaryData.FromString(property0.Value.GetRawText());

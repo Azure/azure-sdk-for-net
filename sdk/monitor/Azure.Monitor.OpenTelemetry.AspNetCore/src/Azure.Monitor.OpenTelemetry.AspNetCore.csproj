@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>An OpenTelemetry .NET distro that exports to Azure Monitor</Description>
+    <AssemblyTitle>AzureMonitor OpenTelemetry ASP.NET Core Distro</AssemblyTitle>
+    <Version>1.0.0-beta.9</Version>
+    <PackageTags>Azure Monitor OpenTelemetry Exporter Distro ApplicationInsights</PackageTags>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <NoWarn>SA1636</NoWarn>
+    <!-- this is temporary. will remove in future PR. -->
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Monitor.OpenTelemetry.Exporter" />
+    <PackageReference Include="OpenTelemetry.Extensions.Hosting" />
+    <PackageReference Include="System.Text.Encodings.Web" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" />
+  </ItemGroup>
+
+  <!-- Shared source from Exporter -->
+  <ItemGroup>
+    <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\ExceptionExtensions.cs" LinkBase="Shared" />
+  </ItemGroup>
+  
+</Project>

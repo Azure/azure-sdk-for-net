@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices
 {
-    /// <summary> A class representing the DeviceProvisioningServicesPrivateEndpointConnection data model. </summary>
+    /// <summary>
+    /// A class representing the DeviceProvisioningServicesPrivateEndpointConnection data model.
+    /// The private endpoint connection of a provisioning service
+    /// </summary>
     public partial class DeviceProvisioningServicesPrivateEndpointConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of DeviceProvisioningServicesPrivateEndpointConnectionData. </summary>

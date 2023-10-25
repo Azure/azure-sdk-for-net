@@ -40,7 +40,7 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
             try
             {
                 // poller object
-                FileUploadOperation operation = loadTestAdministrationClient.UploadTestFile(WaitUntil.Started, testId, "sample.jmx", RequestContent.Create(
+                FileUploadResultOperation operation = loadTestAdministrationClient.UploadTestFile(WaitUntil.Started, testId, "sample.jmx", RequestContent.Create(
                         Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "sample.jmx")
                     ));
 

@@ -23,54 +23,26 @@ namespace Azure.AI.AnomalyDetector
             }
             writer.WriteEndArray();
             writer.WritePropertyName("granularity"u8);
-            writer.WriteStringValue(Granularity.ToSerialString());
+            writer.WriteStringValue(Granularity.ToString());
             if (Optional.IsDefined(CustomInterval))
             {
-                if (CustomInterval != null)
-                {
-                    writer.WritePropertyName("customInterval"u8);
-                    writer.WriteNumberValue(CustomInterval.Value);
-                }
-                else
-                {
-                    writer.WriteNull("customInterval");
-                }
+                writer.WritePropertyName("customInterval"u8);
+                writer.WriteNumberValue(CustomInterval.Value);
             }
             if (Optional.IsDefined(Period))
             {
-                if (Period != null)
-                {
-                    writer.WritePropertyName("period"u8);
-                    writer.WriteNumberValue(Period.Value);
-                }
-                else
-                {
-                    writer.WriteNull("period");
-                }
+                writer.WritePropertyName("period"u8);
+                writer.WriteNumberValue(Period.Value);
             }
             if (Optional.IsDefined(StableTrendWindow))
             {
-                if (StableTrendWindow != null)
-                {
-                    writer.WritePropertyName("stableTrendWindow"u8);
-                    writer.WriteNumberValue(StableTrendWindow.Value);
-                }
-                else
-                {
-                    writer.WriteNull("stableTrendWindow");
-                }
+                writer.WritePropertyName("stableTrendWindow"u8);
+                writer.WriteNumberValue(StableTrendWindow.Value);
             }
             if (Optional.IsDefined(Threshold))
             {
-                if (Threshold != null)
-                {
-                    writer.WritePropertyName("threshold"u8);
-                    writer.WriteNumberValue(Threshold.Value);
-                }
-                else
-                {
-                    writer.WriteNull("threshold");
-                }
+                writer.WritePropertyName("threshold"u8);
+                writer.WriteNumberValue(Threshold.Value);
             }
             writer.WriteEndObject();
         }

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.SignalR.Models
     {
         internal static SignalRKeys DeserializeSignalRKeys(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> primaryKey = default;
             Optional<string> secondaryKey = default;
             Optional<string> primaryConnectionString = default;

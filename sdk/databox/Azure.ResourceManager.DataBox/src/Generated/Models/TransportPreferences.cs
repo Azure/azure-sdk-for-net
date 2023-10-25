@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.DataBox.Models
 {
     /// <summary> Preferences related to the shipment logistics of the sku. </summary>
-    internal partial class TransportPreferences
+    public partial class TransportPreferences
     {
         /// <summary> Initializes a new instance of TransportPreferences. </summary>
         /// <param name="preferredShipmentType"> Indicates Shipment Logistics type that the customer preferred. </param>
@@ -17,7 +17,18 @@ namespace Azure.ResourceManager.DataBox.Models
             PreferredShipmentType = preferredShipmentType;
         }
 
+        /// <summary> Initializes a new instance of TransportPreferences. </summary>
+        /// <param name="preferredShipmentType"> Indicates Shipment Logistics type that the customer preferred. </param>
+        /// <param name="isUpdated"> Read only property which indicates whether transport preferences has been updated or not after device is prepared. </param>
+        internal TransportPreferences(TransportShipmentType preferredShipmentType, bool? isUpdated)
+        {
+            PreferredShipmentType = preferredShipmentType;
+            IsUpdated = isUpdated;
+        }
+
         /// <summary> Indicates Shipment Logistics type that the customer preferred. </summary>
         public TransportShipmentType PreferredShipmentType { get; set; }
+        /// <summary> Read only property which indicates whether transport preferences has been updated or not after device is prepared. </summary>
+        public bool? IsUpdated { get; }
     }
 }

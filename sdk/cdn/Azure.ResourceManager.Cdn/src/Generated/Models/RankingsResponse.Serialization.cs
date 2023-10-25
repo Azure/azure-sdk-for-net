@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Cdn.Models
     {
         internal static RankingsResponse DeserializeRankingsResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> dateTimeBegin = default;
             Optional<DateTimeOffset> dateTimeEnd = default;
             Optional<IReadOnlyList<RankingsResponseTablesItem>> tables = default;
@@ -25,7 +29,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dateTimeBegin = property.Value.GetDateTimeOffset("O");
@@ -35,7 +38,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dateTimeEnd = property.Value.GetDateTimeOffset("O");
@@ -45,7 +47,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RankingsResponseTablesItem> array = new List<RankingsResponseTablesItem>();

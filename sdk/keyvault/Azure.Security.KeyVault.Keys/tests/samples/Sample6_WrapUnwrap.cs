@@ -55,7 +55,7 @@ namespace Azure.Security.KeyVault.Keys.Samples
 
             #region Snippet:KeysSample6UnwrapKey
             UnwrapResult unwrapResult = cryptoClient.UnwrapKey(KeyWrapAlgorithm.RsaOaep, wrapResult.EncryptedKey);
-            Debug.WriteLine($"Decrypted data using the algorithm {unwrapResult.Algorithm}, with key {unwrapResult.KeyId}. The resulting decrypted data is {Encoding.UTF8.GetString(unwrapResult.Key)}");
+            Debug.WriteLine($"Decrypted data using the algorithm {unwrapResult.Algorithm}, with key {unwrapResult.KeyId}. The resulting decrypted data is {Convert.ToBase64String(unwrapResult.Key)}");
             #endregion
 
             DeleteKeyOperation operation = keyClient.StartDeleteKey(rsaKeyName);

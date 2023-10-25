@@ -28,6 +28,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("compute");
                 }
             }
+            if (Optional.IsDefined(DeploymentConfiguration))
+            {
+                if (DeploymentConfiguration != null)
+                {
+                    writer.WritePropertyName("deploymentConfiguration"u8);
+                    writer.WriteObjectValue(DeploymentConfiguration);
+                }
+                else
+                {
+                    writer.WriteNull("deploymentConfiguration");
+                }
+            }
             if (Optional.IsDefined(ErrorThreshold))
             {
                 writer.WritePropertyName("errorThreshold"u8);
@@ -171,7 +183,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningBatchDeploymentProperties DeserializeMachineLearningBatchDeploymentProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> compute = default;
+            Optional<BatchDeploymentConfiguration> deploymentConfiguration = default;
             Optional<int> errorThreshold = default;
             Optional<MachineLearningBatchLoggingLevel> loggingLevel = default;
             Optional<int> maxConcurrencyPerInstance = default;
@@ -199,11 +216,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     compute = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("deploymentConfiguration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        deploymentConfiguration = null;
+                        continue;
+                    }
+                    deploymentConfiguration = BatchDeploymentConfiguration.DeserializeBatchDeploymentConfiguration(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("errorThreshold"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     errorThreshold = property.Value.GetInt32();
@@ -213,7 +239,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     loggingLevel = new MachineLearningBatchLoggingLevel(property.Value.GetString());
@@ -223,7 +248,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxConcurrencyPerInstance = property.Value.GetInt32();
@@ -233,7 +257,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     miniBatchSize = property.Value.GetInt64();
@@ -253,7 +276,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     outputAction = new MachineLearningBatchOutputAction(property.Value.GetString());
@@ -268,7 +290,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new MachineLearningDeploymentProvisioningState(property.Value.GetString());
@@ -334,14 +355,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     environmentVariables = dictionary;
                     continue;
@@ -356,20 +370,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     properties = dictionary;
                     continue;
                 }
             }
-            return new MachineLearningBatchDeploymentProperties(codeConfiguration.Value, description.Value, environmentId.Value, Optional.ToDictionary(environmentVariables), Optional.ToDictionary(properties), compute.Value, Optional.ToNullable(errorThreshold), Optional.ToNullable(loggingLevel), Optional.ToNullable(maxConcurrencyPerInstance), Optional.ToNullable(miniBatchSize), model.Value, Optional.ToNullable(outputAction), outputFileName.Value, Optional.ToNullable(provisioningState), resources.Value, retrySettings.Value);
+            return new MachineLearningBatchDeploymentProperties(codeConfiguration.Value, description.Value, environmentId.Value, Optional.ToDictionary(environmentVariables), Optional.ToDictionary(properties), compute.Value, deploymentConfiguration.Value, Optional.ToNullable(errorThreshold), Optional.ToNullable(loggingLevel), Optional.ToNullable(maxConcurrencyPerInstance), Optional.ToNullable(miniBatchSize), model.Value, Optional.ToNullable(outputAction), outputFileName.Value, Optional.ToNullable(provisioningState), resources.Value, retrySettings.Value);
         }
     }
 }

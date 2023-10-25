@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static RestorePolicy DeserializeRestorePolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool enabled = default;
             Optional<int> days = default;
             Optional<DateTimeOffset> lastEnabledTime = default;
@@ -43,7 +47,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     days = property.Value.GetInt32();
@@ -53,7 +56,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastEnabledTime = property.Value.GetDateTimeOffset("O");
@@ -63,7 +65,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minRestoreTime = property.Value.GetDateTimeOffset("O");

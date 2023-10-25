@@ -24,6 +24,10 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static SeverityCondition DeserializeSeverityCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AnomalySeverity minAlertSeverity = default;
             AnomalySeverity maxAlertSeverity = default;
             foreach (var property in element.EnumerateObject())

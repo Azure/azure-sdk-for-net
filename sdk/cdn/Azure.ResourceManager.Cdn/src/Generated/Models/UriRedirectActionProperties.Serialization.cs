@@ -49,6 +49,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static UriRedirectActionProperties DeserializeUriRedirectActionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             UriRedirectActionType typeName = default;
             RedirectType redirectType = default;
             Optional<DestinationProtocol> destinationProtocol = default;
@@ -72,7 +76,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     destinationProtocol = new DestinationProtocol(property.Value.GetString());

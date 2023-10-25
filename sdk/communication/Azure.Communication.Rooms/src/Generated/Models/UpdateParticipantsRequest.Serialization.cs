@@ -15,13 +15,17 @@ namespace Azure.Communication.Rooms
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("participants"u8);
-            writer.WriteStartArray();
-            foreach (var item in Participants)
+            if (Optional.IsCollectionDefined(Participants))
             {
-                writer.WriteObjectValue(item);
+                writer.WritePropertyName("participants"u8);
+                writer.WriteStartObject();
+                foreach (var item in Participants)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
-            writer.WriteEndArray();
             writer.WriteEndObject();
         }
     }

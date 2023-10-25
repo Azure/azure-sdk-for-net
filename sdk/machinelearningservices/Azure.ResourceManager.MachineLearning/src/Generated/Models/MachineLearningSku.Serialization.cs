@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningSku DeserializeMachineLearningSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<MachineLearningSkuTier> tier = default;
             Optional<string> size = default;
@@ -58,7 +62,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tier = property.Value.GetString().ToMachineLearningSkuTier();
@@ -78,7 +81,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     capacity = property.Value.GetInt32();

@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static WindowsProfile DeserializeWindowsProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> adminPassword = default;
             Optional<string> adminUsername = default;
             Optional<bool> enableCsiProxy = default;
@@ -60,7 +64,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableCsiProxy = property.Value.GetBoolean();
@@ -70,7 +73,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     licenseType = new LicenseType(property.Value.GetString());

@@ -19,5 +19,7 @@ namespace Azure.Identity
         public TimeSpan? InitialImdsConnectionTimeout { get; set; }
 
         public CredentialPipeline Pipeline { get; set; }
+
+        public bool ExcludeTokenExchangeManagedIdentitySource { get; set; }
     }
 }

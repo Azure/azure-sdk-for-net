@@ -49,6 +49,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static PolybaseSettings DeserializePolybaseSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PolybaseSettingsRejectType> rejectType = default;
             Optional<object> rejectValue = default;
             Optional<object> rejectSampleValue = default;
@@ -61,7 +65,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rejectType = new PolybaseSettingsRejectType(property.Value.GetString());
@@ -71,7 +74,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rejectValue = property.Value.GetObject();
@@ -81,7 +83,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rejectSampleValue = property.Value.GetObject();
@@ -91,7 +92,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     useTypeDefault = property.Value.GetObject();

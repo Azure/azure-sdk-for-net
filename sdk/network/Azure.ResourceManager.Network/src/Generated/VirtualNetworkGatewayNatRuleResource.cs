@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Creates a nat rule to a scalable virtual network gateway if it doesn&apos;t exist else updates the existing nat rules.
+        /// Creates a nat rule to a scalable virtual network gateway if it doesn't exist else updates the existing nat rules.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Creates a nat rule to a scalable virtual network gateway if it doesn&apos;t exist else updates the existing nat rules.
+        /// Creates a nat rule to a scalable virtual network gateway if it doesn't exist else updates the existing nat rules.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

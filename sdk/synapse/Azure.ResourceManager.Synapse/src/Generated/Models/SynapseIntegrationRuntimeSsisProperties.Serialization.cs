@@ -58,7 +58,10 @@ namespace Azure.ResourceManager.Synapse.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
@@ -66,6 +69,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseIntegrationRuntimeSsisProperties DeserializeSynapseIntegrationRuntimeSsisProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SynapseIntegrationRuntimeSsisCatalogInfo> catalogInfo = default;
             Optional<SynapseIntegrationRuntimeLicenseType> licenseType = default;
             Optional<SynapseIntegrationRuntimeCustomSetupScriptProperties> customSetupScriptProperties = default;
@@ -80,7 +87,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     catalogInfo = SynapseIntegrationRuntimeSsisCatalogInfo.DeserializeSynapseIntegrationRuntimeSsisCatalogInfo(property.Value);
@@ -90,7 +96,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     licenseType = new SynapseIntegrationRuntimeLicenseType(property.Value.GetString());
@@ -100,7 +105,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     customSetupScriptProperties = SynapseIntegrationRuntimeCustomSetupScriptProperties.DeserializeSynapseIntegrationRuntimeCustomSetupScriptProperties(property.Value);
@@ -110,7 +114,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dataProxyProperties = SynapseIntegrationRuntimeDataProxyProperties.DeserializeSynapseIntegrationRuntimeDataProxyProperties(property.Value);
@@ -120,7 +123,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     edition = new SynapseIntegrationRuntimeEdition(property.Value.GetString());
@@ -130,7 +132,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SynapseCustomSetupBase> array = new List<SynapseCustomSetupBase>();

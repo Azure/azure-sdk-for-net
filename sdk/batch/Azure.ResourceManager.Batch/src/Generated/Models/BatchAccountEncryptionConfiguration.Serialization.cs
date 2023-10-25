@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchAccountEncryptionConfiguration DeserializeBatchAccountEncryptionConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BatchAccountKeySource> keySource = default;
             Optional<KeyVaultProperties> keyVaultProperties = default;
             foreach (var property in element.EnumerateObject())
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     keySource = property.Value.GetString().ToBatchAccountKeySource();
@@ -48,7 +51,6 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     keyVaultProperties = KeyVaultProperties.DeserializeKeyVaultProperties(property.Value);

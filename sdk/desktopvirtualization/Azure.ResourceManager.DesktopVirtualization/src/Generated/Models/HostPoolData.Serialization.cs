@@ -135,10 +135,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 writer.WritePropertyName("startVMOnConnect"u8);
                 writer.WriteBooleanValue(StartVmOnConnect.Value);
             }
-            if (Optional.IsDefined(MigrationRequest))
+            if (Optional.IsDefined(AgentUpdate))
             {
-                writer.WritePropertyName("migrationRequest"u8);
-                writer.WriteObjectValue(MigrationRequest);
+                writer.WritePropertyName("agentUpdate"u8);
+                writer.WriteObjectValue(AgentUpdate);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -146,6 +146,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         internal static HostPoolData DeserializeHostPoolData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> managedBy = default;
             Optional<string> kind = default;
             Optional<ETag> etag = default;
@@ -177,15 +181,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
             Optional<HostPoolSsoSecretType> ssoSecretType = default;
             PreferredAppGroupType preferredAppGroupType = default;
             Optional<bool> startVmOnConnect = default;
-            Optional<DesktopVirtualizationMigrationProperties> migrationRequest = default;
             Optional<bool> cloudPCResource = default;
+            Optional<SessionHostAgentUpdateProperties> agentUpdate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("managedBy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     managedBy = new ResourceIdentifier(property.Value.GetString());
@@ -200,7 +203,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -210,7 +212,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
@@ -220,7 +221,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sku = DesktopVirtualizationSku.DeserializeDesktopVirtualizationSku(property.Value);
@@ -230,7 +230,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     plan = JsonSerializer.Deserialize<ArmPlan>(property.Value.GetRawText());
@@ -240,7 +239,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -275,7 +273,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -314,7 +311,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             personalDesktopAssignmentType = new PersonalDesktopAssignmentType(property0.Value.GetString());
@@ -329,7 +325,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             maxSessionLimit = property0.Value.GetInt32();
@@ -344,7 +339,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             ring = property0.Value.GetInt32();
@@ -354,7 +348,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             validationEnvironment = property0.Value.GetBoolean();
@@ -364,7 +357,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             registrationInfo = HostPoolRegistrationInfo.DeserializeHostPoolRegistrationInfo(property0.Value);
@@ -379,7 +371,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -409,7 +400,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             ssoSecretType = new HostPoolSsoSecretType(property0.Value.GetString());
@@ -424,37 +414,34 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             startVmOnConnect = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("migrationRequest"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            migrationRequest = DesktopVirtualizationMigrationProperties.DeserializeDesktopVirtualizationMigrationProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("cloudPcResource"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             cloudPCResource = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("agentUpdate"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            agentUpdate = SessionHostAgentUpdateProperties.DeserializeSessionHostAgentUpdateProperties(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new HostPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, objectId.Value, friendlyName.Value, description.Value, hostPoolType, Optional.ToNullable(personalDesktopAssignmentType), customRdpProperty.Value, Optional.ToNullable(maxSessionLimit), loadBalancerType, Optional.ToNullable(ring), Optional.ToNullable(validationEnvironment), registrationInfo.Value, vmTemplate.Value, Optional.ToList(applicationGroupReferences), ssoadfsAuthority.Value, ssoClientId.Value, ssoClientSecretKeyVaultPath.Value, Optional.ToNullable(ssoSecretType), preferredAppGroupType, Optional.ToNullable(startVmOnConnect), migrationRequest.Value, Optional.ToNullable(cloudPCResource), managedBy.Value, kind.Value, Optional.ToNullable(etag), identity, sku.Value, plan);
+            return new HostPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, objectId.Value, friendlyName.Value, description.Value, hostPoolType, Optional.ToNullable(personalDesktopAssignmentType), customRdpProperty.Value, Optional.ToNullable(maxSessionLimit), loadBalancerType, Optional.ToNullable(ring), Optional.ToNullable(validationEnvironment), registrationInfo.Value, vmTemplate.Value, Optional.ToList(applicationGroupReferences), ssoadfsAuthority.Value, ssoClientId.Value, ssoClientSecretKeyVaultPath.Value, Optional.ToNullable(ssoSecretType), preferredAppGroupType, Optional.ToNullable(startVmOnConnect), Optional.ToNullable(cloudPCResource), agentUpdate.Value, managedBy.Value, kind.Value, Optional.ToNullable(etag), identity, sku.Value, plan);
         }
     }
 }

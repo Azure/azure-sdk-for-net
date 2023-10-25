@@ -15,6 +15,10 @@ namespace Azure.Maps.Search.Models
     {
         internal static PointOfInterestClassification DeserializePointOfInterestClassification(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> code = default;
             Optional<IReadOnlyList<ClassificationName>> names = default;
             foreach (var property in element.EnumerateObject())
@@ -28,7 +32,6 @@ namespace Azure.Maps.Search.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ClassificationName> array = new List<ClassificationName>();

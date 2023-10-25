@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> Initializes a new instance of ConsistencyPolicy. </summary>
         /// <param name="defaultConsistencyLevel"> The default consistency level and configuration settings of the Cosmos DB account. </param>
-        /// <param name="maxStalenessPrefix"> When used with the Bounded Staleness consistency level, this value represents the number of stale requests tolerated. Accepted range for this value is 1 – 2,147,483,647. Required when defaultConsistencyPolicy is set to &apos;BoundedStaleness&apos;. </param>
-        /// <param name="maxIntervalInSeconds"> When used with the Bounded Staleness consistency level, this value represents the time amount of staleness (in seconds) tolerated. Accepted range for this value is 5 - 86400. Required when defaultConsistencyPolicy is set to &apos;BoundedStaleness&apos;. </param>
+        /// <param name="maxStalenessPrefix"> When used with the Bounded Staleness consistency level, this value represents the number of stale requests tolerated. Accepted range for this value is 1 – 2,147,483,647. Required when defaultConsistencyPolicy is set to 'BoundedStaleness'. </param>
+        /// <param name="maxIntervalInSeconds"> When used with the Bounded Staleness consistency level, this value represents the time amount of staleness (in seconds) tolerated. Accepted range for this value is 5 - 86400. Required when defaultConsistencyPolicy is set to 'BoundedStaleness'. </param>
         internal ConsistencyPolicy(DefaultConsistencyLevel defaultConsistencyLevel, long? maxStalenessPrefix, int? maxIntervalInSeconds)
         {
             DefaultConsistencyLevel = defaultConsistencyLevel;
@@ -30,9 +30,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> The default consistency level and configuration settings of the Cosmos DB account. </summary>
         public DefaultConsistencyLevel DefaultConsistencyLevel { get; set; }
-        /// <summary> When used with the Bounded Staleness consistency level, this value represents the number of stale requests tolerated. Accepted range for this value is 1 – 2,147,483,647. Required when defaultConsistencyPolicy is set to &apos;BoundedStaleness&apos;. </summary>
+        /// <summary> When used with the Bounded Staleness consistency level, this value represents the number of stale requests tolerated. Accepted range for this value is 1 – 2,147,483,647. Required when defaultConsistencyPolicy is set to 'BoundedStaleness'. </summary>
         public long? MaxStalenessPrefix { get; set; }
-        /// <summary> When used with the Bounded Staleness consistency level, this value represents the time amount of staleness (in seconds) tolerated. Accepted range for this value is 5 - 86400. Required when defaultConsistencyPolicy is set to &apos;BoundedStaleness&apos;. </summary>
+        /// <summary> When used with the Bounded Staleness consistency level, this value represents the time amount of staleness (in seconds) tolerated. Accepted range for this value is 5 - 86400. Required when defaultConsistencyPolicy is set to 'BoundedStaleness'. </summary>
         public int? MaxIntervalInSeconds { get; set; }
     }
 }

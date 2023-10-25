@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Relay.Models
 
         internal static RelayNetworkRuleSetIPRule DeserializeRelayNetworkRuleSetIPRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> ipMask = default;
             Optional<RelayNetworkRuleIPAction> action = default;
             foreach (var property in element.EnumerateObject())
@@ -43,7 +47,6 @@ namespace Azure.ResourceManager.Relay.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     action = new RelayNetworkRuleIPAction(property.Value.GetString());

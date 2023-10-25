@@ -9,7 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.WebPubSub.Models
 {
-    /// <summary> Describes an available sku.&quot;. </summary>
+    /// <summary> Describes an available sku.". </summary>
     public partial class WebPubSubSku
     {
         /// <summary> Initializes a new instance of WebPubSubSku. </summary>

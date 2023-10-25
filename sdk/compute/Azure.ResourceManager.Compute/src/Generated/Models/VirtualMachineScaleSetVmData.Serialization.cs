@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -110,6 +111,10 @@ namespace Azure.ResourceManager.Compute
 
         internal static VirtualMachineScaleSetVmData DeserializeVirtualMachineScaleSetVmData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> instanceId = default;
             Optional<ComputeSku> sku = default;
             Optional<ComputePlan> plan = default;
@@ -139,6 +144,7 @@ namespace Azure.ResourceManager.Compute
             Optional<string> modelDefinitionApplied = default;
             Optional<VirtualMachineScaleSetVmProtectionPolicy> protectionPolicy = default;
             Optional<string> userData = default;
+            Optional<DateTimeOffset> timeCreated = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("instanceId"u8))
@@ -150,7 +156,6 @@ namespace Azure.ResourceManager.Compute
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sku = ComputeSku.DeserializeComputeSku(property.Value);
@@ -160,7 +165,6 @@ namespace Azure.ResourceManager.Compute
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     plan = ComputePlan.DeserializeComputePlan(property.Value);
@@ -170,7 +174,6 @@ namespace Azure.ResourceManager.Compute
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<VirtualMachineExtensionData> array = new List<VirtualMachineExtensionData>();
@@ -185,7 +188,6 @@ namespace Azure.ResourceManager.Compute
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -200,7 +202,6 @@ namespace Azure.ResourceManager.Compute
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
@@ -210,7 +211,6 @@ namespace Azure.ResourceManager.Compute
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -245,7 +245,6 @@ namespace Azure.ResourceManager.Compute
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -264,7 +263,6 @@ namespace Azure.ResourceManager.Compute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             latestModelApplied = property0.Value.GetBoolean();
@@ -279,7 +277,6 @@ namespace Azure.ResourceManager.Compute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             instanceView = VirtualMachineScaleSetVmInstanceView.DeserializeVirtualMachineScaleSetVmInstanceView(property0.Value);
@@ -289,7 +286,6 @@ namespace Azure.ResourceManager.Compute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             hardwareProfile = VirtualMachineHardwareProfile.DeserializeVirtualMachineHardwareProfile(property0.Value);
@@ -299,7 +295,6 @@ namespace Azure.ResourceManager.Compute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             storageProfile = VirtualMachineStorageProfile.DeserializeVirtualMachineStorageProfile(property0.Value);
@@ -309,7 +304,6 @@ namespace Azure.ResourceManager.Compute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             additionalCapabilities = AdditionalCapabilities.DeserializeAdditionalCapabilities(property0.Value);
@@ -319,7 +313,6 @@ namespace Azure.ResourceManager.Compute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             osProfile = VirtualMachineOSProfile.DeserializeVirtualMachineOSProfile(property0.Value);
@@ -329,7 +322,6 @@ namespace Azure.ResourceManager.Compute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             securityProfile = SecurityProfile.DeserializeSecurityProfile(property0.Value);
@@ -339,7 +331,6 @@ namespace Azure.ResourceManager.Compute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             networkProfile = VirtualMachineNetworkProfile.DeserializeVirtualMachineNetworkProfile(property0.Value);
@@ -349,7 +340,6 @@ namespace Azure.ResourceManager.Compute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             networkProfileConfiguration = VirtualMachineScaleSetVmNetworkProfileConfiguration.DeserializeVirtualMachineScaleSetVmNetworkProfileConfiguration(property0.Value);
@@ -359,7 +349,6 @@ namespace Azure.ResourceManager.Compute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             diagnosticsProfile = DiagnosticsProfile.DeserializeDiagnosticsProfile(property0.Value);
@@ -369,7 +358,6 @@ namespace Azure.ResourceManager.Compute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             availabilitySet = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
@@ -394,7 +382,6 @@ namespace Azure.ResourceManager.Compute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             protectionPolicy = VirtualMachineScaleSetVmProtectionPolicy.DeserializeVirtualMachineScaleSetVmProtectionPolicy(property0.Value);
@@ -405,11 +392,20 @@ namespace Azure.ResourceManager.Compute
                             userData = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("timeCreated"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            timeCreated = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new VirtualMachineScaleSetVmData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, instanceId.Value, sku.Value, plan.Value, Optional.ToList(resources), Optional.ToList(zones), identity, Optional.ToNullable(latestModelApplied), vmId.Value, instanceView.Value, hardwareProfile.Value, storageProfile.Value, additionalCapabilities.Value, osProfile.Value, securityProfile.Value, networkProfile.Value, networkProfileConfiguration.Value, diagnosticsProfile.Value, availabilitySet, provisioningState.Value, licenseType.Value, modelDefinitionApplied.Value, protectionPolicy.Value, userData.Value);
+            return new VirtualMachineScaleSetVmData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, instanceId.Value, sku.Value, plan.Value, Optional.ToList(resources), Optional.ToList(zones), identity, Optional.ToNullable(latestModelApplied), vmId.Value, instanceView.Value, hardwareProfile.Value, storageProfile.Value, additionalCapabilities.Value, osProfile.Value, securityProfile.Value, networkProfile.Value, networkProfileConfiguration.Value, diagnosticsProfile.Value, availabilitySet, provisioningState.Value, licenseType.Value, modelDefinitionApplied.Value, protectionPolicy.Value, userData.Value, Optional.ToNullable(timeCreated));
         }
     }
 }

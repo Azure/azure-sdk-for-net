@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     {
         internal static RedisEnterpriseOperationStatus DeserializeRedisEnterpriseOperationStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<DateTimeOffset> startTime = default;
@@ -27,7 +31,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -42,7 +45,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startTime = property.Value.GetDateTimeOffset("O");
@@ -52,7 +54,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     endTime = property.Value.GetDateTimeOffset("O");
@@ -67,7 +68,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     error = ErrorResponse.DeserializeErrorResponse(property.Value);

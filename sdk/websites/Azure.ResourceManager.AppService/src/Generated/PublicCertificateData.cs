@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the PublicCertificate data model. </summary>
+    /// <summary>
+    /// A class representing the PublicCertificate data model.
+    /// Public certificate object
+    /// </summary>
     public partial class PublicCertificateData : ResourceData
     {
         /// <summary> Initializes a new instance of PublicCertificateData. </summary>
@@ -27,13 +30,13 @@ namespace Azure.ResourceManager.AppService
         /// <param name="systemData"> The systemData. </param>
         /// <param name="blob"> Public Certificate byte array. </param>
         /// <param name="publicCertificateLocation"> Public Certificate Location. </param>
-        /// <param name="thumbprint"> Certificate Thumbprint. </param>
+        /// <param name="thumbprintString"> Certificate Thumbprint. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal PublicCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, byte[] blob, PublicCertificateLocation? publicCertificateLocation, BinaryData thumbprint, string kind) : base(id, name, resourceType, systemData)
+        internal PublicCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, byte[] blob, PublicCertificateLocation? publicCertificateLocation, string thumbprintString, string kind) : base(id, name, resourceType, systemData)
         {
             Blob = blob;
             PublicCertificateLocation = publicCertificateLocation;
-            Thumbprint = thumbprint;
+            ThumbprintString = thumbprintString;
             Kind = kind;
         }
 
@@ -41,37 +44,8 @@ namespace Azure.ResourceManager.AppService
         public byte[] Blob { get; set; }
         /// <summary> Public Certificate Location. </summary>
         public PublicCertificateLocation? PublicCertificateLocation { get; set; }
-        /// <summary>
-        /// Certificate Thumbprint
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Thumbprint { get; }
+        /// <summary> Certificate Thumbprint. </summary>
+        public string ThumbprintString { get; }
         /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }

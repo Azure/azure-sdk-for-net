@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-08-15";
+            _apiVersion = apiVersion ?? "2023-03-15-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.CosmosDB
             return message;
         }
 
-        /// <summary> Creates or updates an Azure Cosmos DB database account. The &quot;Update&quot; method is preferred when performing updates on an account. </summary>
+        /// <summary> Creates or updates an Azure Cosmos DB database account. The "Update" method is preferred when performing updates on an account. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Creates or updates an Azure Cosmos DB database account. The &quot;Update&quot; method is preferred when performing updates on an account. </summary>
+        /// <summary> Creates or updates an Azure Cosmos DB database account. The "Update" method is preferred when performing updates on an account. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
@@ -1046,7 +1046,7 @@ namespace Azure.ResourceManager.CosmosDB
             return message;
         }
 
-        /// <summary> Checks that the Azure Cosmos DB account name already exists. A valid account name may contain only lowercase letters, numbers, and the &apos;-&apos; character, and must be between 3 and 50 characters. </summary>
+        /// <summary> Checks that the Azure Cosmos DB account name already exists. A valid account name may contain only lowercase letters, numbers, and the '-' character, and must be between 3 and 50 characters. </summary>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
@@ -1074,7 +1074,7 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
-        /// <summary> Checks that the Azure Cosmos DB account name already exists. A valid account name may contain only lowercase letters, numbers, and the &apos;-&apos; character, and must be between 3 and 50 characters. </summary>
+        /// <summary> Checks that the Azure Cosmos DB account name already exists. A valid account name may contain only lowercase letters, numbers, and the '-' character, and must be between 3 and 50 characters. </summary>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>

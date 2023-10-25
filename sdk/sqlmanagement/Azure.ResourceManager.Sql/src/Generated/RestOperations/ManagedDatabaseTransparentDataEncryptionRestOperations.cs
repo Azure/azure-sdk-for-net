@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        /// <summary> Gets a managed database&apos;s transparent data encryption. </summary>
+        /// <summary> Gets a managed database's transparent data encryption. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Gets a managed database&apos;s transparent data encryption. </summary>
+        /// <summary> Gets a managed database's transparent data encryption. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        /// <summary> Updates a database&apos;s transparent data encryption configuration. </summary>
+        /// <summary> Updates a database's transparent data encryption configuration. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Updates a database&apos;s transparent data encryption configuration. </summary>
+        /// <summary> Updates a database's transparent data encryption configuration. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        /// <summary> Gets a list of managed database&apos;s transparent data encryptions. </summary>
+        /// <summary> Gets a list of managed database's transparent data encryptions. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Gets a list of managed database&apos;s transparent data encryptions. </summary>
+        /// <summary> Gets a list of managed database's transparent data encryptions. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        /// <summary> Gets a list of managed database&apos;s transparent data encryptions. </summary>
+        /// <summary> Gets a list of managed database's transparent data encryptions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Gets a list of managed database&apos;s transparent data encryptions. </summary>
+        /// <summary> Gets a list of managed database's transparent data encryptions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>

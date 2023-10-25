@@ -1,8 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
-
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
 using OpenTelemetry;
@@ -10,7 +11,7 @@ using OpenTelemetry.Metrics;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
-    internal class MetricHelper
+    internal static class MetricHelper
     {
         private const int Version = 2;
 
@@ -21,14 +22,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 foreach (ref readonly var metricPoint in metric.GetMetricPoints())
                 {
-                    telemetryItems.Add(new TelemetryItem(metricPoint.EndTime.UtcDateTime, resource, instrumentationKey)
+                    try
                     {
-                        Data = new MonitorBase
+                        telemetryItems.Add(new TelemetryItem(metricPoint.EndTime.UtcDateTime, resource, instrumentationKey)
                         {
-                            BaseType = "MetricData",
-                            BaseData = new MetricsData(Version, metric, metricPoint)
-                        }
-                    });
+                            Data = new MonitorBase
+                            {
+                                BaseType = "MetricData",
+                                BaseData = new MetricsData(Version, metric, metricPoint)
+                            }
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        AzureMonitorExporterEventSource.Log.FailedToConvertMetricPoint(meterName: metric.MeterName, instrumentName: metric.Name, ex: ex);
+                    }
                 }
             }
 

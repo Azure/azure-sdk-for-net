@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="value"> Collection of Build service resources. </param>
         /// <param name="nextLink">
         /// URL client should use to fetch the next page (per server side paging).
-        /// It&apos;s null for now, added for future use.
+        /// It's null for now, added for future use.
         /// </param>
         internal AppBuildServiceList(IReadOnlyList<AppPlatformBuildServiceData> value, string nextLink)
         {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public IReadOnlyList<AppPlatformBuildServiceData> Value { get; }
         /// <summary>
         /// URL client should use to fetch the next page (per server side paging).
-        /// It&apos;s null for now, added for future use.
+        /// It's null for now, added for future use.
         /// </summary>
         public string NextLink { get; }
     }

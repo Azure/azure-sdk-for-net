@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataProtectionBackup
 {
-    /// <summary> A class representing the DataProtectionBackupInstance data model. </summary>
+    /// <summary>
+    /// A class representing the DataProtectionBackupInstance data model.
+    /// BackupInstance Resource
+    /// </summary>
     public partial class DataProtectionBackupInstanceData : ResourceData
     {
         /// <summary> Initializes a new instance of DataProtectionBackupInstanceData. </summary>

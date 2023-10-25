@@ -20,8 +20,8 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
 
         public static TargetRelationType ToTargetRelationType(this string value)
         {
-            if (string.Equals(value, "assessment", StringComparison.InvariantCultureIgnoreCase)) return TargetRelationType.Assessment;
-            if (string.Equals(value, "target", StringComparison.InvariantCultureIgnoreCase)) return TargetRelationType.Target;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "assessment")) return TargetRelationType.Assessment;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "target")) return TargetRelationType.Target;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown TargetRelationType value.");
         }
     }

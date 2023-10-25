@@ -61,6 +61,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static ImageOSDisk DeserializeImageOSDisk(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SupportedOperatingSystemType osType = default;
             OperatingSystemStateType osState = default;
             Optional<WritableSubResource> snapshot = default;
@@ -86,7 +90,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     snapshot = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
@@ -96,7 +99,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     managedDisk = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
@@ -106,7 +108,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        blobUri = null;
                         continue;
                     }
                     blobUri = new Uri(property.Value.GetString());
@@ -116,7 +117,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     caching = property.Value.GetString().ToCachingType();
@@ -126,7 +126,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     diskSizeGB = property.Value.GetInt32();
@@ -136,7 +135,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     storageAccountType = new StorageAccountType(property.Value.GetString());
@@ -146,7 +144,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     diskEncryptionSet = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());

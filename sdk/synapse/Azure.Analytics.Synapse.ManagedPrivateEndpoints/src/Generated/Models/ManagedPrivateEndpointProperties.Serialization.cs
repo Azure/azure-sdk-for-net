@@ -56,6 +56,10 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
 
         internal static ManagedPrivateEndpointProperties DeserializeManagedPrivateEndpointProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> privateLinkResourceId = default;
             Optional<string> groupId = default;
@@ -90,7 +94,6 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     connectionState = ManagedPrivateEndpointConnectionState.DeserializeManagedPrivateEndpointConnectionState(property.Value);
@@ -100,7 +103,6 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isReserved = property.Value.GetBoolean();
@@ -110,7 +112,6 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -125,7 +126,6 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isCompliant = property.Value.GetBoolean();

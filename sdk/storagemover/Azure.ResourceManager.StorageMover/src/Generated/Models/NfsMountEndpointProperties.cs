@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
-    /// <summary> The NfsMountEndpointProperties. </summary>
+    /// <summary> The properties of NFS share endpoint. </summary>
     public partial class NfsMountEndpointProperties : EndpointBaseProperties
     {
         /// <summary> Initializes a new instance of NfsMountEndpointProperties. </summary>

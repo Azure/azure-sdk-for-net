@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string ForceUpdateTag { get; set; }
         /// <summary> The name of the extension handler publisher. </summary>
         public string Publisher { get; set; }
-        /// <summary> Specifies the type of the extension; an example is &quot;CustomScriptExtension&quot;. </summary>
+        /// <summary> Specifies the type of the extension; an example is "CustomScriptExtension". </summary>
         public string ExtensionType { get; set; }
         /// <summary> Specifies the version of the script handler. </summary>
         public string TypeHandlerVersion { get; set; }

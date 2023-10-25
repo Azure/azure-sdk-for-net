@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static GroupContractProperties DeserializeGroupContractProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string displayName = default;
             Optional<string> description = default;
             Optional<bool> builtIn = default;
@@ -35,7 +39,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     builtIn = property.Value.GetBoolean();
@@ -45,7 +48,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = property.Value.GetString().ToApiManagementGroupType();

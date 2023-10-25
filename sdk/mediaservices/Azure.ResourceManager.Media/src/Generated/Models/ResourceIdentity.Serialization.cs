@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static ResourceIdentity DeserializeResourceIdentity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> userAssignedIdentity = default;
             bool useSystemAssignedIdentity = default;
             foreach (var property in element.EnumerateObject())

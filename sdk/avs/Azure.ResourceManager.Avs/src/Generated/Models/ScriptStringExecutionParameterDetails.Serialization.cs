@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.Avs.Models
 
         internal static ScriptStringExecutionParameterDetails DeserializeScriptStringExecutionParameterDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> value = default;
             string name = default;
             ScriptExecutionParameterType type = default;

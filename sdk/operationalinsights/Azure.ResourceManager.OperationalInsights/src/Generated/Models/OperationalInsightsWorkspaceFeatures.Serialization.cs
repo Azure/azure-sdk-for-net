@@ -83,7 +83,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
@@ -91,6 +94,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         internal static OperationalInsightsWorkspaceFeatures DeserializeOperationalInsightsWorkspaceFeatures(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool?> enableDataExport = default;
             Optional<bool?> immediatePurgeDataOn30Days = default;
             Optional<bool?> enableLogAccessUsingOnlyResourcePermissions = default;

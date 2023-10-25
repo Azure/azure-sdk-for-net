@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the HybridConnectionLimit data model. </summary>
+    /// <summary>
+    /// A class representing the HybridConnectionLimit data model.
+    /// Hybrid Connection limits contract. This is used to return the plan limits of Hybrid Connections.
+    /// </summary>
     public partial class HybridConnectionLimitData : ResourceData
     {
         /// <summary> Initializes a new instance of HybridConnectionLimitData. </summary>

@@ -7,7 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -15,6 +14,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
     {
         internal static AppPlatformLogFileUriResult DeserializeAppPlatformLogFileUriResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Uri uri = default;
             foreach (var property in element.EnumerateObject())
             {

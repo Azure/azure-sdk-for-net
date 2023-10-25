@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SecurityConnectorEnvironment DeserializeSecurityConnectorEnvironment(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("environmentType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

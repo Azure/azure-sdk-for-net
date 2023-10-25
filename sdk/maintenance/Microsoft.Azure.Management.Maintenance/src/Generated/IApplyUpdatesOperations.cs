@@ -32,14 +32,14 @@ namespace Microsoft.Azure.Management.Maintenance
         /// <param name='resourceGroupName'>
         /// Resource group name
         /// </param>
+        /// <param name='providerName'>
+        /// Resource provider name
+        /// </param>
         /// <param name='resourceParentType'>
         /// Resource parent type
         /// </param>
         /// <param name='resourceParentName'>
         /// Resource parent identifier
-        /// </param>
-        /// <param name='providerName'>
-        /// Resource provider name
         /// </param>
         /// <param name='resourceType'>
         /// Resource type
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.Maintenance
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ApplyUpdate>> GetParentWithHttpMessagesAsync(string resourceGroupName, string resourceParentType, string resourceParentName, string providerName, string resourceType, string resourceName, string applyUpdateName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ApplyUpdate>> GetParentWithHttpMessagesAsync(string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string applyUpdateName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Track Updates to resource
         /// </summary>

@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.Sql.Models
 
         public static AutomaticTuningDisabledReason ToAutomaticTuningDisabledReason(this string value)
         {
-            if (string.Equals(value, "Default", StringComparison.InvariantCultureIgnoreCase)) return AutomaticTuningDisabledReason.Default;
-            if (string.Equals(value, "Disabled", StringComparison.InvariantCultureIgnoreCase)) return AutomaticTuningDisabledReason.Disabled;
-            if (string.Equals(value, "AutoConfigured", StringComparison.InvariantCultureIgnoreCase)) return AutomaticTuningDisabledReason.AutoConfigured;
-            if (string.Equals(value, "InheritedFromServer", StringComparison.InvariantCultureIgnoreCase)) return AutomaticTuningDisabledReason.InheritedFromServer;
-            if (string.Equals(value, "QueryStoreOff", StringComparison.InvariantCultureIgnoreCase)) return AutomaticTuningDisabledReason.QueryStoreOff;
-            if (string.Equals(value, "QueryStoreReadOnly", StringComparison.InvariantCultureIgnoreCase)) return AutomaticTuningDisabledReason.QueryStoreReadOnly;
-            if (string.Equals(value, "NotSupported", StringComparison.InvariantCultureIgnoreCase)) return AutomaticTuningDisabledReason.NotSupported;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Default")) return AutomaticTuningDisabledReason.Default;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return AutomaticTuningDisabledReason.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AutoConfigured")) return AutomaticTuningDisabledReason.AutoConfigured;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "InheritedFromServer")) return AutomaticTuningDisabledReason.InheritedFromServer;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "QueryStoreOff")) return AutomaticTuningDisabledReason.QueryStoreOff;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "QueryStoreReadOnly")) return AutomaticTuningDisabledReason.QueryStoreReadOnly;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotSupported")) return AutomaticTuningDisabledReason.NotSupported;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AutomaticTuningDisabledReason value.");
         }
     }

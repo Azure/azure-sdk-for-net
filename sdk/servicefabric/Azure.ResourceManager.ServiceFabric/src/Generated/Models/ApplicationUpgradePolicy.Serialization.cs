@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static ApplicationUpgradePolicy DeserializeApplicationUpgradePolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<TimeSpan> upgradeReplicaSetCheckTimeout = default;
             Optional<bool> forceRestart = default;
             Optional<ArmRollingUpgradeMonitoringPolicy> rollingUpgradeMonitoringPolicy = default;
@@ -63,7 +67,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     upgradeReplicaSetCheckTimeout = property.Value.GetTimeSpan("c");
@@ -73,7 +76,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     forceRestart = property.Value.GetBoolean();
@@ -83,7 +85,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rollingUpgradeMonitoringPolicy = ArmRollingUpgradeMonitoringPolicy.DeserializeArmRollingUpgradeMonitoringPolicy(property.Value);
@@ -93,7 +94,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     applicationHealthPolicy = ArmApplicationHealthPolicy.DeserializeArmApplicationHealthPolicy(property.Value);
@@ -103,7 +103,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     upgradeMode = new ApplicationRollingUpgradeMode(property.Value.GetString());
@@ -113,7 +112,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     recreateApplication = property.Value.GetBoolean();

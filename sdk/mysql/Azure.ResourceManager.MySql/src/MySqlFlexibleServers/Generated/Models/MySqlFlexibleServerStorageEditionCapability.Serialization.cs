@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     {
         internal static MySqlFlexibleServerStorageEditionCapability DeserializeMySqlFlexibleServerStorageEditionCapability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<long> minStorageSize = default;
             Optional<long> maxStorageSize = default;
@@ -30,7 +34,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minStorageSize = property.Value.GetInt64();
@@ -40,7 +43,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxStorageSize = property.Value.GetInt64();
@@ -50,7 +52,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minBackupRetentionDays = property.Value.GetInt64();
@@ -60,7 +61,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxBackupRetentionDays = property.Value.GetInt64();

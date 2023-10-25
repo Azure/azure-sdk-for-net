@@ -31,7 +31,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="polyBaseSettings"> Specifies PolyBase-related settings when allowPolyBase is true. </param>
         /// <param name="allowCopyCommand"> Indicates to use Copy Command to copy data into SQL Data Warehouse. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="copyCommandSettings"> Specifies Copy Command related settings when allowCopyCommand is true. </param>
-        /// <param name="tableOption"> The option to handle sink table, such as autoCreate. For now only &apos;autoCreate&apos; value is supported. Type: string (or Expression with resultType string). </param>
+        /// <param name="tableOption"> The option to handle sink table, such as autoCreate. For now only 'autoCreate' value is supported. Type: string (or Expression with resultType string). </param>
         internal SqlDWSink(string type, object writeBatchSize, object writeBatchTimeout, object sinkRetryCount, object sinkRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object preCopyScript, object allowPolyBase, PolybaseSettings polyBaseSettings, object allowCopyCommand, DWCopyCommandSettings copyCommandSettings, object tableOption) : base(type, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, additionalProperties)
         {
             PreCopyScript = preCopyScript;
@@ -53,7 +53,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object AllowCopyCommand { get; set; }
         /// <summary> Specifies Copy Command related settings when allowCopyCommand is true. </summary>
         public DWCopyCommandSettings CopyCommandSettings { get; set; }
-        /// <summary> The option to handle sink table, such as autoCreate. For now only &apos;autoCreate&apos; value is supported. Type: string (or Expression with resultType string). </summary>
+        /// <summary> The option to handle sink table, such as autoCreate. For now only 'autoCreate' value is supported. Type: string (or Expression with resultType string). </summary>
         public object TableOption { get; set; }
     }
 }

@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     /// API Schema Contract details.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class SchemaContract : Resource
+    public partial class SchemaContract : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the SchemaContract class.

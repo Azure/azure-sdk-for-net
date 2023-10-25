@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Lists all subscriptions of the API Management service instance.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// subscription specified by its identifier.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Gets the specified Subscription entity.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -113,7 +113,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// specified product.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -161,7 +161,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Updates the details of a subscription specified by its identifier.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -210,7 +210,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Deletes the specified subscription.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -242,7 +242,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Management service instance.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -269,7 +269,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Management service instance.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -295,7 +295,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Gets the specified Subscription keys.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.

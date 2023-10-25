@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,10 +17,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static InMageRcmDiscoveredProtectedVmDetails DeserializeInMageRcmDiscoveredProtectedVmDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> vCenterId = default;
             Optional<string> vCenterFqdn = default;
             Optional<IReadOnlyList<string>> datastores = default;
-            Optional<IReadOnlyList<string>> ipAddresses = default;
+            Optional<IReadOnlyList<IPAddress>> ipAddresses = default;
             Optional<string> vmwareToolsStatus = default;
             Optional<string> powerStatus = default;
             Optional<string> vmFqdn = default;
@@ -44,7 +49,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -59,13 +63,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<IPAddress> array = new List<IPAddress>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(IPAddress.Parse(item.GetString()));
+                        }
                     }
                     ipAddresses = array;
                     continue;
@@ -94,7 +104,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     createdTimestamp = property.Value.GetDateTimeOffset("O");
@@ -104,7 +113,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     updatedTimestamp = property.Value.GetDateTimeOffset("O");
@@ -114,7 +122,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isDeleted = property.Value.GetBoolean();
@@ -124,7 +131,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastDiscoveryTimeInUtc = property.Value.GetDateTimeOffset("O");

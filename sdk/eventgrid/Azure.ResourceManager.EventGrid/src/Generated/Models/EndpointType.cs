@@ -29,6 +29,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         private const string ServiceBusQueueValue = "ServiceBusQueue";
         private const string ServiceBusTopicValue = "ServiceBusTopic";
         private const string AzureFunctionValue = "AzureFunction";
+        private const string PartnerDestinationValue = "PartnerDestination";
 
         /// <summary> WebHook. </summary>
         public static EndpointType WebHook { get; } = new EndpointType(WebHookValue);
@@ -44,6 +45,8 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static EndpointType ServiceBusTopic { get; } = new EndpointType(ServiceBusTopicValue);
         /// <summary> AzureFunction. </summary>
         public static EndpointType AzureFunction { get; } = new EndpointType(AzureFunctionValue);
+        /// <summary> PartnerDestination. </summary>
+        public static EndpointType PartnerDestination { get; } = new EndpointType(PartnerDestinationValue);
         /// <summary> Determines if two <see cref="EndpointType"/> values are the same. </summary>
         public static bool operator ==(EndpointType left, EndpointType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="EndpointType"/> values are not the same. </summary>

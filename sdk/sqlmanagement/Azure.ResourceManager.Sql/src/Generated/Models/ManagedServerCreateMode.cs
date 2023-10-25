@@ -12,9 +12,9 @@ namespace Azure.ResourceManager.Sql.Models
 {
     /// <summary>
     /// Specifies the mode of database creation.
-    /// 
+    ///
     /// Default: Regular instance creation.
-    /// 
+    ///
     /// Restore: Creates an instance by restoring a set of backups to specific point in time. RestorePointInTime and SourceManagedInstanceId must be specified.
     /// </summary>
     public readonly partial struct ManagedServerCreateMode : IEquatable<ManagedServerCreateMode>

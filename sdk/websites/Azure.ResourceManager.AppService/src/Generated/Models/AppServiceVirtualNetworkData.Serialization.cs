@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -52,13 +51,17 @@ namespace Azure.ResourceManager.AppService
 
         internal static AppServiceVirtualNetworkData DeserializeAppServiceVirtualNetworkData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<ResourceIdentifier> vnetResourceId = default;
-            Optional<BinaryData> certThumbprint = default;
+            Optional<string> certThumbprint = default;
             Optional<string> certBlob = default;
             Optional<IReadOnlyList<AppServiceVirtualNetworkRoute>> routes = default;
             Optional<bool> resyncRequired = default;
@@ -90,7 +93,6 @@ namespace Azure.ResourceManager.AppService
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -109,7 +111,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             vnetResourceId = new ResourceIdentifier(property0.Value.GetString());
@@ -117,12 +118,7 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("certThumbprint"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            certThumbprint = BinaryData.FromString(property0.Value.GetRawText());
+                            certThumbprint = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("certBlob"u8))
@@ -134,7 +130,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<AppServiceVirtualNetworkRoute> array = new List<AppServiceVirtualNetworkRoute>();
@@ -149,7 +144,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             resyncRequired = property0.Value.GetBoolean();
@@ -164,7 +158,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isSwift = property0.Value.GetBoolean();

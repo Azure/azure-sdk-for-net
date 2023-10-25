@@ -25,13 +25,13 @@ namespace Azure.Storage.Files.DataLake.Models
 
         public static ListBlobsIncludeItem ToListBlobsIncludeItem(this string value)
         {
-            if (string.Equals(value, "copy", StringComparison.InvariantCultureIgnoreCase)) return ListBlobsIncludeItem.Copy;
-            if (string.Equals(value, "deleted", StringComparison.InvariantCultureIgnoreCase)) return ListBlobsIncludeItem.Deleted;
-            if (string.Equals(value, "metadata", StringComparison.InvariantCultureIgnoreCase)) return ListBlobsIncludeItem.Metadata;
-            if (string.Equals(value, "snapshots", StringComparison.InvariantCultureIgnoreCase)) return ListBlobsIncludeItem.Snapshots;
-            if (string.Equals(value, "uncommittedblobs", StringComparison.InvariantCultureIgnoreCase)) return ListBlobsIncludeItem.Uncommittedblobs;
-            if (string.Equals(value, "versions", StringComparison.InvariantCultureIgnoreCase)) return ListBlobsIncludeItem.Versions;
-            if (string.Equals(value, "tags", StringComparison.InvariantCultureIgnoreCase)) return ListBlobsIncludeItem.Tags;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "copy")) return ListBlobsIncludeItem.Copy;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "deleted")) return ListBlobsIncludeItem.Deleted;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "metadata")) return ListBlobsIncludeItem.Metadata;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "snapshots")) return ListBlobsIncludeItem.Snapshots;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "uncommittedblobs")) return ListBlobsIncludeItem.Uncommittedblobs;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "versions")) return ListBlobsIncludeItem.Versions;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "tags")) return ListBlobsIncludeItem.Tags;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ListBlobsIncludeItem value.");
         }
     }

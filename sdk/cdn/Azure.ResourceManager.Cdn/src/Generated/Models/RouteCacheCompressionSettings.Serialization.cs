@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static RouteCacheCompressionSettings DeserializeRouteCacheCompressionSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> contentTypesToCompress = default;
             Optional<bool> isCompressionEnabled = default;
             foreach (var property in element.EnumerateObject())
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -59,7 +62,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isCompressionEnabled = property.Value.GetBoolean();

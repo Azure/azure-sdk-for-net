@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MySql.Models
 {
-    /// <summary> The key type like &apos;AzureKeyVault&apos;. </summary>
+    /// <summary> The key type like 'AzureKeyVault'. </summary>
     public readonly partial struct MySqlServerKeyType : IEquatable<MySqlServerKeyType>
     {
         private readonly string _value;

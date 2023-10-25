@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Media.Models
     {
         internal static StorageEncryptedAssetDecryptionInfo DeserializeStorageEncryptedAssetDecryptionInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<byte[]> key = default;
             Optional<IReadOnlyList<MediaAssetFileEncryptionMetadata>> assetFileEncryptionMetadata = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     key = property.Value.GetBytesFromBase64("D");
@@ -34,7 +37,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MediaAssetFileEncryptionMetadata> array = new List<MediaAssetFileEncryptionMetadata>();

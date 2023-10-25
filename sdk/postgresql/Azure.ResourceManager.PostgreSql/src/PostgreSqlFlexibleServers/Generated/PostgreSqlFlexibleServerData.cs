@@ -13,7 +13,10 @@ using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
-    /// <summary> A class representing the PostgreSqlFlexibleServer data model. </summary>
+    /// <summary>
+    /// A class representing the PostgreSqlFlexibleServer data model.
+    /// Represents a server.
+    /// </summary>
     public partial class PostgreSqlFlexibleServerData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerData. </summary>
@@ -31,7 +34,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The SKU (pricing tier) of the server. </param>
         /// <param name="identity"> Describes the identity of the application. </param>
-        /// <param name="administratorLogin"> The administrator&apos;s login name of a server. Can only be specified when the server is being created (and is required for creation). </param>
+        /// <param name="administratorLogin"> The administrator's login name of a server. Can only be specified when the server is being created (and is required for creation). </param>
         /// <param name="administratorLoginPassword"> The administrator login password (required for server creation). </param>
         /// <param name="version"> PostgreSQL Server version. </param>
         /// <param name="minorVersion"> The minor version of the server. </param>
@@ -41,11 +44,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="authConfig"> AuthConfig properties of a server. </param>
         /// <param name="dataEncryption"> Data encryption properties of a server. </param>
         /// <param name="backup"> Backup properties of a server. </param>
-        /// <param name="network"> Network properties of a server. </param>
+        /// <param name="network"> Network properties of a server. This Network property is required to be passed only in case you want the server to be Private access server. </param>
         /// <param name="highAvailability"> High availability properties of a server. </param>
         /// <param name="maintenanceWindow"> Maintenance window properties of a server. </param>
-        /// <param name="sourceServerResourceId"> The source server resource ID to restore from. It&apos;s required when &apos;createMode&apos; is &apos;PointInTimeRestore&apos; or &apos;GeoRestore&apos; or &apos;Replica&apos;. </param>
-        /// <param name="pointInTimeUtc"> Restore point creation time (ISO8601 format), specifying the time to restore from. It&apos;s required when &apos;createMode&apos; is &apos;PointInTimeRestore&apos; or &apos;GeoRestore&apos;. </param>
+        /// <param name="sourceServerResourceId"> The source server resource ID to restore from. It's required when 'createMode' is 'PointInTimeRestore' or 'GeoRestore' or 'Replica' or 'ReviveDropped'. This property is returned only for Replica server. </param>
+        /// <param name="pointInTimeUtc"> Restore point creation time (ISO8601 format), specifying the time to restore from. It's required when 'createMode' is 'PointInTimeRestore' or 'GeoRestore' or 'ReviveDropped'. </param>
         /// <param name="availabilityZone"> availability zone information of the server. </param>
         /// <param name="replicationRole"> Replication role of the server. </param>
         /// <param name="replicaCapacity"> Replicas allowed for a server. </param>
@@ -79,7 +82,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         public PostgreSqlFlexibleServerSku Sku { get; set; }
         /// <summary> Describes the identity of the application. </summary>
         public PostgreSqlFlexibleServerUserAssignedIdentity Identity { get; set; }
-        /// <summary> The administrator&apos;s login name of a server. Can only be specified when the server is being created (and is required for creation). </summary>
+        /// <summary> The administrator's login name of a server. Can only be specified when the server is being created (and is required for creation). </summary>
         public string AdministratorLogin { get; set; }
         /// <summary> The administrator login password (required for server creation). </summary>
         public string AdministratorLoginPassword { get; set; }
@@ -92,41 +95,27 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <summary> The fully qualified domain name of a server. </summary>
         public string FullyQualifiedDomainName { get; }
         /// <summary> Storage properties of a server. </summary>
-        internal PostgreSqlFlexibleServerStorage Storage { get; set; }
-        /// <summary> Max storage allowed for a server. </summary>
-        public int? StorageSizeInGB
-        {
-            get => Storage is null ? default : Storage.StorageSizeInGB;
-            set
-            {
-                if (Storage is null)
-                    Storage = new PostgreSqlFlexibleServerStorage();
-                Storage.StorageSizeInGB = value;
-            }
-        }
-
+        public PostgreSqlFlexibleServerStorage Storage { get; set; }
         /// <summary> AuthConfig properties of a server. </summary>
         public PostgreSqlFlexibleServerAuthConfig AuthConfig { get; set; }
         /// <summary> Data encryption properties of a server. </summary>
         public PostgreSqlFlexibleServerDataEncryption DataEncryption { get; set; }
         /// <summary> Backup properties of a server. </summary>
         public PostgreSqlFlexibleServerBackupProperties Backup { get; set; }
-        /// <summary> Network properties of a server. </summary>
+        /// <summary> Network properties of a server. This Network property is required to be passed only in case you want the server to be Private access server. </summary>
         public PostgreSqlFlexibleServerNetwork Network { get; set; }
         /// <summary> High availability properties of a server. </summary>
         public PostgreSqlFlexibleServerHighAvailability HighAvailability { get; set; }
         /// <summary> Maintenance window properties of a server. </summary>
         public PostgreSqlFlexibleServerMaintenanceWindow MaintenanceWindow { get; set; }
-        /// <summary> The source server resource ID to restore from. It&apos;s required when &apos;createMode&apos; is &apos;PointInTimeRestore&apos; or &apos;GeoRestore&apos; or &apos;Replica&apos;. </summary>
+        /// <summary> The source server resource ID to restore from. It's required when 'createMode' is 'PointInTimeRestore' or 'GeoRestore' or 'Replica' or 'ReviveDropped'. This property is returned only for Replica server. </summary>
         public ResourceIdentifier SourceServerResourceId { get; set; }
-        /// <summary> Restore point creation time (ISO8601 format), specifying the time to restore from. It&apos;s required when &apos;createMode&apos; is &apos;PointInTimeRestore&apos; or &apos;GeoRestore&apos;. </summary>
+        /// <summary> Restore point creation time (ISO8601 format), specifying the time to restore from. It's required when 'createMode' is 'PointInTimeRestore' or 'GeoRestore' or 'ReviveDropped'. </summary>
         public DateTimeOffset? PointInTimeUtc { get; set; }
         /// <summary> availability zone information of the server. </summary>
         public string AvailabilityZone { get; set; }
         /// <summary> Replication role of the server. </summary>
         public PostgreSqlFlexibleServerReplicationRole? ReplicationRole { get; set; }
-        /// <summary> Replicas allowed for a server. </summary>
-        public int? ReplicaCapacity { get; set; }
         /// <summary> The mode to create a new PostgreSQL server. </summary>
         public PostgreSqlFlexibleServerCreateMode? CreateMode { get; set; }
     }

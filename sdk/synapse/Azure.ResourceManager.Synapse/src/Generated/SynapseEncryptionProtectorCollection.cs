@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Updates workspace managed sql server&apos;s encryption protector.
+        /// Updates workspace managed sql server's encryption protector.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Updates workspace managed sql server&apos;s encryption protector.
+        /// Updates workspace managed sql server's encryption protector.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get workspace managed sql server&apos;s encryption protector.
+        /// Get workspace managed sql server's encryption protector.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -165,7 +166,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get workspace managed sql server&apos;s encryption protector.
+        /// Get workspace managed sql server's encryption protector.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -216,7 +217,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseEncryptionProtectorWorkspaceManagedSqlServerEncryptionProtectorRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseEncryptionProtectorWorkspaceManagedSqlServerEncryptionProtectorRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseEncryptionProtectorResource(Client, SynapseEncryptionProtectorData.DeserializeSynapseEncryptionProtectorData(e)), _synapseEncryptionProtectorWorkspaceManagedSqlServerEncryptionProtectorClientDiagnostics, Pipeline, "SynapseEncryptionProtectorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SynapseEncryptionProtectorResource(Client, SynapseEncryptionProtectorData.DeserializeSynapseEncryptionProtectorData(e)), _synapseEncryptionProtectorWorkspaceManagedSqlServerEncryptionProtectorClientDiagnostics, Pipeline, "SynapseEncryptionProtectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -238,7 +239,7 @@ namespace Azure.ResourceManager.Synapse
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseEncryptionProtectorWorkspaceManagedSqlServerEncryptionProtectorRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _synapseEncryptionProtectorWorkspaceManagedSqlServerEncryptionProtectorRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseEncryptionProtectorResource(Client, SynapseEncryptionProtectorData.DeserializeSynapseEncryptionProtectorData(e)), _synapseEncryptionProtectorWorkspaceManagedSqlServerEncryptionProtectorClientDiagnostics, Pipeline, "SynapseEncryptionProtectorCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SynapseEncryptionProtectorResource(Client, SynapseEncryptionProtectorData.DeserializeSynapseEncryptionProtectorData(e)), _synapseEncryptionProtectorWorkspaceManagedSqlServerEncryptionProtectorClientDiagnostics, Pipeline, "SynapseEncryptionProtectorCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -295,6 +296,72 @@ namespace Azure.ResourceManager.Synapse
             {
                 var response = _synapseEncryptionProtectorWorkspaceManagedSqlServerEncryptionProtectorRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/encryptionProtector/{encryptionProtectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceManagedSqlServerEncryptionProtector_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="encryptionProtectorName"> The name of the encryption protector. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<SynapseEncryptionProtectorResource>> GetIfExistsAsync(SynapseEncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _synapseEncryptionProtectorWorkspaceManagedSqlServerEncryptionProtectorClientDiagnostics.CreateScope("SynapseEncryptionProtectorCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _synapseEncryptionProtectorWorkspaceManagedSqlServerEncryptionProtectorRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SynapseEncryptionProtectorResource>(response.GetRawResponse());
+                return Response.FromValue(new SynapseEncryptionProtectorResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/encryptionProtector/{encryptionProtectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceManagedSqlServerEncryptionProtector_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="encryptionProtectorName"> The name of the encryption protector. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<SynapseEncryptionProtectorResource> GetIfExists(SynapseEncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _synapseEncryptionProtectorWorkspaceManagedSqlServerEncryptionProtectorClientDiagnostics.CreateScope("SynapseEncryptionProtectorCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _synapseEncryptionProtectorWorkspaceManagedSqlServerEncryptionProtectorRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SynapseEncryptionProtectorResource>(response.GetRawResponse());
+                return Response.FromValue(new SynapseEncryptionProtectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

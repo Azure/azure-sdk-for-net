@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static EnvelopeEncryption DeserializeEnvelopeEncryption(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MediaEnabledProtocols> enabledProtocols = default;
             Optional<IList<MediaTrackSelection>> clearTracks = default;
             Optional<StreamingPolicyContentKeys> contentKeys = default;
@@ -56,7 +60,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enabledProtocols = MediaEnabledProtocols.DeserializeMediaEnabledProtocols(property.Value);
@@ -66,7 +69,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MediaTrackSelection> array = new List<MediaTrackSelection>();
@@ -81,7 +83,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     contentKeys = StreamingPolicyContentKeys.DeserializeStreamingPolicyContentKeys(property.Value);

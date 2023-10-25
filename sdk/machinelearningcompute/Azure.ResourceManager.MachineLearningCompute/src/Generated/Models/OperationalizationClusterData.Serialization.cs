@@ -75,6 +75,10 @@ namespace Azure.ResourceManager.MachineLearningCompute
 
         internal static OperationalizationClusterData DeserializeOperationalizationClusterData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -98,7 +102,6 @@ namespace Azure.ResourceManager.MachineLearningCompute
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -133,7 +136,6 @@ namespace Azure.ResourceManager.MachineLearningCompute
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -157,7 +159,6 @@ namespace Azure.ResourceManager.MachineLearningCompute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createdOn = property0.Value.GetDateTimeOffset("O");
@@ -167,7 +168,6 @@ namespace Azure.ResourceManager.MachineLearningCompute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             modifiedOn = property0.Value.GetDateTimeOffset("O");
@@ -177,7 +177,6 @@ namespace Azure.ResourceManager.MachineLearningCompute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new OperationStatus(property0.Value.GetString());
@@ -187,7 +186,6 @@ namespace Azure.ResourceManager.MachineLearningCompute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ErrorResponseWrapper> array = new List<ErrorResponseWrapper>();
@@ -202,7 +200,6 @@ namespace Azure.ResourceManager.MachineLearningCompute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             clusterType = new ClusterType(property0.Value.GetString());
@@ -212,7 +209,6 @@ namespace Azure.ResourceManager.MachineLearningCompute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             storageAccount = StorageAccountProperties.DeserializeStorageAccountProperties(property0.Value);
@@ -222,7 +218,6 @@ namespace Azure.ResourceManager.MachineLearningCompute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             containerRegistry = ContainerRegistryProperties.DeserializeContainerRegistryProperties(property0.Value);
@@ -232,7 +227,6 @@ namespace Azure.ResourceManager.MachineLearningCompute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             containerService = AcsClusterProperties.DeserializeAcsClusterProperties(property0.Value);
@@ -242,7 +236,6 @@ namespace Azure.ResourceManager.MachineLearningCompute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             appInsights = AppInsightsProperties.DeserializeAppInsightsProperties(property0.Value);
@@ -252,7 +245,6 @@ namespace Azure.ResourceManager.MachineLearningCompute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             globalServiceConfiguration = GlobalServiceConfiguration.DeserializeGlobalServiceConfiguration(property0.Value);

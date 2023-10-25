@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// it is up to handler implementation whether to re-run it or not
         /// </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
-        /// <param name="rolesAppliedTo"> Optional list of roles to apply this extension. If property is not specified or &apos;*&apos; is specified, extension is applied to all roles in the cloud service. </param>
+        /// <param name="rolesAppliedTo"> Optional list of roles to apply this extension. If property is not specified or '*' is specified, extension is applied to all roles in the cloud service. </param>
         internal CloudServiceExtension(string name, string publisher, string cloudServiceExtensionPropertiesType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, BinaryData settings, BinaryData protectedSettings, CloudServiceVaultAndSecretReference protectedSettingsFromKeyVault, string forceUpdateTag, string provisioningState, IList<string> rolesAppliedTo)
         {
             Name = name;
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string ForceUpdateTag { get; set; }
         /// <summary> The provisioning state, which only appears in the response. </summary>
         public string ProvisioningState { get; }
-        /// <summary> Optional list of roles to apply this extension. If property is not specified or &apos;*&apos; is specified, extension is applied to all roles in the cloud service. </summary>
+        /// <summary> Optional list of roles to apply this extension. If property is not specified or '*' is specified, extension is applied to all roles in the cloud service. </summary>
         public IList<string> RolesAppliedTo { get; }
     }
 }

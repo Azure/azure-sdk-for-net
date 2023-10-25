@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string AutoValue = "Auto";
         private const string CustomValue = "Custom";
 
-        /// <summary> Determine N-Cross validations value automatically. Supported only for &apos;Forecasting&apos; AutoML task. </summary>
+        /// <summary> Determine N-Cross validations value automatically. Supported only for 'Forecasting' AutoML task. </summary>
         public static NCrossValidationsMode Auto { get; } = new NCrossValidationsMode(AutoValue);
         /// <summary> Use custom N-Cross validations value. </summary>
         public static NCrossValidationsMode Custom { get; } = new NCrossValidationsMode(CustomValue);

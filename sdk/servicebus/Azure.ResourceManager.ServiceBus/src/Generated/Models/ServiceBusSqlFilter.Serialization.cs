@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         internal static ServiceBusSqlFilter DeserializeServiceBusSqlFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> sqlExpression = default;
             Optional<int> compatibilityLevel = default;
             Optional<bool> requiresPreprocessing = default;
@@ -49,7 +53,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     compatibilityLevel = property.Value.GetInt32();
@@ -59,7 +62,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     requiresPreprocessing = property.Value.GetBoolean();

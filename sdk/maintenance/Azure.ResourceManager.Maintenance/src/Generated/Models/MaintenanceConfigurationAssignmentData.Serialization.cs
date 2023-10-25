@@ -33,12 +33,21 @@ namespace Azure.ResourceManager.Maintenance.Models
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
+            if (Optional.IsDefined(Filter))
+            {
+                writer.WritePropertyName("filter"u8);
+                writer.WriteObjectValue(Filter);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static MaintenanceConfigurationAssignmentData DeserializeMaintenanceConfigurationAssignmentData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -46,13 +55,13 @@ namespace Azure.ResourceManager.Maintenance.Models
             Optional<SystemData> systemData = default;
             Optional<ResourceIdentifier> maintenanceConfigurationId = default;
             Optional<ResourceIdentifier> resourceId = default;
+            Optional<MaintenanceConfigurationAssignmentFilter> filter = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
@@ -77,7 +86,6 @@ namespace Azure.ResourceManager.Maintenance.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -96,7 +104,6 @@ namespace Azure.ResourceManager.Maintenance.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             maintenanceConfigurationId = new ResourceIdentifier(property0.Value.GetString());
@@ -106,17 +113,25 @@ namespace Azure.ResourceManager.Maintenance.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             resourceId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("filter"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            filter = MaintenanceConfigurationAssignmentFilter.DeserializeMaintenanceConfigurationAssignmentFilter(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new MaintenanceConfigurationAssignmentData(id, name, type, systemData.Value, Optional.ToNullable(location), maintenanceConfigurationId.Value, resourceId.Value);
+            return new MaintenanceConfigurationAssignmentData(id, name, type, systemData.Value, Optional.ToNullable(location), maintenanceConfigurationId.Value, resourceId.Value, filter.Value);
         }
     }
 }

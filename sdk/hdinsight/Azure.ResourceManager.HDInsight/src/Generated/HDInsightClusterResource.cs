@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -2071,7 +2072,7 @@ namespace Azure.ResourceManager.HDInsight
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scriptActionsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scriptActionsRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, RuntimeScriptActionDetail.DeserializeRuntimeScriptActionDetail, _scriptActionsClientDiagnostics, Pipeline, "HDInsightClusterResource.GetScriptActions", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, RuntimeScriptActionDetail.DeserializeRuntimeScriptActionDetail, _scriptActionsClientDiagnostics, Pipeline, "HDInsightClusterResource.GetScriptActions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -2093,7 +2094,7 @@ namespace Azure.ResourceManager.HDInsight
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scriptActionsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scriptActionsRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, RuntimeScriptActionDetail.DeserializeRuntimeScriptActionDetail, _scriptActionsClientDiagnostics, Pipeline, "HDInsightClusterResource.GetScriptActions", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, RuntimeScriptActionDetail.DeserializeRuntimeScriptActionDetail, _scriptActionsClientDiagnostics, Pipeline, "HDInsightClusterResource.GetScriptActions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -2237,7 +2238,7 @@ namespace Azure.ResourceManager.HDInsight
         }
 
         /// <summary>
-        /// Lists all scripts&apos; execution history for the specified cluster.
+        /// Lists all scripts' execution history for the specified cluster.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -2255,11 +2256,11 @@ namespace Azure.ResourceManager.HDInsight
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scriptExecutionHistoryRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scriptExecutionHistoryRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, RuntimeScriptActionDetail.DeserializeRuntimeScriptActionDetail, _scriptExecutionHistoryClientDiagnostics, Pipeline, "HDInsightClusterResource.GetScriptExecutionHistories", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, RuntimeScriptActionDetail.DeserializeRuntimeScriptActionDetail, _scriptExecutionHistoryClientDiagnostics, Pipeline, "HDInsightClusterResource.GetScriptExecutionHistories", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Lists all scripts&apos; execution history for the specified cluster.
+        /// Lists all scripts' execution history for the specified cluster.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -2277,7 +2278,7 @@ namespace Azure.ResourceManager.HDInsight
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _scriptExecutionHistoryRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _scriptExecutionHistoryRestClient.CreateListByClusterNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, RuntimeScriptActionDetail.DeserializeRuntimeScriptActionDetail, _scriptExecutionHistoryClientDiagnostics, Pipeline, "HDInsightClusterResource.GetScriptExecutionHistories", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, RuntimeScriptActionDetail.DeserializeRuntimeScriptActionDetail, _scriptExecutionHistoryClientDiagnostics, Pipeline, "HDInsightClusterResource.GetScriptExecutionHistories", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -2368,7 +2369,7 @@ namespace Azure.ResourceManager.HDInsight
         public virtual AsyncPageable<HDInsightClusterHostInfo> GetVirtualMachineHostsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachinesRestClient.CreateListHostsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, HDInsightClusterHostInfo.DeserializeHDInsightClusterHostInfo, _virtualMachinesClientDiagnostics, Pipeline, "HDInsightClusterResource.GetVirtualMachineHosts", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, HDInsightClusterHostInfo.DeserializeHDInsightClusterHostInfo, _virtualMachinesClientDiagnostics, Pipeline, "HDInsightClusterResource.GetVirtualMachineHosts", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -2389,7 +2390,7 @@ namespace Azure.ResourceManager.HDInsight
         public virtual Pageable<HDInsightClusterHostInfo> GetVirtualMachineHosts(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachinesRestClient.CreateListHostsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, HDInsightClusterHostInfo.DeserializeHDInsightClusterHostInfo, _virtualMachinesClientDiagnostics, Pipeline, "HDInsightClusterResource.GetVirtualMachineHosts", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, HDInsightClusterHostInfo.DeserializeHDInsightClusterHostInfo, _virtualMachinesClientDiagnostics, Pipeline, "HDInsightClusterResource.GetVirtualMachineHosts", "", null, cancellationToken);
         }
 
         /// <summary>

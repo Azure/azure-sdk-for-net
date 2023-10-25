@@ -1,8 +1,8 @@
 ﻿Import-Module Az.Kusto
 
-$SubscriptionId = "e8257c73-24c5-4791-94dc-8b7901c90dbf" # Kusto_Dev_Kusto_Ilay_04_Test
+$SubscriptionId = "fbccad30-f0ed-4ac4-9497-93bf6141062f" # Kusto_Dev_Kusto_Ilay_00 // or "e8257c73-24c5-4791-94dc-8b7901c90dbf" # Kusto_Dev_Kusto_Ilay_04_Test (production)
 $ResourseGroupPrefix = 'CSharpSDKRG'
-$Location = 'eastus2'
+$Location = 'australiaeast'
 $DeleteAfterHours = 1 # currently this is just a tag that is added to the RG, there no actual delete
 
 Write-Host "Creating new resources for test" -ForegroundColor Green
@@ -16,8 +16,7 @@ $ApplicationOId = az ad sp show --id $AppId --query "id" --output tsv
 
 $Id = [string](Get-Random -Minimum 0 -Maximum 999)
 
-$RootDirectory = (Get-Item $PSScriptRoot).parent.parent.parent.parent.parent.parent
-$TestResourcesDirectory = Join-Path -Path $RootDirectory -ChildPath eng\common\TestResources
+$TestResourcesDirectory = Join-Path -Path $PSScriptRoot -ChildPath ..\..\..\..\..\..\eng\common\TestResources
 
 Write-Host "Triggering New-TestResources script to create all required resources" -ForegroundColor Green
 & $TestResourcesDirectory\New-TestResources.ps1 `

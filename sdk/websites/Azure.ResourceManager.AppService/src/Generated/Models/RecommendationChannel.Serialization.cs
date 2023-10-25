@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static RecommendationChannel ToRecommendationChannel(this string value)
         {
-            if (string.Equals(value, "Notification", StringComparison.InvariantCultureIgnoreCase)) return RecommendationChannel.Notification;
-            if (string.Equals(value, "Api", StringComparison.InvariantCultureIgnoreCase)) return RecommendationChannel.Api;
-            if (string.Equals(value, "Email", StringComparison.InvariantCultureIgnoreCase)) return RecommendationChannel.Email;
-            if (string.Equals(value, "Webhook", StringComparison.InvariantCultureIgnoreCase)) return RecommendationChannel.Webhook;
-            if (string.Equals(value, "All", StringComparison.InvariantCultureIgnoreCase)) return RecommendationChannel.All;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Notification")) return RecommendationChannel.Notification;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Api")) return RecommendationChannel.Api;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Email")) return RecommendationChannel.Email;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Webhook")) return RecommendationChannel.Webhook;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "All")) return RecommendationChannel.All;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RecommendationChannel value.");
         }
     }

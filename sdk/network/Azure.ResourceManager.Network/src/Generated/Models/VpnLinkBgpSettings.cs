@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of VpnLinkBgpSettings. </summary>
-        /// <param name="asn"> The BGP speaker&apos;s ASN. </param>
+        /// <param name="asn"> The BGP speaker's ASN. </param>
         /// <param name="bgpPeeringAddress"> The BGP peering address and BGP identifier of this BGP speaker. </param>
         internal VpnLinkBgpSettings(long? asn, string bgpPeeringAddress)
         {
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network.Models
             BgpPeeringAddress = bgpPeeringAddress;
         }
 
-        /// <summary> The BGP speaker&apos;s ASN. </summary>
+        /// <summary> The BGP speaker's ASN. </summary>
         public long? Asn { get; set; }
         /// <summary> The BGP peering address and BGP identifier of this BGP speaker. </summary>
         public string BgpPeeringAddress { get; set; }

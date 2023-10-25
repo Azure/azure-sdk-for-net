@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static ProtocolSettings DeserializeProtocolSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SmbSetting> smb = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -32,7 +36,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     smb = SmbSetting.DeserializeSmbSetting(property.Value);

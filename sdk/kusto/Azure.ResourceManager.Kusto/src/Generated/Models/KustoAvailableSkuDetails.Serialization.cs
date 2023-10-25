@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Kusto.Models
     {
         internal static KustoAvailableSkuDetails DeserializeKustoAvailableSkuDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> resourceType = default;
             Optional<KustoSku> sku = default;
             Optional<KustoCapacity> capacity = default;
@@ -28,7 +32,6 @@ namespace Azure.ResourceManager.Kusto.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sku = KustoSku.DeserializeKustoSku(property.Value);
@@ -38,7 +41,6 @@ namespace Azure.ResourceManager.Kusto.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     capacity = KustoCapacity.DeserializeKustoCapacity(property.Value);

@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Kusto.Models;
 using NUnit.Framework;
@@ -16,6 +17,11 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
         private readonly TimeSpan _hotCachePeriod2 = TimeSpan.FromDays(4);
         private readonly TimeSpan _softDeletePeriod2 = TimeSpan.FromDays(5);
 
+        private Uri KeyVaultUri { get; set; }
+        private string KeyName { get; set; }
+        private string KeyVersion { get; set; }
+        private ResourceIdentifier UserAssignedIdentityId { get; set; }
+
         public KustoDatabaseTests(bool isAsync)
             : base(isAsync) //, RecordedTestMode.Record)
         {
@@ -24,26 +30,38 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
         [SetUp]
         protected async Task SetUp()
         {
-            await BaseSetUp(cluster: true);
+            await BaseSetUp();
+
+            KeyVaultUri = TE.KeyVaultUri;
+            KeyName = TE.KeyName;
+            KeyVersion = TE.KeyVersion;
+            UserAssignedIdentityId = TE.UserAssignedIdentityId;
         }
 
         [TestCase]
         [RecordedTest]
         public async Task DatabaseTests()
         {
+            var databaseDataCreate = new KustoReadWriteDatabase {Location = Location, HotCachePeriod = _hotCachePeriod1, SoftDeletePeriod = _softDeletePeriod1};
+            var databaseDataUpdate = new KustoReadWriteDatabase {Location = Location, HotCachePeriod = _hotCachePeriod2, SoftDeletePeriod = _softDeletePeriod2};
+            await RunDatabaseTests(databaseDataCreate, databaseDataUpdate);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task DatabaseCmkTests()
+        {
+            var keyVaultProperties = new KustoKeyVaultProperties {KeyName = KeyName, KeyVaultUri = KeyVaultUri, KeyVersion = KeyVersion, UserIdentity = UserAssignedIdentityId};
+            var databaseDataCreate = new KustoReadWriteDatabase {Location = Location, HotCachePeriod = _hotCachePeriod1, SoftDeletePeriod = _softDeletePeriod1, KeyVaultProperties = keyVaultProperties};
+            var databaseDataUpdate = new KustoReadWriteDatabase {Location = Location, HotCachePeriod = _hotCachePeriod2, SoftDeletePeriod = _softDeletePeriod2, KeyVaultProperties = keyVaultProperties};
+            await RunDatabaseTests(databaseDataCreate, databaseDataUpdate);
+        }
+
+        private async Task RunDatabaseTests(KustoReadWriteDatabase databaseDataCreate, KustoReadWriteDatabase databaseDataUpdate)
+        {
             var databaseCollection = Cluster.GetKustoDatabases();
 
             var databaseName = GenerateAssetName("sdkDatabase");
-
-            var databaseDataCreate = new KustoReadWriteDatabase
-            {
-                HotCachePeriod = _hotCachePeriod1, Location = Location, SoftDeletePeriod = _softDeletePeriod1
-            };
-
-            var databaseDataUpdate = new KustoReadWriteDatabase
-            {
-                HotCachePeriod = _hotCachePeriod2, Location = Location, SoftDeletePeriod = _softDeletePeriod2
-            };
 
             Task<ArmOperation<KustoDatabaseResource>> CreateOrUpdateDatabaseAsync(
                 string databaseName, KustoReadWriteDatabase databaseData
@@ -70,8 +88,8 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
 
         private static void ValidateReadWriteDatabase(
             string expectedFullDatabaseName,
-            KustoReadWriteDatabase expectedDatabaseData, KustoReadWriteDatabase actualDatabaseData
-        )
+            KustoReadWriteDatabase expectedDatabaseData,
+            KustoReadWriteDatabase actualDatabaseData)
         {
             AssertEquality(expectedDatabaseData.HotCachePeriod, actualDatabaseData.HotCachePeriod);
             Assert.IsFalse(actualDatabaseData.IsFollowed);

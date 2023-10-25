@@ -25,9 +25,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         private const string SignedValue = "signed";
         private const string UnsignedValue = "unsigned";
 
-        /// <summary> signed. </summary>
+        /// <summary> A signature is detected. </summary>
         public static DocumentSignatureType Signed { get; } = new DocumentSignatureType(SignedValue);
-        /// <summary> unsigned. </summary>
+        /// <summary> No signatures are detected. </summary>
         public static DocumentSignatureType Unsigned { get; } = new DocumentSignatureType(UnsignedValue);
         /// <summary> Determines if two <see cref="DocumentSignatureType"/> values are the same. </summary>
         public static bool operator ==(DocumentSignatureType left, DocumentSignatureType right) => left.Equals(right);

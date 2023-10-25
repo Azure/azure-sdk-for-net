@@ -36,7 +36,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Settings);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Settings.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(Settings))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsDefined(ProtectedSettings))
@@ -45,7 +48,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ProtectedSettings);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ProtectedSettings.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(ProtectedSettings))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
@@ -54,6 +60,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         internal static DeploymentExtensionSpec DeserializeDeploymentExtensionSpec(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<string> extensionType = default;
             Optional<string> version = default;
@@ -89,7 +99,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             settings = BinaryData.FromString(property0.Value.GetRawText());
@@ -99,7 +108,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             protectedSettings = BinaryData.FromString(property0.Value.GetRawText());

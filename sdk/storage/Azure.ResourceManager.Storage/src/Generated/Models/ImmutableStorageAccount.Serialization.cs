@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static ImmutableStorageAccount DeserializeImmutableStorageAccount(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enabled = default;
             Optional<AccountImmutabilityPolicy> immutabilityPolicy = default;
             foreach (var property in element.EnumerateObject())
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enabled = property.Value.GetBoolean();
@@ -48,7 +51,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     immutabilityPolicy = AccountImmutabilityPolicy.DeserializeAccountImmutabilityPolicy(property.Value);

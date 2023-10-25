@@ -11,7 +11,10 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the ExpressRouteLink data model. </summary>
+    /// <summary>
+    /// A class representing the ExpressRouteLink data model.
+    /// ExpressRouteLink child resource definition.
+    /// </summary>
     public partial class ExpressRouteLinkData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of ExpressRouteLinkData. </summary>
@@ -28,17 +31,19 @@ namespace Azure.ResourceManager.Network
         /// <param name="interfaceName"> Name of Azure router interface. </param>
         /// <param name="patchPanelId"> Mapping between physical port to patch panel port. </param>
         /// <param name="rackId"> Mapping of physical patch panel to rack. </param>
+        /// <param name="coloLocation"> Cololocation for ExpressRoute Hybrid Direct. </param>
         /// <param name="connectorType"> Physical fiber port type. </param>
         /// <param name="adminState"> Administrative state of the physical port. </param>
         /// <param name="provisioningState"> The provisioning state of the express route link resource. </param>
         /// <param name="macSecConfig"> MacSec configuration. </param>
-        internal ExpressRouteLinkData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string routerName, string interfaceName, string patchPanelId, string rackId, ExpressRouteLinkConnectorType? connectorType, ExpressRouteLinkAdminState? adminState, NetworkProvisioningState? provisioningState, ExpressRouteLinkMacSecConfig macSecConfig) : base(id, name, resourceType)
+        internal ExpressRouteLinkData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string routerName, string interfaceName, string patchPanelId, string rackId, string coloLocation, ExpressRouteLinkConnectorType? connectorType, ExpressRouteLinkAdminState? adminState, NetworkProvisioningState? provisioningState, ExpressRouteLinkMacSecConfig macSecConfig) : base(id, name, resourceType)
         {
             ETag = etag;
             RouterName = routerName;
             InterfaceName = interfaceName;
             PatchPanelId = patchPanelId;
             RackId = rackId;
+            ColoLocation = coloLocation;
             ConnectorType = connectorType;
             AdminState = adminState;
             ProvisioningState = provisioningState;
@@ -55,6 +60,8 @@ namespace Azure.ResourceManager.Network
         public string PatchPanelId { get; }
         /// <summary> Mapping of physical patch panel to rack. </summary>
         public string RackId { get; }
+        /// <summary> Cololocation for ExpressRoute Hybrid Direct. </summary>
+        public string ColoLocation { get; }
         /// <summary> Physical fiber port type. </summary>
         public ExpressRouteLinkConnectorType? ConnectorType { get; }
         /// <summary> Administrative state of the physical port. </summary>

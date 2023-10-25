@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformSku DeserializeAppPlatformSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> tier = default;
             Optional<int> capacity = default;
@@ -54,7 +58,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     capacity = property.Value.GetInt32();

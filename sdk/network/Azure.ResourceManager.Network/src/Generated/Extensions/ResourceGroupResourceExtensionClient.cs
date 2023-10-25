@@ -8,6 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -81,6 +82,14 @@ namespace Azure.ResourceManager.Network
         public virtual BastionHostCollection GetBastionHosts()
         {
             return GetCachedClient(Client => new BastionHostCollection(Client, Id));
+        }
+
+        /// <summary> Gets a collection of CloudServiceSwapResources in the ResourceGroupResource. </summary>
+        /// <param name="resourceName"> The name of the cloud service. </param>
+        /// <returns> An object representing collection of CloudServiceSwapResources and their operations over a CloudServiceSwapResource. </returns>
+        public virtual CloudServiceSwapCollection GetCloudServiceSwaps(string resourceName)
+        {
+            return new CloudServiceSwapCollection(Client, Id, resourceName);
         }
 
         /// <summary> Gets a collection of CustomIPPrefixResources in the ResourceGroupResource. </summary>
@@ -172,6 +181,13 @@ namespace Azure.ResourceManager.Network
         public virtual NetworkInterfaceCollection GetNetworkInterfaces()
         {
             return GetCachedClient(Client => new NetworkInterfaceCollection(Client, Id));
+        }
+
+        /// <summary> Gets a collection of NetworkManagerResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of NetworkManagerResources and their operations over a NetworkManagerResource. </returns>
+        public virtual NetworkManagerCollection GetNetworkManagers()
+        {
+            return GetCachedClient(Client => new NetworkManagerCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of NetworkProfileResources in the ResourceGroupResource. </summary>
@@ -376,7 +392,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableResourceGroupDelegationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableResourceGroupDelegationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AvailableDelegation.DeserializeAvailableDelegation, AvailableResourceGroupDelegationsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetAvailableResourceGroupDelegations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AvailableDelegation.DeserializeAvailableDelegation, AvailableResourceGroupDelegationsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetAvailableResourceGroupDelegations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -399,7 +415,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableResourceGroupDelegationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableResourceGroupDelegationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AvailableDelegation.DeserializeAvailableDelegation, AvailableResourceGroupDelegationsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetAvailableResourceGroupDelegations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AvailableDelegation.DeserializeAvailableDelegation, AvailableResourceGroupDelegationsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetAvailableResourceGroupDelegations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -422,7 +438,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableServiceAliasesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableServiceAliasesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AvailableServiceAlias.DeserializeAvailableServiceAlias, AvailableServiceAliasesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetAvailableServiceAliasesByResourceGroup", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AvailableServiceAlias.DeserializeAvailableServiceAlias, AvailableServiceAliasesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetAvailableServiceAliasesByResourceGroup", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -445,7 +461,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableServiceAliasesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableServiceAliasesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AvailableServiceAlias.DeserializeAvailableServiceAlias, AvailableServiceAliasesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetAvailableServiceAliasesByResourceGroup", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AvailableServiceAlias.DeserializeAvailableServiceAlias, AvailableServiceAliasesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetAvailableServiceAliasesByResourceGroup", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -468,7 +484,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailablePrivateEndpointTypesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailablePrivateEndpointTypesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AvailablePrivateEndpointType.DeserializeAvailablePrivateEndpointType, AvailablePrivateEndpointTypesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetAvailablePrivateEndpointTypesByResourceGroup", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AvailablePrivateEndpointType.DeserializeAvailablePrivateEndpointType, AvailablePrivateEndpointTypesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetAvailablePrivateEndpointTypesByResourceGroup", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -491,7 +507,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailablePrivateEndpointTypesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailablePrivateEndpointTypesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AvailablePrivateEndpointType.DeserializeAvailablePrivateEndpointType, AvailablePrivateEndpointTypesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetAvailablePrivateEndpointTypesByResourceGroup", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AvailablePrivateEndpointType.DeserializeAvailablePrivateEndpointType, AvailablePrivateEndpointTypesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetAvailablePrivateEndpointTypesByResourceGroup", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -586,7 +602,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PrivateLinkServicesRestClient.CreateListAutoApprovedPrivateLinkServicesByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PrivateLinkServicesRestClient.CreateListAutoApprovedPrivateLinkServicesByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AutoApprovedPrivateLinkService.DeserializeAutoApprovedPrivateLinkService, PrivateLinkServicesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServices", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AutoApprovedPrivateLinkService.DeserializeAutoApprovedPrivateLinkService, PrivateLinkServicesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -609,7 +625,7 @@ namespace Azure.ResourceManager.Network
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PrivateLinkServicesRestClient.CreateListAutoApprovedPrivateLinkServicesByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PrivateLinkServicesRestClient.CreateListAutoApprovedPrivateLinkServicesByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AutoApprovedPrivateLinkService.DeserializeAutoApprovedPrivateLinkService, PrivateLinkServicesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServices", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AutoApprovedPrivateLinkService.DeserializeAutoApprovedPrivateLinkService, PrivateLinkServicesClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetAutoApprovedPrivateLinkServicesByResourceGroupPrivateLinkServices", "value", "nextLink", cancellationToken);
         }
     }
 }

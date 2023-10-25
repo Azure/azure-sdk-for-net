@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Data.SchemaRegistry.Models
 {
@@ -14,6 +13,10 @@ namespace Azure.Data.SchemaRegistry.Models
     {
         internal static Error DeserializeError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ErrorDetail error = default;
             foreach (var property in element.EnumerateObject())
             {

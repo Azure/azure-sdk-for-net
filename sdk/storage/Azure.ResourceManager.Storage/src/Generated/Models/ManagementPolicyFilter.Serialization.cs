@@ -48,6 +48,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static ManagementPolicyFilter DeserializeManagementPolicyFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> prefixMatch = default;
             IList<string> blobTypes = default;
             Optional<IList<ManagementPolicyTagFilter>> blobIndexMatch = default;
@@ -57,7 +61,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -82,7 +85,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ManagementPolicyTagFilter> array = new List<ManagementPolicyTagFilter>();

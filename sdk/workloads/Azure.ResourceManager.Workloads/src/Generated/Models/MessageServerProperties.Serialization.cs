@@ -20,6 +20,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static MessageServerProperties DeserializeMessageServerProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long?> msPort = default;
             Optional<long?> internalMsPort = default;
             Optional<long?> httpPort = default;
@@ -83,7 +87,6 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     health = new SapHealthState(property.Value.GetString());

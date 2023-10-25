@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
 
         internal static DataProtectionBackupRecoveryPointData DeserializeDataProtectionBackupRecoveryPointData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DataProtectionBackupRecoveryPointProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = DataProtectionBackupRecoveryPointProperties.DeserializeDataProtectionBackupRecoveryPointProperties(property.Value);
@@ -63,7 +66,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

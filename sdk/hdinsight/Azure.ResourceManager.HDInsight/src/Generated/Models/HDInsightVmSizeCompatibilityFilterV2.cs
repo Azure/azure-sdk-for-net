@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="clusterVersions"> The list of cluster versions affected in Major.Minor format. </param>
         /// <param name="osType"> The OSType affected, Windows or Linux. </param>
         /// <param name="vmSizes"> The list of virtual machine sizes to include or exclude. </param>
-        /// <param name="espApplied"> Whether apply for ESP cluster. &apos;true&apos; means only for ESP, &apos;false&apos; means only for non-ESP, null or empty string or others mean for both. </param>
-        /// <param name="isComputeIsolationSupported"> Whether support compute isolation. &apos;true&apos; means only for ComputeIsolationEnabled, &apos;false&apos; means only for regular cluster. </param>
+        /// <param name="espApplied"> Whether apply for ESP cluster. 'true' means only for ESP, 'false' means only for non-ESP, null or empty string or others mean for both. </param>
+        /// <param name="isComputeIsolationSupported"> Whether support compute isolation. 'true' means only for ComputeIsolationEnabled, 'false' means only for regular cluster. </param>
         internal HDInsightVmSizeCompatibilityFilterV2(HDInsightFilterMode? filterMode, IReadOnlyList<string> regions, IReadOnlyList<string> clusterFlavors, IReadOnlyList<string> nodeTypes, IReadOnlyList<string> clusterVersions, IReadOnlyList<HDInsightOSType> osType, IReadOnlyList<string> vmSizes, string espApplied, string isComputeIsolationSupported)
         {
             FilterMode = filterMode;
@@ -61,9 +61,9 @@ namespace Azure.ResourceManager.HDInsight.Models
         public IReadOnlyList<HDInsightOSType> OSType { get; }
         /// <summary> The list of virtual machine sizes to include or exclude. </summary>
         public IReadOnlyList<string> VmSizes { get; }
-        /// <summary> Whether apply for ESP cluster. &apos;true&apos; means only for ESP, &apos;false&apos; means only for non-ESP, null or empty string or others mean for both. </summary>
+        /// <summary> Whether apply for ESP cluster. 'true' means only for ESP, 'false' means only for non-ESP, null or empty string or others mean for both. </summary>
         public string EspApplied { get; }
-        /// <summary> Whether support compute isolation. &apos;true&apos; means only for ComputeIsolationEnabled, &apos;false&apos; means only for regular cluster. </summary>
+        /// <summary> Whether support compute isolation. 'true' means only for ComputeIsolationEnabled, 'false' means only for regular cluster. </summary>
         public string IsComputeIsolationSupported { get; }
     }
 }

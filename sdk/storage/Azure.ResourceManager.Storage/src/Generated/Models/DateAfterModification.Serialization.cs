@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static DateAfterModification DeserializeDateAfterModification(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<float> daysAfterModificationGreaterThan = default;
             Optional<float> daysAfterLastAccessTimeGreaterThan = default;
             Optional<float> daysAfterLastTierChangeGreaterThan = default;
@@ -50,7 +54,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     daysAfterModificationGreaterThan = property.Value.GetSingle();
@@ -60,7 +63,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     daysAfterLastAccessTimeGreaterThan = property.Value.GetSingle();
@@ -70,7 +72,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     daysAfterLastTierChangeGreaterThan = property.Value.GetSingle();
@@ -80,7 +81,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     daysAfterCreationGreaterThan = property.Value.GetSingle();

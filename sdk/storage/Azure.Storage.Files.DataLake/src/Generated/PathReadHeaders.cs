@@ -40,9 +40,9 @@ namespace Azure.Storage.Files.DataLake
         public DateTimeOffset? LastModified => _response.Headers.TryGetValue("Last-Modified", out DateTimeOffset? value) ? value : null;
         /// <summary> The version of the REST protocol used to process the request. </summary>
         public string Version => _response.Headers.TryGetValue("x-ms-version", out string value) ? value : null;
-        /// <summary> The type of the resource.  The value may be &quot;file&quot; or &quot;directory&quot;.  If not set, the value is &quot;file&quot;. </summary>
+        /// <summary> The type of the resource.  The value may be "file" or "directory".  If not set, the value is "file". </summary>
         public string ResourceType => _response.Headers.TryGetValue("x-ms-resource-type", out string value) ? value : null;
-        /// <summary> The user-defined properties associated with the file or directory, in the format of a comma-separated list of name and value pairs &quot;n1=v1, n2=v2, ...&quot;, where each value is a base64 encoded string. Note that the string may only contain ASCII characters in the ISO-8859-1 character set. </summary>
+        /// <summary> The user-defined properties associated with the file or directory, in the format of a comma-separated list of name and value pairs "n1=v1, n2=v2, ...", where each value is a base64 encoded string. Note that the string may only contain ASCII characters in the ISO-8859-1 character set. </summary>
         public string Properties => _response.Headers.TryGetValue("x-ms-properties", out string value) ? value : null;
         /// <summary> When a resource is leased, specifies whether the lease is of infinite or fixed duration. </summary>
         public string LeaseDuration => _response.Headers.TryGetValue("x-ms-lease-duration", out string value) ? value : null;
@@ -54,7 +54,7 @@ namespace Azure.Storage.Files.DataLake
         public bool? IsServerEncrypted => _response.Headers.TryGetValue("x-ms-request-server-encrypted", out bool? value) ? value : null;
         /// <summary> The SHA-256 hash of the encryption key used to encrypt the blob. This header is only returned when the blob was encrypted with a customer-provided key. </summary>
         public string EncryptionKeySha256 => _response.Headers.TryGetValue("x-ms-encryption-key-sha256", out string value) ? value : null;
-        /// <summary> The MD5 hash of complete file stored in storage. If the file has a MD5 hash, and if request contains range header (Range or x-ms-range), this response header is returned with the value of the complete file&apos;s MD5 value. This value may or may not be equal to the value returned in Content-MD5 header, with the latter calculated from the requested range. </summary>
+        /// <summary> The MD5 hash of complete file stored in storage. If the file has a MD5 hash, and if request contains range header (Range or x-ms-range), this response header is returned with the value of the complete file's MD5 value. This value may or may not be equal to the value returned in Content-MD5 header, with the latter calculated from the requested range. </summary>
         public string XMsContentMd5 => _response.Headers.TryGetValue("x-ms-content-md5", out string value) ? value : null;
     }
 }

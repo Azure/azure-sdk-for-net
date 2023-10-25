@@ -15,17 +15,25 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("nodes"u8);
-            writer.WriteStartArray();
-            foreach (var item in Nodes)
+            if (Optional.IsCollectionDefined(Nodes))
             {
-                writer.WriteStringValue(item);
+                writer.WritePropertyName("nodes"u8);
+                writer.WriteStartArray();
+                foreach (var item in Nodes)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
             if (Optional.IsDefined(IsForced))
             {
                 writer.WritePropertyName("force"u8);
                 writer.WriteBooleanValue(IsForced.Value);
+            }
+            if (Optional.IsDefined(UpdateType))
+            {
+                writer.WritePropertyName("updateType"u8);
+                writer.WriteStringValue(UpdateType.Value.ToString());
             }
             writer.WriteEndObject();
         }

@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.SignalR.Models
 
         internal static ShareablePrivateLinkResourceType DeserializeShareablePrivateLinkResourceType(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<ShareablePrivateLinkResourceProperties> properties = default;
             foreach (var property in element.EnumerateObject())
@@ -43,7 +47,6 @@ namespace Azure.ResourceManager.SignalR.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = ShareablePrivateLinkResourceProperties.DeserializeShareablePrivateLinkResourceProperties(property.Value);

@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static RestoreFileSpecs DeserializeRestoreFileSpecs(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> path = default;
             Optional<string> fileSpecType = default;
             Optional<string> targetFolderPath = default;

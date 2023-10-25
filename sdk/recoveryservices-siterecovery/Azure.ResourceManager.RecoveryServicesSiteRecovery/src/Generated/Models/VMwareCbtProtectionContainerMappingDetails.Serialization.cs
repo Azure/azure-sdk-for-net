@@ -16,26 +16,34 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static VMwareCbtProtectionContainerMappingDetails DeserializeVMwareCbtProtectionContainerMappingDetails(JsonElement element)
         {
-            Optional<string> keyVaultId = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ResourceIdentifier> keyVaultId = default;
             Optional<Uri> keyVaultUri = default;
-            Optional<string> storageAccountId = default;
+            Optional<ResourceIdentifier> storageAccountId = default;
             Optional<string> storageAccountSasSecretName = default;
             Optional<string> serviceBusConnectionStringSecretName = default;
             Optional<string> targetLocation = default;
             Optional<IReadOnlyDictionary<string, int>> roleSizeToNicCountMap = default;
+            Optional<IReadOnlyList<string>> excludedSkus = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyVaultId"u8))
                 {
-                    keyVaultId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    keyVaultId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("keyVaultUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        keyVaultUri = null;
                         continue;
                     }
                     keyVaultUri = new Uri(property.Value.GetString());
@@ -43,7 +51,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("storageAccountId"u8))
                 {
-                    storageAccountId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storageAccountId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("storageAccountSasSecretName"u8))
@@ -65,7 +77,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, int> dictionary = new Dictionary<string, int>();
@@ -76,13 +87,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     roleSizeToNicCountMap = dictionary;
                     continue;
                 }
+                if (property.NameEquals("excludedSkus"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    excludedSkus = array;
+                    continue;
+                }
                 if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
                     continue;
                 }
             }
-            return new VMwareCbtProtectionContainerMappingDetails(instanceType, keyVaultId.Value, keyVaultUri.Value, storageAccountId.Value, storageAccountSasSecretName.Value, serviceBusConnectionStringSecretName.Value, targetLocation.Value, Optional.ToDictionary(roleSizeToNicCountMap));
+            return new VMwareCbtProtectionContainerMappingDetails(instanceType, keyVaultId.Value, keyVaultUri.Value, storageAccountId.Value, storageAccountSasSecretName.Value, serviceBusConnectionStringSecretName.Value, targetLocation.Value, Optional.ToDictionary(roleSizeToNicCountMap), Optional.ToList(excludedSkus));
         }
     }
 }

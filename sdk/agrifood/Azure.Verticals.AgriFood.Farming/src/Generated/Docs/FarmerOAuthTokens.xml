@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetOAuthConnectionLinkAsync(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call GetOAuthConnectionLinkAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+FarmerOAuthTokens client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(apiVersion: "2022-11-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    partyId = "<partyId>",
+    oAuthProviderId = "<oAuthProviderId>",
+    userRedirectLink = "<userRedirectLink>",
+});
+Response response = await client.GetOAuthConnectionLinkAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetOAuthConnectionLinkAsync with all request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+FarmerOAuthTokens client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(apiVersion: "2022-11-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    partyId = "<partyId>",
+    oAuthProviderId = "<oAuthProviderId>",
+    userRedirectLink = "<userRedirectLink>",
+    userRedirectState = "<userRedirectState>",
+});
+Response response = await client.GetOAuthConnectionLinkAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetOAuthConnectionLink(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call GetOAuthConnectionLink and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+FarmerOAuthTokens client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(apiVersion: "2022-11-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    partyId = "<partyId>",
+    oAuthProviderId = "<oAuthProviderId>",
+    userRedirectLink = "<userRedirectLink>",
+});
+Response response = client.GetOAuthConnectionLink(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetOAuthConnectionLink with all request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+FarmerOAuthTokens client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(apiVersion: "2022-11-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    partyId = "<partyId>",
+    oAuthProviderId = "<oAuthProviderId>",
+    userRedirectLink = "<userRedirectLink>",
+    userRedirectState = "<userRedirectState>",
+});
+Response response = client.GetOAuthConnectionLink(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetCascadeDeleteJobDetailsAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetCascadeDeleteJobDetailsAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+FarmerOAuthTokens client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(apiVersion: "2022-11-01-preview");
+
+Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("resourceId").ToString());
+Console.WriteLine(result.GetProperty("resourceType").ToString());
+]]></code>
+This sample shows how to call GetCascadeDeleteJobDetailsAsync with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+FarmerOAuthTokens client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(apiVersion: "2022-11-01-preview");
+
+Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("resourceId").ToString());
+Console.WriteLine(result.GetProperty("resourceType").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+Console.WriteLine(result.GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("endTime").ToString());
+]]></code></example>
+    </member>
+    <member name="GetCascadeDeleteJobDetails(string,RequestContext)">
+      <example>
+This sample shows how to call GetCascadeDeleteJobDetails and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+FarmerOAuthTokens client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(apiVersion: "2022-11-01-preview");
+
+Response response = client.GetCascadeDeleteJobDetails("<jobId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("resourceId").ToString());
+Console.WriteLine(result.GetProperty("resourceType").ToString());
+]]></code>
+This sample shows how to call GetCascadeDeleteJobDetails with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+FarmerOAuthTokens client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(apiVersion: "2022-11-01-preview");
+
+Response response = client.GetCascadeDeleteJobDetails("<jobId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("resourceId").ToString());
+Console.WriteLine(result.GetProperty("resourceType").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+Console.WriteLine(result.GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("endTime").ToString());
+]]></code></example>
+    </member>
+    <member name="GetAuthenticatedFarmersDetailsAsync(IEnumerable{string},IEnumerable{string},bool?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
+      <example>
+This sample shows how to call GetAuthenticatedFarmersDetailsAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+FarmerOAuthTokens client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(apiVersion: "2022-11-01-preview");
+
+await foreach (BinaryData item in client.GetAuthenticatedFarmersDetailsAsync(null, null, null, null, null, null, null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("partyId").ToString());
+    Console.WriteLine(result.GetProperty("authProviderId").ToString());
+}
+]]></code>
+This sample shows how to call GetAuthenticatedFarmersDetailsAsync with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+FarmerOAuthTokens client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(apiVersion: "2022-11-01-preview");
+
+await foreach (BinaryData item in client.GetAuthenticatedFarmersDetailsAsync(new string[] { "<authProviderIds>" }, new string[] { "<partyIds>" }, true, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("partyId").ToString());
+    Console.WriteLine(result.GetProperty("authProviderId").ToString());
+    Console.WriteLine(result.GetProperty("isValid").ToString());
+    Console.WriteLine(result.GetProperty("eTag").ToString());
+    Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+    Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetAuthenticatedFarmersDetails(IEnumerable{string},IEnumerable{string},bool?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
+      <example>
+This sample shows how to call GetAuthenticatedFarmersDetails and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+FarmerOAuthTokens client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(apiVersion: "2022-11-01-preview");
+
+foreach (BinaryData item in client.GetAuthenticatedFarmersDetails(null, null, null, null, null, null, null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("partyId").ToString());
+    Console.WriteLine(result.GetProperty("authProviderId").ToString());
+}
+]]></code>
+This sample shows how to call GetAuthenticatedFarmersDetails with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+FarmerOAuthTokens client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(apiVersion: "2022-11-01-preview");
+
+foreach (BinaryData item in client.GetAuthenticatedFarmersDetails(new string[] { "<authProviderIds>" }, new string[] { "<partyIds>" }, true, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("partyId").ToString());
+    Console.WriteLine(result.GetProperty("authProviderId").ToString());
+    Console.WriteLine(result.GetProperty("isValid").ToString());
+    Console.WriteLine(result.GetProperty("eTag").ToString());
+    Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+    Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="CreateCascadeDeleteJobAsync(WaitUntil,string,string,string,RequestContext)">
+      <example>
+This sample shows how to call CreateCascadeDeleteJobAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+FarmerOAuthTokens client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(apiVersion: "2022-11-01-preview");
+
+Operation<BinaryData> operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<oauthProviderId>", null);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("resourceId").ToString());
+Console.WriteLine(result.GetProperty("resourceType").ToString());
+]]></code>
+This sample shows how to call CreateCascadeDeleteJobAsync with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+FarmerOAuthTokens client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(apiVersion: "2022-11-01-preview");
+
+Operation<BinaryData> operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<oauthProviderId>", null);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("resourceId").ToString());
+Console.WriteLine(result.GetProperty("resourceType").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+Console.WriteLine(result.GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("endTime").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateCascadeDeleteJob(WaitUntil,string,string,string,RequestContext)">
+      <example>
+This sample shows how to call CreateCascadeDeleteJob and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+FarmerOAuthTokens client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(apiVersion: "2022-11-01-preview");
+
+Operation<BinaryData> operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<oauthProviderId>", null);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("resourceId").ToString());
+Console.WriteLine(result.GetProperty("resourceType").ToString());
+]]></code>
+This sample shows how to call CreateCascadeDeleteJob with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+FarmerOAuthTokens client = new FarmBeatsClient(credential).GetFarmerOAuthTokensClient(apiVersion: "2022-11-01-preview");
+
+Operation<BinaryData> operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<oauthProviderId>", null);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("resourceId").ToString());
+Console.WriteLine(result.GetProperty("resourceType").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+Console.WriteLine(result.GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("endTime").ToString());
+]]></code></example>
+    </member>
+  </members>
+</doc>

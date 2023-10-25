@@ -30,6 +30,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static DatasetDebugResource DeserializeDatasetDebugResource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Dataset properties = default;
             Optional<string> name = default;
             foreach (var property in element.EnumerateObject())

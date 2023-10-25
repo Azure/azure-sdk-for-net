@@ -61,7 +61,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// Used for <see cref="SelectionMarkState"/> type.
         /// </summary>
         /// <remarks>
-        /// This property only has value for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and up.
+        /// This property only has value for <see cref="FormRecognizerClientOptions.ServiceVersion.V2_1"/> and newer.
         /// </remarks>
         SelectionMark,
 

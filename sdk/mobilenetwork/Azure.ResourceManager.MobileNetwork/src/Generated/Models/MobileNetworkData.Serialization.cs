@@ -41,14 +41,18 @@ namespace Azure.ResourceManager.MobileNetwork
 
         internal static MobileNetworkData DeserializeMobileNetworkData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ProvisioningState> provisioningState = default;
-            PlmnId publicLandMobileNetworkIdentifier = default;
+            Optional<MobileNetworkProvisioningState> provisioningState = default;
+            MobileNetworkPlmnId publicLandMobileNetworkIdentifier = default;
             Optional<string> serviceKey = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -56,7 +60,6 @@ namespace Azure.ResourceManager.MobileNetwork
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -91,7 +94,6 @@ namespace Azure.ResourceManager.MobileNetwork
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -110,15 +112,14 @@ namespace Azure.ResourceManager.MobileNetwork
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new MobileNetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("publicLandMobileNetworkIdentifier"u8))
                         {
-                            publicLandMobileNetworkIdentifier = PlmnId.DeserializePlmnId(property0.Value);
+                            publicLandMobileNetworkIdentifier = MobileNetworkPlmnId.DeserializeMobileNetworkPlmnId(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("serviceKey"u8))

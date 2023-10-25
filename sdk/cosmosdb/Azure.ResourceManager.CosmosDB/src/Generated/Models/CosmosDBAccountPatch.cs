@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             NetworkAclBypassResourceIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with &quot;defaultExperience&quot;: &quot;Cassandra&quot;. Current &quot;defaultExperience&quot; values also include &quot;Table&quot;, &quot;Graph&quot;, &quot;DocumentDB&quot;, and &quot;MongoDB&quot;. </summary>
+        /// <summary> Tags are a list of key-value pairs that describe the resource. These tags can be used in viewing and grouping this resource (across resource groups). A maximum of 15 tags can be provided for a resource. Each tag must have a key no greater than 128 characters and value no greater than 256 characters. For example, the default experience for a template type is set with "defaultExperience": "Cassandra". Current "defaultExperience" values also include "Table", "Graph", "DocumentDB", and "MongoDB". </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The location of the resource group to which the resource belongs. </summary>
         public AzureLocation? Location { get; set; }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public bool? DisableKeyBasedMetadataWriteAccess { get; set; }
         /// <summary> The URI of the key vault. </summary>
         public Uri KeyVaultKeyUri { get; set; }
-        /// <summary> The default identity for accessing key vault used in features like customer managed keys. The default identity needs to be explicitly set by the users. It can be &quot;FirstPartyIdentity&quot;, &quot;SystemAssignedIdentity&quot; and more. </summary>
+        /// <summary> The default identity for accessing key vault used in features like customer managed keys. The default identity needs to be explicitly set by the users. It can be "FirstPartyIdentity", "SystemAssignedIdentity" and more. </summary>
         public string DefaultIdentity { get; set; }
         /// <summary> Whether requests from Public Network are allowed. </summary>
         public CosmosDBPublicNetworkAccess? PublicNetworkAccess { get; set; }
@@ -105,6 +105,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public NetworkAclBypass? NetworkAclBypass { get; set; }
         /// <summary> An array that contains the Resource Ids for Network Acl Bypass for the Cosmos DB account. </summary>
         public IList<ResourceIdentifier> NetworkAclBypassResourceIds { get; }
+        /// <summary> The Object representing the different Diagnostic log settings for the Cosmos DB Account. </summary>
+        internal DiagnosticLogSettings DiagnosticLogSettings { get; set; }
+        /// <summary> Describe the level of detail with which queries are to be logged. </summary>
+        public EnableFullTextQuery? DiagnosticLogEnableFullTextQuery
+        {
+            get => DiagnosticLogSettings is null ? default : DiagnosticLogSettings.EnableFullTextQuery;
+            set
+            {
+                if (DiagnosticLogSettings is null)
+                    DiagnosticLogSettings = new DiagnosticLogSettings();
+                DiagnosticLogSettings.EnableFullTextQuery = value;
+            }
+        }
+
         /// <summary> Opt-out of local authentication and ensure only MSI and AAD can be used exclusively for authentication. </summary>
         public bool? DisableLocalAuth { get; set; }
         /// <summary> The object that represents all properties related to capacity enforcement on an account. </summary>
@@ -121,9 +135,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
         }
 
+        /// <summary> Flag to indicate whether to enable MaterializedViews on the Cosmos DB account. </summary>
+        public bool? EnableMaterializedViews { get; set; }
         /// <summary> This property is ignored during the update operation, as the metadata is read-only. The object represents the metadata for the Account Keys of the Cosmos DB account. </summary>
         public DatabaseAccountKeysMetadata KeysMetadata { get; }
         /// <summary> Flag to indicate enabling/disabling of Partition Merge feature on the account. </summary>
         public bool? EnablePartitionMerge { get; set; }
+        /// <summary> Flag to indicate enabling/disabling of Burst Capacity Preview feature on the account. </summary>
+        public bool? EnableBurstCapacity { get; set; }
+        /// <summary> Indicates the minimum allowed Tls version. The default is Tls 1.0, except for Cassandra and Mongo API's, which only work with Tls 1.2. </summary>
+        public CosmosDBMinimalTlsVersion? MinimalTlsVersion { get; set; }
     }
 }

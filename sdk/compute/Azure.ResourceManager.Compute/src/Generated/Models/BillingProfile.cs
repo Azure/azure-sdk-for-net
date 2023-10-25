@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> Specifies the billing related details of a Azure Spot VM or VMSS. &lt;br&gt;&lt;br&gt;Minimum api-version: 2019-03-01. </summary>
+    /// <summary> Specifies the billing related details of a Azure Spot VM or VMSS. Minimum api-version: 2019-03-01. </summary>
     internal partial class BillingProfile
     {
         /// <summary> Initializes a new instance of BillingProfile. </summary>

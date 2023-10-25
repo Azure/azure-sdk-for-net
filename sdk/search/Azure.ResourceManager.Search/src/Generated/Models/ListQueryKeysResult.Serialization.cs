@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Search.Models
     {
         internal static ListQueryKeysResult DeserializeListQueryKeysResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SearchServiceQueryKey>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.Search.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SearchServiceQueryKey> array = new List<SearchServiceQueryKey>();

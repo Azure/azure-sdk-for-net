@@ -27,7 +27,10 @@ namespace Azure.ResourceManager.Logic.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsDefined(ParameterReference))
@@ -45,6 +48,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static SwaggerCustomDynamicTreeParameterInfo DeserializeSwaggerCustomDynamicTreeParameterInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> selectedItemValuePath = default;
             Optional<BinaryData> value = default;
             Optional<string> parameterReference = default;
@@ -60,7 +67,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     value = BinaryData.FromString(property.Value.GetRawText());
@@ -75,7 +81,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     required = property.Value.GetBoolean();

@@ -25,15 +25,13 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         private AppConfigurationPrivateEndpointConnectionResource Connection { get; set; }
 
         public PrivateEndpointConnectionOperationTests(bool isAsync)
-            : base(isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
         [SetUp]
         public async Task TestSetUp()
         {
-            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
-            {
                 Initialize();
                 string groupName = Recording.GenerateAssetName(ResourceGroupPrefix);
                 string VnetName = Recording.GenerateAssetName("vnetname");
@@ -55,7 +53,22 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                 vnetData.AddressPrefixes.Add("10.0.0.0/16");
                 vnetData.DhcpOptionsDnsServers.Add("10.1.1.1");
                 vnetData.DhcpOptionsDnsServers.Add("10.1.2.4");
-                VirtualNetworkResource vnet = (await ResGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, VnetName, vnetData)).Value;
+                //VirtualNetworkResource vnet = (await ResGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, VnetName, vnetData)).Value;
+                ResourceIdentifier subnetID;
+                if (Mode == RecordedTestMode.Playback)
+                {
+                    subnetID = SubnetResource.CreateResourceIdentifier(ResGroup.Id.SubscriptionId, ResGroup.Id.Name, VnetName, SubnetName);
+                }
+                else
+                {
+                    using (Recording.DisableRecording())
+                    {
+                        var vnetResource = await ResGroup.GetVirtualNetworks().CreateOrUpdateAsync(WaitUntil.Completed, VnetName, vnetData);
+                        var subnetCollection = vnetResource.Value.GetSubnets();
+                        //SubnetResource subnetResource = (await subnetCollection.CreateOrUpdateAsync(WaitUntil.Completed, subnetName2, subnetData)).Value;
+                        subnetID = vnetResource.Value.Data.Subnets[0].Id;
+                    }
+                }
                 PrivateEndpointData privateEndpointData = new PrivateEndpointData()
                 {
                     Location = "eastus",
@@ -67,12 +80,11 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                             RequestMessage = "Please approve my connection",
                         }
                         },
-                    Subnet = new SubnetData() { Id = new ResourceIdentifier("/subscriptions/" + TestEnvironment.SubscriptionId + "/resourceGroups/" + groupName + "/providers/Microsoft.Network/virtualNetworks/" + VnetName + "/subnets/" + SubnetName) }
+                    Subnet = new SubnetData() { Id = subnetID }
                 };
                 PrivateEndpointResource = (await ResGroup.GetPrivateEndpoints().CreateOrUpdateAsync(WaitUntil.Completed, EndpointName, privateEndpointData)).Value;
                 List<AppConfigurationPrivateEndpointConnectionResource> connections = await ConfigStore.GetAppConfigurationPrivateEndpointConnections().GetAllAsync().ToEnumerableAsync();
                 Connection = connections.FirstOrDefault();
-            }
         }
 
         [Test]
@@ -95,7 +107,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         [Test]
         public async Task GetAvailableLocationsTest()
         {
-            IEnumerable<AzureLocation> locations =  (await Connection.GetAvailableLocationsAsync()).Value;
+            IEnumerable<AzureLocation> locations = (await Connection.GetAvailableLocationsAsync()).Value;
 
             Assert.IsNotEmpty(locations);
         }

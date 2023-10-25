@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ManagementGroups.Models
     {
         internal static ParentManagementGroupInfo DeserializeParentManagementGroupInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> name = default;
             Optional<string> displayName = default;

@@ -1,0 +1,6 @@
+{
+  "AssetsRepo": "Azure/azure-sdk-assets",
+  "AssetsRepoPrefixPath": "net",
+  "TagPrefix": "net/hybridcompute/Azure.ResourceManager.HybridCompute",
+  "Tag": "net/hybridcompute/Azure.ResourceManager.HybridCompute_3bcbb892fd"
+}

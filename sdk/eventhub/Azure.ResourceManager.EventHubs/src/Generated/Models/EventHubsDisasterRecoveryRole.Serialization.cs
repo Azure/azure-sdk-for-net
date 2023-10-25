@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         public static EventHubsDisasterRecoveryRole ToEventHubsDisasterRecoveryRole(this string value)
         {
-            if (string.Equals(value, "Primary", StringComparison.InvariantCultureIgnoreCase)) return EventHubsDisasterRecoveryRole.Primary;
-            if (string.Equals(value, "PrimaryNotReplicating", StringComparison.InvariantCultureIgnoreCase)) return EventHubsDisasterRecoveryRole.PrimaryNotReplicating;
-            if (string.Equals(value, "Secondary", StringComparison.InvariantCultureIgnoreCase)) return EventHubsDisasterRecoveryRole.Secondary;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Primary")) return EventHubsDisasterRecoveryRole.Primary;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PrimaryNotReplicating")) return EventHubsDisasterRecoveryRole.PrimaryNotReplicating;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Secondary")) return EventHubsDisasterRecoveryRole.Secondary;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown EventHubsDisasterRecoveryRole value.");
         }
     }

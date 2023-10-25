@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static VirtualMachineSize DeserializeVirtualMachineSize(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<int> numberOfCores = default;
             Optional<int> osDiskSizeInMB = default;
@@ -31,7 +35,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     numberOfCores = property.Value.GetInt32();
@@ -41,7 +44,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     osDiskSizeInMB = property.Value.GetInt32();
@@ -51,7 +53,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resourceDiskSizeInMB = property.Value.GetInt32();
@@ -61,7 +62,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     memoryInMB = property.Value.GetInt32();
@@ -71,7 +71,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxDataDiskCount = property.Value.GetInt32();

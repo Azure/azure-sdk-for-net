@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static ClientAccessRight DeserializeClientAccessRight(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string client = default;
             EdgeClientPermissionType accessPermission = default;
             foreach (var property in element.EnumerateObject())

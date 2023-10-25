@@ -69,15 +69,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="customData">Specifies a base-64 encoded string of
         /// custom data. The base-64 encoded string is decoded to a binary
         /// array that is saved as a file on the Virtual Machine. The maximum
-        /// length of the binary array is 65535 bytes. &lt;br&gt;&lt;br&gt; For
-        /// using cloud-init for your VM, see [Using cloud-init to customize a
-        /// Linux VM during
+        /// length of the binary array is 65535 bytes. For using cloud-init for
+        /// your VM, see [Using cloud-init to customize a Linux VM during
         /// creation](https://docs.microsoft.com/azure/virtual-machines/linux/using-cloud-init)</param>
         /// <param name="windowsConfiguration">Specifies Windows operating
         /// system settings on the virtual machine.</param>
         /// <param name="linuxConfiguration">Specifies the Linux operating
-        /// system settings on the virtual machine. &lt;br&gt;&lt;br&gt;For a
-        /// list of supported Linux distributions, see [Linux on Azure-Endorsed
+        /// system settings on the virtual machine. For a list of supported
+        /// Linux distributions, see [Linux on Azure-Endorsed
         /// Distributions](https://docs.microsoft.com/azure/virtual-machines/linux/endorsed-distros).</param>
         /// <param name="secrets">Specifies set of certificates that should be
         /// installed onto the virtual machines in the scale set. To install
@@ -87,9 +86,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// or the [Azure Key Vault virtual machine extension for
         /// Windows](https://docs.microsoft.com/azure/virtual-machines/extensions/key-vault-windows).</param>
         /// <param name="allowExtensionOperations">Specifies whether extension
-        /// operations should be allowed on the virtual machine scale set.
-        /// &lt;br&gt;&lt;br&gt;This may only be set to False when no
-        /// extensions are present on the virtual machine scale set.</param>
+        /// operations should be allowed on the virtual machine scale set. This
+        /// may only be set to False when no extensions are present on the
+        /// virtual machine scale set.</param>
         /// <param name="requireGuestProvisionSignal">Optional property which
         /// must either be set to True or omitted.</param>
         public VirtualMachineScaleSetOSProfile(string computerNamePrefix = default(string), string adminUsername = default(string), string adminPassword = default(string), string customData = default(string), WindowsConfiguration windowsConfiguration = default(WindowsConfiguration), LinuxConfiguration linuxConfiguration = default(LinuxConfiguration), IList<VaultSecretGroup> secrets = default(IList<VaultSecretGroup>), bool? allowExtensionOperations = default(bool?), bool? requireGuestProvisionSignal = default(bool?))
@@ -167,9 +166,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Gets or sets specifies a base-64 encoded string of custom data. The
         /// base-64 encoded string is decoded to a binary array that is saved
         /// as a file on the Virtual Machine. The maximum length of the binary
-        /// array is 65535 bytes. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; For
-        /// using cloud-init for your VM, see [Using cloud-init to customize a
-        /// Linux VM during
+        /// array is 65535 bytes. For using cloud-init for your VM, see [Using
+        /// cloud-init to customize a Linux VM during
         /// creation](https://docs.microsoft.com/azure/virtual-machines/linux/using-cloud-init)
         /// </summary>
         [JsonProperty(PropertyName = "customData")]
@@ -184,8 +182,8 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets specifies the Linux operating system settings on the
-        /// virtual machine. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;For a list of
-        /// supported Linux distributions, see [Linux on Azure-Endorsed
+        /// virtual machine. For a list of supported Linux distributions, see
+        /// [Linux on Azure-Endorsed
         /// Distributions](https://docs.microsoft.com/azure/virtual-machines/linux/endorsed-distros).
         /// </summary>
         [JsonProperty(PropertyName = "linuxConfiguration")]
@@ -205,9 +203,9 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets specifies whether extension operations should be
-        /// allowed on the virtual machine scale set.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;This may only be set to False
-        /// when no extensions are present on the virtual machine scale set.
+        /// allowed on the virtual machine scale set. This may only be set to
+        /// False when no extensions are present on the virtual machine scale
+        /// set.
         /// </summary>
         [JsonProperty(PropertyName = "allowExtensionOperations")]
         public bool? AllowExtensionOperations { get; set; }

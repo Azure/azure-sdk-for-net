@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static DefenderForContainersGcpOffering DeserializeDefenderForContainersGcpOffering(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DefenderForContainersGcpOfferingNativeCloudConnection> nativeCloudConnection = default;
             Optional<DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection> dataPipelineNativeCloudConnection = default;
             Optional<bool> auditLogsAutoProvisioningFlag = default;
@@ -60,7 +64,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     nativeCloudConnection = DefenderForContainersGcpOfferingNativeCloudConnection.DeserializeDefenderForContainersGcpOfferingNativeCloudConnection(property.Value);
@@ -70,7 +73,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dataPipelineNativeCloudConnection = DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection.DeserializeDefenderForContainersGcpOfferingDataPipelineNativeCloudConnection(property.Value);
@@ -80,7 +82,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     auditLogsAutoProvisioningFlag = property.Value.GetBoolean();
@@ -90,7 +91,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     defenderAgentAutoProvisioningFlag = property.Value.GetBoolean();
@@ -100,7 +100,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     policyAgentAutoProvisioningFlag = property.Value.GetBoolean();

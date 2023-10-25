@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         public static ServiceBusAccessRight ToServiceBusAccessRight(this string value)
         {
-            if (string.Equals(value, "Manage", StringComparison.InvariantCultureIgnoreCase)) return ServiceBusAccessRight.Manage;
-            if (string.Equals(value, "Send", StringComparison.InvariantCultureIgnoreCase)) return ServiceBusAccessRight.Send;
-            if (string.Equals(value, "Listen", StringComparison.InvariantCultureIgnoreCase)) return ServiceBusAccessRight.Listen;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Manage")) return ServiceBusAccessRight.Manage;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Send")) return ServiceBusAccessRight.Send;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Listen")) return ServiceBusAccessRight.Listen;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ServiceBusAccessRight value.");
         }
     }

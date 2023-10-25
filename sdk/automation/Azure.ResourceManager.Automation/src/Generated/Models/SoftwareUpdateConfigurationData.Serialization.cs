@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Automation
 
         internal static SoftwareUpdateConfigurationData DeserializeSoftwareUpdateConfigurationData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -74,7 +78,6 @@ namespace Azure.ResourceManager.Automation
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -108,7 +111,6 @@ namespace Azure.ResourceManager.Automation
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             error = AutomationResponseError.DeserializeAutomationResponseError(property0.Value);
@@ -118,7 +120,6 @@ namespace Azure.ResourceManager.Automation
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             creationTime = property0.Value.GetDateTimeOffset("O");
@@ -133,7 +134,6 @@ namespace Azure.ResourceManager.Automation
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastModifiedTime = property0.Value.GetDateTimeOffset("O");
@@ -148,7 +148,6 @@ namespace Azure.ResourceManager.Automation
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             tasks = SoftwareUpdateConfigurationTasks.DeserializeSoftwareUpdateConfigurationTasks(property0.Value);

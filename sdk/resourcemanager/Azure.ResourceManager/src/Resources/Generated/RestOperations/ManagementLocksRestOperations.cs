@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Create or update a management lock by scope. </summary>
-        /// <param name="scope"> The scope for the lock. When providing a scope for the assignment, use &apos;/subscriptions/{subscriptionId}&apos; for subscriptions, &apos;/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}&apos; for resource groups, and &apos;/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePathIfPresent}/{resourceType}/{resourceName}&apos; for resources. </param>
+        /// <param name="scope"> The scope for the lock. When providing a scope for the assignment, use '/subscriptions/{subscriptionId}' for subscriptions, '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}' for resource groups, and '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePathIfPresent}/{resourceType}/{resourceName}' for resources. </param>
         /// <param name="lockName"> The name of lock. </param>
         /// <param name="data"> Create or update management lock parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Create or update a management lock by scope. </summary>
-        /// <param name="scope"> The scope for the lock. When providing a scope for the assignment, use &apos;/subscriptions/{subscriptionId}&apos; for subscriptions, &apos;/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}&apos; for resource groups, and &apos;/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePathIfPresent}/{resourceType}/{resourceName}&apos; for resources. </param>
+        /// <param name="scope"> The scope for the lock. When providing a scope for the assignment, use '/subscriptions/{subscriptionId}' for subscriptions, '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}' for resource groups, and '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePathIfPresent}/{resourceType}/{resourceName}' for resources. </param>
         /// <param name="lockName"> The name of lock. </param>
         /// <param name="data"> Create or update management lock parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Gets all the management locks for a scope. </summary>
-        /// <param name="scope"> The scope for the lock. When providing a scope for the assignment, use &apos;/subscriptions/{subscriptionId}&apos; for subscriptions, &apos;/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}&apos; for resource groups, and &apos;/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePathIfPresent}/{resourceType}/{resourceName}&apos; for resources. </param>
+        /// <param name="scope"> The scope for the lock. When providing a scope for the assignment, use '/subscriptions/{subscriptionId}' for subscriptions, '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}' for resource groups, and '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePathIfPresent}/{resourceType}/{resourceName}' for resources. </param>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> Gets all the management locks for a scope. </summary>
-        /// <param name="scope"> The scope for the lock. When providing a scope for the assignment, use &apos;/subscriptions/{subscriptionId}&apos; for subscriptions, &apos;/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}&apos; for resource groups, and &apos;/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePathIfPresent}/{resourceType}/{resourceName}&apos; for resources. </param>
+        /// <param name="scope"> The scope for the lock. When providing a scope for the assignment, use '/subscriptions/{subscriptionId}' for subscriptions, '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}' for resource groups, and '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePathIfPresent}/{resourceType}/{resourceName}' for resources. </param>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Gets all the management locks for a scope. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="scope"> The scope for the lock. When providing a scope for the assignment, use &apos;/subscriptions/{subscriptionId}&apos; for subscriptions, &apos;/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}&apos; for resource groups, and &apos;/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePathIfPresent}/{resourceType}/{resourceName}&apos; for resources. </param>
+        /// <param name="scope"> The scope for the lock. When providing a scope for the assignment, use '/subscriptions/{subscriptionId}' for subscriptions, '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}' for resource groups, and '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePathIfPresent}/{resourceType}/{resourceName}' for resources. </param>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> Gets all the management locks for a scope. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="scope"> The scope for the lock. When providing a scope for the assignment, use &apos;/subscriptions/{subscriptionId}&apos; for subscriptions, &apos;/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}&apos; for resource groups, and &apos;/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePathIfPresent}/{resourceType}/{resourceName}&apos; for resources. </param>
+        /// <param name="scope"> The scope for the lock. When providing a scope for the assignment, use '/subscriptions/{subscriptionId}' for subscriptions, '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}' for resource groups, and '/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{parentResourcePathIfPresent}/{resourceType}/{resourceName}' for resources. </param>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>

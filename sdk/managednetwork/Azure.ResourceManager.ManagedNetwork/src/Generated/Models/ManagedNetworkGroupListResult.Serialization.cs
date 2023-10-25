@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
     {
         internal static ManagedNetworkGroupListResult DeserializeManagedNetworkGroupListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ManagedNetworkGroupData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ManagedNetworkGroupData> array = new List<ManagedNetworkGroupData>();

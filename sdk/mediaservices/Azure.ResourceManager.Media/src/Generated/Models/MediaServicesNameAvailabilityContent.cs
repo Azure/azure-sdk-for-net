@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Media.Models
 
         /// <summary> The account name. </summary>
         public string Name { get; set; }
-        /// <summary> The account type. For a Media Services account, this should be &apos;MediaServices&apos;. </summary>
+        /// <summary> The account type. For a Media Services account, this should be 'MediaServices'. </summary>
         public string ResourceType { get; set; }
     }
 }

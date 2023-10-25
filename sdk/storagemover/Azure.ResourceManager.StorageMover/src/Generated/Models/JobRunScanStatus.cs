@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
-    /// <summary> The status of Agent&apos;s scanning of source. </summary>
+    /// <summary> The status of Agent's scanning of source. </summary>
     public readonly partial struct JobRunScanStatus : IEquatable<JobRunScanStatus>
     {
         private readonly string _value;

@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Peering.Models
         }
 
         /// <summary> Initializes a new instance of PeeringBgpSession. </summary>
-        /// <param name="sessionPrefixV4"> The IPv4 prefix that contains both ends&apos; IPv4 addresses. </param>
-        /// <param name="sessionPrefixV6"> The IPv6 prefix that contains both ends&apos; IPv6 addresses. </param>
-        /// <param name="microsoftSessionIPv4Address"> The IPv4 session address on Microsoft&apos;s end. </param>
-        /// <param name="microsoftSessionIPv6Address"> The IPv6 session address on Microsoft&apos;s end. </param>
-        /// <param name="peerSessionIPv4Address"> The IPv4 session address on peer&apos;s end. </param>
-        /// <param name="peerSessionIPv6Address"> The IPv6 session address on peer&apos;s end. </param>
+        /// <param name="sessionPrefixV4"> The IPv4 prefix that contains both ends' IPv4 addresses. </param>
+        /// <param name="sessionPrefixV6"> The IPv6 prefix that contains both ends' IPv6 addresses. </param>
+        /// <param name="microsoftSessionIPv4Address"> The IPv4 session address on Microsoft's end. </param>
+        /// <param name="microsoftSessionIPv6Address"> The IPv6 session address on Microsoft's end. </param>
+        /// <param name="peerSessionIPv4Address"> The IPv4 session address on peer's end. </param>
+        /// <param name="peerSessionIPv6Address"> The IPv6 session address on peer's end. </param>
         /// <param name="sessionStateV4"> The state of the IPv4 session. </param>
         /// <param name="sessionStateV6"> The state of the IPv6 session. </param>
         /// <param name="maxPrefixesAdvertisedV4"> The maximum number of prefixes advertised over the IPv4 session. </param>
@@ -44,17 +44,17 @@ namespace Azure.ResourceManager.Peering.Models
             Md5AuthenticationKey = md5AuthenticationKey;
         }
 
-        /// <summary> The IPv4 prefix that contains both ends&apos; IPv4 addresses. </summary>
+        /// <summary> The IPv4 prefix that contains both ends' IPv4 addresses. </summary>
         public string SessionPrefixV4 { get; set; }
-        /// <summary> The IPv6 prefix that contains both ends&apos; IPv6 addresses. </summary>
+        /// <summary> The IPv6 prefix that contains both ends' IPv6 addresses. </summary>
         public string SessionPrefixV6 { get; set; }
-        /// <summary> The IPv4 session address on Microsoft&apos;s end. </summary>
+        /// <summary> The IPv4 session address on Microsoft's end. </summary>
         public IPAddress MicrosoftSessionIPv4Address { get; set; }
-        /// <summary> The IPv6 session address on Microsoft&apos;s end. </summary>
+        /// <summary> The IPv6 session address on Microsoft's end. </summary>
         public IPAddress MicrosoftSessionIPv6Address { get; set; }
-        /// <summary> The IPv4 session address on peer&apos;s end. </summary>
+        /// <summary> The IPv4 session address on peer's end. </summary>
         public IPAddress PeerSessionIPv4Address { get; set; }
-        /// <summary> The IPv6 session address on peer&apos;s end. </summary>
+        /// <summary> The IPv6 session address on peer's end. </summary>
         public IPAddress PeerSessionIPv6Address { get; set; }
         /// <summary> The state of the IPv4 session. </summary>
         public PeeringSessionStateV4? SessionStateV4 { get; }

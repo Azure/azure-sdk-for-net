@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Blueprint
         }
 
         /// <summary> Publish a new version of the blueprint definition with the latest artifacts. Published blueprint definitions are immutable. </summary>
-        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: &apos;/providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;/subscriptions/{subscriptionId}&apos;). </param>
+        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: '/subscriptions/{subscriptionId}'). </param>
         /// <param name="blueprintName"> Name of the blueprint definition. </param>
         /// <param name="versionId"> Version of the published blueprint definition. </param>
         /// <param name="data"> Published Blueprint to create or update. </param>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Blueprint
         }
 
         /// <summary> Publish a new version of the blueprint definition with the latest artifacts. Published blueprint definitions are immutable. </summary>
-        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: &apos;/providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;/subscriptions/{subscriptionId}&apos;). </param>
+        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: '/subscriptions/{subscriptionId}'). </param>
         /// <param name="blueprintName"> Name of the blueprint definition. </param>
         /// <param name="versionId"> Version of the published blueprint definition. </param>
         /// <param name="data"> Published Blueprint to create or update. </param>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Blueprint
         }
 
         /// <summary> Get a published version of a blueprint definition. </summary>
-        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: &apos;/providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;/subscriptions/{subscriptionId}&apos;). </param>
+        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: '/subscriptions/{subscriptionId}'). </param>
         /// <param name="blueprintName"> Name of the blueprint definition. </param>
         /// <param name="versionId"> Version of the published blueprint definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Blueprint
         }
 
         /// <summary> Get a published version of a blueprint definition. </summary>
-        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: &apos;/providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;/subscriptions/{subscriptionId}&apos;). </param>
+        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: '/subscriptions/{subscriptionId}'). </param>
         /// <param name="blueprintName"> Name of the blueprint definition. </param>
         /// <param name="versionId"> Version of the published blueprint definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Blueprint
         }
 
         /// <summary> Delete a published version of a blueprint definition. </summary>
-        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: &apos;/providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;/subscriptions/{subscriptionId}&apos;). </param>
+        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: '/subscriptions/{subscriptionId}'). </param>
         /// <param name="blueprintName"> Name of the blueprint definition. </param>
         /// <param name="versionId"> Version of the published blueprint definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Blueprint
         }
 
         /// <summary> Delete a published version of a blueprint definition. </summary>
-        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: &apos;/providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;/subscriptions/{subscriptionId}&apos;). </param>
+        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: '/subscriptions/{subscriptionId}'). </param>
         /// <param name="blueprintName"> Name of the blueprint definition. </param>
         /// <param name="versionId"> Version of the published blueprint definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.Blueprint
         }
 
         /// <summary> List published versions of given blueprint definition. </summary>
-        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: &apos;/providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;/subscriptions/{subscriptionId}&apos;). </param>
+        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: '/subscriptions/{subscriptionId}'). </param>
         /// <param name="blueprintName"> Name of the blueprint definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceScope"/> or <paramref name="blueprintName"/> is null. </exception>
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Blueprint
         }
 
         /// <summary> List published versions of given blueprint definition. </summary>
-        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: &apos;/providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;/subscriptions/{subscriptionId}&apos;). </param>
+        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: '/subscriptions/{subscriptionId}'). </param>
         /// <param name="blueprintName"> Name of the blueprint definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceScope"/> or <paramref name="blueprintName"/> is null. </exception>
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Blueprint
 
         /// <summary> List published versions of given blueprint definition. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: &apos;/providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;/subscriptions/{subscriptionId}&apos;). </param>
+        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: '/subscriptions/{subscriptionId}'). </param>
         /// <param name="blueprintName"> Name of the blueprint definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceScope"/> or <paramref name="blueprintName"/> is null. </exception>
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.Blueprint
 
         /// <summary> List published versions of given blueprint definition. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: &apos;/providers/Microsoft.Management/managementGroups/{managementGroup}&apos;), subscription (format: &apos;/subscriptions/{subscriptionId}&apos;). </param>
+        /// <param name="resourceScope"> The scope of the resource. Valid scopes are: management group (format: '/providers/Microsoft.Management/managementGroups/{managementGroup}'), subscription (format: '/subscriptions/{subscriptionId}'). </param>
         /// <param name="blueprintName"> Name of the blueprint definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceScope"/> or <paramref name="blueprintName"/> is null. </exception>

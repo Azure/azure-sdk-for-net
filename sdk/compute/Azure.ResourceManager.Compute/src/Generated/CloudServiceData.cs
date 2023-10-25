@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing the CloudService data model. </summary>
+    /// <summary>
+    /// A class representing the CloudService data model.
+    /// Describes the cloud service.
+    /// </summary>
     public partial class CloudServiceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of CloudServiceData. </summary>

@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceBlobStorageHttpLogsConfig DeserializeAppServiceBlobStorageHttpLogsConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> sasUrl = default;
             Optional<int> retentionInDays = default;
             Optional<bool> enabled = default;
@@ -45,7 +49,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        sasUrl = null;
                         continue;
                     }
                     sasUrl = new Uri(property.Value.GetString());
@@ -55,7 +58,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     retentionInDays = property.Value.GetInt32();
@@ -65,7 +67,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enabled = property.Value.GetBoolean();

@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary> A class representing the ApiManagementLogger data model. </summary>
+    /// <summary>
+    /// A class representing the ApiManagementLogger data model.
+    /// Logger details.
+    /// </summary>
     public partial class ApiManagementLoggerData : ResourceData
     {
         /// <summary> Initializes a new instance of ApiManagementLoggerData. </summary>

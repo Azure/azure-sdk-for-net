@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.Quantum.Models
         }
 
         /// <summary> Initializes a new instance of ProviderDescription. </summary>
-        /// <param name="id"> Unique provider&apos;s id. </param>
-        /// <param name="name"> Provider&apos;s display name. </param>
+        /// <param name="id"> Unique provider's id. </param>
+        /// <param name="name"> Provider's display name. </param>
         /// <param name="properties"> A list of provider-specific properties. </param>
         internal ProviderDescription(string id, string name, ProviderProperties properties)
         {
@@ -26,9 +26,9 @@ namespace Azure.ResourceManager.Quantum.Models
             Properties = properties;
         }
 
-        /// <summary> Unique provider&apos;s id. </summary>
+        /// <summary> Unique provider's id. </summary>
         public string Id { get; }
-        /// <summary> Provider&apos;s display name. </summary>
+        /// <summary> Provider's display name. </summary>
         public string Name { get; }
         /// <summary> A list of provider-specific properties. </summary>
         public ProviderProperties Properties { get; }

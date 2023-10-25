@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static HttpMessageDiagnostic DeserializeHttpMessageDiagnostic(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> headers = default;
             Optional<BodyDiagnosticSettings> body = default;
             Optional<DataMasking> dataMasking = default;
@@ -50,7 +54,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -65,7 +68,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     body = BodyDiagnosticSettings.DeserializeBodyDiagnosticSettings(property.Value);
@@ -75,7 +77,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dataMasking = DataMasking.DeserializeDataMasking(property.Value);

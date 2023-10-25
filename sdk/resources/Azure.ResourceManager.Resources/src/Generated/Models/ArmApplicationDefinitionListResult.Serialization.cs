@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static ArmApplicationDefinitionListResult DeserializeArmApplicationDefinitionListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ArmApplicationDefinitionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ArmApplicationDefinitionData> array = new List<ArmApplicationDefinitionData>();

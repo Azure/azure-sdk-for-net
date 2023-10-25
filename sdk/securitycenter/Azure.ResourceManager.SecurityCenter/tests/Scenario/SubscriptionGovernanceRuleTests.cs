@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
 {
     internal class SubscriptionGovernanceRuleTests : SecurityCenterManagementTestBase
     {
+#pragma warning disable 0618
         private SubscriptionGovernanceRuleCollection _subscriptionGovernanceRuleCollection => DefaultSubscription.GetSubscriptionGovernanceRules();
         public SubscriptionGovernanceRuleTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
@@ -52,5 +53,6 @@ namespace Azure.ResourceManager.SecurityCenter.Tests
             var list = await _subscriptionGovernanceRuleCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsEmpty(list);
         }
+#pragma warning disable 0618
     }
 }

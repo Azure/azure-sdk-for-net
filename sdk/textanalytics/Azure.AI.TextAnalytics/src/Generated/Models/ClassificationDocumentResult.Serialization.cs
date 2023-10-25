@@ -36,13 +36,17 @@ namespace Azure.AI.TextAnalytics.Models
             if (Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
-                writer.WriteObjectValue(Statistics.Value);
+                writer.WriteObjectValue(Statistics);
             }
             writer.WriteEndObject();
         }
 
         internal static ClassificationDocumentResult DeserializeClassificationDocumentResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<ClassificationResult> @class = default;
             string id = default;
             IList<DocumentWarning> warnings = default;
@@ -78,7 +82,6 @@ namespace Azure.AI.TextAnalytics.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     statistics = TextDocumentStatistics.DeserializeTextDocumentStatistics(property.Value);

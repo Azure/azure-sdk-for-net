@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     {
         internal static CertificateListDescription DeserializeCertificateListDescription(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DeviceProvisioningServicesCertificateData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DeviceProvisioningServicesCertificateData> array = new List<DeviceProvisioningServicesCertificateData>();

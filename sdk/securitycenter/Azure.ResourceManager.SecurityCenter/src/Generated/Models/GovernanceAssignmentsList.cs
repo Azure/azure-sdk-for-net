@@ -11,7 +11,7 @@ using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> Page of a security governance assignments list. </summary>
+    /// <summary> Page of a governance assignments list. </summary>
     internal partial class GovernanceAssignmentsList
     {
         /// <summary> Initializes a new instance of GovernanceAssignmentsList. </summary>

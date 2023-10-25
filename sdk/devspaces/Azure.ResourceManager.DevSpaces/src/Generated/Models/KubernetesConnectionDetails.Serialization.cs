@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DevSpaces.Models
     {
         internal static KubernetesConnectionDetails DeserializeKubernetesConnectionDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kubeConfig = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())

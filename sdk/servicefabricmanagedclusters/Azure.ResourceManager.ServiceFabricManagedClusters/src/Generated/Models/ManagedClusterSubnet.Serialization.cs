@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static ManagedClusterSubnet DeserializeManagedClusterSubnet(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<bool> enableIPv6 = default;
             Optional<ManagedClusterSubnetPrivateEndpointNetworkPoliciesState> privateEndpointNetworkPolicies = default;
@@ -58,7 +62,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableIPv6 = property.Value.GetBoolean();
@@ -68,7 +71,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     privateEndpointNetworkPolicies = new ManagedClusterSubnetPrivateEndpointNetworkPoliciesState(property.Value.GetString());
@@ -78,7 +80,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     privateLinkServiceNetworkPolicies = new ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState(property.Value.GetString());
@@ -86,9 +87,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 if (property.NameEquals("networkSecurityGroupId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     networkSecurityGroupId = new ResourceIdentifier(property.Value.GetString());

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Authorization.Models
     {
         internal static RoleManagementPolicyProperties DeserializeRoleManagementPolicyProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<string> displayName = default;
             Optional<RoleManagementScopeType> type = default;
@@ -32,7 +36,6 @@ namespace Azure.ResourceManager.Authorization.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             id = new ResourceIdentifier(property0.Value.GetString());
@@ -47,7 +50,6 @@ namespace Azure.ResourceManager.Authorization.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             type = new RoleManagementScopeType(property0.Value.GetString());

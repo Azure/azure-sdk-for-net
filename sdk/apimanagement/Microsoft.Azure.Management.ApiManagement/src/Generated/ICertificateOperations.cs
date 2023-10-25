@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// instance.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// by its identifier.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Gets the details of the certificate specified by its identifier.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -119,7 +119,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <see href="https://azure.microsoft.com/en-us/documentation/articles/api-management-howto-mutual-certificates/" />
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -155,7 +155,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Deletes specific certificate.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
@@ -188,7 +188,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <see href="https://azure.microsoft.com/en-us/documentation/articles/api-management-howto-mutual-certificates/" />
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.MySql.Models
         public MySqlMinimalTlsVersionEnum? MinimalTlsVersion { get; set; }
         /// <summary> Status showing whether the server enabled infrastructure encryption. </summary>
         public MySqlInfrastructureEncryption? InfrastructureEncryption { get; set; }
-        /// <summary> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
+        /// <summary> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </summary>
         public MySqlPublicNetworkAccessEnum? PublicNetworkAccess { get; set; }
         /// <summary> Storage profile of a server. </summary>
         public MySqlStorageProfile StorageProfile { get; set; }

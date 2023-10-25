@@ -1,7 +1,7 @@
 trigger: none
 
 variables:
-  NugetSecurityAnalysisWarningLevel: warn
+  nugetMultiFeedWarnLevel: warn
 
 extends:
   template: /eng/common/pipelines/templates/jobs/prepare-pipelines.yml

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static DataPolicyManifestEffect DeserializeDataPolicyManifestEffect(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<BinaryData> detailsSchema = default;
             foreach (var property in element.EnumerateObject())
@@ -28,7 +32,6 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     detailsSchema = BinaryData.FromString(property.Value.GetRawText());

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     {
         internal static DataProtectionBackupNameAvailabilityResult DeserializeDataProtectionBackupNameAvailabilityResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> message = default;
             Optional<bool> nameAvailable = default;
             Optional<string> reason = default;
@@ -28,7 +32,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     nameAvailable = property.Value.GetBoolean();

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -233,7 +234,7 @@ namespace Azure.ResourceManager.Billing
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _billingSubscriptionAliasBillingSubscriptionsAliasesRestClient.CreateListByBillingAccountRequest(_billingAccountName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingSubscriptionAliasBillingSubscriptionsAliasesRestClient.CreateListByBillingAccountNextPageRequest(nextLink, _billingAccountName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BillingSubscriptionAliasResource(Client, BillingSubscriptionAliasData.DeserializeBillingSubscriptionAliasData(e)), _billingSubscriptionAliasBillingSubscriptionsAliasesClientDiagnostics, Pipeline, "BillingSubscriptionAliasCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BillingSubscriptionAliasResource(Client, BillingSubscriptionAliasData.DeserializeBillingSubscriptionAliasData(e)), _billingSubscriptionAliasBillingSubscriptionsAliasesClientDiagnostics, Pipeline, "BillingSubscriptionAliasCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -255,7 +256,7 @@ namespace Azure.ResourceManager.Billing
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _billingSubscriptionAliasBillingSubscriptionsAliasesRestClient.CreateListByBillingAccountRequest(_billingAccountName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingSubscriptionAliasBillingSubscriptionsAliasesRestClient.CreateListByBillingAccountNextPageRequest(nextLink, _billingAccountName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BillingSubscriptionAliasResource(Client, BillingSubscriptionAliasData.DeserializeBillingSubscriptionAliasData(e)), _billingSubscriptionAliasBillingSubscriptionsAliasesClientDiagnostics, Pipeline, "BillingSubscriptionAliasCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BillingSubscriptionAliasResource(Client, BillingSubscriptionAliasData.DeserializeBillingSubscriptionAliasData(e)), _billingSubscriptionAliasBillingSubscriptionsAliasesClientDiagnostics, Pipeline, "BillingSubscriptionAliasCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -320,6 +321,80 @@ namespace Azure.ResourceManager.Billing
             {
                 var response = _billingSubscriptionAliasBillingSubscriptionsAliasesRestClient.Get(_billingAccountName, aliasName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptionAliases/{aliasName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingSubscriptionsAliases_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="aliasName"> The ID that uniquely identifies a subscription alias. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="aliasName"/> is null. </exception>
+        public virtual async Task<NullableResponse<BillingSubscriptionAliasResource>> GetIfExistsAsync(string aliasName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
+
+            using var scope = _billingSubscriptionAliasBillingSubscriptionsAliasesClientDiagnostics.CreateScope("BillingSubscriptionAliasCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _billingSubscriptionAliasBillingSubscriptionsAliasesRestClient.GetAsync(_billingAccountName, aliasName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<BillingSubscriptionAliasResource>(response.GetRawResponse());
+                return Response.FromValue(new BillingSubscriptionAliasResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptionAliases/{aliasName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BillingSubscriptionsAliases_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="aliasName"> The ID that uniquely identifies a subscription alias. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="aliasName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="aliasName"/> is null. </exception>
+        public virtual NullableResponse<BillingSubscriptionAliasResource> GetIfExists(string aliasName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(aliasName, nameof(aliasName));
+
+            using var scope = _billingSubscriptionAliasBillingSubscriptionsAliasesClientDiagnostics.CreateScope("BillingSubscriptionAliasCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _billingSubscriptionAliasBillingSubscriptionsAliasesRestClient.Get(_billingAccountName, aliasName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<BillingSubscriptionAliasResource>(response.GetRawResponse());
+                return Response.FromValue(new BillingSubscriptionAliasResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

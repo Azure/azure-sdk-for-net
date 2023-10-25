@@ -33,6 +33,10 @@ namespace Azure.ResourceManager.Avs.Models
 
         internal static UnknownWorkloadNetworkDhcpEntity DeserializeUnknownWorkloadNetworkDhcpEntity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DhcpTypeEnum dhcpType = "Unknown";
             Optional<string> displayName = default;
             Optional<IReadOnlyList<string>> segments = default;
@@ -54,7 +58,6 @@ namespace Azure.ResourceManager.Avs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -69,7 +72,6 @@ namespace Azure.ResourceManager.Avs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new WorkloadNetworkDhcpProvisioningState(property.Value.GetString());
@@ -79,7 +81,6 @@ namespace Azure.ResourceManager.Avs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     revision = property.Value.GetInt64();

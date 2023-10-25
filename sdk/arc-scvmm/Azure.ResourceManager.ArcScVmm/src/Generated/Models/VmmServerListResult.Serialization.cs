@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ArcScVmm.Models
     {
         internal static VmmServerListResult DeserializeVmmServerListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ScVmmServerData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ScVmmServerData> array = new List<ScVmmServerData>();

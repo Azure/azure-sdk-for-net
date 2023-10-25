@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.Analysis;
 
 namespace Azure.ResourceManager.Analysis.Models
@@ -16,6 +15,10 @@ namespace Azure.ResourceManager.Analysis.Models
     {
         internal static AnalysisServers DeserializeAnalysisServers(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<AnalysisServerData> value = default;
             foreach (var property in element.EnumerateObject())
             {

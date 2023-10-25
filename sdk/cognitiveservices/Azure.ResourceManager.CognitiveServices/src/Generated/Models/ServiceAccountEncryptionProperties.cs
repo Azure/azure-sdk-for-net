@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Properties to configure Encryption. </summary>
@@ -18,29 +16,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Initializes a new instance of ServiceAccountEncryptionProperties. </summary>
+        /// <param name="keyVaultProperties"> Properties of KeyVault. </param>
         /// <param name="keySource"> Enumerates the possible value of keySource for Encryption. </param>
-        /// <param name="keyName"> Name of the Key from KeyVault. </param>
-        /// <param name="keyVersion"> Version of the Key from KeyVault. </param>
-        /// <param name="keyVaultUri"> Uri of KeyVault. </param>
-        /// <param name="identityClientId"></param>
-        internal ServiceAccountEncryptionProperties(ServiceAccountEncryptionKeySource? keySource, string keyName, string keyVersion, Uri keyVaultUri, Guid? identityClientId)
+        internal ServiceAccountEncryptionProperties(CognitiveServicesKeyVaultProperties keyVaultProperties, ServiceAccountEncryptionKeySource? keySource)
         {
+            KeyVaultProperties = keyVaultProperties;
             KeySource = keySource;
-            KeyName = keyName;
-            KeyVersion = keyVersion;
-            KeyVaultUri = keyVaultUri;
-            IdentityClientId = identityClientId;
         }
 
+        /// <summary> Properties of KeyVault. </summary>
+        public CognitiveServicesKeyVaultProperties KeyVaultProperties { get; set; }
         /// <summary> Enumerates the possible value of keySource for Encryption. </summary>
         public ServiceAccountEncryptionKeySource? KeySource { get; set; }
-        /// <summary> Name of the Key from KeyVault. </summary>
-        public string KeyName { get; set; }
-        /// <summary> Version of the Key from KeyVault. </summary>
-        public string KeyVersion { get; set; }
-        /// <summary> Uri of KeyVault. </summary>
-        public Uri KeyVaultUri { get; set; }
-        /// <summary> Gets or sets the identity client id. </summary>
-        public Guid? IdentityClientId { get; set; }
     }
 }

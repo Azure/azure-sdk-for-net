@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    /// <summary> Add a second layer of encryption for your data using new encryption algorithm which gives additional data protection. Value is optional but if passed in, must be &apos;Disabled&apos; or &apos;Enabled&apos;. </summary>
+    /// <summary> Add a second layer of encryption for your data using new encryption algorithm which gives additional data protection. Value is optional but if passed in, must be 'Disabled' or 'Enabled'. </summary>
     public readonly partial struct PostgreSqlInfrastructureEncryption : IEquatable<PostgreSqlInfrastructureEncryption>
     {
         private readonly string _value;

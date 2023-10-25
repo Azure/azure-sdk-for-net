@@ -15,6 +15,10 @@ namespace Azure.Communication.CallAutomation
     {
         internal static RecordingStateChanged DeserializeRecordingStateChanged(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> callConnectionId = default;
             Optional<string> serverCallId = default;
             Optional<string> correlationId = default;
@@ -47,7 +51,6 @@ namespace Azure.Communication.CallAutomation
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     state = new RecordingState(property.Value.GetString());
@@ -57,7 +60,6 @@ namespace Azure.Communication.CallAutomation
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startDateTime = property.Value.GetDateTimeOffset("O");

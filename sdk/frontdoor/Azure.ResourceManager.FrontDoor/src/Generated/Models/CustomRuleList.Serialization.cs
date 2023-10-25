@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static CustomRuleList DeserializeCustomRuleList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<WebApplicationCustomRule>> rules = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<WebApplicationCustomRule> array = new List<WebApplicationCustomRule>();

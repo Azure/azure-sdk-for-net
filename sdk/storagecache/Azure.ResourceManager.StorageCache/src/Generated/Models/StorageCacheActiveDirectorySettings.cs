@@ -15,9 +15,9 @@ namespace Azure.ResourceManager.StorageCache.Models
     public partial class StorageCacheActiveDirectorySettings
     {
         /// <summary> Initializes a new instance of StorageCacheActiveDirectorySettings. </summary>
-        /// <param name="primaryDnsIPAddress"> Primary DNS IP address used to resolve the Active Directory domain controller&apos;s fully qualified domain name. </param>
+        /// <param name="primaryDnsIPAddress"> Primary DNS IP address used to resolve the Active Directory domain controller's fully qualified domain name. </param>
         /// <param name="domainName"> The fully qualified domain name of the Active Directory domain controller. </param>
-        /// <param name="domainNetBiosName"> The Active Directory domain&apos;s NetBIOS name. </param>
+        /// <param name="domainNetBiosName"> The Active Directory domain's NetBIOS name. </param>
         /// <param name="cacheNetBiosName"> The NetBIOS name to assign to the HPC Cache when it joins the Active Directory domain as a server. Length must 1-15 characters from the class [-0-9a-zA-Z]. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="primaryDnsIPAddress"/>, <paramref name="domainName"/>, <paramref name="domainNetBiosName"/> or <paramref name="cacheNetBiosName"/> is null. </exception>
         public StorageCacheActiveDirectorySettings(IPAddress primaryDnsIPAddress, string domainName, string domainNetBiosName, string cacheNetBiosName)
@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.StorageCache.Models
         }
 
         /// <summary> Initializes a new instance of StorageCacheActiveDirectorySettings. </summary>
-        /// <param name="primaryDnsIPAddress"> Primary DNS IP address used to resolve the Active Directory domain controller&apos;s fully qualified domain name. </param>
-        /// <param name="secondaryDnsIPAddress"> Secondary DNS IP address used to resolve the Active Directory domain controller&apos;s fully qualified domain name. </param>
+        /// <param name="primaryDnsIPAddress"> Primary DNS IP address used to resolve the Active Directory domain controller's fully qualified domain name. </param>
+        /// <param name="secondaryDnsIPAddress"> Secondary DNS IP address used to resolve the Active Directory domain controller's fully qualified domain name. </param>
         /// <param name="domainName"> The fully qualified domain name of the Active Directory domain controller. </param>
-        /// <param name="domainNetBiosName"> The Active Directory domain&apos;s NetBIOS name. </param>
+        /// <param name="domainNetBiosName"> The Active Directory domain's NetBIOS name. </param>
         /// <param name="cacheNetBiosName"> The NetBIOS name to assign to the HPC Cache when it joins the Active Directory domain as a server. Length must 1-15 characters from the class [-0-9a-zA-Z]. </param>
         /// <param name="domainJoined"> True if the HPC Cache is joined to the Active Directory domain. </param>
         /// <param name="credentials"> Active Directory admin credentials used to join the HPC Cache to a domain. </param>
@@ -52,13 +52,13 @@ namespace Azure.ResourceManager.StorageCache.Models
             Credentials = credentials;
         }
 
-        /// <summary> Primary DNS IP address used to resolve the Active Directory domain controller&apos;s fully qualified domain name. </summary>
+        /// <summary> Primary DNS IP address used to resolve the Active Directory domain controller's fully qualified domain name. </summary>
         public IPAddress PrimaryDnsIPAddress { get; set; }
-        /// <summary> Secondary DNS IP address used to resolve the Active Directory domain controller&apos;s fully qualified domain name. </summary>
+        /// <summary> Secondary DNS IP address used to resolve the Active Directory domain controller's fully qualified domain name. </summary>
         public IPAddress SecondaryDnsIPAddress { get; set; }
         /// <summary> The fully qualified domain name of the Active Directory domain controller. </summary>
         public string DomainName { get; set; }
-        /// <summary> The Active Directory domain&apos;s NetBIOS name. </summary>
+        /// <summary> The Active Directory domain's NetBIOS name. </summary>
         public string DomainNetBiosName { get; set; }
         /// <summary> The NetBIOS name to assign to the HPC Cache when it joins the Active Directory domain as a server. Length must 1-15 characters from the class [-0-9a-zA-Z]. </summary>
         public string CacheNetBiosName { get; set; }

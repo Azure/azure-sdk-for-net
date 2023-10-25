@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -227,14 +228,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="scope"> Scope like &apos;apis&apos;, &apos;products&apos; or &apos;apis/{apiId}. </param>
+        /// <param name="scope"> Scope like 'apis', 'products' or 'apis/{apiId}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ApiManagementTagResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApiManagementTagResource> GetAllAsync(string filter = null, int? top = null, int? skip = null, string scope = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementTagTagRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, scope);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementTagTagRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, scope);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementTagResource(Client, TagContractData.DeserializeTagContractData(e)), _apiManagementTagTagClientDiagnostics, Pipeline, "ApiManagementTagCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementTagResource(Client, TagContractData.DeserializeTagContractData(e)), _apiManagementTagTagClientDiagnostics, Pipeline, "ApiManagementTagCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,14 +254,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
-        /// <param name="scope"> Scope like &apos;apis&apos;, &apos;products&apos; or &apos;apis/{apiId}. </param>
+        /// <param name="scope"> Scope like 'apis', 'products' or 'apis/{apiId}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ApiManagementTagResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApiManagementTagResource> GetAll(string filter = null, int? top = null, int? skip = null, string scope = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementTagTagRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, scope);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementTagTagRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, scope);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementTagResource(Client, TagContractData.DeserializeTagContractData(e)), _apiManagementTagTagClientDiagnostics, Pipeline, "ApiManagementTagCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementTagResource(Client, TagContractData.DeserializeTagContractData(e)), _apiManagementTagTagClientDiagnostics, Pipeline, "ApiManagementTagCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -325,6 +326,80 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 var response = _apiManagementTagTagRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tags/{tagId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Tag_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tagId"> Tag identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tagId"/> is null. </exception>
+        public virtual async Task<NullableResponse<ApiManagementTagResource>> GetIfExistsAsync(string tagId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(tagId, nameof(tagId));
+
+            using var scope = _apiManagementTagTagClientDiagnostics.CreateScope("ApiManagementTagCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _apiManagementTagTagRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ApiManagementTagResource>(response.GetRawResponse());
+                return Response.FromValue(new ApiManagementTagResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tags/{tagId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Tag_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tagId"> Tag identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tagId"/> is null. </exception>
+        public virtual NullableResponse<ApiManagementTagResource> GetIfExists(string tagId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(tagId, nameof(tagId));
+
+            using var scope = _apiManagementTagTagClientDiagnostics.CreateScope("ApiManagementTagCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _apiManagementTagTagRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ApiManagementTagResource>(response.GetRawResponse());
+                return Response.FromValue(new ApiManagementTagResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

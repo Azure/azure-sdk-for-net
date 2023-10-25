@@ -4,7 +4,6 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -40,21 +39,22 @@ namespace Azure.Communication.JobRouter
         /// <summary>
         /// A set of key/value pairs that are identifying attributes used by the rules engines to make decisions.
         /// </summary>
-#pragma warning disable CA2227 // Collection properties should be read only
-        public IDictionary<string, LabelValue> Labels { get; set; } = new Dictionary<string, LabelValue>();
+        public IDictionary<string, LabelValue?> Labels { get; } = new Dictionary<string, LabelValue?>();
 
         /// <summary>
         /// A set of non-identifying attributes attached to this worker.
         /// </summary>
-        public IDictionary<string, LabelValue> Tags { get; set; } = new Dictionary<string, LabelValue>();
+        public IDictionary<string, LabelValue?> Tags { get; } = new Dictionary<string, LabelValue?>();
 
         /// <summary> The channel(s) this worker can handle and their impact on the workers capacity. </summary>
-        public IDictionary<string, ChannelConfiguration?> ChannelConfigurations { get; set; } =
-            new Dictionary<string, ChannelConfiguration?>();
+        public IDictionary<string, ChannelConfiguration?> ChannelConfigurations { get; } = new Dictionary<string, ChannelConfiguration?>();
 
         /// <summary> The queue(s) that this worker can receive work from. </summary>
-        public IDictionary<string, QueueAssignment?> QueueIds { get; set; } =
-            new Dictionary<string, QueueAssignment?>();
-#pragma warning restore CA2227 // Collection properties should be read only
+        public IDictionary<string, RouterQueueAssignment?> QueueAssignments { get; } = new Dictionary<string, RouterQueueAssignment?>();
+
+        /// <summary>
+        /// The content to send as the request conditions of the request.
+        /// </summary>
+        public RequestConditions RequestConditions { get; set; } = new();
     }
 }

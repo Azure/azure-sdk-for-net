@@ -22,10 +22,10 @@ namespace Azure.Storage.Files.Shares.Models
 
         public static ListFilesIncludeType ToListFilesIncludeType(this string value)
         {
-            if (string.Equals(value, "Timestamps", StringComparison.InvariantCultureIgnoreCase)) return ListFilesIncludeType.Timestamps;
-            if (string.Equals(value, "Etag", StringComparison.InvariantCultureIgnoreCase)) return ListFilesIncludeType.Etag;
-            if (string.Equals(value, "Attributes", StringComparison.InvariantCultureIgnoreCase)) return ListFilesIncludeType.Attributes;
-            if (string.Equals(value, "PermissionKey", StringComparison.InvariantCultureIgnoreCase)) return ListFilesIncludeType.PermissionKey;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Timestamps")) return ListFilesIncludeType.Timestamps;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Etag")) return ListFilesIncludeType.Etag;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Attributes")) return ListFilesIncludeType.Attributes;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PermissionKey")) return ListFilesIncludeType.PermissionKey;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ListFilesIncludeType value.");
         }
     }

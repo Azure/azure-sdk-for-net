@@ -45,11 +45,17 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppReplicaContainer DeserializeContainerAppReplicaContainer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> containerId = default;
             Optional<bool> ready = default;
             Optional<bool> started = default;
             Optional<int> restartCount = default;
+            Optional<ContainerAppContainerRunningState> runningState = default;
+            Optional<string> runningStateDetails = default;
             Optional<string> logStreamEndpoint = default;
             Optional<string> execEndpoint = default;
             foreach (var property in element.EnumerateObject())
@@ -68,7 +74,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ready = property.Value.GetBoolean();
@@ -78,7 +83,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     started = property.Value.GetBoolean();
@@ -88,10 +92,23 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     restartCount = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("runningState"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    runningState = new ContainerAppContainerRunningState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("runningStateDetails"u8))
+                {
+                    runningStateDetails = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("logStreamEndpoint"u8))
@@ -105,7 +122,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppReplicaContainer(name.Value, containerId.Value, Optional.ToNullable(ready), Optional.ToNullable(started), Optional.ToNullable(restartCount), logStreamEndpoint.Value, execEndpoint.Value);
+            return new ContainerAppReplicaContainer(name.Value, containerId.Value, Optional.ToNullable(ready), Optional.ToNullable(started), Optional.ToNullable(restartCount), Optional.ToNullable(runningState), runningStateDetails.Value, logStreamEndpoint.Value, execEndpoint.Value);
         }
     }
 }

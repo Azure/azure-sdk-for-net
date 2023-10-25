@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         internal static DynatraceBillingPlanInfo DeserializeDynatraceBillingPlanInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> usageType = default;
             Optional<string> billingCycle = default;
             Optional<string> planDetails = default;
@@ -66,7 +70,6 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     effectiveDate = property.Value.GetDateTimeOffset("O");

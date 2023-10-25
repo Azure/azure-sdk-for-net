@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get a SQL pool&apos;s Maintenance Windows.
+        /// Get a SQL pool's Maintenance Windows.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get a SQL pool&apos;s Maintenance Windows.
+        /// Get a SQL pool's Maintenance Windows.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Creates or updates a Sql pool&apos;s maintenance windows settings.
+        /// Creates or updates a Sql pool's maintenance windows settings.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Creates or updates a Sql pool&apos;s maintenance windows settings.
+        /// Creates or updates a Sql pool's maintenance windows settings.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

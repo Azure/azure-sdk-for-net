@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.SignalR.Models
     {
         internal static SignalRNameAvailabilityResult DeserializeSignalRNameAvailabilityResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> nameAvailable = default;
             Optional<string> reason = default;
             Optional<string> message = default;
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.SignalR.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     nameAvailable = property.Value.GetBoolean();

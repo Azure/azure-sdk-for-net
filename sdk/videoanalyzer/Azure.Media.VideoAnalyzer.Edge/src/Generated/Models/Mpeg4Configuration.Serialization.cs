@@ -30,6 +30,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static Mpeg4Configuration DeserializeMpeg4Configuration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<float> govLength = default;
             Optional<Mpeg4Profile> profile = default;
             foreach (var property in element.EnumerateObject())
@@ -38,7 +42,6 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     govLength = property.Value.GetSingle();
@@ -48,7 +51,6 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     profile = new Mpeg4Profile(property.Value.GetString());

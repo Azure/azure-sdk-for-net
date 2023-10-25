@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare
 {
-    /// <summary> A class representing the DataShareInvitation data model. </summary>
+    /// <summary>
+    /// A class representing the DataShareInvitation data model.
+    /// A Invitation data transfer object.
+    /// </summary>
     public partial class DataShareInvitationData : ResourceData
     {
         /// <summary> Initializes a new instance of DataShareInvitationData. </summary>
@@ -30,7 +33,7 @@ namespace Azure.ResourceManager.DataShare
         /// <param name="invitationStatus"> The status of the invitation. </param>
         /// <param name="respondedOn"> The time the recipient responded to the invitation. </param>
         /// <param name="sentOn"> Gets the time at which the invitation was sent. </param>
-        /// <param name="targetActiveDirectoryId"> The target Azure AD Id. Can&apos;t be combined with email. </param>
+        /// <param name="targetActiveDirectoryId"> The target Azure AD Id. Can't be combined with email. </param>
         /// <param name="targetEmail"> The email the invitation is directed to. </param>
         /// <param name="targetObjectId">
         /// The target user or application Id that invitation is being sent to.
@@ -63,7 +66,7 @@ namespace Azure.ResourceManager.DataShare
         public DateTimeOffset? RespondedOn { get; }
         /// <summary> Gets the time at which the invitation was sent. </summary>
         public DateTimeOffset? SentOn { get; }
-        /// <summary> The target Azure AD Id. Can&apos;t be combined with email. </summary>
+        /// <summary> The target Azure AD Id. Can't be combined with email. </summary>
         public string TargetActiveDirectoryId { get; set; }
         /// <summary> The email the invitation is directed to. </summary>
         public string TargetEmail { get; set; }

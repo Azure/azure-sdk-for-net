@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static StorageCorsRule DeserializeStorageCorsRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<string> allowedOrigins = default;
             IList<CorsRuleAllowedMethod> allowedMethods = default;
             int maxAgeInSeconds = default;

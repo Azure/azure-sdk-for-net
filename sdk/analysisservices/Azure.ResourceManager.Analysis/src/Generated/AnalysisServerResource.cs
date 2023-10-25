@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -451,7 +452,7 @@ namespace Azure.ResourceManager.Analysis
         public virtual AsyncPageable<AnalysisExistingSku> GetExistingSkusAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _analysisServerServersRestClient.CreateListSkusForExistingRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AnalysisExistingSku.DeserializeAnalysisExistingSku, _analysisServerServersClientDiagnostics, Pipeline, "AnalysisServerResource.GetExistingSkus", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AnalysisExistingSku.DeserializeAnalysisExistingSku, _analysisServerServersClientDiagnostics, Pipeline, "AnalysisServerResource.GetExistingSkus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -472,7 +473,7 @@ namespace Azure.ResourceManager.Analysis
         public virtual Pageable<AnalysisExistingSku> GetExistingSkus(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _analysisServerServersRestClient.CreateListSkusForExistingRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, AnalysisExistingSku.DeserializeAnalysisExistingSku, _analysisServerServersClientDiagnostics, Pipeline, "AnalysisServerResource.GetExistingSkus", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, AnalysisExistingSku.DeserializeAnalysisExistingSku, _analysisServerServersClientDiagnostics, Pipeline, "AnalysisServerResource.GetExistingSkus", "value", null, cancellationToken);
         }
 
         /// <summary>

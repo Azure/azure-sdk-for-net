@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> The source of the image. </summary>
         public ContainerRegistryImportSource Source { get; }
-        /// <summary> List of strings of the form repo[:tag]. When tag is omitted the source will be used (or &apos;latest&apos; if source tag is also omitted). </summary>
+        /// <summary> List of strings of the form repo[:tag]. When tag is omitted the source will be used (or 'latest' if source tag is also omitted). </summary>
         public IList<string> TargetTags { get; }
         /// <summary> List of strings of repository names to do a manifest only copy. No tag will be created. </summary>
         public IList<string> UntaggedTargetRepositories { get; }

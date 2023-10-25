@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static UnknownSsisObjectMetadata DeserializeUnknownSsisObjectMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SsisObjectMetadataType type = "Unknown";
             Optional<long> id = default;
             Optional<string> name = default;
@@ -29,7 +33,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = property.Value.GetInt64();

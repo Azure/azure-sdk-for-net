@@ -104,13 +104,13 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="targetResourceGroup"> Filter by target resource group name. Default value is select all. </param>
         /// <param name="targetResourceType"> Filter by target resource type. Default value is select all. </param>
         /// <param name="monitorService"> Filter by monitor service which generates the alert instance. Default value is select all. </param>
-        /// <param name="monitorCondition"> Filter by monitor condition which is either &apos;Fired&apos; or &apos;Resolved&apos;. Default value is to select all. </param>
+        /// <param name="monitorCondition"> Filter by monitor condition which is either 'Fired' or 'Resolved'. Default value is to select all. </param>
         /// <param name="severity"> Filter by severity.  Default value is select all. </param>
         /// <param name="smartGroupState"> Filter by state of the smart group. Default value is to select all. </param>
         /// <param name="timeRange"> Filter by time range by below listed values. Default value is 1 day. </param>
-        /// <param name="pageCount"> Determines number of alerts returned per page in response. Permissible value is between 1 to 250. When the &quot;includeContent&quot;  filter is selected, maximum value allowed is 25. Default value is 25. </param>
-        /// <param name="sortBy"> Sort the query results by input field. Default value is sort by &apos;lastModifiedDateTime&apos;. </param>
-        /// <param name="sortOrder"> Sort the query results order in either ascending or descending.  Default value is &apos;desc&apos; for time fields and &apos;asc&apos; for others. </param>
+        /// <param name="pageCount"> Determines number of alerts returned per page in response. Permissible value is between 1 to 250. When the "includeContent"  filter is selected, maximum value allowed is 25. Default value is 25. </param>
+        /// <param name="sortBy"> Sort the query results by input field. Default value is sort by 'lastModifiedDateTime'. </param>
+        /// <param name="sortOrder"> Sort the query results order in either ascending or descending.  Default value is 'desc' for time fields and 'asc' for others. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -140,13 +140,13 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="targetResourceGroup"> Filter by target resource group name. Default value is select all. </param>
         /// <param name="targetResourceType"> Filter by target resource type. Default value is select all. </param>
         /// <param name="monitorService"> Filter by monitor service which generates the alert instance. Default value is select all. </param>
-        /// <param name="monitorCondition"> Filter by monitor condition which is either &apos;Fired&apos; or &apos;Resolved&apos;. Default value is to select all. </param>
+        /// <param name="monitorCondition"> Filter by monitor condition which is either 'Fired' or 'Resolved'. Default value is to select all. </param>
         /// <param name="severity"> Filter by severity.  Default value is select all. </param>
         /// <param name="smartGroupState"> Filter by state of the smart group. Default value is to select all. </param>
         /// <param name="timeRange"> Filter by time range by below listed values. Default value is 1 day. </param>
-        /// <param name="pageCount"> Determines number of alerts returned per page in response. Permissible value is between 1 to 250. When the &quot;includeContent&quot;  filter is selected, maximum value allowed is 25. Default value is 25. </param>
-        /// <param name="sortBy"> Sort the query results by input field. Default value is sort by &apos;lastModifiedDateTime&apos;. </param>
-        /// <param name="sortOrder"> Sort the query results order in either ascending or descending.  Default value is &apos;desc&apos; for time fields and &apos;asc&apos; for others. </param>
+        /// <param name="pageCount"> Determines number of alerts returned per page in response. Permissible value is between 1 to 250. When the "includeContent"  filter is selected, maximum value allowed is 25. Default value is 25. </param>
+        /// <param name="sortBy"> Sort the query results by input field. Default value is sort by 'lastModifiedDateTime'. </param>
+        /// <param name="sortOrder"> Sort the query results order in either ascending or descending.  Default value is 'desc' for time fields and 'asc' for others. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -410,13 +410,13 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="targetResourceGroup"> Filter by target resource group name. Default value is select all. </param>
         /// <param name="targetResourceType"> Filter by target resource type. Default value is select all. </param>
         /// <param name="monitorService"> Filter by monitor service which generates the alert instance. Default value is select all. </param>
-        /// <param name="monitorCondition"> Filter by monitor condition which is either &apos;Fired&apos; or &apos;Resolved&apos;. Default value is to select all. </param>
+        /// <param name="monitorCondition"> Filter by monitor condition which is either 'Fired' or 'Resolved'. Default value is to select all. </param>
         /// <param name="severity"> Filter by severity.  Default value is select all. </param>
         /// <param name="smartGroupState"> Filter by state of the smart group. Default value is to select all. </param>
         /// <param name="timeRange"> Filter by time range by below listed values. Default value is 1 day. </param>
-        /// <param name="pageCount"> Determines number of alerts returned per page in response. Permissible value is between 1 to 250. When the &quot;includeContent&quot;  filter is selected, maximum value allowed is 25. Default value is 25. </param>
-        /// <param name="sortBy"> Sort the query results by input field. Default value is sort by &apos;lastModifiedDateTime&apos;. </param>
-        /// <param name="sortOrder"> Sort the query results order in either ascending or descending.  Default value is &apos;desc&apos; for time fields and &apos;asc&apos; for others. </param>
+        /// <param name="pageCount"> Determines number of alerts returned per page in response. Permissible value is between 1 to 250. When the "includeContent"  filter is selected, maximum value allowed is 25. Default value is 25. </param>
+        /// <param name="sortBy"> Sort the query results by input field. Default value is sort by 'lastModifiedDateTime'. </param>
+        /// <param name="sortOrder"> Sort the query results order in either ascending or descending.  Default value is 'desc' for time fields and 'asc' for others. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -448,13 +448,13 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="targetResourceGroup"> Filter by target resource group name. Default value is select all. </param>
         /// <param name="targetResourceType"> Filter by target resource type. Default value is select all. </param>
         /// <param name="monitorService"> Filter by monitor service which generates the alert instance. Default value is select all. </param>
-        /// <param name="monitorCondition"> Filter by monitor condition which is either &apos;Fired&apos; or &apos;Resolved&apos;. Default value is to select all. </param>
+        /// <param name="monitorCondition"> Filter by monitor condition which is either 'Fired' or 'Resolved'. Default value is to select all. </param>
         /// <param name="severity"> Filter by severity.  Default value is select all. </param>
         /// <param name="smartGroupState"> Filter by state of the smart group. Default value is to select all. </param>
         /// <param name="timeRange"> Filter by time range by below listed values. Default value is 1 day. </param>
-        /// <param name="pageCount"> Determines number of alerts returned per page in response. Permissible value is between 1 to 250. When the &quot;includeContent&quot;  filter is selected, maximum value allowed is 25. Default value is 25. </param>
-        /// <param name="sortBy"> Sort the query results by input field. Default value is sort by &apos;lastModifiedDateTime&apos;. </param>
-        /// <param name="sortOrder"> Sort the query results order in either ascending or descending.  Default value is &apos;desc&apos; for time fields and &apos;asc&apos; for others. </param>
+        /// <param name="pageCount"> Determines number of alerts returned per page in response. Permissible value is between 1 to 250. When the "includeContent"  filter is selected, maximum value allowed is 25. Default value is 25. </param>
+        /// <param name="sortBy"> Sort the query results by input field. Default value is sort by 'lastModifiedDateTime'. </param>
+        /// <param name="sortOrder"> Sort the query results order in either ascending or descending.  Default value is 'desc' for time fields and 'asc' for others. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>

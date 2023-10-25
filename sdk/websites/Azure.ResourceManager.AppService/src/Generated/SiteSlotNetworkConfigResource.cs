@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Integrates this Web App with a Virtual Network. This requires that 1) &quot;swiftSupported&quot; is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is not
+        /// Description for Integrates this Web App with a Virtual Network. This requires that 1) "swiftSupported" is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is not
         /// in use by another App Service Plan other than the one this App is in.
         /// <list type="bullet">
         /// <item>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Integrates this Web App with a Virtual Network. This requires that 1) &quot;swiftSupported&quot; is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is not
+        /// Description for Integrates this Web App with a Virtual Network. This requires that 1) "swiftSupported" is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is not
         /// in use by another App Service Plan other than the one this App is in.
         /// <list type="bullet">
         /// <item>
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Integrates this Web App with a Virtual Network. This requires that 1) &quot;swiftSupported&quot; is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is not
+        /// Description for Integrates this Web App with a Virtual Network. This requires that 1) "swiftSupported" is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is not
         /// in use by another App Service Plan other than the one this App is in.
         /// <list type="bullet">
         /// <item>
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Integrates this Web App with a Virtual Network. This requires that 1) &quot;swiftSupported&quot; is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is not
+        /// Description for Integrates this Web App with a Virtual Network. This requires that 1) "swiftSupported" is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is not
         /// in use by another App Service Plan other than the one this App is in.
         /// <list type="bullet">
         /// <item>

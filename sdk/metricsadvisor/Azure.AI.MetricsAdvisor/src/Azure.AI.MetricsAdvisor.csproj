@@ -7,10 +7,6 @@
     <ApiCompatVersion>1.1.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure Metrics Advisor</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <NoWarn>
-      $(NoWarn);
-      AZC0007; <!-- https://github.com/Azure/azure-sdk-for-net/issues/16435 -->
-    </NoWarn>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
 

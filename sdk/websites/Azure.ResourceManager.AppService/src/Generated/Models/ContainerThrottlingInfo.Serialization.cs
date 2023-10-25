@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static ContainerThrottlingInfo DeserializeContainerThrottlingInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> periods = default;
             Optional<int> throttledPeriods = default;
             Optional<int> throttledTime = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     periods = property.Value.GetInt32();
@@ -54,7 +57,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     throttledPeriods = property.Value.GetInt32();
@@ -64,7 +66,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     throttledTime = property.Value.GetInt32();

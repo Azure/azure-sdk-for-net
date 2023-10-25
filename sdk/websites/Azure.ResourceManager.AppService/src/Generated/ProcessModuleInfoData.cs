@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the ProcessModuleInfo data model. </summary>
+    /// <summary>
+    /// A class representing the ProcessModuleInfo data model.
+    /// Process Module Information.
+    /// </summary>
     public partial class ProcessModuleInfoData : ResourceData
     {
         /// <summary> Initializes a new instance of ProcessModuleInfoData. </summary>

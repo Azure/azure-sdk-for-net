@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Resources.Models
 
         public static ArmApplicationLockLevel ToArmApplicationLockLevel(this string value)
         {
-            if (string.Equals(value, "None", StringComparison.InvariantCultureIgnoreCase)) return ArmApplicationLockLevel.None;
-            if (string.Equals(value, "CanNotDelete", StringComparison.InvariantCultureIgnoreCase)) return ArmApplicationLockLevel.CanNotDelete;
-            if (string.Equals(value, "ReadOnly", StringComparison.InvariantCultureIgnoreCase)) return ArmApplicationLockLevel.ReadOnly;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return ArmApplicationLockLevel.None;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CanNotDelete")) return ArmApplicationLockLevel.CanNotDelete;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ReadOnly")) return ArmApplicationLockLevel.ReadOnly;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ArmApplicationLockLevel value.");
         }
     }

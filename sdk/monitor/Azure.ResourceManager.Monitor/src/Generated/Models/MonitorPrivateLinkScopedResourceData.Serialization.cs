@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.Monitor
 
         internal static MonitorPrivateLinkScopedResourceData DeserializeMonitorPrivateLinkScopedResourceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -56,7 +60,6 @@ namespace Azure.ResourceManager.Monitor
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -75,7 +78,6 @@ namespace Azure.ResourceManager.Monitor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             linkedResourceId = new ResourceIdentifier(property0.Value.GetString());

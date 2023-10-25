@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Initializes a new instance of PoolListResult. </summary>
         internal PoolListResult()
         {
-            Value = new ChangeTrackingList<PoolData>();
+            Value = new ChangeTrackingList<DevCenterPoolData>();
         }
 
         /// <summary> Initializes a new instance of PoolListResult. </summary>
         /// <param name="value"> Current page of results. </param>
         /// <param name="nextLink"> URL to get the next set of results if there are any. </param>
-        internal PoolListResult(IReadOnlyList<PoolData> value, string nextLink)
+        internal PoolListResult(IReadOnlyList<DevCenterPoolData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Current page of results. </summary>
-        public IReadOnlyList<PoolData> Value { get; }
+        public IReadOnlyList<DevCenterPoolData> Value { get; }
         /// <summary> URL to get the next set of results if there are any. </summary>
         public string NextLink { get; }
     }

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
@@ -15,6 +14,10 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         internal static IncidentRootCause DeserializeIncidentRootCause(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DimensionKey rootCause = default;
             IReadOnlyList<string> path = default;
             double score = default;

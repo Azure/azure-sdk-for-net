@@ -11,11 +11,11 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary>
-    /// Restart policy for all containers within the container group. 
+    /// Restart policy for all containers within the container group.
     /// - `Always` Always restart
     /// - `OnFailure` Restart on failure
     /// - `Never` Never restart
-    /// 
+    ///
     /// </summary>
     public readonly partial struct ContainerGroupRestartPolicy : IEquatable<ContainerGroupRestartPolicy>
     {

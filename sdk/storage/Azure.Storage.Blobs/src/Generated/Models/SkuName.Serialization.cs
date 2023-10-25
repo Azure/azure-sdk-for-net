@@ -23,11 +23,11 @@ namespace Azure.Storage.Blobs.Models
 
         public static SkuName ToSkuName(this string value)
         {
-            if (string.Equals(value, "Standard_LRS", StringComparison.InvariantCultureIgnoreCase)) return SkuName.StandardLrs;
-            if (string.Equals(value, "Standard_GRS", StringComparison.InvariantCultureIgnoreCase)) return SkuName.StandardGrs;
-            if (string.Equals(value, "Standard_RAGRS", StringComparison.InvariantCultureIgnoreCase)) return SkuName.StandardRagrs;
-            if (string.Equals(value, "Standard_ZRS", StringComparison.InvariantCultureIgnoreCase)) return SkuName.StandardZrs;
-            if (string.Equals(value, "Premium_LRS", StringComparison.InvariantCultureIgnoreCase)) return SkuName.PremiumLrs;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard_LRS")) return SkuName.StandardLrs;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard_GRS")) return SkuName.StandardGrs;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard_RAGRS")) return SkuName.StandardRagrs;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard_ZRS")) return SkuName.StandardZrs;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Premium_LRS")) return SkuName.PremiumLrs;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SkuName value.");
         }
     }

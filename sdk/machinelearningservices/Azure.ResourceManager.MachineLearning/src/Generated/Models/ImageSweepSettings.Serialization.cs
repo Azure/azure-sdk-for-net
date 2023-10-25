@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static ImageSweepSettings DeserializeImageSweepSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MachineLearningEarlyTerminationPolicy> earlyTermination = default;
             SamplingAlgorithmType samplingAlgorithm = default;
             foreach (var property in element.EnumerateObject())

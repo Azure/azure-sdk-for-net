@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -24,26 +25,36 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(TargetName);
 #else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(TargetName.ToString()).RootElement);
+            using (JsonDocument document = JsonDocument.Parse(TargetName))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
 #endif
             writer.WritePropertyName("userName"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(UserName);
 #else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(UserName.ToString()).RootElement);
+            using (JsonDocument document = JsonDocument.Parse(UserName))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
 #endif
             writer.WritePropertyName("password"u8);
-            writer.WriteObjectValue(Password);
+            JsonSerializer.Serialize(writer, Password);
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static CmdkeySetup DeserializeCmdkeySetup(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             BinaryData targetName = default;
             BinaryData userName = default;
-            FactorySecretBaseDefinition password = default;
+            DataFactorySecretBaseDefinition password = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -72,7 +83,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("password"u8))
                         {
-                            password = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            password = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                     }

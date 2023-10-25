@@ -52,7 +52,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(EnablePartitionDiscovery))
             {
                 writer.WritePropertyName("enablePartitionDiscovery"u8);
-                writer.WriteBooleanValue(EnablePartitionDiscovery.Value);
+                writer.WriteObjectValue(EnablePartitionDiscovery);
             }
             if (Optional.IsDefined(PartitionRootPath))
             {
@@ -91,13 +91,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static AzureDataLakeStoreReadSettings DeserializeAzureDataLakeStoreReadSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> recursive = default;
             Optional<object> wildcardFolderPath = default;
             Optional<object> wildcardFileName = default;
             Optional<object> fileListPath = default;
             Optional<object> listAfter = default;
             Optional<object> listBefore = default;
-            Optional<bool> enablePartitionDiscovery = default;
+            Optional<object> enablePartitionDiscovery = default;
             Optional<object> partitionRootPath = default;
             Optional<object> deleteFilesAfterCompletion = default;
             Optional<object> modifiedDatetimeStart = default;
@@ -112,7 +116,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     recursive = property.Value.GetObject();
@@ -122,7 +125,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     wildcardFolderPath = property.Value.GetObject();
@@ -132,7 +134,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     wildcardFileName = property.Value.GetObject();
@@ -142,7 +143,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     fileListPath = property.Value.GetObject();
@@ -152,7 +152,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     listAfter = property.Value.GetObject();
@@ -162,7 +161,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     listBefore = property.Value.GetObject();
@@ -172,17 +170,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    enablePartitionDiscovery = property.Value.GetBoolean();
+                    enablePartitionDiscovery = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("partitionRootPath"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     partitionRootPath = property.Value.GetObject();
@@ -192,7 +188,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     deleteFilesAfterCompletion = property.Value.GetObject();
@@ -202,7 +197,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     modifiedDatetimeStart = property.Value.GetObject();
@@ -212,7 +206,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     modifiedDatetimeEnd = property.Value.GetObject();
@@ -227,7 +220,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxConcurrentConnections = property.Value.GetObject();
@@ -236,7 +228,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureDataLakeStoreReadSettings(type, maxConcurrentConnections.Value, additionalProperties, recursive.Value, wildcardFolderPath.Value, wildcardFileName.Value, fileListPath.Value, listAfter.Value, listBefore.Value, Optional.ToNullable(enablePartitionDiscovery), partitionRootPath.Value, deleteFilesAfterCompletion.Value, modifiedDatetimeStart.Value, modifiedDatetimeEnd.Value);
+            return new AzureDataLakeStoreReadSettings(type, maxConcurrentConnections.Value, additionalProperties, recursive.Value, wildcardFolderPath.Value, wildcardFileName.Value, fileListPath.Value, listAfter.Value, listBefore.Value, enablePartitionDiscovery.Value, partitionRootPath.Value, deleteFilesAfterCompletion.Value, modifiedDatetimeStart.Value, modifiedDatetimeEnd.Value);
         }
 
         internal partial class AzureDataLakeStoreReadSettingsConverter : JsonConverter<AzureDataLakeStoreReadSettings>

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -21,8 +22,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
     /// A class representing a collection of <see cref="ProtectionContainerMappingResource" /> and their operations.
-    /// Each <see cref="ProtectionContainerMappingResource" /> in the collection will belong to the same instance of <see cref="ProtectionContainerResource" />.
-    /// To get a <see cref="ProtectionContainerMappingCollection" /> instance call the GetProtectionContainerMappings method from an instance of <see cref="ProtectionContainerResource" />.
+    /// Each <see cref="ProtectionContainerMappingResource" /> in the collection will belong to the same instance of <see cref="SiteRecoveryProtectionContainerResource" />.
+    /// To get a <see cref="ProtectionContainerMappingCollection" /> instance call the GetProtectionContainerMappings method from an instance of <see cref="SiteRecoveryProtectionContainerResource" />.
     /// </summary>
     public partial class ProtectionContainerMappingCollection : ArmCollection, IEnumerable<ProtectionContainerMappingResource>, IAsyncEnumerable<ProtectionContainerMappingResource>
     {
@@ -49,8 +50,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ProtectionContainerResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ProtectionContainerResource.ResourceType), nameof(id));
+            if (id.ResourceType != SiteRecoveryProtectionContainerResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SiteRecoveryProtectionContainerResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -228,7 +229,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _protectionContainerMappingReplicationProtectionContainerMappingsRestClient.CreateListByReplicationProtectionContainersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _protectionContainerMappingReplicationProtectionContainerMappingsRestClient.CreateListByReplicationProtectionContainersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProtectionContainerMappingResource(Client, ProtectionContainerMappingData.DeserializeProtectionContainerMappingData(e)), _protectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics, Pipeline, "ProtectionContainerMappingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ProtectionContainerMappingResource(Client, ProtectionContainerMappingData.DeserializeProtectionContainerMappingData(e)), _protectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics, Pipeline, "ProtectionContainerMappingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +251,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _protectionContainerMappingReplicationProtectionContainerMappingsRestClient.CreateListByReplicationProtectionContainersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _protectionContainerMappingReplicationProtectionContainerMappingsRestClient.CreateListByReplicationProtectionContainersNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProtectionContainerMappingResource(Client, ProtectionContainerMappingData.DeserializeProtectionContainerMappingData(e)), _protectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics, Pipeline, "ProtectionContainerMappingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ProtectionContainerMappingResource(Client, ProtectionContainerMappingData.DeserializeProtectionContainerMappingData(e)), _protectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics, Pipeline, "ProtectionContainerMappingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -315,6 +316,80 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 var response = _protectionContainerMappingReplicationProtectionContainerMappingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, mappingName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationProtectionContainerMappings/{mappingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationProtectionContainerMappings_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="mappingName"> Protection Container mapping name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="mappingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="mappingName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ProtectionContainerMappingResource>> GetIfExistsAsync(string mappingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(mappingName, nameof(mappingName));
+
+            using var scope = _protectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics.CreateScope("ProtectionContainerMappingCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _protectionContainerMappingReplicationProtectionContainerMappingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, mappingName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ProtectionContainerMappingResource>(response.GetRawResponse());
+                return Response.FromValue(new ProtectionContainerMappingResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationProtectionContainerMappings/{mappingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationProtectionContainerMappings_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="mappingName"> Protection Container mapping name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="mappingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="mappingName"/> is null. </exception>
+        public virtual NullableResponse<ProtectionContainerMappingResource> GetIfExists(string mappingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(mappingName, nameof(mappingName));
+
+            using var scope = _protectionContainerMappingReplicationProtectionContainerMappingsClientDiagnostics.CreateScope("ProtectionContainerMappingCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _protectionContainerMappingReplicationProtectionContainerMappingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, mappingName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ProtectionContainerMappingResource>(response.GetRawResponse());
+                return Response.FromValue(new ProtectionContainerMappingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

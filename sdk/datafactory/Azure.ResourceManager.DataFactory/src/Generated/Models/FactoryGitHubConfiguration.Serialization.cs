@@ -45,20 +45,30 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("lastCommitId"u8);
                 writer.WriteStringValue(LastCommitId);
             }
+            if (Optional.IsDefined(DisablePublish))
+            {
+                writer.WritePropertyName("disablePublish"u8);
+                writer.WriteBooleanValue(DisablePublish.Value);
+            }
             writer.WriteEndObject();
         }
 
         internal static FactoryGitHubConfiguration DeserializeFactoryGitHubConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> hostName = default;
             Optional<string> clientId = default;
-            Optional<GitHubClientSecret> clientSecret = default;
+            Optional<FactoryGitHubClientSecret> clientSecret = default;
             string type = default;
             string accountName = default;
             string repositoryName = default;
             string collaborationBranch = default;
             string rootFolder = default;
             Optional<string> lastCommitId = default;
+            Optional<bool> disablePublish = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hostName"u8))
@@ -75,10 +85,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    clientSecret = GitHubClientSecret.DeserializeGitHubClientSecret(property.Value);
+                    clientSecret = FactoryGitHubClientSecret.DeserializeFactoryGitHubClientSecret(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -111,8 +120,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                     lastCommitId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("disablePublish"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    disablePublish = property.Value.GetBoolean();
+                    continue;
+                }
             }
-            return new FactoryGitHubConfiguration(type, accountName, repositoryName, collaborationBranch, rootFolder, lastCommitId.Value, hostName.Value, clientId.Value, clientSecret.Value);
+            return new FactoryGitHubConfiguration(type, accountName, repositoryName, collaborationBranch, rootFolder, lastCommitId.Value, Optional.ToNullable(disablePublish), hostName.Value, clientId.Value, clientSecret.Value);
         }
     }
 }

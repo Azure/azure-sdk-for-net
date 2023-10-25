@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static TunnelConnectionHealth DeserializeTunnelConnectionHealth(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> tunnel = default;
             Optional<VirtualNetworkGatewayConnectionStatus> connectionStatus = default;
             Optional<long> ingressBytesTransferred = default;
@@ -30,7 +34,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     connectionStatus = new VirtualNetworkGatewayConnectionStatus(property.Value.GetString());
@@ -40,7 +43,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ingressBytesTransferred = property.Value.GetInt64();
@@ -50,7 +52,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     egressBytesTransferred = property.Value.GetInt64();

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="name"> Name depending on report endpoint specifies product, API, operation or developer name. </param>
         /// <param name="timestamp">
         /// Start of aggregation period. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// 
+        ///
         /// </param>
         /// <param name="interval"> Length of aggregation period.  Interval must be multiple of 15 minutes and may not be zero. The value should be in ISO 8601 format (http://en.wikipedia.org/wiki/ISO_8601#Durations). </param>
         /// <param name="country"> Country to which this record data is related. </param>
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public string Name { get; }
         /// <summary>
         /// Start of aggregation period. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
-        /// 
+        ///
         /// </summary>
         public DateTimeOffset? Timestamp { get; }
         /// <summary> Length of aggregation period.  Interval must be multiple of 15 minutes and may not be zero. The value should be in ISO 8601 format (http://en.wikipedia.org/wiki/ISO_8601#Durations). </summary>

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Defines the sequence of characters to use between the lines of text recognized by the OCR skill. The default value is &quot;space&quot;. </summary>
+    /// <summary> Defines the sequence of characters to use between the lines of text recognized by the OCR skill. The default value is "space". </summary>
     public readonly partial struct LineEnding : IEquatable<LineEnding>
     {
         private readonly string _value;
@@ -29,11 +29,11 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Lines are separated by a single space character. </summary>
         public static LineEnding Space { get; } = new LineEnding(SpaceValue);
-        /// <summary> Lines are separated by a carriage return (&apos;\r&apos;) character. </summary>
+        /// <summary> Lines are separated by a carriage return ('\r') character. </summary>
         public static LineEnding CarriageReturn { get; } = new LineEnding(CarriageReturnValue);
-        /// <summary> Lines are separated by a single line feed (&apos;\n&apos;) character. </summary>
+        /// <summary> Lines are separated by a single line feed ('\n') character. </summary>
         public static LineEnding LineFeed { get; } = new LineEnding(LineFeedValue);
-        /// <summary> Lines are separated by a carriage return and a line feed (&apos;\r\n&apos;) character. </summary>
+        /// <summary> Lines are separated by a carriage return and a line feed ('\r\n') character. </summary>
         public static LineEnding CarriageReturnLineFeed { get; } = new LineEnding(CarriageReturnLineFeedValue);
         /// <summary> Determines if two <see cref="LineEnding"/> values are the same. </summary>
         public static bool operator ==(LineEnding left, LineEnding right) => left.Equals(right);

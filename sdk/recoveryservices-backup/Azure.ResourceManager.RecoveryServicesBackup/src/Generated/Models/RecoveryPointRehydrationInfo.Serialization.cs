@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static RecoveryPointRehydrationInfo DeserializeRecoveryPointRehydrationInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<TimeSpan> rehydrationRetentionDuration = default;
             Optional<RehydrationPriority> rehydrationPriority = default;
             foreach (var property in element.EnumerateObject())
@@ -39,7 +43,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rehydrationRetentionDuration = property.Value.GetTimeSpan("P");
@@ -49,7 +52,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rehydrationPriority = new RehydrationPriority(property.Value.GetString());

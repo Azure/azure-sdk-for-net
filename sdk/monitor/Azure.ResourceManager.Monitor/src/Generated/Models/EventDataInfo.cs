@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="correlationId"> the correlation Id, usually a GUID in the string format. The correlation Id is shared among the events that belong to the same uber operation. </param>
         /// <param name="eventName"> the event name. This value should not be confused with OperationName. For practical purposes, OperationName might be more appealing to end users. </param>
         /// <param name="category"> the event category. </param>
-        /// <param name="httpRequest"> the HTTP request info. Usually includes the &apos;clientRequestId&apos;, &apos;clientIpAddress&apos; (IP address of the user who initiated the event) and &apos;method&apos; (HTTP method e.g. PUT). </param>
+        /// <param name="httpRequest"> the HTTP request info. Usually includes the 'clientRequestId', 'clientIpAddress' (IP address of the user who initiated the event) and 'method' (HTTP method e.g. PUT). </param>
         /// <param name="level"> the event level. </param>
         /// <param name="resourceGroupName"> the resource group name of the impacted resource. </param>
         /// <param name="resourceProviderName"> the resource provider name of the impacted resource. </param>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public MonitorLocalizableString EventName { get; }
         /// <summary> the event category. </summary>
         public MonitorLocalizableString Category { get; }
-        /// <summary> the HTTP request info. Usually includes the &apos;clientRequestId&apos;, &apos;clientIpAddress&apos; (IP address of the user who initiated the event) and &apos;method&apos; (HTTP method e.g. PUT). </summary>
+        /// <summary> the HTTP request info. Usually includes the 'clientRequestId', 'clientIpAddress' (IP address of the user who initiated the event) and 'method' (HTTP method e.g. PUT). </summary>
         public EventDataHttpRequestInfo HttpRequest { get; }
         /// <summary> the event level. </summary>
         public MonitorEventLevel? Level { get; }

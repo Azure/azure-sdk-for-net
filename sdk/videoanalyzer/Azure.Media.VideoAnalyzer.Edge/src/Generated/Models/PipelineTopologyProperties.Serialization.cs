@@ -66,6 +66,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static PipelineTopologyProperties DeserializePipelineTopologyProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> description = default;
             Optional<IList<ParameterDeclaration>> parameters = default;
             Optional<IList<SourceNodeBase>> sources = default;
@@ -82,7 +86,6 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ParameterDeclaration> array = new List<ParameterDeclaration>();
@@ -97,7 +100,6 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SourceNodeBase> array = new List<SourceNodeBase>();
@@ -112,7 +114,6 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ProcessorNodeBase> array = new List<ProcessorNodeBase>();
@@ -127,7 +128,6 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SinkNodeBase> array = new List<SinkNodeBase>();

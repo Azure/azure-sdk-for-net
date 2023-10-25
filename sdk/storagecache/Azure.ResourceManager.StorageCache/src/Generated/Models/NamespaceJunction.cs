@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         }
 
         /// <summary> Initializes a new instance of NamespaceJunction. </summary>
-        /// <param name="namespacePath"> Namespace path on a Cache for a Storage Target. </param>
+        /// <param name="namespacePath"> Namespace path on a cache for a Storage Target. </param>
         /// <param name="targetPath"> Path in Storage Target to which namespacePath points. </param>
         /// <param name="nfsExport"> NFS export where targetPath exists. </param>
         /// <param name="nfsAccessPolicy"> Name of the access policy applied to this junction. </param>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             NfsAccessPolicy = nfsAccessPolicy;
         }
 
-        /// <summary> Namespace path on a Cache for a Storage Target. </summary>
+        /// <summary> Namespace path on a cache for a Storage Target. </summary>
         public string NamespacePath { get; set; }
         /// <summary> Path in Storage Target to which namespacePath points. </summary>
         public string TargetPath { get; set; }

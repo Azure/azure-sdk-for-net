@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ConnectionMonitorDestination DeserializeConnectionMonitorDestination(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> resourceId = default;
             Optional<string> address = default;
             Optional<int> port = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resourceId = new ResourceIdentifier(property.Value.GetString());
@@ -59,7 +62,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     port = property.Value.GetInt32();

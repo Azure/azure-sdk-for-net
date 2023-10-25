@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Communication
 {
-    /// <summary> A class representing the EmailServiceResource data model. </summary>
+    /// <summary>
+    /// A class representing the EmailServiceResource data model.
+    /// A class representing an EmailService resource.
+    /// </summary>
     public partial class EmailServiceResourceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of EmailServiceResourceData. </summary>

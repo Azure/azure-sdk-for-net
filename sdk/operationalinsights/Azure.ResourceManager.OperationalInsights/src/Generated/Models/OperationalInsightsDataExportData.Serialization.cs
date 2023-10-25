@@ -73,6 +73,10 @@ namespace Azure.ResourceManager.OperationalInsights
 
         internal static OperationalInsightsDataExportData DeserializeOperationalInsightsDataExportData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -106,7 +110,6 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -125,7 +128,6 @@ namespace Azure.ResourceManager.OperationalInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             dataExportId = property0.Value.GetGuid();
@@ -135,7 +137,6 @@ namespace Azure.ResourceManager.OperationalInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -150,7 +151,6 @@ namespace Azure.ResourceManager.OperationalInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enable = property0.Value.GetBoolean();
@@ -160,7 +160,6 @@ namespace Azure.ResourceManager.OperationalInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createdDate = property0.Value.GetDateTimeOffset("R");
@@ -170,7 +169,6 @@ namespace Azure.ResourceManager.OperationalInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastModifiedDate = property0.Value.GetDateTimeOffset("R");
@@ -189,7 +187,6 @@ namespace Azure.ResourceManager.OperationalInsights
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
-                                        property1.ThrowNonNullablePropertyIsNull();
                                         continue;
                                     }
                                     resourceId = new ResourceIdentifier(property1.Value.GetString());
@@ -199,7 +196,6 @@ namespace Azure.ResourceManager.OperationalInsights
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
-                                        property1.ThrowNonNullablePropertyIsNull();
                                         continue;
                                     }
                                     type0 = new OperationalInsightsDataExportDestinationType(property1.Value.GetString());

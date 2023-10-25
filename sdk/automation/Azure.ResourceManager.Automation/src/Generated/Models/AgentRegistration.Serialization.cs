@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Automation.Models
     {
         internal static AgentRegistration DeserializeAgentRegistration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> dscMetaConfiguration = default;
             Optional<Uri> endpoint = default;
             Optional<AgentRegistrationKeys> keys = default;
@@ -30,7 +34,6 @@ namespace Azure.ResourceManager.Automation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        endpoint = null;
                         continue;
                     }
                     endpoint = new Uri(property.Value.GetString());
@@ -40,7 +43,6 @@ namespace Azure.ResourceManager.Automation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     keys = AgentRegistrationKeys.DeserializeAgentRegistrationKeys(property.Value);
@@ -50,7 +52,6 @@ namespace Azure.ResourceManager.Automation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());

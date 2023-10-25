@@ -62,6 +62,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         internal static VCenterData DeserializeVCenterData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ExtendedLocation> extendedLocation = default;
             Optional<string> kind = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -86,7 +90,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.GetRawText());
@@ -101,7 +104,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -136,7 +138,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -165,7 +166,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             port = property0.Value.GetInt32();
@@ -195,7 +195,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             credentials = VICredential.DeserializeVICredential(property0.Value);
@@ -205,7 +204,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ResourceStatus> array = new List<ResourceStatus>();

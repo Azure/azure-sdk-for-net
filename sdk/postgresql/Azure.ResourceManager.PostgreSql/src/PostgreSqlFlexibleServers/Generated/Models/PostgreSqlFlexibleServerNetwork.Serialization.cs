@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         internal static PostgreSqlFlexibleServerNetwork DeserializePostgreSqlFlexibleServerNetwork(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PostgreSqlFlexibleServerPublicNetworkAccessState> publicNetworkAccess = default;
             Optional<ResourceIdentifier> delegatedSubnetResourceId = default;
             Optional<ResourceIdentifier> privateDnsZoneArmResourceId = default;
@@ -39,7 +43,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     publicNetworkAccess = new PostgreSqlFlexibleServerPublicNetworkAccessState(property.Value.GetString());
@@ -49,7 +52,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     delegatedSubnetResourceId = new ResourceIdentifier(property.Value.GetString());
@@ -59,7 +61,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     privateDnsZoneArmResourceId = new ResourceIdentifier(property.Value.GetString());

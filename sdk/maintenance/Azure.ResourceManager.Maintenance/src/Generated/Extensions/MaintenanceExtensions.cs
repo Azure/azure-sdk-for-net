@@ -19,170 +19,100 @@ namespace Azure.ResourceManager.Maintenance
     /// <summary> A class to add extension methods to Azure.ResourceManager.Maintenance. </summary>
     public static partial class MaintenanceExtensions
     {
-        private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
         {
-            return subscriptionResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
+                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, scope);
+            });
+        }
+
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new SubscriptionResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new SubscriptionResourceExtensionClient(client, scope);
+            });
+        }
+        #region MaintenancePublicConfigurationResource
+        /// <summary>
+        /// Gets an object representing a <see cref="MaintenancePublicConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MaintenancePublicConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="MaintenancePublicConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MaintenancePublicConfigurationResource" /> object. </returns>
+        public static MaintenancePublicConfigurationResource GetMaintenancePublicConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                MaintenancePublicConfigurationResource.ValidateResourceId(id);
+                return new MaintenancePublicConfigurationResource(client, id);
             }
             );
         }
+        #endregion
 
-        /// <summary> Gets a collection of MaintenancePublicConfigurationResources in the SubscriptionResource. </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of MaintenancePublicConfigurationResources and their operations over a MaintenancePublicConfigurationResource. </returns>
-        public static MaintenancePublicConfigurationCollection GetMaintenancePublicConfigurations(this SubscriptionResource subscriptionResource)
-        {
-            return GetExtensionClient(subscriptionResource).GetMaintenancePublicConfigurations();
-        }
-
+        #region MaintenanceConfigurationResource
         /// <summary>
-        /// Get Public Maintenance Configuration record
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PublicMaintenanceConfigurations_Get</description>
-        /// </item>
-        /// </list>
+        /// Gets an object representing a <see cref="MaintenanceConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MaintenanceConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="MaintenanceConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> Maintenance Configuration Name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<MaintenancePublicConfigurationResource>> GetMaintenancePublicConfigurationAsync(this SubscriptionResource subscriptionResource, string resourceName, CancellationToken cancellationToken = default)
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MaintenanceConfigurationResource" /> object. </returns>
+        public static MaintenanceConfigurationResource GetMaintenanceConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return await subscriptionResource.GetMaintenancePublicConfigurations().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get Public Maintenance Configuration record
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PublicMaintenanceConfigurations_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> Maintenance Configuration Name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<MaintenancePublicConfigurationResource> GetMaintenancePublicConfiguration(this SubscriptionResource subscriptionResource, string resourceName, CancellationToken cancellationToken = default)
-        {
-            return subscriptionResource.GetMaintenancePublicConfigurations().Get(resourceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get Configuration records within a subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/applyUpdates</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplyUpdates_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MaintenanceApplyUpdateResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<MaintenanceApplyUpdateResource> GetMaintenanceApplyUpdatesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetMaintenanceApplyUpdatesAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Get Configuration records within a subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/applyUpdates</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApplyUpdates_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MaintenanceApplyUpdateResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<MaintenanceApplyUpdateResource> GetMaintenanceApplyUpdates(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetMaintenanceApplyUpdates(cancellationToken);
-        }
-
-        /// <summary>
-        /// Get Configuration records within a subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/maintenanceConfigurations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MaintenanceConfigurations_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MaintenanceConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<MaintenanceConfigurationResource> GetMaintenanceConfigurationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetMaintenanceConfigurationsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Get Configuration records within a subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/maintenanceConfigurations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>MaintenanceConfigurations_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MaintenanceConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<MaintenanceConfigurationResource> GetMaintenanceConfigurations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(subscriptionResource).GetMaintenanceConfigurations(cancellationToken);
-        }
-
-        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
-        {
-            return resourceGroupResource.GetCachedClient((client) =>
+            return client.GetResourceClient(() =>
             {
-                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
+                MaintenanceConfigurationResource.ValidateResourceId(id);
+                return new MaintenanceConfigurationResource(client, id);
             }
             );
         }
+        #endregion
+
+        #region MaintenanceApplyUpdateResource
+        /// <summary>
+        /// Gets an object representing a <see cref="MaintenanceApplyUpdateResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MaintenanceApplyUpdateResource.CreateResourceIdentifier" /> to create a <see cref="MaintenanceApplyUpdateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MaintenanceApplyUpdateResource" /> object. </returns>
+        public static MaintenanceApplyUpdateResource GetMaintenanceApplyUpdateResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                MaintenanceApplyUpdateResource.ValidateResourceId(id);
+                return new MaintenanceApplyUpdateResource(client, id);
+            }
+            );
+        }
+        #endregion
 
         /// <summary> Gets a collection of MaintenanceConfigurationResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of MaintenanceConfigurationResources and their operations over a MaintenanceConfigurationResource. </returns>
         public static MaintenanceConfigurationCollection GetMaintenanceConfigurations(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetMaintenanceConfigurations();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetMaintenanceConfigurations();
         }
 
         /// <summary>
@@ -238,7 +168,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <returns> An object representing collection of MaintenanceApplyUpdateResources and their operations over a MaintenanceApplyUpdateResource. </returns>
         public static MaintenanceApplyUpdateCollection GetMaintenanceApplyUpdates(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetMaintenanceApplyUpdates();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetMaintenanceApplyUpdates();
         }
 
         /// <summary>
@@ -316,7 +246,7 @@ namespace Azure.ResourceManager.Maintenance
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            return await GetExtensionClient(resourceGroupResource).GetApplyUpdatesByParentAsync(options, cancellationToken).ConfigureAwait(false);
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).GetApplyUpdatesByParentAsync(options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -340,7 +270,7 @@ namespace Azure.ResourceManager.Maintenance
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            return GetExtensionClient(resourceGroupResource).GetApplyUpdatesByParent(options, cancellationToken);
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetApplyUpdatesByParent(options, cancellationToken);
         }
 
         /// <summary>
@@ -373,7 +303,7 @@ namespace Azure.ResourceManager.Maintenance
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return await GetExtensionClient(resourceGroupResource).CreateOrUpdateApplyUpdateByParentAsync(providerName, resourceParentType, resourceParentName, resourceType, resourceName, cancellationToken).ConfigureAwait(false);
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).CreateOrUpdateApplyUpdateByParentAsync(providerName, resourceParentType, resourceParentName, resourceType, resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -406,7 +336,7 @@ namespace Azure.ResourceManager.Maintenance
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetExtensionClient(resourceGroupResource).CreateOrUpdateApplyUpdateByParent(providerName, resourceParentType, resourceParentName, resourceType, resourceName, cancellationToken);
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).CreateOrUpdateApplyUpdateByParent(providerName, resourceParentType, resourceParentName, resourceType, resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -435,7 +365,7 @@ namespace Azure.ResourceManager.Maintenance
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return await GetExtensionClient(resourceGroupResource).CreateOrUpdateApplyUpdateAsync(providerName, resourceType, resourceName, cancellationToken).ConfigureAwait(false);
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).CreateOrUpdateApplyUpdateAsync(providerName, resourceType, resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -464,7 +394,55 @@ namespace Azure.ResourceManager.Maintenance
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetExtensionClient(resourceGroupResource).CreateOrUpdateApplyUpdate(providerName, resourceType, resourceName, cancellationToken);
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).CreateOrUpdateApplyUpdate(providerName, resourceType, resourceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get configuration assignment for resource..
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationAssignments_GetParent</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public static async Task<Response<MaintenanceConfigurationAssignmentData>> GetConfigurationAssignmentByParentAsync(this ResourceGroupResource resourceGroupResource, ResourceGroupResourceGetConfigurationAssignmentByParentOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).GetConfigurationAssignmentByParentAsync(options, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get configuration assignment for resource..
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationAssignments_GetParent</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public static Response<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentByParent(this ResourceGroupResource resourceGroupResource, ResourceGroupResourceGetConfigurationAssignmentByParentOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetConfigurationAssignmentByParent(options, cancellationToken);
         }
 
         /// <summary>
@@ -488,7 +466,7 @@ namespace Azure.ResourceManager.Maintenance
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            return await GetExtensionClient(resourceGroupResource).CreateOrUpdateConfigurationAssignmentByParentAsync(options, cancellationToken).ConfigureAwait(false);
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).CreateOrUpdateConfigurationAssignmentByParentAsync(options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -512,7 +490,7 @@ namespace Azure.ResourceManager.Maintenance
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            return GetExtensionClient(resourceGroupResource).CreateOrUpdateConfigurationAssignmentByParent(options, cancellationToken);
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).CreateOrUpdateConfigurationAssignmentByParent(options, cancellationToken);
         }
 
         /// <summary>
@@ -536,7 +514,7 @@ namespace Azure.ResourceManager.Maintenance
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            return await GetExtensionClient(resourceGroupResource).DeleteConfigurationAssignmentByParentAsync(options, cancellationToken).ConfigureAwait(false);
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).DeleteConfigurationAssignmentByParentAsync(options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -560,7 +538,69 @@ namespace Azure.ResourceManager.Maintenance
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            return GetExtensionClient(resourceGroupResource).DeleteConfigurationAssignmentByParent(options, cancellationToken);
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).DeleteConfigurationAssignmentByParent(options, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get configuration assignment for resource..
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationAssignments_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="providerName"> Resource provider name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="resourceName"> Resource identifier. </param>
+        /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="configurationAssignmentName"/> is null. </exception>
+        public static async Task<Response<MaintenanceConfigurationAssignmentData>> GetConfigurationAssignmentAsync(this ResourceGroupResource resourceGroupResource, string providerName, string resourceType, string resourceName, string configurationAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
+
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).GetConfigurationAssignmentAsync(providerName, resourceType, resourceName, configurationAssignmentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get configuration assignment for resource..
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationAssignments_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="providerName"> Resource provider name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="resourceName"> Resource identifier. </param>
+        /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="configurationAssignmentName"/> is null. </exception>
+        public static Response<MaintenanceConfigurationAssignmentData> GetConfigurationAssignment(this ResourceGroupResource resourceGroupResource, string providerName, string resourceType, string resourceName, string configurationAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetConfigurationAssignment(providerName, resourceType, resourceName, configurationAssignmentName, cancellationToken);
         }
 
         /// <summary>
@@ -593,7 +633,7 @@ namespace Azure.ResourceManager.Maintenance
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            return await GetExtensionClient(resourceGroupResource).CreateOrUpdateConfigurationAssignmentAsync(providerName, resourceType, resourceName, configurationAssignmentName, data, cancellationToken).ConfigureAwait(false);
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).CreateOrUpdateConfigurationAssignmentAsync(providerName, resourceType, resourceName, configurationAssignmentName, data, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -626,7 +666,7 @@ namespace Azure.ResourceManager.Maintenance
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
             Argument.AssertNotNull(data, nameof(data));
 
-            return GetExtensionClient(resourceGroupResource).CreateOrUpdateConfigurationAssignment(providerName, resourceType, resourceName, configurationAssignmentName, data, cancellationToken);
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).CreateOrUpdateConfigurationAssignment(providerName, resourceType, resourceName, configurationAssignmentName, data, cancellationToken);
         }
 
         /// <summary>
@@ -657,7 +697,7 @@ namespace Azure.ResourceManager.Maintenance
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
 
-            return await GetExtensionClient(resourceGroupResource).DeleteConfigurationAssignmentAsync(providerName, resourceType, resourceName, configurationAssignmentName, cancellationToken).ConfigureAwait(false);
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).DeleteConfigurationAssignmentAsync(providerName, resourceType, resourceName, configurationAssignmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -688,7 +728,7 @@ namespace Azure.ResourceManager.Maintenance
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
 
-            return GetExtensionClient(resourceGroupResource).DeleteConfigurationAssignment(providerName, resourceType, resourceName, configurationAssignmentName, cancellationToken);
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).DeleteConfigurationAssignment(providerName, resourceType, resourceName, configurationAssignmentName, cancellationToken);
         }
 
         /// <summary>
@@ -722,7 +762,7 @@ namespace Azure.ResourceManager.Maintenance
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetExtensionClient(resourceGroupResource).GetConfigurationAssignmentsByParentAsync(providerName, resourceParentType, resourceParentName, resourceType, resourceName, cancellationToken);
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetConfigurationAssignmentsByParentAsync(providerName, resourceParentType, resourceParentName, resourceType, resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -756,7 +796,7 @@ namespace Azure.ResourceManager.Maintenance
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetExtensionClient(resourceGroupResource).GetConfigurationAssignmentsByParent(providerName, resourceParentType, resourceParentName, resourceType, resourceName, cancellationToken);
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetConfigurationAssignmentsByParent(providerName, resourceParentType, resourceParentName, resourceType, resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -786,7 +826,7 @@ namespace Azure.ResourceManager.Maintenance
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetExtensionClient(resourceGroupResource).GetConfigurationAssignmentsAsync(providerName, resourceType, resourceName, cancellationToken);
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetConfigurationAssignmentsAsync(providerName, resourceType, resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -816,7 +856,7 @@ namespace Azure.ResourceManager.Maintenance
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetExtensionClient(resourceGroupResource).GetConfigurationAssignments(providerName, resourceType, resourceName, cancellationToken);
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetConfigurationAssignments(providerName, resourceType, resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -837,7 +877,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <returns> An async collection of <see cref="MaintenanceApplyUpdateResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MaintenanceApplyUpdateResource> GetMaintenanceApplyUpdatesAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(resourceGroupResource).GetMaintenanceApplyUpdatesAsync(cancellationToken);
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetMaintenanceApplyUpdatesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -858,7 +898,215 @@ namespace Azure.ResourceManager.Maintenance
         /// <returns> A collection of <see cref="MaintenanceApplyUpdateResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MaintenanceApplyUpdateResource> GetMaintenanceApplyUpdates(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(resourceGroupResource).GetMaintenanceApplyUpdates(cancellationToken);
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetMaintenanceApplyUpdates(cancellationToken);
+        }
+
+        /// <summary>
+        /// Get configuration assignment for resource..
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationAssignmentsForResourceGroup_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
+        public static async Task<Response<MaintenanceConfigurationAssignmentData>> GetConfigurationAssignmentByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, string configurationAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
+
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).GetConfigurationAssignmentByResourceGroupAsync(configurationAssignmentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get configuration assignment for resource..
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationAssignmentsForResourceGroup_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
+        public static Response<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentByResourceGroup(this ResourceGroupResource resourceGroupResource, string configurationAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetConfigurationAssignmentByResourceGroup(configurationAssignmentName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Register configuration for resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationAssignmentsForResourceGroup_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
+        /// <param name="data"> The configurationAssignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
+        public static async Task<Response<MaintenanceConfigurationAssignmentData>> CreateOrUpdateConfigurationAssignmentByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
+            Argument.AssertNotNull(data, nameof(data));
+
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).CreateOrUpdateConfigurationAssignmentByResourceGroupAsync(configurationAssignmentName, data, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Register configuration for resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationAssignmentsForResourceGroup_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
+        /// <param name="data"> The configurationAssignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
+        public static Response<MaintenanceConfigurationAssignmentData> CreateOrUpdateConfigurationAssignmentByResourceGroup(this ResourceGroupResource resourceGroupResource, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
+            Argument.AssertNotNull(data, nameof(data));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).CreateOrUpdateConfigurationAssignmentByResourceGroup(configurationAssignmentName, data, cancellationToken);
+        }
+
+        /// <summary>
+        /// Register configuration for resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationAssignmentsForResourceGroup_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
+        /// <param name="data"> The configurationAssignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
+        public static async Task<Response<MaintenanceConfigurationAssignmentData>> UpdateConfigurationAssignmentByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
+            Argument.AssertNotNull(data, nameof(data));
+
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).UpdateConfigurationAssignmentByResourceGroupAsync(configurationAssignmentName, data, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Register configuration for resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationAssignmentsForResourceGroup_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
+        /// <param name="data"> The configurationAssignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
+        public static Response<MaintenanceConfigurationAssignmentData> UpdateConfigurationAssignmentByResourceGroup(this ResourceGroupResource resourceGroupResource, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
+            Argument.AssertNotNull(data, nameof(data));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).UpdateConfigurationAssignmentByResourceGroup(configurationAssignmentName, data, cancellationToken);
+        }
+
+        /// <summary>
+        /// Unregister configuration for resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationAssignmentsForResourceGroup_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="configurationAssignmentName"> Unique configuration assignment name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
+        public static async Task<Response<MaintenanceConfigurationAssignmentData>> DeleteConfigurationAssignmentByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, string configurationAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
+
+            return await GetResourceGroupResourceExtensionClient(resourceGroupResource).DeleteConfigurationAssignmentByResourceGroupAsync(configurationAssignmentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Unregister configuration for resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationAssignmentsForResourceGroup_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="configurationAssignmentName"> Unique configuration assignment name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
+        public static Response<MaintenanceConfigurationAssignmentData> DeleteConfigurationAssignmentByResourceGroup(this ResourceGroupResource resourceGroupResource, string configurationAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
+
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).DeleteConfigurationAssignmentByResourceGroup(configurationAssignmentName, cancellationToken);
         }
 
         /// <summary>
@@ -892,7 +1140,7 @@ namespace Azure.ResourceManager.Maintenance
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetExtensionClient(resourceGroupResource).GetUpdatesByParentAsync(providerName, resourceParentType, resourceParentName, resourceType, resourceName, cancellationToken);
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetUpdatesByParentAsync(providerName, resourceParentType, resourceParentName, resourceType, resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -926,7 +1174,7 @@ namespace Azure.ResourceManager.Maintenance
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetExtensionClient(resourceGroupResource).GetUpdatesByParent(providerName, resourceParentType, resourceParentName, resourceType, resourceName, cancellationToken);
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetUpdatesByParent(providerName, resourceParentType, resourceParentName, resourceType, resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -956,7 +1204,7 @@ namespace Azure.ResourceManager.Maintenance
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetExtensionClient(resourceGroupResource).GetUpdatesAsync(providerName, resourceType, resourceName, cancellationToken);
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetUpdatesAsync(providerName, resourceType, resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -986,64 +1234,397 @@ namespace Azure.ResourceManager.Maintenance
             Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
-            return GetExtensionClient(resourceGroupResource).GetUpdates(providerName, resourceType, resourceName, cancellationToken);
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetUpdates(providerName, resourceType, resourceName, cancellationToken);
         }
 
-        #region MaintenancePublicConfigurationResource
-        /// <summary>
-        /// Gets an object representing a <see cref="MaintenancePublicConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MaintenancePublicConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="MaintenancePublicConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MaintenancePublicConfigurationResource" /> object. </returns>
-        public static MaintenancePublicConfigurationResource GetMaintenancePublicConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        /// <summary> Gets a collection of MaintenancePublicConfigurationResources in the SubscriptionResource. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of MaintenancePublicConfigurationResources and their operations over a MaintenancePublicConfigurationResource. </returns>
+        public static MaintenancePublicConfigurationCollection GetMaintenancePublicConfigurations(this SubscriptionResource subscriptionResource)
         {
-            return client.GetResourceClient(() =>
-            {
-                MaintenancePublicConfigurationResource.ValidateResourceId(id);
-                return new MaintenancePublicConfigurationResource(client, id);
-            }
-            );
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMaintenancePublicConfigurations();
         }
-        #endregion
 
-        #region MaintenanceConfigurationResource
         /// <summary>
-        /// Gets an object representing a <see cref="MaintenanceConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MaintenanceConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="MaintenanceConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Get Public Maintenance Configuration record
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PublicMaintenanceConfigurations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MaintenanceConfigurationResource" /> object. </returns>
-        public static MaintenanceConfigurationResource GetMaintenanceConfigurationResource(this ArmClient client, ResourceIdentifier id)
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> Maintenance Configuration Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<MaintenancePublicConfigurationResource>> GetMaintenancePublicConfigurationAsync(this SubscriptionResource subscriptionResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return client.GetResourceClient(() =>
-            {
-                MaintenanceConfigurationResource.ValidateResourceId(id);
-                return new MaintenanceConfigurationResource(client, id);
-            }
-            );
+            return await subscriptionResource.GetMaintenancePublicConfigurations().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
-        #endregion
 
-        #region MaintenanceApplyUpdateResource
         /// <summary>
-        /// Gets an object representing a <see cref="MaintenanceApplyUpdateResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MaintenanceApplyUpdateResource.CreateResourceIdentifier" /> to create a <see cref="MaintenanceApplyUpdateResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Get Public Maintenance Configuration record
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PublicMaintenanceConfigurations_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MaintenanceApplyUpdateResource" /> object. </returns>
-        public static MaintenanceApplyUpdateResource GetMaintenanceApplyUpdateResource(this ArmClient client, ResourceIdentifier id)
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="resourceName"> Maintenance Configuration Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<MaintenancePublicConfigurationResource> GetMaintenancePublicConfiguration(this SubscriptionResource subscriptionResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return client.GetResourceClient(() =>
-            {
-                MaintenanceApplyUpdateResource.ValidateResourceId(id);
-                return new MaintenanceApplyUpdateResource(client, id);
-            }
-            );
+            return subscriptionResource.GetMaintenancePublicConfigurations().Get(resourceName, cancellationToken);
         }
-        #endregion
+
+        /// <summary>
+        /// Get Configuration records within a subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/applyUpdates</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplyUpdates_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="MaintenanceApplyUpdateResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<MaintenanceApplyUpdateResource> GetMaintenanceApplyUpdatesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMaintenanceApplyUpdatesAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Get Configuration records within a subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/applyUpdates</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplyUpdates_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="MaintenanceApplyUpdateResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<MaintenanceApplyUpdateResource> GetMaintenanceApplyUpdates(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMaintenanceApplyUpdates(cancellationToken);
+        }
+
+        /// <summary>
+        /// Get Configuration records within a subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/maintenanceConfigurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MaintenanceConfigurations_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="MaintenanceConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<MaintenanceConfigurationResource> GetMaintenanceConfigurationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMaintenanceConfigurationsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Get Configuration records within a subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/maintenanceConfigurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MaintenanceConfigurations_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="MaintenanceConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<MaintenanceConfigurationResource> GetMaintenanceConfigurations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMaintenanceConfigurations(cancellationToken);
+        }
+
+        /// <summary>
+        /// Get configuration assignment within a subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/configurationAssignments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationAssignmentsWithinSubscription_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="MaintenanceConfigurationAssignmentData" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentsBySubscriptionAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetConfigurationAssignmentsBySubscriptionAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Get configuration assignment within a subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/configurationAssignments</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationAssignmentsWithinSubscription_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="MaintenanceConfigurationAssignmentData" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentsBySubscription(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetConfigurationAssignmentsBySubscription(cancellationToken);
+        }
+
+        /// <summary>
+        /// Get configuration assignment for resource..
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationAssignmentsForSubscriptions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
+        public static async Task<Response<MaintenanceConfigurationAssignmentData>> GetConfigurationAssignmentBySubscriptionAsync(this SubscriptionResource subscriptionResource, string configurationAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
+
+            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetConfigurationAssignmentBySubscriptionAsync(configurationAssignmentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get configuration assignment for resource..
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationAssignmentsForSubscriptions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
+        public static Response<MaintenanceConfigurationAssignmentData> GetConfigurationAssignmentBySubscription(this SubscriptionResource subscriptionResource, string configurationAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
+
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetConfigurationAssignmentBySubscription(configurationAssignmentName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Register configuration for resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationAssignmentsForSubscriptions_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
+        /// <param name="data"> The configurationAssignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
+        public static async Task<Response<MaintenanceConfigurationAssignmentData>> CreateOrUpdateConfigurationAssignmentBySubscriptionAsync(this SubscriptionResource subscriptionResource, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
+            Argument.AssertNotNull(data, nameof(data));
+
+            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CreateOrUpdateConfigurationAssignmentBySubscriptionAsync(configurationAssignmentName, data, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Register configuration for resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationAssignmentsForSubscriptions_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
+        /// <param name="data"> The configurationAssignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
+        public static Response<MaintenanceConfigurationAssignmentData> CreateOrUpdateConfigurationAssignmentBySubscription(this SubscriptionResource subscriptionResource, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
+            Argument.AssertNotNull(data, nameof(data));
+
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).CreateOrUpdateConfigurationAssignmentBySubscription(configurationAssignmentName, data, cancellationToken);
+        }
+
+        /// <summary>
+        /// Register configuration for resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationAssignmentsForSubscriptions_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
+        /// <param name="data"> The configurationAssignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
+        public static async Task<Response<MaintenanceConfigurationAssignmentData>> UpdateConfigurationAssignmentBySubscriptionAsync(this SubscriptionResource subscriptionResource, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
+            Argument.AssertNotNull(data, nameof(data));
+
+            return await GetSubscriptionResourceExtensionClient(subscriptionResource).UpdateConfigurationAssignmentBySubscriptionAsync(configurationAssignmentName, data, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Register configuration for resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationAssignmentsForSubscriptions_Update</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
+        /// <param name="data"> The configurationAssignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
+        public static Response<MaintenanceConfigurationAssignmentData> UpdateConfigurationAssignmentBySubscription(this SubscriptionResource subscriptionResource, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
+            Argument.AssertNotNull(data, nameof(data));
+
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).UpdateConfigurationAssignmentBySubscription(configurationAssignmentName, data, cancellationToken);
+        }
+
+        /// <summary>
+        /// Unregister configuration for resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationAssignmentsForSubscriptions_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="configurationAssignmentName"> Unique configuration assignment name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
+        public static async Task<Response<MaintenanceConfigurationAssignmentData>> DeleteConfigurationAssignmentBySubscriptionAsync(this SubscriptionResource subscriptionResource, string configurationAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
+
+            return await GetSubscriptionResourceExtensionClient(subscriptionResource).DeleteConfigurationAssignmentBySubscriptionAsync(configurationAssignmentName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Unregister configuration for resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/configurationAssignments/{configurationAssignmentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationAssignmentsForSubscriptions_Delete</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="configurationAssignmentName"> Unique configuration assignment name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationAssignmentName"/> is null. </exception>
+        public static Response<MaintenanceConfigurationAssignmentData> DeleteConfigurationAssignmentBySubscription(this SubscriptionResource subscriptionResource, string configurationAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
+
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).DeleteConfigurationAssignmentBySubscription(configurationAssignmentName, cancellationToken);
+        }
     }
 }

@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static IPAccessControl DeserializeIPAccessControl(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<IPRange>> allow = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<IPRange> array = new List<IPRange>();

@@ -14,7 +14,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the VirtualNetworkGatewayConnection data model. </summary>
+    /// <summary>
+    /// A class representing the VirtualNetworkGatewayConnection data model.
+    /// A common class for general resource information.
+    /// </summary>
     public partial class VirtualNetworkGatewayConnectionData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of VirtualNetworkGatewayConnectionData. </summary>
@@ -30,6 +33,7 @@ namespace Azure.ResourceManager.Network
             EgressNatRules = new ChangeTrackingList<WritableSubResource>();
             ConnectionType = connectionType;
             TunnelConnectionStatus = new ChangeTrackingList<TunnelConnectionHealth>();
+            GatewayCustomBgpIPAddresses = new ChangeTrackingList<GatewayCustomBgpIPAddressIPConfiguration>();
             IPsecPolicies = new ChangeTrackingList<IPsecPolicy>();
             TrafficSelectorPolicies = new ChangeTrackingList<TrafficSelectorPolicy>();
         }
@@ -54,11 +58,12 @@ namespace Azure.ResourceManager.Network
         /// <param name="connectionMode"> The connection mode for this connection. </param>
         /// <param name="sharedKey"> The IPSec shared key. </param>
         /// <param name="connectionStatus"> Virtual Network Gateway connection status. </param>
-        /// <param name="tunnelConnectionStatus"> Collection of all tunnels&apos; connection health status. </param>
+        /// <param name="tunnelConnectionStatus"> Collection of all tunnels' connection health status. </param>
         /// <param name="egressBytesTransferred"> The egress bytes transferred in this connection. </param>
         /// <param name="ingressBytesTransferred"> The ingress bytes transferred in this connection. </param>
         /// <param name="peer"> The reference to peerings resource. </param>
         /// <param name="enableBgp"> EnableBgp flag. </param>
+        /// <param name="gatewayCustomBgpIPAddresses"> GatewayCustomBgpIpAddresses to be used for virtual network gateway Connection. </param>
         /// <param name="useLocalAzureIPAddress"> Use private local Azure IP for the connection. </param>
         /// <param name="usePolicyBasedTrafficSelectors"> Enable policy-based traffic selectors. </param>
         /// <param name="ipsecPolicies"> The IPSec Policies to be considered by this connection. </param>
@@ -66,7 +71,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGuid"> The resource GUID property of the virtual network gateway connection resource. </param>
         /// <param name="provisioningState"> The provisioning state of the virtual network gateway connection resource. </param>
         /// <param name="expressRouteGatewayBypass"> Bypass ExpressRoute Gateway for data forwarding. </param>
-        internal VirtualNetworkGatewayConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, string authorizationKey, VirtualNetworkGatewayData virtualNetworkGateway1, VirtualNetworkGatewayData virtualNetworkGateway2, LocalNetworkGatewayData localNetworkGateway2, IList<WritableSubResource> ingressNatRules, IList<WritableSubResource> egressNatRules, VirtualNetworkGatewayConnectionType connectionType, VirtualNetworkGatewayConnectionProtocol? connectionProtocol, int? routingWeight, int? dpdTimeoutSeconds, VirtualNetworkGatewayConnectionMode? connectionMode, string sharedKey, VirtualNetworkGatewayConnectionStatus? connectionStatus, IReadOnlyList<TunnelConnectionHealth> tunnelConnectionStatus, long? egressBytesTransferred, long? ingressBytesTransferred, WritableSubResource peer, bool? enableBgp, bool? useLocalAzureIPAddress, bool? usePolicyBasedTrafficSelectors, IList<IPsecPolicy> ipsecPolicies, IList<TrafficSelectorPolicy> trafficSelectorPolicies, Guid? resourceGuid, NetworkProvisioningState? provisioningState, bool? expressRouteGatewayBypass) : base(id, name, resourceType, location, tags)
+        /// <param name="enablePrivateLinkFastPath"> Bypass the ExpressRoute gateway when accessing private-links. ExpressRoute FastPath (expressRouteGatewayBypass) must be enabled. </param>
+        internal VirtualNetworkGatewayConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, string authorizationKey, VirtualNetworkGatewayData virtualNetworkGateway1, VirtualNetworkGatewayData virtualNetworkGateway2, LocalNetworkGatewayData localNetworkGateway2, IList<WritableSubResource> ingressNatRules, IList<WritableSubResource> egressNatRules, VirtualNetworkGatewayConnectionType connectionType, VirtualNetworkGatewayConnectionProtocol? connectionProtocol, int? routingWeight, int? dpdTimeoutSeconds, VirtualNetworkGatewayConnectionMode? connectionMode, string sharedKey, VirtualNetworkGatewayConnectionStatus? connectionStatus, IReadOnlyList<TunnelConnectionHealth> tunnelConnectionStatus, long? egressBytesTransferred, long? ingressBytesTransferred, WritableSubResource peer, bool? enableBgp, IList<GatewayCustomBgpIPAddressIPConfiguration> gatewayCustomBgpIPAddresses, bool? useLocalAzureIPAddress, bool? usePolicyBasedTrafficSelectors, IList<IPsecPolicy> ipsecPolicies, IList<TrafficSelectorPolicy> trafficSelectorPolicies, Guid? resourceGuid, NetworkProvisioningState? provisioningState, bool? expressRouteGatewayBypass, bool? enablePrivateLinkFastPath) : base(id, name, resourceType, location, tags)
         {
             ETag = etag;
             AuthorizationKey = authorizationKey;
@@ -87,6 +93,7 @@ namespace Azure.ResourceManager.Network
             IngressBytesTransferred = ingressBytesTransferred;
             Peer = peer;
             EnableBgp = enableBgp;
+            GatewayCustomBgpIPAddresses = gatewayCustomBgpIPAddresses;
             UseLocalAzureIPAddress = useLocalAzureIPAddress;
             UsePolicyBasedTrafficSelectors = usePolicyBasedTrafficSelectors;
             IPsecPolicies = ipsecPolicies;
@@ -94,6 +101,7 @@ namespace Azure.ResourceManager.Network
             ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
             ExpressRouteGatewayBypass = expressRouteGatewayBypass;
+            EnablePrivateLinkFastPath = enablePrivateLinkFastPath;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
@@ -124,7 +132,7 @@ namespace Azure.ResourceManager.Network
         public string SharedKey { get; set; }
         /// <summary> Virtual Network Gateway connection status. </summary>
         public VirtualNetworkGatewayConnectionStatus? ConnectionStatus { get; }
-        /// <summary> Collection of all tunnels&apos; connection health status. </summary>
+        /// <summary> Collection of all tunnels' connection health status. </summary>
         public IReadOnlyList<TunnelConnectionHealth> TunnelConnectionStatus { get; }
         /// <summary> The egress bytes transferred in this connection. </summary>
         public long? EgressBytesTransferred { get; }
@@ -146,6 +154,8 @@ namespace Azure.ResourceManager.Network
 
         /// <summary> EnableBgp flag. </summary>
         public bool? EnableBgp { get; set; }
+        /// <summary> GatewayCustomBgpIpAddresses to be used for virtual network gateway Connection. </summary>
+        public IList<GatewayCustomBgpIPAddressIPConfiguration> GatewayCustomBgpIPAddresses { get; }
         /// <summary> Use private local Azure IP for the connection. </summary>
         public bool? UseLocalAzureIPAddress { get; set; }
         /// <summary> Enable policy-based traffic selectors. </summary>
@@ -160,5 +170,7 @@ namespace Azure.ResourceManager.Network
         public NetworkProvisioningState? ProvisioningState { get; }
         /// <summary> Bypass ExpressRoute Gateway for data forwarding. </summary>
         public bool? ExpressRouteGatewayBypass { get; set; }
+        /// <summary> Bypass the ExpressRoute gateway when accessing private-links. ExpressRoute FastPath (expressRouteGatewayBypass) must be enabled. </summary>
+        public bool? EnablePrivateLinkFastPath { get; set; }
     }
 }

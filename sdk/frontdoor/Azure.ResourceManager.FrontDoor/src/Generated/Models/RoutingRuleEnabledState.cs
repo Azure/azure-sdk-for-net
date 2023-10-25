@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    /// <summary> Whether to enable use of this rule. Permitted values are &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
+    /// <summary> Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'. </summary>
     public readonly partial struct RoutingRuleEnabledState : IEquatable<RoutingRuleEnabledState>
     {
         private readonly string _value;

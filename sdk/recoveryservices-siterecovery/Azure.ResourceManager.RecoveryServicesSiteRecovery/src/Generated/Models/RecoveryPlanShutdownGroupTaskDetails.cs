@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="name"> The name. </param>
         /// <param name="groupId"> The group identifier. </param>
         /// <param name="rpGroupType"> The group type. </param>
-        internal RecoveryPlanShutdownGroupTaskDetails(string instanceType, IReadOnlyList<ASRTask> childTasks, string name, string groupId, string rpGroupType) : base(instanceType, childTasks, name, groupId, rpGroupType)
+        internal RecoveryPlanShutdownGroupTaskDetails(string instanceType, IReadOnlyList<AsrTask> childTasks, string name, string groupId, string rpGroupType) : base(instanceType, childTasks, name, groupId, rpGroupType)
         {
             InstanceType = instanceType ?? "RecoveryPlanShutdownGroupTaskDetails";
         }

@@ -33,6 +33,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static UnknownIntegrationRuntime DeserializeUnknownIntegrationRuntime(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IntegrationRuntimeType type = "Unknown";
             Optional<string> description = default;
             IDictionary<string, object> additionalProperties = default;

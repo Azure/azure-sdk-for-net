@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static StorageAccountSkuConversionStatus DeserializeStorageAccountSkuConversionStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StorageAccountSkuConversionState> skuConversionStatus = default;
             Optional<StorageSkuName> targetSkuName = default;
             Optional<DateTimeOffset> startTime = default;
@@ -36,7 +40,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     skuConversionStatus = new StorageAccountSkuConversionState(property.Value.GetString());
@@ -46,7 +49,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     targetSkuName = new StorageSkuName(property.Value.GetString());
@@ -56,7 +58,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startTime = property.Value.GetDateTimeOffset("O");
@@ -66,7 +67,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     endTime = property.Value.GetDateTimeOffset("O");

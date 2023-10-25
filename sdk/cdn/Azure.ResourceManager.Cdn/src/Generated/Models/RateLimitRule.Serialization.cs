@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static RateLimitRule DeserializeRateLimitRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int rateLimitThreshold = default;
             int rateLimitDurationInMinutes = default;
             string name = default;
@@ -71,7 +75,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enabledState = new CustomRuleEnabledState(property.Value.GetString());

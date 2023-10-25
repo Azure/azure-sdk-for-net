@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Quantum
             return message;
         }
 
-        /// <summary> Updates an existing workspace&apos;s tags. </summary>
+        /// <summary> Updates an existing workspace's tags. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="workspaceName"> The name of the quantum workspace resource. </param>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Quantum
             }
         }
 
-        /// <summary> Updates an existing workspace&apos;s tags. </summary>
+        /// <summary> Updates an existing workspace's tags. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="workspaceName"> The name of the quantum workspace resource. </param>

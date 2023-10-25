@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -14,6 +13,10 @@ namespace Azure.AI.TextAnalytics.Models
     {
         internal static TasksState DeserializeTasksState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AnalyzeTasks tasks = default;
             foreach (var property in element.EnumerateObject())
             {

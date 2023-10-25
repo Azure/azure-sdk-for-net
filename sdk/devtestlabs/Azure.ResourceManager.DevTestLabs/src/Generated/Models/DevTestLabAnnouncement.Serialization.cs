@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static DevTestLabAnnouncement DeserializeDevTestLabAnnouncement(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> title = default;
             Optional<string> markdown = default;
             Optional<DevTestLabEnableStatus> enabled = default;
@@ -69,7 +73,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enabled = new DevTestLabEnableStatus(property.Value.GetString());
@@ -79,7 +82,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     expirationDate = property.Value.GetDateTimeOffset("O");
@@ -89,7 +91,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     expired = property.Value.GetBoolean();
@@ -104,7 +105,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     uniqueIdentifier = property.Value.GetGuid();

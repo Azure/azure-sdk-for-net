@@ -9,9 +9,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -55,8 +55,16 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary>
         /// Create or update a watchlist item.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}/watchlistItems/{watchlistItemId}
-        /// Operation Id: WatchlistItems_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}/watchlistItems/{watchlistItemId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WatchlistItems_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="watchlistItemId"> The watchlist item id (GUID). </param>
@@ -88,8 +96,16 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary>
         /// Create or update a watchlist item.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}/watchlistItems/{watchlistItemId}
-        /// Operation Id: WatchlistItems_CreateOrUpdate
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}/watchlistItems/{watchlistItemId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WatchlistItems_CreateOrUpdate</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="watchlistItemId"> The watchlist item id (GUID). </param>
@@ -121,8 +137,16 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary>
         /// Get a watchlist item.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}/watchlistItems/{watchlistItemId}
-        /// Operation Id: WatchlistItems_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}/watchlistItems/{watchlistItemId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WatchlistItems_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="watchlistItemId"> The watchlist item id (GUID). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -150,8 +174,16 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary>
         /// Get a watchlist item.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}/watchlistItems/{watchlistItemId}
-        /// Operation Id: WatchlistItems_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}/watchlistItems/{watchlistItemId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WatchlistItems_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="watchlistItemId"> The watchlist item id (GUID). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -179,94 +211,62 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary>
         /// Get all watchlist Items.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}/watchlistItems
-        /// Operation Id: WatchlistItems_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}/watchlistItems</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WatchlistItems_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SecurityInsightsWatchlistItemResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityInsightsWatchlistItemResource> GetAllAsync(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SecurityInsightsWatchlistItemResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _securityInsightsWatchlistItemWatchlistItemsClientDiagnostics.CreateScope("SecurityInsightsWatchlistItemCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _securityInsightsWatchlistItemWatchlistItemsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityInsightsWatchlistItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<SecurityInsightsWatchlistItemResource>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _securityInsightsWatchlistItemWatchlistItemsClientDiagnostics.CreateScope("SecurityInsightsWatchlistItemCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _securityInsightsWatchlistItemWatchlistItemsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityInsightsWatchlistItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsWatchlistItemWatchlistItemsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsWatchlistItemWatchlistItemsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsWatchlistItemResource(Client, SecurityInsightsWatchlistItemData.DeserializeSecurityInsightsWatchlistItemData(e)), _securityInsightsWatchlistItemWatchlistItemsClientDiagnostics, Pipeline, "SecurityInsightsWatchlistItemCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Get all watchlist Items.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}/watchlistItems
-        /// Operation Id: WatchlistItems_List
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}/watchlistItems</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WatchlistItems_List</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SecurityInsightsWatchlistItemResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityInsightsWatchlistItemResource> GetAll(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Page<SecurityInsightsWatchlistItemResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _securityInsightsWatchlistItemWatchlistItemsClientDiagnostics.CreateScope("SecurityInsightsWatchlistItemCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _securityInsightsWatchlistItemWatchlistItemsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityInsightsWatchlistItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<SecurityInsightsWatchlistItemResource> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = _securityInsightsWatchlistItemWatchlistItemsClientDiagnostics.CreateScope("SecurityInsightsWatchlistItemCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _securityInsightsWatchlistItemWatchlistItemsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SecurityInsightsWatchlistItemResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsWatchlistItemWatchlistItemsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityInsightsWatchlistItemWatchlistItemsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityInsightsWatchlistItemResource(Client, SecurityInsightsWatchlistItemData.DeserializeSecurityInsightsWatchlistItemData(e)), _securityInsightsWatchlistItemWatchlistItemsClientDiagnostics, Pipeline, "SecurityInsightsWatchlistItemCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}/watchlistItems/{watchlistItemId}
-        /// Operation Id: WatchlistItems_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}/watchlistItems/{watchlistItemId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WatchlistItems_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="watchlistItemId"> The watchlist item id (GUID). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -292,8 +292,16 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}/watchlistItems/{watchlistItemId}
-        /// Operation Id: WatchlistItems_Get
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}/watchlistItems/{watchlistItemId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WatchlistItems_Get</description>
+        /// </item>
+        /// </list>
         /// </summary>
         /// <param name="watchlistItemId"> The watchlist item id (GUID). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -309,6 +317,80 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 var response = _securityInsightsWatchlistItemWatchlistItemsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, watchlistItemId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}/watchlistItems/{watchlistItemId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WatchlistItems_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="watchlistItemId"> The watchlist item id (GUID). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="watchlistItemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="watchlistItemId"/> is null. </exception>
+        public virtual async Task<NullableResponse<SecurityInsightsWatchlistItemResource>> GetIfExistsAsync(string watchlistItemId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(watchlistItemId, nameof(watchlistItemId));
+
+            using var scope = _securityInsightsWatchlistItemWatchlistItemsClientDiagnostics.CreateScope("SecurityInsightsWatchlistItemCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _securityInsightsWatchlistItemWatchlistItemsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, watchlistItemId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SecurityInsightsWatchlistItemResource>(response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsWatchlistItemResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}/watchlistItems/{watchlistItemId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WatchlistItems_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="watchlistItemId"> The watchlist item id (GUID). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="watchlistItemId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="watchlistItemId"/> is null. </exception>
+        public virtual NullableResponse<SecurityInsightsWatchlistItemResource> GetIfExists(string watchlistItemId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(watchlistItemId, nameof(watchlistItemId));
+
+            using var scope = _securityInsightsWatchlistItemWatchlistItemsClientDiagnostics.CreateScope("SecurityInsightsWatchlistItemCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _securityInsightsWatchlistItemWatchlistItemsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, watchlistItemId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SecurityInsightsWatchlistItemResource>(response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsWatchlistItemResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

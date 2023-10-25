@@ -12,9 +12,9 @@ namespace Azure.ResourceManager.Batch.Models
     {
         /// <summary> The node communication mode is automatically set by the Batch service. </summary>
         Default,
-        /// <summary> Nodes using the Classic communication mode require inbound TCP communication on ports 29876 and 29877 from the &quot;BatchNodeManagement.{region}&quot; service tag and outbound TCP communication on port 443 to the &quot;Storage.region&quot; and &quot;BatchNodeManagement.{region}&quot; service tags. </summary>
+        /// <summary> Nodes using the Classic communication mode require inbound TCP communication on ports 29876 and 29877 from the "BatchNodeManagement.{region}" service tag and outbound TCP communication on port 443 to the "Storage.region" and "BatchNodeManagement.{region}" service tags. </summary>
         Classic,
-        /// <summary> Nodes using the Simplified communication mode require outbound TCP communication on port 443 to the &quot;BatchNodeManagement.{region}&quot; service tag. No open inbound ports are required. </summary>
+        /// <summary> Nodes using the Simplified communication mode require outbound TCP communication on port 443 to the "BatchNodeManagement.{region}" service tag. No open inbound ports are required. </summary>
         Simplified
     }
 }

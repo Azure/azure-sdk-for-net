@@ -64,7 +64,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                     {
                         var content = await new StreamReader(request.Body).ReadToEndAsync().ConfigureAwait(false);
                         var eventRequest = JsonSerializer.Deserialize<ConnectEventRequest>(content);
-                        return new ConnectEventRequest(context, eventRequest.Claims, eventRequest.Query, eventRequest.Subprotocols, eventRequest.ClientCertificates);
+                        return new ConnectEventRequest(context, eventRequest.Claims, eventRequest.Query, eventRequest.Subprotocols, eventRequest.ClientCertificates, eventRequest.Headers);
                     }
                 case RequestType.User:
                     {
@@ -100,7 +100,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                 request.Headers.TryGetValue(Constants.Headers.WebHookRequestOrigin, out StringValues requestOrigin);
                 if (requestOrigin.Count > 0)
                 {
-                    requestOrigins = requestOrigin;
+                    requestOrigins = requestOrigin.SelectMany(x => x.Split(Constants.HeaderSeparator, StringSplitOptions.RemoveEmptyEntries)).ToList();
                     return true;
                 }
             }
@@ -162,8 +162,8 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
                 var hub = request.Headers.GetFirstHeaderValueOrDefault(Constants.Headers.CloudEvents.Hub);
                 var eventType = GetEventType(request.Headers.GetFirstHeaderValueOrDefault(Constants.Headers.CloudEvents.Type));
                 var eventName = request.Headers.GetFirstHeaderValueOrDefault(Constants.Headers.CloudEvents.EventName);
-                var signature = request.Headers.GetFirstHeaderValueOrDefault(Constants.Headers.CloudEvents.Signature);
-                var origin = request.Headers.GetFirstHeaderValueOrDefault(Constants.Headers.WebHookRequestOrigin);
+                var signature = request.Headers.GetStringValueOrDefault(Constants.Headers.CloudEvents.Signature);
+                var origin = request.Headers.GetStringValueOrDefault(Constants.Headers.WebHookRequestOrigin);
                 var headers = request.Headers.ToDictionary(x => x.Key, v => v.Value.ToArray(), StringComparer.OrdinalIgnoreCase);
 
                 string userId = null;
@@ -214,6 +214,11 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore
         private static string GetFirstHeaderValueOrDefault(this IHeaderDictionary header, string key)
         {
             return header.TryGetValue(key, out StringValues values) && values.Count > 0 ? values[0] : null;
+        }
+
+        private static string GetStringValueOrDefault(this IHeaderDictionary header, string key)
+        {
+            return header.TryGetValue(key, out StringValues values) && values.Count > 0 ? values.ToString() : null;
         }
 
         private static bool IsValidMediaType(this string mediaType, out WebPubSubDataType dataType)

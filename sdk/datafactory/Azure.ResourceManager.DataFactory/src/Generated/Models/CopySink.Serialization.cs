@@ -20,56 +20,32 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(WriteBatchSize))
             {
                 writer.WritePropertyName("writeBatchSize"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(WriteBatchSize);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(WriteBatchSize.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, WriteBatchSize);
             }
             if (Optional.IsDefined(WriteBatchTimeout))
             {
                 writer.WritePropertyName("writeBatchTimeout"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(WriteBatchTimeout);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(WriteBatchTimeout.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, WriteBatchTimeout);
             }
             if (Optional.IsDefined(SinkRetryCount))
             {
                 writer.WritePropertyName("sinkRetryCount"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SinkRetryCount);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(SinkRetryCount.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, SinkRetryCount);
             }
             if (Optional.IsDefined(SinkRetryWait))
             {
                 writer.WritePropertyName("sinkRetryWait"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SinkRetryWait);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(SinkRetryWait.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, SinkRetryWait);
             }
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(MaxConcurrentConnections);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(MaxConcurrentConnections.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, MaxConcurrentConnections);
             }
             if (Optional.IsDefined(DisableMetricsCollection))
             {
                 writer.WritePropertyName("disableMetricsCollection"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(DisableMetricsCollection);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(DisableMetricsCollection.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, DisableMetricsCollection);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -77,7 +53,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
@@ -85,6 +64,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static CopySink DeserializeCopySink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
@@ -101,7 +84,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "AzureSqlSink": return AzureSqlSink.DeserializeAzureSqlSink(element);
                     case "AzureTableSink": return AzureTableSink.DeserializeAzureTableSink(element);
                     case "BinarySink": return BinarySink.DeserializeBinarySink(element);
-                    case "BlobSink": return AzureBlobSink.DeserializeAzureBlobSink(element);
+                    case "BlobSink": return DataFactoryBlobSink.DeserializeDataFactoryBlobSink(element);
                     case "CommonDataServiceForAppsSink": return CommonDataServiceForAppsSink.DeserializeCommonDataServiceForAppsSink(element);
                     case "CosmosDbMongoDbApiSink": return CosmosDBMongoDBApiSink.DeserializeCosmosDBMongoDBApiSink(element);
                     case "CosmosDbSqlApiSink": return CosmosDBSqlApiSink.DeserializeCosmosDBSqlApiSink(element);

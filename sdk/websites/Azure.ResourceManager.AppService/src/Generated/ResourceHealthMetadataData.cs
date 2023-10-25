@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the ResourceHealthMetadata data model. </summary>
+    /// <summary>
+    /// A class representing the ResourceHealthMetadata data model.
+    /// Used for getting ResourceHealthCheck settings.
+    /// </summary>
     public partial class ResourceHealthMetadataData : ResourceData
     {
         /// <summary> Initializes a new instance of ResourceHealthMetadataData. </summary>

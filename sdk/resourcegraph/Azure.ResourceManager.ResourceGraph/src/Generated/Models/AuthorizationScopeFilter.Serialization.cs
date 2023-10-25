@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.ResourceGraph.Models
 
         public static AuthorizationScopeFilter ToAuthorizationScopeFilter(this string value)
         {
-            if (string.Equals(value, "AtScopeAndBelow", StringComparison.InvariantCultureIgnoreCase)) return AuthorizationScopeFilter.AtScopeAndBelow;
-            if (string.Equals(value, "AtScopeAndAbove", StringComparison.InvariantCultureIgnoreCase)) return AuthorizationScopeFilter.AtScopeAndAbove;
-            if (string.Equals(value, "AtScopeExact", StringComparison.InvariantCultureIgnoreCase)) return AuthorizationScopeFilter.AtScopeExact;
-            if (string.Equals(value, "AtScopeAboveAndBelow", StringComparison.InvariantCultureIgnoreCase)) return AuthorizationScopeFilter.AtScopeAboveAndBelow;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AtScopeAndBelow")) return AuthorizationScopeFilter.AtScopeAndBelow;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AtScopeAndAbove")) return AuthorizationScopeFilter.AtScopeAndAbove;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AtScopeExact")) return AuthorizationScopeFilter.AtScopeExact;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AtScopeAboveAndBelow")) return AuthorizationScopeFilter.AtScopeAboveAndBelow;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AuthorizationScopeFilter value.");
         }
     }

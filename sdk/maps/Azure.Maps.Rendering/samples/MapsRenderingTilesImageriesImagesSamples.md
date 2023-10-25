@@ -2,7 +2,7 @@
 
 ## Import the namespaces
 
-```C# Snippet:RenderImportNamespace
+```C# Snippet:RenderImportNamespaces
 using Azure.Maps.Rendering;
 ```
 

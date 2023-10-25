@@ -12,15 +12,15 @@ using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
 {
-    /// <summary> The request of entire or last anomaly detection. </summary>
+    /// <summary> Request of the entire or last anomaly detection. </summary>
     public partial class UnivariateDetectionOptions
     {
         /// <summary> Initializes a new instance of UnivariateDetectionOptions. </summary>
         /// <param name="series">
-        /// Time series data points. Points should be sorted by timestamp in ascending
+        /// Time series data points. Points should be sorted by time stamp in ascending
         /// order to match the anomaly detection result. If the data is not sorted
-        /// correctly or there is duplicated timestamp, the API will not work. In such
-        /// case, an error message will be returned.
+        /// correctly or there's a duplicated time stamp, the API won't work. In such
+        /// a case, an error message is returned.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="series"/> is null. </exception>
         public UnivariateDetectionOptions(IEnumerable<TimeSeriesPoint> series)
@@ -30,46 +30,92 @@ namespace Azure.AI.AnomalyDetector
             Series = series.ToList();
         }
 
-        /// <summary>
-        /// Time series data points. Points should be sorted by timestamp in ascending
+        /// <summary> Initializes a new instance of UnivariateDetectionOptions. </summary>
+        /// <param name="series">
+        /// Time series data points. Points should be sorted by time stamp in ascending
         /// order to match the anomaly detection result. If the data is not sorted
-        /// correctly or there is duplicated timestamp, the API will not work. In such
-        /// case, an error message will be returned.
+        /// correctly or there's a duplicated time stamp, the API won't work. In such
+        /// a case, an error message is returned.
+        /// </param>
+        /// <param name="granularity">
+        /// Argument that indicates time granularity. If granularity is not present, the value
+        /// is none by default. If granularity is none, the time stamp property in the time
+        /// series point can be absent.
+        /// </param>
+        /// <param name="customInterval">
+        /// A custom interval is used to set a nonstandard time interval. For example, if the
+        /// series is 5 minutes, the request can be set as {"granularity":"minutely",
+        /// "customInterval":5}.
+        /// </param>
+        /// <param name="period">
+        /// Argument that indicates the periodic value of a time series. If the value is null or
+        /// is not present, the API determines the period automatically.
+        /// </param>
+        /// <param name="maxAnomalyRatio"> Argument that indicates an advanced model parameter. It's the maximum anomaly ratio in a time series. </param>
+        /// <param name="sensitivity">
+        /// Argument that indicates an advanced model parameter between 0 and 99. The lower the value
+        /// is, the larger the margin value is, which means fewer anomalies will be
+        /// accepted.
+        /// </param>
+        /// <param name="imputeMode">
+        /// Specifies how to deal with missing values in the input series. It's used
+        /// when granularity is not "none".
+        /// </param>
+        /// <param name="imputeFixedValue">
+        /// Specifies the value to fill. It's used when granularity is not "none"
+        /// and imputeMode is "fixed".
+        /// </param>
+        internal UnivariateDetectionOptions(IList<TimeSeriesPoint> series, TimeGranularity? granularity, int? customInterval, int? period, float? maxAnomalyRatio, int? sensitivity, ImputeMode? imputeMode, float? imputeFixedValue)
+        {
+            Series = series;
+            Granularity = granularity;
+            CustomInterval = customInterval;
+            Period = period;
+            MaxAnomalyRatio = maxAnomalyRatio;
+            Sensitivity = sensitivity;
+            ImputeMode = imputeMode;
+            ImputeFixedValue = imputeFixedValue;
+        }
+
+        /// <summary>
+        /// Time series data points. Points should be sorted by time stamp in ascending
+        /// order to match the anomaly detection result. If the data is not sorted
+        /// correctly or there's a duplicated time stamp, the API won't work. In such
+        /// a case, an error message is returned.
         /// </summary>
         public IList<TimeSeriesPoint> Series { get; }
         /// <summary>
-        /// Optional argument, can be one of yearly, monthly, weekly, daily, hourly,
-        /// minutely, secondly, microsecond or none. If granularity is not present, it will
-        /// be none by default. If granularity is none, the timestamp property in time
+        /// Argument that indicates time granularity. If granularity is not present, the value
+        /// is none by default. If granularity is none, the time stamp property in the time
         /// series point can be absent.
         /// </summary>
         public TimeGranularity? Granularity { get; set; }
         /// <summary>
-        /// Custom Interval is used to set non-standard time interval, for example, if the
-        /// series is 5 minutes, request can be set as {"granularity":"minutely",
+        /// A custom interval is used to set a nonstandard time interval. For example, if the
+        /// series is 5 minutes, the request can be set as {"granularity":"minutely",
         /// "customInterval":5}.
         /// </summary>
         public int? CustomInterval { get; set; }
         /// <summary>
-        /// Optional argument, periodic value of a time series. If the value is null or
-        /// does not present, the API will determine the period automatically.
+        /// Argument that indicates the periodic value of a time series. If the value is null or
+        /// is not present, the API determines the period automatically.
         /// </summary>
         public int? Period { get; set; }
-        /// <summary> Optional argument, advanced model parameter, max anomaly ratio in a time series. </summary>
+        /// <summary> Argument that indicates an advanced model parameter. It's the maximum anomaly ratio in a time series. </summary>
         public float? MaxAnomalyRatio { get; set; }
         /// <summary>
-        /// Optional argument, advanced model parameter, between 0-99, the lower the value
-        /// is, the larger the margin value will be which means less anomalies will be
+        /// Argument that indicates an advanced model parameter between 0 and 99. The lower the value
+        /// is, the larger the margin value is, which means fewer anomalies will be
         /// accepted.
         /// </summary>
         public int? Sensitivity { get; set; }
         /// <summary>
-        /// Used to specify how to deal with missing values in the input series, it's used
+        /// Specifies how to deal with missing values in the input series. It's used
         /// when granularity is not "none".
         /// </summary>
         public ImputeMode? ImputeMode { get; set; }
         /// <summary>
-        /// Used to specify the value to fill, it's used when granularity is not "none"
+        /// Specifies the value to fill. It's used when granularity is not "none"
         /// and imputeMode is "fixed".
         /// </summary>
         public float? ImputeFixedValue { get; set; }

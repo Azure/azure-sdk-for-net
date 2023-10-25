@@ -34,7 +34,7 @@ steps:
   displayName: CredScan running
   condition: and(succeededOrFailed(), ne(variables['SKIP_CREDSCAN'], true))
   inputs:
-    toolVersion: 2.2.7.8 
+    toolVersion: 2.3.12.23
     scanFolder: "${{ parameters.SourceDirectory }}/credscan.tsv"
     suppressionsFile: ${{ parameters.SuppressionFilePath }}
 - task: securedevelopmentteam.vss-secure-development-tools.build-task-postanalysis.PostAnalysis@2

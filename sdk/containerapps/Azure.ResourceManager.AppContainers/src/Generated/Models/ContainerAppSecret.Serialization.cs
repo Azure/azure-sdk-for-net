@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,8 +15,14 @@ namespace Azure.ResourceManager.AppContainers.Models
     {
         internal static ContainerAppSecret DeserializeContainerAppSecret(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> value = default;
+            Optional<string> identity = default;
+            Optional<Uri> keyVaultUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -28,8 +35,22 @@ namespace Azure.ResourceManager.AppContainers.Models
                     value = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("identity"u8))
+                {
+                    identity = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("keyVaultUrl"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    keyVaultUrl = new Uri(property.Value.GetString());
+                    continue;
+                }
             }
-            return new ContainerAppSecret(name.Value, value.Value);
+            return new ContainerAppSecret(name.Value, value.Value, identity.Value, keyVaultUrl.Value);
         }
     }
 }

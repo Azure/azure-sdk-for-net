@@ -11,7 +11,7 @@ using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    /// <summary> A list of the server&apos;s security alert policies. </summary>
+    /// <summary> A list of the server's security alert policies. </summary>
     internal partial class PostgreSqlServerSecurityAlertPolicyListResult
     {
         /// <summary> Initializes a new instance of PostgreSqlServerSecurityAlertPolicyListResult. </summary>

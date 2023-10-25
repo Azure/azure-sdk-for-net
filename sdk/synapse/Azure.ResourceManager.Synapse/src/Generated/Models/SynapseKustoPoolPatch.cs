@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.Synapse.Models
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
         /// <param name="uri"> The Kusto Pool URI. </param>
         /// <param name="dataIngestionUri"> The Kusto Pool data ingestion URI. </param>
-        /// <param name="stateReason"> The reason for the Kusto Pool&apos;s current state. </param>
+        /// <param name="stateReason"> The reason for the Kusto Pool's current state. </param>
         /// <param name="optimizedAutoscale"> Optimized auto scale definition. </param>
         /// <param name="enableStreamingIngest"> A boolean value that indicates if the streaming ingest is enabled. </param>
         /// <param name="enablePurge"> A boolean value that indicates if the purge operations are enabled. </param>
-        /// <param name="languageExtensions"> List of the Kusto Pool&apos;s language extensions. </param>
+        /// <param name="languageExtensions"> List of the Kusto Pool's language extensions. </param>
         /// <param name="workspaceUid"> The workspace unique identifier. </param>
         internal SynapseKustoPoolPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, SynapseDataSourceSku sku, KustoPoolState? state, ResourceProvisioningState? provisioningState, Uri uri, Uri dataIngestionUri, string stateReason, SynapseOptimizedAutoscale optimizedAutoscale, bool? enableStreamingIngest, bool? enablePurge, SynapseLanguageExtensionsList languageExtensions, Guid? workspaceUid) : base(id, name, resourceType, systemData)
         {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Synapse.Models
         public Uri Uri { get; }
         /// <summary> The Kusto Pool data ingestion URI. </summary>
         public Uri DataIngestionUri { get; }
-        /// <summary> The reason for the Kusto Pool&apos;s current state. </summary>
+        /// <summary> The reason for the Kusto Pool's current state. </summary>
         public string StateReason { get; }
         /// <summary> Optimized auto scale definition. </summary>
         public SynapseOptimizedAutoscale OptimizedAutoscale { get; set; }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Synapse.Models
         public bool? EnableStreamingIngest { get; set; }
         /// <summary> A boolean value that indicates if the purge operations are enabled. </summary>
         public bool? EnablePurge { get; set; }
-        /// <summary> List of the Kusto Pool&apos;s language extensions. </summary>
+        /// <summary> List of the Kusto Pool's language extensions. </summary>
         internal SynapseLanguageExtensionsList LanguageExtensions { get; }
         /// <summary> The list of language extensions. </summary>
         public IList<SynapseLanguageExtension> LanguageExtensionsValue

@@ -28,6 +28,10 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
 
         internal static Quaternion DeserializeQuaternion(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             float x = default;
             float y = default;
             float z = default;
@@ -59,7 +63,6 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isIdentity = property.Value.GetBoolean();

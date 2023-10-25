@@ -4,7 +4,6 @@
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_UsingStatements
 using Azure.Communication.JobRouter;
-using Azure.Communication.JobRouter.Models;
 ```
 
 ## Create a client
@@ -12,8 +11,8 @@ using Azure.Communication.JobRouter.Models;
 Create a `RouterClient`.
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateClient
-RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
-RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
+JobRouterClient routerClient = new JobRouterClient("<< CONNECTION STRING >>");
+JobRouterAdministrationClient routerAdministrationClient = new JobRouterAdministrationClient("<< CONNECTION STRING >>");
 ```
 
 ## Create a worker
@@ -26,25 +25,25 @@ Response<RouterWorker> worker = await routerClient.CreateWorkerAsync(
         workerId: routerWorkerId,
         totalCapacity: 100)
     {
-        QueueIds = new Dictionary<string, QueueAssignment>()
+        QueueAssignments =
         {
-            ["worker-q-1"] = new QueueAssignment(),
-            ["worker-q-2"] = new QueueAssignment()
+            ["worker-q-1"] = new RouterQueueAssignment(),
+            ["worker-q-2"] = new RouterQueueAssignment()
         },
-        ChannelConfigurations = new Dictionary<string, ChannelConfiguration>()
+        ChannelConfigurations =
         {
             ["WebChat"] = new ChannelConfiguration(1),
             ["WebChatEscalated"] = new ChannelConfiguration(20),
             ["Voip"] = new ChannelConfiguration(100)
         },
-        Labels = new Dictionary<string, LabelValue>()
+        Labels =
         {
             ["Location"] = new LabelValue("NA"),
             ["English"] = new LabelValue(7),
             ["O365"] = new LabelValue(true),
             ["Xbox_Support"] = new LabelValue(false)
         },
-        Tags = new Dictionary<string, LabelValue>()
+        Tags =
         {
             ["Name"] = new LabelValue("John Doe"),
             ["Department"] = new LabelValue("IT_HelpDesk")
@@ -77,15 +76,9 @@ Console.WriteLine($"Worker associated with queues: {queriedWorker.Value.QueueAss
 Response<RouterWorker> updateWorker = await routerClient.UpdateWorkerAsync(
     new UpdateWorkerOptions(routerWorkerId)
     {
-        QueueIds = new Dictionary<string, QueueAssignment?>()
-        {
-            ["worker-q-3"] = new QueueAssignment()
-        },
-        ChannelConfigurations = new Dictionary<string, ChannelConfiguration?>()
-        {
-            ["WebChatEscalated"] = new ChannelConfiguration(50),
-        },
-        Labels = new Dictionary<string, LabelValue>()
+        QueueAssignments = { ["worker-q-3"] = new RouterQueueAssignment() },
+        ChannelConfigurations = { ["WebChatEscalated"] = new ChannelConfiguration(50), },
+        Labels =
         {
             ["O365"] = new LabelValue("Supported"),
             ["Xbox_Support"] = new LabelValue(null),
@@ -123,21 +116,18 @@ await foreach (Page<RouterWorkerItem> asPage in workers.AsPages(pageSizeHint: 10
 {
     foreach (RouterWorkerItem? workerPaged in asPage.Values)
     {
-        Console.WriteLine($"Listing exception policy with id: {workerPaged.RouterWorker.Id}");
+        Console.WriteLine($"Listing exception policy with id: {workerPaged.Worker.Id}");
     }
 }
 
 // Additionally workers can be queried with several filters like queueId, capacity, state etc.
-workers = routerClient.GetWorkersAsync(new GetWorkersOptions()
-{
-    ChannelId = "Voip", Status = WorkerStateSelector.All
-});
+workers = routerClient.GetWorkersAsync(channelId: "Voip", state: RouterWorkerStateSelector.All);
 
 await foreach (Page<RouterWorkerItem> asPage in workers.AsPages(pageSizeHint: 10))
 {
     foreach (RouterWorkerItem? workerPaged in asPage.Values)
     {
-        Console.WriteLine($"Listing exception policy with id: {workerPaged.RouterWorker.Id}");
+        Console.WriteLine($"Listing exception policy with id: {workerPaged.Worker.Id}");
     }
 }
 ```

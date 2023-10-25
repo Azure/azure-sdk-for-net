@@ -43,10 +43,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("maxCoresPerTrial"u8);
                 writer.WriteNumberValue(MaxCoresPerTrial.Value);
             }
+            if (Optional.IsDefined(MaxNodes))
+            {
+                writer.WritePropertyName("maxNodes"u8);
+                writer.WriteNumberValue(MaxNodes.Value);
+            }
             if (Optional.IsDefined(MaxTrials))
             {
                 writer.WritePropertyName("maxTrials"u8);
                 writer.WriteNumberValue(MaxTrials.Value);
+            }
+            if (Optional.IsDefined(SweepConcurrentTrials))
+            {
+                writer.WritePropertyName("sweepConcurrentTrials"u8);
+                writer.WriteNumberValue(SweepConcurrentTrials.Value);
+            }
+            if (Optional.IsDefined(SweepTrials))
+            {
+                writer.WritePropertyName("sweepTrials"u8);
+                writer.WriteNumberValue(SweepTrials.Value);
             }
             if (Optional.IsDefined(Timeout))
             {
@@ -63,11 +78,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static TableVerticalLimitSettings DeserializeTableVerticalLimitSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enableEarlyTermination = default;
             Optional<double?> exitScore = default;
             Optional<int> maxConcurrentTrials = default;
             Optional<int> maxCoresPerTrial = default;
+            Optional<int> maxNodes = default;
             Optional<int> maxTrials = default;
+            Optional<int> sweepConcurrentTrials = default;
+            Optional<int> sweepTrials = default;
             Optional<TimeSpan> timeout = default;
             Optional<TimeSpan> trialTimeout = default;
             foreach (var property in element.EnumerateObject())
@@ -76,7 +98,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableEarlyTermination = property.Value.GetBoolean();
@@ -96,7 +117,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxConcurrentTrials = property.Value.GetInt32();
@@ -106,27 +126,51 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxCoresPerTrial = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("maxNodes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxNodes = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("maxTrials"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxTrials = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("sweepConcurrentTrials"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sweepConcurrentTrials = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("sweepTrials"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sweepTrials = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("timeout"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     timeout = property.Value.GetTimeSpan("P");
@@ -136,14 +180,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     trialTimeout = property.Value.GetTimeSpan("P");
                     continue;
                 }
             }
-            return new TableVerticalLimitSettings(Optional.ToNullable(enableEarlyTermination), Optional.ToNullable(exitScore), Optional.ToNullable(maxConcurrentTrials), Optional.ToNullable(maxCoresPerTrial), Optional.ToNullable(maxTrials), Optional.ToNullable(timeout), Optional.ToNullable(trialTimeout));
+            return new TableVerticalLimitSettings(Optional.ToNullable(enableEarlyTermination), Optional.ToNullable(exitScore), Optional.ToNullable(maxConcurrentTrials), Optional.ToNullable(maxCoresPerTrial), Optional.ToNullable(maxNodes), Optional.ToNullable(maxTrials), Optional.ToNullable(sweepConcurrentTrials), Optional.ToNullable(sweepTrials), Optional.ToNullable(timeout), Optional.ToNullable(trialTimeout));
         }
     }
 }

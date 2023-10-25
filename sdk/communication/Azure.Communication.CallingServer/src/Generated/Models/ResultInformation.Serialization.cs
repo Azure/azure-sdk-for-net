@@ -14,6 +14,10 @@ namespace Azure.Communication.CallingServer
     {
         internal static ResultInformation DeserializeResultInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> code = default;
             Optional<int> subCode = default;
             Optional<string> message = default;
@@ -23,7 +27,6 @@ namespace Azure.Communication.CallingServer
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     code = property.Value.GetInt32();
@@ -33,7 +36,6 @@ namespace Azure.Communication.CallingServer
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     subCode = property.Value.GetInt32();

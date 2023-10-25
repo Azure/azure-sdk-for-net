@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary>
-        /// Sets the properties of a storage account’s Queue service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. 
+        /// Sets the properties of a storage account’s Queue service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Storage
         }
 
         /// <summary>
-        /// Sets the properties of a storage account’s Queue service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules. 
+        /// Sets the properties of a storage account’s Queue service, including properties for Storage Analytics and CORS (Cross-Origin Resource Sharing) rules.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

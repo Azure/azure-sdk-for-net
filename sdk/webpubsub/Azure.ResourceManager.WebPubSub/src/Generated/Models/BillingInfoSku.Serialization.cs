@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
 
         internal static BillingInfoSku DeserializeBillingInfoSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<WebPubSubSkuTier> tier = default;
             Optional<string> size = default;
@@ -48,7 +52,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tier = new WebPubSubSkuTier(property.Value.GetString());
@@ -68,7 +71,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     capacity = property.Value.GetInt32();

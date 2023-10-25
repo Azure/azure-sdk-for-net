@@ -298,6 +298,7 @@ function Get-dotnet-DocsMsMetadataForPackage($PackageInfo) {
     DocsMsReadMeName = $readmeName
     LatestReadMeLocation = 'api/overview/azure/latest'
     PreviewReadMeLocation = 'api/overview/azure/preview'
+    LegacyReadMeLocation = 'api/overview/azure/legacy'
     Suffix = ''
   }
 }
@@ -417,6 +418,11 @@ function EnsureCustomSource($package) {
       -Source CustomPackageSource `
       -AllVersions `
       -AllowPrereleaseVersions
+
+      if (!$? -or !$existingVersions) {
+        Write-Host "Failed to find package $($package.Name) in custom source $customPackageSource"
+        return $package
+      }
   }
   catch {
     Write-Error $_ -ErrorAction Continue
@@ -435,16 +441,27 @@ function EnsureCustomSource($package) {
   return $package
 }
 
+$PackageExclusions = @{
+}
+
 function Update-dotnet-DocsMsPackages($DocsRepoLocation, $DocsMetadata) {
+
+  Write-Host "Excluded packages:"
+  foreach ($excludedPackage in $PackageExclusions.Keys) {
+    Write-Host "  $excludedPackage - $($PackageExclusions[$excludedPackage])"
+  }
+
+  $FilteredMetadata = $DocsMetadata.Where({ !($PackageExclusions.ContainsKey($_.Package)) })
+
   UpdateDocsMsPackages `
     (Join-Path $DocsRepoLocation 'bundlepackages/azure-dotnet-preview.csv') `
     'preview' `
-    $DocsMetadata
+    $FilteredMetadata
 
   UpdateDocsMsPackages `
     (Join-Path $DocsRepoLocation 'bundlepackages/azure-dotnet.csv') `
     'latest' `
-    $DocsMetadata
+    $FilteredMetadata
 }
 
 function UpdateDocsMsPackages($DocConfigFile, $Mode, $DocsMetadata) {
@@ -475,6 +492,25 @@ function UpdateDocsMsPackages($DocConfigFile, $Mode, $DocsMetadata) {
       # If we are in preview mode and the package does not have a superseding
       # preview version, remove the package from the list.
       Write-Host "Remove superseded preview package: $($package.Name)"
+      continue
+    }
+
+    if ($matchingPublishedPackage.Support -eq 'deprecated') {
+      if ($Mode -eq 'legacy') {
+
+        # Select the GA version, if none use the preview version
+        $updatedVersion = $matchingPublishedPackage.VersionGA.Trim()
+        if (!$updatedVersion) {
+          $updatedVersion = $matchingPublishedPackage.VersionPreview.Trim()
+        }
+        $package.Versions = @($updatedVersion)
+
+        Write-Host "Add deprecated package to legacy moniker: $($package.Name)"
+        $outputPackages += $package
+      } else {
+        Write-Host "Removing deprecated package: $($package.Name)"
+      }
+
       continue
     }
 
@@ -544,9 +580,50 @@ function UpdateDocsMsPackages($DocConfigFile, $Mode, $DocsMetadata) {
 }
 
 function Get-dotnet-EmitterName() {
-  return "@azure-tools/cadl-csharp"
+  return "@azure-tools/typespec-csharp"
 }
 
 function Get-dotnet-EmitterAdditionalOptions([string]$projectDirectory) {
-  return "--option @azure-tools/cadl-csharp.emitter-output-dir=$projectDirectory/src"
+  return "--option @azure-tools/typespec-csharp.emitter-output-dir=$projectDirectory/src"
+}
+
+function Update-dotnet-GeneratedSdks([string]$PackageDirectoriesFile) {
+  $showSummary = ($env:SYSTEM_DEBUG -eq 'true') -or ($VerbosePreference -ne 'SilentlyContinue')
+  $summaryArgs = $showSummary ? "/v:n /ds" : ""
+
+  $packageDirectories = Get-Content $PackageDirectoriesFile | ConvertFrom-Json
+
+  $directoriesWithErrors = @()
+
+  Invoke-LoggedCommand "npm install -g autorest"
+
+  foreach ($directory in $packageDirectories) {
+    Push-Location $RepoRoot
+    try {
+      Write-Host "`n`n======================================================================"
+      Write-Host "Generating projects under directory '$directory'" -ForegroundColor Yellow
+      Write-Host "======================================================================`n"
+
+      Invoke-LoggedCommand "dotnet msbuild /restore /t:GenerateCode /p:Scope=`"$directory`" $summaryArgs eng\service.proj" -GroupOutput
+    }
+    catch {
+      Write-Host "##[error]Error generating project under directory $directory"
+      Write-Host $_.Exception.Message
+      $directoriesWithErrors += $directory
+    }
+    finally {
+      Pop-Location
+    }
+  }
+
+  if($directoriesWithErrors.Count -gt 0) {
+    Write-Host "##[error]Generation errors found in $($directoriesWithErrors.Count) directories:"
+
+    foreach ($directory in $directoriesWithErrors) {
+      Write-Host "  $directory"
+    }
+
+    exit 1
+  }
+
 }

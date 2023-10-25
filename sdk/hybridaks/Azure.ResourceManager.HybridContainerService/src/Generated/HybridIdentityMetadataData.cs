@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridContainerService
 {
-    /// <summary> A class representing the HybridIdentityMetadata data model. </summary>
+    /// <summary>
+    /// A class representing the HybridIdentityMetadata data model.
+    /// Defines the hybridIdentityMetadata.
+    /// </summary>
     public partial class HybridIdentityMetadataData : ResourceData
     {
         /// <summary> Initializes a new instance of HybridIdentityMetadataData. </summary>

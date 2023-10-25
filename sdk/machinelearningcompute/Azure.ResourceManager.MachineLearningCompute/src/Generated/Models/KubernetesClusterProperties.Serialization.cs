@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
 
         internal static KubernetesClusterProperties DeserializeKubernetesClusterProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ServicePrincipalProperties> servicePrincipal = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -32,7 +36,6 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     servicePrincipal = ServicePrincipalProperties.DeserializeServicePrincipalProperties(property.Value);

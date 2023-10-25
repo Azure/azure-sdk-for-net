@@ -10,7 +10,6 @@ namespace Azure.Maps.Routing.Models
     /// <summary> Batch request object. </summary>
     internal partial class BatchRequestItem
     {
-
         /// <summary> This parameter contains a query string used to perform an unstructured geocoding operation. The query string will be passed verbatim to the search API for processing. </summary>
         public string Query { get; set; }
     }

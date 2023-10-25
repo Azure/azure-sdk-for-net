@@ -44,6 +44,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MonitorAutomationRunbookReceiver DeserializeMonitorAutomationRunbookReceiver(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier automationAccountId = default;
             string runbookName = default;
             ResourceIdentifier webhookResourceId = default;
@@ -82,7 +86,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        serviceUri = null;
                         continue;
                     }
                     serviceUri = new Uri(property.Value.GetString());
@@ -92,7 +95,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     useCommonAlertSchema = property.Value.GetBoolean();

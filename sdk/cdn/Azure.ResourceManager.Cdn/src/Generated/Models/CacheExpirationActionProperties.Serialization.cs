@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static CacheExpirationActionProperties DeserializeCacheExpirationActionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             CacheExpirationActionType typeName = default;
             CacheBehaviorSetting cacheBehavior = default;
             CdnCacheLevel cacheType = default;

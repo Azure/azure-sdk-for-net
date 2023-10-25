@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,6 +13,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static UnknownComputeSecrets DeserializeUnknownComputeSecrets(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ComputeType computeType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {

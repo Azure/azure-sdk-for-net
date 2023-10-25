@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static SqlFileShare DeserializeSqlFileShare(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> path = default;
             Optional<string> username = default;
             Optional<string> password = default;

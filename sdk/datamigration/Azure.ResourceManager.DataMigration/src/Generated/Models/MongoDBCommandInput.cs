@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    /// <summary> Describes the input to the &apos;cancel&apos; and &apos;restart&apos; MongoDB migration commands. </summary>
+    /// <summary> Describes the input to the 'cancel' and 'restart' MongoDB migration commands. </summary>
     public partial class MongoDBCommandInput
     {
         /// <summary> Initializes a new instance of MongoDBCommandInput. </summary>

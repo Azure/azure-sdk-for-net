@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public int? Severity { get; set; }
         /// <summary> the flag that indicates whether the metric alert is enabled. </summary>
         public bool? IsEnabled { get; set; }
-        /// <summary> the list of resource id&apos;s that this metric alert is scoped to. </summary>
+        /// <summary> the list of resource id's that this metric alert is scoped to. </summary>
         public IList<string> Scopes { get; }
         /// <summary> how often the metric alert is evaluated represented in ISO 8601 duration format. </summary>
         public TimeSpan? EvaluationFrequency { get; set; }

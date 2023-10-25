@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static DataProtectionBackupAbsoluteDeleteSetting DeserializeDataProtectionBackupAbsoluteDeleteSetting(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             TimeSpan duration = default;
             string objectType = default;
             foreach (var property in element.EnumerateObject())

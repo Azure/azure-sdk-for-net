@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary>
     /// The upgrade mode of the cluster when new Service Fabric runtime version is available.
-    /// 
+    ///
     /// </summary>
     public readonly partial struct ManagedClusterUpgradeMode : IEquatable<ManagedClusterUpgradeMode>
     {

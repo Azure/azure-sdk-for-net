@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ElasticSan
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-11-20-preview";
+            _apiVersion = apiVersion ?? "2023-01-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ElasticSan
 
         /// <summary> List all the available Skus in the region and information related to them. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="filter"> Specify $filter=&apos;location eq &lt;location&gt;&apos; to filter on location. </param>
+        /// <param name="filter"> Specify $filter='location eq &lt;location&gt;' to filter on location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ElasticSan
 
         /// <summary> List all the available Skus in the region and information related to them. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="filter"> Specify $filter=&apos;location eq &lt;location&gt;&apos; to filter on location. </param>
+        /// <param name="filter"> Specify $filter='location eq &lt;location&gt;' to filter on location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>

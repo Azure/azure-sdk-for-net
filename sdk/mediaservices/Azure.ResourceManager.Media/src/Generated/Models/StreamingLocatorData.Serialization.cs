@@ -82,6 +82,10 @@ namespace Azure.ResourceManager.Media
 
         internal static StreamingLocatorData DeserializeStreamingLocatorData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -117,7 +121,6 @@ namespace Azure.ResourceManager.Media
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -141,7 +144,6 @@ namespace Azure.ResourceManager.Media
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             created = property0.Value.GetDateTimeOffset("O");
@@ -151,7 +153,6 @@ namespace Azure.ResourceManager.Media
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             startTime = property0.Value.GetDateTimeOffset("O");
@@ -161,7 +162,6 @@ namespace Azure.ResourceManager.Media
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             endTime = property0.Value.GetDateTimeOffset("O");
@@ -171,7 +171,6 @@ namespace Azure.ResourceManager.Media
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             streamingLocatorId = property0.Value.GetGuid();
@@ -191,7 +190,6 @@ namespace Azure.ResourceManager.Media
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<StreamingLocatorContentKey> array = new List<StreamingLocatorContentKey>();
@@ -211,7 +209,6 @@ namespace Azure.ResourceManager.Media
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();

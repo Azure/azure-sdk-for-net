@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of BgpPeerStatus. </summary>
-        /// <param name="localAddress"> The virtual network gateway&apos;s local address. </param>
+        /// <param name="localAddress"> The virtual network gateway's local address. </param>
         /// <param name="neighbor"> The remote BGP peer. </param>
         /// <param name="asn"> The autonomous system number of the remote BGP peer. </param>
         /// <param name="state"> The BGP peer state. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
             MessagesReceived = messagesReceived;
         }
 
-        /// <summary> The virtual network gateway&apos;s local address. </summary>
+        /// <summary> The virtual network gateway's local address. </summary>
         public string LocalAddress { get; }
         /// <summary> The remote BGP peer. </summary>
         public string Neighbor { get; }

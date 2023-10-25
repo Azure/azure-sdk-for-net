@@ -15,6 +15,10 @@ namespace Azure.AI.TextAnalytics.Legacy
     {
         internal static DocumentEntities DeserializeDocumentEntities(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string id = default;
             IReadOnlyList<Entity> entities = default;
             IReadOnlyList<TextAnalyticsWarning> warnings = default;
@@ -50,7 +54,6 @@ namespace Azure.AI.TextAnalytics.Legacy
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     statistics = DocumentStatistics.DeserializeDocumentStatistics(property.Value);

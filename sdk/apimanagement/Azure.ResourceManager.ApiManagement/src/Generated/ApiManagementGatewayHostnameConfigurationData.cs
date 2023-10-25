@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary> A class representing the ApiManagementGatewayHostnameConfiguration data model. </summary>
+    /// <summary>
+    /// A class representing the ApiManagementGatewayHostnameConfiguration data model.
+    /// Gateway hostname configuration details.
+    /// </summary>
     public partial class ApiManagementGatewayHostnameConfigurationData : ResourceData
     {
         /// <summary> Initializes a new instance of ApiManagementGatewayHostnameConfigurationData. </summary>

@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SecuritySubAssessmentAdditionalInfo DeserializeSecuritySubAssessmentAdditionalInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("assessedResourceType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

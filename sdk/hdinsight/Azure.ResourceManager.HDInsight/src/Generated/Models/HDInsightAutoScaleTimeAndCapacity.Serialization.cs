@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.HDInsight.Models
 
         internal static HDInsightAutoScaleTimeAndCapacity DeserializeHDInsightAutoScaleTimeAndCapacity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> time = default;
             Optional<int> minInstanceCount = default;
             Optional<int> maxInstanceCount = default;
@@ -49,7 +53,6 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minInstanceCount = property.Value.GetInt32();
@@ -59,7 +62,6 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxInstanceCount = property.Value.GetInt32();

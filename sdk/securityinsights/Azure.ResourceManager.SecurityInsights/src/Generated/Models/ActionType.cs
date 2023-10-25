@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string ModifyPropertiesValue = "ModifyProperties";
         private const string RunPlaybookValue = "RunPlaybook";
 
-        /// <summary> Modify an object&apos;s properties. </summary>
+        /// <summary> Modify an object's properties. </summary>
         public static ActionType ModifyProperties { get; } = new ActionType(ModifyPropertiesValue);
         /// <summary> Run a playbook on an object. </summary>
         public static ActionType RunPlaybook { get; } = new ActionType(RunPlaybookValue);

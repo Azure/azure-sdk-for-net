@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static SamplingAlgorithm DeserializeSamplingAlgorithm(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("samplingAlgorithmType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

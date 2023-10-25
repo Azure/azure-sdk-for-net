@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static DnsVerificationTestResult ToDnsVerificationTestResult(this string value)
         {
-            if (string.Equals(value, "Passed", StringComparison.InvariantCultureIgnoreCase)) return DnsVerificationTestResult.Passed;
-            if (string.Equals(value, "Failed", StringComparison.InvariantCultureIgnoreCase)) return DnsVerificationTestResult.Failed;
-            if (string.Equals(value, "Skipped", StringComparison.InvariantCultureIgnoreCase)) return DnsVerificationTestResult.Skipped;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Passed")) return DnsVerificationTestResult.Passed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed")) return DnsVerificationTestResult.Failed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Skipped")) return DnsVerificationTestResult.Skipped;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DnsVerificationTestResult value.");
         }
     }

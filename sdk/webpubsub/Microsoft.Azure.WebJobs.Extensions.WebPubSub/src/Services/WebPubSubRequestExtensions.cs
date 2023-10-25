@@ -66,7 +66,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                     {
                         var content = await new StreamReader(request.Body).ReadToEndAsync().ConfigureAwait(false);
                         var eventRequest = JsonSerializer.Deserialize<ConnectEventRequest>(content);
-                        return new ConnectEventRequest(context, eventRequest.Claims, eventRequest.Query, eventRequest.Subprotocols, eventRequest.ClientCertificates);
+                        return new ConnectEventRequest(context, eventRequest.Claims, eventRequest.Query, eventRequest.Subprotocols, eventRequest.ClientCertificates, eventRequest.Headers);
                     }
                 case RequestType.User:
                     {
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
                 request.Headers.TryGetValue(Constants.Headers.WebHookRequestOrigin, out StringValues requestOrigin);
                 if (requestOrigin.Any())
                 {
-                    requestHosts = requestOrigin.ToList();
+                    requestHosts = requestOrigin.SelectMany(x => x.Split(Constants.HeaderSeparator, StringSplitOptions.RemoveEmptyEntries)).ToList();
                     return true;
                 }
             }
@@ -116,26 +116,28 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
             {
                 return true;
             }
-
-            if (options.TryGetKey(connectionContext.Origin, out var accessKey))
+            foreach (var origin in connectionContext.Origin.ToHeaderList())
             {
-                // server side disable signature checks.
-                if (string.IsNullOrEmpty(accessKey))
+                if (options.TryGetKey(origin, out var accessKey))
                 {
-                    return true;
-                }
+                    // server side disable signature checks.
+                    if (string.IsNullOrEmpty(accessKey))
+                    {
+                        return true;
+                    }
 
-                var signatures = connectionContext.Signature.ToHeaderList();
-                if (signatures == null)
-                {
-                    return false;
-                }
-                using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(accessKey));
-                var hashBytes = hmac.ComputeHash(Encoding.UTF8.GetBytes(connectionContext.ConnectionId));
-                var hash = "sha256=" + BitConverter.ToString(hashBytes).Replace("-", "");
-                if (signatures.Contains(hash, StringComparer.OrdinalIgnoreCase))
-                {
-                    return true;
+                    var signatures = connectionContext.Signature.ToHeaderList();
+                    if (signatures == null)
+                    {
+                        return false;
+                    }
+                    using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(accessKey));
+                    var hashBytes = hmac.ComputeHash(Encoding.UTF8.GetBytes(connectionContext.ConnectionId));
+                    var hash = "sha256=" + BitConverter.ToString(hashBytes).Replace("-", "");
+                    if (signatures.Contains(hash, StringComparer.OrdinalIgnoreCase))
+                    {
+                        return true;
+                    }
                 }
             }
             return false;

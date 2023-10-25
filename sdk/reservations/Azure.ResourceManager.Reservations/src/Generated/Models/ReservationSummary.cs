@@ -23,7 +23,9 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="pendingCount"> The number of reservation in Pending state. </param>
         /// <param name="cancelledCount"> The number of reservation in Cancelled state. </param>
         /// <param name="processingCount"> The number of reservation in Processing state. </param>
-        internal ReservationSummary(float? succeededCount, float? failedCount, float? expiringCount, float? expiredCount, float? pendingCount, float? cancelledCount, float? processingCount)
+        /// <param name="warningCount"> The number of reservation in Warning state. </param>
+        /// <param name="noBenefitCount"> The number of reservation in NoBenefit state. </param>
+        internal ReservationSummary(float? succeededCount, float? failedCount, float? expiringCount, float? expiredCount, float? pendingCount, float? cancelledCount, float? processingCount, float? warningCount, float? noBenefitCount)
         {
             SucceededCount = succeededCount;
             FailedCount = failedCount;
@@ -32,6 +34,8 @@ namespace Azure.ResourceManager.Reservations.Models
             PendingCount = pendingCount;
             CancelledCount = cancelledCount;
             ProcessingCount = processingCount;
+            WarningCount = warningCount;
+            NoBenefitCount = noBenefitCount;
         }
 
         /// <summary> The number of reservation in Succeeded state. </summary>
@@ -48,5 +52,9 @@ namespace Azure.ResourceManager.Reservations.Models
         public float? CancelledCount { get; }
         /// <summary> The number of reservation in Processing state. </summary>
         public float? ProcessingCount { get; }
+        /// <summary> The number of reservation in Warning state. </summary>
+        public float? WarningCount { get; }
+        /// <summary> The number of reservation in NoBenefit state. </summary>
+        public float? NoBenefitCount { get; }
     }
 }

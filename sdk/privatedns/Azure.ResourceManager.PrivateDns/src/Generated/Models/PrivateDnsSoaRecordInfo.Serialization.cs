@@ -55,6 +55,10 @@ namespace Azure.ResourceManager.PrivateDns.Models
 
         internal static PrivateDnsSoaRecordInfo DeserializePrivateDnsSoaRecordInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> host = default;
             Optional<string> email = default;
             Optional<long> serialNumber = default;
@@ -78,7 +82,6 @@ namespace Azure.ResourceManager.PrivateDns.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     serialNumber = property.Value.GetInt64();
@@ -88,7 +91,6 @@ namespace Azure.ResourceManager.PrivateDns.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     refreshTime = property.Value.GetInt64();
@@ -98,7 +100,6 @@ namespace Azure.ResourceManager.PrivateDns.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     retryTime = property.Value.GetInt64();
@@ -108,7 +109,6 @@ namespace Azure.ResourceManager.PrivateDns.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     expireTime = property.Value.GetInt64();
@@ -118,7 +118,6 @@ namespace Azure.ResourceManager.PrivateDns.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minimumTtl = property.Value.GetInt64();

@@ -22,10 +22,10 @@ namespace Azure.AI.FormRecognizer.Models
 
         public static OperationStatus ToOperationStatus(this string value)
         {
-            if (string.Equals(value, "notStarted", StringComparison.InvariantCultureIgnoreCase)) return OperationStatus.NotStarted;
-            if (string.Equals(value, "running", StringComparison.InvariantCultureIgnoreCase)) return OperationStatus.Running;
-            if (string.Equals(value, "succeeded", StringComparison.InvariantCultureIgnoreCase)) return OperationStatus.Succeeded;
-            if (string.Equals(value, "failed", StringComparison.InvariantCultureIgnoreCase)) return OperationStatus.Failed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "notStarted")) return OperationStatus.NotStarted;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "running")) return OperationStatus.Running;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "succeeded")) return OperationStatus.Succeeded;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "failed")) return OperationStatus.Failed;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown OperationStatus value.");
         }
     }

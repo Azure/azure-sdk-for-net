@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static ApplicationHealthPolicy DeserializeApplicationHealthPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool considerWarningAsError = default;
             int maxPercentUnhealthyDeployedApplications = default;
             Optional<ServiceTypeHealthPolicy> defaultServiceTypeHealthPolicy = default;
@@ -61,7 +65,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     defaultServiceTypeHealthPolicy = ServiceTypeHealthPolicy.DeserializeServiceTypeHealthPolicy(property.Value);
@@ -71,7 +74,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, ServiceTypeHealthPolicy> dictionary = new Dictionary<string, ServiceTypeHealthPolicy>();

@@ -8,6 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Parameters supplied to the CheckNameAvailability Redis operation. The only supported resource type is &apos;Microsoft.Cache/redis&apos;. </param>
+        /// <param name="content"> Parameters supplied to the CheckNameAvailability Redis operation. The only supported resource type is 'Microsoft.Cache/redis'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> CheckRedisNameAvailabilityAsync(RedisNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.Redis
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Parameters supplied to the CheckNameAvailability Redis operation. The only supported resource type is &apos;Microsoft.Cache/redis&apos;. </param>
+        /// <param name="content"> Parameters supplied to the CheckNameAvailability Redis operation. The only supported resource type is 'Microsoft.Cache/redis'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response CheckRedisNameAvailability(RedisNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
@@ -128,7 +129,7 @@ namespace Azure.ResourceManager.Redis
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RedisRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RedisRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RedisResource(Client, RedisData.DeserializeRedisData(e)), RedisClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAllRedis", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RedisResource(Client, RedisData.DeserializeRedisData(e)), RedisClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAllRedis", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -150,7 +151,7 @@ namespace Azure.ResourceManager.Redis
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RedisRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RedisRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RedisResource(Client, RedisData.DeserializeRedisData(e)), RedisClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAllRedis", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RedisResource(Client, RedisData.DeserializeRedisData(e)), RedisClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAllRedis", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

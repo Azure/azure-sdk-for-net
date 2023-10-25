@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.AI.TextAnalytics;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -15,6 +14,10 @@ namespace Azure.AI.TextAnalytics.Models
     {
         internal static PiiTaskResult DeserializePiiTaskResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             PiiEntitiesResult results = default;
             AnalyzeTextTaskResultsKind kind = default;
             foreach (var property in element.EnumerateObject())

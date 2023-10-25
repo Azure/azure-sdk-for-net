@@ -20,8 +20,8 @@ namespace Azure.Storage.Blobs.Models
 
         public static LeaseStatus ToLeaseStatus(this string value)
         {
-            if (string.Equals(value, "locked", StringComparison.InvariantCultureIgnoreCase)) return LeaseStatus.Locked;
-            if (string.Equals(value, "unlocked", StringComparison.InvariantCultureIgnoreCase)) return LeaseStatus.Unlocked;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "locked")) return LeaseStatus.Locked;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "unlocked")) return LeaseStatus.Unlocked;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown LeaseStatus value.");
         }
     }

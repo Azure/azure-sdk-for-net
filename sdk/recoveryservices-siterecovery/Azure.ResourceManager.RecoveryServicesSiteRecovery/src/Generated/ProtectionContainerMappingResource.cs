@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     /// A Class representing a ProtectionContainerMapping along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ProtectionContainerMappingResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetProtectionContainerMappingResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ProtectionContainerResource" /> using the GetProtectionContainerMapping method.
+    /// Otherwise you can get one from its parent resource <see cref="SiteRecoveryProtectionContainerResource" /> using the GetProtectionContainerMapping method.
     /// </summary>
     public partial class ProtectionContainerMappingResource : ArmResource
     {

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Quantum.Models
         /// <param name="providerId"> Unique id of this provider. </param>
         /// <param name="providerSku"> The sku associated with pricing information for this provider. </param>
         /// <param name="instanceUri"> A Uri identifying the specific instance of this provider. </param>
-        /// <param name="applicationName"> The provider&apos;s marketplace application display name. </param>
+        /// <param name="applicationName"> The provider's marketplace application display name. </param>
         /// <param name="provisioningState"> Provisioning status field. </param>
         /// <param name="resourceUsageId"> Id to track resource usage for the provider. </param>
         internal Provider(string providerId, string providerSku, Uri instanceUri, string applicationName, Status? provisioningState, string resourceUsageId)
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Quantum.Models
         public string ProviderSku { get; set; }
         /// <summary> A Uri identifying the specific instance of this provider. </summary>
         public Uri InstanceUri { get; set; }
-        /// <summary> The provider&apos;s marketplace application display name. </summary>
+        /// <summary> The provider's marketplace application display name. </summary>
         public string ApplicationName { get; set; }
         /// <summary> Provisioning status field. </summary>
         public Status? ProvisioningState { get; set; }

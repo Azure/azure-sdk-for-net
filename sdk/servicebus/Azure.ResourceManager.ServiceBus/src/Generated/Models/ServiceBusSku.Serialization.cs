@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         internal static ServiceBusSku DeserializeServiceBusSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ServiceBusSkuName name = default;
             Optional<ServiceBusSkuTier> tier = default;
             Optional<int> capacity = default;
@@ -46,7 +50,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tier = property.Value.GetString().ToServiceBusSkuTier();
@@ -56,7 +59,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     capacity = property.Value.GetInt32();

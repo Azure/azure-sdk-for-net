@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     {
         /// <summary> Initializes a new instance of StreamAnalyticsCompileQuery. </summary>
         /// <param name="query"> The query to compile. </param>
-        /// <param name="jobType"> Describes the type of the job. Valid values are `Cloud` and &apos;Edge&apos;. </param>
+        /// <param name="jobType"> Describes the type of the job. Valid values are `Cloud` and 'Edge'. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
         public StreamAnalyticsCompileQuery(string query, StreamingJobType jobType)
         {
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public IList<StreamAnalyticsQueryInput> Inputs { get; }
         /// <summary> The functions for the query compilation. </summary>
         public IList<StreamAnalyticsQueryFunction> Functions { get; }
-        /// <summary> Describes the type of the job. Valid values are `Cloud` and &apos;Edge&apos;. </summary>
+        /// <summary> Describes the type of the job. Valid values are `Cloud` and 'Edge'. </summary>
         public StreamingJobType JobType { get; }
         /// <summary> The query to compile. </summary>
         public StreamingJobCompatibilityLevel? CompatibilityLevel { get; set; }

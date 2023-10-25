@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Media.Models
     {
         internal static StreamingEndpointSkuInfo DeserializeStreamingEndpointSkuInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceType> resourceType = default;
             Optional<StreamingEndpointCapacity> capacity = default;
             Optional<StreamingEndpointSku> sku = default;
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resourceType = new ResourceType(property.Value.GetString());
@@ -33,7 +36,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     capacity = StreamingEndpointCapacity.DeserializeStreamingEndpointCapacity(property.Value);
@@ -43,7 +45,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sku = StreamingEndpointSku.DeserializeStreamingEndpointSku(property.Value);

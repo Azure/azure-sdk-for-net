@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
@@ -16,10 +15,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     {
         internal static SentinelOnboardingStatesList DeserializeSentinelOnboardingStatesList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<SecurityInsightsSentinelOnboardingStateData> value = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("value"))
+                if (property.NameEquals("value"u8))
                 {
                     List<SecurityInsightsSentinelOnboardingStateData> array = new List<SecurityInsightsSentinelOnboardingStateData>();
                     foreach (var item in property.Value.EnumerateArray())

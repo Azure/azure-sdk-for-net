@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static PartitionSchemeDescription DeserializePartitionSchemeDescription(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("partitionScheme", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

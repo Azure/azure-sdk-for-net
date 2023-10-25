@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static UnknownSapConfiguration DeserializeUnknownSapConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SapConfigurationType configurationType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {

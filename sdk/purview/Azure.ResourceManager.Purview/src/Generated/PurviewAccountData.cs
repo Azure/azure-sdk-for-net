@@ -13,7 +13,10 @@ using Azure.ResourceManager.Purview.Models;
 
 namespace Azure.ResourceManager.Purview
 {
-    /// <summary> A class representing the PurviewAccount data model. </summary>
+    /// <summary>
+    /// A class representing the PurviewAccount data model.
+    /// Account resource
+    /// </summary>
     public partial class PurviewAccountData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of PurviewAccountData. </summary>
@@ -37,7 +40,7 @@ namespace Azure.ResourceManager.Purview
         /// </param>
         /// <param name="createdOn"> Gets the time at which the entity was created. </param>
         /// <param name="createdBy"> Gets the creator of the entity. </param>
-        /// <param name="createdByObjectId"> Gets the creators of the entity&apos;s object id. </param>
+        /// <param name="createdByObjectId"> Gets the creators of the entity's object id. </param>
         /// <param name="endpoints"> The URIs that are the public endpoints of the account. </param>
         /// <param name="friendlyName"> Gets or sets the friendly name. </param>
         /// <param name="managedResourceGroupName"> Gets or sets the managed resource group name. </param>
@@ -83,7 +86,7 @@ namespace Azure.ResourceManager.Purview
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Gets the creator of the entity. </summary>
         public string CreatedBy { get; }
-        /// <summary> Gets the creators of the entity&apos;s object id. </summary>
+        /// <summary> Gets the creators of the entity's object id. </summary>
         public string CreatedByObjectId { get; }
         /// <summary> The URIs that are the public endpoints of the account. </summary>
         public PurviewAccountEndpoint Endpoints { get; }

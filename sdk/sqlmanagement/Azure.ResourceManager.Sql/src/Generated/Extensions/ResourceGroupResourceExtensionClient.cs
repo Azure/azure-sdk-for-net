@@ -5,8 +5,8 @@
 
 #nullable disable
 
-using System;
 using System.Threading;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -46,14 +46,6 @@ namespace Azure.ResourceManager.Sql
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of InstanceFailoverGroupResources in the ResourceGroupResource. </summary>
-        /// <param name="locationName"> The name of the region where the resource is located. </param>
-        /// <returns> An object representing collection of InstanceFailoverGroupResources and their operations over a InstanceFailoverGroupResource. </returns>
-        public virtual InstanceFailoverGroupCollection GetInstanceFailoverGroups(AzureLocation locationName)
-        {
-            return new InstanceFailoverGroupCollection(Client, Id, locationName);
-        }
-
         /// <summary> Gets a collection of InstancePoolResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of InstancePoolResources and their operations over a InstancePoolResource. </returns>
         public virtual InstancePoolCollection GetInstancePools()
@@ -67,13 +59,6 @@ namespace Azure.ResourceManager.Sql
         public virtual SqlServerTrustGroupCollection GetSqlServerTrustGroups(AzureLocation locationName)
         {
             return new SqlServerTrustGroupCollection(Client, Id, locationName);
-        }
-
-        /// <summary> Gets a collection of SqlServerResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of SqlServerResources and their operations over a SqlServerResource. </returns>
-        public virtual SqlServerCollection GetSqlServers()
-        {
-            return GetCachedClient(Client => new SqlServerCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of ResourceGroupLongTermRetentionBackupResources in the ResourceGroupResource. </summary>
@@ -96,6 +81,21 @@ namespace Azure.ResourceManager.Sql
             return new ResourceGroupLongTermRetentionManagedInstanceBackupCollection(Client, Id, locationName, managedInstanceName, databaseName);
         }
 
+        /// <summary> Gets a collection of VirtualClusterResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of VirtualClusterResources and their operations over a VirtualClusterResource. </returns>
+        public virtual VirtualClusterCollection GetVirtualClusters()
+        {
+            return GetCachedClient(Client => new VirtualClusterCollection(Client, Id));
+        }
+
+        /// <summary> Gets a collection of InstanceFailoverGroupResources in the ResourceGroupResource. </summary>
+        /// <param name="locationName"> The name of the region where the resource is located. </param>
+        /// <returns> An object representing collection of InstanceFailoverGroupResources and their operations over a InstanceFailoverGroupResource. </returns>
+        public virtual InstanceFailoverGroupCollection GetInstanceFailoverGroups(AzureLocation locationName)
+        {
+            return new InstanceFailoverGroupCollection(Client, Id, locationName);
+        }
+
         /// <summary> Gets a collection of ManagedInstanceResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of ManagedInstanceResources and their operations over a ManagedInstanceResource. </returns>
         public virtual ManagedInstanceCollection GetManagedInstances()
@@ -103,11 +103,11 @@ namespace Azure.ResourceManager.Sql
             return GetCachedClient(Client => new ManagedInstanceCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of VirtualClusterResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of VirtualClusterResources and their operations over a VirtualClusterResource. </returns>
-        public virtual VirtualClusterCollection GetVirtualClusters()
+        /// <summary> Gets a collection of SqlServerResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of SqlServerResources and their operations over a SqlServerResource. </returns>
+        public virtual SqlServerCollection GetSqlServers()
         {
-            return GetCachedClient(Client => new VirtualClusterCollection(Client, Id));
+            return GetCachedClient(Client => new SqlServerCollection(Client, Id));
         }
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LongTermRetentionBackupsRestClient.CreateListByResourceGroupLocationRequest(Id.SubscriptionId, Id.ResourceGroupName, locationName, onlyLatestPerDatabase, databaseState);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LongTermRetentionBackupsRestClient.CreateListByResourceGroupLocationNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, locationName, onlyLatestPerDatabase, databaseState);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, LongTermRetentionBackupData.DeserializeLongTermRetentionBackupData, LongTermRetentionBackupsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetLongTermRetentionBackupsWithLocation", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, LongTermRetentionBackupData.DeserializeLongTermRetentionBackupData, LongTermRetentionBackupsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetLongTermRetentionBackupsWithLocation", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LongTermRetentionBackupsRestClient.CreateListByResourceGroupLocationRequest(Id.SubscriptionId, Id.ResourceGroupName, locationName, onlyLatestPerDatabase, databaseState);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LongTermRetentionBackupsRestClient.CreateListByResourceGroupLocationNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, locationName, onlyLatestPerDatabase, databaseState);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, LongTermRetentionBackupData.DeserializeLongTermRetentionBackupData, LongTermRetentionBackupsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetLongTermRetentionBackupsWithLocation", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, LongTermRetentionBackupData.DeserializeLongTermRetentionBackupData, LongTermRetentionBackupsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetLongTermRetentionBackupsWithLocation", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LongTermRetentionBackupsRestClient.CreateListByResourceGroupServerRequest(Id.SubscriptionId, Id.ResourceGroupName, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LongTermRetentionBackupsRestClient.CreateListByResourceGroupServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, LongTermRetentionBackupData.DeserializeLongTermRetentionBackupData, LongTermRetentionBackupsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetLongTermRetentionBackupsWithServer", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, LongTermRetentionBackupData.DeserializeLongTermRetentionBackupData, LongTermRetentionBackupsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetLongTermRetentionBackupsWithServer", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LongTermRetentionBackupsRestClient.CreateListByResourceGroupServerRequest(Id.SubscriptionId, Id.ResourceGroupName, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LongTermRetentionBackupsRestClient.CreateListByResourceGroupServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, LongTermRetentionBackupData.DeserializeLongTermRetentionBackupData, LongTermRetentionBackupsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetLongTermRetentionBackupsWithServer", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, LongTermRetentionBackupData.DeserializeLongTermRetentionBackupData, LongTermRetentionBackupsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetLongTermRetentionBackupsWithServer", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LongTermRetentionManagedInstanceBackupsRestClient.CreateListByResourceGroupInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, locationName, managedInstanceName, onlyLatestPerDatabase, databaseState);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LongTermRetentionManagedInstanceBackupsRestClient.CreateListByResourceGroupInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, locationName, managedInstanceName, onlyLatestPerDatabase, databaseState);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ManagedInstanceLongTermRetentionBackupData.DeserializeManagedInstanceLongTermRetentionBackupData, LongTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetLongTermRetentionManagedInstanceBackupsWithInstance", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ManagedInstanceLongTermRetentionBackupData.DeserializeManagedInstanceLongTermRetentionBackupData, LongTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetLongTermRetentionManagedInstanceBackupsWithInstance", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LongTermRetentionManagedInstanceBackupsRestClient.CreateListByResourceGroupInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, locationName, managedInstanceName, onlyLatestPerDatabase, databaseState);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LongTermRetentionManagedInstanceBackupsRestClient.CreateListByResourceGroupInstanceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, locationName, managedInstanceName, onlyLatestPerDatabase, databaseState);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ManagedInstanceLongTermRetentionBackupData.DeserializeManagedInstanceLongTermRetentionBackupData, LongTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetLongTermRetentionManagedInstanceBackupsWithInstance", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ManagedInstanceLongTermRetentionBackupData.DeserializeManagedInstanceLongTermRetentionBackupData, LongTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetLongTermRetentionManagedInstanceBackupsWithInstance", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LongTermRetentionManagedInstanceBackupsRestClient.CreateListByResourceGroupLocationRequest(Id.SubscriptionId, Id.ResourceGroupName, locationName, onlyLatestPerDatabase, databaseState);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LongTermRetentionManagedInstanceBackupsRestClient.CreateListByResourceGroupLocationNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, locationName, onlyLatestPerDatabase, databaseState);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ManagedInstanceLongTermRetentionBackupData.DeserializeManagedInstanceLongTermRetentionBackupData, LongTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetLongTermRetentionManagedInstanceBackupsWithLocation", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ManagedInstanceLongTermRetentionBackupData.DeserializeManagedInstanceLongTermRetentionBackupData, LongTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetLongTermRetentionManagedInstanceBackupsWithLocation", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LongTermRetentionManagedInstanceBackupsRestClient.CreateListByResourceGroupLocationRequest(Id.SubscriptionId, Id.ResourceGroupName, locationName, onlyLatestPerDatabase, databaseState);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LongTermRetentionManagedInstanceBackupsRestClient.CreateListByResourceGroupLocationNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, locationName, onlyLatestPerDatabase, databaseState);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ManagedInstanceLongTermRetentionBackupData.DeserializeManagedInstanceLongTermRetentionBackupData, LongTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetLongTermRetentionManagedInstanceBackupsWithLocation", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ManagedInstanceLongTermRetentionBackupData.DeserializeManagedInstanceLongTermRetentionBackupData, LongTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetLongTermRetentionManagedInstanceBackupsWithLocation", "value", "nextLink", cancellationToken);
         }
     }
 }

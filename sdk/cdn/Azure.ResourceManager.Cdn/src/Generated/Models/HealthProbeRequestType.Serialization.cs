@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.Cdn.Models
 
         public static HealthProbeRequestType ToHealthProbeRequestType(this string value)
         {
-            if (string.Equals(value, "NotSet", StringComparison.InvariantCultureIgnoreCase)) return HealthProbeRequestType.NotSet;
-            if (string.Equals(value, "GET", StringComparison.InvariantCultureIgnoreCase)) return HealthProbeRequestType.Get;
-            if (string.Equals(value, "HEAD", StringComparison.InvariantCultureIgnoreCase)) return HealthProbeRequestType.Head;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotSet")) return HealthProbeRequestType.NotSet;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "GET")) return HealthProbeRequestType.Get;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "HEAD")) return HealthProbeRequestType.Head;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown HealthProbeRequestType value.");
         }
     }

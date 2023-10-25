@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <summary> Initializes a new instance of PairedRegion. </summary>
         /// <param name="name"> The name of the paired region. </param>
-        /// <param name="id"> The fully qualified ID of the location. For example, /subscriptions/00000000-0000-0000-0000-000000000000/locations/westus. </param>
+        /// <param name="id"> The fully qualified ID of the location. For example, /subscriptions/8d65815f-a5b6-402f-9298-045155da7d74/locations/westus. </param>
         /// <param name="subscriptionId"> The subscription ID. </param>
         internal PairedRegion(string name, string id, string subscriptionId)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <summary> The name of the paired region. </summary>
         public string Name { get; }
-        /// <summary> The fully qualified ID of the location. For example, /subscriptions/00000000-0000-0000-0000-000000000000/locations/westus. </summary>
+        /// <summary> The fully qualified ID of the location. For example, /subscriptions/8d65815f-a5b6-402f-9298-045155da7d74/locations/westus. </summary>
         public string Id { get; }
         /// <summary> The subscription ID. </summary>
         public string SubscriptionId { get; }

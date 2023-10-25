@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Sql always encrypted AKV authentication type. Type: string (or Expression with resultType string). </summary>
+    /// <summary> Sql always encrypted AKV authentication type. Type: string. </summary>
     public readonly partial struct SqlAlwaysEncryptedAkvAuthType : IEquatable<SqlAlwaysEncryptedAkvAuthType>
     {
         private readonly string _value;

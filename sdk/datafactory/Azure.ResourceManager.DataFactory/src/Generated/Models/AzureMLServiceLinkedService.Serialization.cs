@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -46,10 +47,18 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
                 writer.WriteEndArray();
@@ -57,54 +66,35 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("subscriptionId"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SubscriptionId);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(SubscriptionId.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, SubscriptionId);
             writer.WritePropertyName("resourceGroupName"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ResourceGroupName);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(ResourceGroupName.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, ResourceGroupName);
             writer.WritePropertyName("mlWorkspaceName"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(MlWorkspaceName);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(MlWorkspaceName.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, MLWorkspaceName);
+            if (Optional.IsDefined(Authentication))
+            {
+                writer.WritePropertyName("authentication"u8);
+                JsonSerializer.Serialize(writer, Authentication);
+            }
             if (Optional.IsDefined(ServicePrincipalId))
             {
                 writer.WritePropertyName("servicePrincipalId"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ServicePrincipalId);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ServicePrincipalId.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, ServicePrincipalId);
             }
             if (Optional.IsDefined(ServicePrincipalKey))
             {
                 writer.WritePropertyName("servicePrincipalKey"u8);
-                writer.WriteObjectValue(ServicePrincipalKey);
+                JsonSerializer.Serialize(writer, ServicePrincipalKey);
             }
             if (Optional.IsDefined(Tenant))
             {
                 writer.WritePropertyName("tenant"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Tenant);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Tenant.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Tenant);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(EncryptedCredential);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(EncryptedCredential.ToString()).RootElement);
-#endif
+                writer.WriteStringValue(EncryptedCredential);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -113,7 +103,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
@@ -121,18 +114,23 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static AzureMLServiceLinkedService DeserializeAzureMLServiceLinkedService(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
-            BinaryData subscriptionId = default;
-            BinaryData resourceGroupName = default;
-            BinaryData mlWorkspaceName = default;
-            Optional<BinaryData> servicePrincipalId = default;
-            Optional<FactorySecretBaseDefinition> servicePrincipalKey = default;
-            Optional<BinaryData> tenant = default;
-            Optional<BinaryData> encryptedCredential = default;
+            DataFactoryElement<string> subscriptionId = default;
+            DataFactoryElement<string> resourceGroupName = default;
+            DataFactoryElement<string> mlWorkspaceName = default;
+            Optional<DataFactoryElement<string>> authentication = default;
+            Optional<DataFactoryElement<string>> servicePrincipalId = default;
+            Optional<DataFactorySecretBaseDefinition> servicePrincipalKey = default;
+            Optional<DataFactoryElement<string>> tenant = default;
+            Optional<string> encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -146,7 +144,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value);
@@ -161,7 +158,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, EntityParameterSpecification> dictionary = new Dictionary<string, EntityParameterSpecification>();
@@ -176,13 +172,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<BinaryData> array = new List<BinaryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BinaryData.FromString(item.GetRawText()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BinaryData.FromString(item.GetRawText()));
+                        }
                     }
                     annotations = array;
                     continue;
@@ -198,57 +200,58 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("subscriptionId"u8))
                         {
-                            subscriptionId = BinaryData.FromString(property0.Value.GetRawText());
+                            subscriptionId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("resourceGroupName"u8))
                         {
-                            resourceGroupName = BinaryData.FromString(property0.Value.GetRawText());
+                            resourceGroupName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("mlWorkspaceName"u8))
                         {
-                            mlWorkspaceName = BinaryData.FromString(property0.Value.GetRawText());
+                            mlWorkspaceName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("authentication"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            authentication = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipalId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            servicePrincipalId = BinaryData.FromString(property0.Value.GetRawText());
+                            servicePrincipalId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("servicePrincipalKey"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            servicePrincipalKey = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            servicePrincipalKey = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("tenant"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            tenant = BinaryData.FromString(property0.Value.GetRawText());
+                            tenant = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            encryptedCredential = BinaryData.FromString(property0.Value.GetRawText());
+                            encryptedCredential = property0.Value.GetString();
                             continue;
                         }
                     }
@@ -257,7 +260,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureMLServiceLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, subscriptionId, resourceGroupName, mlWorkspaceName, servicePrincipalId.Value, servicePrincipalKey.Value, tenant.Value, encryptedCredential.Value);
+            return new AzureMLServiceLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, subscriptionId, resourceGroupName, mlWorkspaceName, authentication.Value, servicePrincipalId.Value, servicePrincipalKey, tenant.Value, encryptedCredential.Value);
         }
     }
 }

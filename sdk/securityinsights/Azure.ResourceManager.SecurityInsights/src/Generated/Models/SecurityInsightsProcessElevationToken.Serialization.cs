@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         public static SecurityInsightsProcessElevationToken ToSecurityInsightsProcessElevationToken(this string value)
         {
-            if (string.Equals(value, "Default", StringComparison.InvariantCultureIgnoreCase)) return SecurityInsightsProcessElevationToken.Default;
-            if (string.Equals(value, "Full", StringComparison.InvariantCultureIgnoreCase)) return SecurityInsightsProcessElevationToken.Full;
-            if (string.Equals(value, "Limited", StringComparison.InvariantCultureIgnoreCase)) return SecurityInsightsProcessElevationToken.Limited;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Default")) return SecurityInsightsProcessElevationToken.Default;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Full")) return SecurityInsightsProcessElevationToken.Full;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Limited")) return SecurityInsightsProcessElevationToken.Limited;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SecurityInsightsProcessElevationToken value.");
         }
     }

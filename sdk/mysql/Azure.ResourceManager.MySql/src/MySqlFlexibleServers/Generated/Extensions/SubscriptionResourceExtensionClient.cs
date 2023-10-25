@@ -8,6 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -27,6 +28,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         private CheckVirtualNetworkSubnetUsageRestOperations _checkVirtualNetworkSubnetUsageRestClient;
         private ClientDiagnostics _checkNameAvailabilityClientDiagnostics;
         private CheckNameAvailabilityRestOperations _checkNameAvailabilityRestClient;
+        private ClientDiagnostics _checkNameAvailabilityWithoutLocationClientDiagnostics;
+        private CheckNameAvailabilityWithoutLocationRestOperations _checkNameAvailabilityWithoutLocationRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -48,6 +51,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         private CheckVirtualNetworkSubnetUsageRestOperations CheckVirtualNetworkSubnetUsageRestClient => _checkVirtualNetworkSubnetUsageRestClient ??= new CheckVirtualNetworkSubnetUsageRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics CheckNameAvailabilityClientDiagnostics => _checkNameAvailabilityClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private CheckNameAvailabilityRestOperations CheckNameAvailabilityRestClient => _checkNameAvailabilityRestClient ??= new CheckNameAvailabilityRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics CheckNameAvailabilityWithoutLocationClientDiagnostics => _checkNameAvailabilityWithoutLocationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private CheckNameAvailabilityWithoutLocationRestOperations CheckNameAvailabilityWithoutLocationRestClient => _checkNameAvailabilityWithoutLocationRestClient ??= new CheckNameAvailabilityWithoutLocationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -74,7 +79,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MySqlFlexibleServerServersRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MySqlFlexibleServerServersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MySqlFlexibleServerResource(Client, MySqlFlexibleServerData.DeserializeMySqlFlexibleServerData(e)), MySqlFlexibleServerServersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMySqlFlexibleServers", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MySqlFlexibleServerResource(Client, MySqlFlexibleServerData.DeserializeMySqlFlexibleServerData(e)), MySqlFlexibleServerServersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMySqlFlexibleServers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -96,7 +101,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MySqlFlexibleServerServersRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MySqlFlexibleServerServersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MySqlFlexibleServerResource(Client, MySqlFlexibleServerData.DeserializeMySqlFlexibleServerData(e)), MySqlFlexibleServerServersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMySqlFlexibleServers", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MySqlFlexibleServerResource(Client, MySqlFlexibleServerData.DeserializeMySqlFlexibleServerData(e)), MySqlFlexibleServerServersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMySqlFlexibleServers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -119,7 +124,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LocationBasedCapabilitiesRestClient.CreateListRequest(Id.SubscriptionId, locationName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LocationBasedCapabilitiesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, locationName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, MySqlFlexibleServerCapabilityProperties.DeserializeMySqlFlexibleServerCapabilityProperties, LocationBasedCapabilitiesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetLocationBasedCapabilities", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, MySqlFlexibleServerCapabilityProperties.DeserializeMySqlFlexibleServerCapabilityProperties, LocationBasedCapabilitiesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetLocationBasedCapabilities", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -142,7 +147,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LocationBasedCapabilitiesRestClient.CreateListRequest(Id.SubscriptionId, locationName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LocationBasedCapabilitiesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, locationName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, MySqlFlexibleServerCapabilityProperties.DeserializeMySqlFlexibleServerCapabilityProperties, LocationBasedCapabilitiesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetLocationBasedCapabilities", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, MySqlFlexibleServerCapabilityProperties.DeserializeMySqlFlexibleServerCapabilityProperties, LocationBasedCapabilitiesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetLocationBasedCapabilities", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -264,6 +269,68 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             try
             {
                 var response = CheckNameAvailabilityRestClient.Execute(Id.SubscriptionId, locationName, content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Check the availability of name for server
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckNameAvailabilityWithoutLocation_Execute</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The required parameters for checking if server name is available. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<MySqlFlexibleServerNameAvailabilityResult>> CheckMySqlFlexibleServerNameAvailabilityWithoutLocationAsync(MySqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            using var scope = CheckNameAvailabilityWithoutLocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckMySqlFlexibleServerNameAvailabilityWithoutLocation");
+            scope.Start();
+            try
+            {
+                var response = await CheckNameAvailabilityWithoutLocationRestClient.ExecuteAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Check the availability of name for server
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckNameAvailabilityWithoutLocation_Execute</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The required parameters for checking if server name is available. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<MySqlFlexibleServerNameAvailabilityResult> CheckMySqlFlexibleServerNameAvailabilityWithoutLocation(MySqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            using var scope = CheckNameAvailabilityWithoutLocationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckMySqlFlexibleServerNameAvailabilityWithoutLocation");
+            scope.Start();
+            try
+            {
+                var response = CheckNameAvailabilityWithoutLocationRestClient.Execute(Id.SubscriptionId, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

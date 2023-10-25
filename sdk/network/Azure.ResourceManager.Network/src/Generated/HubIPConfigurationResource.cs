@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Creates a VirtualHubIpConfiguration resource if it doesn&apos;t exist else updates the existing VirtualHubIpConfiguration.
+        /// Creates a VirtualHubIpConfiguration resource if it doesn't exist else updates the existing VirtualHubIpConfiguration.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// Creates a VirtualHubIpConfiguration resource if it doesn&apos;t exist else updates the existing VirtualHubIpConfiguration.
+        /// Creates a VirtualHubIpConfiguration resource if it doesn't exist else updates the existing VirtualHubIpConfiguration.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

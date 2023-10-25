@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Relay.Models
     {
         internal static HybridConnectionListResult DeserializeHybridConnectionListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<RelayHybridConnectionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.Relay.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RelayHybridConnectionData> array = new List<RelayHybridConnectionData>();

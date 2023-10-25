@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the AppServiceSourceControl data model. </summary>
+    /// <summary>
+    /// A class representing the AppServiceSourceControl data model.
+    /// The source control OAuth token.
+    /// </summary>
     public partial class AppServiceSourceControlData : ResourceData
     {
         /// <summary> Initializes a new instance of AppServiceSourceControlData. </summary>

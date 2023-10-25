@@ -19,7 +19,8 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("secretSource"u8);
-            JsonSerializer.Serialize(writer, SecretSource); if (Optional.IsDefined(SecretVersion))
+            JsonSerializer.Serialize(writer, SecretSource);
+            if (Optional.IsDefined(SecretVersion))
             {
                 writer.WritePropertyName("secretVersion"u8);
                 writer.WriteStringValue(SecretVersion);
@@ -46,6 +47,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static CustomerCertificateProperties DeserializeCustomerCertificateProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             WritableSubResource secretSource = default;
             Optional<string> secretVersion = default;
             Optional<bool> useLatestVersion = default;
@@ -71,7 +76,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     useLatestVersion = property.Value.GetBoolean();
@@ -86,7 +90,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     expirationDate = property.Value.GetDateTimeOffset("O");
@@ -101,7 +104,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

@@ -368,6 +368,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
 
                 async Task ProcessMessage(ProcessMessageEventArgs args)
                 {
+                    bool messageLockLostRaised = false;
+                    args.MessageLockLostAsync += (lockLostArgs) =>
+                    {
+                        messageLockLostRaised = true;
+                        // no exception expected as we have stopped renewing the lock once the max duration has passed
+                        Assert.IsNull(lockLostArgs.Exception);
+                        return Task.CompletedTask;
+                    };
                     var message = args.Message;
                     // wait until 5 seconds past the locked until time
                     await Task.Delay(message.LockedUntil.Subtract(DateTimeOffset.UtcNow).Add(TimeSpan.FromSeconds(5)));
@@ -377,6 +385,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                         // only do the assertion if cancellation wasn't requested as otherwise
                         // the exception we would get is a TaskCanceledException rather than ServiceBusException
                         Assert.AreEqual(lockedUntil, message.LockedUntil);
+                        Assert.IsTrue(args.MessageLockCancellationToken.IsCancellationRequested);
+                        Assert.IsTrue(messageLockLostRaised);
                         ServiceBusException exception = await AsyncAssert.ThrowsAsync<ServiceBusException>(
                             async () => await args.CompleteMessageAsync(message, args.CancellationToken));
                         Assert.AreEqual(ServiceBusFailureReason.MessageLockLost, exception.Reason);
@@ -1284,7 +1294,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 await using var client = CreateClient();
                 var sender = client.CreateSender(scope.QueueName);
                 int messageCount = 10;
-                ConcurrentDictionary<long, byte> sequenceNumbers = new();
 
                 await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(messageCount));
 
@@ -1296,27 +1305,21 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 int receivedCount = 0;
                 var tcs = new TaskCompletionSource<bool>();
                 ProcessMessageEventArgs capturedArgs = null;
+                ServiceBusReceivedMessage receivedDeferredMessage = null;
 
                 async Task ProcessMessage(ProcessMessageEventArgs args)
                 {
                     capturedArgs ??= args;
 
-                    IReadOnlyList<ServiceBusReceivedMessage> receivedDeferredMessages = null;
                     var count = Interlocked.Increment(ref receivedCount);
 
-                    // defer first two messages
-                    if (count <= 2)
+                    // defer first message
+                    if (count == 1)
                     {
                         await args.DeferMessageAsync(args.Message);
-                        sequenceNumbers[args.Message.SequenceNumber] = default;
+                        receivedDeferredMessage = (await args.GetReceiveActions().ReceiveDeferredMessagesAsync(new[] {args.Message.SequenceNumber})).Single();
                     }
-
-                    if (count == 2)
-                    {
-                        receivedDeferredMessages = await args.GetReceiveActions().ReceiveDeferredMessagesAsync(sequenceNumbers.Keys);
-                    }
-
-                    if (manualRenew && !sequenceNumbers.ContainsKey(args.Message.SequenceNumber))
+                    else if (manualRenew)
                     {
                         await args.RenewMessageLockAsync(args.Message);
                     }
@@ -1328,17 +1331,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     {
                         // do not attempt to complete the deferred message as we will only be able to complete it
                         // after receiving using ReceiveDeferredMessageAsync
-                        if (!sequenceNumbers.ContainsKey(args.Message.SequenceNumber))
+                        if (count > 1)
                         {
-                            await args.RenewMessageLockAsync(args.Message);
+                            await args.CompleteMessageAsync(args.Message);
                         }
-
-                        if (receivedDeferredMessages != null)
+                        else
                         {
-                            foreach (var message in receivedDeferredMessages)
-                            {
-                                await args.CompleteMessageAsync(message);
-                            }
+                            await args.CompleteMessageAsync(receivedDeferredMessage);
                         }
                     }
 
@@ -1365,7 +1364,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                 Assert.IsNull(msg);
 
                 Assert.That(
-                    async () => await receiver.ReceiveDeferredMessagesAsync(sequenceNumbers.Keys),
+                    async () => await receiver.ReceiveDeferredMessagesAsync(new[] {receivedDeferredMessage.SequenceNumber}),
                     Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason))
                         .EqualTo(ServiceBusFailureReason.MessageNotFound));
             }
@@ -1459,6 +1458,154 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
                     }
                 }
                 Assert.AreEqual(0, remaining);
+            }
+        }
+
+        [Test]
+        public async Task MessageLockLostEventRaisedAfterExpiration()
+        {
+            var lockDuration = ShortLockDuration;
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false, lockDuration: lockDuration))
+            {
+                await using var client = CreateClient();
+                var sender = client.CreateSender(scope.QueueName);
+                int messageCount = 1;
+
+                await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(messageCount));
+
+                await using var processor = client.CreateProcessor(scope.QueueName, new ServiceBusProcessorOptions
+                {
+                    MaxAutoLockRenewalDuration = TimeSpan.Zero,
+                    AutoCompleteMessages = false
+                });
+
+                var tcs = new TaskCompletionSource<bool>();
+                async Task ProcessMessage(ProcessMessageEventArgs args)
+                {
+                    bool messageLockLostRaised = false;
+                    args.MessageLockLostAsync += (lockLostArgs) =>
+                    {
+                        Assert.AreEqual(args.Message.LockToken, lockLostArgs.Message.LockToken);
+                        messageLockLostRaised = true;
+                        return Task.CompletedTask;
+                    };
+                    await args.CompleteMessageAsync(args.Message);
+                    await Task.Delay(lockDuration.Add(lockDuration));
+                    try
+                    {
+                        Assert.IsTrue(messageLockLostRaised);
+                        Assert.IsTrue(args.MessageLockCancellationToken.IsCancellationRequested);
+                        Assert.IsFalse(args.CancellationToken.IsCancellationRequested);
+                    }
+                    finally
+                    {
+                        tcs.SetResult(true);
+                    }
+                }
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
+
+                await processor.StartProcessingAsync();
+                await tcs.Task;
+                await processor.CloseAsync();
+            }
+        }
+
+        /// <summary>
+        /// Because the message lock renewal occurs on the mgmt link, even when the connection drops, message lock renewal continues
+        /// successfully. This is in contrast to session messages where the lock renewal requires the session to be locked,
+        /// so when the connection drops, the session is lost and the lock renewal fails.
+        /// </summary>
+        [Test]
+        public async Task MessageLockLostEventNotRaisedAfterConnectionDropped()
+        {
+            var lockDuration = TimeSpan.FromSeconds(30);
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false, lockDuration: lockDuration))
+            {
+                await using var client = CreateClient();
+                var sender = client.CreateSender(scope.QueueName);
+                int messageCount = 1;
+
+                await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(messageCount));
+
+                await using var processor = client.CreateProcessor(scope.QueueName);
+
+                var tcs = new TaskCompletionSource<bool>();
+                async Task ProcessMessage(ProcessMessageEventArgs args)
+                {
+                    bool messageLockLostRaised = false;
+                    args.MessageLockLostAsync += (lockLostArgs) =>
+                    {
+                        messageLockLostRaised = true;
+                        Assert.AreEqual(args.Message.LockToken, lockLostArgs.Message.LockToken);
+                        var lockLostException = lockLostArgs.Exception as ServiceBusException;
+                        Assert.IsNotNull(lockLostException);
+                        Assert.AreEqual(ServiceBusFailureReason.MessageLockLost, lockLostException.Reason);
+                        return Task.CompletedTask;
+                    };
+                    SimulateNetworkFailure(client);
+                    await Task.Delay(lockDuration.Add(lockDuration));
+                    try
+                    {
+                        Assert.IsFalse(messageLockLostRaised);
+                        Assert.IsFalse(args.MessageLockCancellationToken.IsCancellationRequested);
+                        Assert.IsFalse(args.CancellationToken.IsCancellationRequested);
+                    }
+                    finally
+                    {
+                        tcs.SetResult(true);
+                    }
+                }
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
+
+                await processor.StartProcessingAsync();
+                await tcs.Task;
+                await processor.CloseAsync();
+            }
+        }
+
+        [Test]
+        public async Task MessageLockLostEventNotRaisedAfterProcessMessageCompletes()
+        {
+            var lockDuration = ShortLockDuration;
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false, lockDuration: lockDuration))
+            {
+                await using var client = CreateClient();
+                var sender = client.CreateSender(scope.QueueName);
+                int messageCount = 1;
+
+                await sender.SendMessagesAsync(ServiceBusTestUtilities.GetMessages(messageCount));
+
+                await using var processor = client.CreateProcessor(scope.QueueName, new ServiceBusProcessorOptions
+                {
+                    MaxAutoLockRenewalDuration = TimeSpan.Zero,
+                    AutoCompleteMessages = false
+                });
+
+                var tcs = new TaskCompletionSource<bool>();
+                bool messageLockLostRaised = false;
+                async Task ProcessMessage(ProcessMessageEventArgs args)
+                {
+                    args.MessageLockLostAsync += (lockLostArgs) =>
+                    {
+                        messageLockLostRaised = true;
+                        return Task.CompletedTask;
+                    };
+                    await args.CompleteMessageAsync(args.Message);
+                    Assert.IsFalse(messageLockLostRaised);
+                    Assert.IsFalse(args.MessageLockCancellationToken.IsCancellationRequested);
+                    Assert.IsFalse(args.CancellationToken.IsCancellationRequested);
+                    tcs.SetResult(true);
+                }
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += ServiceBusTestUtilities.ExceptionHandler;
+
+                await processor.StartProcessingAsync();
+                await tcs.Task;
+                await Task.Delay(lockDuration.Add(lockDuration));
+                Assert.IsFalse(messageLockLostRaised);
+                await processor.CloseAsync();
             }
         }
     }

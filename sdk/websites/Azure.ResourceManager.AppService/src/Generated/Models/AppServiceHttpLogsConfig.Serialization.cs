@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceHttpLogsConfig DeserializeAppServiceHttpLogsConfig(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<FileSystemHttpLogsConfig> fileSystem = default;
             Optional<AppServiceBlobStorageHttpLogsConfig> azureBlobStorage = default;
             foreach (var property in element.EnumerateObject())
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     fileSystem = FileSystemHttpLogsConfig.DeserializeFileSystemHttpLogsConfig(property.Value);
@@ -48,7 +51,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     azureBlobStorage = AppServiceBlobStorageHttpLogsConfig.DeserializeAppServiceBlobStorageHttpLogsConfig(property.Value);

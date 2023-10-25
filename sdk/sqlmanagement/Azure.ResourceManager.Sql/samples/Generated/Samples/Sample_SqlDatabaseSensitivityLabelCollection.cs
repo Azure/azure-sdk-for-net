@@ -92,13 +92,13 @@ namespace Azure.ResourceManager.Sql.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Updates the sensitivity label of a given column with all parameters
+        // Gets the sensitivity label of a given column
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_UpdatesTheSensitivityLabelOfAGivenColumnWithAllParameters()
+        public async Task GetIfExists_GetsTheSensitivityLabelOfAGivenColumn()
         {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/ColumnSensitivityLabelCreateMax.json
-            // this example is just showing the usage of "SensitivityLabels_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/ColumnSensitivityLabelGet.json
+            // this example is just showing the usage of "SensitivityLabels_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -121,22 +121,22 @@ namespace Azure.ResourceManager.Sql.Samples
             SqlDatabaseSensitivityLabelCollection collection = sqlDatabaseColumn.GetSqlDatabaseSensitivityLabels();
 
             // invoke the operation
-            SensitivityLabelData data = new SensitivityLabelData()
-            {
-                LabelName = "PII",
-                LabelId = "bf91e08c-f4f0-478a-b016-25164b2a65ff",
-                InformationType = "PhoneNumber",
-                InformationTypeId = "d22fa6e9-5ee4-3bde-4c2b-a409604c4646",
-                Rank = SensitivityLabelRank.Low,
-            };
-            ArmOperation<SqlDatabaseSensitivityLabelResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, data);
-            SqlDatabaseSensitivityLabelResource result = lro.Value;
+            SensitivityLabelSource sensitivityLabelSource = SensitivityLabelSource.Current;
+            NullableResponse<SqlDatabaseSensitivityLabelResource> response = await collection.GetIfExistsAsync(sensitivityLabelSource);
+            SqlDatabaseSensitivityLabelResource result = response.HasValue ? response.Value : null;
 
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            SensitivityLabelData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                SensitivityLabelData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

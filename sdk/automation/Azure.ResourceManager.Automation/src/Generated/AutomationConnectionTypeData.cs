@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    /// <summary> A class representing the AutomationConnectionType data model. </summary>
+    /// <summary>
+    /// A class representing the AutomationConnectionType data model.
+    /// Definition of the connection type.
+    /// </summary>
     public partial class AutomationConnectionTypeData : ResourceData
     {
         /// <summary> Initializes a new instance of AutomationConnectionTypeData. </summary>

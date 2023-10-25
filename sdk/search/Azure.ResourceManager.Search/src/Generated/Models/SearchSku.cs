@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Search.Models
         }
 
         /// <summary> Initializes a new instance of SearchSku. </summary>
-        /// <param name="name"> The SKU of the search service. Valid values include: &apos;free&apos;: Shared service. &apos;basic&apos;: Dedicated service with up to 3 replicas. &apos;standard&apos;: Dedicated service with up to 12 partitions and 12 replicas. &apos;standard2&apos;: Similar to standard, but with more capacity per search unit. &apos;standard3&apos;: The largest Standard offering with up to 12 partitions and 12 replicas (or up to 3 partitions with more indexes if you also set the hostingMode property to &apos;highDensity&apos;). &apos;storage_optimized_l1&apos;: Supports 1TB per partition, up to 12 partitions. &apos;storage_optimized_l2&apos;: Supports 2TB per partition, up to 12 partitions.&apos;. </param>
+        /// <param name="name"> The SKU of the search service. Valid values include: 'free': Shared service. 'basic': Dedicated service with up to 3 replicas. 'standard': Dedicated service with up to 12 partitions and 12 replicas. 'standard2': Similar to standard, but with more capacity per search unit. 'standard3': The largest Standard offering with up to 12 partitions and 12 replicas (or up to 3 partitions with more indexes if you also set the hostingMode property to 'highDensity'). 'storage_optimized_l1': Supports 1TB per partition, up to 12 partitions. 'storage_optimized_l2': Supports 2TB per partition, up to 12 partitions.'. </param>
         internal SearchSku(SearchSkuName? name)
         {
             Name = name;
         }
 
-        /// <summary> The SKU of the search service. Valid values include: &apos;free&apos;: Shared service. &apos;basic&apos;: Dedicated service with up to 3 replicas. &apos;standard&apos;: Dedicated service with up to 12 partitions and 12 replicas. &apos;standard2&apos;: Similar to standard, but with more capacity per search unit. &apos;standard3&apos;: The largest Standard offering with up to 12 partitions and 12 replicas (or up to 3 partitions with more indexes if you also set the hostingMode property to &apos;highDensity&apos;). &apos;storage_optimized_l1&apos;: Supports 1TB per partition, up to 12 partitions. &apos;storage_optimized_l2&apos;: Supports 2TB per partition, up to 12 partitions.&apos;. </summary>
+        /// <summary> The SKU of the search service. Valid values include: 'free': Shared service. 'basic': Dedicated service with up to 3 replicas. 'standard': Dedicated service with up to 12 partitions and 12 replicas. 'standard2': Similar to standard, but with more capacity per search unit. 'standard3': The largest Standard offering with up to 12 partitions and 12 replicas (or up to 3 partitions with more indexes if you also set the hostingMode property to 'highDensity'). 'storage_optimized_l1': Supports 1TB per partition, up to 12 partitions. 'storage_optimized_l2': Supports 2TB per partition, up to 12 partitions.'. </summary>
         public SearchSkuName? Name { get; set; }
     }
 }

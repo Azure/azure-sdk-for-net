@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary>
     /// Managed data disk type. IOPS and throughput are given by the disk size, to see more information go to https://docs.microsoft.com/en-us/azure/virtual-machines/disks-types.
-    /// 
+    ///
     /// </summary>
     public readonly partial struct ServiceFabricManagedDataDiskType : IEquatable<ServiceFabricManagedDataDiskType>
     {

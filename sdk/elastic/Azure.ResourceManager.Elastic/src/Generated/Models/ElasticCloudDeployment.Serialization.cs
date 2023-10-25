@@ -21,6 +21,10 @@ namespace Azure.ResourceManager.Elastic.Models
 
         internal static ElasticCloudDeployment DeserializeElasticCloudDeployment(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> deploymentId = default;
             Optional<string> azureSubscriptionId = default;
@@ -54,7 +58,6 @@ namespace Azure.ResourceManager.Elastic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        elasticsearchServiceUrl = null;
                         continue;
                     }
                     elasticsearchServiceUrl = new Uri(property.Value.GetString());
@@ -64,7 +67,6 @@ namespace Azure.ResourceManager.Elastic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        kibanaServiceUrl = null;
                         continue;
                     }
                     kibanaServiceUrl = new Uri(property.Value.GetString());
@@ -74,7 +76,6 @@ namespace Azure.ResourceManager.Elastic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        kibanaSsoUrl = null;
                         continue;
                     }
                     kibanaSsoUrl = new Uri(property.Value.GetString());

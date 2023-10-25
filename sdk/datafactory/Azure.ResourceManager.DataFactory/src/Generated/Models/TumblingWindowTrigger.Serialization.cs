@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -32,10 +33,18 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
                 writer.WriteEndArray();
@@ -56,11 +65,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Delay))
             {
                 writer.WritePropertyName("delay"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Delay);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Delay.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Delay);
             }
             writer.WritePropertyName("maxConcurrency"u8);
             writer.WriteNumberValue(MaxConcurrency);
@@ -86,7 +91,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
@@ -94,16 +102,20 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static TumblingWindowTrigger DeserializeTumblingWindowTrigger(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             TriggerPipelineReference pipeline = default;
             string type = default;
             Optional<string> description = default;
-            Optional<FactoryTriggerRuntimeState> runtimeState = default;
+            Optional<DataFactoryTriggerRuntimeState> runtimeState = default;
             Optional<IList<BinaryData>> annotations = default;
             TumblingWindowFrequency frequency = default;
             int interval = default;
             DateTimeOffset startTime = default;
             Optional<DateTimeOffset> endTime = default;
-            Optional<BinaryData> delay = default;
+            Optional<DataFactoryElement<string>> delay = default;
             int maxConcurrency = default;
             Optional<RetryPolicy> retryPolicy = default;
             Optional<IList<DependencyReference>> dependsOn = default;
@@ -130,23 +142,28 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    runtimeState = new FactoryTriggerRuntimeState(property.Value.GetString());
+                    runtimeState = new DataFactoryTriggerRuntimeState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("annotations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<BinaryData> array = new List<BinaryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BinaryData.FromString(item.GetRawText()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BinaryData.FromString(item.GetRawText()));
+                        }
                     }
                     annotations = array;
                     continue;
@@ -179,7 +196,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             endTime = property0.Value.GetDateTimeOffset("O");
@@ -189,10 +205,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            delay = BinaryData.FromString(property0.Value.GetRawText());
+                            delay = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("maxConcurrency"u8))
@@ -204,7 +219,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             retryPolicy = RetryPolicy.DeserializeRetryPolicy(property0.Value);
@@ -214,7 +228,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DependencyReference> array = new List<DependencyReference>();

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static MachineLearningDiagnoseResultValue DeserializeMachineLearningDiagnoseResultValue(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<MachineLearningDiagnoseResult>> userDefinedRouteResults = default;
             Optional<IReadOnlyList<MachineLearningDiagnoseResult>> networkSecurityRuleResults = default;
             Optional<IReadOnlyList<MachineLearningDiagnoseResult>> resourceLockResults = default;
@@ -30,7 +34,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
@@ -45,7 +48,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
@@ -60,7 +62,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
@@ -75,7 +76,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
@@ -90,7 +90,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
@@ -105,7 +104,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
@@ -120,7 +118,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
@@ -135,7 +132,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();
@@ -150,7 +146,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MachineLearningDiagnoseResult> array = new List<MachineLearningDiagnoseResult>();

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> The type of the resource whose name is to be validated. This value must always be &apos;searchServices&apos;. </summary>
+    /// <summary> The type of the resource whose name is to be validated. This value must always be 'searchServices'. </summary>
     public readonly partial struct SearchServiceResourceType : IEquatable<SearchServiceResourceType>
     {
         private readonly string _value;

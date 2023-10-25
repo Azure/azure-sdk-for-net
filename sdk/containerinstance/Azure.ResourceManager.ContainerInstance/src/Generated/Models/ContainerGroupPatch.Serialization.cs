@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         internal static ContainerGroupPatch DeserializeContainerGroupPatch(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> zones = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -58,7 +62,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -73,7 +76,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -108,7 +110,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

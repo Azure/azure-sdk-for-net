@@ -25,6 +25,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static PipelineTopologyListRequest DeserializePipelineTopologyListRequest(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string methodName = default;
             Optional<string> apiVersion = default;
             foreach (var property in element.EnumerateObject())

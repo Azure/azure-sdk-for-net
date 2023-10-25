@@ -53,14 +53,57 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="timeoutInSeconds">The timeout in seconds to execute
         /// the run command.</param>
         /// <param name="outputBlobUri">Specifies the Azure storage blob where
-        /// script output stream will be uploaded.</param>
+        /// script output stream will be uploaded. Use a SAS URI with read,
+        /// append, create, write access OR use managed identity to provide the
+        /// VM access to the blob. Refer outputBlobManagedIdentity parameter.
+        /// </param>
         /// <param name="errorBlobUri">Specifies the Azure storage blob where
-        /// script error stream will be uploaded.</param>
+        /// script error stream will be uploaded. Use a SAS URI with read,
+        /// append, create, write access OR use managed identity to provide the
+        /// VM access to the blob. Refer errorBlobManagedIdentity
+        /// parameter.</param>
+        /// <param name="outputBlobManagedIdentity">User-assigned managed
+        /// identity that has access to outputBlobUri storage blob. Use an
+        /// empty object in case of system-assigned identity. Make sure managed
+        /// identity has been given access to blob's container with 'Storage
+        /// Blob Data Contributor' role assignment. In case of user-assigned
+        /// identity, make sure you add it under VM's identity. For more info
+        /// on managed identity and Run Command, refer
+        /// https://aka.ms/ManagedIdentity and https://aka.ms/RunCommandManaged
+        /// </param>
+        /// <param name="errorBlobManagedIdentity">User-assigned managed
+        /// identity that has access to errorBlobUri storage blob. Use an empty
+        /// object in case of system-assigned identity. Make sure managed
+        /// identity has been given access to blob's container with 'Storage
+        /// Blob Data Contributor' role assignment. In case of user-assigned
+        /// identity, make sure you add it under VM's identity. For more info
+        /// on managed identity and Run Command, refer
+        /// https://aka.ms/ManagedIdentity and https://aka.ms/RunCommandManaged
+        /// </param>
         /// <param name="provisioningState">The provisioning state, which only
-        /// appears in the response.</param>
+        /// appears in the response. If treatFailureAsDeploymentFailure set to
+        /// true, any failure in the script will fail the deployment and
+        /// ProvisioningState will be marked as Failed. If
+        /// treatFailureAsDeploymentFailure set to false, ProvisioningState
+        /// would only reflect whether the run command was run or not by the
+        /// extensions platform, it would not indicate whether script failed in
+        /// case of script failures. See instance view of run command in case
+        /// of script failures to see executionMessage, output, error:
+        /// https://aka.ms/runcommandmanaged#get-execution-status-and-results
+        /// </param>
         /// <param name="instanceView">The virtual machine run command instance
         /// view.</param>
-        public VirtualMachineRunCommand(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), VirtualMachineRunCommandScriptSource source = default(VirtualMachineRunCommandScriptSource), IList<RunCommandInputParameter> parameters = default(IList<RunCommandInputParameter>), IList<RunCommandInputParameter> protectedParameters = default(IList<RunCommandInputParameter>), bool? asyncExecution = default(bool?), string runAsUser = default(string), string runAsPassword = default(string), int? timeoutInSeconds = default(int?), string outputBlobUri = default(string), string errorBlobUri = default(string), string provisioningState = default(string), VirtualMachineRunCommandInstanceView instanceView = default(VirtualMachineRunCommandInstanceView))
+        /// <param name="treatFailureAsDeploymentFailure">Optional. If set to
+        /// true, any failure in the script will fail the deployment and
+        /// ProvisioningState will be marked as Failed. If set to false,
+        /// ProvisioningState would only reflect whether the run command was
+        /// run or not by the extensions platform, it would not indicate
+        /// whether script failed in case of script failures. See instance view
+        /// of run command in case of script failures to see executionMessage,
+        /// output, error:
+        /// https://aka.ms/runcommandmanaged#get-execution-status-and-results
+        /// </param>
+        public VirtualMachineRunCommand(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), VirtualMachineRunCommandScriptSource source = default(VirtualMachineRunCommandScriptSource), IList<RunCommandInputParameter> parameters = default(IList<RunCommandInputParameter>), IList<RunCommandInputParameter> protectedParameters = default(IList<RunCommandInputParameter>), bool? asyncExecution = default(bool?), string runAsUser = default(string), string runAsPassword = default(string), int? timeoutInSeconds = default(int?), string outputBlobUri = default(string), string errorBlobUri = default(string), RunCommandManagedIdentity outputBlobManagedIdentity = default(RunCommandManagedIdentity), RunCommandManagedIdentity errorBlobManagedIdentity = default(RunCommandManagedIdentity), string provisioningState = default(string), VirtualMachineRunCommandInstanceView instanceView = default(VirtualMachineRunCommandInstanceView), bool? treatFailureAsDeploymentFailure = default(bool?))
             : base(location, id, name, type, tags)
         {
             Source = source;
@@ -72,8 +115,11 @@ namespace Microsoft.Azure.Management.Compute.Models
             TimeoutInSeconds = timeoutInSeconds;
             OutputBlobUri = outputBlobUri;
             ErrorBlobUri = errorBlobUri;
+            OutputBlobManagedIdentity = outputBlobManagedIdentity;
+            ErrorBlobManagedIdentity = errorBlobManagedIdentity;
             ProvisioningState = provisioningState;
             InstanceView = instanceView;
+            TreatFailureAsDeploymentFailure = treatFailureAsDeploymentFailure;
             CustomInit();
         }
 
@@ -130,20 +176,59 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets specifies the Azure storage blob where script output
-        /// stream will be uploaded.
+        /// stream will be uploaded. Use a SAS URI with read, append, create,
+        /// write access OR use managed identity to provide the VM access to
+        /// the blob. Refer outputBlobManagedIdentity parameter.
         /// </summary>
         [JsonProperty(PropertyName = "properties.outputBlobUri")]
         public string OutputBlobUri { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the Azure storage blob where script error
-        /// stream will be uploaded.
+        /// stream will be uploaded. Use a SAS URI with read, append, create,
+        /// write access OR use managed identity to provide the VM access to
+        /// the blob. Refer errorBlobManagedIdentity parameter.
         /// </summary>
         [JsonProperty(PropertyName = "properties.errorBlobUri")]
         public string ErrorBlobUri { get; set; }
 
         /// <summary>
-        /// Gets the provisioning state, which only appears in the response.
+        /// Gets or sets user-assigned managed identity that has access to
+        /// outputBlobUri storage blob. Use an empty object in case of
+        /// system-assigned identity. Make sure managed identity has been given
+        /// access to blob's container with 'Storage Blob Data Contributor'
+        /// role assignment. In case of user-assigned identity, make sure you
+        /// add it under VM's identity. For more info on managed identity and
+        /// Run Command, refer https://aka.ms/ManagedIdentity and
+        /// https://aka.ms/RunCommandManaged
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.outputBlobManagedIdentity")]
+        public RunCommandManagedIdentity OutputBlobManagedIdentity { get; set; }
+
+        /// <summary>
+        /// Gets or sets user-assigned managed identity that has access to
+        /// errorBlobUri storage blob. Use an empty object in case of
+        /// system-assigned identity. Make sure managed identity has been given
+        /// access to blob's container with 'Storage Blob Data Contributor'
+        /// role assignment. In case of user-assigned identity, make sure you
+        /// add it under VM's identity. For more info on managed identity and
+        /// Run Command, refer https://aka.ms/ManagedIdentity and
+        /// https://aka.ms/RunCommandManaged
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.errorBlobManagedIdentity")]
+        public RunCommandManagedIdentity ErrorBlobManagedIdentity { get; set; }
+
+        /// <summary>
+        /// Gets the provisioning state, which only appears in the response. If
+        /// treatFailureAsDeploymentFailure set to true, any failure in the
+        /// script will fail the deployment and ProvisioningState will be
+        /// marked as Failed. If treatFailureAsDeploymentFailure set to false,
+        /// ProvisioningState would only reflect whether the run command was
+        /// run or not by the extensions platform, it would not indicate
+        /// whether script failed in case of script failures. See instance view
+        /// of run command in case of script failures to see executionMessage,
+        /// output, error:
+        /// https://aka.ms/runcommandmanaged#get-execution-status-and-results
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
@@ -153,6 +238,19 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.instanceView")]
         public VirtualMachineRunCommandInstanceView InstanceView { get; private set; }
+
+        /// <summary>
+        /// Gets or sets optional. If set to true, any failure in the script
+        /// will fail the deployment and ProvisioningState will be marked as
+        /// Failed. If set to false, ProvisioningState would only reflect
+        /// whether the run command was run or not by the extensions platform,
+        /// it would not indicate whether script failed in case of script
+        /// failures. See instance view of run command in case of script
+        /// failures to see executionMessage, output, error:
+        /// https://aka.ms/runcommandmanaged#get-execution-status-and-results
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.treatFailureAsDeploymentFailure")]
+        public bool? TreatFailureAsDeploymentFailure { get; set; }
 
         /// <summary>
         /// Validate the object.

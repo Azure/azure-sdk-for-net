@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         internal static NetAppVolumeMountTarget DeserializeNetAppVolumeMountTarget(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> mountTargetId = default;
             Guid fileSystemId = default;
             Optional<IPAddress> ipAddress = default;
@@ -26,7 +30,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     mountTargetId = property.Value.GetGuid();
@@ -41,7 +44,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ipAddress = IPAddress.Parse(property.Value.GetString());

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     {
         internal static VCentersList DeserializeVCentersList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             IReadOnlyList<VCenterData> value = default;
             foreach (var property in element.EnumerateObject())

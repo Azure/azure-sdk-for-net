@@ -13,7 +13,10 @@ using Azure.ResourceManager.PolicyInsights.Models;
 
 namespace Azure.ResourceManager.PolicyInsights
 {
-    /// <summary> A class representing the PolicyRemediation data model. </summary>
+    /// <summary>
+    /// A class representing the PolicyRemediation data model.
+    /// The remediation definition.
+    /// </summary>
     public partial class PolicyRemediationData : ResourceData
     {
         /// <summary> Initializes a new instance of PolicyRemediationData. </summary>

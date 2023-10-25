@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.Chaos
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _experimentStatusExperimentsRestClient.CreateListAllStatusesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _experimentStatusExperimentsRestClient.CreateListAllStatusesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ExperimentStatusResource(Client, ExperimentStatusData.DeserializeExperimentStatusData(e)), _experimentStatusExperimentsClientDiagnostics, Pipeline, "ExperimentStatusCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ExperimentStatusResource(Client, ExperimentStatusData.DeserializeExperimentStatusData(e)), _experimentStatusExperimentsClientDiagnostics, Pipeline, "ExperimentStatusCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +168,7 @@ namespace Azure.ResourceManager.Chaos
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _experimentStatusExperimentsRestClient.CreateListAllStatusesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _experimentStatusExperimentsRestClient.CreateListAllStatusesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ExperimentStatusResource(Client, ExperimentStatusData.DeserializeExperimentStatusData(e)), _experimentStatusExperimentsClientDiagnostics, Pipeline, "ExperimentStatusCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ExperimentStatusResource(Client, ExperimentStatusData.DeserializeExperimentStatusData(e)), _experimentStatusExperimentsClientDiagnostics, Pipeline, "ExperimentStatusCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -232,6 +233,80 @@ namespace Azure.ResourceManager.Chaos
             {
                 var response = _experimentStatusExperimentsRestClient.GetStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, statusId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}/statuses/{statusId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Experiments_GetStatus</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="statusId"> GUID that represents a Experiment status. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="statusId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="statusId"/> is null. </exception>
+        public virtual async Task<NullableResponse<ExperimentStatusResource>> GetIfExistsAsync(string statusId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(statusId, nameof(statusId));
+
+            using var scope = _experimentStatusExperimentsClientDiagnostics.CreateScope("ExperimentStatusCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _experimentStatusExperimentsRestClient.GetStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, statusId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ExperimentStatusResource>(response.GetRawResponse());
+                return Response.FromValue(new ExperimentStatusResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Chaos/experiments/{experimentName}/statuses/{statusId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Experiments_GetStatus</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="statusId"> GUID that represents a Experiment status. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="statusId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="statusId"/> is null. </exception>
+        public virtual NullableResponse<ExperimentStatusResource> GetIfExists(string statusId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(statusId, nameof(statusId));
+
+            using var scope = _experimentStatusExperimentsClientDiagnostics.CreateScope("ExperimentStatusCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _experimentStatusExperimentsRestClient.GetStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, statusId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ExperimentStatusResource>(response.GetRawResponse());
+                return Response.FromValue(new ExperimentStatusResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

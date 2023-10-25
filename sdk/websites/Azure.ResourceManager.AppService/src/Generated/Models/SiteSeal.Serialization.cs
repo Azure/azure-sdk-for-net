@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -14,6 +13,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static SiteSeal DeserializeSiteSeal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string html = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary> A class representing the ApiManagementGateway data model. </summary>
+    /// <summary>
+    /// A class representing the ApiManagementGateway data model.
+    /// Gateway details.
+    /// </summary>
     public partial class ApiManagementGatewayData : ResourceData
     {
         /// <summary> Initializes a new instance of ApiManagementGatewayData. </summary>

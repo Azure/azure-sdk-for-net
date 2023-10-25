@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Creates or updates a database&apos;s Advanced Threat Protection state.
+        /// Creates or updates a database's Advanced Threat Protection state.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Creates or updates a database&apos;s Advanced Threat Protection state.
+        /// Creates or updates a database's Advanced Threat Protection state.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a database&apos;s Advanced Threat Protection state.
+        /// Gets a database's Advanced Threat Protection state.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -165,7 +166,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a database&apos;s Advanced Threat Protection state.
+        /// Gets a database's Advanced Threat Protection state.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -198,7 +199,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a list of database&apos;s Advanced Threat Protection states.
+        /// Gets a list of database's Advanced Threat Protection states.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -216,11 +217,11 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseAdvancedThreatProtectionDatabaseAdvancedThreatProtectionSettingsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _databaseAdvancedThreatProtectionDatabaseAdvancedThreatProtectionSettingsRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DatabaseAdvancedThreatProtectionResource(Client, DatabaseAdvancedThreatProtectionData.DeserializeDatabaseAdvancedThreatProtectionData(e)), _databaseAdvancedThreatProtectionDatabaseAdvancedThreatProtectionSettingsClientDiagnostics, Pipeline, "DatabaseAdvancedThreatProtectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DatabaseAdvancedThreatProtectionResource(Client, DatabaseAdvancedThreatProtectionData.DeserializeDatabaseAdvancedThreatProtectionData(e)), _databaseAdvancedThreatProtectionDatabaseAdvancedThreatProtectionSettingsClientDiagnostics, Pipeline, "DatabaseAdvancedThreatProtectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Gets a list of database&apos;s Advanced Threat Protection states.
+        /// Gets a list of database's Advanced Threat Protection states.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -238,7 +239,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _databaseAdvancedThreatProtectionDatabaseAdvancedThreatProtectionSettingsRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _databaseAdvancedThreatProtectionDatabaseAdvancedThreatProtectionSettingsRestClient.CreateListByDatabaseNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DatabaseAdvancedThreatProtectionResource(Client, DatabaseAdvancedThreatProtectionData.DeserializeDatabaseAdvancedThreatProtectionData(e)), _databaseAdvancedThreatProtectionDatabaseAdvancedThreatProtectionSettingsClientDiagnostics, Pipeline, "DatabaseAdvancedThreatProtectionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DatabaseAdvancedThreatProtectionResource(Client, DatabaseAdvancedThreatProtectionData.DeserializeDatabaseAdvancedThreatProtectionData(e)), _databaseAdvancedThreatProtectionDatabaseAdvancedThreatProtectionSettingsClientDiagnostics, Pipeline, "DatabaseAdvancedThreatProtectionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -295,6 +296,72 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _databaseAdvancedThreatProtectionDatabaseAdvancedThreatProtectionSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, advancedThreatProtectionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DatabaseAdvancedThreatProtectionSettings_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="advancedThreatProtectionName"> The name of the Advanced Threat Protection state. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<DatabaseAdvancedThreatProtectionResource>> GetIfExistsAsync(AdvancedThreatProtectionName advancedThreatProtectionName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _databaseAdvancedThreatProtectionDatabaseAdvancedThreatProtectionSettingsClientDiagnostics.CreateScope("DatabaseAdvancedThreatProtectionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _databaseAdvancedThreatProtectionDatabaseAdvancedThreatProtectionSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, advancedThreatProtectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DatabaseAdvancedThreatProtectionResource>(response.GetRawResponse());
+                return Response.FromValue(new DatabaseAdvancedThreatProtectionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DatabaseAdvancedThreatProtectionSettings_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="advancedThreatProtectionName"> The name of the Advanced Threat Protection state. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<DatabaseAdvancedThreatProtectionResource> GetIfExists(AdvancedThreatProtectionName advancedThreatProtectionName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _databaseAdvancedThreatProtectionDatabaseAdvancedThreatProtectionSettingsClientDiagnostics.CreateScope("DatabaseAdvancedThreatProtectionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _databaseAdvancedThreatProtectionDatabaseAdvancedThreatProtectionSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, advancedThreatProtectionName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DatabaseAdvancedThreatProtectionResource>(response.GetRawResponse());
+                return Response.FromValue(new DatabaseAdvancedThreatProtectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

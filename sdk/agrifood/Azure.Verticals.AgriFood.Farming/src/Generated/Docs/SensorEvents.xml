@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetSensorEventsAsync(string,string,DateTimeOffset?,DateTimeOffset?,bool?,RequestContext)">
+      <example>
+This sample shows how to call GetSensorEventsAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+SensorEvents client = new FarmBeatsClient(credential).GetSensorEventsClient(apiVersion: "2022-11-01-preview");
+
+Response response = await client.GetSensorEventsAsync("<sensorId>", "<sensorPartnerId>", null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("value")[0].ToString());
+]]></code>
+This sample shows how to call GetSensorEventsAsync with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+SensorEvents client = new FarmBeatsClient(credential).GetSensorEventsClient(apiVersion: "2022-11-01-preview");
+
+Response response = await client.GetSensorEventsAsync("<sensorId>", "<sensorPartnerId>", DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), true, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("sensorId").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("sensorPartnerId").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("boundaryId").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("eventDateTime").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("ingestionDateTime").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("measures").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("skipToken").ToString());
+Console.WriteLine(result.GetProperty("nextLink").ToString());
+]]></code></example>
+    </member>
+    <member name="GetSensorEvents(string,string,DateTimeOffset?,DateTimeOffset?,bool?,RequestContext)">
+      <example>
+This sample shows how to call GetSensorEvents and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+SensorEvents client = new FarmBeatsClient(credential).GetSensorEventsClient(apiVersion: "2022-11-01-preview");
+
+Response response = client.GetSensorEvents("<sensorId>", "<sensorPartnerId>", null, null, null, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("value")[0].ToString());
+]]></code>
+This sample shows how to call GetSensorEvents with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+SensorEvents client = new FarmBeatsClient(credential).GetSensorEventsClient(apiVersion: "2022-11-01-preview");
+
+Response response = client.GetSensorEvents("<sensorId>", "<sensorPartnerId>", DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), true, null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("sensorId").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("sensorPartnerId").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("boundaryId").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("eventDateTime").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("ingestionDateTime").ToString());
+Console.WriteLine(result.GetProperty("value")[0].GetProperty("measures").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("skipToken").ToString());
+Console.WriteLine(result.GetProperty("nextLink").ToString());
+]]></code></example>
+    </member>
+  </members>
+</doc>

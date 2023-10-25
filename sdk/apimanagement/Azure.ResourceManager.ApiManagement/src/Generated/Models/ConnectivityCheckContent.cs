@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public ConnectivityCheckRequestDestination Destination { get; }
         /// <summary> The IP version to be used. Only IPv4 is supported for now. </summary>
         public PreferredIPVersion? PreferredIPVersion { get; set; }
-        /// <summary> The request&apos;s protocol. Specific protocol configuration can be available based on this selection. The specified destination address must be coherent with this value. </summary>
+        /// <summary> The request's protocol. Specific protocol configuration can be available based on this selection. The specified destination address must be coherent with this value. </summary>
         public ConnectivityCheckProtocol? Protocol { get; set; }
         /// <summary> Protocol-specific configuration. </summary>
         internal ConnectivityCheckRequestProtocolConfiguration ProtocolConfiguration { get; set; }

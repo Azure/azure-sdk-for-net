@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static ServicePlacementNonPartiallyPlaceServicePolicy DeserializeServicePlacementNonPartiallyPlaceServicePolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ServicePlacementPolicyType type = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DigitalTwins.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetTimeSeriesDatabaseConnectionForADigitalTwinsInstance()
         {
-            // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2022-10-31/examples/TimeSeriesDatabaseConnectionsGet_example.json
+            // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2023-01-31/examples/TimeSeriesDatabaseConnectionsGet_example.json
             // this example is just showing the usage of "TimeSeriesDatabaseConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DigitalTwins.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CreateOrReplaceATimeSeriesDatabaseConnectionForADigitalTwinsInstanceWithUserAssignedIdentity()
         {
-            // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2022-10-31/examples/TimeSeriesDatabaseConnectionsPut_WithUserIdentity_example.json
+            // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2023-01-31/examples/TimeSeriesDatabaseConnectionsPut_WithUserIdentity_example.json
             // this example is just showing the usage of "TimeSeriesDatabaseConnections_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DigitalTwins.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CreateOrReplaceATimeSeriesDatabaseConnectionForADigitalTwinsInstance()
         {
-            // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2022-10-31/examples/TimeSeriesDatabaseConnectionsPut_example.json
+            // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2023-01-31/examples/TimeSeriesDatabaseConnectionsPut_example.json
             // this example is just showing the usage of "TimeSeriesDatabaseConnections_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -122,7 +122,10 @@ namespace Azure.ResourceManager.DigitalTwins.Samples
             {
                 Properties = new DataExplorerConnectionProperties(new ResourceIdentifier("/subscriptions/c493073e-2460-45ba-a403-f3e0df1e9feg/resourceGroups/testrg/providers/Microsoft.Kusto/clusters/mycluster"), new Uri("https://mycluster.kusto.windows.net"), "myDatabase", new Uri("sb://myeh.servicebus.windows.net/"), "myeh", new ResourceIdentifier("/subscriptions/c493073e-2460-45ba-a403-f3e0df1e9feg/resourceGroups/testrg/providers/Microsoft.EventHub/namespaces/myeh"))
                 {
-                    AdxTableName = "myTable",
+                    AdxTableName = "myPropertyUpdatesTable",
+                    AdxTwinLifecycleEventsTableName = "myTwinLifecycleEventsTable",
+                    AdxRelationshipLifecycleEventsTableName = "myRelationshipLifecycleEventsTable",
+                    RecordPropertyAndItemRemovals = RecordPropertyAndItemRemoval.True,
                 },
             };
             ArmOperation<TimeSeriesDatabaseConnectionResource> lro = await timeSeriesDatabaseConnection.UpdateAsync(WaitUntil.Completed, data);
@@ -140,7 +143,7 @@ namespace Azure.ResourceManager.DigitalTwins.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteATimeSeriesDatabaseConnectionForADigitalTwinsInstance()
         {
-            // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2022-10-31/examples/TimeSeriesDatabaseConnectionsDelete_example.json
+            // Generated from example definition: specification/digitaltwins/resource-manager/Microsoft.DigitalTwins/stable/2023-01-31/examples/TimeSeriesDatabaseConnectionsDelete_example.json
             // this example is just showing the usage of "TimeSeriesDatabaseConnections_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

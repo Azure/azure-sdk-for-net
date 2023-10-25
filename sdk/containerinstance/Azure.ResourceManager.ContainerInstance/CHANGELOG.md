@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.3 (Unreleased)
+## 1.2.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,38 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0-beta.1 (2023-05-29)
+
+### Features Added
+
+- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.32.0.
+- Upgraded dependent Azure.ResourceManager to 1.6.0.
+
+## 1.1.0 (2023-05-04)
+
+### Other Changes
+
+- Stable release of 1.1.0-beta.4
+
+## 1.1.0-beta.4 (2023-05-01)
+
+This release adds Container Security Context property for Containers with Confidential ContainerGroupSku
+
+### Features Added
+
+- Added Container Security Context for containers with Confidential ContainerGroupSku
+
+## 1.1.0-beta.3 (2023-02-16)
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.28.0`.
+- Upgraded dependent `Azure.ResourceManager` to `1.4.0`.
 
 ## 1.1.0-beta.2 (2023-02-01)
 

@@ -5,7 +5,6 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
-generate-model-factory: false
 csharp: true
 library-name: HybridConnectivity
 namespace: Azure.ResourceManager.HybridConnectivity
@@ -13,6 +12,9 @@ namespace: Azure.ResourceManager.HybridConnectivity
 require: https://github.com/Azure/azure-rest-api-specs/blob/3c162c839b8fe17544d9a3be8383a835dd42eb28/specification/hybridconnectivity/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -24,7 +26,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

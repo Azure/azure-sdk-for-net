@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> Describes an automation rule condition that evaluates a property&apos;s value change. </summary>
+    /// <summary> Describes an automation rule condition that evaluates a property's value change. </summary>
     public partial class SecurityInsightsPropertyChangedConditionProperties : SecurityInsightsAutomationRuleCondition
     {
         /// <summary> Initializes a new instance of SecurityInsightsPropertyChangedConditionProperties. </summary>

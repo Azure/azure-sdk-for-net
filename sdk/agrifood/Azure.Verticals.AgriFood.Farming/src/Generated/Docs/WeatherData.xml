@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetWeatherDataAsync(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call GetWeatherDataAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+WeatherData client = new FarmBeatsClient(credential).GetWeatherDataClient(apiVersion: "2022-11-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    providerApiKey = "<providerApiKey>",
+    extensionId = "<extensionId>",
+    extensionApiName = "<extensionApiName>",
+    units = "<units>",
+});
+Response response = await client.GetWeatherDataAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("extensionVersion").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("weatherDataType").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("extensionId").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("extensionApiName").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("units").ToString());
+]]></code>
+This sample shows how to call GetWeatherDataAsync with all request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+WeatherData client = new FarmBeatsClient(credential).GetWeatherDataClient(apiVersion: "2022-11-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    locations = new object[]
+    {
+        new
+        {
+            type = "LatLong",
+            value = "<value>",
+        }
+    },
+    providerAppId = "<providerAppId>",
+    providerApiKey = "<providerApiKey>",
+    extensionId = "<extensionId>",
+    extensionApiName = "<extensionApiName>",
+    language = "<language>",
+    startTimeHours = 1234,
+    endTimeHours = 1234,
+    duration = 1234,
+    units = "<units>",
+    additionalParams = new
+    {
+        iconResolution = "<iconResolution>",
+        details = true,
+    },
+});
+Response response = await client.GetWeatherDataAsync(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("extensionVersion").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("weatherDataType").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("extensionId").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("extensionApiName").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("language").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("startTimeHours").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("endTimeHours").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("duration").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("units").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("additionalParams").GetProperty("iconResolution").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("additionalParams").GetProperty("details").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("location").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("location").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("requestCompletionTime").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("lastRefreshedDateTime").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("wetBulbTemperature").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("wetBulbTemperature").GetProperty("values")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("cloudCover").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("cloudCover").GetProperty("values")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("dayOfWeek")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("dayOrNight")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("expirationTime")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("iconCode")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("iconCodeExtend")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("hasPrecipitation")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("pressureMeanSeaLevel").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("pressureMeanSeaLevel").GetProperty("values")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("relativeHumidity").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("relativeHumidity").GetProperty("values")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("temperature").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("temperature").GetProperty("values")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("temperatureDewPoint").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("temperatureDewPoint").GetProperty("values")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("temperatureFeelsLike").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("temperatureFeelsLike").GetProperty("values")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("temperatureHeatIndex").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("temperatureHeatIndex").GetProperty("values")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("temperatureWindChill").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("temperatureWindChill").GetProperty("values")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("uvDescription")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("uvIndex")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("validTimeLocal")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("validTime")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("visibility").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("visibility").GetProperty("values")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("windDirection").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("windDirection").GetProperty("values")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("windGust").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("windGust").GetProperty("values")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("windSpeed").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("windSpeed").GetProperty("values")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("wxPhraseLong")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("wxPhraseShort")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("additionalAttributes").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("errors").GetProperty("locations")[0].GetProperty("location").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("errors").GetProperty("locations")[0].GetProperty("location").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("errors").GetProperty("locations")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors").GetProperty("locations")[0].GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("errors").GetProperty("locations")[0].GetProperty("retryable").ToString());
+]]></code></example>
+    </member>
+    <member name="GetWeatherData(RequestContent,RequestContext)">
+      <example>
+This sample shows how to call GetWeatherData and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+WeatherData client = new FarmBeatsClient(credential).GetWeatherDataClient(apiVersion: "2022-11-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    providerApiKey = "<providerApiKey>",
+    extensionId = "<extensionId>",
+    extensionApiName = "<extensionApiName>",
+    units = "<units>",
+});
+Response response = client.GetWeatherData(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("extensionVersion").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("weatherDataType").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("extensionId").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("extensionApiName").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("units").ToString());
+]]></code>
+This sample shows how to call GetWeatherData with all request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+WeatherData client = new FarmBeatsClient(credential).GetWeatherDataClient(apiVersion: "2022-11-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    locations = new object[]
+    {
+        new
+        {
+            type = "LatLong",
+            value = "<value>",
+        }
+    },
+    providerAppId = "<providerAppId>",
+    providerApiKey = "<providerApiKey>",
+    extensionId = "<extensionId>",
+    extensionApiName = "<extensionApiName>",
+    language = "<language>",
+    startTimeHours = 1234,
+    endTimeHours = 1234,
+    duration = 1234,
+    units = "<units>",
+    additionalParams = new
+    {
+        iconResolution = "<iconResolution>",
+        details = true,
+    },
+});
+Response response = client.GetWeatherData(content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("extensionVersion").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("weatherDataType").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("extensionId").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("extensionApiName").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("language").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("startTimeHours").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("endTimeHours").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("duration").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("units").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("additionalParams").GetProperty("iconResolution").ToString());
+Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("additionalParams").GetProperty("details").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("location").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("location").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("requestCompletionTime").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("lastRefreshedDateTime").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("wetBulbTemperature").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("wetBulbTemperature").GetProperty("values")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("cloudCover").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("cloudCover").GetProperty("values")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("dayOfWeek")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("dayOrNight")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("expirationTime")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("iconCode")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("iconCodeExtend")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("hasPrecipitation")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("pressureMeanSeaLevel").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("pressureMeanSeaLevel").GetProperty("values")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("relativeHumidity").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("relativeHumidity").GetProperty("values")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("temperature").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("temperature").GetProperty("values")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("temperatureDewPoint").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("temperatureDewPoint").GetProperty("values")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("temperatureFeelsLike").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("temperatureFeelsLike").GetProperty("values")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("temperatureHeatIndex").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("temperatureHeatIndex").GetProperty("values")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("temperatureWindChill").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("temperatureWindChill").GetProperty("values")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("uvDescription")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("uvIndex")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("validTimeLocal")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("validTime")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("visibility").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("visibility").GetProperty("values")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("windDirection").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("windDirection").GetProperty("values")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("windGust").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("windGust").GetProperty("values")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("windSpeed").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("windSpeed").GetProperty("values")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("wxPhraseLong")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("wxPhraseShort")[0].ToString());
+Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("additionalAttributes").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("errors").GetProperty("locations")[0].GetProperty("location").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("errors").GetProperty("locations")[0].GetProperty("location").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("errors").GetProperty("locations")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors").GetProperty("locations")[0].GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("errors").GetProperty("locations")[0].GetProperty("retryable").ToString());
+]]></code></example>
+    </member>
+  </members>
+</doc>

@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Base class for backup items. </summary>
-    public partial class GenericProtectedItem : ProtectedItem
+    public partial class GenericProtectedItem : BackupGenericProtectedItem
     {
         /// <summary> Initializes a new instance of GenericProtectedItem. </summary>
         public GenericProtectedItem()
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="containerName"> Unique name of container. </param>
         /// <param name="sourceResourceId"> ARM ID of the resource to be backed up. </param>
         /// <param name="policyId"> ID of the backup policy with which this item is backed up. </param>
-        /// <param name="lastRecoveryPoint"> Timestamp when the last (latest) backup copy was created for this backup item. </param>
+        /// <param name="lastRecoverOn"> Timestamp when the last (latest) backup copy was created for this backup item. </param>
         /// <param name="backupSetName"> Name of the backup set the backup item belongs to. </param>
         /// <param name="createMode"> Create mode to indicate recovery of existing soft deleted data source or creation of new data source. </param>
-        /// <param name="deferredDeleteTimeInUTC"> Time for deferred deletion in UTC. </param>
+        /// <param name="deferredDeletedOn"> Time for deferred deletion in UTC. </param>
         /// <param name="isScheduledForDeferredDelete"> Flag to identify whether the DS is scheduled for deferred delete. </param>
         /// <param name="deferredDeleteTimeRemaining"> Time remaining before the DS marked for deferred delete is permanently deleted. </param>
         /// <param name="isDeferredDeleteScheduleUpcoming"> Flag to identify whether the deferred deleted DS is to be purged soon. </param>
@@ -39,14 +39,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
         /// <param name="isArchiveEnabled"> Flag to identify whether datasource is protected in archive. </param>
         /// <param name="policyName"> Name of the policy used for protection. </param>
-        /// <param name="softDeleteRetentionPeriod"> Soft delete retention period in days. </param>
+        /// <param name="softDeleteRetentionPeriodInDays"> Soft delete retention period in days. </param>
         /// <param name="friendlyName"> Friendly name of the container. </param>
         /// <param name="policyState"> Indicates consistency of policy object and policy applied to this backup item. </param>
         /// <param name="protectionState"> Backup state of this backup item. </param>
         /// <param name="protectedItemId"> Data Plane Service ID of the protected item. </param>
         /// <param name="sourceAssociations"> Loosely coupled (type, value) associations (example - parent of a protected item). </param>
-        /// <param name="fabricName"> Name of this backup item&apos;s fabric. </param>
-        internal GenericProtectedItem(string protectedItemType, BackupManagementType? backupManagementType, DataSourceType? workloadType, string containerName, string sourceResourceId, string policyId, DateTimeOffset? lastRecoveryPoint, string backupSetName, CreateMode? createMode, DateTimeOffset? deferredDeleteTimeInUTC, bool? isScheduledForDeferredDelete, string deferredDeleteTimeRemaining, bool? isDeferredDeleteScheduleUpcoming, bool? isRehydrate, IList<string> resourceGuardOperationRequests, bool? isArchiveEnabled, string policyName, int? softDeleteRetentionPeriod, string friendlyName, string policyState, ProtectionState? protectionState, long? protectedItemId, IDictionary<string, string> sourceAssociations, string fabricName) : base(protectedItemType, backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoveryPoint, backupSetName, createMode, deferredDeleteTimeInUTC, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests, isArchiveEnabled, policyName, softDeleteRetentionPeriod)
+        /// <param name="fabricName"> Name of this backup item's fabric. </param>
+        internal GenericProtectedItem(string protectedItemType, BackupManagementType? backupManagementType, BackupDataSourceType? workloadType, string containerName, ResourceIdentifier sourceResourceId, ResourceIdentifier policyId, DateTimeOffset? lastRecoverOn, string backupSetName, BackupCreateMode? createMode, DateTimeOffset? deferredDeletedOn, bool? isScheduledForDeferredDelete, string deferredDeleteTimeRemaining, bool? isDeferredDeleteScheduleUpcoming, bool? isRehydrate, IList<string> resourceGuardOperationRequests, bool? isArchiveEnabled, string policyName, int? softDeleteRetentionPeriodInDays, string friendlyName, string policyState, BackupProtectionState? protectionState, long? protectedItemId, IDictionary<string, string> sourceAssociations, string fabricName) : base(protectedItemType, backupManagementType, workloadType, containerName, sourceResourceId, policyId, lastRecoverOn, backupSetName, createMode, deferredDeletedOn, isScheduledForDeferredDelete, deferredDeleteTimeRemaining, isDeferredDeleteScheduleUpcoming, isRehydrate, resourceGuardOperationRequests, isArchiveEnabled, policyName, softDeleteRetentionPeriodInDays)
         {
             FriendlyName = friendlyName;
             PolicyState = policyState;
@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Indicates consistency of policy object and policy applied to this backup item. </summary>
         public string PolicyState { get; set; }
         /// <summary> Backup state of this backup item. </summary>
-        public ProtectionState? ProtectionState { get; set; }
+        public BackupProtectionState? ProtectionState { get; set; }
         /// <summary> Data Plane Service ID of the protected item. </summary>
         public long? ProtectedItemId { get; set; }
         /// <summary> Loosely coupled (type, value) associations (example - parent of a protected item). </summary>
         public IDictionary<string, string> SourceAssociations { get; }
-        /// <summary> Name of this backup item&apos;s fabric. </summary>
+        /// <summary> Name of this backup item's fabric. </summary>
         public string FabricName { get; set; }
     }
 }

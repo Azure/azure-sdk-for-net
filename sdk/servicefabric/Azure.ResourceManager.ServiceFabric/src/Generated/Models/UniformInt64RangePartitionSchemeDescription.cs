@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="lowKey">
         /// String indicating the lower bound of the partition key range that
         /// should be split between the partition ‘count’
-        /// 
+        ///
         /// </param>
         /// <param name="highKey">
         /// String indicating the upper bound of the partition key range that
         /// should be split between the partition ‘count’
-        /// 
+        ///
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="lowKey"/> or <paramref name="highKey"/> is null. </exception>
         public UniformInt64RangePartitionSchemeDescription(int count, string lowKey, string highKey)
@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="lowKey">
         /// String indicating the lower bound of the partition key range that
         /// should be split between the partition ‘count’
-        /// 
+        ///
         /// </param>
         /// <param name="highKey">
         /// String indicating the upper bound of the partition key range that
         /// should be split between the partition ‘count’
-        /// 
+        ///
         /// </param>
         internal UniformInt64RangePartitionSchemeDescription(ApplicationPartitionScheme partitionScheme, int count, string lowKey, string highKey) : base(partitionScheme)
         {
@@ -63,13 +63,13 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <summary>
         /// String indicating the lower bound of the partition key range that
         /// should be split between the partition ‘count’
-        /// 
+        ///
         /// </summary>
         public string LowKey { get; set; }
         /// <summary>
         /// String indicating the upper bound of the partition key range that
         /// should be split between the partition ‘count’
-        /// 
+        ///
         /// </summary>
         public string HighKey { get; set; }
     }

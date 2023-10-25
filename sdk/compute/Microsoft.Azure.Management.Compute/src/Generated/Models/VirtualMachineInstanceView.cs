@@ -55,14 +55,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="vmHealth">The health status for the VM.</param>
         /// <param name="bootDiagnostics">Boot Diagnostics is a debugging
         /// feature which allows you to view Console Output and Screenshot to
-        /// diagnose VM status. &lt;br&gt;&lt;br&gt; You can easily view the
-        /// output of your console log. &lt;br&gt;&lt;br&gt; Azure also enables
-        /// you to see a screenshot of the VM from the hypervisor.</param>
+        /// diagnose VM status. You can easily view the output of your console
+        /// log. Azure also enables you to see a screenshot of the VM from the
+        /// hypervisor.</param>
         /// <param name="assignedHost">Resource id of the dedicated host, on
         /// which the virtual machine is allocated through automatic placement,
         /// when the virtual machine is associated with a dedicated host group
-        /// that has automatic placement enabled. &lt;br&gt;&lt;br&gt;Minimum
-        /// api-version: 2020-06-01.</param>
+        /// that has automatic placement enabled. Minimum api-version:
+        /// 2020-06-01.</param>
         /// <param name="statuses">The resource status information.</param>
         /// <param name="patchStatus">[Preview Feature] The status of virtual
         /// machine patch operations.</param>
@@ -170,9 +170,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets boot Diagnostics is a debugging feature which allows
         /// you to view Console Output and Screenshot to diagnose VM status.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; You can easily view the output
-        /// of your console log. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Azure
-        /// also enables you to see a screenshot of the VM from the hypervisor.
+        /// You can easily view the output of your console log. Azure also
+        /// enables you to see a screenshot of the VM from the hypervisor.
         /// </summary>
         [JsonProperty(PropertyName = "bootDiagnostics")]
         public BootDiagnosticsInstanceView BootDiagnostics { get; set; }
@@ -181,9 +180,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Gets resource id of the dedicated host, on which the virtual
         /// machine is allocated through automatic placement, when the virtual
         /// machine is associated with a dedicated host group that has
-        /// automatic placement enabled.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
-        /// 2020-06-01.
+        /// automatic placement enabled. Minimum api-version: 2020-06-01.
         /// </summary>
         [JsonProperty(PropertyName = "assignedHost")]
         public string AssignedHost { get; private set; }

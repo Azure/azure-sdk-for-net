@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static ThirdPartyProviderAuthorization DeserializeThirdPartyProviderAuthorization(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<LightHouseAuthorization>> authorizations = default;
             Optional<string> managedByTenantId = default;
             foreach (var property in element.EnumerateObject())
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<LightHouseAuthorization> array = new List<LightHouseAuthorization>();

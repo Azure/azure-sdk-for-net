@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Marketplace.Models
     {
         internal static QueryApprovalRequestResult DeserializeQueryApprovalRequestResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> uniqueOfferId = default;
             Optional<IReadOnlyDictionary<string, PrivateStorePlanDetails>> plansDetails = default;
             Optional<ETag> etag = default;
@@ -31,7 +35,6 @@ namespace Azure.ResourceManager.Marketplace.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, PrivateStorePlanDetails> dictionary = new Dictionary<string, PrivateStorePlanDetails>();
@@ -46,7 +49,6 @@ namespace Azure.ResourceManager.Marketplace.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -56,7 +58,6 @@ namespace Azure.ResourceManager.Marketplace.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     messageCode = property.Value.GetInt64();

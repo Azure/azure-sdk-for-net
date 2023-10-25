@@ -17,6 +17,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static ContainerRegistryImagePushedEventData DeserializeContainerRegistryImagePushedEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<DateTimeOffset> timestamp = default;
             Optional<string> action = default;
@@ -37,7 +41,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     timestamp = property.Value.GetDateTimeOffset("O");
@@ -57,7 +60,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     target = ContainerRegistryEventTarget.DeserializeContainerRegistryEventTarget(property.Value);
@@ -67,7 +69,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     request = ContainerRegistryEventRequest.DeserializeContainerRegistryEventRequest(property.Value);
@@ -77,7 +78,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     actor = ContainerRegistryEventActor.DeserializeContainerRegistryEventActor(property.Value);
@@ -87,7 +87,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     source = ContainerRegistryEventSource.DeserializeContainerRegistryEventSource(property.Value);
@@ -97,7 +96,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     connectedRegistry = ContainerRegistryEventConnectedRegistry.DeserializeContainerRegistryEventConnectedRegistry(property.Value);

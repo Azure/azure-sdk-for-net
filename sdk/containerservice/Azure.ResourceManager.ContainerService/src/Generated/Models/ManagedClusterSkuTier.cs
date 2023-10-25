@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> If not specified, the default is &apos;Free&apos;. See [uptime SLA](https://docs.microsoft.com/azure/aks/uptime-sla) for more details. </summary>
+    /// <summary> If not specified, the default is 'Free'. See [uptime SLA](https://docs.microsoft.com/azure/aks/uptime-sla) for more details. </summary>
     public readonly partial struct ManagedClusterSkuTier : IEquatable<ManagedClusterSkuTier>
     {
         private readonly string _value;
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string PaidValue = "Paid";
         private const string FreeValue = "Free";
 
-        /// <summary> Guarantees 99.95% availability of the Kubernetes API server endpoint for clusters that use Availability Zones and 99.9% of availability for clusters that don&apos;t use Availability Zones. </summary>
+        /// <summary> Guarantees 99.95% availability of the Kubernetes API server endpoint for clusters that use Availability Zones and 99.9% of availability for clusters that don't use Availability Zones. </summary>
         public static ManagedClusterSkuTier Paid { get; } = new ManagedClusterSkuTier(PaidValue);
         /// <summary> No guaranteed SLA, no additional charges. Free tier clusters have an SLO of 99.5%. </summary>
         public static ManagedClusterSkuTier Free { get; } = new ManagedClusterSkuTier(FreeValue);

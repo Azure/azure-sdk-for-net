@@ -30,9 +30,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="kind"> The kind of the entity. </param>
         /// <param name="additionalData"> A bag of custom fields that should be part of the entity and will be presented to the user. </param>
         /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
-        /// <param name="mailboxPrimaryAddress"> The mailbox&apos;s primary address. </param>
-        /// <param name="displayName"> The mailbox&apos;s display name. </param>
-        /// <param name="upn"> The mailbox&apos;s UPN. </param>
+        /// <param name="mailboxPrimaryAddress"> The mailbox's primary address. </param>
+        /// <param name="displayName"> The mailbox's display name. </param>
+        /// <param name="upn"> The mailbox's UPN. </param>
         /// <param name="externalDirectoryObjectId"> The AzureAD identifier of mailbox. Similar to AadUserId in account entity but this property is specific to mailbox object on office side. </param>
         internal SecurityInsightsMailboxEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string mailboxPrimaryAddress, string displayName, string upn, Guid? externalDirectoryObjectId) : base(id, name, resourceType, systemData, kind)
         {
@@ -78,11 +78,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public IReadOnlyDictionary<string, BinaryData> AdditionalData { get; }
         /// <summary> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </summary>
         public string FriendlyName { get; }
-        /// <summary> The mailbox&apos;s primary address. </summary>
+        /// <summary> The mailbox's primary address. </summary>
         public string MailboxPrimaryAddress { get; }
-        /// <summary> The mailbox&apos;s display name. </summary>
+        /// <summary> The mailbox's display name. </summary>
         public string DisplayName { get; }
-        /// <summary> The mailbox&apos;s UPN. </summary>
+        /// <summary> The mailbox's UPN. </summary>
         public string Upn { get; }
         /// <summary> The AzureAD identifier of mailbox. Similar to AadUserId in account entity but this property is specific to mailbox object on office side. </summary>
         public Guid? ExternalDirectoryObjectId { get; }

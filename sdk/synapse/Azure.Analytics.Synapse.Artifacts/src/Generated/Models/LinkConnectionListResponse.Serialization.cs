@@ -18,6 +18,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static LinkConnectionListResponse DeserializeLinkConnectionListResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<LinkConnectionResource> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

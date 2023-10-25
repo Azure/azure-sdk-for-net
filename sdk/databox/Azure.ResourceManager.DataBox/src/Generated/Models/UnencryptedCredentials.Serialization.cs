@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static UnencryptedCredentials DeserializeUnencryptedCredentials(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> jobName = default;
             Optional<JobSecrets> jobSecrets = default;
             foreach (var property in element.EnumerateObject())
@@ -27,7 +31,6 @@ namespace Azure.ResourceManager.DataBox.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     jobSecrets = JobSecrets.DeserializeJobSecrets(property.Value);

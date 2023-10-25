@@ -1,0 +1,24 @@
+﻿{
+    "configuration": {
+        "checkForCancerCase": true,
+        "includeEvidence": true
+    },
+    "patients": [
+        {
+            "id": "patient1",
+            "data": [
+                {
+                    "clinicalType": "pathology",
+                    "content": {
+                        "sourceType": "inline",
+                        "value": "Laterality: Left \n Tumor type present: Invasive duct carcinoma; duct carcinoma in situ \n Tumor site: Upper inner quadrant \n Invasive carcinoma \n Histologic type: Ductal \n Size of invasive component: 0.9 cm \n Histologic Grade - Nottingham combined histologic score: 1 out of 3 \n In situ carcinoma (DCIS) \n Histologic type of DCIS: Cribriform and solid \n Necrosis in DCIS: Yes \n DCIS component of invasive carcinoma: Extensive \n"
+                    },
+                    "createdDateTime": "2022-01-01T00:00:00",
+                    "id": "document1",
+                    "kind": "note",
+                    "language": "en"
+                }
+            ]
+        }
+    ]
+}

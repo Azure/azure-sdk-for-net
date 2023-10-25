@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Gets all available SKU for a given API Management service
         /// </remarks>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.

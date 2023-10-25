@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("maxConcurrentTrials"u8);
                 writer.WriteNumberValue(MaxConcurrentTrials.Value);
             }
+            if (Optional.IsDefined(MaxNodes))
+            {
+                writer.WritePropertyName("maxNodes"u8);
+                writer.WriteNumberValue(MaxNodes.Value);
+            }
             if (Optional.IsDefined(MaxTrials))
             {
                 writer.WritePropertyName("maxTrials"u8);
@@ -31,31 +36,49 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout.Value, "P");
             }
+            if (Optional.IsDefined(TrialTimeout))
+            {
+                writer.WritePropertyName("trialTimeout"u8);
+                writer.WriteStringValue(TrialTimeout.Value, "P");
+            }
             writer.WriteEndObject();
         }
 
         internal static NlpVerticalLimitSettings DeserializeNlpVerticalLimitSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> maxConcurrentTrials = default;
+            Optional<int> maxNodes = default;
             Optional<int> maxTrials = default;
             Optional<TimeSpan> timeout = default;
+            Optional<TimeSpan> trialTimeout = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxConcurrentTrials"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxConcurrentTrials = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("maxNodes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxNodes = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("maxTrials"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxTrials = property.Value.GetInt32();
@@ -65,14 +88,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     timeout = property.Value.GetTimeSpan("P");
                     continue;
                 }
+                if (property.NameEquals("trialTimeout"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    trialTimeout = property.Value.GetTimeSpan("P");
+                    continue;
+                }
             }
-            return new NlpVerticalLimitSettings(Optional.ToNullable(maxConcurrentTrials), Optional.ToNullable(maxTrials), Optional.ToNullable(timeout));
+            return new NlpVerticalLimitSettings(Optional.ToNullable(maxConcurrentTrials), Optional.ToNullable(maxNodes), Optional.ToNullable(maxTrials), Optional.ToNullable(timeout), Optional.ToNullable(trialTimeout));
         }
     }
 }

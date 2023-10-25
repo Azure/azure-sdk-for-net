@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static BgpSettings DeserializeBgpSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> asn = default;
             Optional<string> bgpPeeringAddress = default;
             Optional<int> peerWeight = default;
@@ -56,7 +60,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     asn = property.Value.GetInt64();
@@ -71,7 +74,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     peerWeight = property.Value.GetInt32();
@@ -81,7 +83,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<NetworkIPConfigurationBgpPeeringAddress> array = new List<NetworkIPConfigurationBgpPeeringAddress>();

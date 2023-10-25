@@ -2,6 +2,20 @@
 
 $DevOpsAPIBaseURI = "https://dev.azure.com/{0}/{1}/_apis/{2}/{3}?{4}api-version=6.0"
 
+function Get-Base64EncodedToken([string]$AuthToken)
+{
+  $unencodedAuthToken = "nobody:$AuthToken"
+  $unencodedAuthTokenBytes = [System.Text.Encoding]::UTF8.GetBytes($unencodedAuthToken)
+  $encodedAuthToken = [System.Convert]::ToBase64String($unencodedAuthTokenBytes)
+
+  if (Test-SupportsDevOpsLogging) {
+    # Mark the encoded value as a secret so that DevOps will star any references to it that might end up in the logs
+    Write-Host "##vso[task.setvariable variable=_throwawayencodedaccesstoken;issecret=true;]$($encodedAuthToken)"
+  }
+
+  return $encodedAuthToken
+}
+
 function Get-DevOpsApiHeaders ($Base64EncodedToken) {
   $headers = @{
     Authorization = "Basic $Base64EncodedToken"

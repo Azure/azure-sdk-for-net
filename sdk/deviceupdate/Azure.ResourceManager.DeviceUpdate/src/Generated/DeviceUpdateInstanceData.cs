@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DeviceUpdate
 {
-    /// <summary> A class representing the DeviceUpdateInstance data model. </summary>
+    /// <summary>
+    /// A class representing the DeviceUpdateInstance data model.
+    /// Device Update instance details.
+    /// </summary>
     public partial class DeviceUpdateInstanceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DeviceUpdateInstanceData. </summary>

@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.Elastic.Models
 
         internal static UserInfo DeserializeUserInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> firstName = default;
             Optional<string> lastName = default;
             Optional<string> companyName = default;
@@ -76,7 +80,6 @@ namespace Azure.ResourceManager.Elastic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     companyInfo = CompanyInfo.DeserializeCompanyInfo(property.Value);

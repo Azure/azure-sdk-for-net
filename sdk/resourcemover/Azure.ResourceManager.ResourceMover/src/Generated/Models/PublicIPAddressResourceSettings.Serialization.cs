@@ -54,13 +54,25 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
             writer.WritePropertyName("resourceType"u8);
             writer.WriteStringValue(ResourceType);
-            writer.WritePropertyName("targetResourceName"u8);
-            writer.WriteStringValue(TargetResourceName);
+            if (Optional.IsDefined(TargetResourceName))
+            {
+                writer.WritePropertyName("targetResourceName"u8);
+                writer.WriteStringValue(TargetResourceName);
+            }
+            if (Optional.IsDefined(TargetResourceGroupName))
+            {
+                writer.WritePropertyName("targetResourceGroupName"u8);
+                writer.WriteStringValue(TargetResourceGroupName);
+            }
             writer.WriteEndObject();
         }
 
         internal static PublicIPAddressResourceSettings DeserializePublicIPAddressResourceSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             Optional<string> domainNameLabel = default;
             Optional<string> fqdn = default;
@@ -68,14 +80,14 @@ namespace Azure.ResourceManager.ResourceMover.Models
             Optional<string> sku = default;
             Optional<string> zones = default;
             string resourceType = default;
-            string targetResourceName = default;
+            Optional<string> targetResourceName = default;
+            Optional<string> targetResourceGroupName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -121,8 +133,13 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     targetResourceName = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("targetResourceGroupName"u8))
+                {
+                    targetResourceGroupName = property.Value.GetString();
+                    continue;
+                }
             }
-            return new PublicIPAddressResourceSettings(resourceType, targetResourceName, Optional.ToDictionary(tags), domainNameLabel.Value, fqdn.Value, publicIPAllocationMethod.Value, sku.Value, zones.Value);
+            return new PublicIPAddressResourceSettings(resourceType, targetResourceName.Value, targetResourceGroupName.Value, Optional.ToDictionary(tags), domainNameLabel.Value, fqdn.Value, publicIPAllocationMethod.Value, sku.Value, zones.Value);
         }
     }
 }

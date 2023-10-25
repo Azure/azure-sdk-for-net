@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
@@ -16,6 +15,10 @@ namespace Azure.ResourceManager.AppContainers.Models
     {
         internal static ManagedEnvironmentStoragesCollection DeserializeManagedEnvironmentStoragesCollection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<ContainerAppManagedEnvironmentStorageData> value = default;
             foreach (var property in element.EnumerateObject())
             {

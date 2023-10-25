@@ -7,6 +7,7 @@
 
 using System;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,15 +15,11 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class WebBasicAuthentication : WebLinkedServiceTypeProperties
     {
         /// <summary> Initializes a new instance of WebBasicAuthentication. </summary>
-        /// <param name="uri"> The URL of the web service endpoint, e.g. http://www.microsoft.com . Type: string (or Expression with resultType string). </param>
+        /// <param name="uri"> The URL of the web service endpoint, e.g. https://www.microsoft.com . Type: string (or Expression with resultType string). </param>
         /// <param name="username"> User name for Basic authentication. Type: string (or Expression with resultType string). </param>
-        /// <param name="password">
-        /// The password for Basic authentication.
-        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </param>
+        /// <param name="password"> The password for Basic authentication. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/>, <paramref name="username"/> or <paramref name="password"/> is null. </exception>
-        public WebBasicAuthentication(BinaryData uri, BinaryData username, FactorySecretBaseDefinition password) : base(uri)
+        public WebBasicAuthentication(DataFactoryElement<string> uri, DataFactoryElement<string> username, DataFactorySecretBaseDefinition password) : base(uri)
         {
             Argument.AssertNotNull(uri, nameof(uri));
             Argument.AssertNotNull(username, nameof(username));
@@ -34,57 +31,20 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of WebBasicAuthentication. </summary>
-        /// <param name="uri"> The URL of the web service endpoint, e.g. http://www.microsoft.com . Type: string (or Expression with resultType string). </param>
+        /// <param name="uri"> The URL of the web service endpoint, e.g. https://www.microsoft.com . Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> Type of authentication used to connect to the web table source. </param>
         /// <param name="username"> User name for Basic authentication. Type: string (or Expression with resultType string). </param>
-        /// <param name="password">
-        /// The password for Basic authentication.
-        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </param>
-        internal WebBasicAuthentication(BinaryData uri, WebAuthenticationType authenticationType, BinaryData username, FactorySecretBaseDefinition password) : base(uri, authenticationType)
+        /// <param name="password"> The password for Basic authentication. </param>
+        internal WebBasicAuthentication(DataFactoryElement<string> uri, WebAuthenticationType authenticationType, DataFactoryElement<string> username, DataFactorySecretBaseDefinition password) : base(uri, authenticationType)
         {
             Username = username;
             Password = password;
             AuthenticationType = authenticationType;
         }
 
-        /// <summary>
-        /// User name for Basic authentication. Type: string (or Expression with resultType string).
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Username { get; set; }
-        /// <summary>
-        /// The password for Basic authentication.
-        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </summary>
-        public FactorySecretBaseDefinition Password { get; set; }
+        /// <summary> User name for Basic authentication. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> Username { get; set; }
+        /// <summary> The password for Basic authentication. </summary>
+        public DataFactorySecretBaseDefinition Password { get; set; }
     }
 }

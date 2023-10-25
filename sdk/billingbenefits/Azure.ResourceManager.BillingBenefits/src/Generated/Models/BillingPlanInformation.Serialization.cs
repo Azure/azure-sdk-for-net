@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         internal static BillingPlanInformation DeserializeBillingPlanInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BillingBenefitsPrice> pricingCurrencyTotal = default;
             Optional<DateTimeOffset> startDate = default;
             Optional<DateTimeOffset> nextPaymentDueDate = default;
@@ -57,7 +61,6 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     pricingCurrencyTotal = BillingBenefitsPrice.DeserializeBillingBenefitsPrice(property.Value);
@@ -67,7 +70,6 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startDate = property.Value.GetDateTimeOffset("D");
@@ -77,7 +79,6 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     nextPaymentDueDate = property.Value.GetDateTimeOffset("D");
@@ -87,7 +88,6 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SavingsPlanOrderPaymentDetail> array = new List<SavingsPlanOrderPaymentDetail>();

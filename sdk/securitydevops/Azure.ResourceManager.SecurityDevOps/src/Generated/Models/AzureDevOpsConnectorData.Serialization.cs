@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.SecurityDevOps
 
         internal static AzureDevOpsConnectorData DeserializeAzureDevOpsConnectorData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureDevOpsConnectorProperties> properties = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -54,7 +58,6 @@ namespace Azure.ResourceManager.SecurityDevOps
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = AzureDevOpsConnectorProperties.DeserializeAzureDevOpsConnectorProperties(property.Value);
@@ -64,7 +67,6 @@ namespace Azure.ResourceManager.SecurityDevOps
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -99,7 +101,6 @@ namespace Azure.ResourceManager.SecurityDevOps
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

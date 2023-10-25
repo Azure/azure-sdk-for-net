@@ -29,6 +29,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static CognitiveServicesAccountKey DeserializeCognitiveServicesAccountKey(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string key = default;
             string odataType = default;
             Optional<string> description = default;

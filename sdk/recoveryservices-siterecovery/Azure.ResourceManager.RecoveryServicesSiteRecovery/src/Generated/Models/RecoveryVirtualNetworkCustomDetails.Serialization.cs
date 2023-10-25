@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static RecoveryVirtualNetworkCustomDetails DeserializeRecoveryVirtualNetworkCustomDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("resourceType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

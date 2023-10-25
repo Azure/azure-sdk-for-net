@@ -93,6 +93,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WritePropertyName("replicationRole"u8);
                 writer.WriteStringValue(ReplicationRole.Value.ToString());
             }
+            if (Optional.IsDefined(Network))
+            {
+                writer.WritePropertyName("network"u8);
+                writer.WriteObjectValue(Network);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }

@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    /// <summary> A class representing the WorkloadNetworkDhcp data model. </summary>
+    /// <summary>
+    /// A class representing the WorkloadNetworkDhcp data model.
+    /// NSX DHCP
+    /// </summary>
     public partial class WorkloadNetworkDhcpData : ResourceData
     {
         /// <summary> Initializes a new instance of WorkloadNetworkDhcpData. </summary>

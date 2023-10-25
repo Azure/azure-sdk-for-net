@@ -12,7 +12,10 @@ using Azure.ResourceManager.PowerBIDedicated.Models;
 
 namespace Azure.ResourceManager.PowerBIDedicated
 {
-    /// <summary> A class representing the DedicatedCapacity data model. </summary>
+    /// <summary>
+    /// A class representing the DedicatedCapacity data model.
+    /// Represents an instance of a Dedicated Capacity resource.
+    /// </summary>
     public partial class DedicatedCapacityData : PowerBIDedicatedResourceData
     {
         /// <summary> Initializes a new instance of DedicatedCapacityData. </summary>
@@ -35,7 +38,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
         /// <param name="sku"> The SKU of the PowerBI Dedicated capacity resource. </param>
         /// <param name="administration"> A collection of Dedicated capacity administrators. </param>
-        /// <param name="mode"> Specifies the generation of the Power BI Embedded capacity. If no value is specified, the default value &apos;Gen2&apos; is used. [Learn More](https://docs.microsoft.com/power-bi/developer/embedded/power-bi-embedded-generation-2). </param>
+        /// <param name="mode"> Specifies the generation of the Power BI Embedded capacity. If no value is specified, the default value 'Gen2' is used. [Learn More](https://docs.microsoft.com/power-bi/developer/embedded/power-bi-embedded-generation-2). </param>
         /// <param name="tenantId"> Tenant ID for the capacity. Used for creating Pro Plus capacity. </param>
         /// <param name="friendlyName"> Capacity name. </param>
         /// <param name="state"> The current state of PowerBI Dedicated resource. The state is to indicate more states outside of resource provisioning. </param>
@@ -66,7 +69,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
             }
         }
 
-        /// <summary> Specifies the generation of the Power BI Embedded capacity. If no value is specified, the default value &apos;Gen2&apos; is used. [Learn More](https://docs.microsoft.com/power-bi/developer/embedded/power-bi-embedded-generation-2). </summary>
+        /// <summary> Specifies the generation of the Power BI Embedded capacity. If no value is specified, the default value 'Gen2' is used. [Learn More](https://docs.microsoft.com/power-bi/developer/embedded/power-bi-embedded-generation-2). </summary>
         public Mode? Mode { get; set; }
         /// <summary> Tenant ID for the capacity. Used for creating Pro Plus capacity. </summary>
         public Guid? TenantId { get; }

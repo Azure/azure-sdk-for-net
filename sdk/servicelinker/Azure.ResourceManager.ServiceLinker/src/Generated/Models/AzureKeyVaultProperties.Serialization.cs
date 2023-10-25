@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         internal static AzureKeyVaultProperties DeserializeAzureKeyVaultProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool?> connectAsKubernetesCsiDriver = default;
             AzureResourceType type = default;
             foreach (var property in element.EnumerateObject())

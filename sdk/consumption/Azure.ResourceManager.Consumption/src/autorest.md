@@ -5,13 +5,41 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
-generate-model-factory: false
 csharp: true
 library-name: Consumption
 namespace: Azure.ResourceManager.Consumption
 require: https://github.com/Azure/azure-rest-api-specs/blob/6b08774c89877269e73e11ac3ecbd1bd4e14f5a0/specification/consumption/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
+  skipped-operations:
+  - AggregatedCost_GetForBillingPeriodByManagementGroup
+  - Balances_GetByBillingAccount
+  - Balances_GetForBillingPeriodByBillingAccount
+  - ReservationsSummaries_ListByReservationOrder
+  - ReservationsDetails_ListByReservationOrder
+  - ReservationTransactions_List
+  - ReservationTransactions_ListByBillingProfile
+  - Events_ListByBillingProfile
+  - Events_ListByBillingAccount
+  - Lots_ListByBillingProfile
+  - Lots_ListByBillingAccount
+  - Lots_ListByCustomer
+  - Credits_Get
+  - ReservationsDetails_ListByReservationOrderAndReservation
+  - ReservationsSummaries_ListByReservationOrderAndReservation
+  - Budgets_CreateOrUpdate
+  - PriceSheet_GetByBillingPeriod
+  - UsageDetails_List
+  - Marketplaces_List
+  - Tags_Get
+  - Charges_List
+  - ReservationsSummaries_List
+  - ReservationsDetails_List
+  - ReservationRecommendations_List
+  - ReservationRecommendationDetails_Get
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -36,7 +64,7 @@ override-operation-name:
   Balances_GetForBillingPeriodByBillingAccount: GetBalance
   PriceSheet_GetByBillingPeriod: GetPriceSheet
   AggregatedCost_GetByManagementGroup: GetAggregatedCost
-  AggregatedCost_GetForBillingPeriodByManagementGroup: GetAggregatedCostWithBillingPeriod
+  AggregatedCost_GetForBillingPeriodByManagementGroup: GetAggregatedCost
   Events_ListByBillingAccount: GetEvents
   Events_ListByBillingProfile: GetEvents
   Lots_ListByBillingAccount: GetLots
@@ -47,6 +75,14 @@ override-operation-name:
   ReservationsSummaries_ListByReservationOrderAndReservation: GetReservationSummaries
   ReservationsSummaries_ListByReservationOrder: GetReservationSummaries
   ReservationTransactions_ListByBillingProfile: GetReservationTransactions
+  Charges_List: GetConsumptionCharges
+  Marketplaces_List: GetConsumptionMarketPlaces
+  ReservationRecommendationDetails_Get: GetConsumptionReservationRecommendationDetails
+  ReservationRecommendations_List: GetConsumptionReservationRecommendations
+  ReservationsDetails_List: GetConsumptionReservationsDetails
+  ReservationsSummaries_List: GetConsumptionReservationsSummaries
+  Tags_Get: GetConsumptionTags
+  UsageDetails_List: GetConsumptionUsageDetails
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -55,7 +91,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -77,6 +113,14 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+
+models-to-treat-empty-string-as-null:
+  - ConsumptionLegacyReservationRecommendation
+  - ConsumptionLegacyUsageDetail
+  - ConsumptionMarketplace
+  - ConsumptionModernReservationRecommendation
+  - ConsumptionModernUsageDetail
+  - PriceSheetProperties
 
 rename-mapping:
   Budget: ConsumptionBudget
@@ -144,6 +188,33 @@ rename-mapping:
   ThresholdType: NotificationThresholdType
   PriceSheetProperties.billingPeriodId: -|arm-id
   ReservationSummary.properties.usageDate: UseOn
+  ChargeSummary: ConsumptionChargeSummary
+  Marketplace: ConsumptionMarketplace
+  ReservationRecommendationDetailsModel: ConsumptionReservationRecommendationDetails
+  Scope: ConsumptionReservationRecommendationScope
+  Term: ConsumptionReservationRecommendationTerm
+  LookBackPeriod: ConsumptionReservationRecommendationLookBackPeriod
+  TagsResult: ConsumptionTagsResult
+  UsageDetail: ConsumptionUsageDetail
+  LegacyUsageDetail: ConsumptionLegacyUsageDetail
+  ModernUsageDetail: ConsumptionModernUsageDetail
+  Marketplace.properties.usageStart: UsageStartOn
+  Marketplace.properties.usageEnd: UsageEndOn
+  ReservationRecommendationDetailsModel.properties.resource: Properties
+  LegacyChargeSummary: ConsumptionLegacyChargeSummary
+  ReservationRecommendation: ConsumptionReservationRecommendation
+  LegacyReservationRecommendation: ConsumptionLegacyReservationRecommendation
+  ModernReservationRecommendation: ConsumptionModernReservationRecommendation
+  MeterDetailsResponse: ConsumptionMeterDetailsInfo
+  Metrictype: ConsumptionMetricType
+  ModernChargeSummary: ConsumptionModernChargeSummary
+  PricingModelType: ConsumptionPricingModelType
+  ReservationRecommendationDetailsCalculatedSavingsProperties: ConsumptionCalculatedSavingsProperties
+  ReservationRecommendationDetailsResourceProperties: ConsumptionResourceProperties
+  ReservationRecommendationDetailsSavingsProperties: ConsumptionSavingsProperties
+  ReservationRecommendationDetailsUsageProperties: ConsumptionUsageProperties
+  SkuProperty: ConsumptionSkuProperty
+  Tag: ConsumptionTag
 
 directive:
   - from: consumption.json
@@ -168,5 +239,7 @@ directive:
       $['/subscriptions/{subscriptionId}/providers/Microsoft.Consumption/pricesheets/default'].get.parameters[1]['x-ms-client-name'] = 'skipToken';
       $['/subscriptions/{subscriptionId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}/providers/Microsoft.Consumption/pricesheets/default'].get.parameters[1]['x-ms-client-name'] = 'skipToken';
     reason: change the query parameter name from skiptoken to skipToken.
-
+  - from: consumption.json
+    where: $.parameters.scopeParameter
+    transform: $["x-ms-client-name"] = "reservationScope";
 ```

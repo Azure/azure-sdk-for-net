@@ -64,6 +64,10 @@ namespace Azure.ResourceManager.Consumption.Models
 
         internal static BudgetAssociatedNotification DeserializeBudgetAssociatedNotification(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool enabled = default;
             NotificationAlertTriggerType @operator = default;
             decimal threshold = default;
@@ -103,7 +107,6 @@ namespace Azure.ResourceManager.Consumption.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -118,7 +121,6 @@ namespace Azure.ResourceManager.Consumption.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -133,7 +135,6 @@ namespace Azure.ResourceManager.Consumption.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     thresholdType = new NotificationThresholdType(property.Value.GetString());
@@ -143,7 +144,6 @@ namespace Azure.ResourceManager.Consumption.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     locale = new RecipientNotificationLanguageCode(property.Value.GetString());

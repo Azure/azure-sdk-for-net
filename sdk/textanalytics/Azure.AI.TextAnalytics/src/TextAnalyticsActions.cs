@@ -89,7 +89,7 @@ namespace Azure.AI.TextAnalytics
         /// The set of <see cref="ExtractiveSummarizeAction"/> that will get executed on the input documents.
         /// </summary>
         /// <remarks>
-        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/> and newer.
+        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2023_04_01"/> and newer.
         /// </remarks>
         public IReadOnlyCollection<ExtractiveSummarizeAction> ExtractiveSummarizeActions { get; set; }
 
@@ -97,7 +97,7 @@ namespace Azure.AI.TextAnalytics
         /// The set of <see cref="AbstractiveSummarizeAction"/> that will get executed on the input documents.
         /// </summary>
         /// <remarks>
-        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview"/> and newer.
+        /// This property only applies for <see cref="TextAnalyticsClientOptions.ServiceVersion.V2023_04_01"/> and newer.
         /// </remarks>
         public IReadOnlyCollection<AbstractiveSummarizeAction> AbstractiveSummarizeActions { get; set; }
     }

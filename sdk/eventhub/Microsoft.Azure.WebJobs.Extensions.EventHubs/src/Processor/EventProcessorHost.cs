@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -18,6 +19,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
         private readonly Action<ExceptionReceivedEventArgs> _exceptionHandler;
         private IEventProcessorFactory _processorFactory;
         private BlobCheckpointStoreInternal _checkpointStore;
+
+        private ConcurrentDictionary<string, CheckpointInfo> _lastReadCheckpoint = new();
 
         /// <summary>
         /// Mocking constructor
@@ -59,7 +62,15 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
 
         protected override async Task<EventProcessorCheckpoint> GetCheckpointAsync(string partitionId, CancellationToken cancellationToken)
         {
-            return await _checkpointStore.GetCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partitionId, cancellationToken).ConfigureAwait(false);
+            var checkpoint = await _checkpointStore.GetCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partitionId, cancellationToken).ConfigureAwait(false);
+
+            if (checkpoint is BlobCheckpointStoreInternal.BlobStorageCheckpoint blobCheckpoint && blobCheckpoint is not null)
+            {
+                _lastReadCheckpoint[partitionId] = new CheckpointInfo(blobCheckpoint.Offset ?? -1, blobCheckpoint.SequenceNumber ?? -1,
+                    blobCheckpoint.LastModified);
+            }
+
+            return checkpoint;
         }
 
         internal virtual async Task CheckpointAsync(string partitionId, EventData checkpointEvent, CancellationToken cancellationToken = default)
@@ -73,6 +84,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
                 checkpointEvent.SequenceNumber,
                 cancellationToken).ConfigureAwait(false);
         }
+
+        internal virtual CheckpointInfo? GetLastReadCheckpoint(string partitionId) => _lastReadCheckpoint.TryGetValue(partitionId, out var checkpointInfo) ? checkpointInfo : null;
 
         protected override Task OnProcessingErrorAsync(Exception exception, EventProcessorHostPartition partition, string operationDescription, CancellationToken cancellationToken)
         {
@@ -100,16 +113,16 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
                 return Task.CompletedTask;
             }
 
-            return partition.EventProcessor.ProcessEventsAsync(partition, events, cancellationToken);
+            return partition.EventProcessor.ProcessEventsAsync(partition, events);
         }
 
         protected override async Task OnInitializingPartitionAsync(EventProcessorHostPartition partition, CancellationToken cancellationToken)
         {
             partition.ProcessorHost = this;
-            partition.EventProcessor = _processorFactory.CreateEventProcessor();
+            partition.EventProcessor = _processorFactory.CreatePartitionProcessor();
 
             // Since we are re-initializing this partition, any cached information we have about the partition will be incorrect.
-            // Clear it out now, if there is any, we'll refresh it in ListCheckpointsAsync, which EventProcessor will call before starting to pump messages.
+            // Clear it out now, if there is any, we'll refresh it in GetCheckpointAsync, which EventProcessor will call before starting to pump messages.
             partition.Checkpoint = null;
             await partition.EventProcessor.OpenAsync(partition).ConfigureAwait(false);
 
@@ -120,6 +133,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
 
         protected override Task OnPartitionProcessingStoppedAsync(EventProcessorHostPartition partition, ProcessingStoppedReason reason, CancellationToken cancellationToken)
         {
+            _lastReadCheckpoint.TryRemove(partition.PartitionId, out _);
             return partition.EventProcessor.CloseAsync(partition, reason);
         }
 

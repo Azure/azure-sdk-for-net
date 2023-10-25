@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    /// <summary> A class representing the DataBoxEdgeJob data model. </summary>
+    /// <summary>
+    /// A class representing the DataBoxEdgeJob data model.
+    /// A device job.
+    /// </summary>
     public partial class DataBoxEdgeJobData : ResourceData
     {
         /// <summary> Initializes a new instance of DataBoxEdgeJobData. </summary>

@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Category))
+            if (Optional.IsDefined(WorkloadProfileCategory))
             {
                 writer.WritePropertyName("category"u8);
-                writer.WriteStringValue(Category.Value.ToString());
+                writer.WriteStringValue(WorkloadProfileCategory);
             }
             if (Optional.IsDefined(MeterType))
             {
@@ -35,19 +35,18 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppBillingMeterProperties DeserializeContainerAppBillingMeterProperties(JsonElement element)
         {
-            Optional<ContainerAppBillingMeterCategory> category = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> category = default;
             Optional<string> meterType = default;
             Optional<string> displayName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("category"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    category = new ContainerAppBillingMeterCategory(property.Value.GetString());
+                    category = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("meterType"u8))
@@ -61,7 +60,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppBillingMeterProperties(Optional.ToNullable(category), meterType.Value, displayName.Value);
+            return new ContainerAppBillingMeterProperties(category.Value, meterType.Value, displayName.Value);
         }
     }
 }

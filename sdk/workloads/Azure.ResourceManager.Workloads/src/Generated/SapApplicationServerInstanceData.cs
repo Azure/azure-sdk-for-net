@@ -8,17 +8,22 @@
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Workloads.Models;
 
 namespace Azure.ResourceManager.Workloads
 {
-    /// <summary> A class representing the SapApplicationServerInstance data model. </summary>
+    /// <summary>
+    /// A class representing the SapApplicationServerInstance data model.
+    /// Define the SAP Application Server Instance resource.
+    /// </summary>
     public partial class SapApplicationServerInstanceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of SapApplicationServerInstanceData. </summary>
         /// <param name="location"> The location. </param>
         public SapApplicationServerInstanceData(AzureLocation location) : base(location)
         {
+            VmDetails = new ChangeTrackingList<ApplicationServerVmDetails>();
         }
 
         /// <summary> Initializes a new instance of SapApplicationServerInstanceData. </summary>
@@ -28,21 +33,22 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="instanceNo"> The application server instance id. </param>
-        /// <param name="subnetId"> The application server subnet. </param>
-        /// <param name="hostname"> The application server SAP host name. </param>
-        /// <param name="kernelVersion"> The application server SAP kernel version. </param>
-        /// <param name="kernelPatch"> The application server SAP kernel patch. </param>
-        /// <param name="ipAddress"> The application server SAP IP Address. </param>
-        /// <param name="gatewayPort"> The application server gateway Port. </param>
-        /// <param name="icmHttpPort"> The application server ICM HTTP Port. </param>
-        /// <param name="icmHttpsPort"> The application server ICM HTTPS Port. </param>
-        /// <param name="virtualMachineId"> The virtual machine. </param>
+        /// <param name="instanceNo"> Application server Instance Number. </param>
+        /// <param name="subnetId"> Application server Subnet. </param>
+        /// <param name="hostname"> Application server instance SAP hostname. </param>
+        /// <param name="kernelVersion"> Application server instance SAP Kernel Version. </param>
+        /// <param name="kernelPatch"> Application server instance SAP Kernel Patch level. </param>
+        /// <param name="ipAddress"> Application server instance SAP IP Address. </param>
+        /// <param name="gatewayPort"> Application server instance gateway Port. </param>
+        /// <param name="icmHttpPort"> Application server instance ICM HTTP Port. </param>
+        /// <param name="icmHttpsPort"> Application server instance ICM HTTPS Port. </param>
+        /// <param name="loadBalancerDetails"> The Load Balancer details such as LoadBalancer ID attached to Application Server Virtual Machines. </param>
+        /// <param name="vmDetails"> The list of virtual machines. </param>
         /// <param name="status"> Defines the SAP Instance status. </param>
-        /// <param name="health"> Defines the SAP Instance health. </param>
+        /// <param name="health"> Defines the health of SAP Instances. </param>
         /// <param name="provisioningState"> Defines the provisioning states. </param>
         /// <param name="errors"> Defines the Application Instance errors. </param>
-        internal SapApplicationServerInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string instanceNo, ResourceIdentifier subnetId, string hostname, string kernelVersion, string kernelPatch, string ipAddress, long? gatewayPort, long? icmHttpPort, long? icmHttpsPort, ResourceIdentifier virtualMachineId, SapVirtualInstanceStatus? status, SapHealthState? health, SapVirtualInstanceProvisioningState? provisioningState, SapVirtualInstanceError errors) : base(id, name, resourceType, systemData, tags, location)
+        internal SapApplicationServerInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string instanceNo, ResourceIdentifier subnetId, string hostname, string kernelVersion, string kernelPatch, string ipAddress, long? gatewayPort, long? icmHttpPort, long? icmHttpsPort, SubResource loadBalancerDetails, IReadOnlyList<ApplicationServerVmDetails> vmDetails, SapVirtualInstanceStatus? status, SapHealthState? health, SapVirtualInstanceProvisioningState? provisioningState, SapVirtualInstanceError errors) : base(id, name, resourceType, systemData, tags, location)
         {
             InstanceNo = instanceNo;
             SubnetId = subnetId;
@@ -53,36 +59,45 @@ namespace Azure.ResourceManager.Workloads
             GatewayPort = gatewayPort;
             IcmHttpPort = icmHttpPort;
             IcmHttpsPort = icmHttpsPort;
-            VirtualMachineId = virtualMachineId;
+            LoadBalancerDetails = loadBalancerDetails;
+            VmDetails = vmDetails;
             Status = status;
             Health = health;
             ProvisioningState = provisioningState;
             Errors = errors;
         }
 
-        /// <summary> The application server instance id. </summary>
+        /// <summary> Application server Instance Number. </summary>
         public string InstanceNo { get; }
-        /// <summary> The application server subnet. </summary>
+        /// <summary> Application server Subnet. </summary>
         public ResourceIdentifier SubnetId { get; }
-        /// <summary> The application server SAP host name. </summary>
+        /// <summary> Application server instance SAP hostname. </summary>
         public string Hostname { get; }
-        /// <summary> The application server SAP kernel version. </summary>
+        /// <summary> Application server instance SAP Kernel Version. </summary>
         public string KernelVersion { get; }
-        /// <summary> The application server SAP kernel patch. </summary>
+        /// <summary> Application server instance SAP Kernel Patch level. </summary>
         public string KernelPatch { get; }
-        /// <summary> The application server SAP IP Address. </summary>
+        /// <summary> Application server instance SAP IP Address. </summary>
         public string IPAddress { get; }
-        /// <summary> The application server gateway Port. </summary>
+        /// <summary> Application server instance gateway Port. </summary>
         public long? GatewayPort { get; }
-        /// <summary> The application server ICM HTTP Port. </summary>
+        /// <summary> Application server instance ICM HTTP Port. </summary>
         public long? IcmHttpPort { get; }
-        /// <summary> The application server ICM HTTPS Port. </summary>
+        /// <summary> Application server instance ICM HTTPS Port. </summary>
         public long? IcmHttpsPort { get; }
-        /// <summary> The virtual machine. </summary>
-        public ResourceIdentifier VirtualMachineId { get; }
+        /// <summary> The Load Balancer details such as LoadBalancer ID attached to Application Server Virtual Machines. </summary>
+        internal SubResource LoadBalancerDetails { get; }
+        /// <summary> Gets Id. </summary>
+        public ResourceIdentifier LoadBalancerDetailsId
+        {
+            get => LoadBalancerDetails?.Id;
+        }
+
+        /// <summary> The list of virtual machines. </summary>
+        public IReadOnlyList<ApplicationServerVmDetails> VmDetails { get; }
         /// <summary> Defines the SAP Instance status. </summary>
         public SapVirtualInstanceStatus? Status { get; }
-        /// <summary> Defines the SAP Instance health. </summary>
+        /// <summary> Defines the health of SAP Instances. </summary>
         public SapHealthState? Health { get; }
         /// <summary> Defines the provisioning states. </summary>
         public SapVirtualInstanceProvisioningState? ProvisioningState { get; }

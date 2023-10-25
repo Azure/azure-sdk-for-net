@@ -1,6 +1,6 @@
 # Release History
 
-## 12.13.0-beta.2 (Unreleased)
+## 12.17.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,33 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.17.0-beta.1 (2023-10-16)
+- Added support for QueueClientOptions.Audience
+
+## 12.16.0 (2023-09-12)
+- Includes all features from 12.16.0-beta.1.
+
+## 12.16.0-beta.1 (2023-08-08)
+- This release contains bug fixes to improve quality.
+
+## 12.15.0 (2023-07-11)
+- Includes all features from 12.15.0-beta.1.
+
+## 12.15.0-beta.1 (2023-05-30)
+- This release contains bug fixes to improve quality.
+
+## 12.14.0 (2023-04-11)
+- Includes all features from 12.14.0-beta.1.
+
+## 12.14.0-beta.1 (2023-03-28)
+- This release contains bug fixes to improve quality.
+
+## 12.13.1 (2023-03-24)
+- Bumped Azure.Core dependency from 1.28 and 1.30, fixing issue with headers being non-resilient to double dispose of the request.
+
+## 12.13.0 (2023-02-21)
+- Includes all features from 12.13.0-beta.1.
 
 ## 12.13.0-beta.1 (2023-02-07)
 - This release contains bug fixes to improve quality.

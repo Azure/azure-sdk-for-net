@@ -42,7 +42,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Parameters);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(Parameters.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(Parameters))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
                 else
@@ -55,6 +58,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static ColumnTransformer DeserializeColumnTransformer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> fields = default;
             Optional<BinaryData> parameters = default;
             foreach (var property in element.EnumerateObject())

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static EffectiveNetworkSecurityGroupAssociation DeserializeEffectiveNetworkSecurityGroupAssociation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<WritableSubResource> networkManager = default;
             Optional<WritableSubResource> subnet = default;
             Optional<WritableSubResource> networkInterface = default;
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     networkManager = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
@@ -34,7 +37,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     subnet = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
@@ -44,7 +46,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     networkInterface = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());

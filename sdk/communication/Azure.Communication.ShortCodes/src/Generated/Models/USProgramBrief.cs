@@ -29,8 +29,8 @@ namespace Azure.Communication.ShortCodes.Models
 
         /// <summary> Initializes a new instance of USProgramBrief. </summary>
         /// <param name="id"> Program Brief Id. </param>
-        /// <param name="status"> Program Brief status e.g. &apos;submitted&apos;, &apos;approved&apos;, etc. </param>
-        /// <param name="number"> Number provisioned for the Program Brief e.g. 555555, &apos;CONTOSO&apos;. </param>
+        /// <param name="status"> Program Brief status e.g. 'submitted', 'approved', etc. </param>
+        /// <param name="number"> Number provisioned for the Program Brief e.g. 555555, 'CONTOSO'. </param>
         /// <param name="reviewNotes">
         /// Notes added to the Program Brief after being reviewed to help customer understand
         /// review results and necessary follow up actions.
@@ -59,9 +59,9 @@ namespace Azure.Communication.ShortCodes.Models
 
         /// <summary> Program Brief Id. </summary>
         public Guid Id { get; set; }
-        /// <summary> Program Brief status e.g. &apos;submitted&apos;, &apos;approved&apos;, etc. </summary>
+        /// <summary> Program Brief status e.g. 'submitted', 'approved', etc. </summary>
         public ProgramBriefStatus? Status { get; set; }
-        /// <summary> Number provisioned for the Program Brief e.g. 555555, &apos;CONTOSO&apos;. </summary>
+        /// <summary> Number provisioned for the Program Brief e.g. 555555, 'CONTOSO'. </summary>
         public string Number { get; set; }
         /// <summary>
         /// Notes added to the Program Brief after being reviewed to help customer understand

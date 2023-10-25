@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Media.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListsContentKeyPoliciesOrderedByLastModified()
         {
-            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2022-08-01/examples/content-key-policies-list-by-lastModified.json
+            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/content-key-policies-list-by-lastModified.json
             // this example is just showing the usage of "ContentKeyPolicies_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Media.Samples
             // this example assumes you already have this MediaServicesAccountResource created on azure
             // for more information of creating MediaServicesAccountResource, please refer to the document of MediaServicesAccountResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
             ResourceIdentifier mediaServicesAccountResourceId = MediaServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             MediaServicesAccountResource mediaServicesAccount = client.GetMediaServicesAccountResource(mediaServicesAccountResourceId);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Media.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListsContentKeyPoliciesWithCreatedAndLastModifiedFilters()
         {
-            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2022-08-01/examples/content-key-policies-list-in-date-range.json
+            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/content-key-policies-list-in-date-range.json
             // this example is just showing the usage of "ContentKeyPolicies_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Media.Samples
             // this example assumes you already have this MediaServicesAccountResource created on azure
             // for more information of creating MediaServicesAccountResource, please refer to the document of MediaServicesAccountResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
             ResourceIdentifier mediaServicesAccountResourceId = MediaServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             MediaServicesAccountResource mediaServicesAccount = client.GetMediaServicesAccountResource(mediaServicesAccountResourceId);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Media.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListsAllContentKeyPolicies()
         {
-            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2022-08-01/examples/content-key-policies-list-all.json
+            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/content-key-policies-list-all.json
             // this example is just showing the usage of "ContentKeyPolicies_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Media.Samples
             // this example assumes you already have this MediaServicesAccountResource created on azure
             // for more information of creating MediaServicesAccountResource, please refer to the document of MediaServicesAccountResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
             ResourceIdentifier mediaServicesAccountResourceId = MediaServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             MediaServicesAccountResource mediaServicesAccount = client.GetMediaServicesAccountResource(mediaServicesAccountResourceId);
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Media.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetAContentKeyPolicyByName()
         {
-            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2022-08-01/examples/content-key-policies-get-by-name.json
+            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/content-key-policies-get-by-name.json
             // this example is just showing the usage of "ContentKeyPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Media.Samples
             // this example assumes you already have this MediaServicesAccountResource created on azure
             // for more information of creating MediaServicesAccountResource, please refer to the document of MediaServicesAccountResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
             ResourceIdentifier mediaServicesAccountResourceId = MediaServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             MediaServicesAccountResource mediaServicesAccount = client.GetMediaServicesAccountResource(mediaServicesAccountResourceId);
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Media.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetAContentKeyPolicyByName()
         {
-            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2022-08-01/examples/content-key-policies-get-by-name.json
+            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/content-key-policies-get-by-name.json
             // this example is just showing the usage of "ContentKeyPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Media.Samples
             // this example assumes you already have this MediaServicesAccountResource created on azure
             // for more information of creating MediaServicesAccountResource, please refer to the document of MediaServicesAccountResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
             ResourceIdentifier mediaServicesAccountResourceId = MediaServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             MediaServicesAccountResource mediaServicesAccount = client.GetMediaServicesAccountResource(mediaServicesAccountResourceId);
@@ -197,12 +197,55 @@ namespace Azure.ResourceManager.Media.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
+        // Get a Content Key Policy by name
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_GetAContentKeyPolicyByName()
+        {
+            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/content-key-policies-get-by-name.json
+            // this example is just showing the usage of "ContentKeyPolicies_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MediaServicesAccountResource created on azure
+            // for more information of creating MediaServicesAccountResource, please refer to the document of MediaServicesAccountResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "contosorg";
+            string accountName = "contosomedia";
+            ResourceIdentifier mediaServicesAccountResourceId = MediaServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            MediaServicesAccountResource mediaServicesAccount = client.GetMediaServicesAccountResource(mediaServicesAccountResourceId);
+
+            // get the collection of this ContentKeyPolicyResource
+            ContentKeyPolicyCollection collection = mediaServicesAccount.GetContentKeyPolicies();
+
+            // invoke the operation
+            string contentKeyPolicyName = "PolicyWithMultipleOptions";
+            NullableResponse<ContentKeyPolicyResource> response = await collection.GetIfExistsAsync(contentKeyPolicyName);
+            ContentKeyPolicyResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ContentKeyPolicyData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
         // Creates a Content Key Policy with ClearKey option and Token Restriction
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreatesAContentKeyPolicyWithClearKeyOptionAndTokenRestriction()
         {
-            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2022-08-01/examples/content-key-policies-create-nodrm-token.json
+            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/content-key-policies-create-nodrm-token.json
             // this example is just showing the usage of "ContentKeyPolicies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -213,7 +256,7 @@ namespace Azure.ResourceManager.Media.Samples
             // this example assumes you already have this MediaServicesAccountResource created on azure
             // for more information of creating MediaServicesAccountResource, please refer to the document of MediaServicesAccountResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
             ResourceIdentifier mediaServicesAccountResourceId = MediaServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             MediaServicesAccountResource mediaServicesAccount = client.GetMediaServicesAccountResource(mediaServicesAccountResourceId);
@@ -249,7 +292,7 @@ Name = "ClearKeyOption",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreatesAContentKeyPolicyWithPlayReadyOptionAndOpenRestriction()
         {
-            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2022-08-01/examples/content-key-policies-create-playready-open.json
+            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/content-key-policies-create-playready-open.json
             // this example is just showing the usage of "ContentKeyPolicies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -260,7 +303,7 @@ Name = "ClearKeyOption",
             // this example assumes you already have this MediaServicesAccountResource created on azure
             // for more information of creating MediaServicesAccountResource, please refer to the document of MediaServicesAccountResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
             ResourceIdentifier mediaServicesAccountResourceId = MediaServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             MediaServicesAccountResource mediaServicesAccount = client.GetMediaServicesAccountResource(mediaServicesAccountResourceId);
@@ -307,7 +350,7 @@ Name = "ArmPolicyOptionName",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreatesAContentKeyPolicyWithWidevineOptionAndTokenRestriction()
         {
-            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2022-08-01/examples/content-key-policies-create-widevine-token.json
+            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/content-key-policies-create-widevine-token.json
             // this example is just showing the usage of "ContentKeyPolicies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -318,7 +361,7 @@ Name = "ArmPolicyOptionName",
             // this example assumes you already have this MediaServicesAccountResource created on azure
             // for more information of creating MediaServicesAccountResource, please refer to the document of MediaServicesAccountResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
             ResourceIdentifier mediaServicesAccountResourceId = MediaServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             MediaServicesAccountResource mediaServicesAccount = client.GetMediaServicesAccountResource(mediaServicesAccountResourceId);
@@ -360,7 +403,7 @@ Name = "widevineoption",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreatesAContentKeyPolicyWithMultipleOptions()
         {
-            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2022-08-01/examples/content-key-policies-create-multiple-options.json
+            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/content-key-policies-create-multiple-options.json
             // this example is just showing the usage of "ContentKeyPolicies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -371,7 +414,7 @@ Name = "widevineoption",
             // this example assumes you already have this MediaServicesAccountResource created on azure
             // for more information of creating MediaServicesAccountResource, please refer to the document of MediaServicesAccountResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
             ResourceIdentifier mediaServicesAccountResourceId = MediaServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             MediaServicesAccountResource mediaServicesAccount = client.GetMediaServicesAccountResource(mediaServicesAccountResourceId);

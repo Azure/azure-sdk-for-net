@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        /// <summary> Gets a list of managed database&apos;s Advanced Threat Protection states. </summary>
+        /// <summary> Gets a list of managed database's Advanced Threat Protection states. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Gets a list of managed database&apos;s Advanced Threat Protection states. </summary>
+        /// <summary> Gets a list of managed database's Advanced Threat Protection states. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        /// <summary> Gets a managed database&apos;s Advanced Threat Protection state. </summary>
+        /// <summary> Gets a managed database's Advanced Threat Protection state. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Gets a managed database&apos;s Advanced Threat Protection state. </summary>
+        /// <summary> Gets a managed database's Advanced Threat Protection state. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        /// <summary> Creates or updates a managed database&apos;s Advanced Threat Protection state. </summary>
+        /// <summary> Creates or updates a managed database's Advanced Threat Protection state. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Creates or updates a managed database&apos;s Advanced Threat Protection state. </summary>
+        /// <summary> Creates or updates a managed database's Advanced Threat Protection state. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="managedInstanceName"> The name of the managed instance. </param>
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        /// <summary> Gets a list of managed database&apos;s Advanced Threat Protection states. </summary>
+        /// <summary> Gets a list of managed database's Advanced Threat Protection states. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Gets a list of managed database&apos;s Advanced Threat Protection states. </summary>
+        /// <summary> Gets a list of managed database's Advanced Threat Protection states. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>

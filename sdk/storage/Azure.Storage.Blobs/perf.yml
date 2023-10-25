@@ -14,11 +14,14 @@ parameters:
 - name: Arguments
   displayName: Arguments (regex of arguments to run)
   type: string
-  default: '(10240)|(10485760)|(1073741824)|(5 )|(500 )|(50000 )' 
+  default: '(10240)|(10485760)|(1073741824)|(5 )|(500 )|(50000 )'
 - name: Iterations
   displayName: Iterations (times to run each test)
   type: number
   default: '5'
+- name: Profile
+  type: boolean
+  default: false
 - name: AdditionalArguments
   displayName: AdditionalArguments (passed to PerfAutomation)
   type: string
@@ -33,4 +36,5 @@ extends:
     Tests: ${{ parameters.Tests }}
     Arguments: ${{ parameters.Arguments }}
     Iterations: ${{ parameters.Iterations }}
+    Profile: ${{ parameters.Profile }}
     AdditionalArguments: ${{ parameters.AdditionalArguments }}

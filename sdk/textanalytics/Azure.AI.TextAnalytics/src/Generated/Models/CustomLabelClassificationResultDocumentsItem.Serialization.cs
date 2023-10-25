@@ -17,11 +17,6 @@ namespace Azure.AI.TextAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DetectedLanguage))
-            {
-                writer.WritePropertyName("detectedLanguage"u8);
-                writer.WriteObjectValue(DetectedLanguage.Value);
-            }
             writer.WritePropertyName("class"u8);
             writer.WriteStartArray();
             foreach (var item in Class)
@@ -41,30 +36,23 @@ namespace Azure.AI.TextAnalytics.Models
             if (Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
-                writer.WriteObjectValue(Statistics.Value);
+                writer.WriteObjectValue(Statistics);
             }
             writer.WriteEndObject();
         }
 
         internal static CustomLabelClassificationResultDocumentsItem DeserializeCustomLabelClassificationResultDocumentsItem(JsonElement element)
         {
-            Optional<DetectedLanguageInternal> detectedLanguage = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<ClassificationResult> @class = default;
             string id = default;
             IList<DocumentWarning> warnings = default;
             Optional<TextDocumentStatistics> statistics = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("detectedLanguage"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    detectedLanguage = DetectedLanguageInternal.DeserializeDetectedLanguageInternal(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("class"u8))
                 {
                     List<ClassificationResult> array = new List<ClassificationResult>();
@@ -94,14 +82,13 @@ namespace Azure.AI.TextAnalytics.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     statistics = TextDocumentStatistics.DeserializeTextDocumentStatistics(property.Value);
                     continue;
                 }
             }
-            return new CustomLabelClassificationResultDocumentsItem(id, warnings, Optional.ToNullable(statistics), @class, Optional.ToNullable(detectedLanguage));
+            return new CustomLabelClassificationResultDocumentsItem(id, warnings, Optional.ToNullable(statistics), @class);
         }
     }
 }

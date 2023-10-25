@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningBatchEndpointProperties : MachineLearningEndpointProperties
     {
         /// <summary> Initializes a new instance of MachineLearningBatchEndpointProperties. </summary>
-        /// <param name="authMode"> [Required] Use &apos;Key&apos; for key based authentication and &apos;AMLToken&apos; for Azure Machine Learning token-based authentication. &apos;Key&apos; doesn&apos;t expire but &apos;AMLToken&apos; does. </param>
+        /// <param name="authMode"> [Required] Use 'Key' for key based authentication and 'AMLToken' for Azure Machine Learning token-based authentication. 'Key' doesn't expire but 'AMLToken' does. </param>
         public MachineLearningBatchEndpointProperties(MachineLearningEndpointAuthMode authMode) : base(authMode)
         {
         }
 
         /// <summary> Initializes a new instance of MachineLearningBatchEndpointProperties. </summary>
-        /// <param name="authMode"> [Required] Use &apos;Key&apos; for key based authentication and &apos;AMLToken&apos; for Azure Machine Learning token-based authentication. &apos;Key&apos; doesn&apos;t expire but &apos;AMLToken&apos; does. </param>
+        /// <param name="authMode"> [Required] Use 'Key' for key based authentication and 'AMLToken' for Azure Machine Learning token-based authentication. 'Key' doesn't expire but 'AMLToken' does. </param>
         /// <param name="description"> Description of the inference endpoint. </param>
         /// <param name="keys">
         /// EndpointAuthKeys to set initially on an Endpoint.

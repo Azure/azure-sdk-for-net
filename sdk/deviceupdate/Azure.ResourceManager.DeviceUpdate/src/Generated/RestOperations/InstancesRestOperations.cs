@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             return message;
         }
 
-        /// <summary> Updates instance&apos;s tags. </summary>
+        /// <summary> Updates instance's tags. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="accountName"> Account name. </param>
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             }
         }
 
-        /// <summary> Updates instance&apos;s tags. </summary>
+        /// <summary> Updates instance's tags. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="accountName"> Account name. </param>

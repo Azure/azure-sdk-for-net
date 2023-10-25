@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     {
         internal static ClusterListResult DeserializeClusterListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             Optional<IReadOnlyList<OperationalInsightsClusterData>> value = default;
             foreach (var property in element.EnumerateObject())
@@ -29,7 +33,6 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<OperationalInsightsClusterData> array = new List<OperationalInsightsClusterData>();

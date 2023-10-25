@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.StoragePool.Models
 
         public static StoragePoolSkuRestrictionsReasonCode ToStoragePoolSkuRestrictionsReasonCode(this string value)
         {
-            if (string.Equals(value, "QuotaId", StringComparison.InvariantCultureIgnoreCase)) return StoragePoolSkuRestrictionsReasonCode.QuotaId;
-            if (string.Equals(value, "NotAvailableForSubscription", StringComparison.InvariantCultureIgnoreCase)) return StoragePoolSkuRestrictionsReasonCode.NotAvailableForSubscription;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "QuotaId")) return StoragePoolSkuRestrictionsReasonCode.QuotaId;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotAvailableForSubscription")) return StoragePoolSkuRestrictionsReasonCode.NotAvailableForSubscription;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StoragePoolSkuRestrictionsReasonCode value.");
         }
     }

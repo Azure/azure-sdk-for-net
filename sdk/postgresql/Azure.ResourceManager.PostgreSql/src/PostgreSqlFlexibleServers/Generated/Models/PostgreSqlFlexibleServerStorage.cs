@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
     /// <summary> Storage properties of a server. </summary>
-    internal partial class PostgreSqlFlexibleServerStorage
+    public partial class PostgreSqlFlexibleServerStorage
     {
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerStorage. </summary>
         public PostgreSqlFlexibleServerStorage()
@@ -17,12 +17,24 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerStorage. </summary>
         /// <param name="storageSizeInGB"> Max storage allowed for a server. </param>
-        internal PostgreSqlFlexibleServerStorage(int? storageSizeInGB)
+        /// <param name="autoGrow"> Flag to enable / disable Storage Auto grow for flexible server. </param>
+        /// <param name="tier"> Name of storage tier for IOPS. </param>
+        /// <param name="iops"> Storage tier IOPS quantity. </param>
+        internal PostgreSqlFlexibleServerStorage(int? storageSizeInGB, StorageAutoGrow? autoGrow, PostgreSqlManagedDiskPerformanceTier? tier, int? iops)
         {
             StorageSizeInGB = storageSizeInGB;
+            AutoGrow = autoGrow;
+            Tier = tier;
+            Iops = iops;
         }
 
         /// <summary> Max storage allowed for a server. </summary>
         public int? StorageSizeInGB { get; set; }
+        /// <summary> Flag to enable / disable Storage Auto grow for flexible server. </summary>
+        public StorageAutoGrow? AutoGrow { get; set; }
+        /// <summary> Name of storage tier for IOPS. </summary>
+        public PostgreSqlManagedDiskPerformanceTier? Tier { get; set; }
+        /// <summary> Storage tier IOPS quantity. </summary>
+        public int? Iops { get; }
     }
 }

@@ -50,7 +50,10 @@ namespace Azure.ResourceManager.Resources
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Metadata);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Metadata.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(Metadata))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
@@ -59,6 +62,10 @@ namespace Azure.ResourceManager.Resources
 
         internal static TemplateSpecData DeserializeTemplateSpecData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AzureLocation location = default;
             Optional<IDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
@@ -80,7 +87,6 @@ namespace Azure.ResourceManager.Resources
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -110,7 +116,6 @@ namespace Azure.ResourceManager.Resources
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -139,7 +144,6 @@ namespace Azure.ResourceManager.Resources
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             metadata = BinaryData.FromString(property0.Value.GetRawText());
@@ -149,7 +153,6 @@ namespace Azure.ResourceManager.Resources
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, TemplateSpecVersionInfo> dictionary = new Dictionary<string, TemplateSpecVersionInfo>();

@@ -1064,5 +1064,85 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                 Assert.IsNotNull(message);
             }
         }
+
+        [Test]
+        public async Task CannotCompleteAfterLinkReconnect()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                var sender = client.CreateSender(scope.QueueName);
+                await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage("session"));
+                var receiver = await client.AcceptNextSessionAsync(scope.QueueName);
+
+                var message = await receiver.ReceiveMessageAsync();
+
+                SimulateNetworkFailure(client);
+                Assert.That(
+                    async () => await receiver.CompleteMessageAsync(message),
+                    Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason))
+                        .EqualTo(ServiceBusFailureReason.SessionLockLost));
+            }
+        }
+
+        [Test]
+        public async Task CanAbandonAfterLinkReconnect()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                var sender = client.CreateSender(scope.QueueName);
+                await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage("session"));
+                var receiver = await client.AcceptNextSessionAsync(scope.QueueName);
+
+                var message = await receiver.ReceiveMessageAsync();
+
+                SimulateNetworkFailure(client);
+                Assert.That(
+                    async () => await receiver.AbandonMessageAsync(message),
+                    Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason))
+                        .EqualTo(ServiceBusFailureReason.SessionLockLost));
+            }
+        }
+
+        [Test]
+        public async Task CannotDeferAfterLinkReconnect()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                var sender = client.CreateSender(scope.QueueName);
+                await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage("session"));
+                var receiver = await client.AcceptNextSessionAsync(scope.QueueName);
+
+                var message = await receiver.ReceiveMessageAsync();
+
+                SimulateNetworkFailure(client);
+                Assert.That(
+                    async () => await receiver.DeferMessageAsync(message),
+                    Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason))
+                        .EqualTo(ServiceBusFailureReason.SessionLockLost));
+            }
+        }
+
+        [Test]
+        public async Task CannotDeadLetterAfterLinkReconnect()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                var sender = client.CreateSender(scope.QueueName);
+                await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage("session"));
+                var receiver = await client.AcceptNextSessionAsync(scope.QueueName);
+
+                var message = await receiver.ReceiveMessageAsync();
+
+                SimulateNetworkFailure(client);
+                Assert.That(
+                    async () => await receiver.DeadLetterMessageAsync(message),
+                    Throws.InstanceOf<ServiceBusException>().And.Property(nameof(ServiceBusException.Reason))
+                        .EqualTo(ServiceBusFailureReason.SessionLockLost));
+            }
+        }
     }
 }

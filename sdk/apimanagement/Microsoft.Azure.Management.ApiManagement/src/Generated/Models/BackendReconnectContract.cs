@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     /// Reconnect request parameters.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class BackendReconnectContract : Resource
+    public partial class BackendReconnectContract : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the BackendReconnectContract class.

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ArcScVmm.Models
     {
         internal static CloudCapacity DeserializeCloudCapacity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> cpuCount = default;
             Optional<long> memoryMB = default;
             Optional<long> vmCount = default;
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cpuCount = property.Value.GetInt64();
@@ -33,7 +36,6 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     memoryMB = property.Value.GetInt64();
@@ -43,7 +45,6 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     vmCount = property.Value.GetInt64();

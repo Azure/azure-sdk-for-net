@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -598,7 +599,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="cacheId"> Identifier of the Cache entity. Cache identifier (should be either &apos;default&apos; or valid Azure region identifier). </param>
+        /// <param name="cacheId"> Identifier of the Cache entity. Cache identifier (should be either 'default' or valid Azure region identifier). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="cacheId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cacheId"/> is null. </exception>
@@ -621,7 +622,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="cacheId"> Identifier of the Cache entity. Cache identifier (should be either &apos;default&apos; or valid Azure region identifier). </param>
+        /// <param name="cacheId"> Identifier of the Cache entity. Cache identifier (should be either 'default' or valid Azure region identifier). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="cacheId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cacheId"/> is null. </exception>
@@ -753,7 +754,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="gatewayId"> Gateway entity identifier. Must be unique in the current API Management service instance. Must not have value &apos;managed&apos;. </param>
+        /// <param name="gatewayId"> Gateway entity identifier. Must be unique in the current API Management service instance. Must not have value 'managed'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayId"/> is null. </exception>
@@ -776,7 +777,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="gatewayId"> Gateway entity identifier. Must be unique in the current API Management service instance. Must not have value &apos;managed&apos;. </param>
+        /// <param name="gatewayId"> Gateway entity identifier. Must be unique in the current API Management service instance. Must not have value 'managed'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayId"/> is null. </exception>
@@ -1104,7 +1105,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Gets the developer portal&apos;s revision specified by its identifier.
+        /// Gets the developer portal's revision specified by its identifier.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1127,7 +1128,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Gets the developer portal&apos;s revision specified by its identifier.
+        /// Gets the developer portal's revision specified by its identifier.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1153,21 +1154,21 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementPortalSignInSettingResource" /> object. </returns>
         public virtual ApiManagementPortalSignInSettingResource GetApiManagementPortalSignInSetting()
         {
-            return new ApiManagementPortalSignInSettingResource(Client, new ResourceIdentifier(Id.ToString() + "/portalsettings/signin"));
+            return new ApiManagementPortalSignInSettingResource(Client, Id.AppendChildResource("portalsettings", "signin"));
         }
 
         /// <summary> Gets an object representing a ApiManagementPortalSignUpSettingResource along with the instance operations that can be performed on it in the ApiManagementService. </summary>
         /// <returns> Returns a <see cref="ApiManagementPortalSignUpSettingResource" /> object. </returns>
         public virtual ApiManagementPortalSignUpSettingResource GetApiManagementPortalSignUpSetting()
         {
-            return new ApiManagementPortalSignUpSettingResource(Client, new ResourceIdentifier(Id.ToString() + "/portalsettings/signup"));
+            return new ApiManagementPortalSignUpSettingResource(Client, Id.AppendChildResource("portalsettings", "signup"));
         }
 
         /// <summary> Gets an object representing a ApiManagementPortalDelegationSettingResource along with the instance operations that can be performed on it in the ApiManagementService. </summary>
         /// <returns> Returns a <see cref="ApiManagementPortalDelegationSettingResource" /> object. </returns>
         public virtual ApiManagementPortalDelegationSettingResource GetApiManagementPortalDelegationSetting()
         {
-            return new ApiManagementPortalDelegationSettingResource(Client, new ResourceIdentifier(Id.ToString() + "/portalsettings/delegation"));
+            return new ApiManagementPortalDelegationSettingResource(Client, Id.AppendChildResource("portalsettings", "delegation"));
         }
 
         /// <summary> Gets a collection of ApiManagementPrivateEndpointConnectionResources in the ApiManagementService. </summary>
@@ -1817,7 +1818,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiRestClient.CreateListByTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedApis);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiRestClient.CreateListByTagsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedApis);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, TagResourceContractDetails.DeserializeTagResourceContractDetails, _apiClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetApisByTags", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, TagResourceContractDetails.DeserializeTagResourceContractDetails, _apiClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetApisByTags", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1843,7 +1844,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiRestClient.CreateListByTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedApis);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiRestClient.CreateListByTagsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedApis);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, TagResourceContractDetails.DeserializeTagResourceContractDetails, _apiClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetApisByTags", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, TagResourceContractDetails.DeserializeTagResourceContractDetails, _apiClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetApisByTags", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1923,7 +1924,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Lists the developer portal&apos;s content types. Content types describe content items&apos; properties, validation rules, and constraints.
+        /// Lists the developer portal's content types. Content types describe content items' properties, validation rules, and constraints.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1941,11 +1942,11 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _contentTypeRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _contentTypeRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ApiManagementContentType.DeserializeApiManagementContentType, _contentTypeClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetContentTypes", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ApiManagementContentType.DeserializeApiManagementContentType, _contentTypeClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetContentTypes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Lists the developer portal&apos;s content types. Content types describe content items&apos; properties, validation rules, and constraints.
+        /// Lists the developer portal's content types. Content types describe content items' properties, validation rules, and constraints.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1963,11 +1964,11 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _contentTypeRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _contentTypeRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ApiManagementContentType.DeserializeApiManagementContentType, _contentTypeClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetContentTypes", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ApiManagementContentType.DeserializeApiManagementContentType, _contentTypeClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetContentTypes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Gets the details of the developer portal&apos;s content type. Content types describe content items&apos; properties, validation rules, and constraints.
+        /// Gets the details of the developer portal's content type. Content types describe content items' properties, validation rules, and constraints.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -2002,7 +2003,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Gets the details of the developer portal&apos;s content type. Content types describe content items&apos; properties, validation rules, and constraints.
+        /// Gets the details of the developer portal's content type. Content types describe content items' properties, validation rules, and constraints.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -2037,7 +2038,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Creates or updates the developer portal&apos;s content type. Content types describe content items&apos; properties, validation rules, and constraints. Custom content types&apos; identifiers need to start with the `c-` prefix. Built-in content types can&apos;t be modified.
+        /// Creates or updates the developer portal's content type. Content types describe content items' properties, validation rules, and constraints. Custom content types' identifiers need to start with the `c-` prefix. Built-in content types can't be modified.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -2073,7 +2074,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Creates or updates the developer portal&apos;s content type. Content types describe content items&apos; properties, validation rules, and constraints. Custom content types&apos; identifiers need to start with the `c-` prefix. Built-in content types can&apos;t be modified.
+        /// Creates or updates the developer portal's content type. Content types describe content items' properties, validation rules, and constraints. Custom content types' identifiers need to start with the `c-` prefix. Built-in content types can't be modified.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -2109,7 +2110,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Removes the specified developer portal&apos;s content type. Content types describe content items&apos; properties, validation rules, and constraints. Built-in content types (with identifiers starting with the `c-` prefix) can&apos;t be removed.
+        /// Removes the specified developer portal's content type. Content types describe content items' properties, validation rules, and constraints. Built-in content types (with identifiers starting with the `c-` prefix) can't be removed.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -2145,7 +2146,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Removes the specified developer portal&apos;s content type. Content types describe content items&apos; properties, validation rules, and constraints. Built-in content types (with identifiers starting with the `c-` prefix) can&apos;t be removed.
+        /// Removes the specified developer portal's content type. Content types describe content items' properties, validation rules, and constraints. Built-in content types (with identifiers starting with the `c-` prefix) can't be removed.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -2181,7 +2182,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Lists developer portal&apos;s content items specified by the provided content type.
+        /// Lists developer portal's content items specified by the provided content type.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -2204,11 +2205,11 @@ namespace Azure.ResourceManager.ApiManagement
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _contentItemRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _contentItemRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ApiManagementContentItem.DeserializeApiManagementContentItem, _contentItemClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetContentItems", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ApiManagementContentItem.DeserializeApiManagementContentItem, _contentItemClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetContentItems", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Lists developer portal&apos;s content items specified by the provided content type.
+        /// Lists developer portal's content items specified by the provided content type.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -2231,11 +2232,11 @@ namespace Azure.ResourceManager.ApiManagement
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _contentItemRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _contentItemRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, contentTypeId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ApiManagementContentItem.DeserializeApiManagementContentItem, _contentItemClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetContentItems", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ApiManagementContentItem.DeserializeApiManagementContentItem, _contentItemClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetContentItems", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Returns the entity state (ETag) version of the developer portal&apos;s content item specified by its identifier.
+        /// Returns the entity state (ETag) version of the developer portal's content item specified by its identifier.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -2272,7 +2273,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Returns the entity state (ETag) version of the developer portal&apos;s content item specified by its identifier.
+        /// Returns the entity state (ETag) version of the developer portal's content item specified by its identifier.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -2309,7 +2310,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Returns the developer portal&apos;s content item specified by its identifier.
+        /// Returns the developer portal's content item specified by its identifier.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -2346,7 +2347,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Returns the developer portal&apos;s content item specified by its identifier.
+        /// Returns the developer portal's content item specified by its identifier.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -2383,7 +2384,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Creates a new developer portal&apos;s content item specified by the provided content type.
+        /// Creates a new developer portal's content item specified by the provided content type.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -2421,7 +2422,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Creates a new developer portal&apos;s content item specified by the provided content type.
+        /// Creates a new developer portal's content item specified by the provided content type.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -2459,7 +2460,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Removes the specified developer portal&apos;s content item.
+        /// Removes the specified developer portal's content item.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -2497,7 +2498,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Removes the specified developer portal&apos;s content item.
+        /// Removes the specified developer portal's content item.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -2553,7 +2554,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementServiceSkusRestClient.CreateListAvailableServiceSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementServiceSkusRestClient.CreateListAvailableServiceSkusNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AvailableApiManagementServiceSkuResult.DeserializeAvailableApiManagementServiceSkuResult, _apiManagementServiceSkusClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetAvailableApiManagementServiceSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AvailableApiManagementServiceSkuResult.DeserializeAvailableApiManagementServiceSkuResult, _apiManagementServiceSkusClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetAvailableApiManagementServiceSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -2575,7 +2576,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementServiceSkusRestClient.CreateListAvailableServiceSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementServiceSkusRestClient.CreateListAvailableServiceSkusNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AvailableApiManagementServiceSkuResult.DeserializeAvailableApiManagementServiceSkuResult, _apiManagementServiceSkusClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetAvailableApiManagementServiceSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AvailableApiManagementServiceSkuResult.DeserializeAvailableApiManagementServiceSkuResult, _apiManagementServiceSkusClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetAvailableApiManagementServiceSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -2878,7 +2879,7 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual AsyncPageable<NetworkStatusContractWithLocation> GetNetworkStatusesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkStatusRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, NetworkStatusContractWithLocation.DeserializeNetworkStatusContractWithLocation, _networkStatusClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetNetworkStatuses", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, NetworkStatusContractWithLocation.DeserializeNetworkStatusContractWithLocation, _networkStatusClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetNetworkStatuses", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -2899,7 +2900,7 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual Pageable<NetworkStatusContractWithLocation> GetNetworkStatuses(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkStatusRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, NetworkStatusContractWithLocation.DeserializeNetworkStatusContractWithLocation, _networkStatusClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetNetworkStatuses", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, NetworkStatusContractWithLocation.DeserializeNetworkStatusContractWithLocation, _networkStatusClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetNetworkStatuses", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -2982,7 +2983,7 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual AsyncPageable<OutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpointsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _outboundNetworkDependenciesEndpointsRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, OutboundEnvironmentEndpoint.DeserializeOutboundEnvironmentEndpoint, _outboundNetworkDependenciesEndpointsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetOutboundNetworkDependenciesEndpoints", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, OutboundEnvironmentEndpoint.DeserializeOutboundEnvironmentEndpoint, _outboundNetworkDependenciesEndpointsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetOutboundNetworkDependenciesEndpoints", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -3003,7 +3004,7 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual Pageable<OutboundEnvironmentEndpoint> GetOutboundNetworkDependenciesEndpoints(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _outboundNetworkDependenciesEndpointsRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, OutboundEnvironmentEndpoint.DeserializeOutboundEnvironmentEndpoint, _outboundNetworkDependenciesEndpointsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetOutboundNetworkDependenciesEndpoints", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, OutboundEnvironmentEndpoint.DeserializeOutboundEnvironmentEndpoint, _outboundNetworkDependenciesEndpointsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetOutboundNetworkDependenciesEndpoints", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -3025,7 +3026,7 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual AsyncPageable<PolicyDescriptionContractData> GetPolicyDescriptionsAsync(PolicyScopeContract? scope = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _policyDescriptionRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scope);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PolicyDescriptionContractData.DeserializePolicyDescriptionContractData, _policyDescriptionClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetPolicyDescriptions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PolicyDescriptionContractData.DeserializePolicyDescriptionContractData, _policyDescriptionClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetPolicyDescriptions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -3047,7 +3048,7 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual Pageable<PolicyDescriptionContractData> GetPolicyDescriptions(PolicyScopeContract? scope = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _policyDescriptionRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scope);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, PolicyDescriptionContractData.DeserializePolicyDescriptionContractData, _policyDescriptionClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetPolicyDescriptions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, PolicyDescriptionContractData.DeserializePolicyDescriptionContractData, _policyDescriptionClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetPolicyDescriptions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -3068,7 +3069,7 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual AsyncPageable<PortalSettingsContractData> GetPortalSettingsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementServicePortalSettingsRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PortalSettingsContractData.DeserializePortalSettingsContractData, _apiManagementServicePortalSettingsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetPortalSettings", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PortalSettingsContractData.DeserializePortalSettingsContractData, _apiManagementServicePortalSettingsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetPortalSettings", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -3089,7 +3090,7 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual Pageable<PortalSettingsContractData> GetPortalSettings(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementServicePortalSettingsRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, PortalSettingsContractData.DeserializePortalSettingsContractData, _apiManagementServicePortalSettingsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetPortalSettings", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, PortalSettingsContractData.DeserializePortalSettingsContractData, _apiManagementServicePortalSettingsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetPortalSettings", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -3115,7 +3116,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementProductProductRestClient.CreateListByTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedProducts);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementProductProductRestClient.CreateListByTagsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedProducts);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, TagResourceContractDetails.DeserializeTagResourceContractDetails, _apiManagementProductProductClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetProductsByTags", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, TagResourceContractDetails.DeserializeTagResourceContractDetails, _apiManagementProductProductClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetProductsByTags", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -3141,7 +3142,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementProductProductRestClient.CreateListByTagsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedProducts);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementProductProductRestClient.CreateListByTagsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, includeNotTaggedProducts);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, TagResourceContractDetails.DeserializeTagResourceContractDetails, _apiManagementProductProductClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetProductsByTags", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, TagResourceContractDetails.DeserializeTagResourceContractDetails, _apiManagementProductProductClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetProductsByTags", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -3157,7 +3158,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="quotaCounterKey"> Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key=&quot;boo&quot; in the policy, then it’s accessible by &quot;boo&quot; counter key. But if it’s defined as counter-key=&quot;@(&quot;b&quot;+&quot;a&quot;)&quot; then it will be accessible by &quot;ba&quot; key. </param>
+        /// <param name="quotaCounterKey"> Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key="boo" in the policy, then it’s accessible by "boo" counter key. But if it’s defined as counter-key="@("b"+"a")" then it will be accessible by "ba" key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="quotaCounterKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="quotaCounterKey"/> is null. </exception>
@@ -3167,7 +3168,7 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(quotaCounterKey, nameof(quotaCounterKey));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _quotaByCounterKeysRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, quotaCounterKey);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, QuotaCounterContract.DeserializeQuotaCounterContract, _quotaByCounterKeysClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetQuotaByCounterKeys", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, QuotaCounterContract.DeserializeQuotaCounterContract, _quotaByCounterKeysClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetQuotaByCounterKeys", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -3183,7 +3184,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="quotaCounterKey"> Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key=&quot;boo&quot; in the policy, then it’s accessible by &quot;boo&quot; counter key. But if it’s defined as counter-key=&quot;@(&quot;b&quot;+&quot;a&quot;)&quot; then it will be accessible by &quot;ba&quot; key. </param>
+        /// <param name="quotaCounterKey"> Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key="boo" in the policy, then it’s accessible by "boo" counter key. But if it’s defined as counter-key="@("b"+"a")" then it will be accessible by "ba" key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="quotaCounterKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="quotaCounterKey"/> is null. </exception>
@@ -3193,7 +3194,7 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(quotaCounterKey, nameof(quotaCounterKey));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _quotaByCounterKeysRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, quotaCounterKey);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, QuotaCounterContract.DeserializeQuotaCounterContract, _quotaByCounterKeysClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetQuotaByCounterKeys", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, QuotaCounterContract.DeserializeQuotaCounterContract, _quotaByCounterKeysClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetQuotaByCounterKeys", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -3209,7 +3210,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="quotaCounterKey"> Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key=&quot;boo&quot; in the policy, then it’s accessible by &quot;boo&quot; counter key. But if it’s defined as counter-key=&quot;@(&quot;b&quot;+&quot;a&quot;)&quot; then it will be accessible by &quot;ba&quot; key. </param>
+        /// <param name="quotaCounterKey"> Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key="boo" in the policy, then it’s accessible by "boo" counter key. But if it’s defined as counter-key="@("b"+"a")" then it will be accessible by "ba" key. </param>
         /// <param name="content"> The value of the quota counter to be applied to all quota counter periods. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="quotaCounterKey"/> is an empty string, and was expected to be non-empty. </exception>
@@ -3221,7 +3222,7 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _quotaByCounterKeysRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, quotaCounterKey, content);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, QuotaCounterContract.DeserializeQuotaCounterContract, _quotaByCounterKeysClientDiagnostics, Pipeline, "ApiManagementServiceResource.UpdateQuotaByCounterKeys", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, QuotaCounterContract.DeserializeQuotaCounterContract, _quotaByCounterKeysClientDiagnostics, Pipeline, "ApiManagementServiceResource.UpdateQuotaByCounterKeys", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -3237,7 +3238,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="quotaCounterKey"> Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key=&quot;boo&quot; in the policy, then it’s accessible by &quot;boo&quot; counter key. But if it’s defined as counter-key=&quot;@(&quot;b&quot;+&quot;a&quot;)&quot; then it will be accessible by &quot;ba&quot; key. </param>
+        /// <param name="quotaCounterKey"> Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key="boo" in the policy, then it’s accessible by "boo" counter key. But if it’s defined as counter-key="@("b"+"a")" then it will be accessible by "ba" key. </param>
         /// <param name="content"> The value of the quota counter to be applied to all quota counter periods. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="quotaCounterKey"/> is an empty string, and was expected to be non-empty. </exception>
@@ -3249,7 +3250,7 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _quotaByCounterKeysRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, quotaCounterKey, content);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, QuotaCounterContract.DeserializeQuotaCounterContract, _quotaByCounterKeysClientDiagnostics, Pipeline, "ApiManagementServiceResource.UpdateQuotaByCounterKeys", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, QuotaCounterContract.DeserializeQuotaCounterContract, _quotaByCounterKeysClientDiagnostics, Pipeline, "ApiManagementServiceResource.UpdateQuotaByCounterKeys", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -3265,7 +3266,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="quotaCounterKey"> Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key=&quot;boo&quot; in the policy, then it’s accessible by &quot;boo&quot; counter key. But if it’s defined as counter-key=&quot;@(&quot;b&quot;+&quot;a&quot;)&quot; then it will be accessible by &quot;ba&quot; key. </param>
+        /// <param name="quotaCounterKey"> Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key="boo" in the policy, then it’s accessible by "boo" counter key. But if it’s defined as counter-key="@("b"+"a")" then it will be accessible by "ba" key. </param>
         /// <param name="quotaPeriodKey"> Quota period key identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="quotaCounterKey"/> or <paramref name="quotaPeriodKey"/> is an empty string, and was expected to be non-empty. </exception>
@@ -3302,7 +3303,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="quotaCounterKey"> Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key=&quot;boo&quot; in the policy, then it’s accessible by &quot;boo&quot; counter key. But if it’s defined as counter-key=&quot;@(&quot;b&quot;+&quot;a&quot;)&quot; then it will be accessible by &quot;ba&quot; key. </param>
+        /// <param name="quotaCounterKey"> Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key="boo" in the policy, then it’s accessible by "boo" counter key. But if it’s defined as counter-key="@("b"+"a")" then it will be accessible by "ba" key. </param>
         /// <param name="quotaPeriodKey"> Quota period key identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="quotaCounterKey"/> or <paramref name="quotaPeriodKey"/> is an empty string, and was expected to be non-empty. </exception>
@@ -3339,7 +3340,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="quotaCounterKey"> Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key=&quot;boo&quot; in the policy, then it’s accessible by &quot;boo&quot; counter key. But if it’s defined as counter-key=&quot;@(&quot;b&quot;+&quot;a&quot;)&quot; then it will be accessible by &quot;ba&quot; key. </param>
+        /// <param name="quotaCounterKey"> Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key="boo" in the policy, then it’s accessible by "boo" counter key. But if it’s defined as counter-key="@("b"+"a")" then it will be accessible by "ba" key. </param>
         /// <param name="quotaPeriodKey"> Quota period key identifier. </param>
         /// <param name="content"> The value of the Quota counter to be applied on the specified period. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -3378,7 +3379,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="quotaCounterKey"> Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key=&quot;boo&quot; in the policy, then it’s accessible by &quot;boo&quot; counter key. But if it’s defined as counter-key=&quot;@(&quot;b&quot;+&quot;a&quot;)&quot; then it will be accessible by &quot;ba&quot; key. </param>
+        /// <param name="quotaCounterKey"> Quota counter key identifier.This is the result of expression defined in counter-key attribute of the quota-by-key policy.For Example, if you specify counter-key="boo" in the policy, then it’s accessible by "boo" counter key. But if it’s defined as counter-key="@("b"+"a")" then it will be accessible by "ba" key. </param>
         /// <param name="quotaPeriodKey"> Quota period key identifier. </param>
         /// <param name="content"> The value of the Quota counter to be applied on the specified period. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -3423,7 +3424,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _regionRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _regionRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, RegionContract.DeserializeRegionContract, _regionClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetRegions", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, RegionContract.DeserializeRegionContract, _regionClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetRegions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -3445,7 +3446,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _regionRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _regionRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, RegionContract.DeserializeRegionContract, _regionClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetRegions", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, RegionContract.DeserializeRegionContract, _regionClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetRegions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -3474,7 +3475,7 @@ namespace Azure.ResourceManager.ApiManagement
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByApiRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportsRestClient.CreateListByApiNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ReportRecordContract.DeserializeReportRecordContract, _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByApi", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ReportRecordContract.DeserializeReportRecordContract, _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByApi", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -3503,7 +3504,7 @@ namespace Azure.ResourceManager.ApiManagement
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByApiRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportsRestClient.CreateListByApiNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ReportRecordContract.DeserializeReportRecordContract, _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByApi", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ReportRecordContract.DeserializeReportRecordContract, _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByApi", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -3532,7 +3533,7 @@ namespace Azure.ResourceManager.ApiManagement
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByUserRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportsRestClient.CreateListByUserNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ReportRecordContract.DeserializeReportRecordContract, _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByUser", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ReportRecordContract.DeserializeReportRecordContract, _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByUser", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -3561,7 +3562,7 @@ namespace Azure.ResourceManager.ApiManagement
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByUserRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportsRestClient.CreateListByUserNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ReportRecordContract.DeserializeReportRecordContract, _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByUser", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ReportRecordContract.DeserializeReportRecordContract, _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByUser", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -3590,7 +3591,7 @@ namespace Azure.ResourceManager.ApiManagement
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportsRestClient.CreateListByOperationNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ReportRecordContract.DeserializeReportRecordContract, _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByOperation", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ReportRecordContract.DeserializeReportRecordContract, _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByOperation", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -3619,7 +3620,7 @@ namespace Azure.ResourceManager.ApiManagement
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportsRestClient.CreateListByOperationNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ReportRecordContract.DeserializeReportRecordContract, _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByOperation", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ReportRecordContract.DeserializeReportRecordContract, _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByOperation", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -3648,7 +3649,7 @@ namespace Azure.ResourceManager.ApiManagement
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByProductRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportsRestClient.CreateListByProductNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ReportRecordContract.DeserializeReportRecordContract, _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByProduct", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ReportRecordContract.DeserializeReportRecordContract, _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByProduct", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -3677,7 +3678,7 @@ namespace Azure.ResourceManager.ApiManagement
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByProductRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportsRestClient.CreateListByProductNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ReportRecordContract.DeserializeReportRecordContract, _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByProduct", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ReportRecordContract.DeserializeReportRecordContract, _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByProduct", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -3705,7 +3706,7 @@ namespace Azure.ResourceManager.ApiManagement
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByGeoRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportsRestClient.CreateListByGeoNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ReportRecordContract.DeserializeReportRecordContract, _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByGeo", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ReportRecordContract.DeserializeReportRecordContract, _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByGeo", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -3733,7 +3734,7 @@ namespace Azure.ResourceManager.ApiManagement
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByGeoRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportsRestClient.CreateListByGeoNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ReportRecordContract.DeserializeReportRecordContract, _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByGeo", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ReportRecordContract.DeserializeReportRecordContract, _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByGeo", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -3762,7 +3763,7 @@ namespace Azure.ResourceManager.ApiManagement
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ReportRecordContract.DeserializeReportRecordContract, _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsBySubscription", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ReportRecordContract.DeserializeReportRecordContract, _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsBySubscription", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -3791,7 +3792,7 @@ namespace Azure.ResourceManager.ApiManagement
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, orderBy);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ReportRecordContract.DeserializeReportRecordContract, _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsBySubscription", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ReportRecordContract.DeserializeReportRecordContract, _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsBySubscription", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -3821,7 +3822,7 @@ namespace Azure.ResourceManager.ApiManagement
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByTimeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, interval, top, skip, orderBy);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportsRestClient.CreateListByTimeNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, interval, top, skip, orderBy);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ReportRecordContract.DeserializeReportRecordContract, _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByTime", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ReportRecordContract.DeserializeReportRecordContract, _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByTime", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -3851,7 +3852,7 @@ namespace Azure.ResourceManager.ApiManagement
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByTimeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, interval, top, skip, orderBy);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reportsRestClient.CreateListByTimeNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, interval, top, skip, orderBy);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ReportRecordContract.DeserializeReportRecordContract, _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByTime", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ReportRecordContract.DeserializeReportRecordContract, _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByTime", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -3878,7 +3879,7 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByRequestRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RequestReportRecordContract.DeserializeRequestReportRecordContract, _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByRequest", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RequestReportRecordContract.DeserializeRequestReportRecordContract, _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByRequest", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -3905,7 +3906,7 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNull(filter, nameof(filter));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reportsRestClient.CreateListByRequestRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, RequestReportRecordContract.DeserializeRequestReportRecordContract, _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByRequest", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, RequestReportRecordContract.DeserializeRequestReportRecordContract, _reportsClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetReportsByRequest", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -3930,7 +3931,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _tagResourceRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _tagResourceRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, TagResourceContractDetails.DeserializeTagResourceContractDetails, _tagResourceClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetTagResources", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, TagResourceContractDetails.DeserializeTagResourceContractDetails, _tagResourceClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetTagResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -3955,7 +3956,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _tagResourceRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _tagResourceRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, TagResourceContractDetails.DeserializeTagResourceContractDetails, _tagResourceClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetTagResources", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, TagResourceContractDetails.DeserializeTagResourceContractDetails, _tagResourceClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetTagResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
         }
 
         /// <summary> Initializes a new instance of NotificationHubGcmCredential. </summary>
-        /// <param name="gcmEndpoint"> The FCM legacy endpoint. Default value is &apos;https://fcm.googleapis.com/fcm/send&apos;. </param>
+        /// <param name="gcmEndpoint"> The FCM legacy endpoint. Default value is 'https://fcm.googleapis.com/fcm/send'. </param>
         /// <param name="gcmApiKey"> The Google API key. </param>
         internal NotificationHubGcmCredential(Uri gcmEndpoint, string gcmApiKey)
         {
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             GcmApiKey = gcmApiKey;
         }
 
-        /// <summary> The FCM legacy endpoint. Default value is &apos;https://fcm.googleapis.com/fcm/send&apos;. </summary>
+        /// <summary> The FCM legacy endpoint. Default value is 'https://fcm.googleapis.com/fcm/send'. </summary>
         public Uri GcmEndpoint { get; set; }
         /// <summary> The Google API key. </summary>
         public string GcmApiKey { get; set; }

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -228,7 +229,7 @@ namespace Azure.ResourceManager.Elastic
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticMonitorResourceMonitorsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticMonitorResourceMonitorsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ElasticMonitorResource(Client, ElasticMonitorResourceData.DeserializeElasticMonitorResourceData(e)), _elasticMonitorResourceMonitorsClientDiagnostics, Pipeline, "ElasticMonitorResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ElasticMonitorResource(Client, ElasticMonitorResourceData.DeserializeElasticMonitorResourceData(e)), _elasticMonitorResourceMonitorsClientDiagnostics, Pipeline, "ElasticMonitorResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +251,7 @@ namespace Azure.ResourceManager.Elastic
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticMonitorResourceMonitorsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _elasticMonitorResourceMonitorsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ElasticMonitorResource(Client, ElasticMonitorResourceData.DeserializeElasticMonitorResourceData(e)), _elasticMonitorResourceMonitorsClientDiagnostics, Pipeline, "ElasticMonitorResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ElasticMonitorResource(Client, ElasticMonitorResourceData.DeserializeElasticMonitorResourceData(e)), _elasticMonitorResourceMonitorsClientDiagnostics, Pipeline, "ElasticMonitorResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -315,6 +316,80 @@ namespace Azure.ResourceManager.Elastic
             {
                 var response = _elasticMonitorResourceMonitorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, monitorName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Monitors_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ElasticMonitorResource>> GetIfExistsAsync(string monitorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+
+            using var scope = _elasticMonitorResourceMonitorsClientDiagnostics.CreateScope("ElasticMonitorResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _elasticMonitorResourceMonitorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, monitorName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ElasticMonitorResource>(response.GetRawResponse());
+                return Response.FromValue(new ElasticMonitorResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Elastic/monitors/{monitorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Monitors_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="monitorName"> Monitor resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
+        public virtual NullableResponse<ElasticMonitorResource> GetIfExists(string monitorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(monitorName, nameof(monitorName));
+
+            using var scope = _elasticMonitorResourceMonitorsClientDiagnostics.CreateScope("ElasticMonitorResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _elasticMonitorResourceMonitorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, monitorName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ElasticMonitorResource>(response.GetRawResponse());
+                return Response.FromValue(new ElasticMonitorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

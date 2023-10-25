@@ -23,7 +23,8 @@ namespace Azure.ResourceManager.DnsResolver
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("virtualNetwork"u8);
-            JsonSerializer.Serialize(writer, VirtualNetwork); if (Optional.IsCollectionDefined(Metadata))
+            JsonSerializer.Serialize(writer, VirtualNetwork);
+            if (Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
@@ -40,6 +41,10 @@ namespace Azure.ResourceManager.DnsResolver
 
         internal static DnsForwardingRulesetVirtualNetworkLinkData DeserializeDnsForwardingRulesetVirtualNetworkLinkData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -54,7 +59,6 @@ namespace Azure.ResourceManager.DnsResolver
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -79,7 +83,6 @@ namespace Azure.ResourceManager.DnsResolver
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -103,7 +106,6 @@ namespace Azure.ResourceManager.DnsResolver
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -118,7 +120,6 @@ namespace Azure.ResourceManager.DnsResolver
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new DnsResolverProvisioningState(property0.Value.GetString());

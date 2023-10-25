@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static StoragePermissionScope DeserializeStoragePermissionScope(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string permissions = default;
             string service = default;
             string resourceName = default;

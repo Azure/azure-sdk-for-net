@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static DataExportDetails DeserializeDataExportDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             TransferConfiguration transferConfiguration = default;
             Optional<LogCollectionLevel> logCollectionLevel = default;
             DataAccountDetails accountDetails = default;
@@ -43,7 +47,6 @@ namespace Azure.ResourceManager.DataBox.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     logCollectionLevel = property.Value.GetString().ToLogCollectionLevel();

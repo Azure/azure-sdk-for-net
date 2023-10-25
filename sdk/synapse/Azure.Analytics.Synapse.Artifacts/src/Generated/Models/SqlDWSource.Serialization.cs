@@ -34,6 +34,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("storedProcedureParameters"u8);
                 writer.WriteObjectValue(StoredProcedureParameters);
             }
+            if (Optional.IsDefined(IsolationLevel))
+            {
+                writer.WritePropertyName("isolationLevel"u8);
+                writer.WriteObjectValue(IsolationLevel);
+            }
             if (Optional.IsDefined(PartitionOption))
             {
                 writer.WritePropertyName("partitionOption"u8);
@@ -81,9 +86,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SqlDWSource DeserializeSqlDWSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> sqlReaderQuery = default;
             Optional<object> sqlReaderStoredProcedureName = default;
             Optional<object> storedProcedureParameters = default;
+            Optional<object> isolationLevel = default;
             Optional<object> partitionOption = default;
             Optional<SqlPartitionSettings> partitionSettings = default;
             Optional<object> queryTimeout = default;
@@ -100,7 +110,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sqlReaderQuery = property.Value.GetObject();
@@ -110,7 +119,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sqlReaderStoredProcedureName = property.Value.GetObject();
@@ -120,17 +128,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     storedProcedureParameters = property.Value.GetObject();
+                    continue;
+                }
+                if (property.NameEquals("isolationLevel"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isolationLevel = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("partitionOption"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     partitionOption = property.Value.GetObject();
@@ -140,7 +155,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     partitionSettings = SqlPartitionSettings.DeserializeSqlPartitionSettings(property.Value);
@@ -150,7 +164,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     queryTimeout = property.Value.GetObject();
@@ -160,7 +173,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     additionalColumns = property.Value.GetObject();
@@ -175,7 +187,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sourceRetryCount = property.Value.GetObject();
@@ -185,7 +196,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sourceRetryWait = property.Value.GetObject();
@@ -195,7 +205,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxConcurrentConnections = property.Value.GetObject();
@@ -204,7 +213,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SqlDWSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value, sqlReaderQuery.Value, sqlReaderStoredProcedureName.Value, storedProcedureParameters.Value, partitionOption.Value, partitionSettings.Value);
+            return new SqlDWSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value, sqlReaderQuery.Value, sqlReaderStoredProcedureName.Value, storedProcedureParameters.Value, isolationLevel.Value, partitionOption.Value, partitionSettings.Value);
         }
 
         internal partial class SqlDWSourceConverter : JsonConverter<SqlDWSource>

@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    /// <summary> A class representing the WorkloadNetworkPublicIP data model. </summary>
+    /// <summary>
+    /// A class representing the WorkloadNetworkPublicIP data model.
+    /// NSX Public IP Block
+    /// </summary>
     public partial class WorkloadNetworkPublicIPData : ResourceData
     {
         /// <summary> Initializes a new instance of WorkloadNetworkPublicIPData. </summary>

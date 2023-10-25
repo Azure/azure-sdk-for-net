@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Logic.Models
     {
         internal static IntegrationAccountAssemblyList DeserializeIntegrationAccountAssemblyList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<IntegrationAccountAssemblyDefinitionData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<IntegrationAccountAssemblyDefinitionData> array = new List<IntegrationAccountAssemblyDefinitionData>();

@@ -16,12 +16,8 @@
   </ItemGroup>
 
    <ItemGroup>
-    <PackageReference Include="CommandLineParser" />
-    <PackageReference Include="Microsoft.Azure.Management.EventHub" />
-    <PackageReference Include="Microsoft.Azure.Management.ResourceManager" />
-    <PackageReference Include="Microsoft.Azure.Management.Storage" />
-    <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" />
-    <PackageReference Include="Polly" />
+     <PackageReference Include="Azure.ResourceManager.EventHubs" />
+     <PackageReference Include="CommandLineParser" />
   </ItemGroup>
 
   <ItemGroup>

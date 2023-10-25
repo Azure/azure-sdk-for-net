@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppComplianceAutomation
 {
-    /// <summary> A class representing the SnapshotResource data model. </summary>
+    /// <summary>
+    /// A class representing the SnapshotResource data model.
+    /// A class represent a AppComplianceAutomation snapshot resource.
+    /// </summary>
     public partial class SnapshotResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of SnapshotResourceData. </summary>
@@ -24,13 +27,13 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Snapshot&apos;s property&apos;. </param>
+        /// <param name="properties"> Snapshot's property'. </param>
         internal SnapshotResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SnapshotProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
-        /// <summary> Snapshot&apos;s property&apos;. </summary>
+        /// <summary> Snapshot's property'. </summary>
         public SnapshotProperties Properties { get; }
     }
 }

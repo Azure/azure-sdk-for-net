@@ -19,15 +19,30 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStringValue(IncomingCallContext);
             writer.WritePropertyName("callbackUri"u8);
             writer.WriteStringValue(CallbackUri);
+            if (Optional.IsDefined(OperationContext))
+            {
+                writer.WritePropertyName("operationContext"u8);
+                writer.WriteStringValue(OperationContext);
+            }
             if (Optional.IsDefined(MediaStreamingConfiguration))
             {
                 writer.WritePropertyName("mediaStreamingConfiguration"u8);
                 writer.WriteObjectValue(MediaStreamingConfiguration);
             }
+            if (Optional.IsDefined(TranscriptionConfiguration))
+            {
+                writer.WritePropertyName("transcriptionConfiguration"u8);
+                writer.WriteObjectValue(TranscriptionConfiguration);
+            }
             if (Optional.IsDefined(AzureCognitiveServicesEndpointUrl))
             {
                 writer.WritePropertyName("azureCognitiveServicesEndpointUrl"u8);
                 writer.WriteStringValue(AzureCognitiveServicesEndpointUrl);
+            }
+            if (Optional.IsDefined(AnsweredByIdentifier))
+            {
+                writer.WritePropertyName("answeredByIdentifier"u8);
+                writer.WriteObjectValue(AnsweredByIdentifier);
             }
             writer.WriteEndObject();
         }

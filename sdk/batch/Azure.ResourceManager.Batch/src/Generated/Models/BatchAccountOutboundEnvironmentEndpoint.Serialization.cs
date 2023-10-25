@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Batch.Models
     {
         internal static BatchAccountOutboundEnvironmentEndpoint DeserializeBatchAccountOutboundEnvironmentEndpoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> category = default;
             Optional<IReadOnlyList<BatchAccountEndpointDependency>> endpoints = default;
             foreach (var property in element.EnumerateObject())
@@ -28,7 +32,6 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<BatchAccountEndpointDependency> array = new List<BatchAccountEndpointDependency>();

@@ -14,9 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static FabricReplicationGroupTaskDetails DeserializeFabricReplicationGroupTaskDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> skippedReason = default;
             Optional<string> skippedReasonString = default;
-            Optional<JobEntity> jobTask = default;
+            Optional<SiteRecoveryJobEntity> jobTask = default;
             string instanceType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -34,10 +38,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    jobTask = JobEntity.DeserializeJobEntity(property.Value);
+                    jobTask = SiteRecoveryJobEntity.DeserializeSiteRecoveryJobEntity(property.Value);
                     continue;
                 }
                 if (property.NameEquals("instanceType"u8))

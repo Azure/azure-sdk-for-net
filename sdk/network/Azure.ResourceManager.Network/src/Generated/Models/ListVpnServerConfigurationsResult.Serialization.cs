@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ListVpnServerConfigurationsResult DeserializeListVpnServerConfigurationsResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<VpnServerConfigurationData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<VpnServerConfigurationData> array = new List<VpnServerConfigurationData>();

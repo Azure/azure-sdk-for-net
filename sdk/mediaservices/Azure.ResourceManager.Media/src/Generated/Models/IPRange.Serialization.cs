@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static IPRange DeserializeIPRange(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<IPAddress> address = default;
             Optional<int> subnetPrefixLength = default;
@@ -50,7 +54,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     address = IPAddress.Parse(property.Value.GetString());
@@ -60,7 +63,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     subnetPrefixLength = property.Value.GetInt32();

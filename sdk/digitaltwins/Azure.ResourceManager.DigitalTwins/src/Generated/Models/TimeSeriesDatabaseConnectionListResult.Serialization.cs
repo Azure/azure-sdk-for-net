@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DigitalTwins.Models
     {
         internal static TimeSeriesDatabaseConnectionListResult DeserializeTimeSeriesDatabaseConnectionListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             Optional<IReadOnlyList<TimeSeriesDatabaseConnectionData>> value = default;
             foreach (var property in element.EnumerateObject())
@@ -34,7 +38,6 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TimeSeriesDatabaseConnectionData> array = new List<TimeSeriesDatabaseConnectionData>();

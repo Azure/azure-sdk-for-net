@@ -70,7 +70,7 @@ namespace Azure.AI.FormRecognizer.Models
             Id = operationId;
             _serviceClient = client.ServiceClient;
             _diagnostics = client.Diagnostics;
-            _operationInternal = new(_diagnostics, this, rawResponse: null);
+            _operationInternal = new(this, _diagnostics, rawResponse: null);
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace Azure.AI.FormRecognizer.Models
         {
             _serviceClient = serviceClient;
             _diagnostics = diagnostics;
-            _operationInternal = new(_diagnostics, this, rawResponse: null);
+            _operationInternal = new(this, _diagnostics, rawResponse: null);
 
             // TODO: Add validation here
             // https://github.com/Azure/azure-sdk-for-net/issues/11505
@@ -163,9 +163,7 @@ namespace Azure.AI.FormRecognizer.Models
             }
             else if (status == OperationStatus.Failed)
             {
-                RequestFailedException requestFailedException = await ClientCommon
-                    .CreateExceptionForFailedOperationAsync(async, _diagnostics, rawResponse, response.Value.AnalyzeResult.Errors)
-                    .ConfigureAwait(false);
+                RequestFailedException requestFailedException = ClientCommon.CreateExceptionForFailedOperation(rawResponse, response.Value.AnalyzeResult.Errors);
 
                 return OperationState<RecognizedFormCollection>.Failure(rawResponse, requestFailedException);
             }

@@ -46,6 +46,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static NotebookMetadata DeserializeNotebookMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<NotebookKernelSpec> kernelspec = default;
             Optional<NotebookLanguageInfo> languageInfo = default;
             IDictionary<string, object> additionalProperties = default;
@@ -56,7 +60,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     kernelspec = NotebookKernelSpec.DeserializeNotebookKernelSpec(property.Value);

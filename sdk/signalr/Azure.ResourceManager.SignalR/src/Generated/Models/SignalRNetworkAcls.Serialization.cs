@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.SignalR.Models
 
         internal static SignalRNetworkAcls DeserializeSignalRNetworkAcls(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SignalRNetworkAclAction> defaultAction = default;
             Optional<SignalRNetworkAcl> publicNetwork = default;
             Optional<IList<SignalRPrivateEndpointAcl>> privateEndpoints = default;
@@ -50,7 +54,6 @@ namespace Azure.ResourceManager.SignalR.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     defaultAction = new SignalRNetworkAclAction(property.Value.GetString());
@@ -60,7 +63,6 @@ namespace Azure.ResourceManager.SignalR.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     publicNetwork = SignalRNetworkAcl.DeserializeSignalRNetworkAcl(property.Value);
@@ -70,7 +72,6 @@ namespace Azure.ResourceManager.SignalR.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SignalRPrivateEndpointAcl> array = new List<SignalRPrivateEndpointAcl>();

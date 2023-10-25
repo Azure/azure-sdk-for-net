@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Maps.Routing.Models
 {
-    /// <summary> Type of the incident. Can currently be JAM, ROAD_WORK, ROAD_CLOSURE, or OTHER. See &quot;tec&quot; for detailed information. </summary>
+    /// <summary> Type of the incident. Can currently be JAM, ROAD_WORK, ROAD_CLOSURE, or OTHER. See "tec" for detailed information. </summary>
     public readonly partial struct TrafficIncidentCategory : IEquatable<TrafficIncidentCategory>
     {
         private readonly string _value;

@@ -12,7 +12,10 @@ using Azure.ResourceManager.MySql.Models;
 
 namespace Azure.ResourceManager.MySql
 {
-    /// <summary> A class representing the MySqlServerSecurityAlertPolicy data model. </summary>
+    /// <summary>
+    /// A class representing the MySqlServerSecurityAlertPolicy data model.
+    /// A server security alert policy.
+    /// </summary>
     public partial class MySqlServerSecurityAlertPolicyData : ResourceData
     {
         /// <summary> Initializes a new instance of MySqlServerSecurityAlertPolicyData. </summary>

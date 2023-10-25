@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayUrlConfiguration DeserializeApplicationGatewayUrlConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> modifiedPath = default;
             Optional<string> modifiedQueryString = default;
             Optional<bool> reroute = default;
@@ -54,7 +58,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     reroute = property.Value.GetBoolean();

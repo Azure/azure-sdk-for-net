@@ -29,6 +29,11 @@ namespace Azure.ResourceManager.Redis.Models
                 writer.WritePropertyName("preferred-data-archive-auth-method"u8);
                 writer.WriteStringValue(PreferredDataArchiveAuthMethod);
             }
+            if (Optional.IsDefined(StorageSubscriptionId))
+            {
+                writer.WritePropertyName("storage-subscription-id"u8);
+                writer.WriteStringValue(StorageSubscriptionId);
+            }
             writer.WriteEndObject();
         }
     }

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.3.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,34 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0 (2023-06-24)
+
+### Features Added
+
+- Enable Persistence(aof/rdb) on storage account in a different subscription than the cache via Managed Identity Auth Type. RedisConfiguration has a new property storage-subscription-id.
+
+### Bugs Fixed
+
+- Updated validation to ensure access to storage account while enabling persistence.
+
+## 1.2.0-beta.1 (2023-05-31)
+
+### Features Added
+
+- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.32.0.
+- Upgraded dependent Azure.ResourceManager to 1.6.0.
+
+## 1.1.1 (2023-02-20)
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.28.0`.
+- Upgraded dependent `Azure.ResourceManager` to `1.4.0`.
 
 ## 1.1.0 (2022-11-10)
 

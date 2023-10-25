@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         internal static LinkerSecretStore DeserializeLinkerSecretStore(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> keyVaultId = default;
             foreach (var property in element.EnumerateObject())
             {

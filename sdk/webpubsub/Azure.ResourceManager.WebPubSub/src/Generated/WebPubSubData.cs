@@ -12,7 +12,10 @@ using Azure.ResourceManager.WebPubSub.Models;
 
 namespace Azure.ResourceManager.WebPubSub
 {
-    /// <summary> A class representing the WebPubSub data model. </summary>
+    /// <summary>
+    /// A class representing the WebPubSub data model.
+    /// A class represent a resource.
+    /// </summary>
     public partial class WebPubSubData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of WebPubSubData. </summary>
@@ -46,19 +49,19 @@ namespace Azure.ResourceManager.WebPubSub
         /// <param name="resourceLogConfiguration"> Resource log configuration of a Microsoft.SignalRService resource. </param>
         /// <param name="networkAcls"> Network ACLs for the resource. </param>
         /// <param name="publicNetworkAccess">
-        /// Enable or disable public network access. Default to &quot;Enabled&quot;.
-        /// When it&apos;s Enabled, network ACLs still apply.
-        /// When it&apos;s Disabled, public network access is always disabled no matter what you set in network ACLs.
+        /// Enable or disable public network access. Default to "Enabled".
+        /// When it's Enabled, network ACLs still apply.
+        /// When it's Disabled, public network access is always disabled no matter what you set in network ACLs.
         /// </param>
         /// <param name="isLocalAuthDisabled">
         /// DisableLocalAuth
         /// Enable or disable local auth with AccessKey
-        /// When set as true, connection with AccessKey=xxx won&apos;t work.
+        /// When set as true, connection with AccessKey=xxx won't work.
         /// </param>
         /// <param name="isAadAuthDisabled">
         /// DisableLocalAuth
         /// Enable or disable aad auth
-        /// When set as true, connection with AuthType=aad won&apos;t work.
+        /// When set as true, connection with AuthType=aad won't work.
         /// </param>
         internal WebPubSubData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, BillingInfoSku sku, ManagedServiceIdentity identity, WebPubSubProvisioningState? provisioningState, string externalIP, string hostName, int? publicPort, int? serverPort, string version, IReadOnlyList<WebPubSubPrivateEndpointConnectionData> privateEndpointConnections, IReadOnlyList<WebPubSubSharedPrivateLinkData> sharedPrivateLinkResources, WebPubSubTlsSettings tls, string hostNamePrefix, LiveTraceConfiguration liveTraceConfiguration, ResourceLogConfiguration resourceLogConfiguration, WebPubSubNetworkAcls networkAcls, string publicNetworkAccess, bool? isLocalAuthDisabled, bool? isAadAuthDisabled) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -136,21 +139,21 @@ namespace Azure.ResourceManager.WebPubSub
         /// <summary> Network ACLs for the resource. </summary>
         public WebPubSubNetworkAcls NetworkAcls { get; set; }
         /// <summary>
-        /// Enable or disable public network access. Default to &quot;Enabled&quot;.
-        /// When it&apos;s Enabled, network ACLs still apply.
-        /// When it&apos;s Disabled, public network access is always disabled no matter what you set in network ACLs.
+        /// Enable or disable public network access. Default to "Enabled".
+        /// When it's Enabled, network ACLs still apply.
+        /// When it's Disabled, public network access is always disabled no matter what you set in network ACLs.
         /// </summary>
         public string PublicNetworkAccess { get; set; }
         /// <summary>
         /// DisableLocalAuth
         /// Enable or disable local auth with AccessKey
-        /// When set as true, connection with AccessKey=xxx won&apos;t work.
+        /// When set as true, connection with AccessKey=xxx won't work.
         /// </summary>
         public bool? IsLocalAuthDisabled { get; set; }
         /// <summary>
         /// DisableLocalAuth
         /// Enable or disable aad auth
-        /// When set as true, connection with AuthType=aad won&apos;t work.
+        /// When set as true, connection with AuthType=aad won't work.
         /// </summary>
         public bool? IsAadAuthDisabled { get; set; }
     }

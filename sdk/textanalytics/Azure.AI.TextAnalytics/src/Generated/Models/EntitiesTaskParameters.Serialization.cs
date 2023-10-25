@@ -35,6 +35,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static EntitiesTaskParameters DeserializeEntitiesTaskParameters(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StringIndexType> stringIndexType = default;
             Optional<string> modelVersion = default;
             Optional<bool> loggingOptOut = default;
@@ -44,7 +48,6 @@ namespace Azure.AI.TextAnalytics.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     stringIndexType = new StringIndexType(property.Value.GetString());
@@ -59,7 +62,6 @@ namespace Azure.AI.TextAnalytics.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     loggingOptOut = property.Value.GetBoolean();

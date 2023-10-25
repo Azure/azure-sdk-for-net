@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static TaskSchedulingPolicy DeserializeTaskSchedulingPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             BatchNodeFillType nodeFillType = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.NetworkFunction.Models
 
         internal static IngestionPolicyPropertiesFormat DeserializeIngestionPolicyPropertiesFormat(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IngestionType> ingestionType = default;
             Optional<IList<IngestionSourcesPropertiesFormat>> ingestionSources = default;
             foreach (var property in element.EnumerateObject())
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ingestionType = new IngestionType(property.Value.GetString());
@@ -54,7 +57,6 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<IngestionSourcesPropertiesFormat> array = new List<IngestionSourcesPropertiesFormat>();

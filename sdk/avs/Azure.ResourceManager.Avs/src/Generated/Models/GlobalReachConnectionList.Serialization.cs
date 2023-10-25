@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Avs.Models
     {
         internal static GlobalReachConnectionList DeserializeGlobalReachConnectionList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<GlobalReachConnectionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.Avs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<GlobalReachConnectionData> array = new List<GlobalReachConnectionData>();

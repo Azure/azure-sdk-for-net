@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateVirtualNetworkGatewayConnectionS2S()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/VirtualNetworkGatewayConnectionCreate.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-05-01/examples/VirtualNetworkGatewayConnectionCreate.json
             // this example is just showing the usage of "VirtualNetworkGatewayConnections_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -113,6 +113,10 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/M
                 ConnectionMode = VirtualNetworkGatewayConnectionMode.Default,
                 SharedKey = "Abc123",
                 EnableBgp = false,
+                GatewayCustomBgpIPAddresses =
+{
+new GatewayCustomBgpIPAddressIPConfiguration("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworkGateways/vpngw/ipConfigurations/default","169.254.21.1"),new GatewayCustomBgpIPAddressIPConfiguration("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworkGateways/vpngw/ipConfigurations/ActiveActive","169.254.21.3")
+},
                 UsePolicyBasedTrafficSelectors = false,
                 IPsecPolicies =
 {
@@ -137,7 +141,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/M
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetVirtualNetworkGatewayConnection()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/VirtualNetworkGatewayConnectionGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-05-01/examples/VirtualNetworkGatewayConnectionGet.json
             // this example is just showing the usage of "VirtualNetworkGatewayConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -171,7 +175,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/M
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetVirtualNetworkGatewayConnection()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/VirtualNetworkGatewayConnectionGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-05-01/examples/VirtualNetworkGatewayConnectionGet.json
             // this example is just showing the usage of "VirtualNetworkGatewayConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -196,12 +200,54 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/M
             Console.WriteLine($"Succeeded: {result}");
         }
 
+        // GetVirtualNetworkGatewayConnection
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_GetVirtualNetworkGatewayConnection()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-05-01/examples/VirtualNetworkGatewayConnectionGet.json
+            // this example is just showing the usage of "VirtualNetworkGatewayConnections_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this VirtualNetworkGatewayConnectionResource
+            VirtualNetworkGatewayConnectionCollection collection = resourceGroupResource.GetVirtualNetworkGatewayConnections();
+
+            // invoke the operation
+            string virtualNetworkGatewayConnectionName = "connS2S";
+            NullableResponse<VirtualNetworkGatewayConnectionResource> response = await collection.GetIfExistsAsync(virtualNetworkGatewayConnectionName);
+            VirtualNetworkGatewayConnectionResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                VirtualNetworkGatewayConnectionData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
         // ListVirtualNetworkGatewayConnectionsinResourceGroup
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListVirtualNetworkGatewayConnectionsinResourceGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2021-02-01/examples/VirtualNetworkGatewayConnectionsList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-05-01/examples/VirtualNetworkGatewayConnectionsList.json
             // this example is just showing the usage of "VirtualNetworkGatewayConnections_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

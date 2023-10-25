@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> Specifies the EncryptionType of the managed disk. &lt;br&gt; It is set to DiskWithVMGuestState for encryption of the managed disk along with VMGuestState blob, and VMGuestStateOnly for encryption of just the VMGuestState blob. &lt;br&gt;&lt;br&gt; NOTE: It can be set for only Confidential VMs. </summary>
+    /// <summary> Specifies the EncryptionType of the managed disk. It is set to DiskWithVMGuestState for encryption of the managed disk along with VMGuestState blob, and VMGuestStateOnly for encryption of just the VMGuestState blob. **Note:** It can be set for only Confidential VMs. </summary>
     public readonly partial struct SecurityEncryptionType : IEquatable<SecurityEncryptionType>
     {
         private readonly string _value;

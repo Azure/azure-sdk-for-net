@@ -33,6 +33,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static LegalHold DeserializeLegalHold(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> hasLegalHold = default;
             IList<string> tags = default;
             Optional<bool> allowProtectedAppendWritesAll = default;
@@ -42,7 +46,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     hasLegalHold = property.Value.GetBoolean();
@@ -62,7 +65,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     allowProtectedAppendWritesAll = property.Value.GetBoolean();

@@ -54,8 +54,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
                 // ResponseSchema ?? string.Empty,
                 ResponseTemplate ?? string.Empty);
 
-            responseInfo.SetValue(eventRequest, eventResponse);
-
             if (args != null && args.Length != 0)
             {
                 eventRequest.InstanceCreated(args);
@@ -75,6 +73,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
             {
                 Helpers.ValidateGraph(eventRequest);
             }
+
+            responseInfo.SetValue(eventRequest, eventResponse);
 
             return eventRequest;
         }

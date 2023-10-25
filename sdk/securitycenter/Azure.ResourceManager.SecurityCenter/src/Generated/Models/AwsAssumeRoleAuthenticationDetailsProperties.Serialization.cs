@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static AwsAssumeRoleAuthenticationDetailsProperties DeserializeAwsAssumeRoleAuthenticationDetailsProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> accountId = default;
             string awsAssumeRoleArn = default;
             Guid awsExternalId = default;
@@ -55,7 +59,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     authenticationProvisioningState = new AuthenticationProvisioningState(property.Value.GetString());
@@ -65,7 +68,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SecurityCenterCloudPermission> array = new List<SecurityCenterCloudPermission>();

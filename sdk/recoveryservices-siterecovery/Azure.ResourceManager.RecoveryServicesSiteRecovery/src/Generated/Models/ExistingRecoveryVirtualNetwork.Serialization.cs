@@ -29,14 +29,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static ExistingRecoveryVirtualNetwork DeserializeExistingRecoveryVirtualNetwork(JsonElement element)
         {
-            string recoveryVirtualNetworkId = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ResourceIdentifier recoveryVirtualNetworkId = default;
             Optional<string> recoverySubnetName = default;
             string resourceType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recoveryVirtualNetworkId"u8))
                 {
-                    recoveryVirtualNetworkId = property.Value.GetString();
+                    recoveryVirtualNetworkId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("recoverySubnetName"u8))

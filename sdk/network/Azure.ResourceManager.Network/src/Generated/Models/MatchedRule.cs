@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of MatchedRule. </summary>
         /// <param name="ruleName"> Name of the matched network security rule. </param>
-        /// <param name="action"> The network traffic is allowed or denied. Possible values are &apos;Allow&apos; and &apos;Deny&apos;. </param>
+        /// <param name="action"> The network traffic is allowed or denied. Possible values are 'Allow' and 'Deny'. </param>
         internal MatchedRule(string ruleName, string action)
         {
             RuleName = ruleName;
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Name of the matched network security rule. </summary>
         public string RuleName { get; }
-        /// <summary> The network traffic is allowed or denied. Possible values are &apos;Allow&apos; and &apos;Deny&apos;. </summary>
+        /// <summary> The network traffic is allowed or denied. Possible values are 'Allow' and 'Deny'. </summary>
         public string Action { get; }
     }
 }

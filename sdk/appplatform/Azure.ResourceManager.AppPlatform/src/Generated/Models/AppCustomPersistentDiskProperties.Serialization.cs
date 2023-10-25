@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppCustomPersistentDiskProperties DeserializeAppCustomPersistentDiskProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

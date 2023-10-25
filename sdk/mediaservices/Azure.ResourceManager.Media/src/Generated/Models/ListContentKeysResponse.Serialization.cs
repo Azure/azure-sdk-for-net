@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Media.Models
     {
         internal static ListContentKeysResponse DeserializeListContentKeysResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<StreamingLocatorContentKey>> contentKeys = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -22,7 +26,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<StreamingLocatorContentKey> array = new List<StreamingLocatorContentKey>();

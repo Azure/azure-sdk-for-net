@@ -42,9 +42,13 @@ namespace Azure.ResourceManager.Sql.Models
         public Uri StorageContainerUri { get; set; }
         /// <summary> The resource identifier of the source database associated with create operation of this database. </summary>
         public ResourceIdentifier SourceDatabaseId { get; set; }
+        /// <summary> The resource identifier of the cross-subscription source database associated with create operation of this database. </summary>
+        public ResourceIdentifier CrossSubscriptionSourceDatabaseId { get; set; }
         /// <summary> The restorable dropped database resource id to restore when creating this database. </summary>
         public ResourceIdentifier RestorableDroppedDatabaseId { get; set; }
-        /// <summary> Conditional. If createMode is RestoreExternalBackup, this value is used. Specifies the identity used for storage container authentication. Can be &apos;SharedAccessSignature&apos; or &apos;ManagedIdentity&apos;; if not specified &apos;SharedAccessSignature&apos; is assumed. </summary>
+        /// <summary> The restorable cross-subscription dropped database resource id to restore when creating this database. </summary>
+        public ResourceIdentifier CrossSubscriptionRestorableDroppedDatabaseId { get; set; }
+        /// <summary> Conditional. If createMode is RestoreExternalBackup, this value is used. Specifies the identity used for storage container authentication. Can be 'SharedAccessSignature' or 'ManagedIdentity'; if not specified 'SharedAccessSignature' is assumed. </summary>
         public string StorageContainerIdentity { get; set; }
         /// <summary> Conditional. If createMode is RestoreExternalBackup and storageContainerIdentity is not ManagedIdentity, this value is required. Specifies the storage container sas token. </summary>
         public string StorageContainerSasToken { get; set; }
@@ -58,5 +62,9 @@ namespace Azure.ResourceManager.Sql.Models
         public bool? AllowAutoCompleteRestore { get; set; }
         /// <summary> Last backup file name for restore of this managed database. </summary>
         public string LastBackupName { get; set; }
+        /// <summary> Target managed instance id used in cross-subscription restore. </summary>
+        public ResourceIdentifier CrossSubscriptionTargetManagedInstanceId { get; set; }
+        /// <summary> Whether or not this database is a ledger database, which means all tables in the database are ledger tables. Note: the value of this property cannot be changed after the database has been created. </summary>
+        public bool? IsLedgerOn { get; set; }
     }
 }

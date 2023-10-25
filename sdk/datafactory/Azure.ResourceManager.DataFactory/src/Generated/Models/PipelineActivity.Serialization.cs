@@ -24,6 +24,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
+            if (Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.Value.ToString());
+            }
+            if (Optional.IsDefined(OnInactiveMarkAs))
+            {
+                writer.WritePropertyName("onInactiveMarkAs"u8);
+                writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
+            }
             if (Optional.IsCollectionDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn"u8);
@@ -50,7 +60,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
@@ -58,6 +71,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static PipelineActivity DeserializePipelineActivity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
@@ -92,10 +109,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "HDInsightStreaming": return HDInsightStreamingActivity.DeserializeHDInsightStreamingActivity(element);
                     case "IfCondition": return IfConditionActivity.DeserializeIfConditionActivity(element);
                     case "Lookup": return LookupActivity.DeserializeLookupActivity(element);
-                    case "Script": return ScriptActivity.DeserializeScriptActivity(element);
+                    case "Script": return DataFactoryScriptActivity.DeserializeDataFactoryScriptActivity(element);
                     case "SetVariable": return SetVariableActivity.DeserializeSetVariableActivity(element);
+                    case "SparkJob": return SynapseSparkJobDefinitionActivity.DeserializeSynapseSparkJobDefinitionActivity(element);
                     case "SqlServerStoredProcedure": return SqlServerStoredProcedureActivity.DeserializeSqlServerStoredProcedureActivity(element);
                     case "Switch": return SwitchActivity.DeserializeSwitchActivity(element);
+                    case "SynapseNotebook": return SynapseNotebookActivity.DeserializeSynapseNotebookActivity(element);
                     case "Until": return UntilActivity.DeserializeUntilActivity(element);
                     case "Validation": return ValidationActivity.DeserializeValidationActivity(element);
                     case "Wait": return WaitActivity.DeserializeWaitActivity(element);

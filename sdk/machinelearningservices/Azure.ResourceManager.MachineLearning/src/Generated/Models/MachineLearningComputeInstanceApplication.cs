@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of MachineLearningComputeInstanceApplication. </summary>
         /// <param name="displayName"> Name of the ComputeInstance application. </param>
-        /// <param name="endpointUri"> Application&apos; endpoint URI. </param>
+        /// <param name="endpointUri"> Application' endpoint URI. </param>
         internal MachineLearningComputeInstanceApplication(string displayName, Uri endpointUri)
         {
             DisplayName = displayName;
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Name of the ComputeInstance application. </summary>
         public string DisplayName { get; }
-        /// <summary> Application&apos; endpoint URI. </summary>
+        /// <summary> Application' endpoint URI. </summary>
         public Uri EndpointUri { get; }
     }
 }

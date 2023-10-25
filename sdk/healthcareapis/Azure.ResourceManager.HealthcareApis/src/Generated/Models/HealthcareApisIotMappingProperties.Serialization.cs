@@ -22,7 +22,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Content);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Content.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(Content))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
@@ -30,6 +33,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 
         internal static HealthcareApisIotMappingProperties DeserializeHealthcareApisIotMappingProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> content = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -37,7 +44,6 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     content = BinaryData.FromString(property.Value.GetRawText());

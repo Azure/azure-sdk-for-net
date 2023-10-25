@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Relay.Models
 
         public static RelayType ToRelayType(this string value)
         {
-            if (string.Equals(value, "NetTcp", StringComparison.InvariantCultureIgnoreCase)) return RelayType.NetTcp;
-            if (string.Equals(value, "Http", StringComparison.InvariantCultureIgnoreCase)) return RelayType.Http;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NetTcp")) return RelayType.NetTcp;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Http")) return RelayType.Http;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown RelayType value.");
         }
     }

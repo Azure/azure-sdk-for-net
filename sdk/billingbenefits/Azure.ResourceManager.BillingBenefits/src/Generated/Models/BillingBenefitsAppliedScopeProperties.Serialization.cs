@@ -43,5 +43,63 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             }
             writer.WriteEndObject();
         }
+
+        internal static BillingBenefitsAppliedScopeProperties DeserializeBillingBenefitsAppliedScopeProperties(JsonElement element)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<Guid> tenantId = default;
+            Optional<ResourceIdentifier> managementGroupId = default;
+            Optional<ResourceIdentifier> subscriptionId = default;
+            Optional<ResourceIdentifier> resourceGroupId = default;
+            Optional<string> displayName = default;
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("tenantId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
+                    {
+                        continue;
+                    }
+                    tenantId = property.Value.GetGuid();
+                    continue;
+                }
+                if (property.NameEquals("managementGroupId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
+                    {
+                        continue;
+                    }
+                    managementGroupId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("subscriptionId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
+                    {
+                        continue;
+                    }
+                    subscriptionId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("resourceGroupId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
+                    {
+                        continue;
+                    }
+                    resourceGroupId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("displayName"u8))
+                {
+                    displayName = property.Value.GetString();
+                    continue;
+                }
+            }
+            return new BillingBenefitsAppliedScopeProperties(Optional.ToNullable(tenantId), managementGroupId.Value, subscriptionId.Value, resourceGroupId.Value, displayName.Value);
+        }
     }
 }

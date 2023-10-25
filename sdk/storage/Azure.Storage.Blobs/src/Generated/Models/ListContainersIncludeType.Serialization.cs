@@ -21,9 +21,9 @@ namespace Azure.Storage.Blobs.Models
 
         public static ListContainersIncludeType ToListContainersIncludeType(this string value)
         {
-            if (string.Equals(value, "metadata", StringComparison.InvariantCultureIgnoreCase)) return ListContainersIncludeType.Metadata;
-            if (string.Equals(value, "deleted", StringComparison.InvariantCultureIgnoreCase)) return ListContainersIncludeType.Deleted;
-            if (string.Equals(value, "system", StringComparison.InvariantCultureIgnoreCase)) return ListContainersIncludeType.System;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "metadata")) return ListContainersIncludeType.Metadata;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "deleted")) return ListContainersIncludeType.Deleted;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "system")) return ListContainersIncludeType.System;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ListContainersIncludeType value.");
         }
     }

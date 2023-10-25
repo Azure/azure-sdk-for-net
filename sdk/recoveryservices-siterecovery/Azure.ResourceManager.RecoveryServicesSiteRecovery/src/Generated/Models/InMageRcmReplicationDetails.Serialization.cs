@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,36 +17,40 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static InMageRcmReplicationDetails DeserializeInMageRcmReplicationDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> internalIdentifier = default;
             Optional<string> fabricDiscoveryMachineId = default;
             Optional<string> multiVmGroupName = default;
             Optional<string> discoveryType = default;
-            Optional<string> processServerId = default;
+            Optional<Guid> processServerId = default;
             Optional<int> processorCoreCount = default;
             Optional<double> allocatedMemoryInMB = default;
             Optional<string> processServerName = default;
             Optional<string> runAsAccountId = default;
             Optional<string> osType = default;
             Optional<string> firmwareType = default;
-            Optional<string> primaryNicIPAddress = default;
+            Optional<IPAddress> primaryNicIPAddress = default;
             Optional<string> targetGeneration = default;
             Optional<string> licenseType = default;
-            Optional<string> storageAccountId = default;
+            Optional<ResourceIdentifier> storageAccountId = default;
             Optional<string> targetVmName = default;
             Optional<string> targetVmSize = default;
-            Optional<string> targetResourceGroupId = default;
+            Optional<ResourceIdentifier> targetResourceGroupId = default;
             Optional<string> targetLocation = default;
-            Optional<string> targetAvailabilitySetId = default;
+            Optional<ResourceIdentifier> targetAvailabilitySetId = default;
             Optional<string> targetAvailabilityZone = default;
-            Optional<string> targetProximityPlacementGroupId = default;
-            Optional<string> targetBootDiagnosticsStorageAccountId = default;
-            Optional<string> targetNetworkId = default;
-            Optional<string> testNetworkId = default;
-            Optional<string> failoverRecoveryPointId = default;
+            Optional<ResourceIdentifier> targetProximityPlacementGroupId = default;
+            Optional<ResourceIdentifier> targetBootDiagnosticsStorageAccountId = default;
+            Optional<ResourceIdentifier> targetNetworkId = default;
+            Optional<ResourceIdentifier> testNetworkId = default;
+            Optional<ResourceIdentifier> failoverRecoveryPointId = default;
             Optional<DateTimeOffset> lastRecoveryPointReceived = default;
             Optional<long> lastRpoInSeconds = default;
             Optional<DateTimeOffset> lastRpoCalculatedTime = default;
-            Optional<string> lastRecoveryPointId = default;
+            Optional<ResourceIdentifier> lastRecoveryPointId = default;
             Optional<int> initialReplicationProgressPercentage = default;
             Optional<long> initialReplicationProcessedBytes = default;
             Optional<long> initialReplicationTransferredBytes = default;
@@ -55,7 +60,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<long> resyncTransferredBytes = default;
             Optional<VmReplicationProgressHealth> resyncProgressHealth = default;
             Optional<string> resyncRequired = default;
-            Optional<ResyncState> resyncState = default;
+            Optional<SiteRecoveryResyncState> resyncState = default;
             Optional<MobilityAgentUpgradeState> agentUpgradeState = default;
             Optional<string> lastAgentUpgradeType = default;
             Optional<string> agentUpgradeJobId = default;
@@ -93,14 +98,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("processServerId"u8))
                 {
-                    processServerId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    processServerId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("processorCoreCount"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     processorCoreCount = property.Value.GetInt32();
@@ -110,7 +118,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     allocatedMemoryInMB = property.Value.GetDouble();
@@ -138,7 +145,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("primaryNicIpAddress"u8))
                 {
-                    primaryNicIPAddress = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    primaryNicIPAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetGeneration"u8))
@@ -153,7 +164,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("storageAccountId"u8))
                 {
-                    storageAccountId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storageAccountId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetVmName"u8))
@@ -168,7 +183,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("targetResourceGroupId"u8))
                 {
-                    targetResourceGroupId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetResourceGroupId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetLocation"u8))
@@ -178,7 +197,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("targetAvailabilitySetId"u8))
                 {
-                    targetAvailabilitySetId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetAvailabilitySetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetAvailabilityZone"u8))
@@ -188,34 +211,53 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("targetProximityPlacementGroupId"u8))
                 {
-                    targetProximityPlacementGroupId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetProximityPlacementGroupId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetBootDiagnosticsStorageAccountId"u8))
                 {
-                    targetBootDiagnosticsStorageAccountId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetBootDiagnosticsStorageAccountId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetNetworkId"u8))
                 {
-                    targetNetworkId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetNetworkId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("testNetworkId"u8))
                 {
-                    testNetworkId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    testNetworkId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("failoverRecoveryPointId"u8))
                 {
-                    failoverRecoveryPointId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    failoverRecoveryPointId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("lastRecoveryPointReceived"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastRecoveryPointReceived = property.Value.GetDateTimeOffset("O");
@@ -225,7 +267,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastRpoInSeconds = property.Value.GetInt64();
@@ -235,7 +276,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastRpoCalculatedTime = property.Value.GetDateTimeOffset("O");
@@ -243,14 +283,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("lastRecoveryPointId"u8))
                 {
-                    lastRecoveryPointId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lastRecoveryPointId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("initialReplicationProgressPercentage"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     initialReplicationProgressPercentage = property.Value.GetInt32();
@@ -260,7 +303,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     initialReplicationProcessedBytes = property.Value.GetInt64();
@@ -270,7 +312,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     initialReplicationTransferredBytes = property.Value.GetInt64();
@@ -280,7 +321,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     initialReplicationProgressHealth = new VmReplicationProgressHealth(property.Value.GetString());
@@ -290,7 +330,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resyncProgressPercentage = property.Value.GetInt32();
@@ -300,7 +339,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resyncProcessedBytes = property.Value.GetInt64();
@@ -310,7 +348,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resyncTransferredBytes = property.Value.GetInt64();
@@ -320,7 +357,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resyncProgressHealth = new VmReplicationProgressHealth(property.Value.GetString());
@@ -335,17 +371,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    resyncState = new ResyncState(property.Value.GetString());
+                    resyncState = new SiteRecoveryResyncState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("agentUpgradeState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     agentUpgradeState = new MobilityAgentUpgradeState(property.Value.GetString());
@@ -370,7 +404,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<InMageRcmProtectedDiskDetails> array = new List<InMageRcmProtectedDiskDetails>();
@@ -390,7 +423,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isAgentRegistrationSuccessfulAfterFailover = property.Value.GetBoolean();
@@ -400,7 +432,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     mobilityAgentDetails = InMageRcmMobilityAgentDetails.DeserializeInMageRcmMobilityAgentDetails(property.Value);
@@ -410,7 +441,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<InMageRcmLastAgentUpgradeErrorDetails> array = new List<InMageRcmLastAgentUpgradeErrorDetails>();
@@ -425,7 +455,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<InMageRcmAgentUpgradeBlockingErrorDetails> array = new List<InMageRcmAgentUpgradeBlockingErrorDetails>();
@@ -440,7 +469,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<InMageRcmNicDetails> array = new List<InMageRcmNicDetails>();
@@ -455,7 +483,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     discoveredVmDetails = InMageRcmDiscoveredProtectedVmDetails.DeserializeInMageRcmDiscoveredProtectedVmDetails(property.Value);
@@ -467,7 +494,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new InMageRcmReplicationDetails(instanceType, internalIdentifier.Value, fabricDiscoveryMachineId.Value, multiVmGroupName.Value, discoveryType.Value, processServerId.Value, Optional.ToNullable(processorCoreCount), Optional.ToNullable(allocatedMemoryInMB), processServerName.Value, runAsAccountId.Value, osType.Value, firmwareType.Value, primaryNicIPAddress.Value, targetGeneration.Value, licenseType.Value, storageAccountId.Value, targetVmName.Value, targetVmSize.Value, targetResourceGroupId.Value, targetLocation.Value, targetAvailabilitySetId.Value, targetAvailabilityZone.Value, targetProximityPlacementGroupId.Value, targetBootDiagnosticsStorageAccountId.Value, targetNetworkId.Value, testNetworkId.Value, failoverRecoveryPointId.Value, Optional.ToNullable(lastRecoveryPointReceived), Optional.ToNullable(lastRpoInSeconds), Optional.ToNullable(lastRpoCalculatedTime), lastRecoveryPointId.Value, Optional.ToNullable(initialReplicationProgressPercentage), Optional.ToNullable(initialReplicationProcessedBytes), Optional.ToNullable(initialReplicationTransferredBytes), Optional.ToNullable(initialReplicationProgressHealth), Optional.ToNullable(resyncProgressPercentage), Optional.ToNullable(resyncProcessedBytes), Optional.ToNullable(resyncTransferredBytes), Optional.ToNullable(resyncProgressHealth), resyncRequired.Value, Optional.ToNullable(resyncState), Optional.ToNullable(agentUpgradeState), lastAgentUpgradeType.Value, agentUpgradeJobId.Value, agentUpgradeAttemptToVersion.Value, Optional.ToList(protectedDisks), isLastUpgradeSuccessful.Value, Optional.ToNullable(isAgentRegistrationSuccessfulAfterFailover), mobilityAgentDetails.Value, Optional.ToList(lastAgentUpgradeErrorDetails), Optional.ToList(agentUpgradeBlockingErrorDetails), Optional.ToList(vmNics), discoveredVmDetails.Value);
+            return new InMageRcmReplicationDetails(instanceType, internalIdentifier.Value, fabricDiscoveryMachineId.Value, multiVmGroupName.Value, discoveryType.Value, Optional.ToNullable(processServerId), Optional.ToNullable(processorCoreCount), Optional.ToNullable(allocatedMemoryInMB), processServerName.Value, runAsAccountId.Value, osType.Value, firmwareType.Value, primaryNicIPAddress.Value, targetGeneration.Value, licenseType.Value, storageAccountId.Value, targetVmName.Value, targetVmSize.Value, targetResourceGroupId.Value, targetLocation.Value, targetAvailabilitySetId.Value, targetAvailabilityZone.Value, targetProximityPlacementGroupId.Value, targetBootDiagnosticsStorageAccountId.Value, targetNetworkId.Value, testNetworkId.Value, failoverRecoveryPointId.Value, Optional.ToNullable(lastRecoveryPointReceived), Optional.ToNullable(lastRpoInSeconds), Optional.ToNullable(lastRpoCalculatedTime), lastRecoveryPointId.Value, Optional.ToNullable(initialReplicationProgressPercentage), Optional.ToNullable(initialReplicationProcessedBytes), Optional.ToNullable(initialReplicationTransferredBytes), Optional.ToNullable(initialReplicationProgressHealth), Optional.ToNullable(resyncProgressPercentage), Optional.ToNullable(resyncProcessedBytes), Optional.ToNullable(resyncTransferredBytes), Optional.ToNullable(resyncProgressHealth), resyncRequired.Value, Optional.ToNullable(resyncState), Optional.ToNullable(agentUpgradeState), lastAgentUpgradeType.Value, agentUpgradeJobId.Value, agentUpgradeAttemptToVersion.Value, Optional.ToList(protectedDisks), isLastUpgradeSuccessful.Value, Optional.ToNullable(isAgentRegistrationSuccessfulAfterFailover), mobilityAgentDetails.Value, Optional.ToList(lastAgentUpgradeErrorDetails), Optional.ToList(agentUpgradeBlockingErrorDetails), Optional.ToList(vmNics), discoveredVmDetails.Value);
         }
     }
 }

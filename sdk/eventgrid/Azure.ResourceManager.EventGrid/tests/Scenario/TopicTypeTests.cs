@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
     {
         private TopicTypeCollection _topicTypeCollection;
 
-        public TopicTypeTests(bool isAsync) : base(isAsync)
+        public TopicTypeTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

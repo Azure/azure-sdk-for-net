@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningObjective DeserializeMachineLearningObjective(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             MachineLearningGoal goal = default;
             string primaryMetric = default;
             foreach (var property in element.EnumerateObject())

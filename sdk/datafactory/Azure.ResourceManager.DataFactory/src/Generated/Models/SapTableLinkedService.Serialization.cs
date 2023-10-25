@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -46,10 +47,18 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
                 writer.WriteEndArray();
@@ -59,142 +68,82 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Server))
             {
                 writer.WritePropertyName("server"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Server);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Server.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Server);
             }
             if (Optional.IsDefined(SystemNumber))
             {
                 writer.WritePropertyName("systemNumber"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SystemNumber);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(SystemNumber.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, SystemNumber);
             }
             if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ClientId);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ClientId.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, ClientId);
             }
             if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Language);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Language.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Language);
             }
             if (Optional.IsDefined(SystemId))
             {
                 writer.WritePropertyName("systemId"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SystemId);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(SystemId.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, SystemId);
             }
             if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(UserName);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(UserName.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, UserName);
             }
             if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
-                writer.WriteObjectValue(Password);
+                JsonSerializer.Serialize(writer, Password);
             }
             if (Optional.IsDefined(MessageServer))
             {
                 writer.WritePropertyName("messageServer"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(MessageServer);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(MessageServer.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, MessageServer);
             }
             if (Optional.IsDefined(MessageServerService))
             {
                 writer.WritePropertyName("messageServerService"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(MessageServerService);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(MessageServerService.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, MessageServerService);
             }
             if (Optional.IsDefined(SncMode))
             {
                 writer.WritePropertyName("sncMode"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SncMode);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(SncMode.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, SncMode);
             }
             if (Optional.IsDefined(SncMyName))
             {
                 writer.WritePropertyName("sncMyName"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SncMyName);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(SncMyName.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, SncMyName);
             }
             if (Optional.IsDefined(SncPartnerName))
             {
                 writer.WritePropertyName("sncPartnerName"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SncPartnerName);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(SncPartnerName.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, SncPartnerName);
             }
             if (Optional.IsDefined(SncLibraryPath))
             {
                 writer.WritePropertyName("sncLibraryPath"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SncLibraryPath);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(SncLibraryPath.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, SncLibraryPath);
             }
             if (Optional.IsDefined(SncQop))
             {
                 writer.WritePropertyName("sncQop"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SncQop);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(SncQop.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, SncQop);
             }
             if (Optional.IsDefined(LogonGroup))
             {
                 writer.WritePropertyName("logonGroup"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(LogonGroup);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(LogonGroup.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, LogonGroup);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(EncryptedCredential);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(EncryptedCredential.ToString()).RootElement);
-#endif
+                writer.WriteStringValue(EncryptedCredential);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -203,7 +152,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
@@ -211,27 +163,31 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SapTableLinkedService DeserializeSapTableLinkedService(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             Optional<IntegrationRuntimeReference> connectVia = default;
             Optional<string> description = default;
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
-            Optional<BinaryData> server = default;
-            Optional<BinaryData> systemNumber = default;
-            Optional<BinaryData> clientId = default;
-            Optional<BinaryData> language = default;
-            Optional<BinaryData> systemId = default;
-            Optional<BinaryData> userName = default;
-            Optional<FactorySecretBaseDefinition> password = default;
-            Optional<BinaryData> messageServer = default;
-            Optional<BinaryData> messageServerService = default;
-            Optional<BinaryData> sncMode = default;
-            Optional<BinaryData> sncMyName = default;
-            Optional<BinaryData> sncPartnerName = default;
-            Optional<BinaryData> sncLibraryPath = default;
-            Optional<BinaryData> sncQop = default;
-            Optional<BinaryData> logonGroup = default;
-            Optional<BinaryData> encryptedCredential = default;
+            Optional<DataFactoryElement<string>> server = default;
+            Optional<DataFactoryElement<string>> systemNumber = default;
+            Optional<DataFactoryElement<string>> clientId = default;
+            Optional<DataFactoryElement<string>> language = default;
+            Optional<DataFactoryElement<string>> systemId = default;
+            Optional<DataFactoryElement<string>> userName = default;
+            Optional<DataFactorySecretBaseDefinition> password = default;
+            Optional<DataFactoryElement<string>> messageServer = default;
+            Optional<DataFactoryElement<string>> messageServerService = default;
+            Optional<DataFactoryElement<string>> sncMode = default;
+            Optional<DataFactoryElement<string>> sncMyName = default;
+            Optional<DataFactoryElement<string>> sncPartnerName = default;
+            Optional<DataFactoryElement<string>> sncLibraryPath = default;
+            Optional<DataFactoryElement<string>> sncQop = default;
+            Optional<DataFactoryElement<string>> logonGroup = default;
+            Optional<string> encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -245,7 +201,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property.Value);
@@ -260,7 +215,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, EntityParameterSpecification> dictionary = new Dictionary<string, EntityParameterSpecification>();
@@ -275,13 +229,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<BinaryData> array = new List<BinaryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BinaryData.FromString(item.GetRawText()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BinaryData.FromString(item.GetRawText()));
+                        }
                     }
                     annotations = array;
                     continue;
@@ -299,160 +259,140 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            server = BinaryData.FromString(property0.Value.GetRawText());
+                            server = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("systemNumber"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            systemNumber = BinaryData.FromString(property0.Value.GetRawText());
+                            systemNumber = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("clientId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            clientId = BinaryData.FromString(property0.Value.GetRawText());
+                            clientId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("language"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            language = BinaryData.FromString(property0.Value.GetRawText());
+                            language = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("systemId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            systemId = BinaryData.FromString(property0.Value.GetRawText());
+                            systemId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("userName"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            userName = BinaryData.FromString(property0.Value.GetRawText());
+                            userName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("password"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            password = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            password = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("messageServer"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            messageServer = BinaryData.FromString(property0.Value.GetRawText());
+                            messageServer = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("messageServerService"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            messageServerService = BinaryData.FromString(property0.Value.GetRawText());
+                            messageServerService = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("sncMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            sncMode = BinaryData.FromString(property0.Value.GetRawText());
+                            sncMode = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("sncMyName"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            sncMyName = BinaryData.FromString(property0.Value.GetRawText());
+                            sncMyName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("sncPartnerName"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            sncPartnerName = BinaryData.FromString(property0.Value.GetRawText());
+                            sncPartnerName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("sncLibraryPath"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            sncLibraryPath = BinaryData.FromString(property0.Value.GetRawText());
+                            sncLibraryPath = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("sncQop"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            sncQop = BinaryData.FromString(property0.Value.GetRawText());
+                            sncQop = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("logonGroup"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            logonGroup = BinaryData.FromString(property0.Value.GetRawText());
+                            logonGroup = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("encryptedCredential"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            encryptedCredential = BinaryData.FromString(property0.Value.GetRawText());
+                            encryptedCredential = property0.Value.GetString();
                             continue;
                         }
                     }
@@ -461,7 +401,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SapTableLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, server.Value, systemNumber.Value, clientId.Value, language.Value, systemId.Value, userName.Value, password.Value, messageServer.Value, messageServerService.Value, sncMode.Value, sncMyName.Value, sncPartnerName.Value, sncLibraryPath.Value, sncQop.Value, logonGroup.Value, encryptedCredential.Value);
+            return new SapTableLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, server.Value, systemNumber.Value, clientId.Value, language.Value, systemId.Value, userName.Value, password, messageServer.Value, messageServerService.Value, sncMode.Value, sncMyName.Value, sncPartnerName.Value, sncLibraryPath.Value, sncQop.Value, logonGroup.Value, encryptedCredential.Value);
         }
     }
 }

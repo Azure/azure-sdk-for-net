@@ -39,11 +39,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
         /// </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal AzureFunctionLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object functionAppUrl, SecretBase functionKey, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="credential"> The credential reference containing authentication information. </param>
+        /// <param name="resourceId"> Allowed token audiences for azure function. </param>
+        /// <param name="authentication"> Type of authentication (Required to specify MSI) used to connect to AzureFunction. Type: string (or Expression with resultType string). </param>
+        internal AzureFunctionLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object functionAppUrl, SecretBase functionKey, object encryptedCredential, CredentialReference credential, object resourceId, object authentication) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             FunctionAppUrl = functionAppUrl;
             FunctionKey = functionKey;
             EncryptedCredential = encryptedCredential;
+            Credential = credential;
+            ResourceId = resourceId;
+            Authentication = authentication;
             Type = type ?? "AzureFunction";
         }
 
@@ -57,5 +63,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public SecretBase FunctionKey { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
         public object EncryptedCredential { get; set; }
+        /// <summary> The credential reference containing authentication information. </summary>
+        public CredentialReference Credential { get; set; }
+        /// <summary> Allowed token audiences for azure function. </summary>
+        public object ResourceId { get; set; }
+        /// <summary> Type of authentication (Required to specify MSI) used to connect to AzureFunction. Type: string (or Expression with resultType string). </summary>
+        public object Authentication { get; set; }
     }
 }

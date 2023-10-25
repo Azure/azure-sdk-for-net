@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.Maps
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                JsonSerializer.Serialize(writer, Identity);
+            }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
@@ -48,8 +53,13 @@ namespace Azure.ResourceManager.Maps
 
         internal static MapsAccountData DeserializeMapsAccountData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             MapsSku sku = default;
             Optional<MapsAccountKind> kind = default;
+            Optional<ManagedServiceIdentity> identity = default;
             Optional<MapsAccountProperties> properties = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -68,17 +78,24 @@ namespace Azure.ResourceManager.Maps
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     kind = new MapsAccountKind(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = MapsAccountProperties.DeserializeMapsAccountProperties(property.Value);
@@ -88,7 +105,6 @@ namespace Azure.ResourceManager.Maps
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -123,14 +139,13 @@ namespace Azure.ResourceManager.Maps
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
             }
-            return new MapsAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, Optional.ToNullable(kind), properties.Value);
+            return new MapsAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, Optional.ToNullable(kind), identity, properties.Value);
         }
     }
 }

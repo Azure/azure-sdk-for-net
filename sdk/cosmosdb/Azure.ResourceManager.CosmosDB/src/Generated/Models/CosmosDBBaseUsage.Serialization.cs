@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static CosmosDBBaseUsage DeserializeCosmosDBBaseUsage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CosmosDBMetricUnitType> unit = default;
             Optional<CosmosDBMetricName> name = default;
             Optional<string> quotaPeriod = default;
@@ -25,7 +29,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     unit = new CosmosDBMetricUnitType(property.Value.GetString());
@@ -35,7 +38,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     name = CosmosDBMetricName.DeserializeCosmosDBMetricName(property.Value);
@@ -50,7 +52,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     limit = property.Value.GetInt64();
@@ -60,7 +61,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     currentValue = property.Value.GetInt64();

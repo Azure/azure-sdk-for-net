@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    /// <summary> Required for storage accounts where kind = BlobStorage. The access tier is used for billing. The &apos;Premium&apos; access tier is the default value for premium block blobs storage account type and it cannot be changed for the premium block blobs storage account type. </summary>
+    /// <summary> Required for storage accounts where kind = BlobStorage. The access tier is used for billing. The 'Premium' access tier is the default value for premium block blobs storage account type and it cannot be changed for the premium block blobs storage account type. </summary>
     public enum StorageAccountAccessTier
     {
         /// <summary> Hot. </summary>

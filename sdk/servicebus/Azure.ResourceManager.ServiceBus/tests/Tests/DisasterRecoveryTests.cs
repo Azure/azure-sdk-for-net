@@ -8,12 +8,11 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.ServiceBus.Models;
-using Azure.ResourceManager.ServiceBus.Tests.Helpers;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.ServiceBus.Tests
 {
-    public class DisasterRecoveryTests : ServiceBusTestBase
+    public class DisasterRecoveryTests : ServiceBusManagementTestBase
     {
         private ResourceGroupResource _resourceGroup;
         public DisasterRecoveryTests(bool isAsync) : base(isAsync)

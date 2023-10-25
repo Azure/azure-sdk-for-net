@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static StackMinorVersion DeserializeStackMinorVersion(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> displayVersion = default;
             Optional<string> runtimeVersion = default;
             Optional<bool> isDefault = default;
@@ -60,7 +64,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isDefault = property.Value.GetBoolean();
@@ -70,7 +73,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isRemoteDebuggingEnabled = property.Value.GetBoolean();

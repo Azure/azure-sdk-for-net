@@ -106,11 +106,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("cassandraAuditLoggingEnabled"u8);
                 writer.WriteBooleanValue(IsCassandraAuditLoggingEnabled.Value);
             }
+            if (Optional.IsDefined(ProvisionError))
+            {
+                writer.WritePropertyName("provisionError"u8);
+                writer.WriteObjectValue(ProvisionError);
+            }
             writer.WriteEndObject();
         }
 
         internal static CassandraClusterProperties DeserializeCassandraClusterProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CassandraProvisioningState> provisioningState = default;
             Optional<string> restoreFromBackupId = default;
             Optional<ResourceIdentifier> delegatedManagementSubnetId = default;
@@ -128,13 +137,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<int> hoursBetweenBackups = default;
             Optional<bool> deallocated = default;
             Optional<bool> cassandraAuditLoggingEnabled = default;
+            Optional<CassandraError> provisionError = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new CassandraProvisioningState(property.Value.GetString());
@@ -149,7 +158,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     delegatedManagementSubnetId = new ResourceIdentifier(property.Value.GetString());
@@ -169,7 +177,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     authenticationMethod = new CassandraAuthenticationMethod(property.Value.GetString());
@@ -184,7 +191,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     prometheusEndpoint = CassandraDataCenterSeedNode.DeserializeCassandraDataCenterSeedNode(property.Value);
@@ -194,7 +200,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     repairEnabled = property.Value.GetBoolean();
@@ -204,7 +209,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CassandraCertificate> array = new List<CassandraCertificate>();
@@ -219,7 +223,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CassandraCertificate> array = new List<CassandraCertificate>();
@@ -234,7 +237,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CassandraCertificate> array = new List<CassandraCertificate>();
@@ -249,7 +251,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CassandraDataCenterSeedNode> array = new List<CassandraDataCenterSeedNode>();
@@ -264,7 +265,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CassandraDataCenterSeedNode> array = new List<CassandraDataCenterSeedNode>();
@@ -279,7 +279,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     hoursBetweenBackups = property.Value.GetInt32();
@@ -289,7 +288,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     deallocated = property.Value.GetBoolean();
@@ -299,14 +297,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cassandraAuditLoggingEnabled = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("provisionError"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisionError = CassandraError.DeserializeCassandraError(property.Value);
+                    continue;
+                }
             }
-            return new CassandraClusterProperties(Optional.ToNullable(provisioningState), restoreFromBackupId.Value, delegatedManagementSubnetId.Value, cassandraVersion.Value, clusterNameOverride.Value, Optional.ToNullable(authenticationMethod), initialCassandraAdminPassword.Value, prometheusEndpoint.Value, Optional.ToNullable(repairEnabled), Optional.ToList(clientCertificates), Optional.ToList(externalGossipCertificates), Optional.ToList(gossipCertificates), Optional.ToList(externalSeedNodes), Optional.ToList(seedNodes), Optional.ToNullable(hoursBetweenBackups), Optional.ToNullable(deallocated), Optional.ToNullable(cassandraAuditLoggingEnabled));
+            return new CassandraClusterProperties(Optional.ToNullable(provisioningState), restoreFromBackupId.Value, delegatedManagementSubnetId.Value, cassandraVersion.Value, clusterNameOverride.Value, Optional.ToNullable(authenticationMethod), initialCassandraAdminPassword.Value, prometheusEndpoint.Value, Optional.ToNullable(repairEnabled), Optional.ToList(clientCertificates), Optional.ToList(externalGossipCertificates), Optional.ToList(gossipCertificates), Optional.ToList(externalSeedNodes), Optional.ToList(seedNodes), Optional.ToNullable(hoursBetweenBackups), Optional.ToNullable(deallocated), Optional.ToNullable(cassandraAuditLoggingEnabled), provisionError.Value);
         }
     }
 }

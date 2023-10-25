@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static RuleMetricDataSource DeserializeRuleMetricDataSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> metricName = default;
             string odataType = default;
             Optional<ResourceIdentifier> resourceUri = default;
@@ -69,7 +73,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resourceUri = new ResourceIdentifier(property.Value.GetString());
@@ -79,7 +82,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     legacyResourceId = new ResourceIdentifier(property.Value.GetString());

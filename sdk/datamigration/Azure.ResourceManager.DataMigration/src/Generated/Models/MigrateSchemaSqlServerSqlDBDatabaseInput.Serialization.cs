@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MigrateSchemaSqlServerSqlDBDatabaseInput DeserializeMigrateSchemaSqlServerSqlDBDatabaseInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> id = default;
             Optional<string> targetDatabaseName = default;
@@ -65,7 +69,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     schemaSetting = SchemaMigrationSetting.DeserializeSchemaMigrationSetting(property.Value);

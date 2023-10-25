@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Maps.Routing.Models
 {
-    /// <summary> This object is returned from a successful Route Matrix call. For ex, if 2 origins and 3 destinations are provided, there are going to 2 arrays with 3 elements in each. Each element&apos;s content depends on the options provided in the query. </summary>
+    /// <summary> This object is returned from a successful Route Matrix call. For ex, if 2 origins and 3 destinations are provided, there are going to 2 arrays with 3 elements in each. Each element's content depends on the options provided in the query. </summary>
     public partial class RouteMatrixResult
     {
         /// <summary> Initializes a new instance of RouteMatrixResult. </summary>

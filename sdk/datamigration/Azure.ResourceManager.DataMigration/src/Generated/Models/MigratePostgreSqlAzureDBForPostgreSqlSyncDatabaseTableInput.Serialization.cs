@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput DeserializeMigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             foreach (var property in element.EnumerateObject())
             {

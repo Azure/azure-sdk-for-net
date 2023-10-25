@@ -628,5 +628,35 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 Assert.False(_listener.EventsById(ServiceBusEventSource.SendLinkClosedEvent).Any(e => e.Payload.Contains(sender.Identifier)));
             }
         }
+
+        [Test]
+        public async Task CancellingReceiveLogsVerboseCancellationEvent()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                var receiver = client.CreateReceiver(scope.QueueName);
+
+                var cts = new CancellationTokenSource();
+                cts.CancelAfter(TimeSpan.FromSeconds(1));
+
+                await AsyncAssert.ThrowsAsync<OperationCanceledException>(
+                    async () => await receiver.ReceiveMessageAsync(TimeSpan.FromSeconds(5), cts.Token));
+
+                _listener.SingleEventById(ServiceBusEventSource.ReceiveMessageCanceledEvent, e => e.Payload.Contains(receiver.Identifier) && e.Level == EventLevel.Verbose);
+            }
+        }
+
+        [Test]
+        public async Task ReceiveFromNonExistentQueueLogsErrorEvent()
+        {
+            await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+            var receiver = client.CreateReceiver("nonexistentqueue");
+
+            await AsyncAssert.ThrowsAsync<ServiceBusException>(
+                async () => await receiver.ReceiveMessageAsync());
+
+            _listener.SingleEventById(ServiceBusEventSource.ReceiveMessageExceptionEvent, e => e.Payload.Contains(receiver.Identifier) && e.Level == EventLevel.Error);
+        }
     }
 }

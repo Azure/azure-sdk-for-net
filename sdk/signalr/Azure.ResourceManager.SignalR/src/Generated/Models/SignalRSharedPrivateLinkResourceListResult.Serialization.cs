@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.SignalR.Models
     {
         internal static SignalRSharedPrivateLinkResourceListResult DeserializeSignalRSharedPrivateLinkResourceListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SignalRSharedPrivateLinkResourceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.SignalR.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SignalRSharedPrivateLinkResourceData> array = new List<SignalRSharedPrivateLinkResourceData>();

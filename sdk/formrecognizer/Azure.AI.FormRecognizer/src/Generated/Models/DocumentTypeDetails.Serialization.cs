@@ -15,6 +15,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         internal static DocumentTypeDetails DeserializeDocumentTypeDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> description = default;
             Optional<DocumentBuildMode> buildMode = default;
             IReadOnlyDictionary<string, DocumentFieldSchema> fieldSchema = default;
@@ -30,7 +34,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     buildMode = new DocumentBuildMode(property.Value.GetString());
@@ -50,7 +53,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, float> dictionary = new Dictionary<string, float>();

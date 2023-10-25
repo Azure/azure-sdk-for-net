@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="frontendEndpoints"> Frontend endpoints associated with this rule. </param>
         /// <param name="acceptedProtocols"> Protocol schemes to match for this rule. </param>
         /// <param name="patternsToMatch"> The route patterns of the rule. </param>
-        /// <param name="enabledState"> Whether to enable use of this rule. Permitted values are &apos;Enabled&apos; or &apos;Disabled&apos;. </param>
+        /// <param name="enabledState"> Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'. </param>
         /// <param name="routeConfiguration">
         /// A reference to the routing configuration.
-        /// Please note <see cref="RouteConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.RouteConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ForwardingConfiguration"/> and <see cref="RedirectConfiguration"/>.
         /// </param>
         /// <param name="rulesEngine"> A reference to a specific Rules Engine Configuration to apply to this route. </param>
@@ -56,11 +56,11 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public IList<FrontDoorProtocol> AcceptedProtocols { get; }
         /// <summary> The route patterns of the rule. </summary>
         public IList<string> PatternsToMatch { get; }
-        /// <summary> Whether to enable use of this rule. Permitted values are &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
+        /// <summary> Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'. </summary>
         public RoutingRuleEnabledState? EnabledState { get; set; }
         /// <summary>
         /// A reference to the routing configuration.
-        /// Please note <see cref="RouteConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.RouteConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ForwardingConfiguration"/> and <see cref="RedirectConfiguration"/>.
         /// </summary>
         public RouteConfiguration RouteConfiguration { get; set; }

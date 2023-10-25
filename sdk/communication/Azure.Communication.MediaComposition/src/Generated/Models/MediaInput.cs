@@ -16,7 +16,6 @@ namespace Azure.Communication.MediaComposition.Models
     /// </summary>
     public abstract partial class MediaInput
     {
-
         /// <summary> Initializes a new instance of MediaInput. </summary>
         /// <param name="kind"> Kind of media input. </param>
         /// <param name="placeholderImageUri"> Image url to be used if participant has no video stream. </param>

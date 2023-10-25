@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AuthPlatform DeserializeAuthPlatform(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enabled = default;
             Optional<string> runtimeVersion = default;
             Optional<string> configFilePath = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enabled = property.Value.GetBoolean();

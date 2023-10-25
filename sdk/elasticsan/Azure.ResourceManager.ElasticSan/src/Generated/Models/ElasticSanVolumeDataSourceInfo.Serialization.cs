@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -21,42 +20,44 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 writer.WritePropertyName("createSource"u8);
                 writer.WriteStringValue(CreateSource.Value.ToString());
             }
-            if (Optional.IsDefined(SourceUri))
+            if (Optional.IsDefined(SourceId))
             {
-                writer.WritePropertyName("sourceUri"u8);
-                writer.WriteStringValue(SourceUri.AbsoluteUri);
+                writer.WritePropertyName("sourceId"u8);
+                writer.WriteStringValue(SourceId);
             }
             writer.WriteEndObject();
         }
 
         internal static ElasticSanVolumeDataSourceInfo DeserializeElasticSanVolumeDataSourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ElasticSanVolumeCreateOption> createSource = default;
-            Optional<Uri> sourceUri = default;
+            Optional<ResourceIdentifier> sourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("createSource"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     createSource = new ElasticSanVolumeCreateOption(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("sourceUri"u8))
+                if (property.NameEquals("sourceId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        sourceUri = null;
                         continue;
                     }
-                    sourceUri = new Uri(property.Value.GetString());
+                    sourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }
-            return new ElasticSanVolumeDataSourceInfo(Optional.ToNullable(createSource), sourceUri.Value);
+            return new ElasticSanVolumeDataSourceInfo(Optional.ToNullable(createSource), sourceId.Value);
         }
     }
 }

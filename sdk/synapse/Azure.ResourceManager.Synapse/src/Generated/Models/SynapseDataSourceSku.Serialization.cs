@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseDataSourceSku DeserializeSynapseDataSourceSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SynapseSkuName name = default;
             Optional<int> capacity = default;
             KustoPoolSkuSize size = default;
@@ -43,7 +47,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     capacity = property.Value.GetInt32();

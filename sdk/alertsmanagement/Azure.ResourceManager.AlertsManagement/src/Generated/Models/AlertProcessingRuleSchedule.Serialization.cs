@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         internal static AlertProcessingRuleSchedule DeserializeAlertProcessingRuleSchedule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> effectiveFrom = default;
             Optional<DateTimeOffset> effectiveUntil = default;
             Optional<string> timeZone = default;
@@ -57,7 +61,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     effectiveFrom = property.Value.GetDateTimeOffset("O");
@@ -67,7 +70,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     effectiveUntil = property.Value.GetDateTimeOffset("O");
@@ -82,7 +84,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AlertProcessingRuleRecurrence> array = new List<AlertProcessingRuleRecurrence>();

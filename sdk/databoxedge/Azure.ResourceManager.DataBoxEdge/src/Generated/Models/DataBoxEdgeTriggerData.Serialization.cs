@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         internal static DataBoxEdgeTriggerData DeserializeDataBoxEdgeTriggerData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("kind", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
@@ -63,7 +67,6 @@ namespace Azure.ResourceManager.DataBoxEdge
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

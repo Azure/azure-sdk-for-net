@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         internal static OrderItemPreferences DeserializeOrderItemPreferences(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<NotificationPreference>> notificationPreferences = default;
             Optional<TransportPreferences> transportPreferences = default;
             Optional<EncryptionPreferences> encryptionPreferences = default;
@@ -56,7 +60,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<NotificationPreference> array = new List<NotificationPreference>();
@@ -71,7 +74,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     transportPreferences = TransportPreferences.DeserializeTransportPreferences(property.Value);
@@ -81,7 +83,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     encryptionPreferences = EncryptionPreferences.DeserializeEncryptionPreferences(property.Value);
@@ -91,7 +92,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     managementResourcePreferences = ManagementResourcePreferences.DeserializeManagementResourcePreferences(property.Value);

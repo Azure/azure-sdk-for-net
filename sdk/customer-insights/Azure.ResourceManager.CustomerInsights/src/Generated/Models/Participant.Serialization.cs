@@ -59,6 +59,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         internal static Participant DeserializeParticipant(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string profileTypeName = default;
             IList<ParticipantPropertyReference> participantPropertyReferences = default;
             string participantName = default;
@@ -91,7 +95,6 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -106,7 +109,6 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     {
         internal static GuestAgentList DeserializeGuestAgentList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             IReadOnlyList<GuestAgentData> value = default;
             foreach (var property in element.EnumerateObject())

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Logic.Models
     {
         internal static LogicWorkflowRunListResult DeserializeLogicWorkflowRunListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<LogicWorkflowRunData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<LogicWorkflowRunData> array = new List<LogicWorkflowRunData>();

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     public partial class CognitiveServicesVirtualNetworkRule
     {
         /// <summary> Initializes a new instance of CognitiveServicesVirtualNetworkRule. </summary>
-        /// <param name="id"> Full resource id of a vnet subnet, such as &apos;/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1&apos;. </param>
+        /// <param name="id"> Full resource id of a vnet subnet, such as '/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1'. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public CognitiveServicesVirtualNetworkRule(ResourceIdentifier id)
         {
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Initializes a new instance of CognitiveServicesVirtualNetworkRule. </summary>
-        /// <param name="id"> Full resource id of a vnet subnet, such as &apos;/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1&apos;. </param>
+        /// <param name="id"> Full resource id of a vnet subnet, such as '/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1'. </param>
         /// <param name="state"> Gets the state of virtual network rule. </param>
         /// <param name="ignoreMissingVnetServiceEndpoint"> Ignore missing vnet service endpoint or not. </param>
         internal CognitiveServicesVirtualNetworkRule(ResourceIdentifier id, string state, bool? ignoreMissingVnetServiceEndpoint)
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             IgnoreMissingVnetServiceEndpoint = ignoreMissingVnetServiceEndpoint;
         }
 
-        /// <summary> Full resource id of a vnet subnet, such as &apos;/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1&apos;. </summary>
+        /// <summary> Full resource id of a vnet subnet, such as '/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1'. </summary>
         public ResourceIdentifier Id { get; set; }
         /// <summary> Gets the state of virtual network rule. </summary>
         public string State { get; set; }

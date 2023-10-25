@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="backupFileShare"> Backup file share information for all selected databases. </param>
         /// <param name="backupBlobShare"> SAS URI of Azure Storage Account Container to be used for storing backup files. </param>
         /// <param name="backupMode"> Backup Mode to specify whether to use existing backup or create new backup. If using existing backups, backup file paths are required to be provided in selectedDatabases. </param>
-        /// <param name="aadDomainName"> Azure Active Directory domain name in the format of &apos;contoso.com&apos; for federated Azure AD or &apos;contoso.onmicrosoft.com&apos; for managed domain, required if and only if Windows logins are selected. </param>
+        /// <param name="aadDomainName"> Azure Active Directory domain name in the format of 'contoso.com' for federated Azure AD or 'contoso.onmicrosoft.com' for managed domain, required if and only if Windows logins are selected. </param>
         /// <param name="encryptedKeyForSecureFields"> encrypted key for secure fields. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceConnectionInfo"/> or <paramref name="targetConnectionInfo"/> is null. </exception>
         internal MigrateSqlServerSqlMITaskInput(SqlConnectionInfo sourceConnectionInfo, SqlConnectionInfo targetConnectionInfo, IList<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases, string startedOn, IList<string> selectedLogins, IList<string> selectedAgentJobs, FileShare backupFileShare, BlobShare backupBlobShare, BackupMode? backupMode, string aadDomainName, string encryptedKeyForSecureFields) : base(sourceConnectionInfo, targetConnectionInfo)
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         /// <summary> Backup Mode to specify whether to use existing backup or create new backup. If using existing backups, backup file paths are required to be provided in selectedDatabases. </summary>
         public BackupMode? BackupMode { get; set; }
-        /// <summary> Azure Active Directory domain name in the format of &apos;contoso.com&apos; for federated Azure AD or &apos;contoso.onmicrosoft.com&apos; for managed domain, required if and only if Windows logins are selected. </summary>
+        /// <summary> Azure Active Directory domain name in the format of 'contoso.com' for federated Azure AD or 'contoso.onmicrosoft.com' for managed domain, required if and only if Windows logins are selected. </summary>
         public string AadDomainName { get; set; }
         /// <summary> encrypted key for secure fields. </summary>
         public string EncryptedKeyForSecureFields { get; set; }

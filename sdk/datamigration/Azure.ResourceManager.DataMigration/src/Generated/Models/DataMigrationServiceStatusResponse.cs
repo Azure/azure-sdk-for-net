@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of DataMigrationServiceStatusResponse. </summary>
         /// <param name="agentVersion"> The DMS instance agent version. </param>
         /// <param name="agentConfiguration"> Agent Configuration. </param>
-        /// <param name="status"> The machine-readable status, such as &apos;Initializing&apos;, &apos;Offline&apos;, &apos;Online&apos;, &apos;Deploying&apos;, &apos;Deleting&apos;, &apos;Stopped&apos;, &apos;Stopping&apos;, &apos;Starting&apos;, &apos;FailedToStart&apos;, &apos;FailedToStop&apos; or &apos;Failed&apos;. </param>
-        /// <param name="vmSize"> The services virtual machine size, such as &apos;Standard_D2_v2&apos;. </param>
+        /// <param name="status"> The machine-readable status, such as 'Initializing', 'Offline', 'Online', 'Deploying', 'Deleting', 'Stopped', 'Stopping', 'Starting', 'FailedToStart', 'FailedToStop' or 'Failed'. </param>
+        /// <param name="vmSize"> The services virtual machine size, such as 'Standard_D2_v2'. </param>
         /// <param name="supportedTaskTypes"> The list of supported task types. </param>
         internal DataMigrationServiceStatusResponse(string agentVersion, BinaryData agentConfiguration, string status, string vmSize, IReadOnlyList<string> supportedTaskTypes)
         {
@@ -68,9 +68,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// </para>
         /// </summary>
         public BinaryData AgentConfiguration { get; }
-        /// <summary> The machine-readable status, such as &apos;Initializing&apos;, &apos;Offline&apos;, &apos;Online&apos;, &apos;Deploying&apos;, &apos;Deleting&apos;, &apos;Stopped&apos;, &apos;Stopping&apos;, &apos;Starting&apos;, &apos;FailedToStart&apos;, &apos;FailedToStop&apos; or &apos;Failed&apos;. </summary>
+        /// <summary> The machine-readable status, such as 'Initializing', 'Offline', 'Online', 'Deploying', 'Deleting', 'Stopped', 'Stopping', 'Starting', 'FailedToStart', 'FailedToStop' or 'Failed'. </summary>
         public string Status { get; }
-        /// <summary> The services virtual machine size, such as &apos;Standard_D2_v2&apos;. </summary>
+        /// <summary> The services virtual machine size, such as 'Standard_D2_v2'. </summary>
         public string VmSize { get; }
         /// <summary> The list of supported task types. </summary>
         public IReadOnlyList<string> SupportedTaskTypes { get; }

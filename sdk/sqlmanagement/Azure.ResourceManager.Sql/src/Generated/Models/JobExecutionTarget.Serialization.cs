@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static JobExecutionTarget DeserializeJobExecutionTarget(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<JobTargetType> type = default;
             Optional<string> serverName = default;
             Optional<string> databaseName = default;
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new JobTargetType(property.Value.GetString());

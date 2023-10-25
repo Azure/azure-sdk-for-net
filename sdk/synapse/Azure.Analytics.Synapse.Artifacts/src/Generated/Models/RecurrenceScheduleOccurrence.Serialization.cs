@@ -39,6 +39,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static RecurrenceScheduleOccurrence DeserializeRecurrenceScheduleOccurrence(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DayOfWeek> day = default;
             Optional<int> occurrence = default;
             IDictionary<string, object> additionalProperties = default;
@@ -49,7 +53,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     day = property.Value.GetString().ToDayOfWeek();
@@ -59,7 +62,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     occurrence = property.Value.GetInt32();

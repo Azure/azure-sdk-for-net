@@ -8,11 +8,12 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Azure Batch linked service. </summary>
-    public partial class AzureBatchLinkedService : FactoryLinkedServiceDefinition
+    public partial class AzureBatchLinkedService : DataFactoryLinkedServiceProperties
     {
         /// <summary> Initializes a new instance of AzureBatchLinkedService. </summary>
         /// <param name="accountName"> The Azure Batch account name. Type: string (or Expression with resultType string). </param>
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="poolName"> The Azure Batch pool name. Type: string (or Expression with resultType string). </param>
         /// <param name="linkedServiceName"> The Azure Storage linked service reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/>, <paramref name="batchUri"/>, <paramref name="poolName"/> or <paramref name="linkedServiceName"/> is null. </exception>
-        public AzureBatchLinkedService(BinaryData accountName, BinaryData batchUri, BinaryData poolName, FactoryLinkedServiceReference linkedServiceName)
+        public AzureBatchLinkedService(DataFactoryElement<string> accountName, DataFactoryElement<string> batchUri, DataFactoryElement<string> poolName, DataFactoryLinkedServiceReference linkedServiceName)
         {
             Argument.AssertNotNull(accountName, nameof(accountName));
             Argument.AssertNotNull(batchUri, nameof(batchUri));
@@ -42,17 +43,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="accountName"> The Azure Batch account name. Type: string (or Expression with resultType string). </param>
-        /// <param name="accessKey">
-        /// The Azure Batch account access key.
-        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </param>
+        /// <param name="accessKey"> The Azure Batch account access key. </param>
         /// <param name="batchUri"> The Azure Batch URI. Type: string (or Expression with resultType string). </param>
         /// <param name="poolName"> The Azure Batch pool name. Type: string (or Expression with resultType string). </param>
         /// <param name="linkedServiceName"> The Azure Storage linked service reference. </param>
-        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
+        /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
-        internal AzureBatchLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData accountName, FactorySecretBaseDefinition accessKey, BinaryData batchUri, BinaryData poolName, FactoryLinkedServiceReference linkedServiceName, BinaryData encryptedCredential, FactoryCredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal AzureBatchLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> accountName, DataFactorySecretBaseDefinition accessKey, DataFactoryElement<string> batchUri, DataFactoryElement<string> poolName, DataFactoryLinkedServiceReference linkedServiceName, string encryptedCredential, DataFactoryCredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             AccountName = accountName;
             AccessKey = accessKey;
@@ -64,139 +61,19 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "AzureBatch";
         }
 
-        /// <summary>
-        /// The Azure Batch account name. Type: string (or Expression with resultType string).
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData AccountName { get; set; }
-        /// <summary>
-        /// The Azure Batch account access key.
-        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </summary>
-        public FactorySecretBaseDefinition AccessKey { get; set; }
-        /// <summary>
-        /// The Azure Batch URI. Type: string (or Expression with resultType string).
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData BatchUri { get; set; }
-        /// <summary>
-        /// The Azure Batch pool name. Type: string (or Expression with resultType string).
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData PoolName { get; set; }
+        /// <summary> The Azure Batch account name. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> AccountName { get; set; }
+        /// <summary> The Azure Batch account access key. </summary>
+        public DataFactorySecretBaseDefinition AccessKey { get; set; }
+        /// <summary> The Azure Batch URI. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> BatchUri { get; set; }
+        /// <summary> The Azure Batch pool name. Type: string (or Expression with resultType string). </summary>
+        public DataFactoryElement<string> PoolName { get; set; }
         /// <summary> The Azure Storage linked service reference. </summary>
-        public FactoryLinkedServiceReference LinkedServiceName { get; set; }
-        /// <summary>
-        /// The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string).
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData EncryptedCredential { get; set; }
+        public DataFactoryLinkedServiceReference LinkedServiceName { get; set; }
+        /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
+        public string EncryptedCredential { get; set; }
         /// <summary> The credential reference containing authentication information. </summary>
-        public FactoryCredentialReference Credential { get; set; }
+        public DataFactoryCredentialReference Credential { get; set; }
     }
 }

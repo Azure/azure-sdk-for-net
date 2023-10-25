@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static AwsOrganizationalDataMember DeserializeAwsOrganizationalDataMember(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> parentHierarchyId = default;
             OrganizationMembershipType organizationMembershipType = default;
             foreach (var property in element.EnumerateObject())

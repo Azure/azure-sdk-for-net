@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -14,6 +13,10 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         internal static SearchServiceStatistics DeserializeSearchServiceStatistics(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SearchServiceCounters counters = default;
             SearchServiceLimits limits = default;
             foreach (var property in element.EnumerateObject())

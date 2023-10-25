@@ -9,6 +9,7 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -170,7 +171,7 @@ namespace Azure.ResourceManager.AppService
         public virtual AsyncPageable<AppSnapshot> GetDeletedWebAppSnapshotsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deletedSiteGlobalRestClient.CreateGetDeletedWebAppSnapshotsRequest(Id.SubscriptionId, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AppSnapshot.DeserializeAppSnapshot, _deletedSiteGlobalClientDiagnostics, Pipeline, "DeletedSiteResource.GetDeletedWebAppSnapshots", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AppSnapshot.DeserializeAppSnapshot, _deletedSiteGlobalClientDiagnostics, Pipeline, "DeletedSiteResource.GetDeletedWebAppSnapshots", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -191,7 +192,7 @@ namespace Azure.ResourceManager.AppService
         public virtual Pageable<AppSnapshot> GetDeletedWebAppSnapshots(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _deletedSiteGlobalRestClient.CreateGetDeletedWebAppSnapshotsRequest(Id.SubscriptionId, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, AppSnapshot.DeserializeAppSnapshot, _deletedSiteGlobalClientDiagnostics, Pipeline, "DeletedSiteResource.GetDeletedWebAppSnapshots", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, AppSnapshot.DeserializeAppSnapshot, _deletedSiteGlobalClientDiagnostics, Pipeline, "DeletedSiteResource.GetDeletedWebAppSnapshots", "", null, cancellationToken);
         }
     }
 }

@@ -31,8 +31,9 @@ namespace Azure.Identity.Tests
             var options = new AuthorizationCodeCredentialOptions
             {
                 Transport = config.Transport,
-                DisableInstanceDiscovery = config.DisableMetadataDiscovery ?? false,
-                AdditionallyAllowedTenantsCore = config.AdditionallyAllowedTenants
+                DisableInstanceDiscovery = config.DisableInstanceDiscovery,
+                AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
+                IsUnsafeSupportLoggingEnabled = config.IsUnsafeSupportLoggingEnabled,
             };
             var pipeline = CredentialPipeline.GetInstance(options);
             return InstrumentClient(

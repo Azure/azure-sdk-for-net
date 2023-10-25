@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetCropProductAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetCropProductAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+CropProducts client = new FarmBeatsClient(credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
+
+Response response = await client.GetCropProductAsync("<cropProductId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetCropProductAsync with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+CropProducts client = new FarmBeatsClient(credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
+
+Response response = await client.GetCropProductAsync("<cropProductId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("cropIds")[0].ToString());
+Console.WriteLine(result.GetProperty("brand").ToString());
+Console.WriteLine(result.GetProperty("product").ToString());
+Console.WriteLine(result.GetProperty("trait").ToString());
+Console.WriteLine(result.GetProperty("relativeMaturity").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("relativeMaturity").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("treatments")[0].ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("eTag").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+Console.WriteLine(result.GetProperty("source").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="GetCropProduct(string,RequestContext)">
+      <example>
+This sample shows how to call GetCropProduct and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+CropProducts client = new FarmBeatsClient(credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
+
+Response response = client.GetCropProduct("<cropProductId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetCropProduct with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+CropProducts client = new FarmBeatsClient(credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
+
+Response response = client.GetCropProduct("<cropProductId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("cropIds")[0].ToString());
+Console.WriteLine(result.GetProperty("brand").ToString());
+Console.WriteLine(result.GetProperty("product").ToString());
+Console.WriteLine(result.GetProperty("trait").ToString());
+Console.WriteLine(result.GetProperty("relativeMaturity").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("relativeMaturity").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("treatments")[0].ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("eTag").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+Console.WriteLine(result.GetProperty("source").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateOrUpdateAsync(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateOrUpdateAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+CropProducts client = new FarmBeatsClient(credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = await client.CreateOrUpdateAsync("<cropProductId>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call CreateOrUpdateAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+CropProducts client = new FarmBeatsClient(credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    cropIds = new object[]
+    {
+        "<cropIds>"
+    },
+    brand = "<brand>",
+    product = "<product>",
+    trait = "<trait>",
+    relativeMaturity = new
+    {
+        unit = "<unit>",
+        value = 123.45,
+    },
+    treatments = new object[]
+    {
+        "<treatments>"
+    },
+    status = "<status>",
+    source = "<source>",
+    name = "<name>",
+    description = "<description>",
+    properties = new
+    {
+        key = new object(),
+    },
+});
+Response response = await client.CreateOrUpdateAsync("<cropProductId>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("cropIds")[0].ToString());
+Console.WriteLine(result.GetProperty("brand").ToString());
+Console.WriteLine(result.GetProperty("product").ToString());
+Console.WriteLine(result.GetProperty("trait").ToString());
+Console.WriteLine(result.GetProperty("relativeMaturity").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("relativeMaturity").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("treatments")[0].ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("eTag").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+Console.WriteLine(result.GetProperty("source").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateOrUpdate(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateOrUpdate and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+CropProducts client = new FarmBeatsClient(credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
+
+using RequestContent content = RequestContent.Create(new object());
+Response response = client.CreateOrUpdate("<cropProductId>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call CreateOrUpdate with all parameters and request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+CropProducts client = new FarmBeatsClient(credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    cropIds = new object[]
+    {
+        "<cropIds>"
+    },
+    brand = "<brand>",
+    product = "<product>",
+    trait = "<trait>",
+    relativeMaturity = new
+    {
+        unit = "<unit>",
+        value = 123.45,
+    },
+    treatments = new object[]
+    {
+        "<treatments>"
+    },
+    status = "<status>",
+    source = "<source>",
+    name = "<name>",
+    description = "<description>",
+    properties = new
+    {
+        key = new object(),
+    },
+});
+Response response = client.CreateOrUpdate("<cropProductId>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("cropIds")[0].ToString());
+Console.WriteLine(result.GetProperty("brand").ToString());
+Console.WriteLine(result.GetProperty("product").ToString());
+Console.WriteLine(result.GetProperty("trait").ToString());
+Console.WriteLine(result.GetProperty("relativeMaturity").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("relativeMaturity").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("treatments")[0].ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("eTag").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+Console.WriteLine(result.GetProperty("source").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="DeleteAsync(string,RequestContext)">
+      <example>
+This sample shows how to call DeleteAsync.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+CropProducts client = new FarmBeatsClient(credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
+
+Response response = await client.DeleteAsync("<cropProductId>");
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call DeleteAsync with all parameters.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+CropProducts client = new FarmBeatsClient(credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
+
+Response response = await client.DeleteAsync("<cropProductId>");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="Delete(string,RequestContext)">
+      <example>
+This sample shows how to call Delete.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+CropProducts client = new FarmBeatsClient(credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
+
+Response response = client.Delete("<cropProductId>");
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call Delete with all parameters.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+CropProducts client = new FarmBeatsClient(credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
+
+Response response = client.Delete("<cropProductId>");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="GetCropProductsAsync(IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
+      <example>
+This sample shows how to call GetCropProductsAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+CropProducts client = new FarmBeatsClient(credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
+
+await foreach (BinaryData item in client.GetCropProductsAsync(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetCropProductsAsync with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+CropProducts client = new FarmBeatsClient(credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
+
+await foreach (BinaryData item in client.GetCropProductsAsync(new string[] { "<cropIds>" }, new string[] { "<brands>" }, new string[] { "<products>" }, new string[] { "<traits>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("cropIds")[0].ToString());
+    Console.WriteLine(result.GetProperty("brand").ToString());
+    Console.WriteLine(result.GetProperty("product").ToString());
+    Console.WriteLine(result.GetProperty("trait").ToString());
+    Console.WriteLine(result.GetProperty("relativeMaturity").GetProperty("unit").ToString());
+    Console.WriteLine(result.GetProperty("relativeMaturity").GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("treatments")[0].ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("eTag").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+    Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+    Console.WriteLine(result.GetProperty("source").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetCropProducts(IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
+      <example>
+This sample shows how to call GetCropProducts and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+CropProducts client = new FarmBeatsClient(credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
+
+foreach (BinaryData item in client.GetCropProducts(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetCropProducts with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+CropProducts client = new FarmBeatsClient(credential).GetCropProductsClient(apiVersion: "2022-11-01-preview");
+
+foreach (BinaryData item in client.GetCropProducts(new string[] { "<cropIds>" }, new string[] { "<brands>" }, new string[] { "<products>" }, new string[] { "<traits>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("cropIds")[0].ToString());
+    Console.WriteLine(result.GetProperty("brand").ToString());
+    Console.WriteLine(result.GetProperty("product").ToString());
+    Console.WriteLine(result.GetProperty("trait").ToString());
+    Console.WriteLine(result.GetProperty("relativeMaturity").GetProperty("unit").ToString());
+    Console.WriteLine(result.GetProperty("relativeMaturity").GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("treatments")[0].ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("eTag").ToString());
+    Console.WriteLine(result.GetProperty("status").ToString());
+    Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+    Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+    Console.WriteLine(result.GetProperty("source").ToString());
+    Console.WriteLine(result.GetProperty("name").ToString());
+    Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("createdBy").ToString());
+    Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+}
+]]></code></example>
+    </member>
+  </members>
+</doc>

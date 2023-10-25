@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> AWS cloud account connector based credentials, the credentials is composed of access key ID and secret key, for more details, refer to &lt;a href=&quot;https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html&quot;&gt;Creating an IAM User in Your AWS Account (write only)&lt;/a&gt;. </summary>
+    /// <summary> AWS cloud account connector based credentials, the credentials is composed of access key ID and secret key, for more details, refer to &lt;a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html"&gt;Creating an IAM User in Your AWS Account (write only)&lt;/a&gt;. </summary>
     public partial class AwsCredsAuthenticationDetailsProperties : AuthenticationDetailsProperties
     {
         /// <summary> Initializes a new instance of AwsCredsAuthenticationDetailsProperties. </summary>

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HybridCompute
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-05-10-preview";
+            _apiVersion = apiVersion ?? "2022-12-27";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.HybridCompute
             return message;
         }
 
-        /// <summary> Updates an existing PrivateLinkScope&apos;s tags. To update other fields use the CreateOrUpdate method. </summary>
+        /// <summary> Updates an existing PrivateLinkScope's tags. To update other fields use the CreateOrUpdate method. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="scopeName"> The name of the Azure Arc PrivateLinkScope resource. </param>
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.HybridCompute
             }
         }
 
-        /// <summary> Updates an existing PrivateLinkScope&apos;s tags. To update other fields use the CreateOrUpdate method. </summary>
+        /// <summary> Updates an existing PrivateLinkScope's tags. To update other fields use the CreateOrUpdate method. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="scopeName"> The name of the Azure Arc PrivateLinkScope resource. </param>
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.HybridCompute
             return message;
         }
 
-        /// <summary> Returns a Azure Arc PrivateLinkScope&apos;s validation details. </summary>
+        /// <summary> Returns a Azure Arc PrivateLinkScope's validation details. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="location"> The location of the target resource. </param>
         /// <param name="privateLinkScopeId"> The id (Guid) of the Azure Arc PrivateLinkScope resource. </param>
@@ -553,7 +553,7 @@ namespace Azure.ResourceManager.HybridCompute
             }
         }
 
-        /// <summary> Returns a Azure Arc PrivateLinkScope&apos;s validation details. </summary>
+        /// <summary> Returns a Azure Arc PrivateLinkScope's validation details. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="location"> The location of the target resource. </param>
         /// <param name="privateLinkScopeId"> The id (Guid) of the Azure Arc PrivateLinkScope resource. </param>
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.HybridCompute
             return message;
         }
 
-        /// <summary> Returns a Azure Arc PrivateLinkScope&apos;s validation details for a given machine. </summary>
+        /// <summary> Returns a Azure Arc PrivateLinkScope's validation details for a given machine. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="machineName"> The name of the target machine to get the private link scope validation details for. </param>
@@ -631,7 +631,7 @@ namespace Azure.ResourceManager.HybridCompute
             }
         }
 
-        /// <summary> Returns a Azure Arc PrivateLinkScope&apos;s validation details for a given machine. </summary>
+        /// <summary> Returns a Azure Arc PrivateLinkScope's validation details for a given machine. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="machineName"> The name of the target machine to get the private link scope validation details for. </param>

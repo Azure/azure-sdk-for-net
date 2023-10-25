@@ -14,6 +14,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static ContainerRegistryEventSource DeserializeContainerRegistryEventSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> addr = default;
             Optional<string> instanceID = default;
             foreach (var property in element.EnumerateObject())

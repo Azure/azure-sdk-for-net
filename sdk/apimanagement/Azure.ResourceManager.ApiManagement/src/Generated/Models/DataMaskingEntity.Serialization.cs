@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static DataMaskingEntity DeserializeDataMaskingEntity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> value = default;
             Optional<DataMaskingMode> mode = default;
             foreach (var property in element.EnumerateObject())
@@ -43,7 +47,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     mode = new DataMaskingMode(property.Value.GetString());

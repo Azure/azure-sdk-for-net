@@ -16,10 +16,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Initializes a new instance of LinkConnection. </summary>
-        /// <param name="sourceDatabase"> Properties of link connection&apos;s source database. </param>
-        /// <param name="targetDatabase"> Properties of link connection&apos;s target database. </param>
-        /// <param name="landingZone"> Properties of link connection&apos;s landing zone. </param>
-        /// <param name="compute"> Properties of link connection&apos;s compute. </param>
+        /// <param name="sourceDatabase"> Properties of link connection's source database. </param>
+        /// <param name="targetDatabase"> Properties of link connection's target database. </param>
+        /// <param name="landingZone"> Properties of link connection's landing zone. </param>
+        /// <param name="compute"> Properties of link connection's compute. </param>
         internal LinkConnection(LinkConnectionSourceDatabase sourceDatabase, LinkConnectionTargetDatabase targetDatabase, LinkConnectionLandingZone landingZone, LinkConnectionCompute compute)
         {
             SourceDatabase = sourceDatabase;
@@ -28,13 +28,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Compute = compute;
         }
 
-        /// <summary> Properties of link connection&apos;s source database. </summary>
+        /// <summary> Properties of link connection's source database. </summary>
         public LinkConnectionSourceDatabase SourceDatabase { get; set; }
-        /// <summary> Properties of link connection&apos;s target database. </summary>
+        /// <summary> Properties of link connection's target database. </summary>
         public LinkConnectionTargetDatabase TargetDatabase { get; set; }
-        /// <summary> Properties of link connection&apos;s landing zone. </summary>
+        /// <summary> Properties of link connection's landing zone. </summary>
         public LinkConnectionLandingZone LandingZone { get; set; }
-        /// <summary> Properties of link connection&apos;s compute. </summary>
+        /// <summary> Properties of link connection's compute. </summary>
         public LinkConnectionCompute Compute { get; set; }
     }
 }

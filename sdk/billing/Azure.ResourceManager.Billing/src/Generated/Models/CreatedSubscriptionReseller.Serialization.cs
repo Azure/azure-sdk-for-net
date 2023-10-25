@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Billing.Models
     {
         internal static CreatedSubscriptionReseller DeserializeCreatedSubscriptionReseller(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> resellerId = default;
             Optional<string> description = default;
             foreach (var property in element.EnumerateObject())

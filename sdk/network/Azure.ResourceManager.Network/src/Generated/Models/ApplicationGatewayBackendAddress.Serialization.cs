@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayBackendAddress DeserializeApplicationGatewayBackendAddress(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> fqdn = default;
             Optional<string> ipAddress = default;
             foreach (var property in element.EnumerateObject())

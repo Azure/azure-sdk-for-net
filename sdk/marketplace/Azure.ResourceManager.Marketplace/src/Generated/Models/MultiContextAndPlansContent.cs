@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Marketplace.Models
 
         /// <summary> The offer ID which contains the plans. </summary>
         public string OfferId { get; set; }
-        /// <summary> The offer&apos;s eTag. </summary>
+        /// <summary> The offer's eTag. </summary>
         public ETag? ETag { get; set; }
         /// <summary> Gets the plans context. </summary>
         public IList<ContextAndPlansDetails> PlansContext { get; }

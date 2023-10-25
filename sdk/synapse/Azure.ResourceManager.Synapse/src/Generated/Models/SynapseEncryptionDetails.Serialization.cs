@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseEncryptionDetails DeserializeSynapseEncryptionDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> doubleEncryptionEnabled = default;
             Optional<WorkspaceCustomerManagedKeyDetails> cmk = default;
             foreach (var property in element.EnumerateObject())
@@ -33,7 +37,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     doubleEncryptionEnabled = property.Value.GetBoolean();
@@ -43,7 +46,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cmk = WorkspaceCustomerManagedKeyDetails.DeserializeWorkspaceCustomerManagedKeyDetails(property.Value);

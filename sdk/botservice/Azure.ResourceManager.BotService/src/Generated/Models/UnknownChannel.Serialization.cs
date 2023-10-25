@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.BotService.Models
                 if (ETag != null)
                 {
                     writer.WritePropertyName("etag"u8);
-                    writer.WriteStringValue(ETag.ToString());
+                    writer.WriteStringValue(ETag.Value.ToString());
                 }
                 else
                 {
@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static UnknownChannel DeserializeUnknownChannel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string channelName = "Unknown";
             Optional<ETag?> etag = default;
             Optional<string> provisioningState = default;
@@ -70,7 +74,6 @@ namespace Azure.ResourceManager.BotService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());

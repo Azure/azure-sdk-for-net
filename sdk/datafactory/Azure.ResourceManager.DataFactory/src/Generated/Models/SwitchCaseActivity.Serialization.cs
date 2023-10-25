@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SwitchCaseActivity DeserializeSwitchCaseActivity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> value = default;
             Optional<IList<PipelineActivity>> activities = default;
             foreach (var property in element.EnumerateObject())
@@ -49,7 +53,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PipelineActivity> array = new List<PipelineActivity>();

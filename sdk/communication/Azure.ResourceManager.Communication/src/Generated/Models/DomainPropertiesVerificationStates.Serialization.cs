@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Communication.Models
     {
         internal static DomainPropertiesVerificationStates DeserializeDomainPropertiesVerificationStates(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DomainVerificationStatusRecord> domain = default;
             Optional<DomainVerificationStatusRecord> spf = default;
             Optional<DomainVerificationStatusRecord> dkim = default;
@@ -25,7 +29,6 @@ namespace Azure.ResourceManager.Communication.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     domain = DomainVerificationStatusRecord.DeserializeDomainVerificationStatusRecord(property.Value);
@@ -35,7 +38,6 @@ namespace Azure.ResourceManager.Communication.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     spf = DomainVerificationStatusRecord.DeserializeDomainVerificationStatusRecord(property.Value);
@@ -45,7 +47,6 @@ namespace Azure.ResourceManager.Communication.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dkim = DomainVerificationStatusRecord.DeserializeDomainVerificationStatusRecord(property.Value);
@@ -55,7 +56,6 @@ namespace Azure.ResourceManager.Communication.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dkiM2 = DomainVerificationStatusRecord.DeserializeDomainVerificationStatusRecord(property.Value);
@@ -65,7 +65,6 @@ namespace Azure.ResourceManager.Communication.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dmarc = DomainVerificationStatusRecord.DeserializeDomainVerificationStatusRecord(property.Value);

@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataMigration
 {
-    /// <summary> A class representing the ProjectTask data model. </summary>
+    /// <summary>
+    /// A class representing the ProjectTask data model.
+    /// A task resource
+    /// </summary>
     public partial class ProjectTaskData : ResourceData
     {
         /// <summary> Initializes a new instance of ProjectTaskData. </summary>

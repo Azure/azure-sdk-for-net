@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.AppContainers.Models
     {
         internal static AuthConfigCollection DeserializeAuthConfigCollection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<ContainerAppAuthConfigData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static SynapseDataConnectionValidationListResult DeserializeSynapseDataConnectionValidationListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SynapseDataConnectionValidationResult>> value = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -22,7 +26,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SynapseDataConnectionValidationResult> array = new List<SynapseDataConnectionValidationResult>();

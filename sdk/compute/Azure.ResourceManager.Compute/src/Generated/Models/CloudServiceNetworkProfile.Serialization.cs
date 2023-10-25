@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static CloudServiceNetworkProfile DeserializeCloudServiceNetworkProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<CloudServiceLoadBalancerConfiguration>> loadBalancerConfigurations = default;
             Optional<CloudServiceSlotType> slotType = default;
             Optional<WritableSubResource> swappableCloudService = default;
@@ -51,7 +55,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CloudServiceLoadBalancerConfiguration> array = new List<CloudServiceLoadBalancerConfiguration>();
@@ -66,7 +69,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     slotType = new CloudServiceSlotType(property.Value.GetString());
@@ -76,7 +78,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     swappableCloudService = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());

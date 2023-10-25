@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
@@ -14,6 +13,10 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
     {
         internal static ErrorDetail DeserializeErrorDetail(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string code = default;
             string message = default;
             foreach (var property in element.EnumerateObject())

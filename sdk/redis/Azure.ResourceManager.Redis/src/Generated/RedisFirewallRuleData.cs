@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Redis
 {
-    /// <summary> A class representing the RedisFirewallRule data model. </summary>
+    /// <summary>
+    /// A class representing the RedisFirewallRule data model.
+    /// A firewall rule on a redis cache has a name, and describes a contiguous range of IP addresses permitted to connect
+    /// </summary>
     public partial class RedisFirewallRuleData : ResourceData
     {
         /// <summary> Initializes a new instance of RedisFirewallRuleData. </summary>

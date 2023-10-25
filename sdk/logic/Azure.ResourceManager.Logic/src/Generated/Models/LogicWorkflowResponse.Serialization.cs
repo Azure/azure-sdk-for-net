@@ -22,7 +22,10 @@ namespace Azure.ResourceManager.Logic.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Headers);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Headers.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(Headers))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsDefined(StatusCode))
@@ -40,6 +43,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static LogicWorkflowResponse DeserializeLogicWorkflowResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> headers = default;
             Optional<int> statusCode = default;
             Optional<LogicContentLink> bodyLink = default;
@@ -49,7 +56,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     headers = BinaryData.FromString(property.Value.GetRawText());
@@ -59,7 +65,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     statusCode = property.Value.GetInt32();
@@ -69,7 +74,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     bodyLink = LogicContentLink.DeserializeLogicContentLink(property.Value);

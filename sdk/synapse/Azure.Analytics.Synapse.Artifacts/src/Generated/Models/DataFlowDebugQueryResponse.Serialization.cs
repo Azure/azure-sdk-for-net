@@ -28,6 +28,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static DataFlowDebugQueryResponse DeserializeDataFlowDebugQueryResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> runId = default;
             foreach (var property in element.EnumerateObject())
             {

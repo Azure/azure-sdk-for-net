@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class RunFilterContent
     {
         /// <summary> Initializes a new instance of RunFilterContent. </summary>
-        /// <param name="lastUpdatedAfter"> The time at or after which the run event was updated in &apos;ISO 8601&apos; format. </param>
-        /// <param name="lastUpdatedBefore"> The time at or before which the run event was updated in &apos;ISO 8601&apos; format. </param>
+        /// <param name="lastUpdatedAfter"> The time at or after which the run event was updated in 'ISO 8601' format. </param>
+        /// <param name="lastUpdatedBefore"> The time at or before which the run event was updated in 'ISO 8601' format. </param>
         public RunFilterContent(DateTimeOffset lastUpdatedAfter, DateTimeOffset lastUpdatedBefore)
         {
             LastUpdatedAfter = lastUpdatedAfter;
@@ -27,9 +27,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> The continuation token for getting the next page of results. Null for first page. </summary>
         public string ContinuationToken { get; set; }
-        /// <summary> The time at or after which the run event was updated in &apos;ISO 8601&apos; format. </summary>
+        /// <summary> The time at or after which the run event was updated in 'ISO 8601' format. </summary>
         public DateTimeOffset LastUpdatedAfter { get; }
-        /// <summary> The time at or before which the run event was updated in &apos;ISO 8601&apos; format. </summary>
+        /// <summary> The time at or before which the run event was updated in 'ISO 8601' format. </summary>
         public DateTimeOffset LastUpdatedBefore { get; }
         /// <summary> List of filters. </summary>
         public IList<RunQueryFilter> Filters { get; }

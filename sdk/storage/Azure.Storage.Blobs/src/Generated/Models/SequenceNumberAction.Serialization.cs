@@ -21,9 +21,9 @@ namespace Azure.Storage.Blobs.Models
 
         public static SequenceNumberAction ToSequenceNumberAction(this string value)
         {
-            if (string.Equals(value, "max", StringComparison.InvariantCultureIgnoreCase)) return SequenceNumberAction.Max;
-            if (string.Equals(value, "update", StringComparison.InvariantCultureIgnoreCase)) return SequenceNumberAction.Update;
-            if (string.Equals(value, "increment", StringComparison.InvariantCultureIgnoreCase)) return SequenceNumberAction.Increment;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "max")) return SequenceNumberAction.Max;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "update")) return SequenceNumberAction.Update;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "increment")) return SequenceNumberAction.Increment;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SequenceNumberAction value.");
         }
     }

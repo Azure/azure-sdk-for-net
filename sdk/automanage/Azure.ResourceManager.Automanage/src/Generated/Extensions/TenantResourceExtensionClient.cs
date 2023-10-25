@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.Automanage
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of BestPracticeResources in the TenantResource. </summary>
-        /// <returns> An object representing collection of BestPracticeResources and their operations over a BestPracticeResource. </returns>
-        public virtual BestPracticeCollection GetBestPractices()
+        /// <summary> Gets a collection of AutomanageBestPracticeResources in the TenantResource. </summary>
+        /// <returns> An object representing collection of AutomanageBestPracticeResources and their operations over a AutomanageBestPracticeResource. </returns>
+        public virtual AutomanageBestPracticeCollection GetAutomanageBestPractices()
         {
-            return GetCachedClient(Client => new BestPracticeCollection(Client, Id));
+            return GetCachedClient(Client => new AutomanageBestPracticeCollection(Client, Id));
         }
     }
 }

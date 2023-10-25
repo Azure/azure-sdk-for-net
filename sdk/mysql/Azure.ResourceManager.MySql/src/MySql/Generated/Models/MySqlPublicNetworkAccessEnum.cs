@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MySql.Models
 {
-    /// <summary> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
+    /// <summary> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </summary>
     public readonly partial struct MySqlPublicNetworkAccessEnum : IEquatable<MySqlPublicNetworkAccessEnum>
     {
         private readonly string _value;

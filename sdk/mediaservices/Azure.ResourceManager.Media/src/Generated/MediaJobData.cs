@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Media
 {
-    /// <summary> A class representing the MediaJob data model. </summary>
+    /// <summary>
+    /// A class representing the MediaJob data model.
+    /// A Job resource type. The progress and state can be obtained by polling a Job or subscribing to events using EventGrid.
+    /// </summary>
     public partial class MediaJobData : ResourceData
     {
         /// <summary> Initializes a new instance of MediaJobData. </summary>
@@ -28,7 +31,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="createdOn"> The UTC date and time when the customer has created the Job, in &apos;YYYY-MM-DDThh:mm:ssZ&apos; format. </param>
+        /// <param name="createdOn"> The UTC date and time when the customer has created the Job, in 'YYYY-MM-DDThh:mm:ssZ' format. </param>
         /// <param name="state"> The current state of the job. </param>
         /// <param name="description"> Optional customer supplied description of the Job. </param>
         /// <param name="input">
@@ -36,7 +39,7 @@ namespace Azure.ResourceManager.Media
         /// Please note <see cref="MediaJobInputBasicProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="MediaJobInputAsset"/>, <see cref="MediaJobInputClip"/>, <see cref="MediaJobInputHttp"/>, <see cref="MediaJobInputSequence"/> and <see cref="MediaJobInputs"/>.
         /// </param>
-        /// <param name="lastModifiedOn"> The UTC date and time when the customer has last updated the Job, in &apos;YYYY-MM-DDThh:mm:ssZ&apos; format. </param>
+        /// <param name="lastModifiedOn"> The UTC date and time when the customer has last updated the Job, in 'YYYY-MM-DDThh:mm:ssZ' format. </param>
         /// <param name="outputs">
         /// The outputs for the Job.
         /// Please note <see cref="MediaJobOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -60,7 +63,7 @@ namespace Azure.ResourceManager.Media
             EndOn = endOn;
         }
 
-        /// <summary> The UTC date and time when the customer has created the Job, in &apos;YYYY-MM-DDThh:mm:ssZ&apos; format. </summary>
+        /// <summary> The UTC date and time when the customer has created the Job, in 'YYYY-MM-DDThh:mm:ssZ' format. </summary>
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The current state of the job. </summary>
         public MediaJobState? State { get; }
@@ -72,7 +75,7 @@ namespace Azure.ResourceManager.Media
         /// The available derived classes include <see cref="MediaJobInputAsset"/>, <see cref="MediaJobInputClip"/>, <see cref="MediaJobInputHttp"/>, <see cref="MediaJobInputSequence"/> and <see cref="MediaJobInputs"/>.
         /// </summary>
         public MediaJobInputBasicProperties Input { get; set; }
-        /// <summary> The UTC date and time when the customer has last updated the Job, in &apos;YYYY-MM-DDThh:mm:ssZ&apos; format. </summary>
+        /// <summary> The UTC date and time when the customer has last updated the Job, in 'YYYY-MM-DDThh:mm:ssZ' format. </summary>
         public DateTimeOffset? LastModifiedOn { get; }
         /// <summary>
         /// The outputs for the Job.

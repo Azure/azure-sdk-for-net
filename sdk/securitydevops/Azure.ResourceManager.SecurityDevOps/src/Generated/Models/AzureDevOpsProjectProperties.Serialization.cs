@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
 
         internal static AzureDevOpsProjectProperties DeserializeAzureDevOpsProjectProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ProvisioningState> provisioningState = default;
             Optional<string> projectId = default;
             Optional<string> orgName = default;
@@ -50,7 +54,6 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new ProvisioningState(property.Value.GetString());
@@ -70,7 +73,6 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     autoDiscovery = new AutoDiscovery(property.Value.GetString());

@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -332,7 +333,7 @@ namespace Azure.ResourceManager.DataMigration
         }
 
         /// <summary>
-        /// The services resource is the top-level resource that represents the Database Migration Service. The PATCH method updates an existing service. This method can change the kind, SKU, and network of the service, but if tasks are currently running (i.e. the service is busy), this will fail with 400 Bad Request (&quot;ServiceIsBusy&quot;).
+        /// The services resource is the top-level resource that represents the Database Migration Service. The PATCH method updates an existing service. This method can change the kind, SKU, and network of the service, but if tasks are currently running (i.e. the service is busy), this will fail with 400 Bad Request ("ServiceIsBusy").
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -370,7 +371,7 @@ namespace Azure.ResourceManager.DataMigration
         }
 
         /// <summary>
-        /// The services resource is the top-level resource that represents the Database Migration Service. The PATCH method updates an existing service. This method can change the kind, SKU, and network of the service, but if tasks are currently running (i.e. the service is busy), this will fail with 400 Bad Request (&quot;ServiceIsBusy&quot;).
+        /// The services resource is the top-level resource that represents the Database Migration Service. The PATCH method updates an existing service. This method can change the kind, SKU, and network of the service, but if tasks are currently running (i.e. the service is busy), this will fail with 400 Bad Request ("ServiceIsBusy").
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -536,7 +537,7 @@ namespace Azure.ResourceManager.DataMigration
         }
 
         /// <summary>
-        /// The services resource is the top-level resource that represents the Database Migration Service. This action stops the service and the service cannot be used for data migration. The service owner won&apos;t be billed when the service is stopped.
+        /// The services resource is the top-level resource that represents the Database Migration Service. This action stops the service and the service cannot be used for data migration. The service owner won't be billed when the service is stopped.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -570,7 +571,7 @@ namespace Azure.ResourceManager.DataMigration
         }
 
         /// <summary>
-        /// The services resource is the top-level resource that represents the Database Migration Service. This action stops the service and the service cannot be used for data migration. The service owner won&apos;t be billed when the service is stopped.
+        /// The services resource is the top-level resource that represents the Database Migration Service. This action stops the service and the service cannot be used for data migration. The service owner won't be billed when the service is stopped.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -622,7 +623,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataMigrationServiceServicesRestClient.CreateListSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataMigrationServiceServicesRestClient.CreateListSkusNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AvailableServiceSku.DeserializeAvailableServiceSku, _dataMigrationServiceServicesClientDiagnostics, Pipeline, "DataMigrationServiceResource.GetSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AvailableServiceSku.DeserializeAvailableServiceSku, _dataMigrationServiceServicesClientDiagnostics, Pipeline, "DataMigrationServiceResource.GetSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -644,7 +645,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataMigrationServiceServicesRestClient.CreateListSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataMigrationServiceServicesRestClient.CreateListSkusNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AvailableServiceSku.DeserializeAvailableServiceSku, _dataMigrationServiceServicesClientDiagnostics, Pipeline, "DataMigrationServiceResource.GetSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AvailableServiceSku.DeserializeAvailableServiceSku, _dataMigrationServiceServicesClientDiagnostics, Pipeline, "DataMigrationServiceResource.GetSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

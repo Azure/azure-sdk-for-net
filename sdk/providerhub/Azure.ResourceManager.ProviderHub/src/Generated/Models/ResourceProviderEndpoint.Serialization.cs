@@ -16,21 +16,23 @@ namespace Azure.ResourceManager.ProviderHub.Models
     {
         internal static ResourceProviderEndpoint DeserializeResourceProviderEndpoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enabled = default;
             Optional<IReadOnlyList<string>> apiVersions = default;
             Optional<Uri> endpointUri = default;
-            Optional<IReadOnlyList<string>> locations = default;
+            Optional<IReadOnlyList<AzureLocation>> locations = default;
             Optional<IReadOnlyList<string>> requiredFeatures = default;
-            Optional<ResourceProviderEndpointFeaturesRule> featuresRule = default;
+            Optional<FeaturesRule> featuresRule = default;
             Optional<TimeSpan> timeout = default;
-            Optional<EndpointType> endpointType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enabled = property.Value.GetBoolean();
@@ -40,7 +42,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -55,7 +56,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        endpointUri = null;
                         continue;
                     }
                     endpointUri = new Uri(property.Value.GetString());
@@ -65,13 +65,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<AzureLocation> array = new List<AzureLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new AzureLocation(item.GetString()));
                     }
                     locations = array;
                     continue;
@@ -80,7 +79,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -95,34 +93,22 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    featuresRule = ResourceProviderEndpointFeaturesRule.DeserializeResourceProviderEndpointFeaturesRule(property.Value);
+                    featuresRule = FeaturesRule.DeserializeFeaturesRule(property.Value);
                     continue;
                 }
                 if (property.NameEquals("timeout"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     timeout = property.Value.GetTimeSpan("P");
                     continue;
                 }
-                if (property.NameEquals("endpointType"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    endpointType = new EndpointType(property.Value.GetString());
-                    continue;
-                }
             }
-            return new ResourceProviderEndpoint(Optional.ToNullable(enabled), Optional.ToList(apiVersions), endpointUri.Value, Optional.ToList(locations), Optional.ToList(requiredFeatures), featuresRule.Value, Optional.ToNullable(timeout), Optional.ToNullable(endpointType));
+            return new ResourceProviderEndpoint(Optional.ToNullable(enabled), Optional.ToList(apiVersions), endpointUri.Value, Optional.ToList(locations), Optional.ToList(requiredFeatures), featuresRule.Value, Optional.ToNullable(timeout));
         }
     }
 }

@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Communication.Sms;
-using Azure.Core;
 
 namespace Azure.Communication.Sms.Models
 {
@@ -16,6 +15,10 @@ namespace Azure.Communication.Sms.Models
     {
         internal static SmsSendResponse DeserializeSmsSendResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<SmsSendResult> value = default;
             foreach (var property in element.EnumerateObject())
             {

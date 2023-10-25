@@ -30,7 +30,7 @@ namespace Azure.Maps.Rendering
         public static MapImageLayer Basic { get; } = new MapImageLayer(BasicValue);
         /// <summary> Returns an image containing borders, roads, and labels, and can be overlaid on other tiles (such as satellite imagery) to produce hybrid tiles. </summary>
         public static MapImageLayer Hybrid { get; } = new MapImageLayer(HybridValue);
-        /// <summary> Returns an image of just the map&apos;s label information. </summary>
+        /// <summary> Returns an image of just the map's label information. </summary>
         public static MapImageLayer Labels { get; } = new MapImageLayer(LabelsValue);
         /// <summary> Determines if two <see cref="MapImageLayer"/> values are the same. </summary>
         public static bool operator ==(MapImageLayer left, MapImageLayer right) => left.Equals(right);

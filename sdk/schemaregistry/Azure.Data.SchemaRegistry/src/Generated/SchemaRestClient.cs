@@ -79,7 +79,7 @@ namespace Azure.Data.SchemaRegistry
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -106,7 +106,7 @@ namespace Azure.Data.SchemaRegistry
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -130,7 +130,7 @@ namespace Azure.Data.SchemaRegistry
         }
 
         /// <summary> Get list schema versions. </summary>
-        /// <param name="groupName"> Schema group under which schema is registered.  Group&apos;s serialization type should match the serialization type specified in the request. </param>
+        /// <param name="groupName"> Schema group under which schema is registered.  Group's serialization type should match the serialization type specified in the request. </param>
         /// <param name="schemaName"> Name of schema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> or <paramref name="schemaName"/> is null. </exception>
@@ -158,12 +158,12 @@ namespace Azure.Data.SchemaRegistry
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Get list schema versions. </summary>
-        /// <param name="groupName"> Schema group under which schema is registered.  Group&apos;s serialization type should match the serialization type specified in the request. </param>
+        /// <param name="groupName"> Schema group under which schema is registered.  Group's serialization type should match the serialization type specified in the request. </param>
         /// <param name="schemaName"> Name of schema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> or <paramref name="schemaName"/> is null. </exception>
@@ -191,7 +191,7 @@ namespace Azure.Data.SchemaRegistry
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -216,7 +216,7 @@ namespace Azure.Data.SchemaRegistry
         }
 
         /// <summary> Get specific schema versions. </summary>
-        /// <param name="groupName"> Schema group under which schema is registered.  Group&apos;s serialization type should match the serialization type specified in the request. </param>
+        /// <param name="groupName"> Schema group under which schema is registered.  Group's serialization type should match the serialization type specified in the request. </param>
         /// <param name="schemaName"> Name of schema. </param>
         /// <param name="schemaVersion"> Version number of specific schema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -244,12 +244,12 @@ namespace Azure.Data.SchemaRegistry
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Get specific schema versions. </summary>
-        /// <param name="groupName"> Schema group under which schema is registered.  Group&apos;s serialization type should match the serialization type specified in the request. </param>
+        /// <param name="groupName"> Schema group under which schema is registered.  Group's serialization type should match the serialization type specified in the request. </param>
         /// <param name="schemaName"> Name of schema. </param>
         /// <param name="schemaVersion"> Version number of specific schema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -277,7 +277,7 @@ namespace Azure.Data.SchemaRegistry
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -303,7 +303,7 @@ namespace Azure.Data.SchemaRegistry
         }
 
         /// <summary> Get ID for existing schema. </summary>
-        /// <param name="groupName"> Schema group under which schema is registered.  Group&apos;s serialization type should match the serialization type specified in the request. </param>
+        /// <param name="groupName"> Schema group under which schema is registered.  Group's serialization type should match the serialization type specified in the request. </param>
         /// <param name="schemaName"> Name of schema. </param>
         /// <param name="contentType"> Content type of the schema. </param>
         /// <param name="schemaContent"> String representation (UTF-8) of the registered schema. </param>
@@ -333,12 +333,12 @@ namespace Azure.Data.SchemaRegistry
                 case 204:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Get ID for existing schema. </summary>
-        /// <param name="groupName"> Schema group under which schema is registered.  Group&apos;s serialization type should match the serialization type specified in the request. </param>
+        /// <param name="groupName"> Schema group under which schema is registered.  Group's serialization type should match the serialization type specified in the request. </param>
         /// <param name="schemaName"> Name of schema. </param>
         /// <param name="contentType"> Content type of the schema. </param>
         /// <param name="schemaContent"> String representation (UTF-8) of the registered schema. </param>
@@ -368,7 +368,7 @@ namespace Azure.Data.SchemaRegistry
                 case 204:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -393,7 +393,7 @@ namespace Azure.Data.SchemaRegistry
         }
 
         /// <summary> Register new schema. </summary>
-        /// <param name="groupName"> Schema group under which schema should be registered.  Group&apos;s serialization type should match the serialization type specified in the request. </param>
+        /// <param name="groupName"> Schema group under which schema should be registered.  Group's serialization type should match the serialization type specified in the request. </param>
         /// <param name="schemaName"> Name of schema. </param>
         /// <param name="contentType"> Content type of the schema. </param>
         /// <param name="schemaContent"> String representation (UTF-8) of the schema being registered. </param>
@@ -401,7 +401,7 @@ namespace Azure.Data.SchemaRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="schemaName"/>, <paramref name="contentType"/> or <paramref name="schemaContent"/> is null. </exception>
         /// <remarks>
         /// Register new schema. If schema of specified name does not exist in specified group, schema is created at version 1. If schema of specified name exists already in specified group, schema is created at latest version + 1.
-        /// 
+        ///
         /// </remarks>
         public async Task<ResponseWithHeaders<SchemaRegisterHeaders>> RegisterAsync(string groupName, string schemaName, string contentType, Stream schemaContent, CancellationToken cancellationToken = default)
         {
@@ -430,12 +430,12 @@ namespace Azure.Data.SchemaRegistry
                 case 204:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Register new schema. </summary>
-        /// <param name="groupName"> Schema group under which schema should be registered.  Group&apos;s serialization type should match the serialization type specified in the request. </param>
+        /// <param name="groupName"> Schema group under which schema should be registered.  Group's serialization type should match the serialization type specified in the request. </param>
         /// <param name="schemaName"> Name of schema. </param>
         /// <param name="contentType"> Content type of the schema. </param>
         /// <param name="schemaContent"> String representation (UTF-8) of the schema being registered. </param>
@@ -443,7 +443,7 @@ namespace Azure.Data.SchemaRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/>, <paramref name="schemaName"/>, <paramref name="contentType"/> or <paramref name="schemaContent"/> is null. </exception>
         /// <remarks>
         /// Register new schema. If schema of specified name does not exist in specified group, schema is created at version 1. If schema of specified name exists already in specified group, schema is created at latest version + 1.
-        /// 
+        ///
         /// </remarks>
         public ResponseWithHeaders<SchemaRegisterHeaders> Register(string groupName, string schemaName, string contentType, Stream schemaContent, CancellationToken cancellationToken = default)
         {
@@ -472,7 +472,7 @@ namespace Azure.Data.SchemaRegistry
                 case 204:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -492,7 +492,7 @@ namespace Azure.Data.SchemaRegistry
 
         /// <summary> Get list schema versions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="groupName"> Schema group under which schema is registered.  Group&apos;s serialization type should match the serialization type specified in the request. </param>
+        /// <param name="groupName"> Schema group under which schema is registered.  Group's serialization type should match the serialization type specified in the request. </param>
         /// <param name="schemaName"> Name of schema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="groupName"/> or <paramref name="schemaName"/> is null. </exception>
@@ -524,13 +524,13 @@ namespace Azure.Data.SchemaRegistry
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Get list schema versions. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="groupName"> Schema group under which schema is registered.  Group&apos;s serialization type should match the serialization type specified in the request. </param>
+        /// <param name="groupName"> Schema group under which schema is registered.  Group's serialization type should match the serialization type specified in the request. </param>
         /// <param name="schemaName"> Name of schema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="groupName"/> or <paramref name="schemaName"/> is null. </exception>
@@ -562,7 +562,7 @@ namespace Azure.Data.SchemaRegistry
                         return Response.FromValue(value, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
     }

@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HealthcareApis
 {
-    /// <summary> A class representing the HealthcareApisWorkspace data model. </summary>
+    /// <summary>
+    /// A class representing the HealthcareApisWorkspace data model.
+    /// Workspace resource.
+    /// </summary>
     public partial class HealthcareApisWorkspaceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of HealthcareApisWorkspaceData. </summary>

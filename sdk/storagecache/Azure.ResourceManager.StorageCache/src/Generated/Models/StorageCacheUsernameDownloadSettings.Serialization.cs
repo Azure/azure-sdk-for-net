@@ -76,6 +76,10 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         internal static StorageCacheUsernameDownloadSettings DeserializeStorageCacheUsernameDownloadSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> extendedGroups = default;
             Optional<StorageCacheUsernameSourceType> usernameSource = default;
             Optional<Uri> groupFileUri = default;
@@ -94,7 +98,6 @@ namespace Azure.ResourceManager.StorageCache.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     extendedGroups = property.Value.GetBoolean();
@@ -104,7 +107,6 @@ namespace Azure.ResourceManager.StorageCache.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     usernameSource = new StorageCacheUsernameSourceType(property.Value.GetString());
@@ -114,7 +116,6 @@ namespace Azure.ResourceManager.StorageCache.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        groupFileUri = null;
                         continue;
                     }
                     groupFileUri = new Uri(property.Value.GetString());
@@ -124,7 +125,6 @@ namespace Azure.ResourceManager.StorageCache.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        userFileUri = null;
                         continue;
                     }
                     userFileUri = new Uri(property.Value.GetString());
@@ -144,7 +144,6 @@ namespace Azure.ResourceManager.StorageCache.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     encryptLdapConnection = property.Value.GetBoolean();
@@ -154,7 +153,6 @@ namespace Azure.ResourceManager.StorageCache.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     requireValidCertificate = property.Value.GetBoolean();
@@ -164,7 +162,6 @@ namespace Azure.ResourceManager.StorageCache.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     autoDownloadCertificate = property.Value.GetBoolean();
@@ -174,7 +171,6 @@ namespace Azure.ResourceManager.StorageCache.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        caCertificateUri = null;
                         continue;
                     }
                     caCertificateUri = new Uri(property.Value.GetString());
@@ -184,7 +180,6 @@ namespace Azure.ResourceManager.StorageCache.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     usernameDownloaded = new StorageCacheUsernameDownloadedType(property.Value.GetString());
@@ -194,7 +189,6 @@ namespace Azure.ResourceManager.StorageCache.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     credentials = StorageCacheUsernameDownloadCredential.DeserializeStorageCacheUsernameDownloadCredential(property.Value);

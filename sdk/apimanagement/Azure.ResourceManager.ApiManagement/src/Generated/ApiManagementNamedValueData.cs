@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary> A class representing the ApiManagementNamedValue data model. </summary>
+    /// <summary>
+    /// A class representing the ApiManagementNamedValue data model.
+    /// NamedValue details.
+    /// </summary>
     public partial class ApiManagementNamedValueData : ResourceData
     {
         /// <summary> Initializes a new instance of ApiManagementNamedValueData. </summary>
@@ -29,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="tags"> Optional tags that when provided can be used to filter the NamedValue list. </param>
         /// <param name="isSecret"> Determines whether the value is a secret and should be encrypted or not. Default value is false. </param>
         /// <param name="displayName"> Unique name of NamedValue. It may contain only letters, digits, period, dash, and underscore characters. </param>
-        /// <param name="value"> Value of the NamedValue. Can contain policy expressions. It may not be empty or consist only of whitespace. This property will not be filled on &apos;GET&apos; operations! Use &apos;/listSecrets&apos; POST request to get the value. </param>
+        /// <param name="value"> Value of the NamedValue. Can contain policy expressions. It may not be empty or consist only of whitespace. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
         /// <param name="keyVaultDetails"> KeyVault location details of the namedValue. </param>
         internal ApiManagementNamedValueData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<string> tags, bool? isSecret, string displayName, string value, KeyVaultContractProperties keyVaultDetails) : base(id, name, resourceType, systemData)
         {
@@ -46,7 +49,7 @@ namespace Azure.ResourceManager.ApiManagement
         public bool? IsSecret { get; set; }
         /// <summary> Unique name of NamedValue. It may contain only letters, digits, period, dash, and underscore characters. </summary>
         public string DisplayName { get; set; }
-        /// <summary> Value of the NamedValue. Can contain policy expressions. It may not be empty or consist only of whitespace. This property will not be filled on &apos;GET&apos; operations! Use &apos;/listSecrets&apos; POST request to get the value. </summary>
+        /// <summary> Value of the NamedValue. Can contain policy expressions. It may not be empty or consist only of whitespace. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </summary>
         public string Value { get; set; }
         /// <summary> KeyVault location details of the namedValue. </summary>
         public KeyVaultContractProperties KeyVaultDetails { get; set; }

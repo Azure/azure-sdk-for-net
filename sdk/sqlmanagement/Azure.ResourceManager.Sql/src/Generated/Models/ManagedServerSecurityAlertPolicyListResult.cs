@@ -11,7 +11,7 @@ using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> A list of the managed Server&apos;s security alert policies. </summary>
+    /// <summary> A list of the managed Server's security alert policies. </summary>
     internal partial class ManagedServerSecurityAlertPolicyListResult
     {
         /// <summary> Initializes a new instance of ManagedServerSecurityAlertPolicyListResult. </summary>

@@ -40,6 +40,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("knowledgeStore"u8);
                 writer.WriteObjectValue(KnowledgeStore);
             }
+            if (Optional.IsDefined(IndexProjections))
+            {
+                writer.WritePropertyName("indexProjections"u8);
+                writer.WriteObjectValue(IndexProjections);
+            }
             if (Optional.IsDefined(_etag))
             {
                 writer.WritePropertyName("@odata.etag"u8);
@@ -62,11 +67,16 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static SearchIndexerSkillset DeserializeSearchIndexerSkillset(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<string> description = default;
             IList<SearchIndexerSkill> skills = default;
             Optional<CognitiveServicesAccount> cognitiveServices = default;
             Optional<KnowledgeStore> knowledgeStore = default;
+            Optional<SearchIndexerIndexProjections> indexProjections = default;
             Optional<string> odataEtag = default;
             Optional<SearchResourceEncryptionKey> encryptionKey = default;
             foreach (var property in element.EnumerateObject())
@@ -95,7 +105,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cognitiveServices = CognitiveServicesAccount.DeserializeCognitiveServicesAccount(property.Value);
@@ -105,10 +114,18 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     knowledgeStore = KnowledgeStore.DeserializeKnowledgeStore(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("indexProjections"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    indexProjections = SearchIndexerIndexProjections.DeserializeSearchIndexerIndexProjections(property.Value);
                     continue;
                 }
                 if (property.NameEquals("@odata.etag"u8))
@@ -127,7 +144,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SearchIndexerSkillset(name, description.Value, skills, cognitiveServices.Value, knowledgeStore.Value, odataEtag.Value, encryptionKey.Value);
+            return new SearchIndexerSkillset(name, description.Value, skills, cognitiveServices.Value, knowledgeStore.Value, indexProjections.Value, odataEtag.Value, encryptionKey.Value);
         }
     }
 }

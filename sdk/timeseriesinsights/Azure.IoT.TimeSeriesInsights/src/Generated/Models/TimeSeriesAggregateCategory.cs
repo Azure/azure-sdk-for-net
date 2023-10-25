@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    /// <summary> Category used in categorical variables. A category is defined by &apos;label&apos; and the &apos;values&apos; that are assigned this label. </summary>
+    /// <summary> Category used in categorical variables. A category is defined by 'label' and the 'values' that are assigned this label. </summary>
     public partial class TimeSeriesAggregateCategory
     {
         /// <summary> Initializes a new instance of TimeSeriesAggregateCategory. </summary>

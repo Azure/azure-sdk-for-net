@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Chaos
 {
-    /// <summary> A class representing the Capability data model. </summary>
+    /// <summary>
+    /// A class representing the Capability data model.
+    /// Model that represents a Capability resource.
+    /// </summary>
     public partial class CapabilityData : ResourceData
     {
         /// <summary> Initializes a new instance of CapabilityData. </summary>

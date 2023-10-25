@@ -61,7 +61,7 @@ namespace Azure.Identity
     {
         public AzureCliCredentialOptions() { }
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
-        public System.TimeSpan? CliProcessTimeout { get { throw null; } set { } }
+        public System.TimeSpan? ProcessTimeout { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
     }
     public partial class AzureDeveloperCliCredential : Azure.Core.TokenCredential
@@ -75,7 +75,7 @@ namespace Azure.Identity
     {
         public AzureDeveloperCliCredentialOptions() { }
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
-        public System.TimeSpan? AzdCliProcessTimeout { get { throw null; } set { } }
+        public System.TimeSpan? ProcessTimeout { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
     }
     public partial class AzurePowerShellCredential : Azure.Core.TokenCredential
@@ -89,8 +89,15 @@ namespace Azure.Identity
     {
         public AzurePowerShellCredentialOptions() { }
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
-        public System.TimeSpan? PowerShellProcessTimeout { get { throw null; } set { } }
+        public System.TimeSpan? ProcessTimeout { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
+    }
+    public partial class BrowserCustomizationOptions
+    {
+        public BrowserCustomizationOptions() { }
+        public string ErrorMessage { get { throw null; } set { } }
+        public string SuccessMessage { get { throw null; } set { } }
+        public bool? UseEmbeddedWebView { get { throw null; } set { } }
     }
     public partial class ChainedTokenCredential : Azure.Core.TokenCredential
     {
@@ -167,7 +174,7 @@ namespace Azure.Identity
     {
         public DefaultAzureCredentialOptions() { }
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
-        public System.TimeSpan? DeveloperCredentialTimeout { get { throw null; } set { } }
+        public System.TimeSpan? CredentialProcessTimeout { get { throw null; } set { } }
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
         public bool ExcludeAzureCliCredential { get { throw null; } set { } }
         public bool ExcludeAzureDeveloperCliCredential { get { throw null; } set { } }
@@ -178,6 +185,7 @@ namespace Azure.Identity
         public bool ExcludeSharedTokenCacheCredential { get { throw null; } set { } }
         public bool ExcludeVisualStudioCodeCredential { get { throw null; } set { } }
         public bool ExcludeVisualStudioCredential { get { throw null; } set { } }
+        public bool ExcludeWorkloadIdentityCredential { get { throw null; } set { } }
         public string InteractiveBrowserCredentialClientId { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string InteractiveBrowserTenantId { get { throw null; } set { } }
@@ -191,6 +199,7 @@ namespace Azure.Identity
         public string VisualStudioCodeTenantId { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string VisualStudioTenantId { get { throw null; } set { } }
+        public string WorkloadIdentityClientId { get { throw null; } set { } }
     }
     public partial class DeviceCodeCredential : Azure.Core.TokenCredential
     {
@@ -236,6 +245,7 @@ namespace Azure.Identity
     {
         public EnvironmentCredential() { }
         public EnvironmentCredential(Azure.Identity.EnvironmentCredentialOptions options) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public EnvironmentCredential(Azure.Identity.TokenCredentialOptions options) { }
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -243,6 +253,7 @@ namespace Azure.Identity
     public partial class EnvironmentCredentialOptions : Azure.Identity.TokenCredentialOptions
     {
         public EnvironmentCredentialOptions() { }
+        public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
     }
     public static partial class IdentityModelFactory
@@ -270,6 +281,7 @@ namespace Azure.Identity
         public InteractiveBrowserCredentialOptions() { }
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
         public Azure.Identity.AuthenticationRecord AuthenticationRecord { get { throw null; } set { } }
+        public Azure.Identity.BrowserCustomizationOptions BrowserCustomization { get { throw null; } set { } }
         public string ClientId { get { throw null; } set { } }
         public bool DisableAutomaticAuthentication { get { throw null; } set { } }
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
@@ -322,7 +334,7 @@ namespace Azure.Identity
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
         public bool EnableGuestTenantAuthentication { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
-        public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } }
+        public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
         public string Username { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -342,11 +354,13 @@ namespace Azure.Identity
     public partial class TokenCacheRefreshArgs
     {
         internal TokenCacheRefreshArgs() { }
+        public bool IsCaeEnabled { get { throw null; } }
         public string SuggestedCacheKey { get { throw null; } }
     }
     public partial class TokenCacheUpdatedArgs
     {
         internal TokenCacheUpdatedArgs() { }
+        public bool IsCaeEnabled { get { throw null; } }
         public System.ReadOnlyMemory<byte> UnsafeCacheData { get { throw null; } }
     }
     public partial class TokenCredentialDiagnosticsOptions : Azure.Core.DiagnosticsOptions
@@ -359,6 +373,7 @@ namespace Azure.Identity
         public TokenCredentialOptions() { }
         public System.Uri AuthorityHost { get { throw null; } set { } }
         public new Azure.Identity.TokenCredentialDiagnosticsOptions Diagnostics { get { throw null; } }
+        public bool IsUnsafeSupportLoggingEnabled { get { throw null; } set { } }
     }
     public abstract partial class UnsafeTokenCacheOptions : Azure.Identity.TokenCachePersistenceOptions
     {
@@ -411,7 +426,23 @@ namespace Azure.Identity
     {
         public VisualStudioCredentialOptions() { }
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
+        public System.TimeSpan? ProcessTimeout { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
-        public System.TimeSpan? VisualStudioProcessTimeout { get { throw null; } set { } }
+    }
+    public partial class WorkloadIdentityCredential : Azure.Core.TokenCredential
+    {
+        public WorkloadIdentityCredential() { }
+        public WorkloadIdentityCredential(Azure.Identity.WorkloadIdentityCredentialOptions options) { }
+        public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class WorkloadIdentityCredentialOptions : Azure.Identity.TokenCredentialOptions
+    {
+        public WorkloadIdentityCredentialOptions() { }
+        public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
+        public string ClientId { get { throw null; } set { } }
+        public bool DisableInstanceDiscovery { get { throw null; } set { } }
+        public string TenantId { get { throw null; } set { } }
+        public string TokenFilePath { get { throw null; } set { } }
     }
 }

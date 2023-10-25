@@ -15,6 +15,10 @@ namespace Azure.Communication.Identity
     {
         internal static CommunicationIdentityAccessToken DeserializeCommunicationIdentityAccessToken(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string token = default;
             DateTimeOffset expiresOn = default;
             foreach (var property in element.EnumerateObject())

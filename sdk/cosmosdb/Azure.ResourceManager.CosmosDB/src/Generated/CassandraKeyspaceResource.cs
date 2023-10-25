@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CassandraKeyspaceThroughputSettingResource" /> object. </returns>
         public virtual CassandraKeyspaceThroughputSettingResource GetCassandraKeyspaceThroughputSetting()
         {
-            return new CassandraKeyspaceThroughputSettingResource(Client, new ResourceIdentifier(Id.ToString() + "/throughputSettings/default"));
+            return new CassandraKeyspaceThroughputSettingResource(Client, Id.AppendChildResource("throughputSettings", "default"));
         }
 
         /// <summary> Gets a collection of CassandraTableResources in the CassandraKeyspace. </summary>
@@ -146,6 +146,59 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Response<CassandraTableResource> GetCassandraTable(string tableName, CancellationToken cancellationToken = default)
         {
             return GetCassandraTables().Get(tableName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of CassandraViewGetResultResources in the CassandraKeyspace. </summary>
+        /// <returns> An object representing collection of CassandraViewGetResultResources and their operations over a CassandraViewGetResultResource. </returns>
+        public virtual CassandraViewGetResultCollection GetCassandraViewGetResults()
+        {
+            return GetCachedClient(Client => new CassandraViewGetResultCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets the Cassandra view under an existing Azure Cosmos DB database account.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/views/{viewName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CassandraResources_GetCassandraView</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="viewName"> Cosmos DB view name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<CassandraViewGetResultResource>> GetCassandraViewGetResultAsync(string viewName, CancellationToken cancellationToken = default)
+        {
+            return await GetCassandraViewGetResults().GetAsync(viewName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the Cassandra view under an existing Azure Cosmos DB database account.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/views/{viewName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CassandraResources_GetCassandraView</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="viewName"> Cosmos DB view name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="viewName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="viewName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<CassandraViewGetResultResource> GetCassandraViewGetResult(string viewName, CancellationToken cancellationToken = default)
+        {
+            return GetCassandraViewGetResults().Get(viewName, cancellationToken);
         }
 
         /// <summary>

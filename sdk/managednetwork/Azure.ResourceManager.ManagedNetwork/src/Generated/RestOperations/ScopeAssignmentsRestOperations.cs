@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         }
 
         /// <summary> Creates a scope assignment. </summary>
-        /// <param name="scope"> The base resource of the scope assignment to create. The scope can be any REST resource instance. For example, use &apos;subscriptions/{subscription-id}&apos; for a subscription, &apos;subscriptions/{subscription-id}/resourceGroups/{resource-group-name}&apos; for a resource group, and &apos;subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/providers/{resource-provider}/{resource-type}/{resource-name}&apos; for a resource. </param>
+        /// <param name="scope"> The base resource of the scope assignment to create. The scope can be any REST resource instance. For example, use 'subscriptions/{subscription-id}' for a subscription, 'subscriptions/{subscription-id}/resourceGroups/{resource-group-name}' for a resource group, and 'subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/providers/{resource-provider}/{resource-type}/{resource-name}' for a resource. </param>
         /// <param name="scopeAssignmentName"> The name of the scope assignment to create. </param>
         /// <param name="data"> Parameters supplied to the specify which Managed Network this scope is being assigned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         }
 
         /// <summary> Creates a scope assignment. </summary>
-        /// <param name="scope"> The base resource of the scope assignment to create. The scope can be any REST resource instance. For example, use &apos;subscriptions/{subscription-id}&apos; for a subscription, &apos;subscriptions/{subscription-id}/resourceGroups/{resource-group-name}&apos; for a resource group, and &apos;subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/providers/{resource-provider}/{resource-type}/{resource-name}&apos; for a resource. </param>
+        /// <param name="scope"> The base resource of the scope assignment to create. The scope can be any REST resource instance. For example, use 'subscriptions/{subscription-id}' for a subscription, 'subscriptions/{subscription-id}/resourceGroups/{resource-group-name}' for a resource group, and 'subscriptions/{subscription-id}/resourceGroups/{resource-group-name}/providers/{resource-provider}/{resource-type}/{resource-name}' for a resource. </param>
         /// <param name="scopeAssignmentName"> The name of the scope assignment to create. </param>
         /// <param name="data"> Parameters supplied to the specify which Managed Network this scope is being assigned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.DigitalTwins
 
         internal static DigitalTwinsEndpointResourceData DeserializeDigitalTwinsEndpointResourceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DigitalTwinsEndpointResourceProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -55,7 +59,6 @@ namespace Azure.ResourceManager.DigitalTwins
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

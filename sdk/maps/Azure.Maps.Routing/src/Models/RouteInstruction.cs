@@ -27,14 +27,14 @@ namespace Azure.Maps.Routing.Models
         /// <param name="junctionType"> The type of the junction where the maneuver takes place. For larger roundabouts, two separate instructions are generated for entering and leaving the roundabout. </param>
         /// <param name="turnAngleInDegrees">
         /// Indicates the direction of an instruction. If junctionType indicates a turn instruction:
-        /// <list>
+        /// <list type="bullet">
         /// <item><description> 180 = U-turn </description></item>
         /// <item><description> [-179, -1] = Left turn </description></item>
         /// <item><description> 0 = Straight on (a "0 degree" turn) </description></item>
         /// <item><description> [1, 179] = Right turn </description></item>
         /// </list>
         /// If junctionType indicates a bifurcation instruction:
-        /// <list>
+        /// <list type="bullet">
         /// <item><description> less than 0 - keep left </description></item>
         /// <item><description> larger than 0 - keep right </description></item>
         /// </list>

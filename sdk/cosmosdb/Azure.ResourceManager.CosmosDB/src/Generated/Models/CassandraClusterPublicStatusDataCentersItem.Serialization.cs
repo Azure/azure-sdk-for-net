@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
     {
         internal static CassandraClusterPublicStatusDataCentersItem DeserializeCassandraClusterPublicStatusDataCentersItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<IReadOnlyList<string>> seedNodes = default;
             Optional<IReadOnlyList<CassandraClusterDataCenterNodeItem>> nodes = default;
@@ -29,7 +33,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -44,7 +47,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CassandraClusterDataCenterNodeItem> array = new List<CassandraClusterDataCenterNodeItem>();

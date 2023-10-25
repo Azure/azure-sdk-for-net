@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static TaskType Forecasting { get; } = new TaskType(ForecastingValue);
         /// <summary>
         /// Image Classification. Multi-class image classification is used when an image is classified with only a single label
-        /// from a set of classes - e.g. each image is classified as either an image of a &apos;cat&apos; or a &apos;dog&apos; or a &apos;duck&apos;.
+        /// from a set of classes - e.g. each image is classified as either an image of a 'cat' or a 'dog' or a 'duck'.
         /// </summary>
         public static TaskType ImageClassification { get; } = new TaskType(ImageClassificationValue);
         /// <summary>
         /// Image Classification Multilabel. Multi-label image classification is used when an image could have one or more labels
-        /// from a set of labels - e.g. an image could be labeled with both &apos;cat&apos; and &apos;dog&apos;.
+        /// from a set of labels - e.g. an image could be labeled with both 'cat' and 'dog'.
         /// </summary>
         public static TaskType ImageClassificationMultilabel { get; } = new TaskType(ImageClassificationMultilabelValue);
         /// <summary>

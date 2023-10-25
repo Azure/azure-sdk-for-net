@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     {
         internal static UnknownMeterDetails DeserializeUnknownMeterDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             BillingType billingType = "Unknown";
             Optional<double> multiplier = default;
             Optional<EdgeOrderProductChargingType> chargingType = default;
@@ -28,7 +32,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     multiplier = property.Value.GetDouble();
@@ -38,7 +41,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     chargingType = new EdgeOrderProductChargingType(property.Value.GetString());

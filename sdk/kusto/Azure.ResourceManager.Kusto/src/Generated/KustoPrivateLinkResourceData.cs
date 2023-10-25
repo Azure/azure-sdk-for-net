@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto
 {
-    /// <summary> A class representing the KustoPrivateLinkResource data model. </summary>
+    /// <summary>
+    /// A class representing the KustoPrivateLinkResource data model.
+    /// A private link resource
+    /// </summary>
     public partial class KustoPrivateLinkResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of KustoPrivateLinkResourceData. </summary>

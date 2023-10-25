@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
@@ -14,6 +13,10 @@ namespace Azure.Communication.Chat
     {
         internal static ChatErrorResponse DeserializeChatErrorResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ChatError error = default;
             foreach (var property in element.EnumerateObject())
             {

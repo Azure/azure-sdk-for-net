@@ -1,0 +1,14 @@
+{
+    "properties": {
+        "providerSettings": {
+            "sslPreference": "Disabled",
+            "providerType": "Db2",
+            "hostname": "10.1.21.4",
+            "sapSid": "OPA",
+            "dbPort": "25000",
+            "dbUsername": "db2admin",
+            "dbPassword": "Sanitized",
+            "dbName": "Sample"
+        }
+    }
+}

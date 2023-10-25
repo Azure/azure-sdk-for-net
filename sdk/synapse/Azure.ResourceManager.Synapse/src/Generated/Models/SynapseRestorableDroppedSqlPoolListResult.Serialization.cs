@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
@@ -16,6 +15,10 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static SynapseRestorableDroppedSqlPoolListResult DeserializeSynapseRestorableDroppedSqlPoolListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<SynapseRestorableDroppedSqlPoolData> value = default;
             foreach (var property in element.EnumerateObject())
             {

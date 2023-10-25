@@ -24,87 +24,38 @@ namespace Azure.AI.AnomalyDetector
             writer.WriteEndArray();
             if (Optional.IsDefined(Granularity))
             {
-                if (Granularity != null)
-                {
-                    writer.WritePropertyName("granularity"u8);
-                    writer.WriteStringValue(Granularity.Value.ToSerialString());
-                }
-                else
-                {
-                    writer.WriteNull("granularity");
-                }
+                writer.WritePropertyName("granularity"u8);
+                writer.WriteStringValue(Granularity.Value.ToString());
             }
             if (Optional.IsDefined(CustomInterval))
             {
-                if (CustomInterval != null)
-                {
-                    writer.WritePropertyName("customInterval"u8);
-                    writer.WriteNumberValue(CustomInterval.Value);
-                }
-                else
-                {
-                    writer.WriteNull("customInterval");
-                }
+                writer.WritePropertyName("customInterval"u8);
+                writer.WriteNumberValue(CustomInterval.Value);
             }
             if (Optional.IsDefined(Period))
             {
-                if (Period != null)
-                {
-                    writer.WritePropertyName("period"u8);
-                    writer.WriteNumberValue(Period.Value);
-                }
-                else
-                {
-                    writer.WriteNull("period");
-                }
+                writer.WritePropertyName("period"u8);
+                writer.WriteNumberValue(Period.Value);
             }
             if (Optional.IsDefined(MaxAnomalyRatio))
             {
-                if (MaxAnomalyRatio != null)
-                {
-                    writer.WritePropertyName("maxAnomalyRatio"u8);
-                    writer.WriteNumberValue(MaxAnomalyRatio.Value);
-                }
-                else
-                {
-                    writer.WriteNull("maxAnomalyRatio");
-                }
+                writer.WritePropertyName("maxAnomalyRatio"u8);
+                writer.WriteNumberValue(MaxAnomalyRatio.Value);
             }
             if (Optional.IsDefined(Sensitivity))
             {
-                if (Sensitivity != null)
-                {
-                    writer.WritePropertyName("sensitivity"u8);
-                    writer.WriteNumberValue(Sensitivity.Value);
-                }
-                else
-                {
-                    writer.WriteNull("sensitivity");
-                }
+                writer.WritePropertyName("sensitivity"u8);
+                writer.WriteNumberValue(Sensitivity.Value);
             }
             if (Optional.IsDefined(ImputeMode))
             {
-                if (ImputeMode != null)
-                {
-                    writer.WritePropertyName("imputeMode"u8);
-                    writer.WriteStringValue(ImputeMode.Value.ToString());
-                }
-                else
-                {
-                    writer.WriteNull("imputeMode");
-                }
+                writer.WritePropertyName("imputeMode"u8);
+                writer.WriteStringValue(ImputeMode.Value.ToString());
             }
             if (Optional.IsDefined(ImputeFixedValue))
             {
-                if (ImputeFixedValue != null)
-                {
-                    writer.WritePropertyName("imputeFixedValue"u8);
-                    writer.WriteNumberValue(ImputeFixedValue.Value);
-                }
-                else
-                {
-                    writer.WriteNull("imputeFixedValue");
-                }
+                writer.WritePropertyName("imputeFixedValue"u8);
+                writer.WriteNumberValue(ImputeFixedValue.Value);
             }
             writer.WriteEndObject();
         }

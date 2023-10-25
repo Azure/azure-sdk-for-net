@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                 writer.WriteStartArray();
                 foreach (var item in ClusterExtensionIds)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();

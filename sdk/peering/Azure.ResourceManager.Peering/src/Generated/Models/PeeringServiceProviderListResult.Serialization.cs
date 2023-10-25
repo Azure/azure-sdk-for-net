@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Peering.Models
     {
         internal static PeeringServiceProviderListResult DeserializePeeringServiceProviderListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<PeeringServiceProvider>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.Peering.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PeeringServiceProvider> array = new List<PeeringServiceProvider>();

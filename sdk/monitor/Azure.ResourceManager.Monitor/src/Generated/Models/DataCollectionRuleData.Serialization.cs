@@ -24,6 +24,11 @@ namespace Azure.ResourceManager.Monitor
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                JsonSerializer.Serialize(writer, Identity);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -86,7 +91,12 @@ namespace Azure.ResourceManager.Monitor
 
         internal static DataCollectionRuleData DeserializeDataCollectionRuleData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DataCollectionRuleResourceKind> kind = default;
+            Optional<ManagedServiceIdentity> identity = default;
             Optional<ETag> etag = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -109,17 +119,24 @@ namespace Azure.ResourceManager.Monitor
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     kind = new DataCollectionRuleResourceKind(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -129,7 +146,6 @@ namespace Azure.ResourceManager.Monitor
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -164,7 +180,6 @@ namespace Azure.ResourceManager.Monitor
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -193,7 +208,6 @@ namespace Azure.ResourceManager.Monitor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             dataCollectionEndpointId = new ResourceIdentifier(property0.Value.GetString());
@@ -203,7 +217,6 @@ namespace Azure.ResourceManager.Monitor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             metadata = DataCollectionRuleMetadata.DeserializeDataCollectionRuleMetadata(property0.Value);
@@ -213,7 +226,6 @@ namespace Azure.ResourceManager.Monitor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, DataStreamDeclaration> dictionary = new Dictionary<string, DataStreamDeclaration>();
@@ -228,7 +240,6 @@ namespace Azure.ResourceManager.Monitor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             dataSources = DataCollectionRuleDataSources.DeserializeDataCollectionRuleDataSources(property0.Value);
@@ -238,7 +249,6 @@ namespace Azure.ResourceManager.Monitor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             destinations = DataCollectionRuleDestinations.DeserializeDataCollectionRuleDestinations(property0.Value);
@@ -248,7 +258,6 @@ namespace Azure.ResourceManager.Monitor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DataFlow> array = new List<DataFlow>();
@@ -263,7 +272,6 @@ namespace Azure.ResourceManager.Monitor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new DataCollectionRuleProvisioningState(property0.Value.GetString());
@@ -273,7 +281,7 @@ namespace Azure.ResourceManager.Monitor
                     continue;
                 }
             }
-            return new DataCollectionRuleData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(kind), Optional.ToNullable(etag), description.Value, immutableId.Value, dataCollectionEndpointId.Value, metadata.Value, Optional.ToDictionary(streamDeclarations), dataSources.Value, destinations.Value, Optional.ToList(dataFlows), Optional.ToNullable(provisioningState));
+            return new DataCollectionRuleData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(kind), identity, Optional.ToNullable(etag), description.Value, immutableId.Value, dataCollectionEndpointId.Value, metadata.Value, Optional.ToDictionary(streamDeclarations), dataSources.Value, destinations.Value, Optional.ToList(dataFlows), Optional.ToNullable(provisioningState));
         }
     }
 }

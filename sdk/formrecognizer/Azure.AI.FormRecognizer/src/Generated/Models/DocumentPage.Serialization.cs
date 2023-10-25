@@ -15,6 +15,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         internal static DocumentPage DeserializeDocumentPage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int pageNumber = default;
             Optional<float> angle = default;
             Optional<float> width = default;
@@ -24,6 +28,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Optional<IReadOnlyList<DocumentWord>> words = default;
             Optional<IReadOnlyList<DocumentSelectionMark>> selectionMarks = default;
             Optional<IReadOnlyList<DocumentLine>> lines = default;
+            Optional<IReadOnlyList<DocumentBarcode>> barcodes = default;
+            Optional<IReadOnlyList<DocumentFormula>> formulas = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("pageNumber"u8))
@@ -35,7 +41,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     angle = property.Value.GetSingle();
@@ -45,7 +50,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     width = property.Value.GetSingle();
@@ -55,7 +59,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     height = property.Value.GetSingle();
@@ -65,7 +68,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     unit = new V3LengthUnit(property.Value.GetString());
@@ -85,7 +87,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DocumentWord> array = new List<DocumentWord>();
@@ -100,7 +101,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DocumentSelectionMark> array = new List<DocumentSelectionMark>();
@@ -115,7 +115,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DocumentLine> array = new List<DocumentLine>();
@@ -126,8 +125,36 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     lines = array;
                     continue;
                 }
+                if (property.NameEquals("barcodes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<DocumentBarcode> array = new List<DocumentBarcode>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(DocumentBarcode.DeserializeDocumentBarcode(item));
+                    }
+                    barcodes = array;
+                    continue;
+                }
+                if (property.NameEquals("formulas"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<DocumentFormula> array = new List<DocumentFormula>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(DocumentFormula.DeserializeDocumentFormula(item));
+                    }
+                    formulas = array;
+                    continue;
+                }
             }
-            return new DocumentPage(pageNumber, Optional.ToNullable(angle), Optional.ToNullable(width), Optional.ToNullable(height), Optional.ToNullable(unit), spans, Optional.ToList(words), Optional.ToList(selectionMarks), Optional.ToList(lines));
+            return new DocumentPage(pageNumber, Optional.ToNullable(angle), Optional.ToNullable(width), Optional.ToNullable(height), Optional.ToNullable(unit), spans, Optional.ToList(words), Optional.ToList(selectionMarks), Optional.ToList(lines), Optional.ToList(barcodes), Optional.ToList(formulas));
         }
     }
 }

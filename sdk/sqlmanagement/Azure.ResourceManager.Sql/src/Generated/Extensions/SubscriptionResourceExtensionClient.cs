@@ -9,6 +9,7 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -29,16 +30,16 @@ namespace Azure.ResourceManager.Sql
         private CapabilitiesRestOperations _capabilitiesRestClient;
         private ClientDiagnostics _syncGroupClientDiagnostics;
         private SyncGroupsRestOperations _syncGroupRestClient;
-        private ClientDiagnostics _sqlServerServersClientDiagnostics;
-        private ServersRestOperations _sqlServerServersRestClient;
         private ClientDiagnostics _longTermRetentionBackupsClientDiagnostics;
         private LongTermRetentionBackupsRestOperations _longTermRetentionBackupsRestClient;
         private ClientDiagnostics _longTermRetentionManagedInstanceBackupsClientDiagnostics;
         private LongTermRetentionManagedInstanceBackupsRestOperations _longTermRetentionManagedInstanceBackupsRestClient;
-        private ClientDiagnostics _managedInstanceClientDiagnostics;
-        private ManagedInstancesRestOperations _managedInstanceRestClient;
         private ClientDiagnostics _virtualClusterClientDiagnostics;
         private VirtualClustersRestOperations _virtualClusterRestClient;
+        private ClientDiagnostics _managedInstanceClientDiagnostics;
+        private ManagedInstancesRestOperations _managedInstanceRestClient;
+        private ClientDiagnostics _sqlServerServersClientDiagnostics;
+        private ServersRestOperations _sqlServerServersRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -60,16 +61,16 @@ namespace Azure.ResourceManager.Sql
         private CapabilitiesRestOperations CapabilitiesRestClient => _capabilitiesRestClient ??= new CapabilitiesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics SyncGroupClientDiagnostics => _syncGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql", SyncGroupResource.ResourceType.Namespace, Diagnostics);
         private SyncGroupsRestOperations SyncGroupRestClient => _syncGroupRestClient ??= new SyncGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SyncGroupResource.ResourceType));
-        private ClientDiagnostics SqlServerServersClientDiagnostics => _sqlServerServersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql", SqlServerResource.ResourceType.Namespace, Diagnostics);
-        private ServersRestOperations SqlServerServersRestClient => _sqlServerServersRestClient ??= new ServersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SqlServerResource.ResourceType));
         private ClientDiagnostics LongTermRetentionBackupsClientDiagnostics => _longTermRetentionBackupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private LongTermRetentionBackupsRestOperations LongTermRetentionBackupsRestClient => _longTermRetentionBackupsRestClient ??= new LongTermRetentionBackupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics LongTermRetentionManagedInstanceBackupsClientDiagnostics => _longTermRetentionManagedInstanceBackupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private LongTermRetentionManagedInstanceBackupsRestOperations LongTermRetentionManagedInstanceBackupsRestClient => _longTermRetentionManagedInstanceBackupsRestClient ??= new LongTermRetentionManagedInstanceBackupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics ManagedInstanceClientDiagnostics => _managedInstanceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedInstanceResource.ResourceType.Namespace, Diagnostics);
-        private ManagedInstancesRestOperations ManagedInstanceRestClient => _managedInstanceRestClient ??= new ManagedInstancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ManagedInstanceResource.ResourceType));
         private ClientDiagnostics VirtualClusterClientDiagnostics => _virtualClusterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql", VirtualClusterResource.ResourceType.Namespace, Diagnostics);
         private VirtualClustersRestOperations VirtualClusterRestClient => _virtualClusterRestClient ??= new VirtualClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VirtualClusterResource.ResourceType));
+        private ClientDiagnostics ManagedInstanceClientDiagnostics => _managedInstanceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedInstanceResource.ResourceType.Namespace, Diagnostics);
+        private ManagedInstancesRestOperations ManagedInstanceRestClient => _managedInstanceRestClient ??= new ManagedInstancesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ManagedInstanceResource.ResourceType));
+        private ClientDiagnostics SqlServerServersClientDiagnostics => _sqlServerServersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Sql", SqlServerResource.ResourceType.Namespace, Diagnostics);
+        private ServersRestOperations SqlServerServersRestClient => _sqlServerServersRestClient ??= new ServersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SqlServerResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DeletedServerRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DeletedServerRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DeletedServerResource(Client, DeletedServerData.DeserializeDeletedServerData(e)), DeletedServerClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDeletedServers", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DeletedServerResource(Client, DeletedServerData.DeserializeDeletedServerData(e)), DeletedServerClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDeletedServers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -162,7 +163,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DeletedServerRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DeletedServerRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DeletedServerResource(Client, DeletedServerData.DeserializeDeletedServerData(e)), DeletedServerClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDeletedServers", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DeletedServerResource(Client, DeletedServerData.DeserializeDeletedServerData(e)), DeletedServerClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDeletedServers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -184,7 +185,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => InstancePoolRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => InstancePoolRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new InstancePoolResource(Client, InstancePoolData.DeserializeInstancePoolData(e)), InstancePoolClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetInstancePools", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new InstancePoolResource(Client, InstancePoolData.DeserializeInstancePoolData(e)), InstancePoolClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetInstancePools", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -206,7 +207,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => InstancePoolRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => InstancePoolRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new InstancePoolResource(Client, InstancePoolData.DeserializeInstancePoolData(e)), InstancePoolClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetInstancePools", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new InstancePoolResource(Client, InstancePoolData.DeserializeInstancePoolData(e)), InstancePoolClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetInstancePools", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -293,7 +294,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SyncGroupRestClient.CreateListSyncDatabaseIdsRequest(Id.SubscriptionId, locationName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SyncGroupRestClient.CreateListSyncDatabaseIdsNextPageRequest(nextLink, Id.SubscriptionId, locationName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => JsonSerializer.Deserialize<SubResource>(e.GetRawText()), SyncGroupClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSyncDatabaseIdsSyncGroups", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => JsonSerializer.Deserialize<SubResource>(e.GetRawText()), SyncGroupClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSyncDatabaseIdsSyncGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -316,53 +317,301 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SyncGroupRestClient.CreateListSyncDatabaseIdsRequest(Id.SubscriptionId, locationName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SyncGroupRestClient.CreateListSyncDatabaseIdsNextPageRequest(nextLink, Id.SubscriptionId, locationName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => JsonSerializer.Deserialize<SubResource>(e.GetRawText()), SyncGroupClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSyncDatabaseIdsSyncGroups", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => JsonSerializer.Deserialize<SubResource>(e.GetRawText()), SyncGroupClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSyncDatabaseIdsSyncGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Gets a list of all servers in the subscription.
+        /// Lists the long term retention backups for a given location.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/servers</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionBackups</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Servers_List</description>
+        /// <description>LongTermRetentionBackups_ListByLocation</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="locationName"> The location of the database. </param>
+        /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
+        /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="LongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithLocationAsync(AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => LongTermRetentionBackupsRestClient.CreateListByLocationRequest(Id.SubscriptionId, locationName, onlyLatestPerDatabase, databaseState);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LongTermRetentionBackupsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, locationName, onlyLatestPerDatabase, databaseState);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, LongTermRetentionBackupData.DeserializeLongTermRetentionBackupData, LongTermRetentionBackupsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetLongTermRetentionBackupsWithLocation", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the long term retention backups for a given location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionBackups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionBackups_ListByLocation</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="locationName"> The location of the database. </param>
+        /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
+        /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="LongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithLocation(AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => LongTermRetentionBackupsRestClient.CreateListByLocationRequest(Id.SubscriptionId, locationName, onlyLatestPerDatabase, databaseState);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LongTermRetentionBackupsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, locationName, onlyLatestPerDatabase, databaseState);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, LongTermRetentionBackupData.DeserializeLongTermRetentionBackupData, LongTermRetentionBackupsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetLongTermRetentionBackupsWithLocation", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the long term retention backups for a given server.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionBackups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionBackups_ListByServer</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="locationName"> The location of the database. </param>
+        /// <param name="longTermRetentionServerName"> The name of the server. </param>
+        /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
+        /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="LongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithServerAsync(AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => LongTermRetentionBackupsRestClient.CreateListByServerRequest(Id.SubscriptionId, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LongTermRetentionBackupsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, LongTermRetentionBackupData.DeserializeLongTermRetentionBackupData, LongTermRetentionBackupsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetLongTermRetentionBackupsWithServer", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the long term retention backups for a given server.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionBackups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionBackups_ListByServer</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="locationName"> The location of the database. </param>
+        /// <param name="longTermRetentionServerName"> The name of the server. </param>
+        /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
+        /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="LongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithServer(AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => LongTermRetentionBackupsRestClient.CreateListByServerRequest(Id.SubscriptionId, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LongTermRetentionBackupsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, LongTermRetentionBackupData.DeserializeLongTermRetentionBackupData, LongTermRetentionBackupsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetLongTermRetentionBackupsWithServer", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the long term retention backups for a given managed instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionManagedInstanceBackups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionManagedInstanceBackups_ListByInstance</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="locationName"> The location of the database. </param>
+        /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
+        /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ManagedInstanceLongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithInstanceAsync(AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => LongTermRetentionManagedInstanceBackupsRestClient.CreateListByInstanceRequest(Id.SubscriptionId, locationName, managedInstanceName, onlyLatestPerDatabase, databaseState);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LongTermRetentionManagedInstanceBackupsRestClient.CreateListByInstanceNextPageRequest(nextLink, Id.SubscriptionId, locationName, managedInstanceName, onlyLatestPerDatabase, databaseState);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ManagedInstanceLongTermRetentionBackupData.DeserializeManagedInstanceLongTermRetentionBackupData, LongTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetLongTermRetentionManagedInstanceBackupsWithInstance", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the long term retention backups for a given managed instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionManagedInstanceBackups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionManagedInstanceBackups_ListByInstance</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="locationName"> The location of the database. </param>
+        /// <param name="managedInstanceName"> The name of the managed instance. </param>
+        /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
+        /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ManagedInstanceLongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithInstance(AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => LongTermRetentionManagedInstanceBackupsRestClient.CreateListByInstanceRequest(Id.SubscriptionId, locationName, managedInstanceName, onlyLatestPerDatabase, databaseState);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LongTermRetentionManagedInstanceBackupsRestClient.CreateListByInstanceNextPageRequest(nextLink, Id.SubscriptionId, locationName, managedInstanceName, onlyLatestPerDatabase, databaseState);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ManagedInstanceLongTermRetentionBackupData.DeserializeManagedInstanceLongTermRetentionBackupData, LongTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetLongTermRetentionManagedInstanceBackupsWithInstance", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the long term retention backups for managed databases in a given location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstanceBackups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionManagedInstanceBackups_ListByLocation</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="locationName"> The location of the database. </param>
+        /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
+        /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ManagedInstanceLongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => LongTermRetentionManagedInstanceBackupsRestClient.CreateListByLocationRequest(Id.SubscriptionId, locationName, onlyLatestPerDatabase, databaseState);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LongTermRetentionManagedInstanceBackupsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, locationName, onlyLatestPerDatabase, databaseState);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ManagedInstanceLongTermRetentionBackupData.DeserializeManagedInstanceLongTermRetentionBackupData, LongTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetLongTermRetentionManagedInstanceBackupsWithLocation", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the long term retention backups for managed databases in a given location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstanceBackups</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LongTermRetentionManagedInstanceBackups_ListByLocation</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="locationName"> The location of the database. </param>
+        /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
+        /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ManagedInstanceLongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocation(AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => LongTermRetentionManagedInstanceBackupsRestClient.CreateListByLocationRequest(Id.SubscriptionId, locationName, onlyLatestPerDatabase, databaseState);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LongTermRetentionManagedInstanceBackupsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, locationName, onlyLatestPerDatabase, databaseState);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ManagedInstanceLongTermRetentionBackupData.DeserializeManagedInstanceLongTermRetentionBackupData, LongTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetLongTermRetentionManagedInstanceBackupsWithLocation", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of all virtualClusters in the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/virtualClusters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualClusters_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="VirtualClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<VirtualClusterResource> GetVirtualClustersAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualClusterRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualClusterRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualClusterResource(Client, VirtualClusterData.DeserializeVirtualClusterData(e)), VirtualClusterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualClusters", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of all virtualClusters in the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/virtualClusters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualClusters_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="VirtualClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<VirtualClusterResource> GetVirtualClusters(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualClusterRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualClusterRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualClusterResource(Client, VirtualClusterData.DeserializeVirtualClusterData(e)), VirtualClusterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualClusters", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of all managed instances in the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/managedInstances</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedInstances_List</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlServerResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SqlServerResource> GetSqlServersAsync(string expand = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ManagedInstanceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ManagedInstanceResource> GetManagedInstancesAsync(string expand = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SqlServerServersRestClient.CreateListRequest(Id.SubscriptionId, expand);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SqlServerServersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, expand);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerResource(Client, SqlServerData.DeserializeSqlServerData(e)), SqlServerServersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSqlServers", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedInstanceRestClient.CreateListRequest(Id.SubscriptionId, expand);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedInstanceRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, expand);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedInstanceResource(Client, ManagedInstanceData.DeserializeManagedInstanceData(e)), ManagedInstanceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetManagedInstances", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Gets a list of all servers in the subscription.
+        /// Gets a list of all managed instances in the subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/servers</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/managedInstances</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Servers_List</description>
+        /// <description>ManagedInstances_List</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlServerResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SqlServerResource> GetSqlServers(string expand = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ManagedInstanceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ManagedInstanceResource> GetManagedInstances(string expand = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SqlServerServersRestClient.CreateListRequest(Id.SubscriptionId, expand);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SqlServerServersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, expand);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerResource(Client, SqlServerData.DeserializeSqlServerData(e)), SqlServerServersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSqlServers", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedInstanceRestClient.CreateListRequest(Id.SubscriptionId, expand);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedInstanceRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, expand);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedInstanceResource(Client, ManagedInstanceData.DeserializeManagedInstanceData(e)), ManagedInstanceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetManagedInstances", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -428,297 +677,49 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Lists the long term retention backups for a given location.
+        /// Gets a list of all servers in the subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionBackups</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/servers</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LongTermRetentionBackups_ListByLocation</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="locationName"> The location of the database. </param>
-        /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
-        /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithLocationAsync(AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => LongTermRetentionBackupsRestClient.CreateListByLocationRequest(Id.SubscriptionId, locationName, onlyLatestPerDatabase, databaseState);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LongTermRetentionBackupsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, locationName, onlyLatestPerDatabase, databaseState);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, LongTermRetentionBackupData.DeserializeLongTermRetentionBackupData, LongTermRetentionBackupsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetLongTermRetentionBackupsWithLocation", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the long term retention backups for a given location.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionBackups</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LongTermRetentionBackups_ListByLocation</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="locationName"> The location of the database. </param>
-        /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
-        /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithLocation(AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => LongTermRetentionBackupsRestClient.CreateListByLocationRequest(Id.SubscriptionId, locationName, onlyLatestPerDatabase, databaseState);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LongTermRetentionBackupsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, locationName, onlyLatestPerDatabase, databaseState);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, LongTermRetentionBackupData.DeserializeLongTermRetentionBackupData, LongTermRetentionBackupsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetLongTermRetentionBackupsWithLocation", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the long term retention backups for a given server.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionBackups</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LongTermRetentionBackups_ListByServer</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="locationName"> The location of the database. </param>
-        /// <param name="longTermRetentionServerName"> The name of the server. </param>
-        /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
-        /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithServerAsync(AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => LongTermRetentionBackupsRestClient.CreateListByServerRequest(Id.SubscriptionId, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LongTermRetentionBackupsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, LongTermRetentionBackupData.DeserializeLongTermRetentionBackupData, LongTermRetentionBackupsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetLongTermRetentionBackupsWithServer", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the long term retention backups for a given server.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionBackups</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LongTermRetentionBackups_ListByServer</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="locationName"> The location of the database. </param>
-        /// <param name="longTermRetentionServerName"> The name of the server. </param>
-        /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
-        /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithServer(AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => LongTermRetentionBackupsRestClient.CreateListByServerRequest(Id.SubscriptionId, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LongTermRetentionBackupsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, LongTermRetentionBackupData.DeserializeLongTermRetentionBackupData, LongTermRetentionBackupsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetLongTermRetentionBackupsWithServer", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the long term retention backups for a given managed instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionManagedInstanceBackups</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LongTermRetentionManagedInstanceBackups_ListByInstance</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="locationName"> The location of the database. </param>
-        /// <param name="managedInstanceName"> The name of the managed instance. </param>
-        /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
-        /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedInstanceLongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithInstanceAsync(AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => LongTermRetentionManagedInstanceBackupsRestClient.CreateListByInstanceRequest(Id.SubscriptionId, locationName, managedInstanceName, onlyLatestPerDatabase, databaseState);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LongTermRetentionManagedInstanceBackupsRestClient.CreateListByInstanceNextPageRequest(nextLink, Id.SubscriptionId, locationName, managedInstanceName, onlyLatestPerDatabase, databaseState);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ManagedInstanceLongTermRetentionBackupData.DeserializeManagedInstanceLongTermRetentionBackupData, LongTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetLongTermRetentionManagedInstanceBackupsWithInstance", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the long term retention backups for a given managed instance.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstances/{managedInstanceName}/longTermRetentionManagedInstanceBackups</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LongTermRetentionManagedInstanceBackups_ListByInstance</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="locationName"> The location of the database. </param>
-        /// <param name="managedInstanceName"> The name of the managed instance. </param>
-        /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
-        /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedInstanceLongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithInstance(AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => LongTermRetentionManagedInstanceBackupsRestClient.CreateListByInstanceRequest(Id.SubscriptionId, locationName, managedInstanceName, onlyLatestPerDatabase, databaseState);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LongTermRetentionManagedInstanceBackupsRestClient.CreateListByInstanceNextPageRequest(nextLink, Id.SubscriptionId, locationName, managedInstanceName, onlyLatestPerDatabase, databaseState);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ManagedInstanceLongTermRetentionBackupData.DeserializeManagedInstanceLongTermRetentionBackupData, LongTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetLongTermRetentionManagedInstanceBackupsWithInstance", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the long term retention backups for managed databases in a given location.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstanceBackups</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LongTermRetentionManagedInstanceBackups_ListByLocation</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="locationName"> The location of the database. </param>
-        /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
-        /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedInstanceLongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => LongTermRetentionManagedInstanceBackupsRestClient.CreateListByLocationRequest(Id.SubscriptionId, locationName, onlyLatestPerDatabase, databaseState);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LongTermRetentionManagedInstanceBackupsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, locationName, onlyLatestPerDatabase, databaseState);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ManagedInstanceLongTermRetentionBackupData.DeserializeManagedInstanceLongTermRetentionBackupData, LongTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetLongTermRetentionManagedInstanceBackupsWithLocation", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the long term retention backups for managed databases in a given location.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionManagedInstanceBackups</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LongTermRetentionManagedInstanceBackups_ListByLocation</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="locationName"> The location of the database. </param>
-        /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
-        /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedInstanceLongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocation(AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => LongTermRetentionManagedInstanceBackupsRestClient.CreateListByLocationRequest(Id.SubscriptionId, locationName, onlyLatestPerDatabase, databaseState);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LongTermRetentionManagedInstanceBackupsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, locationName, onlyLatestPerDatabase, databaseState);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ManagedInstanceLongTermRetentionBackupData.DeserializeManagedInstanceLongTermRetentionBackupData, LongTermRetentionManagedInstanceBackupsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetLongTermRetentionManagedInstanceBackupsWithLocation", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of all managed instances in the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/managedInstances</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ManagedInstances_List</description>
+        /// <description>Servers_List</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedInstanceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagedInstanceResource> GetManagedInstancesAsync(string expand = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SqlServerResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SqlServerResource> GetSqlServersAsync(string expand = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedInstanceRestClient.CreateListRequest(Id.SubscriptionId, expand);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedInstanceRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, expand);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagedInstanceResource(Client, ManagedInstanceData.DeserializeManagedInstanceData(e)), ManagedInstanceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetManagedInstances", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SqlServerServersRestClient.CreateListRequest(Id.SubscriptionId, expand);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SqlServerServersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, expand);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SqlServerResource(Client, SqlServerData.DeserializeSqlServerData(e)), SqlServerServersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSqlServers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Gets a list of all managed instances in the subscription.
+        /// Gets a list of all servers in the subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/managedInstances</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/servers</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ManagedInstances_List</description>
+        /// <description>Servers_List</description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedInstanceResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagedInstanceResource> GetManagedInstances(string expand = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SqlServerResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SqlServerResource> GetSqlServers(string expand = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedInstanceRestClient.CreateListRequest(Id.SubscriptionId, expand);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ManagedInstanceRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, expand);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagedInstanceResource(Client, ManagedInstanceData.DeserializeManagedInstanceData(e)), ManagedInstanceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetManagedInstances", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of all virtualClusters in the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/virtualClusters</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualClusters_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualClusterResource> GetVirtualClustersAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualClusterRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualClusterRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualClusterResource(Client, VirtualClusterData.DeserializeVirtualClusterData(e)), VirtualClusterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualClusters", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of all virtualClusters in the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Sql/virtualClusters</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualClusters_List</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualClusterResource> GetVirtualClusters(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualClusterRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualClusterRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualClusterResource(Client, VirtualClusterData.DeserializeVirtualClusterData(e)), VirtualClusterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualClusters", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => SqlServerServersRestClient.CreateListRequest(Id.SubscriptionId, expand);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SqlServerServersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, expand);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SqlServerResource(Client, SqlServerData.DeserializeSqlServerData(e)), SqlServerServersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSqlServers", "value", "nextLink", cancellationToken);
         }
     }
 }

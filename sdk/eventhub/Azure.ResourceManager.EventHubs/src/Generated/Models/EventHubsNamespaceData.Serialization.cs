@@ -110,6 +110,10 @@ namespace Azure.ResourceManager.EventHubs
 
         internal static EventHubsNamespaceData DeserializeEventHubsNamespaceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<EventHubsSku> sku = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -141,7 +145,6 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sku = EventHubsSku.DeserializeEventHubsSku(property.Value);
@@ -151,7 +154,6 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
@@ -161,7 +163,6 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -196,7 +197,6 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -215,7 +215,6 @@ namespace Azure.ResourceManager.EventHubs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             minimumTlsVersion = new EventHubsTlsVersion(property0.Value.GetString());
@@ -235,7 +234,6 @@ namespace Azure.ResourceManager.EventHubs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createdAt = property0.Value.GetDateTimeOffset("O");
@@ -245,7 +243,6 @@ namespace Azure.ResourceManager.EventHubs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             updatedAt = property0.Value.GetDateTimeOffset("O");
@@ -260,7 +257,6 @@ namespace Azure.ResourceManager.EventHubs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             clusterArmId = new ResourceIdentifier(property0.Value.GetString());
@@ -275,7 +271,6 @@ namespace Azure.ResourceManager.EventHubs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isAutoInflateEnabled = property0.Value.GetBoolean();
@@ -285,7 +280,6 @@ namespace Azure.ResourceManager.EventHubs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             publicNetworkAccess = new EventHubsPublicNetworkAccess(property0.Value.GetString());
@@ -295,7 +289,6 @@ namespace Azure.ResourceManager.EventHubs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             maximumThroughputUnits = property0.Value.GetInt32();
@@ -305,7 +298,6 @@ namespace Azure.ResourceManager.EventHubs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             kafkaEnabled = property0.Value.GetBoolean();
@@ -315,7 +307,6 @@ namespace Azure.ResourceManager.EventHubs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             zoneRedundant = property0.Value.GetBoolean();
@@ -325,7 +316,6 @@ namespace Azure.ResourceManager.EventHubs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             encryption = EventHubsEncryption.DeserializeEventHubsEncryption(property0.Value);
@@ -335,7 +325,6 @@ namespace Azure.ResourceManager.EventHubs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<EventHubsPrivateEndpointConnectionData> array = new List<EventHubsPrivateEndpointConnectionData>();
@@ -350,7 +339,6 @@ namespace Azure.ResourceManager.EventHubs
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             disableLocalAuth = property0.Value.GetBoolean();

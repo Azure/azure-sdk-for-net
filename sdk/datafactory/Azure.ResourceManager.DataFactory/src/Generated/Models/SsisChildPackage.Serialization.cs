@@ -5,9 +5,9 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -17,22 +17,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("packagePath"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(PackagePath);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(PackagePath.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, PackagePath);
             if (Optional.IsDefined(PackageName))
             {
                 writer.WritePropertyName("packageName"u8);
                 writer.WriteStringValue(PackageName);
             }
             writer.WritePropertyName("packageContent"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(PackageContent);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(PackageContent.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, PackageContent);
             if (Optional.IsDefined(PackageLastModifiedDate))
             {
                 writer.WritePropertyName("packageLastModifiedDate"u8);
@@ -43,15 +35,19 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SsisChildPackage DeserializeSsisChildPackage(JsonElement element)
         {
-            BinaryData packagePath = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            DataFactoryElement<string> packagePath = default;
             Optional<string> packageName = default;
-            BinaryData packageContent = default;
+            DataFactoryElement<string> packageContent = default;
             Optional<string> packageLastModifiedDate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("packagePath"u8))
                 {
-                    packagePath = BinaryData.FromString(property.Value.GetRawText());
+                    packagePath = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("packageName"u8))
@@ -61,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("packageContent"u8))
                 {
-                    packageContent = BinaryData.FromString(property.Value.GetRawText());
+                    packageContent = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("packageLastModifiedDate"u8))

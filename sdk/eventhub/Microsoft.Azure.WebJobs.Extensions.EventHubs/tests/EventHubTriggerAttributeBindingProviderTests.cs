@@ -13,6 +13,7 @@ using Microsoft.Azure.WebJobs.EventHubs;
 using Microsoft.Azure.WebJobs.EventHubs.Listeners;
 using Microsoft.Azure.WebJobs.EventHubs.Processor;
 using Microsoft.Azure.WebJobs.EventHubs.Tests;
+using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Protocols;
@@ -54,12 +55,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.UnitTests
                     It.IsAny<BlobClientOptions>())).Returns(blobServiceClient.Object);
 
             var factory = ConfigurationUtilities.CreateFactory(configuration, options, componentFactory.Object);
-            _provider = new EventHubTriggerAttributeBindingProvider(convertManager.Object, Options.Create(options), NullLoggerFactory.Instance, factory);
+            _provider = new EventHubTriggerAttributeBindingProvider(convertManager.Object, Options.Create(options), NullLoggerFactory.Instance, factory, Mock.Of<IDrainModeManager>());
         }
 
         [Test]
         [TestCase(nameof(SingleDispatch), 1)]
-        [TestCase(nameof(MultipleDispatch), 10)]
+        [TestCase(nameof(MultipleDispatch), 100)]
         public async Task TryCreateAsync_BatchCountsDefaultedCorrectly(string function, int expectedBatchCount)
         {
             ParameterInfo parameter = GetType().GetMethod(function, BindingFlags.NonPublic | BindingFlags.Static).GetParameters()[0];

@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> The UnknownJob. </summary>
-    internal partial class UnknownJob : Job
+    internal partial class UnknownJob : BackupGenericJob
     {
         /// <summary> Initializes a new instance of UnknownJob. </summary>
         /// <param name="entityFriendlyName"> Friendly name of the entity on which the current job is executing. </param>

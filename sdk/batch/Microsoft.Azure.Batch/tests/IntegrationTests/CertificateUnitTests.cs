@@ -78,7 +78,9 @@ namespace BatchClientIntegrationTests
                 X509Certificate2 x509Certificate = password == null ? new X509Certificate2(certificateFileLocation) : new X509Certificate2(certificateFileLocation, password);
                 byte[] cerBytes = x509Certificate.Export(X509ContentType.Cert);
 
+#pragma warning disable CS0618 // Type or member is obsolete
                 Certificate certificate = batchClient.CertificateOperations.CreateCertificateFromCer(cerBytes);
+#pragma warning restore CS0618 // Type or member is obsolete
 
                 Assert.Equal(x509Certificate.Thumbprint.ToUpper(), certificate.Thumbprint.ToUpper());
                 Assert.Equal("sha1", certificate.ThumbprintAlgorithm);

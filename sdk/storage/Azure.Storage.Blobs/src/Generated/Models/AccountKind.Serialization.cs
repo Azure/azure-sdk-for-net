@@ -23,11 +23,11 @@ namespace Azure.Storage.Blobs.Models
 
         public static AccountKind ToAccountKind(this string value)
         {
-            if (string.Equals(value, "Storage", StringComparison.InvariantCultureIgnoreCase)) return AccountKind.Storage;
-            if (string.Equals(value, "BlobStorage", StringComparison.InvariantCultureIgnoreCase)) return AccountKind.BlobStorage;
-            if (string.Equals(value, "StorageV2", StringComparison.InvariantCultureIgnoreCase)) return AccountKind.StorageV2;
-            if (string.Equals(value, "FileStorage", StringComparison.InvariantCultureIgnoreCase)) return AccountKind.FileStorage;
-            if (string.Equals(value, "BlockBlobStorage", StringComparison.InvariantCultureIgnoreCase)) return AccountKind.BlockBlobStorage;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Storage")) return AccountKind.Storage;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "BlobStorage")) return AccountKind.BlobStorage;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "StorageV2")) return AccountKind.StorageV2;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "FileStorage")) return AccountKind.FileStorage;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "BlockBlobStorage")) return AccountKind.BlockBlobStorage;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AccountKind value.");
         }
     }

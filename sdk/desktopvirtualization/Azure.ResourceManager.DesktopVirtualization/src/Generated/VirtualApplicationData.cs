@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    /// <summary> A class representing the VirtualApplication data model. </summary>
+    /// <summary>
+    /// A class representing the VirtualApplication data model.
+    /// Schema for Application properties.
+    /// </summary>
     public partial class VirtualApplicationData : ResourceData
     {
         /// <summary> Initializes a new instance of VirtualApplicationData. </summary>

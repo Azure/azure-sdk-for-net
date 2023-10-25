@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    /// <summary> A class representing the ContainerAppConnectedEnvironment data model. </summary>
+    /// <summary>
+    /// A class representing the ContainerAppConnectedEnvironment data model.
+    /// An environment for Kubernetes cluster specialized for web workloads by Azure App Service
+    /// </summary>
     public partial class ContainerAppConnectedEnvironmentData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ContainerAppConnectedEnvironmentData. </summary>

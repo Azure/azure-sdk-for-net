@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static DeliveryRule DeserializeDeliveryRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             int order = default;
             Optional<IList<DeliveryRuleCondition>> conditions = default;
@@ -65,7 +69,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DeliveryRuleCondition> array = new List<DeliveryRuleCondition>();

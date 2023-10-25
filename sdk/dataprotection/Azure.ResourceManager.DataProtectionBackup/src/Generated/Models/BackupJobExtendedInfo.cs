@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
 
         /// <summary> Initializes a new instance of BackupJobExtendedInfo. </summary>
-        /// <param name="additionalDetails"> Job&apos;s Additional Details. </param>
+        /// <param name="additionalDetails"> Job's Additional Details. </param>
         /// <param name="backupInstanceState"> State of the Backup Instance. </param>
         /// <param name="dataTransferredInBytes"> Number of bytes transferred. </param>
         /// <param name="recoveryDestination"> Destination where restore is done. </param>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             TargetRecoverPoint = targetRecoverPoint;
         }
 
-        /// <summary> Job&apos;s Additional Details. </summary>
+        /// <summary> Job's Additional Details. </summary>
         public IReadOnlyDictionary<string, string> AdditionalDetails { get; }
         /// <summary> State of the Backup Instance. </summary>
         public string BackupInstanceState { get; }

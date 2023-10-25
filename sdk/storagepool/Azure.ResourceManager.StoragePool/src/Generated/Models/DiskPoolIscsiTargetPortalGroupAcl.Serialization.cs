@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.StoragePool.Models
 
         internal static DiskPoolIscsiTargetPortalGroupAcl DeserializeDiskPoolIscsiTargetPortalGroupAcl(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string initiatorIqn = default;
             IList<string> mappedLuns = default;
             foreach (var property in element.EnumerateObject())

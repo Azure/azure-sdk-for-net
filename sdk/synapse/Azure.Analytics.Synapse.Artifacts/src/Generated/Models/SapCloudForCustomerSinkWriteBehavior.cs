@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    /// <summary> The write behavior for the operation. Default is &apos;Insert&apos;. </summary>
+    /// <summary> The write behavior for the operation. Default is 'Insert'. </summary>
     public readonly partial struct SapCloudForCustomerSinkWriteBehavior : IEquatable<SapCloudForCustomerSinkWriteBehavior>
     {
         private readonly string _value;

@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
 
         internal static AzureDevOpsConnectorStats DeserializeAzureDevOpsConnectorStats(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureDevOpsConnectorStatsProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -37,7 +41,6 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = AzureDevOpsConnectorStatsProperties.DeserializeAzureDevOpsConnectorStatsProperties(property.Value);
@@ -62,7 +65,6 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

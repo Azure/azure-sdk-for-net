@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.Cdn.Models
         public int? Weight { get; set; }
         /// <summary> Origin is enabled for load balancing or not. </summary>
         public bool? Enabled { get; set; }
-        /// <summary> The Alias of the Private Link resource. Populating this optional field indicates that this origin is &apos;Private&apos;. </summary>
+        /// <summary> The Alias of the Private Link resource. Populating this optional field indicates that this origin is 'Private'. </summary>
         public string PrivateLinkAlias { get; set; }
-        /// <summary> The Resource Id of the Private Link resource. Populating this optional field indicates that this backend is &apos;Private&apos;. </summary>
+        /// <summary> The Resource Id of the Private Link resource. Populating this optional field indicates that this backend is 'Private'. </summary>
         public ResourceIdentifier PrivateLinkResourceId { get; set; }
-        /// <summary> The location of the Private Link resource. Required only if &apos;privateLinkResourceId&apos; is populated. </summary>
+        /// <summary> The location of the Private Link resource. Required only if 'privateLinkResourceId' is populated. </summary>
         public string PrivateLinkLocation { get; set; }
         /// <summary> A custom message to be included in the approval request to connect to the Private Link. </summary>
         public string PrivateLinkApprovalMessage { get; set; }

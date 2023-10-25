@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Synapse
             return message;
         }
 
-        /// <summary> Update workspace managed sql server&apos;s minimal tls settings. </summary>
+        /// <summary> Update workspace managed sql server's minimal tls settings. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Synapse
             }
         }
 
-        /// <summary> Update workspace managed sql server&apos;s minimal tls settings. </summary>
+        /// <summary> Update workspace managed sql server's minimal tls settings. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Synapse
             return message;
         }
 
-        /// <summary> Get workspace managed sql server&apos;s minimal tls settings. </summary>
+        /// <summary> Get workspace managed sql server's minimal tls settings. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Synapse
             }
         }
 
-        /// <summary> Get workspace managed sql server&apos;s minimal tls settings. </summary>
+        /// <summary> Get workspace managed sql server's minimal tls settings. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Synapse
             return message;
         }
 
-        /// <summary> List workspace managed sql server&apos;s minimal tls settings. </summary>
+        /// <summary> List workspace managed sql server's minimal tls settings. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Synapse
             }
         }
 
-        /// <summary> List workspace managed sql server&apos;s minimal tls settings. </summary>
+        /// <summary> List workspace managed sql server's minimal tls settings. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Synapse
             return message;
         }
 
-        /// <summary> List workspace managed sql server&apos;s minimal tls settings. </summary>
+        /// <summary> List workspace managed sql server's minimal tls settings. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Synapse
             }
         }
 
-        /// <summary> List workspace managed sql server&apos;s minimal tls settings. </summary>
+        /// <summary> List workspace managed sql server's minimal tls settings. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>

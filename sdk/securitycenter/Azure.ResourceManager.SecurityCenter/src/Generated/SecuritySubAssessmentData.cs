@@ -12,7 +12,10 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary> A class representing the SecuritySubAssessment data model. </summary>
+    /// <summary>
+    /// A class representing the SecuritySubAssessment data model.
+    /// Security sub-assessment on a resource
+    /// </summary>
     public partial class SecuritySubAssessmentData : ResourceData
     {
         /// <summary> Initializes a new instance of SecuritySubAssessmentData. </summary>

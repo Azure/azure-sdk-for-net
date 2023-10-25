@@ -58,6 +58,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningVirtualMachineProperties DeserializeMachineLearningVirtualMachineProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> virtualMachineSize = default;
             Optional<int> sshPort = default;
             Optional<int> notebookServerPort = default;
@@ -75,7 +79,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sshPort = property.Value.GetInt32();
@@ -85,7 +88,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     notebookServerPort = property.Value.GetInt32();
@@ -95,7 +97,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     address = IPAddress.Parse(property.Value.GetString());
@@ -115,7 +116,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isNotebookInstanceCompute = property.Value.GetBoolean();

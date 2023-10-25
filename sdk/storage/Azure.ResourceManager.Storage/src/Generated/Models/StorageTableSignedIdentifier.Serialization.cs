@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static StorageTableSignedIdentifier DeserializeStorageTableSignedIdentifier(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string id = default;
             Optional<StorageTableAccessPolicy> accessPolicy = default;
             foreach (var property in element.EnumerateObject())
@@ -40,7 +44,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     accessPolicy = StorageTableAccessPolicy.DeserializeStorageTableAccessPolicy(property.Value);

@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary> A class representing the AdvancedThreatProtectionSetting data model. </summary>
+    /// <summary>
+    /// A class representing the AdvancedThreatProtectionSetting data model.
+    /// The Advanced Threat Protection resource.
+    /// </summary>
     public partial class AdvancedThreatProtectionSettingData : ResourceData
     {
         /// <summary> Initializes a new instance of AdvancedThreatProtectionSettingData. </summary>

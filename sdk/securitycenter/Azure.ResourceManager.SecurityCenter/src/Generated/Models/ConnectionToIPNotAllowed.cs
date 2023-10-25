@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> Outbound connection to an ip that isn&apos;t allowed. Allow list consists of ipv4 or ipv6 range in CIDR notation. </summary>
+    /// <summary> Outbound connection to an ip that isn't allowed. Allow list consists of ipv4 or ipv6 range in CIDR notation. </summary>
     public partial class ConnectionToIPNotAllowed : AllowlistCustomAlertRule
     {
         /// <summary> Initializes a new instance of ConnectionToIPNotAllowed. </summary>

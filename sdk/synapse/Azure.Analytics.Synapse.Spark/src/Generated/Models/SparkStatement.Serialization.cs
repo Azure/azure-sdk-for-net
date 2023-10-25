@@ -14,6 +14,10 @@ namespace Azure.Analytics.Synapse.Spark.Models
     {
         internal static SparkStatement DeserializeSparkStatement(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int id = default;
             Optional<string> code = default;
             Optional<LivyStatementStates> state = default;
@@ -34,7 +38,6 @@ namespace Azure.Analytics.Synapse.Spark.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     state = new LivyStatementStates(property.Value.GetString());

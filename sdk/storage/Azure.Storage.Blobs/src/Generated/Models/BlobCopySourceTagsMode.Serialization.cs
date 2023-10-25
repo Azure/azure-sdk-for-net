@@ -20,8 +20,8 @@ namespace Azure.Storage.Blobs.Models
 
         public static BlobCopySourceTagsMode ToBlobCopySourceTagsMode(this string value)
         {
-            if (string.Equals(value, "REPLACE", StringComparison.InvariantCultureIgnoreCase)) return BlobCopySourceTagsMode.Replace;
-            if (string.Equals(value, "COPY", StringComparison.InvariantCultureIgnoreCase)) return BlobCopySourceTagsMode.Copy;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "REPLACE")) return BlobCopySourceTagsMode.Replace;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "COPY")) return BlobCopySourceTagsMode.Copy;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BlobCopySourceTagsMode value.");
         }
     }

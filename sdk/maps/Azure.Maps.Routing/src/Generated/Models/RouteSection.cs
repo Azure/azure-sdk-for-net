@@ -20,7 +20,7 @@ namespace Azure.Maps.Routing.Models
         /// <param name="endPointIndex"> Index of the last point (offset 0) in the route this section applies to. </param>
         /// <param name="sectionType"> Section types of the reported route response. </param>
         /// <param name="travelMode"> Travel mode for the calculated route. The value will be set to `other` if the requested mode of transport is not possible in this section. </param>
-        /// <param name="simpleCategory"> Type of the incident. Can currently be JAM, ROAD_WORK, ROAD_CLOSURE, or OTHER. See &quot;tec&quot; for detailed information. </param>
+        /// <param name="simpleCategory"> Type of the incident. Can currently be JAM, ROAD_WORK, ROAD_CLOSURE, or OTHER. See "tec" for detailed information. </param>
         /// <param name="effectiveSpeedInKmh"> Effective speed of the incident in km/h, averaged over its entire length. </param>
         /// <param name="delayInSeconds"> Delay in seconds caused by the incident. </param>
         /// <param name="delayMagnitude"> The magnitude of delay caused by the incident. These values correspond to the values of the response field ty of the [Get Traffic Incident Detail API](https://docs.microsoft.com/rest/api/maps/traffic/gettrafficincidentdetail). </param>
@@ -46,7 +46,7 @@ namespace Azure.Maps.Routing.Models
         public ResponseSectionType? SectionType { get; }
         /// <summary> Travel mode for the calculated route. The value will be set to `other` if the requested mode of transport is not possible in this section. </summary>
         public ResponseTravelMode? TravelMode { get; }
-        /// <summary> Type of the incident. Can currently be JAM, ROAD_WORK, ROAD_CLOSURE, or OTHER. See &quot;tec&quot; for detailed information. </summary>
+        /// <summary> Type of the incident. Can currently be JAM, ROAD_WORK, ROAD_CLOSURE, or OTHER. See "tec" for detailed information. </summary>
         public TrafficIncidentCategory? SimpleCategory { get; }
         /// <summary> Effective speed of the incident in km/h, averaged over its entire length. </summary>
         public int? EffectiveSpeedInKmh { get; }

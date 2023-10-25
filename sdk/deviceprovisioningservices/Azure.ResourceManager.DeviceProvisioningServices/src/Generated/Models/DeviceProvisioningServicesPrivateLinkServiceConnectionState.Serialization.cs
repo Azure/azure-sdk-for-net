@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 
         internal static DeviceProvisioningServicesPrivateLinkServiceConnectionState DeserializeDeviceProvisioningServicesPrivateLinkServiceConnectionState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DeviceProvisioningServicesPrivateLinkServiceConnectionStatus status = default;
             string description = default;
             Optional<string> actionsRequired = default;

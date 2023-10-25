@@ -21,6 +21,11 @@ namespace Azure.Communication.CallAutomation
         internal string ApiVersion { get; }
 
         /// <summary>
+        /// The caller source of the call automation client.
+        /// </summary>
+        public CommunicationUserIdentifier Source { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="CallAutomationClientOptions"/>.
         /// </summary>
         public CallAutomationClientOptions(ServiceVersion version = LatestVersion)
@@ -44,10 +49,5 @@ namespace Azure.Communication.CallAutomation
             V2023_01_15_Preview = 1
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
-
-        /// <summary>
-        /// Configure options for Call Automation's <see cref="EventProcessor"/>.
-        /// </summary>
-        public EventProcessorOptions EventProcessorOptions { get; } = new();
     }
 }

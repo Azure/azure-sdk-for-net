@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The multi cloud account&apos;s membership type in the organization. </summary>
+    /// <summary> The multi cloud account's membership type in the organization. </summary>
     internal readonly partial struct OrganizationMembershipType : IEquatable<OrganizationMembershipType>
     {
         private readonly string _value;

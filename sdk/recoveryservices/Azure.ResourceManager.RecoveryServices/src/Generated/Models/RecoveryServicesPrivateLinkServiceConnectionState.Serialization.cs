@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     {
         internal static RecoveryServicesPrivateLinkServiceConnectionState DeserializeRecoveryServicesPrivateLinkServiceConnectionState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<RecoveryServicesPrivateEndpointConnectionStatus> status = default;
             Optional<string> description = default;
             Optional<string> actionsRequired = default;
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new RecoveryServicesPrivateEndpointConnectionStatus(property.Value.GetString());

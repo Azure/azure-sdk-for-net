@@ -35,14 +35,14 @@ namespace Microsoft.Azure.Management.Maintenance
             /// <param name='resourceGroupName'>
             /// Resource group name
             /// </param>
+            /// <param name='providerName'>
+            /// Resource provider name
+            /// </param>
             /// <param name='resourceParentType'>
             /// Resource parent type
             /// </param>
             /// <param name='resourceParentName'>
             /// Resource parent identifier
-            /// </param>
-            /// <param name='providerName'>
-            /// Resource provider name
             /// </param>
             /// <param name='resourceType'>
             /// Resource type
@@ -53,9 +53,9 @@ namespace Microsoft.Azure.Management.Maintenance
             /// <param name='applyUpdateName'>
             /// applyUpdate Id
             /// </param>
-            public static ApplyUpdate GetParent(this IApplyUpdatesOperations operations, string resourceGroupName, string resourceParentType, string resourceParentName, string providerName, string resourceType, string resourceName, string applyUpdateName)
+            public static ApplyUpdate GetParent(this IApplyUpdatesOperations operations, string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string applyUpdateName)
             {
-                return operations.GetParentAsync(resourceGroupName, resourceParentType, resourceParentName, providerName, resourceType, resourceName, applyUpdateName).GetAwaiter().GetResult();
+                return operations.GetParentAsync(resourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, applyUpdateName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -70,14 +70,14 @@ namespace Microsoft.Azure.Management.Maintenance
             /// <param name='resourceGroupName'>
             /// Resource group name
             /// </param>
+            /// <param name='providerName'>
+            /// Resource provider name
+            /// </param>
             /// <param name='resourceParentType'>
             /// Resource parent type
             /// </param>
             /// <param name='resourceParentName'>
             /// Resource parent identifier
-            /// </param>
-            /// <param name='providerName'>
-            /// Resource provider name
             /// </param>
             /// <param name='resourceType'>
             /// Resource type
@@ -91,9 +91,9 @@ namespace Microsoft.Azure.Management.Maintenance
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ApplyUpdate> GetParentAsync(this IApplyUpdatesOperations operations, string resourceGroupName, string resourceParentType, string resourceParentName, string providerName, string resourceType, string resourceName, string applyUpdateName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ApplyUpdate> GetParentAsync(this IApplyUpdatesOperations operations, string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string applyUpdateName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetParentWithHttpMessagesAsync(resourceGroupName, resourceParentType, resourceParentName, providerName, resourceType, resourceName, applyUpdateName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetParentWithHttpMessagesAsync(resourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, applyUpdateName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

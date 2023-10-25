@@ -9,6 +9,7 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -529,7 +530,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// This operation allows adding a name to the list of predefined tag names for the given subscription. A tag name can have a maximum of 512 characters and is case-insensitive. Tag names cannot have the following prefixes which are reserved for Azure use: &apos;microsoft&apos;, &apos;azure&apos;, &apos;windows&apos;.
+        /// This operation allows adding a name to the list of predefined tag names for the given subscription. A tag name can have a maximum of 512 characters and is case-insensitive. Tag names cannot have the following prefixes which are reserved for Azure use: 'microsoft', 'azure', 'windows'.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -564,7 +565,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// This operation allows adding a name to the list of predefined tag names for the given subscription. A tag name can have a maximum of 512 characters and is case-insensitive. Tag names cannot have the following prefixes which are reserved for Azure use: &apos;microsoft&apos;, &apos;azure&apos;, &apos;windows&apos;.
+        /// This operation allows adding a name to the list of predefined tag names for the given subscription. A tag name can have a maximum of 512 characters and is case-insensitive. Tag names cannot have the following prefixes which are reserved for Azure use: 'microsoft', 'azure', 'windows'.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -687,7 +688,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionTagsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionTagsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PredefinedTag.DeserializePredefinedTag, _subscriptionTagsClientDiagnostics, Pipeline, "SubscriptionResource.GetAllPredefinedTags", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PredefinedTag.DeserializePredefinedTag, _subscriptionTagsClientDiagnostics, Pipeline, "SubscriptionResource.GetAllPredefinedTags", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -709,7 +710,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionTagsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionTagsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PredefinedTag.DeserializePredefinedTag, _subscriptionTagsClientDiagnostics, Pipeline, "SubscriptionResource.GetAllPredefinedTags", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PredefinedTag.DeserializePredefinedTag, _subscriptionTagsClientDiagnostics, Pipeline, "SubscriptionResource.GetAllPredefinedTags", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -731,7 +732,7 @@ namespace Azure.ResourceManager.Resources
         public virtual AsyncPageable<LocationExpanded> GetLocationsAsync(bool? includeExtendedLocations = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionRestClient.CreateListLocationsRequest(Id.SubscriptionId, includeExtendedLocations);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, LocationExpanded.DeserializeLocationExpanded, _subscriptionClientDiagnostics, Pipeline, "SubscriptionResource.GetLocations", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, LocationExpanded.DeserializeLocationExpanded, _subscriptionClientDiagnostics, Pipeline, "SubscriptionResource.GetLocations", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -753,7 +754,7 @@ namespace Azure.ResourceManager.Resources
         public virtual Pageable<LocationExpanded> GetLocations(bool? includeExtendedLocations = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionRestClient.CreateListLocationsRequest(Id.SubscriptionId, includeExtendedLocations);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, LocationExpanded.DeserializeLocationExpanded, _subscriptionClientDiagnostics, Pipeline, "SubscriptionResource.GetLocations", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, LocationExpanded.DeserializeLocationExpanded, _subscriptionClientDiagnostics, Pipeline, "SubscriptionResource.GetLocations", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -775,7 +776,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _featureRestClient.CreateListAllRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _featureRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FeatureResource(Client, FeatureData.DeserializeFeatureData(e)), _featureClientDiagnostics, Pipeline, "SubscriptionResource.GetFeatures", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FeatureResource(Client, FeatureData.DeserializeFeatureData(e)), _featureClientDiagnostics, Pipeline, "SubscriptionResource.GetFeatures", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -797,7 +798,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _featureRestClient.CreateListAllRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _featureRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FeatureResource(Client, FeatureData.DeserializeFeatureData(e)), _featureClientDiagnostics, Pipeline, "SubscriptionResource.GetFeatures", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FeatureResource(Client, FeatureData.DeserializeFeatureData(e)), _featureClientDiagnostics, Pipeline, "SubscriptionResource.GetFeatures", "value", "nextLink", cancellationToken);
         }
     }
 }

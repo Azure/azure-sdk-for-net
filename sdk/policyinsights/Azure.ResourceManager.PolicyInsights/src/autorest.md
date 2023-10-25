@@ -5,7 +5,6 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
-generate-model-factory: false
 csharp: true
 library-name: PolicyInsights
 namespace: Azure.ResourceManager.PolicyInsights
@@ -13,18 +12,32 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/05a9cdab363b8ec82409
 tag: package-2022-09
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
+  skipped-operations:
+  - PolicyEvents_ListQueryResultsForResourceGroupLevelPolicyAssignment
+  - PolicyStates_ListQueryResultsForResourceGroupLevelPolicyAssignment
+  - PolicyStates_SummarizeForResourceGroupLevelPolicyAssignment
+  - PolicyEvents_ListQueryResultsForPolicySetDefinition
+  - PolicyEvents_ListQueryResultsForPolicyDefinition
+  - PolicyEvents_ListQueryResultsForSubscriptionLevelPolicyAssignment
+  - PolicyStates_ListQueryResultsForPolicySetDefinition
+  - PolicyStates_SummarizeForPolicySetDefinition
+  - PolicyStates_ListQueryResultsForPolicyDefinition
+  - PolicyStates_SummarizeForPolicyDefinition
+  - PolicyStates_ListQueryResultsForSubscriptionLevelPolicyAssignment
+  - PolicyStates_SummarizeForSubscriptionLevelPolicyAssignment
+  - PolicyEvents_ListQueryResultsForResource
+  - PolicyStates_ListQueryResultsForResource
+  - PolicyStates_SummarizeForResource
+  - PolicyTrackedResources_ListQueryResultsForResource
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
 request-path-to-parent:
   /providers/Microsoft.PolicyInsights/policyMetadata: /providers/Microsoft.PolicyInsights/policyMetadata/{resourceName}
-
-partial-resources:
-  /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}: SubscriptionPolicySetDefinition
-  /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}: SubscriptionPolicyDefinition
-  /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}: SubscriptionPolicyAssignment
-  /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}: ResourceGroupPolicyAssignment
 
 override-operation-name:
   PolicyMetadata_List: GetAll
@@ -34,6 +47,7 @@ override-operation-name:
   PolicyEvents_ListQueryResultsForSubscription: GetPolicyEventQueryResults
   PolicyEvents_ListQueryResultsForResourceGroup: GetPolicyEventQueryResults
   PolicyEvents_ListQueryResultsForManagementGroup: GetPolicyEventQueryResults
+  PolicyEvents_ListQueryResultsForResource: GetPolicyEventQueryResults
 #  PolicyEvents_ListQueryResultsForPolicySetDefinition: GetPolicyEventQueryResults
 #  PolicyEvents_ListQueryResultsForPolicyDefinition: GetPolicyEventQueryResults
 #  PolicyEvents_ListQueryResultsForSubscriptionLevelPolicyAssignment: GetPolicyEventQueryResults
@@ -41,6 +55,7 @@ override-operation-name:
   PolicyStates_ListQueryResultsForSubscription: GetPolicyStateQueryResults
   PolicyStates_ListQueryResultsForResourceGroup: GetPolicyStateQueryResults
   PolicyStates_ListQueryResultsForManagementGroup: GetPolicyStateQueryResults
+  PolicyStates_ListQueryResultsForResource: GetPolicyStateQueryResults
 #  PolicyStates_ListQueryResultsForPolicySetDefinition: GetPolicyStateQueryResults
 #  PolicyStates_ListQueryResultsForPolicyDefinition: GetPolicyStateQueryResults
 #  PolicyStates_ListQueryResultsForSubscriptionLevelPolicyAssignment: GetPolicyStateQueryResults
@@ -48,6 +63,7 @@ override-operation-name:
   PolicyStates_SummarizeForManagementGroup: SummarizePolicyStates
   PolicyStates_SummarizeForSubscription: SummarizePolicyStates
   PolicyStates_SummarizeForResourceGroup: SummarizePolicyStates
+  PolicyStates_SummarizeForResource: SummarizePolicyStates
 #  PolicyStates_SummarizeForPolicySetDefinition: SummarizePolicyStates
 #  PolicyStates_SummarizeForPolicyDefinition: SummarizePolicyStates
 #  PolicyStates_SummarizeForSubscriptionLevelPolicyAssignment: SummarizePolicyStates
@@ -59,6 +75,7 @@ override-operation-name:
   PolicyTrackedResources_ListQueryResultsForSubscription: GetPolicyTrackedResourceQueryResults
   PolicyTrackedResources_ListQueryResultsForResourceGroup: GetPolicyTrackedResourceQueryResults
   PolicyTrackedResources_ListQueryResultsForManagementGroup: GetPolicyTrackedResourceQueryResults
+  PolicyTrackedResources_ListQueryResultsForResource: GetPolicyTrackedResourceQueryResults
 
 operation-positions:
   PolicyMetadata_List: collection
@@ -71,7 +88,7 @@ format-by-name-rules:
   '*Uris': 'Uri'
   'locations': 'azure-location'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -102,6 +119,7 @@ rename-mapping:
   Remediation: PolicyRemediation
   Attestation.properties.expiresOn: ExpireOn
   Attestation.properties.policyAssignmentId: -|arm-id
+  Attestation.properties.assessmentDate: AssessOn
   Remediation.properties.policyAssignmentId: -|arm-id
   CheckRestrictionsResult: CheckPolicyRestrictionsResult
   CheckRestrictionsRequest: CheckPolicyRestrictionsContent
@@ -142,6 +160,15 @@ rename-mapping:
   RemediationDeployment.resourceLocation: -|azure-location
   TrackedResourceModificationDetails.deploymentId: -|arm-id
   PolicyTrackedResourcesResourceType: PolicyTrackedResourceType
+
+models-to-treat-empty-string-as-null:
+  - PolicyAssignmentSummary
+  - PolicyDetails
+  - PolicyEvent
+  - PolicyReference
+  - PolicyState
+  - PolicyMetadataData
+  - SlimPolicyMetadata
 
 directive:
   # TODO: Autorest.csharp should combine these redundancy methods into the scope one automatically.

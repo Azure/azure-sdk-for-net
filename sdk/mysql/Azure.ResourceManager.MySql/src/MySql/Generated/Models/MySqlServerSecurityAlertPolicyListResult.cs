@@ -11,7 +11,7 @@ using Azure.ResourceManager.MySql;
 
 namespace Azure.ResourceManager.MySql.Models
 {
-    /// <summary> A list of the server&apos;s security alert policies. </summary>
+    /// <summary> A list of the server's security alert policies. </summary>
     internal partial class MySqlServerSecurityAlertPolicyListResult
     {
         /// <summary> Initializes a new instance of MySqlServerSecurityAlertPolicyListResult. </summary>

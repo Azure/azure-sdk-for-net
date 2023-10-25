@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.Blueprint.Models
 
         internal static ManagedServiceIdentity DeserializeManagedServiceIdentity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ManagedServiceIdentityType type = default;
             Optional<string> principalId = default;
             Optional<Guid> tenantId = default;
@@ -66,7 +70,6 @@ namespace Azure.ResourceManager.Blueprint.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tenantId = property.Value.GetGuid();
@@ -76,7 +79,6 @@ namespace Azure.ResourceManager.Blueprint.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, UserAssignedIdentity> dictionary = new Dictionary<string, UserAssignedIdentity>();

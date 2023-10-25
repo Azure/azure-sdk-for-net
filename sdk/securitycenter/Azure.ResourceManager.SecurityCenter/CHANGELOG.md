@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0-beta.4 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,36 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0-beta.3 (2023-09-18)
+
+### Features Added
+
+- Bump api-version of `Pricings` to `2023-03-01`.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.32.0 to 1.35.0
+- Upgraded Azure.ResourceManager from 1.6.0 to 1.7.0
+
+## 1.2.0-beta.2 (2023-06-02)
+
+### Features Added
+
+- Bump api-version of `SqlVulnerabilityAssessmentsScanOperations` to `2023-02-01-preview`.
+- Bump api-version of `SqlVulnerabilityAssessmentsScanResultsOperations` to `2023-02-01-preview`.
+- Bump api-version of `SqlVulnerabilityAssessmentsBaselineRuleOperations` to `2023-02-01-preview`.
+
+## 1.2.0-beta.1 (2023-05-31)
+
+### Features Added
+
+- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.32.0.
+- Upgraded dependent Azure.ResourceManager to 1.6.0.
 
 ## 1.1.0 (2023-02-13)
 

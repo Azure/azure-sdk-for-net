@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Logic
             return message;
         }
 
-        /// <summary> Creates or updates an integration account map. If the map is larger than 4 MB, you need to store the map in an Azure blob and use the blob&apos;s Shared Access Signature (SAS) URL as the &apos;contentLink&apos; property value. </summary>
+        /// <summary> Creates or updates an integration account map. If the map is larger than 4 MB, you need to store the map in an Azure blob and use the blob's Shared Access Signature (SAS) URL as the 'contentLink' property value. </summary>
         /// <param name="subscriptionId"> The subscription id. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="integrationAccountName"> The integration account name. </param>
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Logic
             }
         }
 
-        /// <summary> Creates or updates an integration account map. If the map is larger than 4 MB, you need to store the map in an Azure blob and use the blob&apos;s Shared Access Signature (SAS) URL as the &apos;contentLink&apos; property value. </summary>
+        /// <summary> Creates or updates an integration account map. If the map is larger than 4 MB, you need to store the map in an Azure blob and use the blob's Shared Access Signature (SAS) URL as the 'contentLink' property value. </summary>
         /// <param name="subscriptionId"> The subscription id. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="integrationAccountName"> The integration account name. </param>

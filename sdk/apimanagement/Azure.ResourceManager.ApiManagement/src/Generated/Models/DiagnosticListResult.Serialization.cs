@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static DiagnosticListResult DeserializeDiagnosticListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DiagnosticContractData>> value = default;
             Optional<long> count = default;
             Optional<string> nextLink = default;
@@ -25,7 +29,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DiagnosticContractData> array = new List<DiagnosticContractData>();
@@ -40,7 +43,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     count = property.Value.GetInt64();

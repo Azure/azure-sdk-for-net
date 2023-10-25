@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static StreamingPolicyContentKey DeserializeStreamingPolicyContentKey(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> label = default;
             Optional<string> policyName = default;
             Optional<IList<MediaTrackSelection>> tracks = default;
@@ -60,7 +64,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MediaTrackSelection> array = new List<MediaTrackSelection>();

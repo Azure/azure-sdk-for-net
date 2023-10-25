@@ -14,23 +14,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static MachineLearningWorkspaceGetKeysResult DeserializeMachineLearningWorkspaceGetKeysResult(JsonElement element)
         {
-            Optional<string> userStorageKey = default;
-            Optional<string> userStorageResourceId = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> appInsightsInstrumentationKey = default;
             Optional<MachineLearningContainerRegistryCredentials> containerRegistryCredentials = default;
             Optional<MachineLearningWorkspaceGetNotebookKeysResult> notebookAccessKeys = default;
+            Optional<string> userStorageArmId = default;
+            Optional<string> userStorageKey = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("userStorageKey"u8))
-                {
-                    userStorageKey = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("userStorageResourceId"u8))
-                {
-                    userStorageResourceId = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("appInsightsInstrumentationKey"u8))
                 {
                     appInsightsInstrumentationKey = property.Value.GetString();
@@ -40,7 +34,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     containerRegistryCredentials = MachineLearningContainerRegistryCredentials.DeserializeMachineLearningContainerRegistryCredentials(property.Value);
@@ -50,14 +43,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     notebookAccessKeys = MachineLearningWorkspaceGetNotebookKeysResult.DeserializeMachineLearningWorkspaceGetNotebookKeysResult(property.Value);
                     continue;
                 }
+                if (property.NameEquals("userStorageArmId"u8))
+                {
+                    userStorageArmId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("userStorageKey"u8))
+                {
+                    userStorageKey = property.Value.GetString();
+                    continue;
+                }
             }
-            return new MachineLearningWorkspaceGetKeysResult(userStorageKey.Value, userStorageResourceId.Value, appInsightsInstrumentationKey.Value, containerRegistryCredentials.Value, notebookAccessKeys.Value);
+            return new MachineLearningWorkspaceGetKeysResult(appInsightsInstrumentationKey.Value, containerRegistryCredentials.Value, notebookAccessKeys.Value, userStorageArmId.Value, userStorageKey.Value);
         }
     }
 }

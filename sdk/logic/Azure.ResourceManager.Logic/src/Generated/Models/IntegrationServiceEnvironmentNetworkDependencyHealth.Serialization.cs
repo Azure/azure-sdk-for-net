@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Logic.Models
     {
         internal static IntegrationServiceEnvironmentNetworkDependencyHealth DeserializeIntegrationServiceEnvironmentNetworkDependencyHealth(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IntegrationServiceErrorInfo> error = default;
             Optional<IntegrationServiceEnvironmentNetworkDependencyHealthState> state = default;
             foreach (var property in element.EnumerateObject())
@@ -22,7 +26,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     error = IntegrationServiceErrorInfo.DeserializeIntegrationServiceErrorInfo(property.Value);
@@ -32,7 +35,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     state = new IntegrationServiceEnvironmentNetworkDependencyHealthState(property.Value.GetString());

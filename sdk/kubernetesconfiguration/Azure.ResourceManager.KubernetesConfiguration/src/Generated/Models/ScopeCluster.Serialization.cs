@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
 
         internal static ScopeCluster DeserializeScopeCluster(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> releaseNamespace = default;
             foreach (var property in element.EnumerateObject())
             {

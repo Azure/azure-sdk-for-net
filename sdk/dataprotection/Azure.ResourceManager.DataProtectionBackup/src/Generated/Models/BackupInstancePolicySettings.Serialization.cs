@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static BackupInstancePolicySettings DeserializeBackupInstancePolicySettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<DataStoreSettings>> dataStoreParametersList = default;
             Optional<IList<BackupDataSourceSettings>> backupDatasourceParametersList = default;
             foreach (var property in element.EnumerateObject())
@@ -49,7 +53,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DataStoreSettings> array = new List<DataStoreSettings>();
@@ -64,7 +67,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<BackupDataSourceSettings> array = new List<BackupDataSourceSettings>();

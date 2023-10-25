@@ -40,12 +40,21 @@ namespace Azure.ResourceManager.Media
                 writer.WritePropertyName("storageAccountName"u8);
                 writer.WriteStringValue(StorageAccountName);
             }
+            if (Optional.IsDefined(EncryptionScope))
+            {
+                writer.WritePropertyName("encryptionScope"u8);
+                writer.WriteStringValue(EncryptionScope);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static MediaAssetData DeserializeMediaAssetData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -58,6 +67,7 @@ namespace Azure.ResourceManager.Media
             Optional<string> container = default;
             Optional<string> storageAccountName = default;
             Optional<MediaAssetStorageEncryptionFormat> storageEncryptionFormat = default;
+            Optional<string> encryptionScope = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -79,7 +89,6 @@ namespace Azure.ResourceManager.Media
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -98,7 +107,6 @@ namespace Azure.ResourceManager.Media
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             assetId = property0.Value.GetGuid();
@@ -108,7 +116,6 @@ namespace Azure.ResourceManager.Media
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             created = property0.Value.GetDateTimeOffset("O");
@@ -118,7 +125,6 @@ namespace Azure.ResourceManager.Media
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastModified = property0.Value.GetDateTimeOffset("O");
@@ -148,17 +154,21 @@ namespace Azure.ResourceManager.Media
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             storageEncryptionFormat = new MediaAssetStorageEncryptionFormat(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("encryptionScope"u8))
+                        {
+                            encryptionScope = property0.Value.GetString();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new MediaAssetData(id, name, type, systemData.Value, Optional.ToNullable(assetId), Optional.ToNullable(created), Optional.ToNullable(lastModified), alternateId.Value, description.Value, container.Value, storageAccountName.Value, Optional.ToNullable(storageEncryptionFormat));
+            return new MediaAssetData(id, name, type, systemData.Value, Optional.ToNullable(assetId), Optional.ToNullable(created), Optional.ToNullable(lastModified), alternateId.Value, description.Value, container.Value, storageAccountName.Value, Optional.ToNullable(storageEncryptionFormat), encryptionScope.Value);
         }
     }
 }

@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.LabServices
 {
-    /// <summary> A class representing the LabVirtualMachine data model. </summary>
+    /// <summary>
+    /// A class representing the LabVirtualMachine data model.
+    /// A lab virtual machine resource.
+    /// </summary>
     public partial class LabVirtualMachineData : ResourceData
     {
         /// <summary> Initializes a new instance of LabVirtualMachineData. </summary>

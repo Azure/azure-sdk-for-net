@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     /// Identity Provider details.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class IdentityProviderCreateContract : Resource
+    public partial class IdentityProviderCreateContract : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the IdentityProviderCreateContract
@@ -68,7 +68,10 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Only applies to AAD B2C Identity Provider.</param>
         /// <param name="passwordResetPolicyName">Password Reset Policy Name.
         /// Only applies to AAD B2C Identity Provider.</param>
-        public IdentityProviderCreateContract(string clientId, string clientSecret, string id = default(string), string name = default(string), string type = default(string), string identityProviderCreateContractType = default(string), string signinTenant = default(string), IList<string> allowedTenants = default(IList<string>), string authority = default(string), string signupPolicyName = default(string), string signinPolicyName = default(string), string profileEditingPolicyName = default(string), string passwordResetPolicyName = default(string))
+        /// <param name="clientLibrary">The client library to be used in the
+        /// developer portal. Only applies to AAD and AAD B2C Identity
+        /// Provider.</param>
+        public IdentityProviderCreateContract(string clientId, string clientSecret, string id = default(string), string name = default(string), string type = default(string), string identityProviderCreateContractType = default(string), string signinTenant = default(string), IList<string> allowedTenants = default(IList<string>), string authority = default(string), string signupPolicyName = default(string), string signinPolicyName = default(string), string profileEditingPolicyName = default(string), string passwordResetPolicyName = default(string), string clientLibrary = default(string))
             : base(id, name, type)
         {
             IdentityProviderCreateContractType = identityProviderCreateContractType;
@@ -79,6 +82,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             SigninPolicyName = signinPolicyName;
             ProfileEditingPolicyName = profileEditingPolicyName;
             PasswordResetPolicyName = passwordResetPolicyName;
+            ClientLibrary = clientLibrary;
             ClientId = clientId;
             ClientSecret = clientSecret;
             CustomInit();
@@ -147,6 +151,13 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public string PasswordResetPolicyName { get; set; }
 
         /// <summary>
+        /// Gets or sets the client library to be used in the developer portal.
+        /// Only applies to AAD and AAD B2C Identity Provider.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.clientLibrary")]
+        public string ClientLibrary { get; set; }
+
+        /// <summary>
         /// Gets or sets client Id of the Application in the external Identity
         /// Provider. It is App ID for Facebook login, Client ID for Google
         /// login, App ID for Microsoft.
@@ -213,6 +224,17 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
                 if (PasswordResetPolicyName.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "PasswordResetPolicyName", 1);
+                }
+            }
+            if (ClientLibrary != null)
+            {
+                if (ClientLibrary.Length > 16)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "ClientLibrary", 16);
+                }
+                if (ClientLibrary.Length < 0)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "ClientLibrary", 0);
                 }
             }
             if (ClientId != null)

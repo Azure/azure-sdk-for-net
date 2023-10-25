@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.Attestation.Models
     {
         /// <summary> Initializes a new instance of JsonWebKey. </summary>
         /// <param name="kty">
-        /// The &quot;kty&quot; (key type) parameter identifies the cryptographic algorithm
-        /// family used with the key, such as &quot;RSA&quot; or &quot;EC&quot;. &quot;kty&quot; values should
-        /// either be registered in the IANA &quot;JSON Web Key Types&quot; registry
+        /// The "kty" (key type) parameter identifies the cryptographic algorithm
+        /// family used with the key, such as "RSA" or "EC". "kty" values should
+        /// either be registered in the IANA "JSON Web Key Types" registry
         /// established by [JWA] or be a value that contains a Collision-
-        /// Resistant Name.  The &quot;kty&quot; value is a case-sensitive string.
+        /// Resistant Name.  The "kty" value is a case-sensitive string.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="kty"/> is null. </exception>
         public JsonWebKey(string kty)
@@ -32,14 +32,14 @@ namespace Azure.ResourceManager.Attestation.Models
         }
 
         /// <summary>
-        /// The &quot;alg&quot; (algorithm) parameter identifies the algorithm intended for
+        /// The "alg" (algorithm) parameter identifies the algorithm intended for
         /// use with the key.  The values used should either be registered in the
-        /// IANA &quot;JSON Web Signature and Encryption Algorithms&quot; registry
+        /// IANA "JSON Web Signature and Encryption Algorithms" registry
         /// established by [JWA] or be a value that contains a Collision-
         /// Resistant Name.
         /// </summary>
         public string Alg { get; set; }
-        /// <summary> The &quot;crv&quot; (curve) parameter identifies the curve type. </summary>
+        /// <summary> The "crv" (curve) parameter identifies the curve type. </summary>
         public string Crv { get; set; }
         /// <summary> RSA private exponent or ECC private key. </summary>
         public string D { get; set; }
@@ -52,23 +52,23 @@ namespace Azure.ResourceManager.Attestation.Models
         /// <summary> Symmetric key. </summary>
         public string K { get; set; }
         /// <summary>
-        /// The &quot;kid&quot; (key ID) parameter is used to match a specific key.  This
+        /// The "kid" (key ID) parameter is used to match a specific key.  This
         /// is used, for instance, to choose among a set of keys within a JWK Set
-        /// during key rollover.  The structure of the &quot;kid&quot; value is
-        /// unspecified.  When &quot;kid&quot; values are used within a JWK Set, different
-        /// keys within the JWK Set SHOULD use distinct &quot;kid&quot; values.  (One
-        /// example in which different keys might use the same &quot;kid&quot; value is if
-        /// they have different &quot;kty&quot; (key type) values but are considered to be
-        /// equivalent alternatives by the application using them.)  The &quot;kid&quot;
+        /// during key rollover.  The structure of the "kid" value is
+        /// unspecified.  When "kid" values are used within a JWK Set, different
+        /// keys within the JWK Set SHOULD use distinct "kid" values.  (One
+        /// example in which different keys might use the same "kid" value is if
+        /// they have different "kty" (key type) values but are considered to be
+        /// equivalent alternatives by the application using them.)  The "kid"
         /// value is a case-sensitive string.
         /// </summary>
         public string Kid { get; set; }
         /// <summary>
-        /// The &quot;kty&quot; (key type) parameter identifies the cryptographic algorithm
-        /// family used with the key, such as &quot;RSA&quot; or &quot;EC&quot;. &quot;kty&quot; values should
-        /// either be registered in the IANA &quot;JSON Web Key Types&quot; registry
+        /// The "kty" (key type) parameter identifies the cryptographic algorithm
+        /// family used with the key, such as "RSA" or "EC". "kty" values should
+        /// either be registered in the IANA "JSON Web Key Types" registry
         /// established by [JWA] or be a value that contains a Collision-
-        /// Resistant Name.  The &quot;kty&quot; value is a case-sensitive string.
+        /// Resistant Name.  The "kty" value is a case-sensitive string.
         /// </summary>
         public string Kty { get; }
         /// <summary> RSA modulus, in Base64. </summary>
@@ -80,16 +80,16 @@ namespace Azure.ResourceManager.Attestation.Models
         /// <summary> RSA Private Key Parameter. </summary>
         public string Qi { get; set; }
         /// <summary>
-        /// Use (&quot;public key use&quot;) identifies the intended use of
-        /// the public key. The &quot;use&quot; parameter is employed to indicate whether
+        /// Use ("public key use") identifies the intended use of
+        /// the public key. The "use" parameter is employed to indicate whether
         /// a public key is used for encrypting data or verifying the signature
-        /// on data. Values are commonly &quot;sig&quot; (signature) or &quot;enc&quot; (encryption).
+        /// on data. Values are commonly "sig" (signature) or "enc" (encryption).
         /// </summary>
         public string Use { get; set; }
         /// <summary> X coordinate for the Elliptic Curve point. </summary>
         public string X { get; set; }
         /// <summary>
-        /// The &quot;x5c&quot; (X.509 certificate chain) parameter contains a chain of one
+        /// The "x5c" (X.509 certificate chain) parameter contains a chain of one
         /// or more PKIX certificates [RFC5280].  The certificate chain is
         /// represented as a JSON array of certificate value strings.  Each
         /// string in the array is a base64-encoded (Section 4 of [RFC4648] --

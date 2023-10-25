@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Initializes a new instance of SwitchCase. </summary>
-        /// <param name="value"> Expected value that satisfies the expression result of the &apos;on&apos; property. </param>
+        /// <param name="value"> Expected value that satisfies the expression result of the 'on' property. </param>
         /// <param name="activities">
         /// List of activities to execute for satisfied case condition.
         /// Please note <see cref="Activity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -32,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Activities = activities;
         }
 
-        /// <summary> Expected value that satisfies the expression result of the &apos;on&apos; property. </summary>
+        /// <summary> Expected value that satisfies the expression result of the 'on' property. </summary>
         public string Value { get; set; }
         /// <summary>
         /// List of activities to execute for satisfied case condition.

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     public partial class KeyVaultVirtualNetworkRule
     {
         /// <summary> Initializes a new instance of KeyVaultVirtualNetworkRule. </summary>
-        /// <param name="id"> Full resource id of a vnet subnet, such as &apos;/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1&apos;. </param>
+        /// <param name="id"> Full resource id of a vnet subnet, such as '/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1'. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public KeyVaultVirtualNetworkRule(string id)
         {
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Initializes a new instance of KeyVaultVirtualNetworkRule. </summary>
-        /// <param name="id"> Full resource id of a vnet subnet, such as &apos;/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1&apos;. </param>
+        /// <param name="id"> Full resource id of a vnet subnet, such as '/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1'. </param>
         /// <param name="ignoreMissingVnetServiceEndpoint"> Property to specify whether NRP will ignore the check if parent subnet has serviceEndpoints configured. </param>
         internal KeyVaultVirtualNetworkRule(string id, bool? ignoreMissingVnetServiceEndpoint)
         {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             IgnoreMissingVnetServiceEndpoint = ignoreMissingVnetServiceEndpoint;
         }
 
-        /// <summary> Full resource id of a vnet subnet, such as &apos;/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1&apos;. </summary>
+        /// <summary> Full resource id of a vnet subnet, such as '/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1'. </summary>
         public string Id { get; set; }
         /// <summary> Property to specify whether NRP will ignore the check if parent subnet has serviceEndpoints configured. </summary>
         public bool? IgnoreMissingVnetServiceEndpoint { get; set; }

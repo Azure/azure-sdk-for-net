@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -229,9 +230,9 @@ namespace Azure.ResourceManager.MachineLearning
         {
             options ??= new MachineLearningModelVersionCollectionGetAllOptions();
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningModelVersionModelVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Skip, options.OrderBy, options.Top, options.Version, options.Description, options.Offset, options.Tags, options.Properties, options.Feed, options.ListViewType);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningModelVersionModelVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Skip, options.OrderBy, options.Top, options.Version, options.Description, options.Offset, options.Tags, options.Properties, options.Feed, options.ListViewType);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningModelVersionResource(Client, MachineLearningModelVersionData.DeserializeMachineLearningModelVersionData(e)), _machineLearningModelVersionModelVersionsClientDiagnostics, Pipeline, "MachineLearningModelVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningModelVersionModelVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Skip, options.OrderBy, options.Top, options.Version, options.Description, options.Offset, options.Tags, options.Properties, options.Feed, options.ListViewType, options.Stage);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningModelVersionModelVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Skip, options.OrderBy, options.Top, options.Version, options.Description, options.Offset, options.Tags, options.Properties, options.Feed, options.ListViewType, options.Stage);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningModelVersionResource(Client, MachineLearningModelVersionData.DeserializeMachineLearningModelVersionData(e)), _machineLearningModelVersionModelVersionsClientDiagnostics, Pipeline, "MachineLearningModelVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -254,9 +255,9 @@ namespace Azure.ResourceManager.MachineLearning
         {
             options ??= new MachineLearningModelVersionCollectionGetAllOptions();
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningModelVersionModelVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Skip, options.OrderBy, options.Top, options.Version, options.Description, options.Offset, options.Tags, options.Properties, options.Feed, options.ListViewType);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningModelVersionModelVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Skip, options.OrderBy, options.Top, options.Version, options.Description, options.Offset, options.Tags, options.Properties, options.Feed, options.ListViewType);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningModelVersionResource(Client, MachineLearningModelVersionData.DeserializeMachineLearningModelVersionData(e)), _machineLearningModelVersionModelVersionsClientDiagnostics, Pipeline, "MachineLearningModelVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningModelVersionModelVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Skip, options.OrderBy, options.Top, options.Version, options.Description, options.Offset, options.Tags, options.Properties, options.Feed, options.ListViewType, options.Stage);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningModelVersionModelVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.Skip, options.OrderBy, options.Top, options.Version, options.Description, options.Offset, options.Tags, options.Properties, options.Feed, options.ListViewType, options.Stage);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningModelVersionResource(Client, MachineLearningModelVersionData.DeserializeMachineLearningModelVersionData(e)), _machineLearningModelVersionModelVersionsClientDiagnostics, Pipeline, "MachineLearningModelVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -321,6 +322,80 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 var response = _machineLearningModelVersionModelVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/models/{name}/versions/{version}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ModelVersions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="version"> Version identifier. This is case-sensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
+        public virtual async Task<NullableResponse<MachineLearningModelVersionResource>> GetIfExistsAsync(string version, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
+
+            using var scope = _machineLearningModelVersionModelVersionsClientDiagnostics.CreateScope("MachineLearningModelVersionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _machineLearningModelVersionModelVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<MachineLearningModelVersionResource>(response.GetRawResponse());
+                return Response.FromValue(new MachineLearningModelVersionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/models/{name}/versions/{version}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ModelVersions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="version"> Version identifier. This is case-sensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
+        public virtual NullableResponse<MachineLearningModelVersionResource> GetIfExists(string version, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
+
+            using var scope = _machineLearningModelVersionModelVersionsClientDiagnostics.CreateScope("MachineLearningModelVersionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _machineLearningModelVersionModelVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<MachineLearningModelVersionResource>(response.GetRawResponse());
+                return Response.FromValue(new MachineLearningModelVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

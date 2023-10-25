@@ -36,7 +36,10 @@ namespace Azure.ResourceManager.ApiManagement
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsDefined(Document))
@@ -45,7 +48,10 @@ namespace Azure.ResourceManager.ApiManagement
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Document);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Document.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(Document))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
@@ -54,6 +60,10 @@ namespace Azure.ResourceManager.ApiManagement
 
         internal static ApiManagementGlobalSchemaData DeserializeApiManagementGlobalSchemaData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -83,7 +93,6 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -102,7 +111,6 @@ namespace Azure.ResourceManager.ApiManagement
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             schemaType = new ApiSchemaType(property0.Value.GetString());
@@ -117,7 +125,6 @@ namespace Azure.ResourceManager.ApiManagement
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             value = BinaryData.FromString(property0.Value.GetRawText());
@@ -127,7 +134,6 @@ namespace Azure.ResourceManager.ApiManagement
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             document = BinaryData.FromString(property0.Value.GetRawText());

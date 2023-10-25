@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppPlatform
 {
-    /// <summary> A class representing the AppPlatformServiceRegistry data model. </summary>
+    /// <summary>
+    /// A class representing the AppPlatformServiceRegistry data model.
+    /// Service Registry resource
+    /// </summary>
     public partial class AppPlatformServiceRegistryData : ResourceData
     {
         /// <summary> Initializes a new instance of AppPlatformServiceRegistryData. </summary>

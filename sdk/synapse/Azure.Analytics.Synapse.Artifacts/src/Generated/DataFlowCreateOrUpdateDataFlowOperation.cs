@@ -29,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         internal DataFlowCreateOrUpdateDataFlowOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response)
         {
             IOperation<DataFlowResource> nextLinkOperation = NextLinkOperationImplementation.Create(this, pipeline, request.Method, request.Uri.ToUri(), response, OperationFinalStateVia.Location);
-            _operation = new OperationInternal<DataFlowResource>(clientDiagnostics, nextLinkOperation, response, "DataFlowCreateOrUpdateDataFlowOperation");
+            _operation = new OperationInternal<DataFlowResource>(nextLinkOperation, clientDiagnostics, response, "DataFlowCreateOrUpdateDataFlowOperation");
         }
 
         /// <inheritdoc />

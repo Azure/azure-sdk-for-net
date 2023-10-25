@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of SharedGalleryDiskImage. </summary>
         /// <param name="diskSizeGB"> This property indicates the size of the VHD to be created. </param>
-        /// <param name="hostCaching"> The host caching of the disk. Valid values are &apos;None&apos;, &apos;ReadOnly&apos;, and &apos;ReadWrite&apos;. </param>
+        /// <param name="hostCaching"> The host caching of the disk. Valid values are 'None', 'ReadOnly', and 'ReadWrite'. </param>
         internal SharedGalleryDiskImage(int? diskSizeGB, SharedGalleryHostCaching? hostCaching)
         {
             DiskSizeGB = diskSizeGB;
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> This property indicates the size of the VHD to be created. </summary>
         public int? DiskSizeGB { get; }
-        /// <summary> The host caching of the disk. Valid values are &apos;None&apos;, &apos;ReadOnly&apos;, and &apos;ReadWrite&apos;. </summary>
+        /// <summary> The host caching of the disk. Valid values are 'None', 'ReadOnly', and 'ReadWrite'. </summary>
         public SharedGalleryHostCaching? HostCaching { get; }
     }
 }

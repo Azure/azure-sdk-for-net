@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
-    /// <summary> The AzureStorageBlobContainerEndpointProperties. </summary>
+    /// <summary> The properties of Azure Storage blob container endpoint. </summary>
     public partial class AzureStorageBlobContainerEndpointProperties : EndpointBaseProperties
     {
         /// <summary> Initializes a new instance of AzureStorageBlobContainerEndpointProperties. </summary>

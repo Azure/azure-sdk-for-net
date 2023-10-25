@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of DevTestLabEnvironmentDeployment. </summary>
-        /// <param name="armTemplateId"> The Azure Resource Manager template&apos;s identifier. </param>
+        /// <param name="armTemplateId"> The Azure Resource Manager template's identifier. </param>
         /// <param name="parameters"> The parameters of the Azure Resource Manager template. </param>
         internal DevTestLabEnvironmentDeployment(ResourceIdentifier armTemplateId, IList<DevTestLabArmTemplateParameter> parameters)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             Parameters = parameters;
         }
 
-        /// <summary> The Azure Resource Manager template&apos;s identifier. </summary>
+        /// <summary> The Azure Resource Manager template's identifier. </summary>
         public ResourceIdentifier ArmTemplateId { get; set; }
         /// <summary> The parameters of the Azure Resource Manager template. </summary>
         public IList<DevTestLabArmTemplateParameter> Parameters { get; }

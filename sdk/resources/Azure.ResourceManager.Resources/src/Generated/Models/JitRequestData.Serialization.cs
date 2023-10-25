@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.Resources
 
         internal static JitRequestData DeserializeJitRequestData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -80,7 +84,6 @@ namespace Azure.ResourceManager.Resources
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -115,7 +118,6 @@ namespace Azure.ResourceManager.Resources
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -139,7 +141,6 @@ namespace Azure.ResourceManager.Resources
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             publisherTenantId = property0.Value.GetGuid();
@@ -149,7 +150,6 @@ namespace Azure.ResourceManager.Resources
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<JitAuthorizationPolicies> array = new List<JitAuthorizationPolicies>();
@@ -164,7 +164,6 @@ namespace Azure.ResourceManager.Resources
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             jitSchedulingPolicy = JitSchedulingPolicy.DeserializeJitSchedulingPolicy(property0.Value);
@@ -174,7 +173,6 @@ namespace Azure.ResourceManager.Resources
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ResourcesProvisioningState(property0.Value.GetString());
@@ -184,7 +182,6 @@ namespace Azure.ResourceManager.Resources
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             jitRequestState = new JitRequestState(property0.Value.GetString());
@@ -194,7 +191,6 @@ namespace Azure.ResourceManager.Resources
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createdBy = ArmApplicationDetails.DeserializeArmApplicationDetails(property0.Value);
@@ -204,7 +200,6 @@ namespace Azure.ResourceManager.Resources
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             updatedBy = ArmApplicationDetails.DeserializeArmApplicationDetails(property0.Value);

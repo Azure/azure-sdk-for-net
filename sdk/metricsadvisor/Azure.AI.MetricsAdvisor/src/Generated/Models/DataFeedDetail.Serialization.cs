@@ -162,6 +162,10 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static DataFeedDetail DeserializeDataFeedDetail(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("dataSourceType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

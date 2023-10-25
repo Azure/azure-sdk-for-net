@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    /// <summary> A class representing the SynapseKey data model. </summary>
+    /// <summary>
+    /// A class representing the SynapseKey data model.
+    /// A workspace key
+    /// </summary>
     public partial class SynapseKeyData : ResourceData
     {
         /// <summary> Initializes a new instance of SynapseKeyData. </summary>

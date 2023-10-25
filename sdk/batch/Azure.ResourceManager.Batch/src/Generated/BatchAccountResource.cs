@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -668,7 +669,7 @@ namespace Azure.ResourceManager.Batch
         }
 
         /// <summary>
-        /// This operation applies only to Batch accounts with allowedAuthenticationModes containing &apos;SharedKey&apos;. If the Batch account doesn&apos;t contain &apos;SharedKey&apos; in its allowedAuthenticationMode, clients cannot use shared keys to authenticate, and must use another allowedAuthenticationModes instead. In this case, regenerating the keys will fail.
+        /// This operation applies only to Batch accounts with allowedAuthenticationModes containing 'SharedKey'. If the Batch account doesn't contain 'SharedKey' in its allowedAuthenticationMode, clients cannot use shared keys to authenticate, and must use another allowedAuthenticationModes instead. In this case, regenerating the keys will fail.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -702,7 +703,7 @@ namespace Azure.ResourceManager.Batch
         }
 
         /// <summary>
-        /// This operation applies only to Batch accounts with allowedAuthenticationModes containing &apos;SharedKey&apos;. If the Batch account doesn&apos;t contain &apos;SharedKey&apos; in its allowedAuthenticationMode, clients cannot use shared keys to authenticate, and must use another allowedAuthenticationModes instead. In this case, regenerating the keys will fail.
+        /// This operation applies only to Batch accounts with allowedAuthenticationModes containing 'SharedKey'. If the Batch account doesn't contain 'SharedKey' in its allowedAuthenticationMode, clients cannot use shared keys to authenticate, and must use another allowedAuthenticationModes instead. In this case, regenerating the keys will fail.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -736,7 +737,7 @@ namespace Azure.ResourceManager.Batch
         }
 
         /// <summary>
-        /// This operation applies only to Batch accounts with allowedAuthenticationModes containing &apos;SharedKey&apos;. If the Batch account doesn&apos;t contain &apos;SharedKey&apos; in its allowedAuthenticationMode, clients cannot use shared keys to authenticate, and must use another allowedAuthenticationModes instead. In this case, getting the keys will fail.
+        /// This operation applies only to Batch accounts with allowedAuthenticationModes containing 'SharedKey'. If the Batch account doesn't contain 'SharedKey' in its allowedAuthenticationMode, clients cannot use shared keys to authenticate, and must use another allowedAuthenticationModes instead. In this case, getting the keys will fail.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -766,7 +767,7 @@ namespace Azure.ResourceManager.Batch
         }
 
         /// <summary>
-        /// This operation applies only to Batch accounts with allowedAuthenticationModes containing &apos;SharedKey&apos;. If the Batch account doesn&apos;t contain &apos;SharedKey&apos; in its allowedAuthenticationMode, clients cannot use shared keys to authenticate, and must use another allowedAuthenticationModes instead. In this case, getting the keys will fail.
+        /// This operation applies only to Batch accounts with allowedAuthenticationModes containing 'SharedKey'. If the Batch account doesn't contain 'SharedKey' in its allowedAuthenticationMode, clients cannot use shared keys to authenticate, and must use another allowedAuthenticationModes instead. In this case, getting the keys will fail.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -814,7 +815,7 @@ namespace Azure.ResourceManager.Batch
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _batchAccountRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _batchAccountRestClient.CreateListOutboundNetworkDependenciesEndpointsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BatchAccountOutboundEnvironmentEndpoint.DeserializeBatchAccountOutboundEnvironmentEndpoint, _batchAccountClientDiagnostics, Pipeline, "BatchAccountResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BatchAccountOutboundEnvironmentEndpoint.DeserializeBatchAccountOutboundEnvironmentEndpoint, _batchAccountClientDiagnostics, Pipeline, "BatchAccountResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -836,7 +837,7 @@ namespace Azure.ResourceManager.Batch
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _batchAccountRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _batchAccountRestClient.CreateListOutboundNetworkDependenciesEndpointsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BatchAccountOutboundEnvironmentEndpoint.DeserializeBatchAccountOutboundEnvironmentEndpoint, _batchAccountClientDiagnostics, Pipeline, "BatchAccountResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BatchAccountOutboundEnvironmentEndpoint.DeserializeBatchAccountOutboundEnvironmentEndpoint, _batchAccountClientDiagnostics, Pipeline, "BatchAccountResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

@@ -13,12 +13,11 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Storage.Models;
-using Azure.ResourceManager.Storage.Tests.Helpers;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Storage.Tests
 {
-    public class StorageAccountTests : StorageTestBase
+    public class StorageAccountTests : StorageManagementTestBase
     {
         private ResourceGroupResource _resourceGroup;
         private const string namePrefix = "teststoragemgmt";
@@ -1837,6 +1836,40 @@ namespace Azure.ResourceManager.Storage.Tests
             account = await account.GetAsync();
 
             Assert.AreEqual(StorageSkuName.StandardLrs, account.Data.Sku.Name);
+            Assert.AreEqual(location, account.Data.PrimaryLocation?.ToString());
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task StorageAccountSoftFailOver()
+        {
+            //create an account with network rule set
+            string accountName1 = await CreateValidAccountNameAsync(namePrefix);
+            ResourceGroupResource resourceGroup1 = await CreateResourceGroupAsync();
+            StorageAccountCollection storageAccountCollection = resourceGroup1.GetStorageAccounts();
+            StorageAccountCreateOrUpdateContent parameters = GetDefaultStorageAccountParameters(kind: StorageKind.StorageV2, sku: new StorageSku(StorageSkuName.StandardRagrs), location: "eastus2euap");
+            StorageAccountResource account = (await storageAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName1, parameters)).Value;
+            int i = 100;
+            string location;
+            do
+            {
+                account = await account.GetAsync(expand: StorageAccountExpand.GeoReplicationStats);
+                Assert.AreEqual(StorageSkuName.StandardRagrs, account.Data.Sku.Name);
+                Assert.Null(account.Data.IsFailoverInProgress);
+                location = account.Data.SecondaryLocation;
+
+                //Don't need sleep when playback, or Unit test will be very slow. Need sleep when record.
+                if (Mode != RecordedTestMode.Playback)
+                {
+                    await Task.Delay(10000);
+                }
+            } while ((account.Data.GeoReplicationStats.CanFailover != true) && (i-- > 0));
+
+            await account.FailoverAsync(WaitUntil.Completed, StorageAccountFailoverType.Planned);
+
+            account = await account.GetAsync();
+
+            Assert.AreEqual(StorageSkuName.StandardRagrs, account.Data.Sku.Name);
             Assert.AreEqual(location, account.Data.PrimaryLocation?.ToString());
         }
 

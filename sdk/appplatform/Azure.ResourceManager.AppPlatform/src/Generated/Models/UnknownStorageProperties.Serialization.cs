@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static UnknownStorageProperties DeserializeUnknownStorageProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             StorageType storageType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {

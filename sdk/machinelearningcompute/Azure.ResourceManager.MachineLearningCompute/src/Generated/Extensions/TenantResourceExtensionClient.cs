@@ -5,8 +5,8 @@
 
 #nullable disable
 
-using System;
 using System.Threading;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
         public virtual AsyncPageable<ResourceOperation> GetAvailableOperationsMachineLearningComputesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MachineLearningComputeRestClient.CreateListAvailableOperationsRequest();
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ResourceOperation.DeserializeResourceOperation, MachineLearningComputeClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetAvailableOperationsMachineLearningComputes", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ResourceOperation.DeserializeResourceOperation, MachineLearningComputeClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetAvailableOperationsMachineLearningComputes", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
         public virtual Pageable<ResourceOperation> GetAvailableOperationsMachineLearningComputes(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MachineLearningComputeRestClient.CreateListAvailableOperationsRequest();
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, ResourceOperation.DeserializeResourceOperation, MachineLearningComputeClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetAvailableOperationsMachineLearningComputes", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ResourceOperation.DeserializeResourceOperation, MachineLearningComputeClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetAvailableOperationsMachineLearningComputes", "value", null, cancellationToken);
         }
     }
 }

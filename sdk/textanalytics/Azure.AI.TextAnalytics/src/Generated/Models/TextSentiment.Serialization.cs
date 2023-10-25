@@ -22,10 +22,10 @@ namespace Azure.AI.TextAnalytics
 
         public static TextSentiment ToTextSentiment(this string value)
         {
-            if (string.Equals(value, "positive", StringComparison.InvariantCultureIgnoreCase)) return TextSentiment.Positive;
-            if (string.Equals(value, "neutral", StringComparison.InvariantCultureIgnoreCase)) return TextSentiment.Neutral;
-            if (string.Equals(value, "negative", StringComparison.InvariantCultureIgnoreCase)) return TextSentiment.Negative;
-            if (string.Equals(value, "mixed", StringComparison.InvariantCultureIgnoreCase)) return TextSentiment.Mixed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "positive")) return TextSentiment.Positive;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "neutral")) return TextSentiment.Neutral;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "negative")) return TextSentiment.Negative;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "mixed")) return TextSentiment.Mixed;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown TextSentiment value.");
         }
     }

@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
 
         internal static CustomLocationEnabledResourceType DeserializeCustomLocationEnabledResourceType(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -73,7 +77,6 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -92,7 +95,6 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             clusterExtensionId = new ResourceIdentifier(property0.Value.GetString());
@@ -107,7 +109,6 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<CustomLocationEnabledResourceTypeMetadata> array = new List<CustomLocationEnabledResourceTypeMetadata>();

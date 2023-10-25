@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Resources.Models
 
         public static WhatIfResultFormat ToWhatIfResultFormat(this string value)
         {
-            if (string.Equals(value, "ResourceIdOnly", StringComparison.InvariantCultureIgnoreCase)) return WhatIfResultFormat.ResourceIdOnly;
-            if (string.Equals(value, "FullResourcePayloads", StringComparison.InvariantCultureIgnoreCase)) return WhatIfResultFormat.FullResourcePayloads;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ResourceIdOnly")) return WhatIfResultFormat.ResourceIdOnly;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "FullResourcePayloads")) return WhatIfResultFormat.FullResourcePayloads;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown WhatIfResultFormat value.");
         }
     }

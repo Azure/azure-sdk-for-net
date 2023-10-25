@@ -16,17 +16,17 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         }
 
         /// <summary> Initializes a new instance of TlsValidationOptions. </summary>
-        /// <param name="ignoreHostname"> When set to &apos;true&apos; causes the certificate subject name validation to be skipped. Default is &apos;false&apos;. </param>
-        /// <param name="ignoreSignature"> When set to &apos;true&apos; causes the certificate chain trust validation to be skipped. Default is &apos;false&apos;. </param>
+        /// <param name="ignoreHostname"> When set to 'true' causes the certificate subject name validation to be skipped. Default is 'false'. </param>
+        /// <param name="ignoreSignature"> When set to 'true' causes the certificate chain trust validation to be skipped. Default is 'false'. </param>
         internal TlsValidationOptions(string ignoreHostname, string ignoreSignature)
         {
             IgnoreHostname = ignoreHostname;
             IgnoreSignature = ignoreSignature;
         }
 
-        /// <summary> When set to &apos;true&apos; causes the certificate subject name validation to be skipped. Default is &apos;false&apos;. </summary>
+        /// <summary> When set to 'true' causes the certificate subject name validation to be skipped. Default is 'false'. </summary>
         public string IgnoreHostname { get; set; }
-        /// <summary> When set to &apos;true&apos; causes the certificate chain trust validation to be skipped. Default is &apos;false&apos;. </summary>
+        /// <summary> When set to 'true' causes the certificate chain trust validation to be skipped. Default is 'false'. </summary>
         public string IgnoreSignature { get; set; }
     }
 }

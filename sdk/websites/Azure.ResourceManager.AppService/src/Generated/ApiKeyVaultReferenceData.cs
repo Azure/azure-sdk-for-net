@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the ApiKeyVaultReference data model. </summary>
+    /// <summary>
+    /// A class representing the ApiKeyVaultReference data model.
+    /// Description of site key vault references.
+    /// </summary>
     public partial class ApiKeyVaultReferenceData : ResourceData
     {
         /// <summary> Initializes a new instance of ApiKeyVaultReferenceData. </summary>

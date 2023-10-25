@@ -17,6 +17,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static StorageLifecyclePolicyCompletedEventData DeserializeStorageLifecyclePolicyCompletedEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> scheduleTime = default;
             Optional<StorageLifecyclePolicyActionSummaryDetail> deleteSummary = default;
             Optional<StorageLifecyclePolicyActionSummaryDetail> tierToCoolSummary = default;
@@ -32,7 +36,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     deleteSummary = StorageLifecyclePolicyActionSummaryDetail.DeserializeStorageLifecyclePolicyActionSummaryDetail(property.Value);
@@ -42,7 +45,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tierToCoolSummary = StorageLifecyclePolicyActionSummaryDetail.DeserializeStorageLifecyclePolicyActionSummaryDetail(property.Value);
@@ -52,7 +54,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tierToArchiveSummary = StorageLifecyclePolicyActionSummaryDetail.DeserializeStorageLifecyclePolicyActionSummaryDetail(property.Value);

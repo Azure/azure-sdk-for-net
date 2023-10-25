@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual AsyncPageable<ActionGroupResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _actionGroupRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ActionGroupResource(Client, ActionGroupData.DeserializeActionGroupData(e)), _actionGroupClientDiagnostics, Pipeline, "ActionGroupCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ActionGroupResource(Client, ActionGroupData.DeserializeActionGroupData(e)), _actionGroupClientDiagnostics, Pipeline, "ActionGroupCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +249,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual Pageable<ActionGroupResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _actionGroupRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ActionGroupResource(Client, ActionGroupData.DeserializeActionGroupData(e)), _actionGroupClientDiagnostics, Pipeline, "ActionGroupCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new ActionGroupResource(Client, ActionGroupData.DeserializeActionGroupData(e)), _actionGroupClientDiagnostics, Pipeline, "ActionGroupCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -313,6 +314,80 @@ namespace Azure.ResourceManager.Monitor
             {
                 var response = _actionGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, actionGroupName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ActionGroups_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="actionGroupName"> The name of the action group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="actionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="actionGroupName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ActionGroupResource>> GetIfExistsAsync(string actionGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(actionGroupName, nameof(actionGroupName));
+
+            using var scope = _actionGroupClientDiagnostics.CreateScope("ActionGroupCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _actionGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, actionGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ActionGroupResource>(response.GetRawResponse());
+                return Response.FromValue(new ActionGroupResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/actionGroups/{actionGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ActionGroups_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="actionGroupName"> The name of the action group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="actionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="actionGroupName"/> is null. </exception>
+        public virtual NullableResponse<ActionGroupResource> GetIfExists(string actionGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(actionGroupName, nameof(actionGroupName));
+
+            using var scope = _actionGroupClientDiagnostics.CreateScope("ActionGroupCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _actionGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, actionGroupName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ActionGroupResource>(response.GetRawResponse());
+                return Response.FromValue(new ActionGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

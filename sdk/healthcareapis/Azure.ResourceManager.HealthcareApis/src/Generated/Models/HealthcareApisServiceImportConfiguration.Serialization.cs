@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 
         internal static HealthcareApisServiceImportConfiguration DeserializeHealthcareApisServiceImportConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> integrationDataStore = default;
             Optional<bool> initialImportMode = default;
             Optional<bool> enabled = default;
@@ -49,7 +53,6 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     initialImportMode = property.Value.GetBoolean();
@@ -59,7 +62,6 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enabled = property.Value.GetBoolean();

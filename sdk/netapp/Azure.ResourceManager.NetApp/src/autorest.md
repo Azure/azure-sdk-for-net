@@ -5,13 +5,15 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
-generate-model-factory: false
 csharp: true
 library-name: NetApp
 namespace: Azure.ResourceManager.NetApp
-require: https://github.com/Azure/azure-rest-api-specs/blob/e31e3938529269e0e6a81f60b2fdc6d2aec5b9df/specification/netapp/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/c78b5d8bd3aff2d82a5f034d9164b1a9ac030e09/specification/netapp/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -23,7 +25,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -99,7 +101,7 @@ rename-mapping:
   FilePathAvailabilityRequest.subnetId: -|arm-id
   MountTargetProperties.mountTargetId: -|uuid
   MountTargetProperties.fileSystemId: -|uuid
-  MountTargetProperties.ipAddress: -|ip-address
+  MountTargetProperties.ipAddress: -|ip-address  
   ActiveDirectory.kdcIP: -|ip-address
   ReplicationSchedule._10minutely: TenMinutely
   EndpointType.src: Source
@@ -128,6 +130,9 @@ rename-mapping:
   Volume.properties.smbContinuouslyAvailable: IsSmbContinuouslyAvailable
   Volume.properties.ldapEnabled: IsLdapEnabled
   Volume.properties.encrypted: IsEncrypted
+  Volume.properties.dataStoreResourceId: -|arm-id
+  Volume.properties.originatingResourceId: -|arm-id
+  VolumePatch.properties.snapshotDirectoryVisible: IsSnapshotDirectoryVisible
   VolumeGroupVolumeProperties.properties.proximityPlacementGroup: ProximityPlacementGroupId|arm-id
   VolumeGroupVolumeProperties.properties.coolAccess: IsCoolAccessEnabled
   VolumeGroupVolumeProperties.properties.snapshotDirectoryVisible: IsSnapshotDirectoryVisible
@@ -136,6 +141,7 @@ rename-mapping:
   VolumeGroupVolumeProperties.properties.smbContinuouslyAvailable: IsSmbContinuouslyAvailable
   VolumeGroupVolumeProperties.properties.ldapEnabled: IsLdapEnabled
   VolumeGroupVolumeProperties.properties.encrypted: IsEncrypted
+  VolumeGroupVolumeProperties.properties.originatingResourceId: -|arm-id
   VolumeGroupVolumeProperties.id: -|arm-id
   VolumeGroupVolumeProperties.type: ResourceType|resource-type
   VolumeGroupVolumeProperties: NetAppVolumeGroupVolume
@@ -213,7 +219,15 @@ rename-mapping:
   VolumeGroupMetaData: NetAppVolumeGroupMetadata
   VolumeGroup: NetAppVolumeGroupResult
   RegionInfoAvailabilityZoneMappingsItem: AvailabilityZoneMapping
-
+  VolumeRelocationProperties.readyToBeFinalized: IsReadyToBeFinalized
+  VolumeRelocationProperties.relocationRequested: IsRelocationRequested
+  BreakFileLocksRequest.clientIp: -|ip-address
+  BreakFileLocksRequest: NetAppVolumeBreakFileLocksContent  
+  BackupRestoreFiles.destinationVolumeId: -|arm-id
+  BackupRestoreFiles: NetAppVolumeBackupBackupRestoreFilesContent
+  VolumeRelocationProperties: NetAppVolumeRelocationProperties
+  FileAccessLogs: NetAppFileAccessLog
+  GetGroupIdListForLdapUserResponse: GetGroupIdListForLdapUserResult
 list-exception:
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/volumeGroups/{volumeGroupName}
 

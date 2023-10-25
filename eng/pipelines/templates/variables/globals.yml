@@ -3,7 +3,7 @@ variables:
   OfficialBuildId: $(Build.BuildNumber)
   AdditionalTestArguments: ''
   skipComponentGovernanceDetection: true
-  NugetSecurityAnalysisWarningLevel: 'none'
+  nugetMultiFeedWarnLevel: 'none'
   ${{ if ne(variables['System.TeamProject'], 'internal') }}:
     BuildConfiguration: 'Debug'
   ${{ if eq(variables['System.TeamProject'], 'internal') }}:

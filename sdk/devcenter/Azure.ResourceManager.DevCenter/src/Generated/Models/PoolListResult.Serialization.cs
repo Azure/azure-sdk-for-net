@@ -16,7 +16,11 @@ namespace Azure.ResourceManager.DevCenter.Models
     {
         internal static PoolListResult DeserializePoolListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<PoolData>> value = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IReadOnlyList<DevCenterPoolData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -24,13 +28,12 @@ namespace Azure.ResourceManager.DevCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PoolData> array = new List<PoolData>();
+                    List<DevCenterPoolData> array = new List<DevCenterPoolData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PoolData.DeserializePoolData(item));
+                        array.Add(DevCenterPoolData.DeserializeDevCenterPoolData(item));
                     }
                     value = array;
                     continue;

@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.PostgreSql
             return message;
         }
 
-        /// <summary> Get a server&apos;s security alert policy. </summary>
+        /// <summary> Get a server's security alert policy. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serverName"> The name of the server. </param>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.PostgreSql
             }
         }
 
-        /// <summary> Get a server&apos;s security alert policy. </summary>
+        /// <summary> Get a server's security alert policy. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serverName"> The name of the server. </param>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.PostgreSql
             return message;
         }
 
-        /// <summary> Get the server&apos;s threat detection policies. </summary>
+        /// <summary> Get the server's threat detection policies. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serverName"> The name of the server. </param>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.PostgreSql
             }
         }
 
-        /// <summary> Get the server&apos;s threat detection policies. </summary>
+        /// <summary> Get the server's threat detection policies. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="serverName"> The name of the server. </param>
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.PostgreSql
             return message;
         }
 
-        /// <summary> Get the server&apos;s threat detection policies. </summary>
+        /// <summary> Get the server's threat detection policies. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.PostgreSql
             }
         }
 
-        /// <summary> Get the server&apos;s threat detection policies. </summary>
+        /// <summary> Get the server's threat detection policies. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>

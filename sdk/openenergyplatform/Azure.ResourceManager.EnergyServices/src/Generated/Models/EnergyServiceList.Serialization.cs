@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.EnergyServices.Models
     {
         internal static EnergyServiceList DeserializeEnergyServiceList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             Optional<IReadOnlyList<EnergyServiceData>> value = default;
             foreach (var property in element.EnumerateObject())
@@ -29,7 +33,6 @@ namespace Azure.ResourceManager.EnergyServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<EnergyServiceData> array = new List<EnergyServiceData>();

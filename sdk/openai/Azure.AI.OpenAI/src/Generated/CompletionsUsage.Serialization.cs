@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
@@ -15,6 +14,10 @@ namespace Azure.AI.OpenAI
     {
         internal static CompletionsUsage DeserializeCompletionsUsage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int completionTokens = default;
             int promptTokens = default;
             int totalTokens = default;

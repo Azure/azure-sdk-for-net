@@ -22,10 +22,10 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
 
         public static DocumentSentimentValue ToDocumentSentimentValue(this string value)
         {
-            if (string.Equals(value, "positive", StringComparison.InvariantCultureIgnoreCase)) return DocumentSentimentValue.Positive;
-            if (string.Equals(value, "neutral", StringComparison.InvariantCultureIgnoreCase)) return DocumentSentimentValue.Neutral;
-            if (string.Equals(value, "negative", StringComparison.InvariantCultureIgnoreCase)) return DocumentSentimentValue.Negative;
-            if (string.Equals(value, "mixed", StringComparison.InvariantCultureIgnoreCase)) return DocumentSentimentValue.Mixed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "positive")) return DocumentSentimentValue.Positive;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "neutral")) return DocumentSentimentValue.Neutral;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "negative")) return DocumentSentimentValue.Negative;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "mixed")) return DocumentSentimentValue.Mixed;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DocumentSentimentValue value.");
         }
     }

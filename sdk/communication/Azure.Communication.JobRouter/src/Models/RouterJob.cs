@@ -8,104 +8,236 @@ using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     [CodeGenModel("RouterJob")]
-    [CodeGenSuppress("RouterJob")]
-    public partial class RouterJob
+    public partial class RouterJob : IUtf8JsonSerializable
     {
-        /// <summary> Initializes a new instance of RouterJob. </summary>
+        /*/// <summary> Initializes a new instance of RouterJob. </summary>
         internal RouterJob()
         {
-            _requestedWorkerSelectors = new ChangeTrackingList<WorkerSelector>();
-            AttachedWorkerSelectors = new ChangeTrackingList<WorkerSelector>();
-            _labels = new ChangeTrackingDictionary<string, object>();
-            Assignments = new ChangeTrackingDictionary<string, JobAssignment>();
-            _tags = new ChangeTrackingDictionary<string, object>();
+            AttachedWorkerSelectors = new ChangeTrackingList<RouterWorkerSelector>();
+            Assignments = new ChangeTrackingDictionary<string, RouterJobAssignment>();
+            _requestedWorkerSelectors = new ChangeTrackingList<RouterWorkerSelector>();
+            _labels = new ChangeTrackingDictionary<string, BinaryData>();
+            _tags = new ChangeTrackingDictionary<string, BinaryData>();
             _notes = new ChangeTrackingDictionary<string, string>();
-        }
-
-        [CodeGenMember("Labels")]
-        internal IDictionary<string, object> _labels
-        {
-            get
-            {
-                return Labels != null && Labels.Count != 0
-                    ? Labels?.ToDictionary(x => x.Key, x => x.Value.Value)
-                    : new ChangeTrackingDictionary<string, object>();
-            }
-            set
-            {
-                Labels = value != null && value.Count != 0
-                    ? value.ToDictionary(x => x.Key, x => new LabelValue(x.Value))
-                    : new Dictionary<string, LabelValue>();
-            }
-        }
+        }*/
 
         /// <summary>
         /// A set of key/value pairs that are identifying attributes used by the rules engines to make decisions.
         /// </summary>
-#pragma warning disable CA2227 // Collection properties should be read only
-        public IDictionary<string, LabelValue> Labels { get; set; }
-#pragma warning restore CA2227 // Collection properties should be read only
+        public Dictionary<string, LabelValue> Labels { get; } = new Dictionary<string, LabelValue>();
+
+        /// <summary> A set of non-identifying attributes attached to this job. </summary>
+        public Dictionary<string, LabelValue> Tags { get; } = new Dictionary<string, LabelValue>();
+
+        /// <summary> A collection of manually specified label selectors, which a worker must satisfy in order to process this job. </summary>
+        public List<RouterWorkerSelector> RequestedWorkerSelectors { get; } = new List<RouterWorkerSelector>();
+
+        /// <summary> A collection of notes attached to a job. </summary>
+        public List<RouterJobNote> Notes { get; } = new List<RouterJobNote>();
+
+        /// <summary> Reference to an external parent context, eg. call ID. </summary>
+        public string ChannelReference { get; internal set; }
+
+        /// <summary> The channel identifier. eg. voice, chat, etc. </summary>
+        public string ChannelId { get; internal set; }
+
+        /// <summary> The Id of the Classification policy used for classifying a job. </summary>
+        public string ClassificationPolicyId { get; internal set; }
+
+        /// <summary> The Id of the Queue that this job is queued to. </summary>
+        public string QueueId { get; internal set; }
+
+        /// <summary> The priority of this job. </summary>
+        public int? Priority { get; internal set; }
+
+        /// <summary> Reason code for cancelled or closed jobs. </summary>
+        public string DispositionCode { get; internal set; }
+
+        /// <summary> Gets or sets the matching mode. </summary>
+        public JobMatchingMode MatchingMode { get; internal set; }
+
+        [CodeGenMember("Labels")]
+        internal IDictionary<string, BinaryData> _labels
+        {
+            get
+            {
+                return Labels != null && Labels.Count != 0
+                    ? Labels?.ToDictionary(x => x.Key, x => BinaryData.FromObjectAsJson(x.Value?.Value))
+                    : new ChangeTrackingDictionary<string, BinaryData>();
+            }
+            set
+            {
+                if (value != null && value.Count != 0)
+                {
+                    foreach (var label in value)
+                    {
+                        Labels[label.Key] = new LabelValue(label.Value.ToObjectFromJson());
+                    }
+                }
+            }
+        }
 
         [CodeGenMember("Tags")]
-        internal IDictionary<string, object> _tags
+        internal IDictionary<string, BinaryData> _tags
         {
             get
             {
                 return Tags != null && Tags.Count != 0
-                    ? Tags?.ToDictionary(x => x.Key,
-                        x => x.Value.Value)
-                    : new ChangeTrackingDictionary<string, object>();
+                    ? Tags?.ToDictionary(x => x.Key, x => BinaryData.FromObjectAsJson(x.Value?.Value))
+                    : new ChangeTrackingDictionary<string, BinaryData>();
             }
             set
             {
-                Tags = value != null && value.Count != 0
-                    ? value.ToDictionary(x => x.Key, x => new LabelValue(x.Value))
-                    : new Dictionary<string, LabelValue>();
+                if (value != null && value.Count != 0)
+                {
+                    foreach (var tag in value)
+                    {
+                        Tags[tag.Key] = new LabelValue(tag.Value.ToObjectFromJson());
+                    }
+                }
             }
         }
-
-        /// <summary> A set of non-identifying attributes attached to this job. </summary>
-#pragma warning disable CA2227 // Collection properties should be read only
-        public IDictionary<string, LabelValue> Tags { get; set; }
-#pragma warning restore CA2227 // Collection properties should be read only
 
         [CodeGenMember("Notes")]
         internal IDictionary<string, string> _notes
         {
             get
             {
-                return Notes != null
-                    ? Notes?.ToDictionary(x => x.Key.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture),
-                        x => x.Value)
+                return Notes != null && Notes.Count != 0
+                    ? Notes?.ToDictionary(x => (x.AddedAt ?? DateTimeOffset.UtcNow)
+                        .ToUniversalTime().ToString("O", CultureInfo.InvariantCulture), x => x.Message)
                     : new ChangeTrackingDictionary<string, string>();
             }
             set
             {
-                Notes = new SortedDictionary<DateTimeOffset, string>(
-                    value.ToDictionary(x => DateTimeOffsetParser.ParseAndGetDateTimeOffset(x.Key), x => x.Value));
+                foreach (var note in value.ToList())
+                {
+                    Notes.Add(new RouterJobNote
+                    {
+                        AddedAt = DateTimeOffsetParser.ParseAndGetDateTimeOffset(note.Key),
+                        Message = note.Value
+                    });
+                }
             }
         }
 
-        /// <summary> Notes attached to a job, sorted by timestamp. </summary>
-#pragma warning disable CA2227 // Collection properties should be read only
-        public SortedDictionary<DateTimeOffset, string> Notes { get; set; }
-
-        /// <summary> A collection of manually specified label selectors, which a worker must satisfy in order to process this job. </summary>
-        public IList<WorkerSelector> RequestedWorkerSelectors { get; set; }
-
         [CodeGenMember("RequestedWorkerSelectors")]
-        internal IList<WorkerSelector> _requestedWorkerSelectors {
+        internal IList<RouterWorkerSelector> _requestedWorkerSelectors
+        {
             get
             {
-                return RequestedWorkerSelectors != null ? RequestedWorkerSelectors.ToList() : new ChangeTrackingList<WorkerSelector>();
+                return RequestedWorkerSelectors != null && RequestedWorkerSelectors.Any()
+                    ? RequestedWorkerSelectors.ToList()
+                    : new ChangeTrackingList<RouterWorkerSelector>();
             }
             set
             {
-                RequestedWorkerSelectors = value;
-            } }
-#pragma warning restore CA2227 // Collection properties should be read only
+                RequestedWorkerSelectors.AddRange(value);
+            }
+        }
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ChannelReference))
+            {
+                writer.WritePropertyName("channelReference"u8);
+                writer.WriteStringValue(ChannelReference);
+            }
+            if (Optional.IsDefined(ChannelId))
+            {
+                writer.WritePropertyName("channelId"u8);
+                writer.WriteStringValue(ChannelId);
+            }
+            if (Optional.IsDefined(ClassificationPolicyId))
+            {
+                writer.WritePropertyName("classificationPolicyId"u8);
+                writer.WriteStringValue(ClassificationPolicyId);
+            }
+            if (Optional.IsDefined(QueueId))
+            {
+                writer.WritePropertyName("queueId"u8);
+                writer.WriteStringValue(QueueId);
+            }
+            if (Optional.IsDefined(Priority))
+            {
+                writer.WritePropertyName("priority"u8);
+                writer.WriteNumberValue(Priority.Value);
+            }
+            if (Optional.IsDefined(DispositionCode))
+            {
+                writer.WritePropertyName("dispositionCode"u8);
+                writer.WriteStringValue(DispositionCode);
+            }
+            if (Optional.IsCollectionDefined(_requestedWorkerSelectors))
+            {
+                writer.WritePropertyName("requestedWorkerSelectors"u8);
+                writer.WriteStartArray();
+                foreach (var item in _requestedWorkerSelectors)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(_labels))
+            {
+                writer.WritePropertyName("labels"u8);
+                writer.WriteStartObject();
+                foreach (var item in _labels)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteObjectValue(item.Value.ToObjectFromJson());
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsCollectionDefined(_tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in _tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteObjectValue(item.Value.ToObjectFromJson());
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsCollectionDefined(_notes))
+            {
+                writer.WritePropertyName("notes"u8);
+                writer.WriteStartObject();
+                foreach (var item in _notes)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(MatchingMode))
+            {
+                writer.WritePropertyName("matchingMode"u8);
+                writer.WriteObjectValue(MatchingMode);
+            }
+            writer.WriteEndObject();
+        }
+
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
+        }
     }
 }

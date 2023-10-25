@@ -12,7 +12,10 @@ using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters
 {
-    /// <summary> A class representing the ServiceFabricManagedNodeType data model. </summary>
+    /// <summary>
+    /// A class representing the ServiceFabricManagedNodeType data model.
+    /// Describes a node type in the cluster, each node type represents sub set of nodes in the cluster.
+    /// </summary>
     public partial class ServiceFabricManagedNodeTypeData : ResourceData
     {
         /// <summary> Initializes a new instance of ServiceFabricManagedNodeTypeData. </summary>
@@ -25,6 +28,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             FrontendConfigurations = new ChangeTrackingList<NodeTypeFrontendConfiguration>();
             NetworkSecurityRules = new ChangeTrackingList<ServiceFabricManagedNetworkSecurityRule>();
             AdditionalDataDisks = new ChangeTrackingList<NodeTypeVmssDataDisk>();
+            Zones = new ChangeTrackingList<string>();
+            VmSetupActions = new ChangeTrackingList<VmSetupAction>();
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
@@ -47,7 +52,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="vmImagePublisher"> The publisher of the Azure Virtual Machines Marketplace image. For example, Canonical or MicrosoftWindowsServer. </param>
         /// <param name="vmImageOffer"> The offer type of the Azure Virtual Machines Marketplace image. For example, UbuntuServer or WindowsServer. </param>
         /// <param name="vmImageSku"> The SKU of the Azure Virtual Machines Marketplace image. For example, 14.04.0-LTS or 2012-R2-Datacenter. </param>
-        /// <param name="vmImageVersion"> The version of the Azure Virtual Machines Marketplace image. A value of &apos;latest&apos; can be specified to select the latest version of an image. If omitted, the default is &apos;latest&apos;. </param>
+        /// <param name="vmImageVersion"> The version of the Azure Virtual Machines Marketplace image. A value of 'latest' can be specified to select the latest version of an image. If omitted, the default is 'latest'. </param>
         /// <param name="vmSecrets"> The secrets to install in the virtual machines. </param>
         /// <param name="vmExtensions"> Set of extensions that should be installed onto the virtual machines. </param>
         /// <param name="vmManagedIdentity"> Identities to assign to the virtual machine scale set under the node type. </param>
@@ -59,11 +64,26 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="isEncryptionAtHostEnabled"> Enable or disable the Host Encryption for the virtual machines on the node type. This will enable the encryption for all the disks including Resource/Temp disk at host itself. Default: The Encryption at host will be disabled unless this property is set to true for the resource. </param>
         /// <param name="provisioningState"> The provisioning state of the node type resource. </param>
         /// <param name="isAcceleratedNetworkingEnabled"> Specifies whether the network interface is accelerated networking-enabled. </param>
-        /// <param name="useDefaultPublicLoadBalancer"> Specifies whether the use public load balancer. If not specified and the node type doesn&apos;t have its own frontend configuration, it will be attached to the default load balancer. If the node type uses its own Load balancer and useDefaultPublicLoadBalancer is true, then the frontend has to be an Internal Load Balancer. If the node type uses its own Load balancer and useDefaultPublicLoadBalancer is false or not set, then the custom load balancer must include a public load balancer to provide outbound connectivity. </param>
+        /// <param name="useDefaultPublicLoadBalancer"> Specifies whether the use public load balancer. If not specified and the node type doesn't have its own frontend configuration, it will be attached to the default load balancer. If the node type uses its own Load balancer and useDefaultPublicLoadBalancer is true, then the frontend has to be an Internal Load Balancer. If the node type uses its own Load balancer and useDefaultPublicLoadBalancer is false or not set, then the custom load balancer must include a public load balancer to provide outbound connectivity. </param>
         /// <param name="useTempDataDisk"> Specifies whether to use the temporary disk for the service fabric data root, in which case no managed data disk will be attached and the temporary disk will be used. It is only allowed for stateless node types. </param>
         /// <param name="isOverProvisioningEnabled"> Specifies whether the node type should be overprovisioned. It is only allowed for stateless node types. </param>
+        /// <param name="zones"> Specifies the availability zones where the node type would span across. If the cluster is not spanning across availability zones, initiates az migration for the cluster. </param>
+        /// <param name="isSpotVm"> Indicates whether the node type will be Spot Virtual Machines. Azure will allocate the VMs if there is capacity available and the VMs can be evicted at any time. </param>
+        /// <param name="hostGroupId"> Specifies the full host group resource Id. This property is used for deploying on azure dedicated hosts. </param>
+        /// <param name="useEphemeralOSDisk"> Indicates whether to use ephemeral os disk. The sku selected on the vmSize property needs to support this feature. </param>
+        /// <param name="spotRestoreTimeout"> Indicates the time duration after which the platform will not try to restore the VMSS SPOT instances specified as ISO 8601. </param>
+        /// <param name="evictionPolicy"> Specifies the eviction policy for virtual machines in a SPOT node type. Default is Delete. </param>
+        /// <param name="vmImageResourceId"> Indicates the resource id of the vm image. This parameter is used for custom vm image. </param>
+        /// <param name="subnetId"> Indicates the resource id of the subnet for the node type. </param>
+        /// <param name="vmSetupActions"> Specifies the actions to be performed on the vms before bootstrapping the service fabric runtime. </param>
+        /// <param name="securityType"> Specifies the security type of the nodeType. Only TrustedLaunch is currently supported. </param>
+        /// <param name="isSecureBootEnabled"> Specifies whether secure boot should be enabled on the nodeType. Can only be used with TrustedLaunch SecurityType. </param>
+        /// <param name="isNodePublicIPEnabled"> Specifies whether each node is allocated its own public IP address. This is only supported on secondary node types with custom Load Balancers. </param>
+        /// <param name="vmSharedGalleryImageId"> Indicates the resource id of the vm shared galleries image. This parameter is used for custom vm image. </param>
+        /// <param name="natGatewayId"> Specifies the resource id of a NAT Gateway to attach to the subnet of this node type. Node type must use custom load balancer. </param>
+        /// <param name="vmImagePlan"> Specifies information about the marketplace image used to create the virtual machine. This element is only used for marketplace images. Before you can use a marketplace image from an API, you must enable the image for programmatic use. In the Azure portal, find the marketplace image that you want to use and then click Want to deploy programmatically, Get Started -&gt;. Enter any required information and then click Save. </param>
         /// <param name="tags"> Azure resource tags. </param>
-        internal ServiceFabricManagedNodeTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NodeTypeSku sku, bool? isPrimary, int? vmInstanceCount, int? dataDiskSizeInGB, ServiceFabricManagedDataDiskType? dataDiskType, string dataDiskLetter, IDictionary<string, string> placementProperties, IDictionary<string, string> capacities, EndpointRangeDescription applicationPorts, EndpointRangeDescription ephemeralPorts, string vmSize, string vmImagePublisher, string vmImageOffer, string vmImageSku, string vmImageVersion, IList<NodeTypeVaultSecretGroup> vmSecrets, IList<NodeTypeVmssExtension> vmExtensions, VmManagedIdentity vmManagedIdentity, bool? isStateless, bool? hasMultiplePlacementGroups, IList<NodeTypeFrontendConfiguration> frontendConfigurations, IList<ServiceFabricManagedNetworkSecurityRule> networkSecurityRules, IList<NodeTypeVmssDataDisk> additionalDataDisks, bool? isEncryptionAtHostEnabled, ServiceFabricManagedResourceProvisioningState? provisioningState, bool? isAcceleratedNetworkingEnabled, bool? useDefaultPublicLoadBalancer, bool? useTempDataDisk, bool? isOverProvisioningEnabled, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        internal ServiceFabricManagedNodeTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NodeTypeSku sku, bool? isPrimary, int? vmInstanceCount, int? dataDiskSizeInGB, ServiceFabricManagedDataDiskType? dataDiskType, string dataDiskLetter, IDictionary<string, string> placementProperties, IDictionary<string, string> capacities, EndpointRangeDescription applicationPorts, EndpointRangeDescription ephemeralPorts, string vmSize, string vmImagePublisher, string vmImageOffer, string vmImageSku, string vmImageVersion, IList<NodeTypeVaultSecretGroup> vmSecrets, IList<NodeTypeVmssExtension> vmExtensions, VmManagedIdentity vmManagedIdentity, bool? isStateless, bool? hasMultiplePlacementGroups, IList<NodeTypeFrontendConfiguration> frontendConfigurations, IList<ServiceFabricManagedNetworkSecurityRule> networkSecurityRules, IList<NodeTypeVmssDataDisk> additionalDataDisks, bool? isEncryptionAtHostEnabled, ServiceFabricManagedResourceProvisioningState? provisioningState, bool? isAcceleratedNetworkingEnabled, bool? useDefaultPublicLoadBalancer, bool? useTempDataDisk, bool? isOverProvisioningEnabled, IList<string> zones, bool? isSpotVm, string hostGroupId, bool? useEphemeralOSDisk, string spotRestoreTimeout, SpotNodeVmEvictionPolicyType? evictionPolicy, ResourceIdentifier vmImageResourceId, ResourceIdentifier subnetId, IList<VmSetupAction> vmSetupActions, ServiceFabricManagedClusterSecurityType? securityType, bool? isSecureBootEnabled, bool? isNodePublicIPEnabled, ResourceIdentifier vmSharedGalleryImageId, ResourceIdentifier natGatewayId, VmImagePlan vmImagePlan, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             Sku = sku;
             IsPrimary = isPrimary;
@@ -94,6 +114,21 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             UseDefaultPublicLoadBalancer = useDefaultPublicLoadBalancer;
             UseTempDataDisk = useTempDataDisk;
             IsOverProvisioningEnabled = isOverProvisioningEnabled;
+            Zones = zones;
+            IsSpotVm = isSpotVm;
+            HostGroupId = hostGroupId;
+            UseEphemeralOSDisk = useEphemeralOSDisk;
+            SpotRestoreTimeout = spotRestoreTimeout;
+            EvictionPolicy = evictionPolicy;
+            VmImageResourceId = vmImageResourceId;
+            SubnetId = subnetId;
+            VmSetupActions = vmSetupActions;
+            SecurityType = securityType;
+            IsSecureBootEnabled = isSecureBootEnabled;
+            IsNodePublicIPEnabled = isNodePublicIPEnabled;
+            VmSharedGalleryImageId = vmSharedGalleryImageId;
+            NatGatewayId = natGatewayId;
+            VmImagePlan = vmImagePlan;
             Tags = tags;
         }
 
@@ -125,7 +160,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         public string VmImageOffer { get; set; }
         /// <summary> The SKU of the Azure Virtual Machines Marketplace image. For example, 14.04.0-LTS or 2012-R2-Datacenter. </summary>
         public string VmImageSku { get; set; }
-        /// <summary> The version of the Azure Virtual Machines Marketplace image. A value of &apos;latest&apos; can be specified to select the latest version of an image. If omitted, the default is &apos;latest&apos;. </summary>
+        /// <summary> The version of the Azure Virtual Machines Marketplace image. A value of 'latest' can be specified to select the latest version of an image. If omitted, the default is 'latest'. </summary>
         public string VmImageVersion { get; set; }
         /// <summary> The secrets to install in the virtual machines. </summary>
         public IList<NodeTypeVaultSecretGroup> VmSecrets { get; }
@@ -133,7 +168,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         public IList<NodeTypeVmssExtension> VmExtensions { get; }
         /// <summary> Identities to assign to the virtual machine scale set under the node type. </summary>
         internal VmManagedIdentity VmManagedIdentity { get; set; }
-        /// <summary> The list of user identities associated with the virtual machine scale set under the node type. Each entry will be an ARM resource ids in the form: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}&apos;. </summary>
+        /// <summary> The list of user identities associated with the virtual machine scale set under the node type. Each entry will be an ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </summary>
         public IList<ResourceIdentifier> UserAssignedIdentities
         {
             get
@@ -160,12 +195,42 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         public ServiceFabricManagedResourceProvisioningState? ProvisioningState { get; }
         /// <summary> Specifies whether the network interface is accelerated networking-enabled. </summary>
         public bool? IsAcceleratedNetworkingEnabled { get; set; }
-        /// <summary> Specifies whether the use public load balancer. If not specified and the node type doesn&apos;t have its own frontend configuration, it will be attached to the default load balancer. If the node type uses its own Load balancer and useDefaultPublicLoadBalancer is true, then the frontend has to be an Internal Load Balancer. If the node type uses its own Load balancer and useDefaultPublicLoadBalancer is false or not set, then the custom load balancer must include a public load balancer to provide outbound connectivity. </summary>
+        /// <summary> Specifies whether the use public load balancer. If not specified and the node type doesn't have its own frontend configuration, it will be attached to the default load balancer. If the node type uses its own Load balancer and useDefaultPublicLoadBalancer is true, then the frontend has to be an Internal Load Balancer. If the node type uses its own Load balancer and useDefaultPublicLoadBalancer is false or not set, then the custom load balancer must include a public load balancer to provide outbound connectivity. </summary>
         public bool? UseDefaultPublicLoadBalancer { get; set; }
         /// <summary> Specifies whether to use the temporary disk for the service fabric data root, in which case no managed data disk will be attached and the temporary disk will be used. It is only allowed for stateless node types. </summary>
         public bool? UseTempDataDisk { get; set; }
         /// <summary> Specifies whether the node type should be overprovisioned. It is only allowed for stateless node types. </summary>
         public bool? IsOverProvisioningEnabled { get; set; }
+        /// <summary> Specifies the availability zones where the node type would span across. If the cluster is not spanning across availability zones, initiates az migration for the cluster. </summary>
+        public IList<string> Zones { get; }
+        /// <summary> Indicates whether the node type will be Spot Virtual Machines. Azure will allocate the VMs if there is capacity available and the VMs can be evicted at any time. </summary>
+        public bool? IsSpotVm { get; set; }
+        /// <summary> Specifies the full host group resource Id. This property is used for deploying on azure dedicated hosts. </summary>
+        public string HostGroupId { get; set; }
+        /// <summary> Indicates whether to use ephemeral os disk. The sku selected on the vmSize property needs to support this feature. </summary>
+        public bool? UseEphemeralOSDisk { get; set; }
+        /// <summary> Indicates the time duration after which the platform will not try to restore the VMSS SPOT instances specified as ISO 8601. </summary>
+        public string SpotRestoreTimeout { get; set; }
+        /// <summary> Specifies the eviction policy for virtual machines in a SPOT node type. Default is Delete. </summary>
+        public SpotNodeVmEvictionPolicyType? EvictionPolicy { get; set; }
+        /// <summary> Indicates the resource id of the vm image. This parameter is used for custom vm image. </summary>
+        public ResourceIdentifier VmImageResourceId { get; set; }
+        /// <summary> Indicates the resource id of the subnet for the node type. </summary>
+        public ResourceIdentifier SubnetId { get; set; }
+        /// <summary> Specifies the actions to be performed on the vms before bootstrapping the service fabric runtime. </summary>
+        public IList<VmSetupAction> VmSetupActions { get; }
+        /// <summary> Specifies the security type of the nodeType. Only TrustedLaunch is currently supported. </summary>
+        public ServiceFabricManagedClusterSecurityType? SecurityType { get; set; }
+        /// <summary> Specifies whether secure boot should be enabled on the nodeType. Can only be used with TrustedLaunch SecurityType. </summary>
+        public bool? IsSecureBootEnabled { get; set; }
+        /// <summary> Specifies whether each node is allocated its own public IP address. This is only supported on secondary node types with custom Load Balancers. </summary>
+        public bool? IsNodePublicIPEnabled { get; set; }
+        /// <summary> Indicates the resource id of the vm shared galleries image. This parameter is used for custom vm image. </summary>
+        public ResourceIdentifier VmSharedGalleryImageId { get; set; }
+        /// <summary> Specifies the resource id of a NAT Gateway to attach to the subnet of this node type. Node type must use custom load balancer. </summary>
+        public ResourceIdentifier NatGatewayId { get; set; }
+        /// <summary> Specifies information about the marketplace image used to create the virtual machine. This element is only used for marketplace images. Before you can use a marketplace image from an API, you must enable the image for programmatic use. In the Azure portal, find the marketplace image that you want to use and then click Want to deploy programmatically, Get Started -&gt;. Enter any required information and then click Save. </summary>
+        public VmImagePlan VmImagePlan { get; set; }
         /// <summary> Azure resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
     }

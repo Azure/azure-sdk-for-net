@@ -15,6 +15,10 @@ namespace Azure.Quantum.Jobs.Models
     {
         internal static QuantumJobQuotaList DeserializeQuantumJobQuotaList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<QuantumJobQuota>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +27,6 @@ namespace Azure.Quantum.Jobs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<QuantumJobQuota> array = new List<QuantumJobQuota>();

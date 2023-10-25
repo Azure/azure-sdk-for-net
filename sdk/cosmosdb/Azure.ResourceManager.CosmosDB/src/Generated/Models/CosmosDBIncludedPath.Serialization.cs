@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CosmosDBIncludedPath DeserializeCosmosDBIncludedPath(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> path = default;
             Optional<IList<CosmosDBPathIndexes>> indexes = default;
             foreach (var property in element.EnumerateObject())
@@ -49,7 +53,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CosmosDBPathIndexes> array = new List<CosmosDBPathIndexes>();

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static DataBoxSkuInformation DeserializeDataBoxSkuInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DataBoxSku> sku = default;
             Optional<bool> enabled = default;
             Optional<IReadOnlyList<DataLocationToServiceLocationMap>> dataLocationToServiceLocationMap = default;
@@ -24,13 +28,13 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<SkuDisabledReason> disabledReason = default;
             Optional<string> disabledReasonMessage = default;
             Optional<string> requiredFeature = default;
+            Optional<IReadOnlyList<string>> countriesWithinCommerceBoundary = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sku = DataBoxSku.DeserializeDataBoxSku(property.Value);
@@ -40,7 +44,6 @@ namespace Azure.ResourceManager.DataBox.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enabled = property.Value.GetBoolean();
@@ -59,7 +62,6 @@ namespace Azure.ResourceManager.DataBox.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DataLocationToServiceLocationMap> array = new List<DataLocationToServiceLocationMap>();
@@ -74,7 +76,6 @@ namespace Azure.ResourceManager.DataBox.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             capacity = DataBoxSkuCapacity.DeserializeDataBoxSkuCapacity(property0.Value);
@@ -84,7 +85,6 @@ namespace Azure.ResourceManager.DataBox.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DataBoxSkuCost> array = new List<DataBoxSkuCost>();
@@ -99,7 +99,6 @@ namespace Azure.ResourceManager.DataBox.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -114,7 +113,6 @@ namespace Azure.ResourceManager.DataBox.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             disabledReason = property0.Value.GetString().ToSkuDisabledReason();
@@ -130,11 +128,25 @@ namespace Azure.ResourceManager.DataBox.Models
                             requiredFeature = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("countriesWithinCommerceBoundary"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            countriesWithinCommerceBoundary = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new DataBoxSkuInformation(sku.Value, Optional.ToNullable(enabled), Optional.ToList(dataLocationToServiceLocationMap), capacity.Value, Optional.ToList(costs), Optional.ToList(apiVersions), Optional.ToNullable(disabledReason), disabledReasonMessage.Value, requiredFeature.Value);
+            return new DataBoxSkuInformation(sku.Value, Optional.ToNullable(enabled), Optional.ToList(dataLocationToServiceLocationMap), capacity.Value, Optional.ToList(costs), Optional.ToList(apiVersions), Optional.ToNullable(disabledReason), disabledReasonMessage.Value, requiredFeature.Value, Optional.ToList(countriesWithinCommerceBoundary));
         }
     }
 }

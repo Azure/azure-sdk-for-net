@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <param name="vlanId"> VLAN Id used by the network. </param>
         /// <param name="provisioningState"></param>
         /// <param name="status"> HybridAKSNetworkStatus defines the observed state of HybridAKSNetwork. </param>
-        internal VirtualNetworksProperties(VirtualNetworksPropertiesInfraVnetProfile infraVnetProfile, IList<VirtualNetworksPropertiesVipPoolItem> vipPool, IList<VirtualNetworksPropertiesVmipPoolItem> vmipPool, IReadOnlyList<string> dhcpServers, IReadOnlyList<string> dnsServers, string gateway, string ipAddressPrefix, string vlanId, ProvisioningState? provisioningState, VirtualNetworksPropertiesStatus status)
+        internal VirtualNetworksProperties(VirtualNetworksPropertiesInfraVnetProfile infraVnetProfile, IList<VirtualNetworksPropertiesVipPoolItem> vipPool, IList<VirtualNetworksPropertiesVmipPoolItem> vmipPool, IReadOnlyList<string> dhcpServers, IList<string> dnsServers, string gateway, string ipAddressPrefix, string vlanId, ProvisioningState? provisioningState, VirtualNetworksPropertiesStatus status)
         {
             InfraVnetProfile = infraVnetProfile;
             VipPool = vipPool;
@@ -56,11 +56,11 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <summary> Address of the DHCP servers associated with the network. </summary>
         public IReadOnlyList<string> DhcpServers { get; }
         /// <summary> Address of the DNS servers associated with the network. </summary>
-        public IReadOnlyList<string> DnsServers { get; }
+        public IList<string> DnsServers { get; }
         /// <summary> Address of the Gateway associated with the network. </summary>
-        public string Gateway { get; }
+        public string Gateway { get; set; }
         /// <summary> IP Address Prefix of the network. </summary>
-        public string IPAddressPrefix { get; }
+        public string IPAddressPrefix { get; set; }
         /// <summary> VLAN Id used by the network. </summary>
         public string VlanId { get; }
         /// <summary> Gets the provisioning state. </summary>

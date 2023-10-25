@@ -41,16 +41,12 @@ namespace Azure.ResourceManager.NetApp.Tests
                     await capacityPool.DeleteAsync(WaitUntil.Completed);
                 }
                 //remove account
-                if (Mode != RecordedTestMode.Playback)
-                {
-                    await Task.Delay(40000);
-                }
+                await LiveDelay(40000);
                 await _netAppAccount.DeleteAsync(WaitUntil.Completed);
             }
             _resourceGroup = null;
         }
 
-        [Test]
         [RecordedTest]
         public async Task CreateDeletePool()
         {
@@ -81,7 +77,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(404, exception.Status);
         }
 
-        [Test]
         [RecordedTest]
         public async Task DeleteAccountWithPoolPresent()
         {
@@ -98,7 +93,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.IsTrue(await _capacityPoolCollection.ExistsAsync(poolName));
         }
 
-        [Test]
         [RecordedTest]
         public async Task GetAllPoolsByNetAppAccount()
         {
@@ -114,11 +108,16 @@ namespace Azure.ResourceManager.NetApp.Tests
             CapacityPoolResource pool4 = null;
             await foreach (CapacityPoolResource pool in _capacityPoolCollection.GetAllAsync())
             {
-                count++;
                 if (pool.Id.Name == poolName1)
+                {
                     pool3 = pool;
-                if (pool.Id.Name == poolName2)
+                    count++;
+                }
+                else if (pool.Id.Name == poolName2)
+                {
                     pool4 = pool;
+                    count++;
+                }
             }
             Assert.AreEqual(count, 2);
             VerifyCapacityPoolProperties(pool3, true);
@@ -127,7 +126,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             pool4.Should().BeEquivalentTo(pool2);
         }
 
-        [Test]
         [RecordedTest]
         public async Task PatchPool()
         {

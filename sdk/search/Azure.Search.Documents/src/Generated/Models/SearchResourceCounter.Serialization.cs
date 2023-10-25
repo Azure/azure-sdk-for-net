@@ -14,6 +14,10 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         internal static SearchResourceCounter DeserializeSearchResourceCounter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             long usage = default;
             Optional<long?> quota = default;
             foreach (var property in element.EnumerateObject())

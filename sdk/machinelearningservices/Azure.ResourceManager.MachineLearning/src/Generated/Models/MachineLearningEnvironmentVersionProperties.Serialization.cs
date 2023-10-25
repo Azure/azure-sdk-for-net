@@ -41,10 +41,46 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("inferenceConfig"u8);
                 writer.WriteObjectValue(InferenceConfig);
             }
+            if (Optional.IsDefined(IntellectualProperty))
+            {
+                if (IntellectualProperty != null)
+                {
+                    writer.WritePropertyName("intellectualProperty"u8);
+                    writer.WriteObjectValue(IntellectualProperty);
+                }
+                else
+                {
+                    writer.WriteNull("intellectualProperty");
+                }
+            }
             if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToString());
+            }
+            if (Optional.IsDefined(Stage))
+            {
+                if (Stage != null)
+                {
+                    writer.WritePropertyName("stage"u8);
+                    writer.WriteStringValue(Stage);
+                }
+                else
+                {
+                    writer.WriteNull("stage");
+                }
+            }
+            if (Optional.IsDefined(AutoDeleteSetting))
+            {
+                if (AutoDeleteSetting != null)
+                {
+                    writer.WritePropertyName("autoDeleteSetting"u8);
+                    writer.WriteObjectValue(AutoDeleteSetting);
+                }
+                else
+                {
+                    writer.WriteNull("autoDeleteSetting");
+                }
             }
             if (Optional.IsDefined(IsAnonymous))
             {
@@ -109,13 +145,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningEnvironmentVersionProperties DeserializeMachineLearningEnvironmentVersionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AutoRebuildSetting> autoRebuild = default;
             Optional<MachineLearningBuildContext> build = default;
             Optional<string> condaFile = default;
             Optional<MachineLearningEnvironmentType> environmentType = default;
             Optional<string> image = default;
             Optional<MachineLearningInferenceContainerProperties> inferenceConfig = default;
+            Optional<IntellectualProperty> intellectualProperty = default;
             Optional<MachineLearningOperatingSystemType> osType = default;
+            Optional<RegistryAssetProvisioningState> provisioningState = default;
+            Optional<string> stage = default;
+            Optional<AutoDeleteSetting> autoDeleteSetting = default;
             Optional<bool> isAnonymous = default;
             Optional<bool> isArchived = default;
             Optional<string> description = default;
@@ -127,7 +171,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     autoRebuild = new AutoRebuildSetting(property.Value.GetString());
@@ -137,7 +180,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     build = MachineLearningBuildContext.DeserializeMachineLearningBuildContext(property.Value);
@@ -152,7 +194,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     environmentType = new MachineLearningEnvironmentType(property.Value.GetString());
@@ -167,27 +208,63 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     inferenceConfig = MachineLearningInferenceContainerProperties.DeserializeMachineLearningInferenceContainerProperties(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("intellectualProperty"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        intellectualProperty = null;
+                        continue;
+                    }
+                    intellectualProperty = IntellectualProperty.DeserializeIntellectualProperty(property.Value);
                     continue;
                 }
                 if (property.NameEquals("osType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     osType = new MachineLearningOperatingSystemType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("provisioningState"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisioningState = new RegistryAssetProvisioningState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("stage"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        stage = null;
+                        continue;
+                    }
+                    stage = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("autoDeleteSetting"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        autoDeleteSetting = null;
+                        continue;
+                    }
+                    autoDeleteSetting = AutoDeleteSetting.DeserializeAutoDeleteSetting(property.Value);
                     continue;
                 }
                 if (property.NameEquals("isAnonymous"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isAnonymous = property.Value.GetBoolean();
@@ -197,7 +274,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isArchived = property.Value.GetBoolean();
@@ -223,14 +299,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     properties = dictionary;
                     continue;
@@ -245,20 +314,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
                     continue;
                 }
             }
-            return new MachineLearningEnvironmentVersionProperties(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), Optional.ToNullable(isAnonymous), Optional.ToNullable(isArchived), Optional.ToNullable(autoRebuild), build.Value, condaFile.Value, Optional.ToNullable(environmentType), image.Value, inferenceConfig.Value, Optional.ToNullable(osType));
+            return new MachineLearningEnvironmentVersionProperties(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), autoDeleteSetting.Value, Optional.ToNullable(isAnonymous), Optional.ToNullable(isArchived), Optional.ToNullable(autoRebuild), build.Value, condaFile.Value, Optional.ToNullable(environmentType), image.Value, inferenceConfig.Value, intellectualProperty.Value, Optional.ToNullable(osType), Optional.ToNullable(provisioningState), stage.Value);
         }
     }
 }

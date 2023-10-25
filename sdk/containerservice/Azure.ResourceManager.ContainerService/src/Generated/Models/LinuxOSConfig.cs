@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Initializes a new instance of LinuxOSConfig. </summary>
         /// <param name="sysctls"> Sysctl settings for Linux agent nodes. </param>
-        /// <param name="transparentHugePageEnabled"> Valid values are &apos;always&apos;, &apos;madvise&apos;, and &apos;never&apos;. The default is &apos;always&apos;. For more information see [Transparent Hugepages](https://www.kernel.org/doc/html/latest/admin-guide/mm/transhuge.html#admin-guide-transhuge). </param>
-        /// <param name="transparentHugePageDefrag"> Valid values are &apos;always&apos;, &apos;defer&apos;, &apos;defer+madvise&apos;, &apos;madvise&apos; and &apos;never&apos;. The default is &apos;madvise&apos;. For more information see [Transparent Hugepages](https://www.kernel.org/doc/html/latest/admin-guide/mm/transhuge.html#admin-guide-transhuge). </param>
+        /// <param name="transparentHugePageEnabled"> Valid values are 'always', 'madvise', and 'never'. The default is 'always'. For more information see [Transparent Hugepages](https://www.kernel.org/doc/html/latest/admin-guide/mm/transhuge.html#admin-guide-transhuge). </param>
+        /// <param name="transparentHugePageDefrag"> Valid values are 'always', 'defer', 'defer+madvise', 'madvise' and 'never'. The default is 'madvise'. For more information see [Transparent Hugepages](https://www.kernel.org/doc/html/latest/admin-guide/mm/transhuge.html#admin-guide-transhuge). </param>
         /// <param name="swapFileSizeInMB"> The size in MB of a swap file that will be created on each node. </param>
         internal LinuxOSConfig(SysctlConfig sysctls, string transparentHugePageEnabled, string transparentHugePageDefrag, int? swapFileSizeInMB)
         {
@@ -30,9 +30,9 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Sysctl settings for Linux agent nodes. </summary>
         public SysctlConfig Sysctls { get; set; }
-        /// <summary> Valid values are &apos;always&apos;, &apos;madvise&apos;, and &apos;never&apos;. The default is &apos;always&apos;. For more information see [Transparent Hugepages](https://www.kernel.org/doc/html/latest/admin-guide/mm/transhuge.html#admin-guide-transhuge). </summary>
+        /// <summary> Valid values are 'always', 'madvise', and 'never'. The default is 'always'. For more information see [Transparent Hugepages](https://www.kernel.org/doc/html/latest/admin-guide/mm/transhuge.html#admin-guide-transhuge). </summary>
         public string TransparentHugePageEnabled { get; set; }
-        /// <summary> Valid values are &apos;always&apos;, &apos;defer&apos;, &apos;defer+madvise&apos;, &apos;madvise&apos; and &apos;never&apos;. The default is &apos;madvise&apos;. For more information see [Transparent Hugepages](https://www.kernel.org/doc/html/latest/admin-guide/mm/transhuge.html#admin-guide-transhuge). </summary>
+        /// <summary> Valid values are 'always', 'defer', 'defer+madvise', 'madvise' and 'never'. The default is 'madvise'. For more information see [Transparent Hugepages](https://www.kernel.org/doc/html/latest/admin-guide/mm/transhuge.html#admin-guide-transhuge). </summary>
         public string TransparentHugePageDefrag { get; set; }
         /// <summary> The size in MB of a swap file that will be created on each node. </summary>
         public int? SwapFileSizeInMB { get; set; }

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     {
         internal static MySqlFlexibleServerListResult DeserializeMySqlFlexibleServerListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<MySqlFlexibleServerData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MySqlFlexibleServerData> array = new List<MySqlFlexibleServerData>();

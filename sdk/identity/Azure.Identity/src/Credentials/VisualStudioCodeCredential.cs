@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -15,7 +15,7 @@ using Microsoft.Identity.Client;
 namespace Azure.Identity
 {
     /// <summary>
-    /// Enables authentication to Azure Active Directory as the user signed in to Visual Studio Code via
+    /// Enables authentication to Microsoft Entra ID as the user signed in to Visual Studio Code via
     /// the 'Azure Account' extension.
     ///
     /// It's a <see href="https://github.com/Azure/azure-sdk-for-net/issues/27263">known issue</see> that `VisualStudioCodeCredential`
@@ -55,7 +55,7 @@ namespace Azure.Identity
             Client = client ?? new MsalPublicClient(_pipeline, TenantId, ClientId, null, options);
             _fileSystem = fileSystem ?? FileSystemService.Default;
             _vscAdapter = vscAdapter ?? GetVscAdapter();
-            AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenantsCore);
+            AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
         }
 
         /// <inheritdoc />
@@ -85,7 +85,7 @@ namespace Azure.Identity
                 string storedCredentials = GetStoredCredentials(environmentName);
 
                 var result = await Client
-                    .AcquireTokenByRefreshTokenAsync(requestContext.Scopes, requestContext.Claims, storedCredentials, cloudInstance, tenantId, async, cancellationToken)
+                    .AcquireTokenByRefreshTokenAsync(requestContext.Scopes, requestContext.Claims, storedCredentials, cloudInstance, tenantId, requestContext.IsCaeEnabled, async, cancellationToken)
                     .ConfigureAwait(false);
                 return scope.Succeeded(new AccessToken(result.AccessToken, result.ExpiresOn));
             }

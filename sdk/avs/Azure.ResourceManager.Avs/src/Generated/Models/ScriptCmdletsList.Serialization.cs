@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Avs.Models
     {
         internal static ScriptCmdletsList DeserializeScriptCmdletsList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ScriptCmdletData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.Avs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ScriptCmdletData> array = new List<ScriptCmdletData>();

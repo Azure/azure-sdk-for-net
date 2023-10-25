@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ContainerServiceTimeInWeek DeserializeContainerServiceTimeInWeek(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ContainerServiceWeekDay> day = default;
             Optional<IList<int>> hourSlots = default;
             foreach (var property in element.EnumerateObject())
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     day = new ContainerServiceWeekDay(property.Value.GetString());
@@ -54,7 +57,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<int> array = new List<int>();

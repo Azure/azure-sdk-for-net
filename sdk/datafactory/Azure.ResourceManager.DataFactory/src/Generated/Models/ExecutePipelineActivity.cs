@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="name"> Activity name. </param>
         /// <param name="pipeline"> Pipeline reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="pipeline"/> is null. </exception>
-        public ExecutePipelineActivity(string name, FactoryPipelineReference pipeline) : base(name)
+        public ExecutePipelineActivity(string name, DataFactoryPipelineReference pipeline) : base(name)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(pipeline, nameof(pipeline));
@@ -32,6 +32,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="name"> Activity name. </param>
         /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
+        /// <param name="state"> Activity state. This is an optional property and if not provided, the state will be Active by default. </param>
+        /// <param name="onInactiveMarkAs"> Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default. </param>
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
@@ -39,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="pipeline"> Pipeline reference. </param>
         /// <param name="parameters"> Pipeline parameters. </param>
         /// <param name="waitOnCompletion"> Defines whether activity execution will wait for the dependent pipeline execution to finish. Default is false. </param>
-        internal ExecutePipelineActivity(string name, string activityType, string description, IList<ActivityDependency> dependsOn, IList<ActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, ExecutePipelineActivityPolicy policy, FactoryPipelineReference pipeline, IDictionary<string, BinaryData> parameters, bool? waitOnCompletion) : base(name, activityType, description, dependsOn, userProperties, additionalProperties)
+        internal ExecutePipelineActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, ExecutePipelineActivityPolicy policy, DataFactoryPipelineReference pipeline, IDictionary<string, BinaryData> parameters, bool? waitOnCompletion) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties)
         {
             Policy = policy;
             Pipeline = pipeline;
@@ -51,7 +53,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Execute pipeline activity policy. </summary>
         public ExecutePipelineActivityPolicy Policy { get; set; }
         /// <summary> Pipeline reference. </summary>
-        public FactoryPipelineReference Pipeline { get; set; }
+        public DataFactoryPipelineReference Pipeline { get; set; }
         /// <summary>
         /// Pipeline parameters.
         /// <para>

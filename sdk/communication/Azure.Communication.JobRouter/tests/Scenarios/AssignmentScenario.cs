@@ -2,11 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
-using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Communication.JobRouter.Tests.Scenarios
@@ -21,15 +19,13 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
         [Test]
         public async Task Scenario()
         {
-            RouterClient client = CreateRouterClientWithConnectionString();
-            RouterAdministrationClient routerAdministrationClient = CreateRouterAdministrationClientWithConnectionString();
+            JobRouterClient client = CreateRouterClientWithConnectionString();
+            JobRouterAdministrationClient routerAdministrationClient = CreateRouterAdministrationClientWithConnectionString();
 
             var channelResponse = GenerateUniqueId($"Channel-{IdPrefix}-{nameof(AssignmentScenario)}");
             var distributionPolicyId = GenerateUniqueId($"{IdPrefix}-dist-policy");
             var distributionPolicyResponse = await routerAdministrationClient.CreateDistributionPolicyAsync(
-                new CreateDistributionPolicyOptions(distributionPolicyId,
-                    TimeSpan.FromMinutes(10),
-                    new LongestIdleMode(1, 1))
+                new CreateDistributionPolicyOptions(distributionPolicyId, TimeSpan.FromMinutes(10), new LongestIdleMode())
                 {
                     Name = "test",
                 });
@@ -47,11 +43,8 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             var registerWorker = await client.CreateWorkerAsync(
                 new CreateWorkerOptions(workerId: workerId1, totalCapacity: 1)
                 {
-                    QueueIds = new Dictionary<string, QueueAssignment>() { [queueResponse.Value.Id] = new QueueAssignment()},
-                    ChannelConfigurations = new Dictionary<string, ChannelConfiguration>
-                    {
-                        [channelResponse] = new ChannelConfiguration(1)
-                    },
+                    QueueAssignments = { [queueResponse.Value.Id] = new RouterQueueAssignment() },
+                    ChannelConfigurations = { [channelResponse] = new ChannelConfiguration(1) },
                     AvailableForOffers = true,
                 });
             AddForCleanup(new Task(async () => await client.UpdateWorkerAsync(new UpdateWorkerOptions(workerId1) { AvailableForOffers = false })));
@@ -72,32 +65,33 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
 
             var offer = worker.Value.Offers.Single(x => x.JobId == createJob.Value.Id);
             Assert.AreEqual(1, offer.CapacityCost);
-            Assert.IsNotNull(offer.OfferTimeUtc);
-            Assert.IsNotNull(offer.ExpiryTimeUtc);
+            Assert.IsNotNull(offer.OfferedAt);
+            Assert.IsNotNull(offer.ExpiresAt);
 
-            var accept = await client.AcceptJobOfferAsync(worker.Value.Id, offer.Id);
+            var accept = await client.AcceptJobOfferAsync(worker.Value.Id, offer.OfferId);
             Assert.AreEqual(createJob.Value.Id, accept.Value.JobId);
             Assert.AreEqual(worker.Value.Id, accept.Value.WorkerId);
 
-            Assert.ThrowsAsync<RequestFailedException>(async () => await client.DeclineJobOfferAsync(worker.Value.Id, offer.Id));
+            Assert.ThrowsAsync<RequestFailedException>(async () => await client.DeclineJobOfferAsync(
+                    new DeclineJobOfferOptions(worker.Value.Id, offer.OfferId) { RetryOfferAt = DateTimeOffset.MinValue }));
 
             var complete = await client.CompleteJobAsync(new CompleteJobOptions(createJob.Value.Id, accept.Value.AssignmentId)
             {
                 Note = $"Job completed by {workerId1}"
             });
-            Assert.AreEqual(200, complete.GetRawResponse().Status);
+            Assert.AreEqual(200, complete.Status);
 
             var close = await client.CloseJobAsync(new CloseJobOptions(createJob.Value.Id, accept.Value.AssignmentId)
             {
                 Note = $"Job closed by {workerId1}"
             });
-            Assert.AreEqual(200, complete.GetRawResponse().Status);
+            Assert.AreEqual(200, complete.Status);
 
             var finalJobState = await client.GetJobAsync(createJob.Value.Id);
-            Assert.IsNotNull(finalJobState.Value.Assignments[accept.Value.AssignmentId].AssignTime);
+            Assert.IsNotNull(finalJobState.Value.Assignments[accept.Value.AssignmentId].AssignedAt);
             Assert.AreEqual(worker.Value.Id, finalJobState.Value.Assignments[accept.Value.AssignmentId].WorkerId);
-            Assert.IsNotNull(finalJobState.Value.Assignments[accept.Value.AssignmentId].CompleteTime);
-            Assert.IsNotNull(finalJobState.Value.Assignments[accept.Value.AssignmentId].CloseTime);
+            Assert.IsNotNull(finalJobState.Value.Assignments[accept.Value.AssignmentId].CompletedAt);
+            Assert.IsNotNull(finalJobState.Value.Assignments[accept.Value.AssignmentId].ClosedAt);
             Assert.IsNotEmpty(finalJobState.Value.Notes);
             Assert.IsTrue(finalJobState.Value.Notes.Count == 2);
         }

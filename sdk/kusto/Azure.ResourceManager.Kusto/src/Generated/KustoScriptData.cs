@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto
 {
-    /// <summary> A class representing the KustoScript data model. </summary>
+    /// <summary>
+    /// A class representing the KustoScript data model.
+    /// Class representing a database script.
+    /// </summary>
     public partial class KustoScriptData : ResourceData
     {
         /// <summary> Initializes a new instance of KustoScriptData. </summary>

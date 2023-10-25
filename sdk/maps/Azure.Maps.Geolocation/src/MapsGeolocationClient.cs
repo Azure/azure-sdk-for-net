@@ -95,6 +95,35 @@ namespace Azure.Maps.Geolocation
             RestClient = new GeolocationRestClient(_clientDiagnostics, _pipeline, endpoint, clientId, options.Version);
         }
 
+        /// <summary> Initializes a new instance of MapsGeolocationClient. </summary>
+        /// <param name="credential"> The Shared Access Signature credential used to connect to Azure. This signature
+        /// can be constructed using the <see cref="AzureSasCredential"/>.</param>
+        public MapsGeolocationClient(AzureSasCredential credential)
+        {
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            var endpoint = new Uri("https://atlas.microsoft.com");
+            var options = new MapsGeolocationClientOptions();
+            _clientDiagnostics = new ClientDiagnostics(options);
+            _pipeline = HttpPipelineBuilder.Build(options, new MapsSasCredentialPolicy(credential));
+            RestClient = new GeolocationRestClient(_clientDiagnostics, _pipeline, endpoint, null, options.Version);
+        }
+
+        /// <summary> Initializes a new instance of MapsGeolocationClient. </summary>
+        /// <param name="credential"> The Shared Access Signature credential used to connect to Azure. This signature
+        /// can be constructed using the <see cref="AzureSasCredential"/>.</param>
+        /// <param name="options"> The options for configuring the client. </param>
+        public MapsGeolocationClient(AzureSasCredential credential, MapsGeolocationClientOptions options)
+        {
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            var endpoint = options.Endpoint;
+            options ??= new MapsGeolocationClientOptions();
+            _clientDiagnostics = new ClientDiagnostics(options);
+            _pipeline = HttpPipelineBuilder.Build(options, new MapsSasCredentialPolicy(credential));
+            RestClient = new GeolocationRestClient(_clientDiagnostics, _pipeline, endpoint, null, options.Version);
+        }
+
         /// <summary>
         /// This service will return the ISO country code for the provided IP address. Developers can use this information  to block or alter certain content based on geographical locations where the application is being viewed from.
         /// </summary>
@@ -110,8 +139,8 @@ namespace Azure.Maps.Geolocation
             try
             {
                 return await RestClient.GetLocationAsync(
-                    ipAddress.ToString(),
                     JsonFormat.Json,
+                    ipAddress.ToString(),
                     cancellationToken
                 ).ConfigureAwait(false);
             }
@@ -137,8 +166,8 @@ namespace Azure.Maps.Geolocation
             try
             {
                 return RestClient.GetLocation(
-                    ipAddress.ToString(),
                     JsonFormat.Json,
+                    ipAddress.ToString(),
                     cancellationToken
                 );
             }

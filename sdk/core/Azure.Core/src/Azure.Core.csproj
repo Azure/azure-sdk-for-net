@@ -2,13 +2,13 @@
   <PropertyGroup>
     <Description>This is the implementation of the Azure Client Pipeline</Description>
     <AssemblyTitle>Microsoft Azure Client Pipeline</AssemblyTitle>
-    <Version>1.29.0-beta.1</Version>
+    <Version>1.36.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.28.0</ApiCompatVersion>
+    <ApiCompatVersion>1.35.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure Client Pipeline</PackageTags>
     <Nullable>enable</Nullable>
     <DefineConstants>$(DefineConstants);AZURE_NULLABLE;HAS_INTERNALS_VISIBLE_CORE</DefineConstants>
-    <TargetFrameworks>$(RequiredTargetFrameworks);net461;netcoreapp2.1;net5.0;net6.0</TargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks);net461;net472;netcoreapp2.1;net5.0;net6.0</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <EnableClientSdkAnalyzers>true</EnableClientSdkAnalyzers>
     <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>
@@ -17,6 +17,7 @@
       to give customers time to migrate without losing perf optimizations
      -->
     <NoWarn>$(NoWarn);NETSDK1138</NoWarn>
+    <ApiCompatBaselineTargetFramework Condition="'$(TargetFramework)' == 'net472'">net461</ApiCompatBaselineTargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -25,17 +26,26 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
-    <PackageReference Include="System.Diagnostics.DiagnosticSource" />
     <PackageReference Include="System.Numerics.Vectors" />
+    <PackageReference Include="System.Diagnostics.DiagnosticSource" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />
     <PackageReference Include="System.Text.Json" />
     <PackageReference Include="System.Text.Encodings.Web" />
     <PackageReference Include="System.Memory.Data" />
   </ItemGroup>
 
+  <!-- Keep System.Diagnostics.DiagnosticSource 4.6.0 for netcoreapp2.1 support. -->
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.1' ">
+    <PackageReference Include="System.Diagnostics.DiagnosticSource" VersionOverride="4.6.0" />
+  </ItemGroup>
+
   <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
     <PackageReference Include="System.Runtime.InteropServices.RuntimeInformation" />
     <PackageReference Include="System.Net.Http" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net472'">
+    <Reference Include="System.Net.Http" />
   </ItemGroup>
 
   <ItemGroup>
@@ -49,30 +59,28 @@
     <Compile Include="Shared\AzureSasCredentialSynchronousPolicy.cs" />
     <Compile Include="Shared\Base64Url.cs" />
     <Compile Include="Shared\ClientDiagnostics.cs" />
-    <Compile Include="Shared\ConstantDelayStrategy.cs" />
     <Compile Include="Shared\ContentTypeUtilities.cs" />
     <Compile Include="Shared\DiagnosticScope.cs" />
     <Compile Include="Shared\DiagnosticScopeFactory.cs" />
     <Compile Include="Shared\DictionaryHeaders.cs" />
     <Compile Include="Shared\EventSourceEventFormatting.cs" />
-    <Compile Include="Shared\ExponentialDelayStrategy.cs" />
+    <Compile Include="Shared\FixedDelayWithNoJitterStrategy.cs" />
     <Compile Include="Shared\HashCodeBuilder.cs" />
     <Compile Include="Shared\HttpMessageSanitizer.cs" />
     <Compile Include="Shared\InitializationConstructorAttribute.cs" />
     <Compile Include="Shared\Multipart\MemoryResponse.cs" />
     <Compile Include="Shared\NullableAttributes.cs" />
     <Compile Include="Shared\OperationInternalBase.cs" />
+    <Compile Include="Shared\TrimmingAttribute.cs" />
     <Compile Include="Shared\VoidValue.cs" />
     <Compile Include="Shared\OperationInternal.cs" />
     <Compile Include="Shared\OperationInternalOfT.cs" />
-    <Compile Include="Shared\RetryAfterDelayStrategy.cs" />
+    <Compile Include="Shared\SequentialDelayStrategy.cs" />
     <Compile Include="Shared\SerializationConstructorAttribute.cs" />
     <Compile Include="Shared\TaskExtensions.cs" />
     <Compile Include="Shared\CancellationHelper.cs" />
     <Compile Include="Shared\OperationPoller.cs" />
-    <Compile Include="Shared\DelayStrategy.cs" />
     <Compile Include="Shared\TypeReferenceTypeAttribute.cs" />
-    <Compile Include="Shared\GeoRedundantFallbackPolicy.cs" />
   </ItemGroup>
 
 </Project>

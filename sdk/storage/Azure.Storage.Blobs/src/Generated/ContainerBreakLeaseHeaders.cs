@@ -18,7 +18,7 @@ namespace Azure.Storage.Blobs
         {
             _response = response;
         }
-        /// <summary> Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob&apos;s metadata or properties, changes the last-modified time of the blob. </summary>
+        /// <summary> Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob. </summary>
         public DateTimeOffset? LastModified => _response.Headers.TryGetValue("Last-Modified", out DateTimeOffset? value) ? value : null;
         /// <summary> Approximate time remaining in the lease period, in seconds. </summary>
         public int? LeaseTime => _response.Headers.TryGetValue("x-ms-lease-time", out int? value) ? value : null;

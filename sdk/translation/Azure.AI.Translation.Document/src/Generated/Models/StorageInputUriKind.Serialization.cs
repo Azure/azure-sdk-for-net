@@ -20,8 +20,8 @@ namespace Azure.AI.Translation.Document
 
         public static StorageInputUriKind ToStorageInputUriKind(this string value)
         {
-            if (string.Equals(value, "Folder", StringComparison.InvariantCultureIgnoreCase)) return StorageInputUriKind.Folder;
-            if (string.Equals(value, "File", StringComparison.InvariantCultureIgnoreCase)) return StorageInputUriKind.File;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Folder")) return StorageInputUriKind.Folder;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "File")) return StorageInputUriKind.File;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown StorageInputUriKind value.");
         }
     }

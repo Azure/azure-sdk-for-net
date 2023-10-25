@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="timeToLiveInMinutes"> Compute type of the cluster. </param>
         /// <param name="lastActivityOn"> Last activity time of data flow debug session. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal DataFlowDebugSessionInfo(string dataFlowName, string computeType, int? coreCount, int? nodeCount, string integrationRuntimeName, Guid? sessionId, string startOn, int? timeToLiveInMinutes, DateTimeOffset? lastActivityOn, IReadOnlyDictionary<string, BinaryData> additionalProperties)
+        internal DataFlowDebugSessionInfo(string dataFlowName, string computeType, int? coreCount, int? nodeCount, string integrationRuntimeName, Guid? sessionId, DateTimeOffset? startOn, int? timeToLiveInMinutes, DateTimeOffset? lastActivityOn, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
             DataFlowName = dataFlowName;
             ComputeType = computeType;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The ID of data flow debug session. </summary>
         public Guid? SessionId { get; }
         /// <summary> Start time of data flow debug session. </summary>
-        public string StartOn { get; }
+        public DateTimeOffset? StartOn { get; }
         /// <summary> Compute type of the cluster. </summary>
         public int? TimeToLiveInMinutes { get; }
         /// <summary> Last activity time of data flow debug session. </summary>

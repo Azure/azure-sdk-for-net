@@ -1,14 +1,41 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0-beta.5 (2023-10-27)
 
 ### Features Added
 
-### Breaking Changes
+- Upgraded to API version 2023-01-01
+- Supported snapshot and CMK for ElasticSan
 
-### Bugs Fixed
+## 1.0.0-beta.4 (2023-07-31)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2021-11-20-preview' to 'package-preview-2022-12'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/1af2861030243b06ee35172c95899f4809eedfc7/specification/elasticsan/resource-manager/readme.md
+- Supported private endpoints for ElasticSan
 
 ### Other Changes
+
+- Upgraded Azure.Core from 1.32.0 to 1.34.0
+- Upgraded Azure.ResourceManager from 1.6.0 to 1.7.0
+
+## 1.0.0-beta.3 (2023-05-30)
+
+### Features Added
+
+- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.32.0.
+- Upgraded dependent Azure.ResourceManager to 1.6.0.
+
+## 1.0.0-beta.2 (2023-02-17)
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.28.0`.
+- Upgraded dependent `Azure.ResourceManager` to `1.4.0`.
 
 ## 1.0.0-beta.1 (2022-10-12)
 

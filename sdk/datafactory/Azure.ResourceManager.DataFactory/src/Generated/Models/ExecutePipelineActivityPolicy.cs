@@ -21,16 +21,16 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Initializes a new instance of ExecutePipelineActivityPolicy. </summary>
-        /// <param name="enableSecureInput"> When set to true, Input from activity is considered as secure and will not be logged to monitoring. </param>
+        /// <param name="isSecureInputEnabled"> When set to true, Input from activity is considered as secure and will not be logged to monitoring. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal ExecutePipelineActivityPolicy(bool? enableSecureInput, IDictionary<string, BinaryData> additionalProperties)
+        internal ExecutePipelineActivityPolicy(bool? isSecureInputEnabled, IDictionary<string, BinaryData> additionalProperties)
         {
-            EnableSecureInput = enableSecureInput;
+            IsSecureInputEnabled = isSecureInputEnabled;
             AdditionalProperties = additionalProperties;
         }
 
         /// <summary> When set to true, Input from activity is considered as secure and will not be logged to monitoring. </summary>
-        public bool? EnableSecureInput { get; set; }
+        public bool? IsSecureInputEnabled { get; set; }
         /// <summary>
         /// Additional Properties
         /// <para>

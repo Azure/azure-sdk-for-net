@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StoragePool.Models
     public partial class DiskPoolIscsiTargetPortalGroupAcl
     {
         /// <summary> Initializes a new instance of DiskPoolIscsiTargetPortalGroupAcl. </summary>
-        /// <param name="initiatorIqn"> iSCSI initiator IQN (iSCSI Qualified Name); example: &quot;iqn.2005-03.org.iscsi:client&quot;. </param>
+        /// <param name="initiatorIqn"> iSCSI initiator IQN (iSCSI Qualified Name); example: "iqn.2005-03.org.iscsi:client". </param>
         /// <param name="mappedLuns"> List of LUN names mapped to the ACL. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="initiatorIqn"/> or <paramref name="mappedLuns"/> is null. </exception>
         public DiskPoolIscsiTargetPortalGroupAcl(string initiatorIqn, IEnumerable<string> mappedLuns)
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.StoragePool.Models
         }
 
         /// <summary> Initializes a new instance of DiskPoolIscsiTargetPortalGroupAcl. </summary>
-        /// <param name="initiatorIqn"> iSCSI initiator IQN (iSCSI Qualified Name); example: &quot;iqn.2005-03.org.iscsi:client&quot;. </param>
+        /// <param name="initiatorIqn"> iSCSI initiator IQN (iSCSI Qualified Name); example: "iqn.2005-03.org.iscsi:client". </param>
         /// <param name="mappedLuns"> List of LUN names mapped to the ACL. </param>
         internal DiskPoolIscsiTargetPortalGroupAcl(string initiatorIqn, IList<string> mappedLuns)
         {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             MappedLuns = mappedLuns;
         }
 
-        /// <summary> iSCSI initiator IQN (iSCSI Qualified Name); example: &quot;iqn.2005-03.org.iscsi:client&quot;. </summary>
+        /// <summary> iSCSI initiator IQN (iSCSI Qualified Name); example: "iqn.2005-03.org.iscsi:client". </summary>
         public string InitiatorIqn { get; set; }
         /// <summary> List of LUN names mapped to the ACL. </summary>
         public IList<string> MappedLuns { get; }

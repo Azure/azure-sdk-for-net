@@ -55,6 +55,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static CookiesMatchCondition DeserializeCookiesMatchCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             CookiesMatchConditionType typeName = default;
             Optional<string> selector = default;
             CookiesOperator @operator = default;
@@ -82,7 +86,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     negateCondition = property.Value.GetBoolean();
@@ -92,7 +95,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -107,7 +109,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PreTransformCategory> array = new List<PreTransformCategory>();

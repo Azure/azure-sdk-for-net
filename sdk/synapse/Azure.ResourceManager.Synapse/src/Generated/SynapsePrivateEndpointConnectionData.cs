@@ -12,7 +12,10 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    /// <summary> A class representing the SynapsePrivateEndpointConnection data model. </summary>
+    /// <summary>
+    /// A class representing the SynapsePrivateEndpointConnection data model.
+    /// A private endpoint connection
+    /// </summary>
     public partial class SynapsePrivateEndpointConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of SynapsePrivateEndpointConnectionData. </summary>

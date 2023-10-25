@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static ApiManagementServiceGetSsoTokenResult DeserializeApiManagementServiceGetSsoTokenResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> redirectUri = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -22,7 +26,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        redirectUri = null;
                         continue;
                     }
                     redirectUri = new Uri(property.Value.GetString());

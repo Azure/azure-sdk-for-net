@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static ThrottlingRule DeserializeThrottlingRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string action = default;
             IList<ThrottlingMetric> metrics = default;
             Optional<IList<string>> requiredFeatures = default;
@@ -64,7 +68,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

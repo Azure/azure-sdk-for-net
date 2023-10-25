@@ -7,7 +7,7 @@
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    /// <summary> Request to update model settings. One of &quot;name&quot; or &quot;defaultTypeId&quot; must be set. </summary>
+    /// <summary> Request to update model settings. One of "name" or "defaultTypeId" must be set. </summary>
     internal partial class UpdateModelSettingsRequest
     {
         /// <summary> Initializes a new instance of UpdateModelSettingsRequest. </summary>
@@ -15,7 +15,7 @@ namespace Azure.IoT.TimeSeriesInsights
         {
         }
 
-        /// <summary> Model display name which is shown in the UX and mutable by the user. Initial value is &quot;DefaultModel&quot;. </summary>
+        /// <summary> Model display name which is shown in the UX and mutable by the user. Initial value is "DefaultModel". </summary>
         public string Name { get; set; }
         /// <summary> Default type id of the model that new instances will automatically belong to. </summary>
         public string DefaultTypeId { get; set; }

@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static ManagedRuleOverrideSetting DeserializeManagedRuleOverrideSetting(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string ruleId = default;
             Optional<ManagedRuleSetupState> enabledState = default;
             Optional<OverrideActionType> action = default;
@@ -46,7 +50,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enabledState = new ManagedRuleSetupState(property.Value.GetString());
@@ -56,7 +59,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     action = new OverrideActionType(property.Value.GetString());

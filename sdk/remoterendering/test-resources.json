@@ -30,7 +30,7 @@
   },
   "variables": {
     "apiVersion": "2020-05-01",
-    "arrApiVersion": "2020-04-06-preview",
+    "arrApiVersion": "2021-03-01-preview",
     "arrAccountName": "[concat(parameters('baseName'), '-arr-account')]",
     "storageApiVersion": "2019-06-01",
     "storageAccountName": "[parameters('baseName')]",

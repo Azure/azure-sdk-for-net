@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ProviderHub.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_SkusGet()
         {
-            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/preview/2021-09-01-preview/examples/Skus_Get.json
+            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/Skus_Get.json
             // this example is just showing the usage of "Skus_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ProviderHub.Samples
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SkuResourceData resourceData = result.Data;
+            ResourceTypeSkuData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ProviderHub.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_SkusCreateOrUpdate()
         {
-            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/preview/2021-09-01-preview/examples/Skus_CreateOrUpdate.json
+            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/Skus_CreateOrUpdate.json
             // this example is just showing the usage of "Skus_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -73,21 +73,21 @@ namespace Azure.ResourceManager.ProviderHub.Samples
             ResourceTypeSkuResource resourceTypeSku = client.GetResourceTypeSkuResource(resourceTypeSkuResourceId);
 
             // invoke the operation
-            SkuResourceData data = new SkuResourceData()
+            ResourceTypeSkuData data = new ResourceTypeSkuData()
             {
-                Properties = new SkuResourceProperties(new SkuSetting[]
+                Properties = new ResourceTypeSkuProperties(new ResourceTypeSkuSetting[]
             {
-new SkuSetting("freeSku")
+new ResourceTypeSkuSetting("freeSku")
 {
 Tier = "Tier1",
 Kind = "Standard",
-},new SkuSetting("premiumSku")
+},new ResourceTypeSkuSetting("premiumSku")
 {
 Tier = "Tier2",
 Kind = "Premium",
 Costs =
 {
-new SkuCost("xxx")
+new ResourceTypeSkuCost("xxx")
 },
 }
             }),
@@ -97,7 +97,7 @@ new SkuCost("xxx")
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SkuResourceData resourceData = result.Data;
+            ResourceTypeSkuData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -107,7 +107,7 @@ new SkuCost("xxx")
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_SkusDelete()
         {
-            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/preview/2021-09-01-preview/examples/Skus_Delete.json
+            // Generated from example definition: specification/providerhub/resource-manager/Microsoft.ProviderHub/stable/2020-11-20/examples/Skus_Delete.json
             // this example is just showing the usage of "Skus_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

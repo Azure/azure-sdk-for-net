@@ -14,7 +14,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto
 {
-    /// <summary> A class representing the KustoCluster data model. </summary>
+    /// <summary>
+    /// A class representing the KustoCluster data model.
+    /// Class representing a Kusto cluster.
+    /// </summary>
     public partial class KustoClusterData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of KustoClusterData. </summary>
@@ -49,27 +52,28 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
         /// <param name="clusterUri"> The cluster URI. </param>
         /// <param name="dataIngestionUri"> The cluster data ingestion URI. </param>
-        /// <param name="stateReason"> The reason for the cluster&apos;s current state. </param>
-        /// <param name="trustedExternalTenants"> The cluster&apos;s external tenants. </param>
+        /// <param name="stateReason"> The reason for the cluster's current state. </param>
+        /// <param name="trustedExternalTenants"> The cluster's external tenants. </param>
         /// <param name="optimizedAutoscale"> Optimized auto scale definition. </param>
-        /// <param name="isDiskEncryptionEnabled"> A boolean value that indicates if the cluster&apos;s disks are encrypted. </param>
+        /// <param name="isDiskEncryptionEnabled"> A boolean value that indicates if the cluster's disks are encrypted. </param>
         /// <param name="isStreamingIngestEnabled"> A boolean value that indicates if the streaming ingest is enabled. </param>
         /// <param name="virtualNetworkConfiguration"> Virtual network definition. </param>
         /// <param name="keyVaultProperties"> KeyVault properties for the cluster encryption. </param>
         /// <param name="isPurgeEnabled"> A boolean value that indicates if the purge operations are enabled. </param>
-        /// <param name="languageExtensions"> List of the cluster&apos;s language extensions. </param>
+        /// <param name="languageExtensions"> List of the cluster's language extensions. </param>
         /// <param name="isDoubleEncryptionEnabled"> A boolean value that indicates if double encryption is enabled. </param>
         /// <param name="publicNetworkAccess"> Public network access to the cluster is enabled by default. When disabled, only private endpoint connection to the cluster is allowed. </param>
         /// <param name="allowedIPRangeList"> The list of ips in the format of CIDR allowed to connect to the cluster. </param>
         /// <param name="engineType"> The engine type. </param>
-        /// <param name="acceptedAudiences"> The cluster&apos;s accepted audiences. </param>
+        /// <param name="acceptedAudiences"> The cluster's accepted audiences. </param>
         /// <param name="isAutoStopEnabled"> A boolean value that indicates if the cluster could be automatically stopped (due to lack of data or no activity for many days). </param>
-        /// <param name="restrictOutboundNetworkAccess"> Whether or not to restrict outbound network access.  Value is optional but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos;. </param>
+        /// <param name="restrictOutboundNetworkAccess"> Whether or not to restrict outbound network access.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
         /// <param name="allowedFqdnList"> List of allowed FQDNs(Fully Qualified Domain Name) for egress from Cluster. </param>
         /// <param name="publicIPType"> Indicates what public IP type to create - IPv4 (default), or DualStack (both IPv4 and IPv6). </param>
         /// <param name="virtualClusterGraduationProperties"> Virtual Cluster graduation properties. </param>
         /// <param name="privateEndpointConnections"> A list of private endpoint connections. </param>
-        internal KustoClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, KustoSku sku, IList<string> zones, ManagedServiceIdentity identity, ETag? etag, KustoClusterState? state, KustoProvisioningState? provisioningState, Uri clusterUri, Uri dataIngestionUri, string stateReason, IList<KustoClusterTrustedExternalTenant> trustedExternalTenants, OptimizedAutoscale optimizedAutoscale, bool? isDiskEncryptionEnabled, bool? isStreamingIngestEnabled, KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration, KustoKeyVaultProperties keyVaultProperties, bool? isPurgeEnabled, KustoLanguageExtensionList languageExtensions, bool? isDoubleEncryptionEnabled, KustoClusterPublicNetworkAccess? publicNetworkAccess, IList<string> allowedIPRangeList, KustoClusterEngineType? engineType, IList<AcceptedAudience> acceptedAudiences, bool? isAutoStopEnabled, KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess, IList<string> allowedFqdnList, KustoClusterPublicIPType? publicIPType, string virtualClusterGraduationProperties, IReadOnlyList<KustoPrivateEndpointConnectionData> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="migrationCluster"> Properties of the peer cluster involved in a migration to/from this cluster. </param>
+        internal KustoClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, KustoSku sku, IList<string> zones, ManagedServiceIdentity identity, ETag? etag, KustoClusterState? state, KustoProvisioningState? provisioningState, Uri clusterUri, Uri dataIngestionUri, string stateReason, IList<KustoClusterTrustedExternalTenant> trustedExternalTenants, OptimizedAutoscale optimizedAutoscale, bool? isDiskEncryptionEnabled, bool? isStreamingIngestEnabled, KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration, KustoKeyVaultProperties keyVaultProperties, bool? isPurgeEnabled, KustoLanguageExtensionList languageExtensions, bool? isDoubleEncryptionEnabled, KustoClusterPublicNetworkAccess? publicNetworkAccess, IList<string> allowedIPRangeList, KustoClusterEngineType? engineType, IList<AcceptedAudience> acceptedAudiences, bool? isAutoStopEnabled, KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess, IList<string> allowedFqdnList, KustoClusterPublicIPType? publicIPType, string virtualClusterGraduationProperties, IReadOnlyList<KustoPrivateEndpointConnectionData> privateEndpointConnections, MigrationClusterProperties migrationCluster) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Zones = zones;
@@ -99,6 +103,7 @@ namespace Azure.ResourceManager.Kusto
             PublicIPType = publicIPType;
             VirtualClusterGraduationProperties = virtualClusterGraduationProperties;
             PrivateEndpointConnections = privateEndpointConnections;
+            MigrationCluster = migrationCluster;
         }
 
         /// <summary> The SKU of the cluster. </summary>
@@ -117,13 +122,13 @@ namespace Azure.ResourceManager.Kusto
         public Uri ClusterUri { get; }
         /// <summary> The cluster data ingestion URI. </summary>
         public Uri DataIngestionUri { get; }
-        /// <summary> The reason for the cluster&apos;s current state. </summary>
+        /// <summary> The reason for the cluster's current state. </summary>
         public string StateReason { get; }
-        /// <summary> The cluster&apos;s external tenants. </summary>
+        /// <summary> The cluster's external tenants. </summary>
         public IList<KustoClusterTrustedExternalTenant> TrustedExternalTenants { get; }
         /// <summary> Optimized auto scale definition. </summary>
         public OptimizedAutoscale OptimizedAutoscale { get; set; }
-        /// <summary> A boolean value that indicates if the cluster&apos;s disks are encrypted. </summary>
+        /// <summary> A boolean value that indicates if the cluster's disks are encrypted. </summary>
         public bool? IsDiskEncryptionEnabled { get; set; }
         /// <summary> A boolean value that indicates if the streaming ingest is enabled. </summary>
         public bool? IsStreamingIngestEnabled { get; set; }
@@ -133,7 +138,7 @@ namespace Azure.ResourceManager.Kusto
         public KustoKeyVaultProperties KeyVaultProperties { get; set; }
         /// <summary> A boolean value that indicates if the purge operations are enabled. </summary>
         public bool? IsPurgeEnabled { get; set; }
-        /// <summary> List of the cluster&apos;s language extensions. </summary>
+        /// <summary> List of the cluster's language extensions. </summary>
         internal KustoLanguageExtensionList LanguageExtensions { get; set; }
         /// <summary> The list of language extensions. </summary>
         public IList<KustoLanguageExtension> LanguageExtensionsValue
@@ -154,11 +159,11 @@ namespace Azure.ResourceManager.Kusto
         public IList<string> AllowedIPRangeList { get; }
         /// <summary> The engine type. </summary>
         public KustoClusterEngineType? EngineType { get; set; }
-        /// <summary> The cluster&apos;s accepted audiences. </summary>
+        /// <summary> The cluster's accepted audiences. </summary>
         public IList<AcceptedAudience> AcceptedAudiences { get; }
         /// <summary> A boolean value that indicates if the cluster could be automatically stopped (due to lack of data or no activity for many days). </summary>
         public bool? IsAutoStopEnabled { get; set; }
-        /// <summary> Whether or not to restrict outbound network access.  Value is optional but if passed in, must be &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
+        /// <summary> Whether or not to restrict outbound network access.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </summary>
         public KustoClusterNetworkAccessFlag? RestrictOutboundNetworkAccess { get; set; }
         /// <summary> List of allowed FQDNs(Fully Qualified Domain Name) for egress from Cluster. </summary>
         public IList<string> AllowedFqdnList { get; }
@@ -168,5 +173,7 @@ namespace Azure.ResourceManager.Kusto
         public string VirtualClusterGraduationProperties { get; set; }
         /// <summary> A list of private endpoint connections. </summary>
         public IReadOnlyList<KustoPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
+        /// <summary> Properties of the peer cluster involved in a migration to/from this cluster. </summary>
+        public MigrationClusterProperties MigrationCluster { get; }
     }
 }

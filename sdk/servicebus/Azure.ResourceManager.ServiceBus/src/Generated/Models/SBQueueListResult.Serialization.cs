@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
     {
         internal static SBQueueListResult DeserializeSBQueueListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ServiceBusQueueData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ServiceBusQueueData> array = new List<ServiceBusQueueData>();

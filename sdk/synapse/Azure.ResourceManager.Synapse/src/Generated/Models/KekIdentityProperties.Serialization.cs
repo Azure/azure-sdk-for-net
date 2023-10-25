@@ -27,7 +27,10 @@ namespace Azure.ResourceManager.Synapse.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(UseSystemAssignedIdentity);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(UseSystemAssignedIdentity.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(UseSystemAssignedIdentity))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
@@ -35,6 +38,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static KekIdentityProperties DeserializeKekIdentityProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> userAssignedIdentity = default;
             Optional<BinaryData> useSystemAssignedIdentity = default;
             foreach (var property in element.EnumerateObject())
@@ -43,7 +50,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     userAssignedIdentity = new ResourceIdentifier(property.Value.GetString());
@@ -53,7 +59,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     useSystemAssignedIdentity = BinaryData.FromString(property.Value.GetRawText());

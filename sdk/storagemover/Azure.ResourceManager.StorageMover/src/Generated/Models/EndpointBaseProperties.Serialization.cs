@@ -27,12 +27,18 @@ namespace Azure.ResourceManager.StorageMover.Models
 
         internal static EndpointBaseProperties DeserializeEndpointBaseProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("endpointType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
                     case "AzureStorageBlobContainer": return AzureStorageBlobContainerEndpointProperties.DeserializeAzureStorageBlobContainerEndpointProperties(element);
+                    case "AzureStorageSmbFileShare": return AzureStorageSmbFileShareEndpointProperties.DeserializeAzureStorageSmbFileShareEndpointProperties(element);
                     case "NfsMount": return NfsMountEndpointProperties.DeserializeNfsMountEndpointProperties(element);
+                    case "SmbMount": return SmbMountEndpointProperties.DeserializeSmbMountEndpointProperties(element);
                 }
             }
             return UnknownEndpointBaseProperties.DeserializeUnknownEndpointBaseProperties(element);

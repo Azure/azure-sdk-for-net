@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static ManagedRuleSetList DeserializeManagedRuleSetList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<ManagedRuleSet>> managedRuleSets = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ManagedRuleSet> array = new List<ManagedRuleSet>();

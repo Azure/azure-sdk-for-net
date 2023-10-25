@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static ScheduledQueryRuleActions DeserializeScheduledQueryRuleActions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> actionGroups = default;
             Optional<IDictionary<string, string>> customProperties = default;
             foreach (var property in element.EnumerateObject())
@@ -50,7 +54,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -65,7 +68,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();

@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static ClearKeyEncryptionConfiguration DeserializeClearKeyEncryptionConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> customKeysAcquisitionUriTemplate = default;
             foreach (var property in element.EnumerateObject())
             {

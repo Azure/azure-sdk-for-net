@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static KeyVaultProperties DeserializeKeyVaultProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> keyIdentifier = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -33,7 +37,6 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        keyIdentifier = null;
                         continue;
                     }
                     keyIdentifier = new Uri(property.Value.GetString());

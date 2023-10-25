@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
     public partial class PostgreSqlServerPropertiesForDefaultCreate : PostgreSqlServerPropertiesForCreate
     {
         /// <summary> Initializes a new instance of PostgreSqlServerPropertiesForDefaultCreate. </summary>
-        /// <param name="administratorLogin"> The administrator&apos;s login name of a server. Can only be specified when the server is being created (and is required for creation). </param>
+        /// <param name="administratorLogin"> The administrator's login name of a server. Can only be specified when the server is being created (and is required for creation). </param>
         /// <param name="administratorLoginPassword"> The password of the administrator login. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="administratorLogin"/> or <paramref name="administratorLoginPassword"/> is null. </exception>
         public PostgreSqlServerPropertiesForDefaultCreate(string administratorLogin, string administratorLoginPassword)
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             CreateMode = PostgreSqlCreateMode.Default;
         }
 
-        /// <summary> The administrator&apos;s login name of a server. Can only be specified when the server is being created (and is required for creation). </summary>
+        /// <summary> The administrator's login name of a server. Can only be specified when the server is being created (and is required for creation). </summary>
         public string AdministratorLogin { get; }
         /// <summary> The password of the administrator login. </summary>
         public string AdministratorLoginPassword { get; }

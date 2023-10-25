@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     {
         internal static ReplicationJobSummary DeserializeReplicationJobSummary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> failedJobs = default;
             Optional<int> suspendedJobs = default;
             Optional<int> inProgressJobs = default;
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     failedJobs = property.Value.GetInt32();
@@ -33,7 +36,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     suspendedJobs = property.Value.GetInt32();
@@ -43,7 +45,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     inProgressJobs = property.Value.GetInt32();

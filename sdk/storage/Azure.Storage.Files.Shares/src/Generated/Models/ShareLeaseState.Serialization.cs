@@ -23,11 +23,11 @@ namespace Azure.Storage.Files.Shares.Models
 
         public static ShareLeaseState ToShareLeaseState(this string value)
         {
-            if (string.Equals(value, "available", StringComparison.InvariantCultureIgnoreCase)) return ShareLeaseState.Available;
-            if (string.Equals(value, "leased", StringComparison.InvariantCultureIgnoreCase)) return ShareLeaseState.Leased;
-            if (string.Equals(value, "expired", StringComparison.InvariantCultureIgnoreCase)) return ShareLeaseState.Expired;
-            if (string.Equals(value, "breaking", StringComparison.InvariantCultureIgnoreCase)) return ShareLeaseState.Breaking;
-            if (string.Equals(value, "broken", StringComparison.InvariantCultureIgnoreCase)) return ShareLeaseState.Broken;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "available")) return ShareLeaseState.Available;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "leased")) return ShareLeaseState.Leased;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "expired")) return ShareLeaseState.Expired;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "breaking")) return ShareLeaseState.Breaking;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "broken")) return ShareLeaseState.Broken;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ShareLeaseState value.");
         }
     }

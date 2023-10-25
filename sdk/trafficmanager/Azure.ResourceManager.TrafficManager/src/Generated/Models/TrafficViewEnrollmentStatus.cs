@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.TrafficManager.Models
 {
-    /// <summary> Indicates whether Traffic View is &apos;Enabled&apos; or &apos;Disabled&apos; for the Traffic Manager profile. Null, indicates &apos;Disabled&apos;. Enabling this feature will increase the cost of the Traffic Manage profile. </summary>
+    /// <summary> Indicates whether Traffic View is 'Enabled' or 'Disabled' for the Traffic Manager profile. Null, indicates 'Disabled'. Enabling this feature will increase the cost of the Traffic Manage profile. </summary>
     public readonly partial struct TrafficViewEnrollmentStatus : IEquatable<TrafficViewEnrollmentStatus>
     {
         private readonly string _value;

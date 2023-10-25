@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static TargetCopySetting DeserializeTargetCopySetting(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DataProtectionBackupCopySetting copyAfter = default;
             DataStoreInfoBase dataStore = default;
             foreach (var property in element.EnumerateObject())

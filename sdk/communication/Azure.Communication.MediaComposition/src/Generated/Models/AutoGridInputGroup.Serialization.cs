@@ -56,6 +56,10 @@ namespace Azure.Communication.MediaComposition
 
         internal static AutoGridInputGroup DeserializeAutoGridInputGroup(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<string> inputIds = default;
             InputGroupType kind = default;
             Optional<InputPosition> position = default;
@@ -84,7 +88,6 @@ namespace Azure.Communication.MediaComposition
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     position = InputPosition.DeserializeInputPosition(property.Value);
@@ -109,7 +112,6 @@ namespace Azure.Communication.MediaComposition
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     scalingMode = new ScalingMode(property.Value.GetString());

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="provisionedBandwidthInMbps"> The bandwidth that is actually provisioned. </param>
         /// <param name="sessionAddressProvider"> The field indicating if Microsoft provides session ip addresses. </param>
         /// <param name="useForPeeringService"> The flag that indicates whether or not the connection is used for peering service. </param>
-        /// <param name="microsoftTrackingId"> The ID used within Microsoft&apos;s peering provisioning system to track the connection. </param>
+        /// <param name="microsoftTrackingId"> The ID used within Microsoft's peering provisioning system to track the connection. </param>
         /// <param name="peeringDBFacilityId"> The PeeringDB.com ID of the facility at which the connection has to be set up. </param>
         /// <param name="connectionState"> The state of the connection. </param>
         /// <param name="bgpSession"> The BGP session associated with the connection. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Peering.Models
         public PeeringSessionAddressProvider? SessionAddressProvider { get; set; }
         /// <summary> The flag that indicates whether or not the connection is used for peering service. </summary>
         public bool? UseForPeeringService { get; set; }
-        /// <summary> The ID used within Microsoft&apos;s peering provisioning system to track the connection. </summary>
+        /// <summary> The ID used within Microsoft's peering provisioning system to track the connection. </summary>
         public string MicrosoftTrackingId { get; }
         /// <summary> The PeeringDB.com ID of the facility at which the connection has to be set up. </summary>
         public int? PeeringDBFacilityId { get; set; }

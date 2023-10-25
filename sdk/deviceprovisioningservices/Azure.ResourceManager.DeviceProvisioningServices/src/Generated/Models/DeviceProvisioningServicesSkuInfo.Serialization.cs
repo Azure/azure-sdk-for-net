@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 
         internal static DeviceProvisioningServicesSkuInfo DeserializeDeviceProvisioningServicesSkuInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DeviceProvisioningServicesSku> name = default;
             Optional<string> tier = default;
             Optional<long> capacity = default;
@@ -39,7 +43,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     name = new DeviceProvisioningServicesSku(property.Value.GetString());
@@ -54,7 +57,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     capacity = property.Value.GetInt64();

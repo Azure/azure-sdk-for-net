@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static DataTableResponseColumn DeserializeDataTableResponseColumn(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> columnName = default;
             Optional<string> dataType = default;
             Optional<string> columnType = default;

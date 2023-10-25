@@ -14,6 +14,10 @@ namespace Azure.Containers.ContainerRegistry
     {
         internal static ManifestListAttributes DeserializeManifestListAttributes(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> mediaType = default;
             Optional<long> size = default;
             Optional<string> digest = default;
@@ -29,7 +33,6 @@ namespace Azure.Containers.ContainerRegistry
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     size = property.Value.GetInt64();
@@ -44,7 +47,6 @@ namespace Azure.Containers.ContainerRegistry
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     platform = Platform.DeserializePlatform(property.Value);

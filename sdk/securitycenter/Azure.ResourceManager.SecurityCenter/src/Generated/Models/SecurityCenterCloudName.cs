@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The multi cloud resource&apos;s cloud name. </summary>
+    /// <summary> The multi cloud resource's cloud name. </summary>
     public readonly partial struct SecurityCenterCloudName : IEquatable<SecurityCenterCloudName>
     {
         private readonly string _value;

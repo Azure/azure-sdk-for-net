@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -15,6 +14,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static AzureReachabilityReport DeserializeAzureReachabilityReport(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string aggregationLevel = default;
             AzureReachabilityReportLocation providerLocation = default;
             IReadOnlyList<AzureReachabilityReportItem> reachabilityReport = default;

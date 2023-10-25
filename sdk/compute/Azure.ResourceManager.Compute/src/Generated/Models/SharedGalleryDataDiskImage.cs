@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of SharedGalleryDataDiskImage. </summary>
         /// <param name="diskSizeGB"> This property indicates the size of the VHD to be created. </param>
-        /// <param name="hostCaching"> The host caching of the disk. Valid values are &apos;None&apos;, &apos;ReadOnly&apos;, and &apos;ReadWrite&apos;. </param>
+        /// <param name="hostCaching"> The host caching of the disk. Valid values are 'None', 'ReadOnly', and 'ReadWrite'. </param>
         /// <param name="lun"> This property specifies the logical unit number of the data disk. This value is used to identify data disks within the Virtual Machine and therefore must be unique for each data disk attached to the Virtual Machine. </param>
         internal SharedGalleryDataDiskImage(int? diskSizeGB, SharedGalleryHostCaching? hostCaching, int lun) : base(diskSizeGB, hostCaching)
         {

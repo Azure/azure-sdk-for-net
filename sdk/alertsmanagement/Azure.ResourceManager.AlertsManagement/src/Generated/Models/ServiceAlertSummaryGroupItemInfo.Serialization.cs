@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         internal static ServiceAlertSummaryGroupItemInfo DeserializeServiceAlertSummaryGroupItemInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<long> count = default;
             Optional<string> groupedby = default;
@@ -61,7 +65,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     count = property.Value.GetInt64();
@@ -76,7 +79,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ServiceAlertSummaryGroupItemInfo> array = new List<ServiceAlertSummaryGroupItemInfo>();

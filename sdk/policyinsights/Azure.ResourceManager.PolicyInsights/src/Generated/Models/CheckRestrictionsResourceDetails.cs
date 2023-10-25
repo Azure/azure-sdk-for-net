@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public BinaryData ResourceContent { get; }
         /// <summary> The api-version of the resource content. </summary>
         public string ApiVersion { get; set; }
-        /// <summary> The scope where the resource is being created. For example, if the resource is a child resource this would be the parent resource&apos;s resource ID. </summary>
+        /// <summary> The scope where the resource is being created. For example, if the resource is a child resource this would be the parent resource's resource ID. </summary>
         public string Scope { get; set; }
     }
 }

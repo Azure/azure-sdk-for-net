@@ -45,8 +45,9 @@ namespace Azure.Storage.Files.Shares.Tests
         public async Task<DisposingShare> GetTestShareAsync(
             ShareServiceClient service = default,
             string shareName = default,
-            IDictionary<string, string> metadata = default)
-            => await SharesClientBuilder.GetTestShareAsync(service, shareName, metadata);
+            IDictionary<string, string> metadata = default,
+            ShareClientOptions options = default)
+            => await SharesClientBuilder.GetTestShareAsync(service, shareName, metadata, options);
 
         public ShareClientOptions GetOptions()
         {
@@ -77,6 +78,14 @@ namespace Azure.Storage.Files.Shares.Tests
             raise = raise ?? new IOException("Simulated connection fault");
             ShareClientOptions options = GetOptions();
             options.AddPolicy(new FaultyDownloadPipelinePolicy(raiseAt, raise, onFault), HttpPipelinePosition.PerCall);
+            return options;
+        }
+
+        public ShareClientOptions GetOptionsWithAudience(ShareAudience audience)
+        {
+            ShareClientOptions options = SharesClientBuilder.GetOptions(false);
+            options.Audience = audience;
+            options.ShareTokenIntent = ShareTokenIntent.Backup;
             return options;
         }
 

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    /// <summary> Configures whether billing will be only on the cluster or each workspace will be billed by its proportional use. This does not change the overall billing, only how it will be distributed. Default value is &apos;Cluster&apos;. </summary>
+    /// <summary> Configures whether billing will be only on the cluster or each workspace will be billed by its proportional use. This does not change the overall billing, only how it will be distributed. Default value is 'Cluster'. </summary>
     public readonly partial struct OperationalInsightsBillingType : IEquatable<OperationalInsightsBillingType>
     {
         private readonly string _value;

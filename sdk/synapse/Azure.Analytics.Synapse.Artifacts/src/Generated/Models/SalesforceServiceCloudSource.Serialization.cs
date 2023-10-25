@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ReadBehavior))
             {
                 writer.WritePropertyName("readBehavior"u8);
-                writer.WriteStringValue(ReadBehavior.Value.ToString());
+                writer.WriteObjectValue(ReadBehavior);
             }
             if (Optional.IsDefined(AdditionalColumns))
             {
@@ -61,8 +61,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SalesforceServiceCloudSource DeserializeSalesforceServiceCloudSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> query = default;
-            Optional<SalesforceSourceReadBehavior> readBehavior = default;
+            Optional<object> readBehavior = default;
             Optional<object> additionalColumns = default;
             string type = default;
             Optional<object> sourceRetryCount = default;
@@ -76,7 +80,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     query = property.Value.GetObject();
@@ -86,17 +89,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    readBehavior = new SalesforceSourceReadBehavior(property.Value.GetString());
+                    readBehavior = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("additionalColumns"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     additionalColumns = property.Value.GetObject();
@@ -111,7 +112,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sourceRetryCount = property.Value.GetObject();
@@ -121,7 +121,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sourceRetryWait = property.Value.GetObject();
@@ -131,7 +130,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxConcurrentConnections = property.Value.GetObject();
@@ -140,7 +138,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SalesforceServiceCloudSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, query.Value, Optional.ToNullable(readBehavior), additionalColumns.Value);
+            return new SalesforceServiceCloudSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, query.Value, readBehavior.Value, additionalColumns.Value);
         }
 
         internal partial class SalesforceServiceCloudSourceConverter : JsonConverter<SalesforceServiceCloudSource>

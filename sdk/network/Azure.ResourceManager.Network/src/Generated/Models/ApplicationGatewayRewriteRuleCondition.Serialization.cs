@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayRewriteRuleCondition DeserializeApplicationGatewayRewriteRuleCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> variable = default;
             Optional<string> pattern = default;
             Optional<bool> ignoreCase = default;
@@ -60,7 +64,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ignoreCase = property.Value.GetBoolean();
@@ -70,7 +73,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     negate = property.Value.GetBoolean();

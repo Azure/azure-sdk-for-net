@@ -66,6 +66,11 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportingScriptUris)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.AbsoluteUri);
                 }
                 writer.WriteEndArray();
@@ -110,6 +115,10 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static AzurePowerShellScript DeserializeAzurePowerShellScript(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ArmDeploymentScriptManagedIdentity> identity = default;
             AzureLocation location = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -139,7 +148,6 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = ArmDeploymentScriptManagedIdentity.DeserializeArmDeploymentScriptManagedIdentity(property.Value);
@@ -154,7 +162,6 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -189,7 +196,6 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -208,7 +214,6 @@ namespace Azure.ResourceManager.Resources.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             containerSettings = ContainerConfiguration.DeserializeContainerConfiguration(property0.Value);
@@ -218,7 +223,6 @@ namespace Azure.ResourceManager.Resources.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             storageAccountSettings = ScriptStorageConfiguration.DeserializeScriptStorageConfiguration(property0.Value);
@@ -228,7 +232,6 @@ namespace Azure.ResourceManager.Resources.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             cleanupPreference = new ScriptCleanupOptions(property0.Value.GetString());
@@ -238,7 +241,6 @@ namespace Azure.ResourceManager.Resources.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ScriptProvisioningState(property0.Value.GetString());
@@ -248,7 +250,6 @@ namespace Azure.ResourceManager.Resources.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             status = ScriptStatus.DeserializeScriptStatus(property0.Value);
@@ -258,7 +259,6 @@ namespace Azure.ResourceManager.Resources.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             outputs = BinaryData.FromString(property0.Value.GetRawText());
@@ -268,7 +268,6 @@ namespace Azure.ResourceManager.Resources.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                primaryScriptUri = null;
                                 continue;
                             }
                             primaryScriptUri = new Uri(property0.Value.GetString());
@@ -278,13 +277,19 @@ namespace Azure.ResourceManager.Resources.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<Uri> array = new List<Uri>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new Uri(item.GetString()));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(new Uri(item.GetString()));
+                                }
                             }
                             supportingScriptUris = array;
                             continue;
@@ -303,7 +308,6 @@ namespace Azure.ResourceManager.Resources.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ScriptEnvironmentVariable> array = new List<ScriptEnvironmentVariable>();
@@ -328,7 +332,6 @@ namespace Azure.ResourceManager.Resources.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             timeout = property0.Value.GetTimeSpan("P");

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Compute.Models
         public IList<string> KbNumbersToInclude { get; }
         /// <summary> Kbs to exclude in the patch operation. </summary>
         public IList<string> KbNumbersToExclude { get; }
-        /// <summary> Filters out Kbs that don&apos;t have an InstallationRebootBehavior of &apos;NeverReboots&apos; when this is set to true. </summary>
+        /// <summary> Filters out Kbs that don't have an InstallationRebootBehavior of 'NeverReboots' when this is set to true. </summary>
         public bool? ExcludeKbsRequiringReboot { get; set; }
         /// <summary> This is used to install patches that were published on or before this given max published date. </summary>
         public DateTimeOffset? MaxPatchPublishOn { get; set; }

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static UnknownMigrateSqlServerSqlDBSyncTaskOutput DeserializeUnknownMigrateSqlServerSqlDBSyncTaskOutput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             string resultType = "Unknown";
             foreach (var property in element.EnumerateObject())

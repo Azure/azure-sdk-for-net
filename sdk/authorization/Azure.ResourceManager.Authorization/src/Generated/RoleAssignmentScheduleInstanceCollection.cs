@@ -10,6 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -129,14 +130,14 @@ namespace Azure.ResourceManager.Authorization
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignment schedules at or above the scope. Use $filter=principalId eq {id} to return all role assignment schedules at, above or below the scope for the specified principal.  Use $filter=assignedTo(&apos;{userId}&apos;) to return all role assignment schedule instances for the user. Use $filter=asTarget() to return all role assignment schedule instances created for the current user. </param>
+        /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignment schedules at or above the scope. Use $filter=principalId eq {id} to return all role assignment schedules at, above or below the scope for the specified principal.  Use $filter=assignedTo('{userId}') to return all role assignment schedule instances for the user. Use $filter=asTarget() to return all role assignment schedule instances created for the current user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="RoleAssignmentScheduleInstanceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RoleAssignmentScheduleInstanceResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _roleAssignmentScheduleInstanceRestClient.CreateListForScopeRequest(Id, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _roleAssignmentScheduleInstanceRestClient.CreateListForScopeNextPageRequest(nextLink, Id, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RoleAssignmentScheduleInstanceResource(Client, RoleAssignmentScheduleInstanceData.DeserializeRoleAssignmentScheduleInstanceData(e)), _roleAssignmentScheduleInstanceClientDiagnostics, Pipeline, "RoleAssignmentScheduleInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RoleAssignmentScheduleInstanceResource(Client, RoleAssignmentScheduleInstanceData.DeserializeRoleAssignmentScheduleInstanceData(e)), _roleAssignmentScheduleInstanceClientDiagnostics, Pipeline, "RoleAssignmentScheduleInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -152,14 +153,14 @@ namespace Azure.ResourceManager.Authorization
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignment schedules at or above the scope. Use $filter=principalId eq {id} to return all role assignment schedules at, above or below the scope for the specified principal.  Use $filter=assignedTo(&apos;{userId}&apos;) to return all role assignment schedule instances for the user. Use $filter=asTarget() to return all role assignment schedule instances created for the current user. </param>
+        /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignment schedules at or above the scope. Use $filter=principalId eq {id} to return all role assignment schedules at, above or below the scope for the specified principal.  Use $filter=assignedTo('{userId}') to return all role assignment schedule instances for the user. Use $filter=asTarget() to return all role assignment schedule instances created for the current user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="RoleAssignmentScheduleInstanceResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RoleAssignmentScheduleInstanceResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _roleAssignmentScheduleInstanceRestClient.CreateListForScopeRequest(Id, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _roleAssignmentScheduleInstanceRestClient.CreateListForScopeNextPageRequest(nextLink, Id, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RoleAssignmentScheduleInstanceResource(Client, RoleAssignmentScheduleInstanceData.DeserializeRoleAssignmentScheduleInstanceData(e)), _roleAssignmentScheduleInstanceClientDiagnostics, Pipeline, "RoleAssignmentScheduleInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RoleAssignmentScheduleInstanceResource(Client, RoleAssignmentScheduleInstanceData.DeserializeRoleAssignmentScheduleInstanceData(e)), _roleAssignmentScheduleInstanceClientDiagnostics, Pipeline, "RoleAssignmentScheduleInstanceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -224,6 +225,80 @@ namespace Azure.ResourceManager.Authorization
             {
                 var response = _roleAssignmentScheduleInstanceRestClient.Get(Id, roleAssignmentScheduleInstanceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignmentScheduleInstances/{roleAssignmentScheduleInstanceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleAssignmentScheduleInstances_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="roleAssignmentScheduleInstanceName"> The name (hash of schedule name + time) of the role assignment schedule to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentScheduleInstanceName"/> is null. </exception>
+        public virtual async Task<NullableResponse<RoleAssignmentScheduleInstanceResource>> GetIfExistsAsync(string roleAssignmentScheduleInstanceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleAssignmentScheduleInstanceName, nameof(roleAssignmentScheduleInstanceName));
+
+            using var scope = _roleAssignmentScheduleInstanceClientDiagnostics.CreateScope("RoleAssignmentScheduleInstanceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _roleAssignmentScheduleInstanceRestClient.GetAsync(Id, roleAssignmentScheduleInstanceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<RoleAssignmentScheduleInstanceResource>(response.GetRawResponse());
+                return Response.FromValue(new RoleAssignmentScheduleInstanceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignmentScheduleInstances/{roleAssignmentScheduleInstanceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleAssignmentScheduleInstances_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="roleAssignmentScheduleInstanceName"> The name (hash of schedule name + time) of the role assignment schedule to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentScheduleInstanceName"/> is null. </exception>
+        public virtual NullableResponse<RoleAssignmentScheduleInstanceResource> GetIfExists(string roleAssignmentScheduleInstanceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleAssignmentScheduleInstanceName, nameof(roleAssignmentScheduleInstanceName));
+
+            using var scope = _roleAssignmentScheduleInstanceClientDiagnostics.CreateScope("RoleAssignmentScheduleInstanceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _roleAssignmentScheduleInstanceRestClient.Get(Id, roleAssignmentScheduleInstanceName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<RoleAssignmentScheduleInstanceResource>(response.GetRawResponse());
+                return Response.FromValue(new RoleAssignmentScheduleInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

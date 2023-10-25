@@ -98,6 +98,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         internal static CognitiveServicesAccountProperties DeserializeCognitiveServicesAccountProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ServiceAccountProvisioningState> provisioningState = default;
             Optional<string> endpoint = default;
             Optional<IReadOnlyList<CognitiveServicesSkuCapability>> capabilities = default;
@@ -124,13 +128,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Optional<string> scheduledPurgeDate = default;
             Optional<CognitiveServicesMultiRegionSettings> locations = default;
             Optional<IReadOnlyList<CommitmentPlanAssociation>> commitmentPlanAssociations = default;
+            Optional<AbusePenalty> abusePenalty = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new ServiceAccountProvisioningState(property.Value.GetString());
@@ -145,7 +149,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CognitiveServicesSkuCapability> array = new List<CognitiveServicesSkuCapability>();
@@ -160,7 +163,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isMigrated = property.Value.GetBoolean();
@@ -175,7 +177,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     skuChangeInfo = CognitiveServicesSkuChangeInfo.DeserializeCognitiveServicesSkuChangeInfo(property.Value);
@@ -190,7 +191,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     networkAcls = CognitiveServicesNetworkRuleSet.DeserializeCognitiveServicesNetworkRuleSet(property.Value);
@@ -200,7 +200,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     encryption = ServiceAccountEncryptionProperties.DeserializeServiceAccountEncryptionProperties(property.Value);
@@ -210,7 +209,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ServiceAccountUserOwnedStorage> array = new List<ServiceAccountUserOwnedStorage>();
@@ -225,7 +223,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CognitiveServicesPrivateEndpointConnectionData> array = new List<CognitiveServicesPrivateEndpointConnectionData>();
@@ -240,7 +237,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     publicNetworkAccess = new ServiceAccountPublicNetworkAccess(property.Value.GetString());
@@ -250,7 +246,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     apiProperties = ServiceAccountApiProperties.DeserializeServiceAccountApiProperties(property.Value);
@@ -260,7 +255,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dateCreated = property.Value.GetDateTimeOffset("O");
@@ -270,7 +264,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     callRateLimit = ServiceAccountCallRateLimit.DeserializeServiceAccountCallRateLimit(property.Value);
@@ -280,7 +273,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dynamicThrottlingEnabled = property.Value.GetBoolean();
@@ -290,7 +282,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     quotaLimit = ServiceAccountQuotaLimit.DeserializeServiceAccountQuotaLimit(property.Value);
@@ -300,7 +291,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     restrictOutboundNetworkAccess = property.Value.GetBoolean();
@@ -310,7 +300,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -325,7 +314,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     disableLocalAuth = property.Value.GetBoolean();
@@ -335,7 +323,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -350,7 +337,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     restore = property.Value.GetBoolean();
@@ -360,7 +346,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     deletionDate = property.Value.GetDateTimeOffset("O");
@@ -375,7 +360,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     locations = CognitiveServicesMultiRegionSettings.DeserializeCognitiveServicesMultiRegionSettings(property.Value);
@@ -385,7 +369,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CommitmentPlanAssociation> array = new List<CommitmentPlanAssociation>();
@@ -396,8 +379,17 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     commitmentPlanAssociations = array;
                     continue;
                 }
+                if (property.NameEquals("abusePenalty"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    abusePenalty = AbusePenalty.DeserializeAbusePenalty(property.Value);
+                    continue;
+                }
             }
-            return new CognitiveServicesAccountProperties(Optional.ToNullable(provisioningState), endpoint.Value, Optional.ToList(capabilities), Optional.ToNullable(isMigrated), migrationToken.Value, skuChangeInfo.Value, customSubDomainName.Value, networkAcls.Value, encryption.Value, Optional.ToList(userOwnedStorage), Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), apiProperties.Value, Optional.ToNullable(dateCreated), callRateLimit.Value, Optional.ToNullable(dynamicThrottlingEnabled), quotaLimit.Value, Optional.ToNullable(restrictOutboundNetworkAccess), Optional.ToList(allowedFqdnList), Optional.ToNullable(disableLocalAuth), Optional.ToDictionary(endpoints), Optional.ToNullable(restore), Optional.ToNullable(deletionDate), scheduledPurgeDate.Value, locations.Value, Optional.ToList(commitmentPlanAssociations));
+            return new CognitiveServicesAccountProperties(Optional.ToNullable(provisioningState), endpoint.Value, Optional.ToList(capabilities), Optional.ToNullable(isMigrated), migrationToken.Value, skuChangeInfo.Value, customSubDomainName.Value, networkAcls.Value, encryption.Value, Optional.ToList(userOwnedStorage), Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), apiProperties.Value, Optional.ToNullable(dateCreated), callRateLimit.Value, Optional.ToNullable(dynamicThrottlingEnabled), quotaLimit.Value, Optional.ToNullable(restrictOutboundNetworkAccess), Optional.ToList(allowedFqdnList), Optional.ToNullable(disableLocalAuth), Optional.ToDictionary(endpoints), Optional.ToNullable(restore), Optional.ToNullable(deletionDate), scheduledPurgeDate.Value, locations.Value, Optional.ToList(commitmentPlanAssociations), abusePenalty.Value);
         }
     }
 }

@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static IntegrationServiceNetworkConfiguration DeserializeIntegrationServiceNetworkConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> virtualNetworkAddressSpace = default;
             Optional<IntegrationServiceEnvironmentAccessEndpoint> accessEndpoint = default;
             Optional<IList<LogicResourceReference>> subnets = default;
@@ -55,7 +59,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     accessEndpoint = IntegrationServiceEnvironmentAccessEndpoint.DeserializeIntegrationServiceEnvironmentAccessEndpoint(property.Value);
@@ -65,7 +68,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<LogicResourceReference> array = new List<LogicResourceReference>();

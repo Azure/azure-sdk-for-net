@@ -24,6 +24,10 @@ namespace Azure.Communication.MediaComposition.Models
 
         internal static LayoutResolution DeserializeLayoutResolution(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int width = default;
             int height = default;
             foreach (var property in element.EnumerateObject())

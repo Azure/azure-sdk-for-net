@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static DefenderForDatabasesAwsOffering DeserializeDefenderForDatabasesAwsOffering(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DefenderForDatabasesAwsOfferingArcAutoProvisioning> arcAutoProvisioning = default;
             Optional<DefenderForDatabasesAwsOfferingRds> rds = default;
             OfferingType offeringType = default;
@@ -42,7 +46,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     arcAutoProvisioning = DefenderForDatabasesAwsOfferingArcAutoProvisioning.DeserializeDefenderForDatabasesAwsOfferingArcAutoProvisioning(property.Value);
@@ -52,7 +55,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rds = DefenderForDatabasesAwsOfferingRds.DeserializeDefenderForDatabasesAwsOfferingRds(property.Value);

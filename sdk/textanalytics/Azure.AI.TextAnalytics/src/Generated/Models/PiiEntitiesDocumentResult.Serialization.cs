@@ -38,13 +38,17 @@ namespace Azure.AI.TextAnalytics.Models
             if (Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
-                writer.WriteObjectValue(Statistics.Value);
+                writer.WriteObjectValue(Statistics);
             }
             writer.WriteEndObject();
         }
 
         internal static PiiEntitiesDocumentResult DeserializePiiEntitiesDocumentResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string redactedText = default;
             IList<Entity> entities = default;
             string id = default;
@@ -86,7 +90,6 @@ namespace Azure.AI.TextAnalytics.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     statistics = TextDocumentStatistics.DeserializeTextDocumentStatistics(property.Value);

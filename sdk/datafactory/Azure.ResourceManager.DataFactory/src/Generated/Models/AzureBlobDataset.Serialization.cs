@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -27,23 +28,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Structure))
             {
                 writer.WritePropertyName("structure"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Structure);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Structure.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Structure);
             }
             if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Schema);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Schema.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Schema);
             }
             writer.WritePropertyName("linkedServiceName"u8);
-            writer.WriteObjectValue(LinkedServiceName);
+            JsonSerializer.Serialize(writer, LinkedServiceName);
             if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
@@ -61,10 +54,18 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
                 writer.WriteEndArray();
@@ -79,47 +80,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(FolderPath);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(FolderPath.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, FolderPath);
             }
             if (Optional.IsDefined(TableRootLocation))
             {
                 writer.WritePropertyName("tableRootLocation"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(TableRootLocation);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(TableRootLocation.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, TableRootLocation);
             }
             if (Optional.IsDefined(FileName))
             {
                 writer.WritePropertyName("fileName"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(FileName);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(FileName.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, FileName);
             }
             if (Optional.IsDefined(ModifiedDatetimeStart))
             {
                 writer.WritePropertyName("modifiedDatetimeStart"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ModifiedDatetimeStart);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ModifiedDatetimeStart.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, ModifiedDatetimeStart);
             }
             if (Optional.IsDefined(ModifiedDatetimeEnd))
             {
                 writer.WritePropertyName("modifiedDatetimeEnd"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ModifiedDatetimeEnd);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ModifiedDatetimeEnd.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, ModifiedDatetimeEnd);
             }
             if (Optional.IsDefined(Format))
             {
@@ -138,7 +119,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
@@ -146,19 +130,23 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static AzureBlobDataset DeserializeAzureBlobDataset(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             Optional<string> description = default;
-            Optional<BinaryData> structure = default;
-            Optional<BinaryData> schema = default;
-            FactoryLinkedServiceReference linkedServiceName = default;
+            Optional<DataFactoryElement<IList<DatasetDataElement>>> structure = default;
+            Optional<DataFactoryElement<IList<DatasetSchemaDataElement>>> schema = default;
+            DataFactoryLinkedServiceReference linkedServiceName = default;
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
             Optional<DatasetFolder> folder = default;
-            Optional<BinaryData> folderPath = default;
-            Optional<BinaryData> tableRootLocation = default;
-            Optional<BinaryData> fileName = default;
-            Optional<BinaryData> modifiedDatetimeStart = default;
-            Optional<BinaryData> modifiedDatetimeEnd = default;
+            Optional<DataFactoryElement<string>> folderPath = default;
+            Optional<DataFactoryElement<string>> tableRootLocation = default;
+            Optional<DataFactoryElement<string>> fileName = default;
+            Optional<DataFactoryElement<string>> modifiedDatetimeStart = default;
+            Optional<DataFactoryElement<string>> modifiedDatetimeEnd = default;
             Optional<DatasetStorageFormat> format = default;
             Optional<DatasetCompression> compression = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -179,32 +167,29 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    structure = BinaryData.FromString(property.Value.GetRawText());
+                    structure = JsonSerializer.Deserialize<DataFactoryElement<IList<DatasetDataElement>>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("schema"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    schema = BinaryData.FromString(property.Value.GetRawText());
+                    schema = JsonSerializer.Deserialize<DataFactoryElement<IList<DatasetSchemaDataElement>>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("linkedServiceName"u8))
                 {
-                    linkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
+                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("parameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, EntityParameterSpecification> dictionary = new Dictionary<string, EntityParameterSpecification>();
@@ -219,13 +204,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<BinaryData> array = new List<BinaryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BinaryData.FromString(item.GetRawText()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BinaryData.FromString(item.GetRawText()));
+                        }
                     }
                     annotations = array;
                     continue;
@@ -234,7 +225,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     folder = DatasetFolder.DeserializeDatasetFolder(property.Value);
@@ -253,57 +243,51 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            folderPath = BinaryData.FromString(property0.Value.GetRawText());
+                            folderPath = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("tableRootLocation"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            tableRootLocation = BinaryData.FromString(property0.Value.GetRawText());
+                            tableRootLocation = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("fileName"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            fileName = BinaryData.FromString(property0.Value.GetRawText());
+                            fileName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("modifiedDatetimeStart"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            modifiedDatetimeStart = BinaryData.FromString(property0.Value.GetRawText());
+                            modifiedDatetimeStart = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("modifiedDatetimeEnd"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            modifiedDatetimeEnd = BinaryData.FromString(property0.Value.GetRawText());
+                            modifiedDatetimeEnd = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("format"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             format = DatasetStorageFormat.DeserializeDatasetStorageFormat(property0.Value);
@@ -313,7 +297,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             compression = DatasetCompression.DeserializeDatasetCompression(property0.Value);

@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         }
 
         /// <summary> Initializes a new instance of DeviceProvisioningServicesCertificateProperties. </summary>
-        /// <param name="subject"> The certificate&apos;s subject name. </param>
-        /// <param name="expireOn"> The certificate&apos;s expiration date and time. </param>
-        /// <param name="thumbprint"> The certificate&apos;s thumbprint. </param>
+        /// <param name="subject"> The certificate's subject name. </param>
+        /// <param name="expireOn"> The certificate's expiration date and time. </param>
+        /// <param name="thumbprint"> The certificate's thumbprint. </param>
         /// <param name="isVerified"> Determines whether certificate has been verified. </param>
         /// <param name="certificate"> base-64 representation of X509 certificate .cer file or just .pem file content. </param>
-        /// <param name="createdOn"> The certificate&apos;s creation date and time. </param>
-        /// <param name="updatedOn"> The certificate&apos;s last update date and time. </param>
+        /// <param name="createdOn"> The certificate's creation date and time. </param>
+        /// <param name="updatedOn"> The certificate's last update date and time. </param>
         internal DeviceProvisioningServicesCertificateProperties(string subject, DateTimeOffset? expireOn, BinaryData thumbprint, bool? isVerified, BinaryData certificate, DateTimeOffset? createdOn, DateTimeOffset? updatedOn)
         {
             Subject = subject;
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             UpdatedOn = updatedOn;
         }
 
-        /// <summary> The certificate&apos;s subject name. </summary>
+        /// <summary> The certificate's subject name. </summary>
         public string Subject { get; }
-        /// <summary> The certificate&apos;s expiration date and time. </summary>
+        /// <summary> The certificate's expiration date and time. </summary>
         public DateTimeOffset? ExpireOn { get; }
         /// <summary>
-        /// The certificate&apos;s thumbprint.
+        /// The certificate's thumbprint.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -104,9 +104,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// </para>
         /// </summary>
         public BinaryData Certificate { get; set; }
-        /// <summary> The certificate&apos;s creation date and time. </summary>
+        /// <summary> The certificate's creation date and time. </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary> The certificate&apos;s last update date and time. </summary>
+        /// <summary> The certificate's last update date and time. </summary>
         public DateTimeOffset? UpdatedOn { get; }
     }
 }

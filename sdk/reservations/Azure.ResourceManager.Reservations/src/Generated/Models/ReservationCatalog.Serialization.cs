@@ -15,13 +15,17 @@ namespace Azure.ResourceManager.Reservations.Models
     {
         internal static ReservationCatalog DeserializeReservationCatalog(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> resourceType = default;
             Optional<string> name = default;
             Optional<IReadOnlyDictionary<string, IList<ReservationBillingPlan>>> billingPlans = default;
             Optional<IReadOnlyList<ReservationTerm>> terms = default;
             Optional<IReadOnlyList<AzureLocation>> locations = default;
             Optional<IReadOnlyList<SkuProperty>> skuProperties = default;
-            Optional<CatalogMsrp> msrp = default;
+            Optional<ReservationCatalogMsrp> msrp = default;
             Optional<IReadOnlyList<SkuRestriction>> restrictions = default;
             Optional<string> tier = default;
             Optional<string> size = default;
@@ -42,18 +46,24 @@ namespace Azure.ResourceManager.Reservations.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, IList<ReservationBillingPlan>> dictionary = new Dictionary<string, IList<ReservationBillingPlan>>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        List<ReservationBillingPlan> array = new List<ReservationBillingPlan>();
-                        foreach (var item in property0.Value.EnumerateArray())
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
                         {
-                            array.Add(new ReservationBillingPlan(item.GetString()));
+                            dictionary.Add(property0.Name, null);
                         }
-                        dictionary.Add(property0.Name, array);
+                        else
+                        {
+                            List<ReservationBillingPlan> array = new List<ReservationBillingPlan>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(new ReservationBillingPlan(item.GetString()));
+                            }
+                            dictionary.Add(property0.Name, array);
+                        }
                     }
                     billingPlans = dictionary;
                     continue;
@@ -62,7 +72,6 @@ namespace Azure.ResourceManager.Reservations.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ReservationTerm> array = new List<ReservationTerm>();
@@ -77,7 +86,6 @@ namespace Azure.ResourceManager.Reservations.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AzureLocation> array = new List<AzureLocation>();
@@ -92,7 +100,6 @@ namespace Azure.ResourceManager.Reservations.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SkuProperty> array = new List<SkuProperty>();
@@ -107,17 +114,15 @@ namespace Azure.ResourceManager.Reservations.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    msrp = CatalogMsrp.DeserializeCatalogMsrp(property.Value);
+                    msrp = ReservationCatalogMsrp.DeserializeReservationCatalogMsrp(property.Value);
                     continue;
                 }
                 if (property.NameEquals("restrictions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SkuRestriction> array = new List<SkuRestriction>();
@@ -142,7 +147,6 @@ namespace Azure.ResourceManager.Reservations.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SkuCapability> array = new List<SkuCapability>();

@@ -15,39 +15,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Status))
+            if (Optional.IsDefined(ActionsRequired))
             {
-                writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToString());
+                writer.WritePropertyName("actionsRequired"u8);
+                writer.WriteStringValue(ActionsRequired);
             }
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsDefined(ActionsRequired))
+            if (Optional.IsDefined(Status))
             {
-                writer.WritePropertyName("actionsRequired"u8);
-                writer.WriteStringValue(ActionsRequired);
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
             }
             writer.WriteEndObject();
         }
 
         internal static MachineLearningPrivateLinkServiceConnectionState DeserializeMachineLearningPrivateLinkServiceConnectionState(JsonElement element)
         {
-            Optional<MachineLearningPrivateEndpointServiceConnectionStatus> status = default;
-            Optional<string> description = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> actionsRequired = default;
+            Optional<string> description = default;
+            Optional<MachineLearningPrivateEndpointServiceConnectionStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"u8))
+                if (property.NameEquals("actionsRequired"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    status = new MachineLearningPrivateEndpointServiceConnectionStatus(property.Value.GetString());
+                    actionsRequired = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -55,13 +54,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     description = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("actionsRequired"u8))
+                if (property.NameEquals("status"u8))
                 {
-                    actionsRequired = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    status = new MachineLearningPrivateEndpointServiceConnectionStatus(property.Value.GetString());
                     continue;
                 }
             }
-            return new MachineLearningPrivateLinkServiceConnectionState(Optional.ToNullable(status), description.Value, actionsRequired.Value);
+            return new MachineLearningPrivateLinkServiceConnectionState(actionsRequired.Value, description.Value, Optional.ToNullable(status));
         }
     }
 }

@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the ManagedBackupShortTermRetentionPolicy data model. </summary>
+    /// <summary>
+    /// A class representing the ManagedBackupShortTermRetentionPolicy data model.
+    /// A short term retention policy.
+    /// </summary>
     public partial class ManagedBackupShortTermRetentionPolicyData : ResourceData
     {
         /// <summary> Initializes a new instance of ManagedBackupShortTermRetentionPolicyData. </summary>

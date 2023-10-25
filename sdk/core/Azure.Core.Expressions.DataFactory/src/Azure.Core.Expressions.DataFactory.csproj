@@ -3,12 +3,10 @@
   <PropertyGroup>
     <Description>This is the implementation of the DataFactoryExpressions</Description>
     <AssemblyTitle>Microsoft Azure DataFactory Expressions</AssemblyTitle>
-    <Version>1.0.0-beta.2</Version>
+    <Version>1.0.0-beta.6</Version>
     <PackageTags>azure;datafactory</PackageTags>
     <Nullable>enable</Nullable>
-    <DefineConstants>$(DefineConstants);AZURE_NULLABLE;HAS_INTERNALS_VISIBLE_CORE</DefineConstants>
-    <TargetFrameworks>$(RequiredTargetFrameworks);net461;netcoreapp2.1;net5.0;net6.0</TargetFrameworks>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <EnableClientSdkAnalyzers>true</EnableClientSdkAnalyzers>
     <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>
     <!--
@@ -23,10 +21,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="$(AutoRestSharedCodeDirectory)IUtf8JsonSerializable.cs" LinkBase="Shared\AutoRest" />
-    <Compile Include="$(AutoRestSharedCodeDirectory)Utf8JsonWriterExtensions.cs" LinkBase="Shared\AutoRest" />
-    <Compile Include="$(AutoRestSharedCodeDirectory)TypeFormatters.cs" LinkBase="Shared\AutoRest" />
-    <Compile Include="$(AutoRestSharedCodeDirectory)JsonElementExtensions.cs" LinkBase="Shared\AutoRest" />
+    <Compile Include="$(AzureCoreSharedSources)IUtf8JsonSerializable.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)Utf8JsonWriterExtensions.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)TypeFormatters.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)JsonElementExtensions.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)Optional.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)ChangeTrackingDictionary.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)ChangeTrackingList.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)PropertyReferenceTypeAttribute.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)InitializationConstructorAttribute.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)SerializationConstructorAttribute.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)TrimmingAttribute.cs" LinkBase="Shared\Core" />
   </ItemGroup>
 
 </Project>

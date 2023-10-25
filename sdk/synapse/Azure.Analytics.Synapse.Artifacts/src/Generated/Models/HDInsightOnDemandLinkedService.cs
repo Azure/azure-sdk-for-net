@@ -81,7 +81,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="additionalLinkedServiceNames"> Specifies additional storage accounts for the HDInsight linked service so that the Data Factory service can register them on your behalf. </param>
         /// <param name="hcatalogLinkedServiceName"> The name of Azure SQL linked service that point to the HCatalog database. The on-demand HDInsight cluster is created by using the Azure SQL database as the metastore. </param>
         /// <param name="clusterType"> The cluster type. Type: string (or Expression with resultType string). </param>
-        /// <param name="sparkVersion"> The version of spark if the cluster type is &apos;spark&apos;. Type: string (or Expression with resultType string). </param>
+        /// <param name="sparkVersion"> The version of spark if the cluster type is 'spark'. Type: string (or Expression with resultType string). </param>
         /// <param name="coreConfiguration"> Specifies the core configuration parameters (as in core-site.xml) for the HDInsight cluster to be created. </param>
         /// <param name="hBaseConfiguration"> Specifies the HBase configuration parameters (hbase-site.xml) for the HDInsight cluster. </param>
         /// <param name="hdfsConfiguration"> Specifies the HDFS configuration parameters (hdfs-site.xml) for the HDInsight cluster. </param>
@@ -94,10 +94,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="headNodeSize"> Specifies the size of the head node for the HDInsight cluster. </param>
         /// <param name="dataNodeSize"> Specifies the size of the data node for the HDInsight cluster. </param>
         /// <param name="zookeeperNodeSize"> Specifies the size of the Zoo Keeper node for the HDInsight cluster. </param>
-        /// <param name="scriptActions"> Custom script actions to run on HDI ondemand cluster once it&apos;s up. Please refer to https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-hadoop-customize-cluster-linux?toc=%2Fen-us%2Fazure%2Fhdinsight%2Fr-server%2FTOC.json&amp;bc=%2Fen-us%2Fazure%2Fbread%2Ftoc.json#understanding-script-actions. </param>
+        /// <param name="scriptActions"> Custom script actions to run on HDI ondemand cluster once it's up. Please refer to https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-hadoop-customize-cluster-linux?toc=%2Fen-us%2Fazure%2Fhdinsight%2Fr-server%2FTOC.json&amp;bc=%2Fen-us%2Fazure%2Fbread%2Ftoc.json#understanding-script-actions. </param>
         /// <param name="virtualNetworkId"> The ARM resource ID for the vNet to which the cluster should be joined after creation. Type: string (or Expression with resultType string). </param>
         /// <param name="subnetName"> The ARM resource ID for the subnet in the vNet. If virtualNetworkId was specified, then this property is required. Type: string (or Expression with resultType string). </param>
-        internal HDInsightOnDemandLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object clusterSize, object timeToLive, object version, LinkedServiceReference linkedServiceName, object hostSubscriptionId, object servicePrincipalId, SecretBase servicePrincipalKey, object tenant, object clusterResourceGroup, object clusterNamePrefix, object clusterUserName, SecretBase clusterPassword, object clusterSshUserName, SecretBase clusterSshPassword, IList<LinkedServiceReference> additionalLinkedServiceNames, LinkedServiceReference hcatalogLinkedServiceName, object clusterType, object sparkVersion, object coreConfiguration, object hBaseConfiguration, object hdfsConfiguration, object hiveConfiguration, object mapReduceConfiguration, object oozieConfiguration, object stormConfiguration, object yarnConfiguration, object encryptedCredential, object headNodeSize, object dataNodeSize, object zookeeperNodeSize, IList<ScriptAction> scriptActions, object virtualNetworkId, object subnetName) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="credential"> The credential reference containing authentication information. </param>
+        internal HDInsightOnDemandLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object clusterSize, object timeToLive, object version, LinkedServiceReference linkedServiceName, object hostSubscriptionId, object servicePrincipalId, SecretBase servicePrincipalKey, object tenant, object clusterResourceGroup, object clusterNamePrefix, object clusterUserName, SecretBase clusterPassword, object clusterSshUserName, SecretBase clusterSshPassword, IList<LinkedServiceReference> additionalLinkedServiceNames, LinkedServiceReference hcatalogLinkedServiceName, object clusterType, object sparkVersion, object coreConfiguration, object hBaseConfiguration, object hdfsConfiguration, object hiveConfiguration, object mapReduceConfiguration, object oozieConfiguration, object stormConfiguration, object yarnConfiguration, object encryptedCredential, object headNodeSize, object dataNodeSize, object zookeeperNodeSize, IList<ScriptAction> scriptActions, object virtualNetworkId, object subnetName, CredentialReference credential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             ClusterSize = clusterSize;
             TimeToLive = timeToLive;
@@ -132,6 +133,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             ScriptActions = scriptActions;
             VirtualNetworkId = virtualNetworkId;
             SubnetName = subnetName;
+            Credential = credential;
             Type = type ?? "HDInsightOnDemand";
         }
 
@@ -181,7 +183,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public LinkedServiceReference HcatalogLinkedServiceName { get; set; }
         /// <summary> The cluster type. Type: string (or Expression with resultType string). </summary>
         public object ClusterType { get; set; }
-        /// <summary> The version of spark if the cluster type is &apos;spark&apos;. Type: string (or Expression with resultType string). </summary>
+        /// <summary> The version of spark if the cluster type is 'spark'. Type: string (or Expression with resultType string). </summary>
         public object SparkVersion { get; set; }
         /// <summary> Specifies the core configuration parameters (as in core-site.xml) for the HDInsight cluster to be created. </summary>
         public object CoreConfiguration { get; set; }
@@ -207,11 +209,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object DataNodeSize { get; set; }
         /// <summary> Specifies the size of the Zoo Keeper node for the HDInsight cluster. </summary>
         public object ZookeeperNodeSize { get; set; }
-        /// <summary> Custom script actions to run on HDI ondemand cluster once it&apos;s up. Please refer to https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-hadoop-customize-cluster-linux?toc=%2Fen-us%2Fazure%2Fhdinsight%2Fr-server%2FTOC.json&amp;bc=%2Fen-us%2Fazure%2Fbread%2Ftoc.json#understanding-script-actions. </summary>
+        /// <summary> Custom script actions to run on HDI ondemand cluster once it's up. Please refer to https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-hadoop-customize-cluster-linux?toc=%2Fen-us%2Fazure%2Fhdinsight%2Fr-server%2FTOC.json&amp;bc=%2Fen-us%2Fazure%2Fbread%2Ftoc.json#understanding-script-actions. </summary>
         public IList<ScriptAction> ScriptActions { get; }
         /// <summary> The ARM resource ID for the vNet to which the cluster should be joined after creation. Type: string (or Expression with resultType string). </summary>
         public object VirtualNetworkId { get; set; }
         /// <summary> The ARM resource ID for the subnet in the vNet. If virtualNetworkId was specified, then this property is required. Type: string (or Expression with resultType string). </summary>
         public object SubnetName { get; set; }
+        /// <summary> The credential reference containing authentication information. </summary>
+        public CredentialReference Credential { get; set; }
     }
 }

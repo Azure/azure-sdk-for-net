@@ -36,7 +36,7 @@ namespace Azure.Identity
             return token;
         }
 
-        public Exception FailWrapAndThrow(Exception ex, string additionalMessage = null)
+        public Exception FailWrapAndThrow(Exception ex, string additionalMessage = null, bool isCredentialUnavailable = false)
         {
             var wrapped = TryWrapException(ref ex, additionalMessage);
             RegisterFailed(ex);
@@ -55,7 +55,7 @@ namespace Azure.Identity
             _scopeHandler.Fail(_name, _scope, ex);
         }
 
-        private bool TryWrapException(ref Exception exception, string additionalMessageText = null)
+        private bool TryWrapException(ref Exception exception, string additionalMessageText = null, bool isCredentialUnavailable = false)
         {
             if (exception is OperationCanceledException || exception is AuthenticationFailedException)
             {
@@ -76,7 +76,9 @@ namespace Azure.Identity
             {
                 exceptionMessage = exceptionMessage + $"\n{additionalMessageText}";
             }
-            exception = new AuthenticationFailedException(exceptionMessage, exception);
+            exception = isCredentialUnavailable ?
+                new CredentialUnavailableException(exceptionMessage, exception) :
+                new AuthenticationFailedException(exceptionMessage, exception);
             return true;
         }
 

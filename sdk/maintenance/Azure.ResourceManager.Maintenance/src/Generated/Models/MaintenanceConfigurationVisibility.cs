@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
-    /// <summary> Gets or sets the visibility of the configuration. The default value is &apos;Custom&apos;. </summary>
+    /// <summary> Gets or sets the visibility of the configuration. The default value is 'Custom'. </summary>
     public readonly partial struct MaintenanceConfigurationVisibility : IEquatable<MaintenanceConfigurationVisibility>
     {
         private readonly string _value;

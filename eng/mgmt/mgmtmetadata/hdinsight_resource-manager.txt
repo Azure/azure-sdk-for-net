@@ -8,7 +8,7 @@ cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/maste
 Azure-rest-api-specs repository information
 GitHub fork: Azure
 Branch:      master
-Commit:      2ebe584103a362fa87f2f60c9bab89ab410c7571
+Commit:      de37c47a625de64c0ac5bf76cf531527ba2feb77
 AutoRest information
 Requested version: v2
-Bootstrapper version:    autorest@3.3.2
+Bootstrapper version:    autorest@3.9.3

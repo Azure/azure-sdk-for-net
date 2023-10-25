@@ -33,6 +33,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static StorageTableAccessPolicy DeserializeStorageTableAccessPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> expiryTime = default;
             string permission = default;
@@ -42,7 +46,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startTime = property.Value.GetDateTimeOffset("O");
@@ -52,7 +55,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     expiryTime = property.Value.GetDateTimeOffset("O");

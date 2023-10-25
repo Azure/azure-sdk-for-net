@@ -78,28 +78,9 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
             //Obtaining the Collection object of the Frontend to perform the Create/PUT operation.
             FrontendCollection frontends = GetFrontends(tc);
 
-            //Creating a public IP (PIP) Address Resource. The resource ID of the resouce is passed on to the Frontend.
-            PublicIPAddressCollection publicIPAddresses = rgResource.GetPublicIPAddresses();
-            string pipName = Recording.GenerateAssetName("tc-pip");
-            _resourceNames["tc-pip"] = pipName;
-            var pipData = new PublicIPAddressData()
-            {
-                Location = "East US 2",
-                Sku = new PublicIPAddressSku()
-                {
-                    Name = PublicIPAddressSkuName.Standard,
-                    Tier = PublicIPAddressSkuTier.Global
-                },
-                PublicIPAllocationMethod = NetworkIPAllocationMethod.Static
-            };
-
-            PublicIPAddressResource pip = publicIPAddresses.CreateOrUpdateAsync(WaitUntil.Completed, pipName, pipData).Result.Value;
-
             //Frontend Data object that is used to create the new frontend object.
             FrontendData fnd = new FrontendData(location)
             {
-                Mode = FrontendMode.Public,
-                PublicIPAddressId = pip.Id,
                 Location = location,
             };
             //Performing the Create/PUT operation and returning the result.
@@ -138,29 +119,39 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
             AssociationCollection associations = GetAssociations(tc);
 
             //Creating the virtual network (vnet) and subnet required for creating an association object.
-            VirtualNetworkCollection vnets = GetVirtualNetworks(resourceGroup);
-            VirtualNetworkData vnetData = new VirtualNetworkData()
-            {
-                Location = location,
-                AddressPrefixes = { "10.225.0.0/16" },
-            };
+            var rg = GetResourceGroup(resourceGroup);
             string vnetName = Recording.GenerateAssetName("tc-vnet");
-            _resourceNames["tc-vnet"] = vnetName;
-            VirtualNetworkResource vnet = vnets.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnetData).Result.Value;
-            SubnetCollection subnets = vnet.GetSubnets();
-            SubnetData subnetData = new SubnetData()
-            {
-                AddressPrefix = "10.225.0.0/24",
-            };
-            var trafficControllerServiceDelegation = new ServiceDelegation()
-            {
-                ServiceName = "Microsoft.ServiceNetworking/trafficControllers",
-                Name = "Microsoft.ServiceNetworking/trafficControllers",
-            };
-            subnetData.Delegations.Add(trafficControllerServiceDelegation);
             string subnetName = Recording.GenerateAssetName("tc-subnet");
-            _resourceNames["tc-subnet"] = subnetName;
-            SubnetResource subnet = subnets.CreateOrUpdateAsync(WaitUntil.Completed, subnetName, subnetData).Result.Value;
+            SubnetResource subnet;
+            if (Mode == RecordedTestMode.Playback)
+            {
+                ResourceIdentifier id = SubnetResource.CreateResourceIdentifier(rg.Id.SubscriptionId, rg.Id.Name, vnetName, subnetName);
+                subnet = Client.GetSubnetResource(id);
+            }
+            else
+            {
+                VirtualNetworkCollection vnets = GetVirtualNetworks(resourceGroup);
+                VirtualNetworkData vnetData = new VirtualNetworkData()
+                {
+                    Location = location,
+                    AddressPrefixes = { "10.225.0.0/16" },
+                };
+                _resourceNames["tc-vnet"] = vnetName;
+                VirtualNetworkResource vnet = vnets.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnetData).Result.Value;
+                SubnetCollection subnets = vnet.GetSubnets();
+                SubnetData subnetData = new SubnetData()
+                {
+                    AddressPrefix = "10.225.0.0/24",
+                };
+                var trafficControllerServiceDelegation = new ServiceDelegation()
+                {
+                    ServiceName = "Microsoft.ServiceNetworking/trafficControllers",
+                    Name = "Microsoft.ServiceNetworking/trafficControllers",
+                };
+                subnetData.Delegations.Add(trafficControllerServiceDelegation);
+                _resourceNames["tc-subnet"] = subnetName;
+                subnet = subnets.CreateOrUpdateAsync(WaitUntil.Completed, subnetName, subnetData).Result.Value;
+            }
 
             //Association Data object that is used to create the new frontend object.
             AssociationData associationData = new AssociationData(location)

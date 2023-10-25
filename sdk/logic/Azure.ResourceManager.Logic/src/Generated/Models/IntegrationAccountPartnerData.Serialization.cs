@@ -42,7 +42,10 @@ namespace Azure.ResourceManager.Logic
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Metadata);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Metadata.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(Metadata))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WritePropertyName("content"u8);
@@ -53,6 +56,10 @@ namespace Azure.ResourceManager.Logic
 
         internal static IntegrationAccountPartnerData DeserializeIntegrationAccountPartnerData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -70,7 +77,6 @@ namespace Azure.ResourceManager.Logic
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -105,7 +111,6 @@ namespace Azure.ResourceManager.Logic
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -129,7 +134,6 @@ namespace Azure.ResourceManager.Logic
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createdTime = property0.Value.GetDateTimeOffset("O");
@@ -139,7 +143,6 @@ namespace Azure.ResourceManager.Logic
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             changedTime = property0.Value.GetDateTimeOffset("O");
@@ -149,7 +152,6 @@ namespace Azure.ResourceManager.Logic
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             metadata = BinaryData.FromString(property0.Value.GetRawText());

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
     {
         internal static ArmDisasterRecoveryListResult DeserializeArmDisasterRecoveryListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ServiceBusDisasterRecoveryData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ServiceBusDisasterRecoveryData> array = new List<ServiceBusDisasterRecoveryData>();

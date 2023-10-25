@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static DataBoxManagedIdentity DeserializeDataBoxManagedIdentity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> type = default;
             Optional<DataBoxUserAssignedIdentity> userAssigned = default;
             foreach (var property in element.EnumerateObject())
@@ -43,7 +47,6 @@ namespace Azure.ResourceManager.DataBox.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     userAssigned = DataBoxUserAssignedIdentity.DeserializeDataBoxUserAssignedIdentity(property.Value);

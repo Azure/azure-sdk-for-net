@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         public static SecurityInsightsMailMessageDeliveryAction ToSecurityInsightsMailMessageDeliveryAction(this string value)
         {
-            if (string.Equals(value, "Unknown", StringComparison.InvariantCultureIgnoreCase)) return SecurityInsightsMailMessageDeliveryAction.Unknown;
-            if (string.Equals(value, "DeliveredAsSpam", StringComparison.InvariantCultureIgnoreCase)) return SecurityInsightsMailMessageDeliveryAction.DeliveredAsSpam;
-            if (string.Equals(value, "Delivered", StringComparison.InvariantCultureIgnoreCase)) return SecurityInsightsMailMessageDeliveryAction.Delivered;
-            if (string.Equals(value, "Blocked", StringComparison.InvariantCultureIgnoreCase)) return SecurityInsightsMailMessageDeliveryAction.Blocked;
-            if (string.Equals(value, "Replaced", StringComparison.InvariantCultureIgnoreCase)) return SecurityInsightsMailMessageDeliveryAction.Replaced;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Unknown")) return SecurityInsightsMailMessageDeliveryAction.Unknown;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DeliveredAsSpam")) return SecurityInsightsMailMessageDeliveryAction.DeliveredAsSpam;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Delivered")) return SecurityInsightsMailMessageDeliveryAction.Delivered;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Blocked")) return SecurityInsightsMailMessageDeliveryAction.Blocked;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Replaced")) return SecurityInsightsMailMessageDeliveryAction.Replaced;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SecurityInsightsMailMessageDeliveryAction value.");
         }
     }

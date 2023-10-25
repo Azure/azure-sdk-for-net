@@ -21,7 +21,9 @@ The Azure Monitor Query client library is used to execute read-only queries agai
 
 - An [Azure subscription][azure_subscription]
 - A [TokenCredential](https://learn.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet) implementation, such as an [Azure Identity library credential type](https://learn.microsoft.com/dotnet/api/overview/azure/Identity-readme#credential-classes).
-- To query Logs, you need an [Azure Log Analytics workspace][azure_monitor_create_using_portal].
+- To query Logs, you need one of the following things:
+  - An [Azure Log Analytics workspace][azure_monitor_create_using_portal]
+  - An Azure resource of any kind (Storage Account, Key Vault, Cosmos DB, etc.)
 - To query Metrics, you need an Azure resource of any kind (Storage Account, Key Vault, Cosmos DB, etc.).
 
 ### Install the package
@@ -79,7 +81,7 @@ All client instance methods are thread-safe and independent of each other ([guid
 [Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
 [Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
 [Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
-[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#mocking) |
+[Mocking](https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking) |
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 
@@ -99,24 +101,63 @@ All client instance methods are thread-safe and independent of each other ([guid
 - [Metrics query](#metrics-query)
   - [Handle metrics query response](#handle-metrics-query-response)
   - [Query metrics with options](#query-metrics-with-options)
+  - [Split a metric by dimension](#split-a-metric-by-dimension)
+- [Register the client with dependency injection](#register-the-client-with-dependency-injection)
 
 ### Logs query
 
-You can query logs using the `LogsQueryClient.QueryWorkspaceAsync` method. The result is returned as a table with a collection of rows:
+You can query logs by workspace ID or resource ID. The result is returned as a table with a collection of rows.
+
+**Workspace-centric logs query**
+
+To query by workspace ID, use the [LogsQueryClient.QueryWorkspaceAsync](https://learn.microsoft.com/dotnet/api/azure.monitor.query.logsqueryclient.queryworkspaceasync) method:
 
 ```C# Snippet:QueryLogsAsTable
 string workspaceId = "<workspace_id>";
 var client = new LogsQueryClient(new DefaultAzureCredential());
-Response<LogsQueryResult> response = await client.QueryWorkspaceAsync(
+
+Response<LogsQueryResult> result = await client.QueryWorkspaceAsync(
     workspaceId,
     "AzureActivity | top 10 by TimeGenerated",
     new QueryTimeRange(TimeSpan.FromDays(1)));
 
-LogsTable table = response.Value.Table;
+LogsTable table = result.Value.Table;
 
 foreach (var row in table.Rows)
 {
-    Console.WriteLine(row["OperationName"] + " " + row["ResourceGroup"]);
+    Console.WriteLine($"{row["OperationName"]} {row["ResourceGroup"]}");
+}
+```
+
+**Resource-centric logs query**
+
+To query by resource ID, use the [LogsQueryClient.QueryResourceAsync](https://learn.microsoft.com/dotnet/api/azure.monitor.query.logsqueryclient.queryresourceasync) method.
+
+To find the resource ID:
+
+1. Navigate to your resource's page in the Azure portal.
+1. From the **Overview** blade, select the **JSON View** link.
+1. In the resulting JSON, copy the value of the `id` property.
+
+```C# Snippet:QueryResource
+var client = new LogsQueryClient(new DefaultAzureCredential());
+
+string resourceId = "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/<resource_provider>/<resource>";
+string tableName = "<table_name>";
+Response<LogsQueryResult> results = await client.QueryResourceAsync(
+    new ResourceIdentifier(resourceId),
+    $"{tableName} | distinct * | project TimeGenerated",
+    new QueryTimeRange(TimeSpan.FromDays(7)));
+
+LogsTable resultTable = results.Value.Table;
+foreach (LogsTableRow row in resultTable.Rows)
+{
+    Console.WriteLine($"{row["OperationName"]} {row["ResourceGroup"]}");
+}
+
+foreach (LogsTableColumn columns in resultTable.Columns)
+{
+    Console.WriteLine("Name: " + columns.Name + " Type: " + columns.Type);
 }
 ```
 
@@ -428,7 +469,7 @@ var client = new MetricsQueryClient(new DefaultAzureCredential());
 
 Response<MetricsQueryResult> results = await client.QueryResourceAsync(
     resourceId,
-    new[] { "SuccessfulCalls", "TotalCalls" }
+    new[] { "AvailabilityRate_Query", "Query Count" }
 );
 
 foreach (MetricResult metric in results.Value.Metrics)
@@ -478,11 +519,12 @@ A `MetricsQueryOptions` object may be used to support more granular metrics quer
 ```C# Snippet:QueryMetricsWithAggregations
 string resourceId =
     "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/Microsoft.KeyVault/vaults/TestVault";
+string[] metricNames = new[] { "Availability" };
 var client = new MetricsQueryClient(new DefaultAzureCredential());
 
 Response<MetricsQueryResult> result = await client.QueryResourceAsync(
     resourceId,
-    new[] { "Availability" },
+    metricNames,
     new MetricsQueryOptions
     {
         Aggregations =
@@ -503,6 +545,74 @@ foreach (MetricTimeSeriesElement element in metric.TimeSeries)
     }
 }
 ```
+
+#### Split a metric by dimension
+
+The [MetricsQueryOptions.Filter](https://learn.microsoft.com/dotnet/api/azure.monitor.query.metricsqueryoptions.filter?view=azure-dotnet#azure-monitor-query-metricsqueryoptions-filter) property can be used for [splitting a metric](https://learn.microsoft.com/azure/azure-monitor/essentials/metrics-charts#metric-splitting) by a dimension when its filter value is set to an asterisk. Consider the following example for an App Service resource named *TestWebApp*. The code queries the resource's `Http2xx` metric and splits it by the `Instance` dimension.
+
+```C# Snippet:QueryMetricsWithSplitting
+string resourceId =
+    "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/Microsoft.Web/sites/TestWebApp";
+string[] metricNames = new[] { "Http2xx" };
+// Use of asterisk in filter value enables splitting on Instance dimension.
+string filter = "Instance eq '*'";
+var client = new MetricsQueryClient(new DefaultAzureCredential());
+var options = new MetricsQueryOptions
+{
+    Aggregations =
+    {
+        MetricAggregationType.Average,
+    },
+    Filter = filter,
+    TimeRange = TimeSpan.FromDays(2),
+};
+Response<MetricsQueryResult> result = await client.QueryResourceAsync(
+    resourceId,
+    metricNames,
+    options);
+
+foreach (MetricResult metric in result.Value.Metrics)
+{
+    foreach (MetricTimeSeriesElement element in metric.TimeSeries)
+    {
+        foreach (MetricValue value in element.Values)
+        {
+            // Prints a line that looks like the following:
+            // Thursday, May 4, 2023 9:42:00 PM, webwk000002, Http2xx, 1
+            Console.WriteLine(
+                $"{value.TimeStamp:F}, {element.Metadata["Instance"]}, {metric.Name}, {value.Average}");
+        }
+    }
+}
+```
+
+#### Metrics batch query
+
+A user can also query metrics from multiple resources at once using the `QueryBatch` method of `MetricsBatchQueryClient`. This uses a different API than the `MetricsQueryClient` and requires that a user pass in a regional endpoint when instantiating the client (for example, "https://westus3.metrics.monitor.azure.com").
+
+Note, each resource must be in the same region as the endpoint passed in when instantiating the client, and each resource must be in the same Azure subscription. Furthermore, the metric namespace that contains the metrics to be queried must also be passed. A list of metric namespaces can be found [here][metric_namespaces].
+
+```C# Snippet:QueryBatchMetrics
+string resourceId =
+    "/subscriptions/<id>/resourceGroups/<rg-name>/providers/<source>/storageAccounts/<resource-name-1>";
+MetricsBatchQueryClient client = new MetricsBatchQueryClient(new Uri("https://metrics.monitor.azure.com/.default"), new DefaultAzureCredential());
+Response<MetricResultsResponse> metricsResultsResponse = await client.QueryBatchAsync(
+    resourceIds: new List<string> { resourceId },
+    metricNames: new List<string> { "Ingress" },
+    metricNamespace: "Microsoft.Storage/storageAccounts").ConfigureAwait(false);
+
+MetricResultsResponse metricsQueryResults = metricsResultsResponse.Value;
+foreach (var value in metricsQueryResults.Values)
+{
+    Console.WriteLine(value.Interval);
+}
+```
+
+For an inventory of metrics and dimensions available for each Azure resource type, see [Supported metrics with Azure Monitor](https://learn.microsoft.com/azure/azure-monitor/essentials/metrics-supported).
+
+#### Register the client with dependency injection
+
+To register `LogsQueryClient` with the dependency injection (DI) container, invoke the `AddLogsQueryClient` method. To register `MetricsQueryClient` with the dependency injection (DI) container, invoke the `AddMetricsQueryClient` method. For more information, see [Register client](https://learn.microsoft.com/dotnet/azure/sdk/dependency-injection#register-client).
 
 ## Troubleshooting
 
@@ -530,6 +640,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 [msdocs_apiref]: https://learn.microsoft.com/dotnet/api/overview/azure/monitor.query-readme?view=azure-dotnet
 [package]: https://www.nuget.org/packages/Azure.Monitor.Query
 [source]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.Query/src
+[metric_namespaces]: https://learn.microsoft.com/azure/azure-monitor/reference/supported-metrics/metrics-index#metrics-by-resource-provider
 
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/

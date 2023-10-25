@@ -27,6 +27,11 @@ namespace Azure.Search.Documents.Indexes.Models
                     foreach (var item in Parameters)
                     {
                         writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
                         writer.WriteObjectValue(item.Value);
                     }
                     writer.WriteEndObject();
@@ -41,6 +46,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static FieldMappingFunction DeserializeFieldMappingFunction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<IDictionary<string, object>> parameters = default;
             foreach (var property in element.EnumerateObject())
@@ -60,7 +69,14 @@ namespace Azure.Search.Documents.Indexes.Models
                     Dictionary<string, object> dictionary = new Dictionary<string, object>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetObject());
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, property0.Value.GetObject());
+                        }
                     }
                     parameters = dictionary;
                     continue;

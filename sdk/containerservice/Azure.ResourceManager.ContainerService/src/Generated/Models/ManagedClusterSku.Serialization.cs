@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         internal static ManagedClusterSku DeserializeManagedClusterSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedClusterSkuName> name = default;
             Optional<ManagedClusterSkuTier> tier = default;
             foreach (var property in element.EnumerateObject())
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     name = new ManagedClusterSkuName(property.Value.GetString());
@@ -48,7 +51,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tier = new ManagedClusterSkuTier(property.Value.GetString());

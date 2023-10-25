@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
@@ -14,6 +13,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     {
         internal static UnknownAlertsMetaDataProperties DeserializeUnknownAlertsMetaDataProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ServiceAlertMetadataIdentifier metadataIdentifier = "Unknown";
             foreach (var property in element.EnumerateObject())
             {

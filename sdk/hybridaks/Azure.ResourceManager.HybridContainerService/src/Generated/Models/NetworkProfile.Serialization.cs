@@ -71,6 +71,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static NetworkProfile DeserializeNetworkProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LoadBalancerProfile> loadBalancerProfile = default;
             Optional<LoadBalancerSku> loadBalancerSku = default;
             Optional<string> dnsServiceIP = default;
@@ -85,7 +89,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     loadBalancerProfile = LoadBalancerProfile.DeserializeLoadBalancerProfile(property.Value);
@@ -95,7 +98,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     loadBalancerSku = new LoadBalancerSku(property.Value.GetString());
@@ -110,7 +112,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     networkPolicy = new NetworkPolicy(property.Value.GetString());
@@ -125,7 +126,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -145,7 +145,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

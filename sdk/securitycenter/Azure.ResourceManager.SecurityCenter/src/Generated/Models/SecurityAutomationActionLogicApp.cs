@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The logic app action that should be triggered. To learn more about Microsoft Defender for Cloud&apos;s Workflow Automation capabilities, visit https://aka.ms/ASCWorkflowAutomationLearnMore. </summary>
+    /// <summary> The logic app action that should be triggered. To learn more about Microsoft Defender for Cloud's Workflow Automation capabilities, visit https://aka.ms/ASCWorkflowAutomationLearnMore. </summary>
     public partial class SecurityAutomationActionLogicApp : SecurityAutomationAction
     {
         /// <summary> Initializes a new instance of SecurityAutomationActionLogicApp. </summary>

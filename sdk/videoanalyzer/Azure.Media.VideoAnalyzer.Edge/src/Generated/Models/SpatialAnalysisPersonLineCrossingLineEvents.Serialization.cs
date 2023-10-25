@@ -33,6 +33,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static SpatialAnalysisPersonLineCrossingLineEvents DeserializeSpatialAnalysisPersonLineCrossingLineEvents(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             NamedLineBase line = default;
             Optional<IList<SpatialAnalysisPersonLineCrossingEvent>> events = default;
             foreach (var property in element.EnumerateObject())
@@ -46,7 +50,6 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SpatialAnalysisPersonLineCrossingEvent> array = new List<SpatialAnalysisPersonLineCrossingEvent>();

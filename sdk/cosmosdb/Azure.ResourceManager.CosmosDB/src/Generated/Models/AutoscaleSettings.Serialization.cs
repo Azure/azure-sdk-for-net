@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static AutoscaleSettings DeserializeAutoscaleSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> maxThroughput = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -32,7 +36,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxThroughput = property.Value.GetInt32();

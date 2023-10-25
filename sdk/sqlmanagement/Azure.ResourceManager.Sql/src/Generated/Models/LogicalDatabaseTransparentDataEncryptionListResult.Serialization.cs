@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static LogicalDatabaseTransparentDataEncryptionListResult DeserializeLogicalDatabaseTransparentDataEncryptionListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<LogicalDatabaseTransparentDataEncryptionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<LogicalDatabaseTransparentDataEncryptionData> array = new List<LogicalDatabaseTransparentDataEncryptionData>();

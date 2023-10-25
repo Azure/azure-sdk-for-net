@@ -12,7 +12,6 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Consumption;
-using Azure.ResourceManager.Consumption.Models;
 
 namespace Azure.ResourceManager.Consumption.Samples
 {
@@ -112,13 +111,13 @@ namespace Azure.ResourceManager.Consumption.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // CreateOrUpdateBudget
+        // Budget
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateOrUpdateBudget()
+        public async Task GetIfExists_Budget()
         {
-            // Generated from example definition: specification/consumption/resource-manager/Microsoft.Consumption/stable/2021-10-01/examples/CreateOrUpdateBudget.json
-            // this example is just showing the usage of "Budgets_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/consumption/resource-manager/Microsoft.Consumption/stable/2021-10-01/examples/Budget.json
+            // this example is just showing the usage of "Budgets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -135,69 +134,21 @@ namespace Azure.ResourceManager.Consumption.Samples
 
             // invoke the operation
             string budgetName = "TestBudget";
-            ConsumptionBudgetData data = new ConsumptionBudgetData()
-            {
-                Category = BudgetCategory.Cost,
-                Amount = 100.65,
-                TimeGrain = BudgetTimeGrainType.Monthly,
-                TimePeriod = new BudgetTimePeriod(DateTimeOffset.Parse("2017-10-01T00:00:00Z"))
-                {
-                    EndOn = DateTimeOffset.Parse("2018-10-31T00:00:00Z"),
-                },
-                Filter = new ConsumptionBudgetFilter()
-                {
-                    And =
-{
-new BudgetFilterProperties()
-{
-Dimensions = new BudgetComparisonExpression("ResourceId",BudgetOperatorType.In,new string[]
-{
-"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/Microsoft.Compute/virtualMachines/MSVM2","/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/Microsoft.Compute/virtualMachines/platformcloudplatformGeneric1"
-}),
-},new BudgetFilterProperties()
-{
-Tags = new BudgetComparisonExpression("category",BudgetOperatorType.In,new string[]
-{
-"Dev","Prod"
-}),
-},new BudgetFilterProperties()
-{
-Tags = new BudgetComparisonExpression("department",BudgetOperatorType.In,new string[]
-{
-"engineering","sales"
-}),
-}
-},
-                },
-                Notifications =
-{
-["Actual_GreaterThan_80_Percent"] = new BudgetAssociatedNotification(true,NotificationAlertTriggerType.GreaterThan,80,new string[]
-{
-"johndoe@contoso.com","janesmith@contoso.com"
-})
-{
-ContactRoles =
-{
-"Contributor","Reader"
-},
-ContactGroups =
-{
-"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/MYDEVTESTRG/providers/microsoft.insights/actionGroups/SampleActionGroup"
-},
-ThresholdType = NotificationThresholdType.Actual,
-Locale = RecipientNotificationLanguageCode.EnglishUnitedStates,
-},
-},
-                ETag = new ETag("\"1d34d016a593709\""),
-            };
-            ArmOperation<ConsumptionBudgetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, budgetName, data);
-            ConsumptionBudgetResource result = lro.Value;
+            NullableResponse<ConsumptionBudgetResource> response = await collection.GetIfExistsAsync(budgetName);
+            ConsumptionBudgetResource result = response.HasValue ? response.Value : null;
 
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ConsumptionBudgetData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ConsumptionBudgetData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

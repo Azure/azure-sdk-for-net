@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
             if (Optional.IsDefined(PrimaryKeyUri))
             {
-                writer.WritePropertyName("primaryKeyUri"u8);
+                writer.WritePropertyName("primaryKeyURI"u8);
                 writer.WriteStringValue(PrimaryKeyUri.AbsoluteUri);
             }
             if (Optional.IsDefined(GeoBackupUserAssignedIdentityId))
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             }
             if (Optional.IsDefined(GeoBackupKeyUri))
             {
-                writer.WritePropertyName("geoBackupKeyUri"u8);
+                writer.WritePropertyName("geoBackupKeyURI"u8);
                 writer.WriteStringValue(GeoBackupKeyUri.AbsoluteUri);
             }
             if (Optional.IsDefined(EncryptionType))
@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         internal static MySqlFlexibleServerDataEncryption DeserializeMySqlFlexibleServerDataEncryption(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> primaryUserAssignedIdentityId = default;
             Optional<Uri> primaryKeyUri = default;
             Optional<ResourceIdentifier> geoBackupUserAssignedIdentityId = default;
@@ -57,17 +61,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     primaryUserAssignedIdentityId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("primaryKeyUri"u8))
+                if (property.NameEquals("primaryKeyURI"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        primaryKeyUri = null;
                         continue;
                     }
                     primaryKeyUri = new Uri(property.Value.GetString());
@@ -77,17 +79,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     geoBackupUserAssignedIdentityId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("geoBackupKeyUri"u8))
+                if (property.NameEquals("geoBackupKeyURI"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        geoBackupKeyUri = null;
                         continue;
                     }
                     geoBackupKeyUri = new Uri(property.Value.GetString());
@@ -97,7 +97,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = property.Value.GetString().ToMySqlFlexibleServerDataEncryptionType();

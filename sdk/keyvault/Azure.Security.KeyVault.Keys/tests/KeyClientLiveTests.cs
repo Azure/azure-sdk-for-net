@@ -80,6 +80,10 @@ namespace Azure.Security.KeyVault.Keys.Tests
             RegisterForCleanup(keyName);
 
             KeyVaultKey keyReturned = await Client.GetKeyAsync(keyName);
+            if (!IsManagedHSM && _serviceVersion >= KeyClientOptions.ServiceVersion.V7_5_Preview_1)
+            {
+                Assert.That(keyReturned.Properties.HsmPlatform, Is.Not.Null.And.Not.Empty);
+            }
 
             AssertKeyVaultKeysEqual(ecHsmkey, keyReturned);
 
@@ -108,7 +112,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
         [RecordedTest]
         [PremiumOnly]
-        public async Task CreateEcWithCurveKey([EnumValues(Exclude = new[] { nameof(KeyCurveName.Ed25519) })] KeyCurveName curveName)
+        public async Task CreateEcWithCurveKey([EnumValues] KeyCurveName curveName)
         {
             var ecCurveKey = new CreateEcKeyOptions(Recording.GenerateId(), hardwareProtected: false)
             {
@@ -142,6 +146,10 @@ namespace Azure.Security.KeyVault.Keys.Tests
             RegisterForCleanup(keyName);
 
             KeyVaultKey keyReturned = await Client.GetKeyAsync(keyName);
+            if (!IsManagedHSM && _serviceVersion >= KeyClientOptions.ServiceVersion.V7_5_Preview_1)
+            {
+                Assert.That(keyReturned.Properties.HsmPlatform, Is.Not.Null.And.Not.Empty);
+            }
 
             AssertKeyVaultKeysEqual(rsaHsmkey, keyReturned);
 

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -14,18 +15,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static VMwareCbtNicDetails DeserializeVMwareCbtNicDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nicId = default;
             Optional<string> isPrimaryNic = default;
-            Optional<string> sourceIPAddress = default;
-            Optional<EthernetAddressType> sourceIPAddressType = default;
-            Optional<string> sourceNetworkId = default;
-            Optional<string> targetIPAddress = default;
-            Optional<EthernetAddressType> targetIPAddressType = default;
+            Optional<IPAddress> sourceIPAddress = default;
+            Optional<SiteRecoveryEthernetAddressType> sourceIPAddressType = default;
+            Optional<ResourceIdentifier> sourceNetworkId = default;
+            Optional<IPAddress> targetIPAddress = default;
+            Optional<SiteRecoveryEthernetAddressType> targetIPAddressType = default;
             Optional<string> targetSubnetName = default;
-            Optional<string> testNetworkId = default;
+            Optional<ResourceIdentifier> testNetworkId = default;
             Optional<string> testSubnetName = default;
-            Optional<string> testIPAddress = default;
-            Optional<EthernetAddressType> testIPAddressType = default;
+            Optional<IPAddress> testIPAddress = default;
+            Optional<SiteRecoveryEthernetAddressType> testIPAddressType = default;
             Optional<string> targetNicName = default;
             Optional<string> isSelectedForMigration = default;
             foreach (var property in element.EnumerateObject())
@@ -42,37 +47,47 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("sourceIPAddress"u8))
                 {
-                    sourceIPAddress = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceIPAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sourceIPAddressType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sourceIPAddressType = new EthernetAddressType(property.Value.GetString());
+                    sourceIPAddressType = new SiteRecoveryEthernetAddressType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sourceNetworkId"u8))
                 {
-                    sourceNetworkId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceNetworkId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetIPAddress"u8))
                 {
-                    targetIPAddress = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetIPAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetIPAddressType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    targetIPAddressType = new EthernetAddressType(property.Value.GetString());
+                    targetIPAddressType = new SiteRecoveryEthernetAddressType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetSubnetName"u8))
@@ -82,7 +97,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("testNetworkId"u8))
                 {
-                    testNetworkId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    testNetworkId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("testSubnetName"u8))
@@ -92,17 +111,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("testIPAddress"u8))
                 {
-                    testIPAddress = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    testIPAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("testIPAddressType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    testIPAddressType = new EthernetAddressType(property.Value.GetString());
+                    testIPAddressType = new SiteRecoveryEthernetAddressType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetNicName"u8))

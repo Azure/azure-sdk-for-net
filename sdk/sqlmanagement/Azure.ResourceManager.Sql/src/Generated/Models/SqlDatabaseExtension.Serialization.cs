@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static SqlDatabaseExtension DeserializeSqlDatabaseExtension(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -74,7 +78,6 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -93,7 +96,6 @@ namespace Azure.ResourceManager.Sql.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             operationMode = new DatabaseExtensionOperationMode(property0.Value.GetString());
@@ -103,7 +105,6 @@ namespace Azure.ResourceManager.Sql.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             storageKeyType = new StorageKeyType(property0.Value.GetString());
@@ -118,7 +119,6 @@ namespace Azure.ResourceManager.Sql.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                storageUri = null;
                                 continue;
                             }
                             storageUri = new Uri(property0.Value.GetString());

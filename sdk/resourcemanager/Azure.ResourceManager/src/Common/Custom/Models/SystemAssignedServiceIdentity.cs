@@ -33,6 +33,16 @@ namespace Azure.ResourceManager.Models
             Identity = new ManagedServiceIdentity(principalId, tenantId, systemAssignedServiceIdentityType.ToString(), null);
         }
 
+        /// <summary> Initializes a new instance of SystemAssignedServiceIdentity by given ManagedServiceIdentity. </summary>
+        internal SystemAssignedServiceIdentity(ManagedServiceIdentity managedServiceIdentity)
+        {
+            if (managedServiceIdentity == null)
+            {
+                throw new ArgumentNullException();
+            }
+            Identity = managedServiceIdentity;
+        }
+
         internal ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity. </summary>

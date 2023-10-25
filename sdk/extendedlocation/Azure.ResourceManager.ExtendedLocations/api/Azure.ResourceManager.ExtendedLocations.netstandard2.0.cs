@@ -11,6 +11,8 @@ namespace Azure.ResourceManager.ExtendedLocations
         public virtual Azure.Pageable<Azure.ResourceManager.ExtendedLocations.CustomLocationResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ExtendedLocations.CustomLocationResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ExtendedLocations.CustomLocationResource>> GetAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ExtendedLocations.CustomLocationResource> GetIfExists(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ExtendedLocations.CustomLocationResource>> GetIfExistsAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ExtendedLocations.CustomLocationResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ExtendedLocations.CustomLocationResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ExtendedLocations.CustomLocationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ExtendedLocations.CustomLocationResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -61,6 +63,11 @@ namespace Azure.ResourceManager.ExtendedLocations
 }
 namespace Azure.ResourceManager.ExtendedLocations.Models
 {
+    public static partial class ArmExtendedLocationsModelFactory
+    {
+        public static Azure.ResourceManager.ExtendedLocations.CustomLocationData CustomLocationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.ExtendedLocations.Models.CustomLocationAuthentication authentication = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> clusterExtensionIds = null, string displayName = null, Azure.Core.ResourceIdentifier hostResourceId = null, Azure.ResourceManager.ExtendedLocations.Models.CustomLocationHostType? hostType = default(Azure.ResourceManager.ExtendedLocations.Models.CustomLocationHostType?), string @namespace = null, string provisioningState = null) { throw null; }
+        public static Azure.ResourceManager.ExtendedLocations.Models.CustomLocationEnabledResourceType CustomLocationEnabledResourceType(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier clusterExtensionId = null, string extensionType = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ExtendedLocations.Models.CustomLocationEnabledResourceTypeMetadata> typesMetadata = null) { throw null; }
+    }
     public partial class CustomLocationAuthentication
     {
         public CustomLocationAuthentication() { }

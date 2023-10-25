@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static ThroughputSettingsResourceInfo DeserializeThroughputSettingsResourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> throughput = default;
             Optional<AutoscaleSettingsResourceInfo> autoscaleSettings = default;
             Optional<string> minimumThroughput = default;
@@ -40,7 +44,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     throughput = property.Value.GetInt32();
@@ -50,7 +53,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     autoscaleSettings = AutoscaleSettingsResourceInfo.DeserializeAutoscaleSettingsResourceInfo(property.Value);

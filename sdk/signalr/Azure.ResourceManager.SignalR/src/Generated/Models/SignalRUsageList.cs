@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <param name="value"> List of the resource usages. </param>
         /// <param name="nextLink">
         /// The URL the client should use to fetch the next page (per server side paging).
-        /// It&apos;s null for now, added for future use.
+        /// It's null for now, added for future use.
         /// </param>
         internal SignalRUsageList(IReadOnlyList<SignalRUsage> value, string nextLink)
         {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.SignalR.Models
         public IReadOnlyList<SignalRUsage> Value { get; }
         /// <summary>
         /// The URL the client should use to fetch the next page (per server side paging).
-        /// It&apos;s null for now, added for future use.
+        /// It's null for now, added for future use.
         /// </summary>
         public string NextLink { get; }
     }

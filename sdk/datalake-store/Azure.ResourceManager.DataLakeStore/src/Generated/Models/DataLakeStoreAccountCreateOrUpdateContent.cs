@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
         public AzureLocation Location { get; }
         /// <summary> The resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> The Key Vault encryption identity, if any. </summary>
+        /// <summary> The Key Vault encryption identity, if any. Current supported identity types: SystemAssigned. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The default owner group for all new folders and files created in the Data Lake Store account. </summary>
         public string DefaultGroup { get; set; }

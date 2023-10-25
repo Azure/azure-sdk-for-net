@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static MaxSizeRangeCapability DeserializeMaxSizeRangeCapability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MaxSizeCapability> minValue = default;
             Optional<MaxSizeCapability> maxValue = default;
             Optional<MaxSizeCapability> scaleSize = default;
@@ -26,7 +30,6 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minValue = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value);
@@ -36,7 +39,6 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxValue = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value);
@@ -46,7 +48,6 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     scaleSize = MaxSizeCapability.DeserializeMaxSizeCapability(property.Value);
@@ -56,7 +57,6 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     logSize = LogSizeCapability.DeserializeLogSizeCapability(property.Value);
@@ -66,7 +66,6 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = property.Value.GetString().ToSqlCapabilityStatus();

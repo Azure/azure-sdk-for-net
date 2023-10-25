@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static NonAzureQueryProperties DeserializeNonAzureQueryProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> functionAlias = default;
             Optional<string> workspaceId = default;
             foreach (var property in element.EnumerateObject())

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         public IDictionary<string, string> Tags { get; }
         /// <summary> The associated key properties. </summary>
         public OperationalInsightsKeyVaultProperties KeyVaultProperties { get; set; }
-        /// <summary> The cluster&apos;s billing type. </summary>
+        /// <summary> The cluster's billing type. </summary>
         public OperationalInsightsBillingType? BillingType { get; set; }
     }
 }

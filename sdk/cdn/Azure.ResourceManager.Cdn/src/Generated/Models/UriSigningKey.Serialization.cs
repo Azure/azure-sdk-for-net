@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static UriSigningKey DeserializeUriSigningKey(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string keyId = default;
             KeyVaultSigningKey keySourceParameters = default;
             foreach (var property in element.EnumerateObject())

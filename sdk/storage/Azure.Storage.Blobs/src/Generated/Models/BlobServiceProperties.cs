@@ -13,13 +13,12 @@ namespace Azure.Storage.Blobs.Models
     /// <summary> Storage Service Properties. </summary>
     public partial class BlobServiceProperties
     {
-
         /// <summary> Initializes a new instance of BlobServiceProperties. </summary>
         /// <param name="logging"> Azure Analytics Logging settings. </param>
         /// <param name="hourMetrics"> a summary of request statistics grouped by API in hour or minute aggregates for blobs. </param>
         /// <param name="minuteMetrics"> a summary of request statistics grouped by API in hour or minute aggregates for blobs. </param>
         /// <param name="cors"> The set of CORS rules. </param>
-        /// <param name="defaultServiceVersion"> The default version to use for requests to the Blob service if an incoming request&apos;s version is not specified. Possible values include version 2008-10-27 and all more recent versions. </param>
+        /// <param name="defaultServiceVersion"> The default version to use for requests to the Blob service if an incoming request's version is not specified. Possible values include version 2008-10-27 and all more recent versions. </param>
         /// <param name="deleteRetentionPolicy"> the retention policy which determines how long the associated data should persist. </param>
         /// <param name="staticWebsite"> The properties that enable an account to host a static website. </param>
         internal BlobServiceProperties(BlobAnalyticsLogging logging, BlobMetrics hourMetrics, BlobMetrics minuteMetrics, IList<BlobCorsRule> cors, string defaultServiceVersion, BlobRetentionPolicy deleteRetentionPolicy, BlobStaticWebsite staticWebsite)
@@ -39,7 +38,7 @@ namespace Azure.Storage.Blobs.Models
         public BlobMetrics HourMetrics { get; set; }
         /// <summary> a summary of request statistics grouped by API in hour or minute aggregates for blobs. </summary>
         public BlobMetrics MinuteMetrics { get; set; }
-        /// <summary> The default version to use for requests to the Blob service if an incoming request&apos;s version is not specified. Possible values include version 2008-10-27 and all more recent versions. </summary>
+        /// <summary> The default version to use for requests to the Blob service if an incoming request's version is not specified. Possible values include version 2008-10-27 and all more recent versions. </summary>
         public string DefaultServiceVersion { get; set; }
         /// <summary> the retention policy which determines how long the associated data should persist. </summary>
         public BlobRetentionPolicy DeleteRetentionPolicy { get; set; }

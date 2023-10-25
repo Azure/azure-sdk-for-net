@@ -22,7 +22,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        /// <param name="publicEventType"> The public event namespace used as the &quot;type&quot; property in the CloudEvent. </param>
+        /// <param name="publicEventType"> The public event namespace used as the "type" property in the CloudEvent. </param>
         internal PlayCompleted(string operationContext, ResultInformation resultInformation, string version, string callConnectionId, string serverCallId, string correlationId, string publicEventType)
         {
             OperationContext = operationContext;
@@ -40,7 +40,7 @@ namespace Azure.Communication.CallingServer
         public ResultInformation ResultInformation { get; }
         /// <summary> Used to determine the version of the event. </summary>
         public string Version { get; }
-        /// <summary> The public event namespace used as the &quot;type&quot; property in the CloudEvent. </summary>
+        /// <summary> The public event namespace used as the "type" property in the CloudEvent. </summary>
         public string PublicEventType { get; }
     }
 }

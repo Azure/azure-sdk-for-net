@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-06-15";
+            _apiVersion = apiVersion ?? "2023-06-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary> Get properties of an event subscription of a partner topic. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. </param>
         /// <param name="partnerTopicName"> Name of the partner topic. </param>
         /// <param name="eventSubscriptionName"> Name of the event subscription to be found. Event subscription names must be between 3 and 100 characters in length and use alphanumeric letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary> Get properties of an event subscription of a partner topic. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. </param>
         /// <param name="partnerTopicName"> Name of the partner topic. </param>
         /// <param name="eventSubscriptionName"> Name of the event subscription to be found. Event subscription names must be between 3 and 100 characters in length and use alphanumeric letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary> Asynchronously creates or updates an event subscription of a partner topic with the specified parameters. Existing event subscriptions will be updated with this API. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. </param>
         /// <param name="partnerTopicName"> Name of the partner topic. </param>
         /// <param name="eventSubscriptionName"> Name of the event subscription to be created. Event subscription names must be between 3 and 100 characters in length and use alphanumeric letters only. </param>
         /// <param name="data"> Event subscription properties containing the destination and filter information. </param>
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary> Asynchronously creates or updates an event subscription of a partner topic with the specified parameters. Existing event subscriptions will be updated with this API. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. </param>
         /// <param name="partnerTopicName"> Name of the partner topic. </param>
         /// <param name="eventSubscriptionName"> Name of the event subscription to be created. Event subscription names must be between 3 and 100 characters in length and use alphanumeric letters only. </param>
         /// <param name="data"> Event subscription properties containing the destination and filter information. </param>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary> Delete an existing event subscription of a partner topic. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. </param>
         /// <param name="partnerTopicName"> Name of the partner topic. </param>
         /// <param name="eventSubscriptionName"> Name of the event subscription to be created. Event subscription names must be between 3 and 100 characters in length and use alphanumeric letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary> Delete an existing event subscription of a partner topic. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. </param>
         /// <param name="partnerTopicName"> Name of the partner topic. </param>
         /// <param name="eventSubscriptionName"> Name of the event subscription to be created. Event subscription names must be between 3 and 100 characters in length and use alphanumeric letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary> Update an existing event subscription of a partner topic. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. </param>
         /// <param name="partnerTopicName"> Name of the partner topic. </param>
         /// <param name="eventSubscriptionName"> Name of the event subscription to be created. Event subscription names must be between 3 and 100 characters in length and use alphanumeric letters only. </param>
         /// <param name="patch"> Updated event subscription information. </param>
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary> Update an existing event subscription of a partner topic. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. </param>
         /// <param name="partnerTopicName"> Name of the partner topic. </param>
         /// <param name="eventSubscriptionName"> Name of the event subscription to be created. Event subscription names must be between 3 and 100 characters in length and use alphanumeric letters only. </param>
         /// <param name="patch"> Updated event subscription information. </param>
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary> Get the full endpoint URL for an event subscription of a partner topic. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. </param>
         /// <param name="partnerTopicName"> Name of the partner topic. </param>
         /// <param name="eventSubscriptionName"> Name of the event subscription to be created. Event subscription names must be between 3 and 100 characters in length and use alphanumeric letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary> Get the full endpoint URL for an event subscription of a partner topic. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. </param>
         /// <param name="partnerTopicName"> Name of the partner topic. </param>
         /// <param name="eventSubscriptionName"> Name of the event subscription to be created. Event subscription names must be between 3 and 100 characters in length and use alphanumeric letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -484,9 +484,9 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary> List event subscriptions that belong to a specific partner topic. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. </param>
         /// <param name="partnerTopicName"> Name of the partner topic. </param>
-        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
+        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="partnerTopicName"/> is null. </exception>
@@ -515,9 +515,9 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary> List event subscriptions that belong to a specific partner topic. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. </param>
         /// <param name="partnerTopicName"> Name of the partner topic. </param>
-        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
+        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="partnerTopicName"/> is null. </exception>
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary> Get all delivery attributes for an event subscription of a partner topic. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. </param>
         /// <param name="partnerTopicName"> Name of the partner topic. </param>
         /// <param name="eventSubscriptionName"> Name of the event subscription to be created. Event subscription names must be between 3 and 100 characters in length and use alphanumeric letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -600,7 +600,7 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary> Get all delivery attributes for an event subscription of a partner topic. </summary>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. </param>
         /// <param name="partnerTopicName"> Name of the partner topic. </param>
         /// <param name="eventSubscriptionName"> Name of the event subscription to be created. Event subscription names must be between 3 and 100 characters in length and use alphanumeric letters only. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -646,9 +646,9 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary> List event subscriptions that belong to a specific partner topic. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. </param>
         /// <param name="partnerTopicName"> Name of the partner topic. </param>
-        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
+        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="partnerTopicName"/> is null. </exception>
@@ -679,9 +679,9 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary> List event subscriptions that belong to a specific partner topic. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. </param>
         /// <param name="partnerTopicName"> Name of the partner topic. </param>
-        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the &apos;name&apos; property only and with limited number of OData operations. These operations are: the &apos;contains&apos; function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, &apos;PATTERN&apos;) and name ne &apos;PATTERN-1&apos;. The following is not a valid filter example: $filter=location eq &apos;westus&apos;. </param>
+        /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="partnerTopicName"/> is null. </exception>

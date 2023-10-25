@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// on a collection or named value, Write should be used.
         /// If it is a GET, Read should be used. If it is a DELETE, Delete should be used. If it
         /// is a POST, Action should be used.
-        /// As a note: all resource providers would need to include the &quot;{Resource Provider
-        /// Namespace}/register/action&quot; operation in their response.
+        /// As a note: all resource providers would need to include the "{Resource Provider
+        /// Namespace}/register/action" operation in their response.
         /// This API is used to register for their service, and should include details about the
         /// operation (e.g. a localized name for the resource provider + any special
         /// considerations like PII release).
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// Gets or sets Origin.
         /// The intended executor of the operation; governs the display of the operation in the
         /// RBAC UX and the audit logs UX.
-        /// Default value is &quot;user,system&quot;.
+        /// Default value is "user,system".
         /// </param>
         /// <param name="properties"> ClientDiscovery properties. </param>
         internal MoverOperationsDiscovery(string name, bool? isDataAction, MoverDisplayInfo display, string origin, BinaryData properties)
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// on a collection or named value, Write should be used.
         /// If it is a GET, Read should be used. If it is a DELETE, Delete should be used. If it
         /// is a POST, Action should be used.
-        /// As a note: all resource providers would need to include the &quot;{Resource Provider
-        /// Namespace}/register/action&quot; operation in their response.
+        /// As a note: all resource providers would need to include the "{Resource Provider
+        /// Namespace}/register/action" operation in their response.
         /// This API is used to register for their service, and should include details about the
         /// operation (e.g. a localized name for the resource provider + any special
         /// considerations like PII release).
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// Gets or sets Origin.
         /// The intended executor of the operation; governs the display of the operation in the
         /// RBAC UX and the audit logs UX.
-        /// Default value is &quot;user,system&quot;.
+        /// Default value is "user,system".
         /// </summary>
         public string Origin { get; }
         /// <summary>

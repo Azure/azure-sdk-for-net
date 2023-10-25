@@ -14,6 +14,10 @@ namespace Azure.Containers.ContainerRegistry
     {
         internal static JWKHeader DeserializeJWKHeader(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> crv = default;
             Optional<string> kid = default;
             Optional<string> kty = default;

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         private const string IPCidrValue = "IpCidr";
         private const string StringValue = "String";
 
-        /// <summary> An IP range in CIDR format (e.g. &apos;192.168.0.1/8&apos;). </summary>
+        /// <summary> An IP range in CIDR format (e.g. '192.168.0.1/8'). </summary>
         public static SecurityValueType IPCidr { get; } = new SecurityValueType(IPCidrValue);
         /// <summary> Any string value. </summary>
         public static SecurityValueType String { get; } = new SecurityValueType(StringValue);

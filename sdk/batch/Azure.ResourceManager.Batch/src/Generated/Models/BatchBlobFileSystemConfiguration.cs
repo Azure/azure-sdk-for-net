@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="containerName"> The Azure Blob Storage Container name. </param>
         /// <param name="accountKey"> This property is mutually exclusive with both sasKey and identity; exactly one must be specified. </param>
         /// <param name="sasKey"> This property is mutually exclusive with both accountKey and identity; exactly one must be specified. </param>
-        /// <param name="blobfuseOptions"> These are &apos;net use&apos; options in Windows and &apos;mount&apos; options in Linux. </param>
+        /// <param name="blobfuseOptions"> These are 'net use' options in Windows and 'mount' options in Linux. </param>
         /// <param name="relativeMountPath"> All file systems are mounted relative to the Batch mounts directory, accessible via the AZ_BATCH_NODE_MOUNTS_DIR environment variable. </param>
         /// <param name="identity"> This property is mutually exclusive with both accountKey and sasKey; exactly one must be specified. </param>
         internal BatchBlobFileSystemConfiguration(string accountName, string containerName, string accountKey, string sasKey, string blobfuseOptions, string relativeMountPath, ComputeNodeIdentityReference identity)
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Batch.Models
         public string AccountKey { get; set; }
         /// <summary> This property is mutually exclusive with both accountKey and identity; exactly one must be specified. </summary>
         public string SasKey { get; set; }
-        /// <summary> These are &apos;net use&apos; options in Windows and &apos;mount&apos; options in Linux. </summary>
+        /// <summary> These are 'net use' options in Windows and 'mount' options in Linux. </summary>
         public string BlobfuseOptions { get; set; }
         /// <summary> All file systems are mounted relative to the Batch mounts directory, accessible via the AZ_BATCH_NODE_MOUNTS_DIR environment variable. </summary>
         public string RelativeMountPath { get; set; }

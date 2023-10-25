@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Initializes a new instance of PartnerDetails. </summary>
         /// <param name="description"> This is short description about the partner. The length of this description should not exceed 256 characters. </param>
-        /// <param name="longDescription"> Long description for the partner&apos;s scenarios and integration.Length of this description should not exceed 2048 characters. </param>
+        /// <param name="longDescription"> Long description for the partner's scenarios and integration.Length of this description should not exceed 2048 characters. </param>
         /// <param name="setupUri">
         /// URI of the partner website that can be used by Azure customers to setup Event Grid
         /// integration on an event source.
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> This is short description about the partner. The length of this description should not exceed 256 characters. </summary>
         public string Description { get; set; }
-        /// <summary> Long description for the partner&apos;s scenarios and integration.Length of this description should not exceed 2048 characters. </summary>
+        /// <summary> Long description for the partner's scenarios and integration.Length of this description should not exceed 2048 characters. </summary>
         public string LongDescription { get; set; }
         /// <summary>
         /// URI of the partner website that can be used by Azure customers to setup Event Grid

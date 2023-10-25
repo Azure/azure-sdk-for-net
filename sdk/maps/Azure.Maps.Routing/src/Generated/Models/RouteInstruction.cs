@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Maps.Routing.Models
 {
-    /// <summary> A set of attributes describing a maneuver, e.g. &apos;Turn right&apos;, &apos;Keep left&apos;, &apos;Take the ferry&apos;, &apos;Take the motorway&apos;, &apos;Arrive&apos;. </summary>
+    /// <summary> A set of attributes describing a maneuver, e.g. 'Turn right', 'Keep left', 'Take the ferry', 'Take the motorway', 'Arrive'. </summary>
     public partial class RouteInstruction
     {
         /// <summary> Initializes a new instance of RouteInstruction. </summary>
@@ -23,13 +23,13 @@ namespace Azure.Maps.Routing.Models
         public int? RouteOffsetInMeters { get; }
         /// <summary> Estimated travel time up to the point corresponding to routeOffsetInMeters. </summary>
         public int? TravelTimeInSeconds { get; }
-        /// <summary> The index of the point in the list of polyline &quot;points&quot; corresponding to the point of the instruction. </summary>
+        /// <summary> The index of the point in the list of polyline "points" corresponding to the point of the instruction. </summary>
         public int? PointIndex { get; }
         /// <summary> Type of the instruction, e.g., turn or change of road form. </summary>
         public GuidanceInstructionType? InstructionType { get; }
-        /// <summary> The road number(s) of the next significant road segment(s) after the maneuver, or of the road(s) to be followed. Example: [&quot;E34&quot;, &quot;N205&quot;]. </summary>
+        /// <summary> The road number(s) of the next significant road segment(s) after the maneuver, or of the road(s) to be followed. Example: ["E34", "N205"]. </summary>
         public IReadOnlyList<string> RoadNumbers { get; }
-        /// <summary> The number(s) of a highway exit taken by the current maneuver. If an exit has multiple exit numbers, they will be separated by &quot;,&quot; and possibly aggregated by &quot;-&quot;, e.g., &quot;10, 13-15&quot;. </summary>
+        /// <summary> The number(s) of a highway exit taken by the current maneuver. If an exit has multiple exit numbers, they will be separated by "," and possibly aggregated by "-", e.g., "10, 13-15". </summary>
         public string ExitNumber { get; }
         /// <summary> Street name of the next significant road segment after the maneuver, or of the street that should be followed. </summary>
         public string Street { get; }
@@ -43,21 +43,21 @@ namespace Azure.Maps.Routing.Models
         public JunctionType? JunctionType { get; }
         /// <summary>
         /// Indicates the direction of an instruction. If junctionType indicates a turn instruction:
-        /// 
+        ///
         ///   * 180 = U-turn
         ///   * [-179, -1] = Left turn
-        ///   * 0 = Straight on (a &apos;0 degree&apos; turn)
+        ///   * 0 = Straight on (a '0 degree' turn)
         ///   * [1, 179] = Right turn
-        /// 
+        ///
         /// If junctionType indicates a bifurcation instruction:
-        /// 
+        ///
         ///   * &lt;0 - keep left
         ///   * \&gt;0 - keep right
         /// </summary>
         public int? TurnAngleInDegrees { get; }
         /// <summary> This indicates which exit to take at a roundabout. </summary>
         public string RoundaboutExitNumber { get; }
-        /// <summary> It is possible to optionally combine the instruction with the next one. This can be used to build messages like &quot;Turn left and then turn right&quot;. </summary>
+        /// <summary> It is possible to optionally combine the instruction with the next one. This can be used to build messages like "Turn left and then turn right". </summary>
         public bool? PossibleCombineWithNext { get; }
         /// <summary> Indicates left-hand vs. right-hand side driving at the point of the maneuver. </summary>
         public DrivingSide? DrivingSide { get; }
@@ -67,14 +67,14 @@ namespace Azure.Maps.Routing.Models
         public string Message { get; }
         /// <summary>
         /// A human-readable message for the maneuver combined with the message from the next instruction. Sometimes it is possible to combine two successive instructions into a single instruction making it easier to follow. When this is the case the possibleCombineWithNext flag will be true. For example:
-        /// 
+        ///
         /// ```
         /// 10. Turn left onto Einsteinweg/A10/E22 towards Ring Amsterdam
         /// 11. Follow Einsteinweg/A10/E22 towards Ring Amsterdam
         /// ```
-        /// 
+        ///
         /// The possibleCombineWithNext flag on instruction 10 is true. This indicates to the clients of coded guidance that it can be combined with instruction 11. The instructions will be combined automatically for clients requesting human-readable guidance. The combinedMessage field contains the combined message:
-        /// 
+        ///
         /// ```
         /// Turn left onto Einsteinweg/A10/E22 towards Ring Amsterdam
         /// then follow Einsteinweg/A10/E22 towards Ring Amsterdam.

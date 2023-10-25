@@ -18,12 +18,39 @@ namespace Azure.ResourceManager.Maintenance.Samples
 {
     public partial class Sample_ResourceGroupResourceExtensions
     {
+        // ConfigurationAssignments_GetParent
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetConfigurationAssignmentByParent_ConfigurationAssignmentsGetParent()
+        {
+            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/stable/2023-04-01/examples/ConfigurationAssignments_GetParent.json
+            // this example is just showing the usage of "ConfigurationAssignments_GetParent" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
+            string resourceGroupName = "examplerg";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // invoke the operation
+            ResourceGroupResourceGetConfigurationAssignmentByParentOptions options = new ResourceGroupResourceGetConfigurationAssignmentByParentOptions(providerName: "Microsoft.Compute", resourceParentType: "virtualMachineScaleSets", resourceParentName: "smdtest1", resourceType: "virtualMachines", resourceName: "smdvm1", configurationAssignmentName: "workervmPolicy") { };
+            MaintenanceConfigurationAssignmentData result = await resourceGroupResource.GetConfigurationAssignmentByParentAsync(options);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
         // ConfigurationAssignments_CreateOrUpdateParent
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdateConfigurationAssignmentByParent_ConfigurationAssignmentsCreateOrUpdateParent()
         {
-            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/stable/2021-05-01/examples/ConfigurationAssignments_CreateOrUpdateParent.json
+            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/stable/2023-04-01/examples/ConfigurationAssignments_CreateOrUpdateParent.json
             // this example is just showing the usage of "ConfigurationAssignments_CreateOrUpdateParent" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -54,7 +81,7 @@ namespace Azure.ResourceManager.Maintenance.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task DeleteConfigurationAssignmentByParent_ConfigurationAssignmentsDeleteParent()
         {
-            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/stable/2021-05-01/examples/ConfigurationAssignments_DeleteParent.json
+            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/stable/2023-04-01/examples/ConfigurationAssignments_DeleteParent.json
             // this example is just showing the usage of "ConfigurationAssignments_DeleteParent" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -76,12 +103,42 @@ namespace Azure.ResourceManager.Maintenance.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
+        // ConfigurationAssignments_Get
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetConfigurationAssignment_ConfigurationAssignmentsGet()
+        {
+            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/stable/2023-04-01/examples/ConfigurationAssignments_Get.json
+            // this example is just showing the usage of "ConfigurationAssignments_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
+            string resourceGroupName = "examplerg";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // invoke the operation
+            string providerName = "Microsoft.Compute";
+            string resourceType = "virtualMachineScaleSets";
+            string resourceName = "smdtest1";
+            string configurationAssignmentName = "workervmConfiguration";
+            MaintenanceConfigurationAssignmentData result = await resourceGroupResource.GetConfigurationAssignmentAsync(providerName, resourceType, resourceName, configurationAssignmentName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
         // ConfigurationAssignments_CreateOrUpdate
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdateConfigurationAssignment_ConfigurationAssignmentsCreateOrUpdate()
         {
-            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/stable/2021-05-01/examples/ConfigurationAssignments_CreateOrUpdate.json
+            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/stable/2023-04-01/examples/ConfigurationAssignments_CreateOrUpdate.json
             // this example is just showing the usage of "ConfigurationAssignments_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -115,7 +172,7 @@ namespace Azure.ResourceManager.Maintenance.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task DeleteConfigurationAssignment_ConfigurationAssignmentsDelete()
         {
-            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/stable/2021-05-01/examples/ConfigurationAssignments_Delete.json
+            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/stable/2023-04-01/examples/ConfigurationAssignments_Delete.json
             // this example is just showing the usage of "ConfigurationAssignments_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -145,7 +202,7 @@ namespace Azure.ResourceManager.Maintenance.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetConfigurationAssignmentsByParent_ConfigurationAssignmentsListParent()
         {
-            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/stable/2021-05-01/examples/ConfigurationAssignments_ListParent.json
+            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/stable/2023-04-01/examples/ConfigurationAssignments_ListParent.json
             // this example is just showing the usage of "ConfigurationAssignments_ListParent" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -179,7 +236,7 @@ namespace Azure.ResourceManager.Maintenance.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetConfigurationAssignments_ConfigurationAssignmentsList()
         {
-            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/stable/2021-05-01/examples/ConfigurationAssignments_List.json
+            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/stable/2023-04-01/examples/ConfigurationAssignments_List.json
             // this example is just showing the usage of "ConfigurationAssignments_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -211,7 +268,7 @@ namespace Azure.ResourceManager.Maintenance.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetMaintenanceApplyUpdates_ApplyUpdatesResourceGroupList()
         {
-            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/stable/2021-05-01/examples/ApplyUpdatesResourceGroup_List.json
+            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/stable/2023-04-01/examples/ApplyUpdatesResourceGroup_List.json
             // this example is just showing the usage of "ApplyUpdateForResourceGroup_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -239,12 +296,180 @@ namespace Azure.ResourceManager.Maintenance.Samples
             Console.WriteLine($"Succeeded");
         }
 
+        // ConfigurationAssignmentsForResourceGroup_Get
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetConfigurationAssignmentByResourceGroup_ConfigurationAssignmentsForResourceGroupGet()
+        {
+            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/stable/2023-04-01/examples/ConfigurationAssignmentsForResourceGroup_Get.json
+            // this example is just showing the usage of "ConfigurationAssignmentsForResourceGroup_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
+            string resourceGroupName = "examplerg";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // invoke the operation
+            string configurationAssignmentName = "workervmConfiguration";
+            MaintenanceConfigurationAssignmentData result = await resourceGroupResource.GetConfigurationAssignmentByResourceGroupAsync(configurationAssignmentName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // ConfigurationAssignmentsForResourceGroup_CreateOrUpdate
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task CreateOrUpdateConfigurationAssignmentByResourceGroup_ConfigurationAssignmentsForResourceGroupCreateOrUpdate()
+        {
+            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/stable/2023-04-01/examples/ConfigurationAssignmentsForResourceGroup_CreateOrUpdate.json
+            // this example is just showing the usage of "ConfigurationAssignmentsForResourceGroup_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
+            string resourceGroupName = "examplerg";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // invoke the operation
+            string configurationAssignmentName = "workervmConfiguration";
+            MaintenanceConfigurationAssignmentData data = new MaintenanceConfigurationAssignmentData()
+            {
+                MaintenanceConfigurationId = new ResourceIdentifier("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourcegroups/examplerg/providers/Microsoft.Maintenance/maintenanceConfigurations/configuration1"),
+                Filter = new MaintenanceConfigurationAssignmentFilter()
+                {
+                    ResourceTypes =
+{
+new ResourceType("Microsoft.HybridCompute/machines"),new ResourceType("Microsoft.Compute/virtualMachines")
+},
+                    Locations =
+{
+new AzureLocation("Japan East"),new AzureLocation("UK South")
+},
+                    TagSettings = new VmTagSettings()
+                    {
+                        Tags =
+{
+["tag1"] = new string[]
+{
+"tag1Value1","tag1Value2","tag1Value3"
+},
+["tag2"] = new string[]
+{
+"tag2Value1","tag2Value2","tag2Value3"
+},
+},
+                        FilterOperator = VmTagOperator.Any,
+                    },
+                },
+            };
+            MaintenanceConfigurationAssignmentData result = await resourceGroupResource.CreateOrUpdateConfigurationAssignmentByResourceGroupAsync(configurationAssignmentName, data);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // ConfigurationAssignmentsForResourceGroup_CreateOrUpdate
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task UpdateConfigurationAssignmentByResourceGroup_ConfigurationAssignmentsForResourceGroupCreateOrUpdate()
+        {
+            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/stable/2023-04-01/examples/ConfigurationAssignmentsForResourceGroup_UpdateForResource.json
+            // this example is just showing the usage of "ConfigurationAssignmentsForResourceGroup_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
+            string resourceGroupName = "examplerg";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // invoke the operation
+            string configurationAssignmentName = "workervmConfiguration";
+            MaintenanceConfigurationAssignmentData data = new MaintenanceConfigurationAssignmentData()
+            {
+                MaintenanceConfigurationId = new ResourceIdentifier("/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourcegroups/examplerg/providers/Microsoft.Maintenance/maintenanceConfigurations/configuration1"),
+                Filter = new MaintenanceConfigurationAssignmentFilter()
+                {
+                    ResourceTypes =
+{
+new ResourceType("Microsoft.HybridCompute/machines"),new ResourceType("Microsoft.Compute/virtualMachines")
+},
+                    Locations =
+{
+new AzureLocation("Japan East"),new AzureLocation("UK South")
+},
+                    TagSettings = new VmTagSettings()
+                    {
+                        Tags =
+{
+["tag1"] = new string[]
+{
+"tag1Value1","tag1Value2","tag1Value3"
+},
+["tag2"] = new string[]
+{
+"tag2Value1","tag2Value2","tag2Value3"
+},
+},
+                        FilterOperator = VmTagOperator.Any,
+                    },
+                },
+            };
+            MaintenanceConfigurationAssignmentData result = await resourceGroupResource.UpdateConfigurationAssignmentByResourceGroupAsync(configurationAssignmentName, data);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // ConfigurationAssignmentsForResourceGroup_Delete
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task DeleteConfigurationAssignmentByResourceGroup_ConfigurationAssignmentsForResourceGroupDelete()
+        {
+            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/stable/2023-04-01/examples/ConfigurationAssignmentsForResourceGroup_Delete.json
+            // this example is just showing the usage of "ConfigurationAssignmentsForResourceGroup_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
+            string resourceGroupName = "examplerg";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // invoke the operation
+            string configurationAssignmentName = "workervmConfiguration";
+            MaintenanceConfigurationAssignmentData result = await resourceGroupResource.DeleteConfigurationAssignmentByResourceGroupAsync(configurationAssignmentName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
         // Updates_ListParent
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetUpdatesByParent_UpdatesListParent()
         {
-            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/stable/2021-05-01/examples/Updates_ListParent.json
+            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/stable/2023-04-01/examples/Updates_ListParent.json
             // this example is just showing the usage of "Updates_ListParent" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -278,7 +503,7 @@ namespace Azure.ResourceManager.Maintenance.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetUpdates_UpdatesList()
         {
-            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/stable/2021-05-01/examples/Updates_List.json
+            // Generated from example definition: specification/maintenance/resource-manager/Microsoft.Maintenance/stable/2023-04-01/examples/Updates_List.json
             // this example is just showing the usage of "Updates_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

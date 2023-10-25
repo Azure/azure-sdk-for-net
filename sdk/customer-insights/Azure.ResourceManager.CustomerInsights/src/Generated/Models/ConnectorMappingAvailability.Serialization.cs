@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         internal static ConnectorMappingAvailability DeserializeConnectorMappingAvailability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<FrequencyType> frequency = default;
             int interval = default;
             foreach (var property in element.EnumerateObject())
@@ -35,7 +39,6 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     frequency = property.Value.GetString().ToFrequencyType();

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="workspaceResourceId"> The resource ID of the Log Analytics workspace. </param>
         /// <param name="workspaceId"> The Customer ID of the Log Analytics workspace. </param>
         /// <param name="name">
-        /// A friendly name for the destination. 
+        /// A friendly name for the destination.
         /// This name should be unique across all destinations (regardless of type) within the data collection rule.
         /// </param>
         internal LogAnalyticsDestination(ResourceIdentifier workspaceResourceId, string workspaceId, string name)
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> The Customer ID of the Log Analytics workspace. </summary>
         public string WorkspaceId { get; }
         /// <summary>
-        /// A friendly name for the destination. 
+        /// A friendly name for the destination.
         /// This name should be unique across all destinations (regardless of type) within the data collection rule.
         /// </summary>
         public string Name { get; set; }

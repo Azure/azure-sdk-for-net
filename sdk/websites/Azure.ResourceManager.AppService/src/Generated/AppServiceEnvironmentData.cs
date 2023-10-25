@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the AppServiceEnvironment data model. </summary>
+    /// <summary>
+    /// A class representing the AppServiceEnvironment data model.
+    /// App Service Environment ARM resource.
+    /// </summary>
     public partial class AppServiceEnvironmentData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of AppServiceEnvironmentData. </summary>
@@ -34,7 +37,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="status"> Current status of the App Service Environment. </param>
         /// <param name="virtualNetwork"> Description of the Virtual Network. </param>
         /// <param name="internalLoadBalancingMode"> Specifies which endpoints to serve internally in the Virtual Network for the App Service Environment. </param>
-        /// <param name="multiSize"> Front-end VM size, e.g. &quot;Medium&quot;, &quot;Large&quot;. </param>
+        /// <param name="multiSize"> Front-end VM size, e.g. "Medium", "Large". </param>
         /// <param name="multiRoleCount"> Number of front-end instances. </param>
         /// <param name="ipSslAddressCount"> Number of IP SSL addresses reserved for the App Service Environment. </param>
         /// <param name="dnsSuffix"> DNS suffix of the App Service Environment. </param>
@@ -79,7 +82,7 @@ namespace Azure.ResourceManager.AppService
         public AppServiceVirtualNetworkProfile VirtualNetwork { get; set; }
         /// <summary> Specifies which endpoints to serve internally in the Virtual Network for the App Service Environment. </summary>
         public LoadBalancingMode? InternalLoadBalancingMode { get; set; }
-        /// <summary> Front-end VM size, e.g. &quot;Medium&quot;, &quot;Large&quot;. </summary>
+        /// <summary> Front-end VM size, e.g. "Medium", "Large". </summary>
         public string MultiSize { get; set; }
         /// <summary> Number of front-end instances. </summary>
         public int? MultiRoleCount { get; }

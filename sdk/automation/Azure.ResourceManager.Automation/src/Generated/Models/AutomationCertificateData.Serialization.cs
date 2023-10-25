@@ -30,11 +30,15 @@ namespace Azure.ResourceManager.Automation
 
         internal static AutomationCertificateData DeserializeAutomationCertificateData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<BinaryData> thumbprint = default;
+            Optional<string> thumbprint = default;
             Optional<DateTimeOffset> expiryTime = default;
             Optional<bool> isExportable = default;
             Optional<DateTimeOffset> creationTime = default;
@@ -61,7 +65,6 @@ namespace Azure.ResourceManager.Automation
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -78,19 +81,13 @@ namespace Azure.ResourceManager.Automation
                     {
                         if (property0.NameEquals("thumbprint"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            thumbprint = BinaryData.FromString(property0.Value.GetRawText());
+                            thumbprint = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("expiryTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             expiryTime = property0.Value.GetDateTimeOffset("O");
@@ -100,7 +97,6 @@ namespace Azure.ResourceManager.Automation
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isExportable = property0.Value.GetBoolean();
@@ -110,7 +106,6 @@ namespace Azure.ResourceManager.Automation
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             creationTime = property0.Value.GetDateTimeOffset("O");
@@ -120,7 +115,6 @@ namespace Azure.ResourceManager.Automation
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastModifiedTime = property0.Value.GetDateTimeOffset("O");

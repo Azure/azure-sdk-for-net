@@ -1,11 +1,14 @@
-@description('The base resource name.')
-param baseName string = resourceGroup().name
-
 @description('The location of the resource. By default, this is the same as the resource group.')
 param location string = resourceGroup().location
 
 @description('The client OID to grant access to test resources.')
 param testApplicationOid string
+
+@description('Random string to generate storage account name.')
+param utc string = utcNow()
+
+@description('The base resource name.')
+param baseName string = resourceGroup().name
 
 resource baseName_resource 'Microsoft.Insights/components@2020-02-02-preview' = {
   name: baseName
@@ -169,6 +172,24 @@ resource dataCollectionRuleRoleAssignment 'Microsoft.Authorization/roleAssignmen
   }
 }
 
+@description('The base resource name.')
+param storageAccountName string = 'nibhatistorage'
+@description('The base resource name.')
+param storageAccountsku string = 'Standard_LRS'
+
+resource storageAccount 'Microsoft.Storage/storageAccounts@2021-08-01' = {
+  name: storageAccountName
+  location: location
+  sku: {
+    name: storageAccountsku
+  }
+  kind: 'StorageV2'
+  tags: {
+    ObjectName: storageAccountName
+  }
+  properties: {}
+}
+
 output CONNECTION_STRING string = baseName_resource.properties.ConnectionString
 output APPLICATION_ID string = baseName_resource.properties.AppId
 output WORKSPACE_ID string = primaryWorkspace.properties.customerId
@@ -183,3 +204,10 @@ output INGESTION_STREAM_NAME string = streamName
 output INGESTION_TABLE_NAME string = table.name
 output INGESTION_DATA_COLLECTION_RULE_ID string = dataCollectionRule.id
 output INGESTION_DATA_COLLECTION_RULE_IMMUTABLE_ID string = dataCollectionRule.properties.immutableId
+output RESOURCE_ID string = resourceGroup().id
+output WORKSPACE_PRIMARY_RESOURCE_ID string = primaryWorkspace.id
+output WORKSPACE_SECONDARY_RESOURCE_ID string = secondaryWorkspace.id
+output DATAPLANE_ENDPOINT string = 'https://${location}.metrics.monitor.azure.com'
+output STORAGE_NAME string = storageAccount.name
+output STORAGE_ID string = storageAccount.id
+output STORAGE_CONNECTION_STRING string = 'DefaultEndpointsProtocol=https;AccountName=${storageAccountName};AccountKey=${listKeys(storageAccount.id, storageAccount.apiVersion).keys[0].value};EndpointSuffix=${environment().suffixes.storage}'

@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static EncoderPresetConfigurations DeserializeEncoderPresetConfigurations(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<EncodingComplexity> complexity = default;
             Optional<InterleaveOutput> interleaveOutput = default;
             Optional<float> keyFrameIntervalInSeconds = default;
@@ -74,7 +78,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     complexity = new EncodingComplexity(property.Value.GetString());
@@ -84,7 +87,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     interleaveOutput = new InterleaveOutput(property.Value.GetString());
@@ -94,7 +96,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     keyFrameIntervalInSeconds = property.Value.GetSingle();
@@ -104,7 +105,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxBitrateBps = property.Value.GetInt32();
@@ -114,7 +114,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxHeight = property.Value.GetInt32();
@@ -124,7 +123,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxLayers = property.Value.GetInt32();
@@ -134,7 +132,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minBitrateBps = property.Value.GetInt32();
@@ -144,7 +141,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minHeight = property.Value.GetInt32();

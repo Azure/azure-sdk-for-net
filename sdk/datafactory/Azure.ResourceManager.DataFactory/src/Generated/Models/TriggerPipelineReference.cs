@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of TriggerPipelineReference. </summary>
         /// <param name="pipelineReference"> Pipeline reference. </param>
         /// <param name="parameters"> Pipeline parameters. </param>
-        internal TriggerPipelineReference(FactoryPipelineReference pipelineReference, IDictionary<string, BinaryData> parameters)
+        internal TriggerPipelineReference(DataFactoryPipelineReference pipelineReference, IDictionary<string, BinaryData> parameters)
         {
             PipelineReference = pipelineReference;
             Parameters = parameters;
         }
 
         /// <summary> Pipeline reference. </summary>
-        public FactoryPipelineReference PipelineReference { get; set; }
+        public DataFactoryPipelineReference PipelineReference { get; set; }
         /// <summary>
         /// Pipeline parameters.
         /// <para>

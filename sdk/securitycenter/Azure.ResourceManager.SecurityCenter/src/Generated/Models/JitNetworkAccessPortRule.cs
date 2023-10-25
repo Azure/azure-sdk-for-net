@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <summary> Initializes a new instance of JitNetworkAccessPortRule. </summary>
         /// <param name="number"></param>
         /// <param name="protocol"></param>
-        /// <param name="allowedSourceAddressPrefix"> Mutually exclusive with the &quot;allowedSourceAddressPrefixes&quot; parameter. Should be an IP address or CIDR, for example &quot;192.168.0.3&quot; or &quot;192.168.0.0/16&quot;. </param>
-        /// <param name="allowedSourceAddressPrefixes"> Mutually exclusive with the &quot;allowedSourceAddressPrefix&quot; parameter. </param>
+        /// <param name="allowedSourceAddressPrefix"> Mutually exclusive with the "allowedSourceAddressPrefixes" parameter. Should be an IP address or CIDR, for example "192.168.0.3" or "192.168.0.0/16". </param>
+        /// <param name="allowedSourceAddressPrefixes"> Mutually exclusive with the "allowedSourceAddressPrefix" parameter. </param>
         /// <param name="maxRequestAccessDuration"> Maximum duration requests can be made for. In ISO 8601 duration format. Minimum 5 minutes, maximum 1 day. </param>
         internal JitNetworkAccessPortRule(int number, JitNetworkAccessPortProtocol protocol, string allowedSourceAddressPrefix, IList<string> allowedSourceAddressPrefixes, TimeSpan maxRequestAccessDuration)
         {
@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public int Number { get; set; }
         /// <summary> Gets or sets the protocol. </summary>
         public JitNetworkAccessPortProtocol Protocol { get; set; }
-        /// <summary> Mutually exclusive with the &quot;allowedSourceAddressPrefixes&quot; parameter. Should be an IP address or CIDR, for example &quot;192.168.0.3&quot; or &quot;192.168.0.0/16&quot;. </summary>
+        /// <summary> Mutually exclusive with the "allowedSourceAddressPrefixes" parameter. Should be an IP address or CIDR, for example "192.168.0.3" or "192.168.0.0/16". </summary>
         public string AllowedSourceAddressPrefix { get; set; }
-        /// <summary> Mutually exclusive with the &quot;allowedSourceAddressPrefix&quot; parameter. </summary>
+        /// <summary> Mutually exclusive with the "allowedSourceAddressPrefix" parameter. </summary>
         public IList<string> AllowedSourceAddressPrefixes { get; }
         /// <summary> Maximum duration requests can be made for. In ISO 8601 duration format. Minimum 5 minutes, maximum 1 day. </summary>
         public TimeSpan MaxRequestAccessDuration { get; set; }

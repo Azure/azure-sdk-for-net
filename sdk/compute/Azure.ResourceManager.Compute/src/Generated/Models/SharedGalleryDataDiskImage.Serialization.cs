@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static SharedGalleryDataDiskImage DeserializeSharedGalleryDataDiskImage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int lun = default;
             Optional<int> diskSizeGB = default;
             Optional<SharedGalleryHostCaching> hostCaching = default;
@@ -28,7 +32,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     diskSizeGB = property.Value.GetInt32();
@@ -38,7 +41,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     hostCaching = new SharedGalleryHostCaching(property.Value.GetString());

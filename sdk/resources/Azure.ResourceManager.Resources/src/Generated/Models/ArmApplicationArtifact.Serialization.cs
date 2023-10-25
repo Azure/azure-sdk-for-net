@@ -7,7 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -15,6 +14,10 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static ArmApplicationArtifact DeserializeArmApplicationArtifact(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ArmApplicationArtifactName name = default;
             Uri uri = default;
             ArmApplicationArtifactType type = default;

@@ -69,6 +69,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningRecurrenceSchedule DeserializeMachineLearningRecurrenceSchedule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<int> hours = default;
             IList<int> minutes = default;
             Optional<IList<int>> monthDays = default;

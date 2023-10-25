@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> Recording storage mode. When set to &apos;BlobStorage&apos;, specify required parameter &apos;ExternalStorageLocation&apos;, to export recording to your own blob container. </summary>
+    /// <summary> Defines the type of external storage. </summary>
     public readonly partial struct RecordingStorageType : IEquatable<RecordingStorageType>
     {
         private readonly string _value;

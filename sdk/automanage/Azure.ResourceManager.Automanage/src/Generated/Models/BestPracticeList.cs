@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Automanage.Models
         /// <summary> Initializes a new instance of BestPracticeList. </summary>
         internal BestPracticeList()
         {
-            Value = new ChangeTrackingList<BestPracticeData>();
+            Value = new ChangeTrackingList<AutomanageBestPracticeData>();
         }
 
         /// <summary> Initializes a new instance of BestPracticeList. </summary>
         /// <param name="value"> Result of the list best practice operation. </param>
-        internal BestPracticeList(IReadOnlyList<BestPracticeData> value)
+        internal BestPracticeList(IReadOnlyList<AutomanageBestPracticeData> value)
         {
             Value = value;
         }
 
         /// <summary> Result of the list best practice operation. </summary>
-        public IReadOnlyList<BestPracticeData> Value { get; }
+        public IReadOnlyList<AutomanageBestPracticeData> Value { get; }
     }
 }

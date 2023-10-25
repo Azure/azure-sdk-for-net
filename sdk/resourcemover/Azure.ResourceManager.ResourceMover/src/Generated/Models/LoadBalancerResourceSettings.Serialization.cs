@@ -59,27 +59,39 @@ namespace Azure.ResourceManager.ResourceMover.Models
             }
             writer.WritePropertyName("resourceType"u8);
             writer.WriteStringValue(ResourceType);
-            writer.WritePropertyName("targetResourceName"u8);
-            writer.WriteStringValue(TargetResourceName);
+            if (Optional.IsDefined(TargetResourceName))
+            {
+                writer.WritePropertyName("targetResourceName"u8);
+                writer.WriteStringValue(TargetResourceName);
+            }
+            if (Optional.IsDefined(TargetResourceGroupName))
+            {
+                writer.WritePropertyName("targetResourceGroupName"u8);
+                writer.WriteStringValue(TargetResourceGroupName);
+            }
             writer.WriteEndObject();
         }
 
         internal static LoadBalancerResourceSettings DeserializeLoadBalancerResourceSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             Optional<string> sku = default;
             Optional<IList<LoadBalancerFrontendIPConfigurationResourceSettings>> frontendIPConfigurations = default;
             Optional<IList<LoadBalancerBackendAddressPoolResourceSettings>> backendAddressPools = default;
             Optional<string> zones = default;
             string resourceType = default;
-            string targetResourceName = default;
+            Optional<string> targetResourceName = default;
+            Optional<string> targetResourceGroupName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -99,7 +111,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<LoadBalancerFrontendIPConfigurationResourceSettings> array = new List<LoadBalancerFrontendIPConfigurationResourceSettings>();
@@ -114,7 +125,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<LoadBalancerBackendAddressPoolResourceSettings> array = new List<LoadBalancerBackendAddressPoolResourceSettings>();
@@ -140,8 +150,13 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     targetResourceName = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("targetResourceGroupName"u8))
+                {
+                    targetResourceGroupName = property.Value.GetString();
+                    continue;
+                }
             }
-            return new LoadBalancerResourceSettings(resourceType, targetResourceName, Optional.ToDictionary(tags), sku.Value, Optional.ToList(frontendIPConfigurations), Optional.ToList(backendAddressPools), zones.Value);
+            return new LoadBalancerResourceSettings(resourceType, targetResourceName.Value, targetResourceGroupName.Value, Optional.ToDictionary(tags), sku.Value, Optional.ToList(frontendIPConfigurations), Optional.ToList(backendAddressPools), zones.Value);
         }
     }
 }

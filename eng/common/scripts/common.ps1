@@ -40,6 +40,7 @@ if (!(Get-Variable -Name "LanguageDisplayName" -ValueOnly -ErrorAction "Ignore")
 }
 
 # Transformed Functions
+# Expected to be set in eng/scripts/Language-Settings.ps1
 $GetPackageInfoFromRepoFn = "Get-${Language}-PackageInfoFromRepo"
 $GetPackageInfoFromPackageFileFn = "Get-${Language}-PackageInfoFromPackageFile"
 $PublishGithubIODocsFn = "Publish-${Language}-GithubIODocs"
@@ -59,4 +60,11 @@ $GetPackageLevelReadmeFn = "Get-${Language}-PackageLevelReadme"
 $GetRepositoryLinkFn = "Get-${Language}-RepositoryLink"
 $GetEmitterAdditionalOptionsFn = "Get-${Language}-EmitterAdditionalOptions"
 $GetEmitterNameFn = "Get-${Language}-EmitterName"
-$GetEmitterPackageJsonPathFn = "Get-${Language}-EmitterPackageJsonPath"
+$GetDirectoriesForGenerationFn = "Get-${Language}-DirectoriesForGeneration"
+$UpdateGeneratedSdksFn = "Update-${Language}-GeneratedSdks"
+
+# Expected to be set in eng/scripts/docs/Docs-Onboarding.ps1
+$SetDocsPackageOnboarding = "Set-${Language}-DocsPackageOnboarding"
+$GetDocsPackagesAlreadyOnboarded = "Get-${Language}-DocsPackagesAlreadyOnboarded"
+$GetPackageIdentity = "Get-${Language}-PackageIdentity"
+$GetPackageIdentityFromCsvMetadata = "Get-${Language}-PackageIdentityFromCsvMetadata"

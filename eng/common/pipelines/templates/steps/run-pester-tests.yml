@@ -13,7 +13,7 @@ parameters:
 
 steps:
   - pwsh: |
-     Install-Module -Name Pester -Force
+       Install-Module -Name Pester -Force
     displayName: Install Pester
 
    # default test steps
@@ -30,8 +30,10 @@ steps:
           $config.Filter.Tag = $tags
         }
 
+        Write-Host "Calling 'Invoke-Pester' in workingDirectory '$(Build.SourcesDirectory)/${{ parameters.TargetDirectory }}'. Pester tags filter: '$tags'"
+        # https://pester.dev/docs/commands/Invoke-Pester
         Invoke-Pester -Configuration $config
-      displayName: Run Tests
+      displayName: Run Pester Tests
       env: ${{ parameters.EnvVars }}
       workingDirectory: $(Build.SourcesDirectory)/${{ parameters.TargetDirectory }}
 
@@ -39,17 +41,17 @@ steps:
     - ${{ parameters.CustomTestSteps }}
 
   - task: PublishTestResults@2
-    displayName: 'Publish Test Results'
+    displayName: Publish Test Results
     condition: succeededOrFailed()
     inputs:
-      testResultsFormat: 'NUnit'
+      testResultsFormat: NUnit
       testResultsFiles: $(Build.SourcesDirectory)/${{ parameters.TargetDirectory }}/testResults.xml
-      testRunTitle: '$(System.StageName)_$(Agent.JobName)_Tests'
+      testRunTitle: $(System.StageName)_$(Agent.JobName)_Tests
 
   - task: PublishCodeCoverageResults@1
-    displayName: 'Publish Code Coverage to Azure DevOps'
+    displayName: Publish Code Coverage to Azure DevOps
     condition: succeededOrFailed()
     inputs:
-      codeCoverageTool: 'JaCoCo'
-      summaryFileLocation: '$(Build.SourcesDirectory)/${{ parameters.TargetDirectory }}/coverage.xml'
-      pathToSources: '$(Build.SourcesDirectory)/${{ parameters.TargetDirectory }}'
+      codeCoverageTool: JaCoCo
+      summaryFileLocation: $(Build.SourcesDirectory)/${{ parameters.TargetDirectory }}/coverage.xml
+      pathToSources: $(Build.SourcesDirectory)/${{ parameters.TargetDirectory }}

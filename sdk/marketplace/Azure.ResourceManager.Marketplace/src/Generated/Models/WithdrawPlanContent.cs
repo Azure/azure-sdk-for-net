@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Marketplace.Models
 
         /// <summary> Gets or sets Plan Id. </summary>
         public string PlanId { get; set; }
-        /// <summary> The offer&apos;s publisher id. </summary>
+        /// <summary> The offer's publisher id. </summary>
         public string PublisherId { get; set; }
     }
 }

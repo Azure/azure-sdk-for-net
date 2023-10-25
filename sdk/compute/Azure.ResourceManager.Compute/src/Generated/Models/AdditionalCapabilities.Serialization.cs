@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static AdditionalCapabilities DeserializeAdditionalCapabilities(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> ultraSsdEnabled = default;
             Optional<bool> hibernationEnabled = default;
             foreach (var property in element.EnumerateObject())
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ultraSsdEnabled = property.Value.GetBoolean();
@@ -48,7 +51,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     hibernationEnabled = property.Value.GetBoolean();

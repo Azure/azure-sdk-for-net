@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static SubscriptionStateOverrideAction DeserializeSubscriptionStateOverrideAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SubscriptionTransitioningState state = default;
             SubscriptionNotificationOperation action = default;
             foreach (var property in element.EnumerateObject())

@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppLogsConfiguration DeserializeAppLogsConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> destination = default;
             Optional<LogAnalyticsConfiguration> logAnalyticsConfiguration = default;
             foreach (var property in element.EnumerateObject())
@@ -43,7 +47,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     logAnalyticsConfiguration = LogAnalyticsConfiguration.DeserializeLogAnalyticsConfiguration(property.Value);

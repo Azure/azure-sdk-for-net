@@ -15,6 +15,10 @@ namespace Azure.AI.AnomalyDetector
     {
         internal static UnivariateLastDetectionResult DeserializeUnivariateLastDetectionResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int period = default;
             int suggestedWindow = default;
             float expectedValue = default;
@@ -23,7 +27,7 @@ namespace Azure.AI.AnomalyDetector
             bool isAnomaly = default;
             bool isNegativeAnomaly = default;
             bool isPositiveAnomaly = default;
-            Optional<float?> severity = default;
+            Optional<float> severity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("period"u8))
@@ -70,7 +74,6 @@ namespace Azure.AI.AnomalyDetector
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        severity = null;
                         continue;
                     }
                     severity = property.Value.GetSingle();

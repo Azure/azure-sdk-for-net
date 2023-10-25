@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static TldLegalAgreement DeserializeTldLegalAgreement(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string agreementKey = default;
             string title = default;
             string content = default;
@@ -40,7 +44,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        url = null;
                         continue;
                     }
                     url = new Uri(property.Value.GetString());

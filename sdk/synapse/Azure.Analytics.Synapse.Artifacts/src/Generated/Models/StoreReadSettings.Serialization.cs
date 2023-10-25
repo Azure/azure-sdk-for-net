@@ -35,6 +35,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static StoreReadSettings DeserializeStoreReadSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

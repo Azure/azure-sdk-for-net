@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.Monitor.Models
 
         public static MetricStatisticType ToMetricStatisticType(this string value)
         {
-            if (string.Equals(value, "Average", StringComparison.InvariantCultureIgnoreCase)) return MetricStatisticType.Average;
-            if (string.Equals(value, "Min", StringComparison.InvariantCultureIgnoreCase)) return MetricStatisticType.Min;
-            if (string.Equals(value, "Max", StringComparison.InvariantCultureIgnoreCase)) return MetricStatisticType.Max;
-            if (string.Equals(value, "Sum", StringComparison.InvariantCultureIgnoreCase)) return MetricStatisticType.Sum;
-            if (string.Equals(value, "Count", StringComparison.InvariantCultureIgnoreCase)) return MetricStatisticType.Count;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Average")) return MetricStatisticType.Average;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Min")) return MetricStatisticType.Min;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Max")) return MetricStatisticType.Max;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Sum")) return MetricStatisticType.Sum;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Count")) return MetricStatisticType.Count;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MetricStatisticType value.");
         }
     }

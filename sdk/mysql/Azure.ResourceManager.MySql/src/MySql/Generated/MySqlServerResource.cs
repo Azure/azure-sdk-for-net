@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -329,7 +330,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> Returns a <see cref="MySqlServerAdministratorResource" /> object. </returns>
         public virtual MySqlServerAdministratorResource GetMySqlServerAdministrator()
         {
-            return new MySqlServerAdministratorResource(Client, new ResourceIdentifier(Id.ToString() + "/administrators/activeDirectory"));
+            return new MySqlServerAdministratorResource(Client, Id.AppendChildResource("administrators", "activeDirectory"));
         }
 
         /// <summary> Gets a collection of MySqlServerSecurityAlertPolicyResources in the MySqlServer. </summary>
@@ -340,7 +341,7 @@ namespace Azure.ResourceManager.MySql
         }
 
         /// <summary>
-        /// Get a server&apos;s security alert policy.
+        /// Get a server's security alert policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -361,7 +362,7 @@ namespace Azure.ResourceManager.MySql
         }
 
         /// <summary>
-        /// Get a server&apos;s security alert policy.
+        /// Get a server's security alert policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1122,7 +1123,7 @@ namespace Azure.ResourceManager.MySql
         public virtual AsyncPageable<MySqlLogFile> GetLogFilesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logFilesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MySqlLogFile.DeserializeMySqlLogFile, _logFilesClientDiagnostics, Pipeline, "MySqlServerResource.GetLogFiles", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MySqlLogFile.DeserializeMySqlLogFile, _logFilesClientDiagnostics, Pipeline, "MySqlServerResource.GetLogFiles", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1143,7 +1144,7 @@ namespace Azure.ResourceManager.MySql
         public virtual Pageable<MySqlLogFile> GetLogFiles(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logFilesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, MySqlLogFile.DeserializeMySqlLogFile, _logFilesClientDiagnostics, Pipeline, "MySqlServerResource.GetLogFiles", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, MySqlLogFile.DeserializeMySqlLogFile, _logFilesClientDiagnostics, Pipeline, "MySqlServerResource.GetLogFiles", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1224,7 +1225,7 @@ namespace Azure.ResourceManager.MySql
         public virtual AsyncPageable<MySqlPerformanceTier> GetServerBasedPerformanceTiersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serverBasedPerformanceTierRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MySqlPerformanceTier.DeserializeMySqlPerformanceTier, _serverBasedPerformanceTierClientDiagnostics, Pipeline, "MySqlServerResource.GetServerBasedPerformanceTiers", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MySqlPerformanceTier.DeserializeMySqlPerformanceTier, _serverBasedPerformanceTierClientDiagnostics, Pipeline, "MySqlServerResource.GetServerBasedPerformanceTiers", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1245,7 +1246,7 @@ namespace Azure.ResourceManager.MySql
         public virtual Pageable<MySqlPerformanceTier> GetServerBasedPerformanceTiers(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serverBasedPerformanceTierRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, MySqlPerformanceTier.DeserializeMySqlPerformanceTier, _serverBasedPerformanceTierClientDiagnostics, Pipeline, "MySqlServerResource.GetServerBasedPerformanceTiers", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, MySqlPerformanceTier.DeserializeMySqlPerformanceTier, _serverBasedPerformanceTierClientDiagnostics, Pipeline, "MySqlServerResource.GetServerBasedPerformanceTiers", "value", null, cancellationToken);
         }
 
         /// <summary>

@@ -26,6 +26,10 @@ namespace Azure.AI.TextAnalytics
 
         internal static SentimentConfidenceScores DeserializeSentimentConfidenceScores(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             double positive = default;
             double neutral = default;
             double negative = default;

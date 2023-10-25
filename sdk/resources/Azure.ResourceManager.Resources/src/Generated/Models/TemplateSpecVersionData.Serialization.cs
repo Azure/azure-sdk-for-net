@@ -55,7 +55,10 @@ namespace Azure.ResourceManager.Resources
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Metadata);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Metadata.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(Metadata))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsDefined(MainTemplate))
@@ -64,7 +67,10 @@ namespace Azure.ResourceManager.Resources
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(MainTemplate);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(MainTemplate.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(MainTemplate))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsDefined(UiFormDefinition))
@@ -73,7 +79,10 @@ namespace Azure.ResourceManager.Resources
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(UiFormDefinition);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(UiFormDefinition.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(UiFormDefinition))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
@@ -82,6 +91,10 @@ namespace Azure.ResourceManager.Resources
 
         internal static TemplateSpecVersionData DeserializeTemplateSpecVersionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AzureLocation location = default;
             Optional<IDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
@@ -104,7 +117,6 @@ namespace Azure.ResourceManager.Resources
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -134,7 +146,6 @@ namespace Azure.ResourceManager.Resources
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -158,7 +169,6 @@ namespace Azure.ResourceManager.Resources
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<LinkedTemplateArtifact> array = new List<LinkedTemplateArtifact>();
@@ -173,7 +183,6 @@ namespace Azure.ResourceManager.Resources
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             metadata = BinaryData.FromString(property0.Value.GetRawText());
@@ -183,7 +192,6 @@ namespace Azure.ResourceManager.Resources
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             mainTemplate = BinaryData.FromString(property0.Value.GetRawText());
@@ -193,7 +201,6 @@ namespace Azure.ResourceManager.Resources
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             uiFormDefinition = BinaryData.FromString(property0.Value.GetRawText());

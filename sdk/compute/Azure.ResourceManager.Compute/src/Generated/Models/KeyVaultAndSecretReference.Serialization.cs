@@ -18,13 +18,18 @@ namespace Azure.ResourceManager.Compute.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("sourceVault"u8);
-            JsonSerializer.Serialize(writer, SourceVault); writer.WritePropertyName("secretUrl"u8);
+            JsonSerializer.Serialize(writer, SourceVault);
+            writer.WritePropertyName("secretUrl"u8);
             writer.WriteStringValue(SecretUri.AbsoluteUri);
             writer.WriteEndObject();
         }
 
         internal static KeyVaultAndSecretReference DeserializeKeyVaultAndSecretReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             WritableSubResource sourceVault = default;
             Uri secretUrl = default;
             foreach (var property in element.EnumerateObject())

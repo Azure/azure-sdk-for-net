@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Training
 {
@@ -14,6 +13,10 @@ namespace Azure.AI.FormRecognizer.Training
     {
         internal static CustomFormModelField DeserializeCustomFormModelField(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string fieldName = default;
             float? accuracy = default;
             foreach (var property in element.EnumerateObject())

@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.Sql.Models
         public SqlDatabasePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+            Keys = new ChangeTrackingDictionary<string, SqlDatabaseKey>();
         }
 
         /// <summary> The name and tier of the SKU. </summary>
@@ -28,21 +29,21 @@ namespace Azure.ResourceManager.Sql.Models
         public IDictionary<string, string> Tags { get; }
         /// <summary>
         /// Specifies the mode of database creation.
-        /// 
+        ///
         /// Default: regular database creation.
-        /// 
+        ///
         /// Copy: creates a database as a copy of an existing database. sourceDatabaseId must be specified as the resource ID of the source database.
-        /// 
+        ///
         /// Secondary: creates a database as a secondary replica of an existing database. sourceDatabaseId must be specified as the resource ID of the existing primary database.
-        /// 
+        ///
         /// PointInTimeRestore: Creates a database by restoring a point in time backup of an existing database. sourceDatabaseId must be specified as the resource ID of the existing database, and restorePointInTime must be specified.
-        /// 
+        ///
         /// Recovery: Creates a database by restoring a geo-replicated backup. sourceDatabaseId must be specified as the recoverable database resource ID to restore.
-        /// 
-        /// Restore: Creates a database by restoring a backup of a deleted database. sourceDatabaseId must be specified. If sourceDatabaseId is the database&apos;s original resource ID, then sourceDatabaseDeletionDate must be specified. Otherwise sourceDatabaseId must be the restorable dropped database resource ID and sourceDatabaseDeletionDate is ignored. restorePointInTime may also be specified to restore from an earlier point in time.
-        /// 
+        ///
+        /// Restore: Creates a database by restoring a backup of a deleted database. sourceDatabaseId must be specified. If sourceDatabaseId is the database's original resource ID, then sourceDatabaseDeletionDate must be specified. Otherwise sourceDatabaseId must be the restorable dropped database resource ID and sourceDatabaseDeletionDate is ignored. restorePointInTime may also be specified to restore from an earlier point in time.
+        ///
         /// RestoreLongTermRetentionBackup: Creates a database by restoring from a long term retention vault. recoveryServicesRecoveryPointResourceId must be specified as the recovery point resource ID.
-        /// 
+        ///
         /// Copy, Secondary, and RestoreLongTermRetentionBackup are not supported for DataWarehouse edition.
         /// </summary>
         public SqlDatabaseCreateMode? CreateMode { get; set; }
@@ -120,7 +121,43 @@ namespace Azure.ResourceManager.Sql.Models
         public bool? IsInfraEncryptionEnabled { get; }
         /// <summary> The Client id used for cross tenant per database CMK scenario. </summary>
         public Guid? FederatedClientId { get; set; }
+        /// <summary> The resource ids of the user assigned identities to use. </summary>
+        public IDictionary<string, SqlDatabaseKey> Keys { get; }
+        /// <summary> The azure key vault URI of the database if it's configured with per Database Customer Managed Keys. </summary>
+        public string EncryptionProtector { get; set; }
         /// <summary> Type of enclave requested on the database i.e. Default or VBS enclaves. </summary>
         public SqlAlwaysEncryptedEnclaveType? PreferredEnclaveType { get; set; }
+        /// <summary> Whether or not the database uses free monthly limits. Allowed on one database in a subscription. </summary>
+        public bool? UseFreeLimit { get; set; }
+        /// <summary>
+        /// Specifies the behavior when monthly free limits are exhausted for the free database.
+        ///
+        /// AutoPause: The database will be auto paused upon exhaustion of free limits for remainder of the month.
+        ///
+        /// BillForUsage: The database will continue to be online upon exhaustion of free limits and any overage will be billed.
+        /// </summary>
+        public FreeLimitExhaustionBehavior? FreeLimitExhaustionBehavior { get; set; }
+        /// <summary>
+        /// Whether or not customer controlled manual cutover needs to be done during Update Database operation to Hyperscale tier.
+        ///
+        /// This property is only applicable when scaling database from Business Critical/General Purpose/Premium/Standard tier to Hyperscale tier.
+        ///
+        /// When manualCutover is specified, the scaling operation will wait for user input to trigger cutover to Hyperscale database.
+        ///
+        /// To trigger cutover, please provide 'performCutover' parameter when the Scaling operation is in Waiting state.
+        /// </summary>
+        public bool? ManualCutover { get; set; }
+        /// <summary>
+        /// To trigger customer controlled manual cutover during the wait state while Scaling operation is in progress.
+        ///
+        /// This property parameter is only applicable for scaling operations that are initiated along with 'manualCutover' parameter.
+        ///
+        /// This property is only applicable when scaling database from Business Critical/General Purpose/Premium/Standard tier to Hyperscale tier is already in progress.
+        ///
+        /// When performCutover is specified, the scaling operation will trigger cutover and perform role-change to Hyperscale database.
+        /// </summary>
+        public bool? PerformCutover { get; set; }
+        /// <summary> The flag to enable or disable auto rotation of database encryption protector AKV key. </summary>
+        public bool? EncryptionProtectorAutoRotation { get; set; }
     }
 }

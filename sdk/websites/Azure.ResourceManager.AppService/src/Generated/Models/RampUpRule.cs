@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="actionHostName"> Hostname of a slot to which the traffic will be redirected if decided to. E.g. myapp-stage.azurewebsites.net. </param>
         /// <param name="reroutePercentage"> Percentage of the traffic which will be redirected to &lt;code&gt;ActionHostName&lt;/code&gt;. </param>
         /// <param name="changeStep">
-        /// In auto ramp up scenario this is the step to add/remove from &lt;code&gt;ReroutePercentage&lt;/code&gt; until it reaches \n&lt;code&gt;MinReroutePercentage&lt;/code&gt; or 
-        /// &lt;code&gt;MaxReroutePercentage&lt;/code&gt;. Site metrics are checked every N minutes specified in &lt;code&gt;ChangeIntervalInMinutes&lt;/code&gt;.\nCustom decision algorithm 
+        /// In auto ramp up scenario this is the step to add/remove from &lt;code&gt;ReroutePercentage&lt;/code&gt; until it reaches \n&lt;code&gt;MinReroutePercentage&lt;/code&gt; or
+        /// &lt;code&gt;MaxReroutePercentage&lt;/code&gt;. Site metrics are checked every N minutes specified in &lt;code&gt;ChangeIntervalInMinutes&lt;/code&gt;.\nCustom decision algorithm
         /// can be provided in TiPCallback site extension which URL can be specified in &lt;code&gt;ChangeDecisionCallbackUrl&lt;/code&gt;.
         /// </param>
         /// <param name="changeIntervalInMinutes"> Specifies interval in minutes to reevaluate ReroutePercentage. </param>
@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Percentage of the traffic which will be redirected to &lt;code&gt;ActionHostName&lt;/code&gt;. </summary>
         public double? ReroutePercentage { get; set; }
         /// <summary>
-        /// In auto ramp up scenario this is the step to add/remove from &lt;code&gt;ReroutePercentage&lt;/code&gt; until it reaches \n&lt;code&gt;MinReroutePercentage&lt;/code&gt; or 
-        /// &lt;code&gt;MaxReroutePercentage&lt;/code&gt;. Site metrics are checked every N minutes specified in &lt;code&gt;ChangeIntervalInMinutes&lt;/code&gt;.\nCustom decision algorithm 
+        /// In auto ramp up scenario this is the step to add/remove from &lt;code&gt;ReroutePercentage&lt;/code&gt; until it reaches \n&lt;code&gt;MinReroutePercentage&lt;/code&gt; or
+        /// &lt;code&gt;MaxReroutePercentage&lt;/code&gt;. Site metrics are checked every N minutes specified in &lt;code&gt;ChangeIntervalInMinutes&lt;/code&gt;.\nCustom decision algorithm
         /// can be provided in TiPCallback site extension which URL can be specified in &lt;code&gt;ChangeDecisionCallbackUrl&lt;/code&gt;.
         /// </summary>
         public double? ChangeStep { get; set; }

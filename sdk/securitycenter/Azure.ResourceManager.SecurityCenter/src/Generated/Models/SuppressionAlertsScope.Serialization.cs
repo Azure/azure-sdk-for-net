@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SuppressionAlertsScope DeserializeSuppressionAlertsScope(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<SuppressionAlertsScopeElement> allOf = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary>
-        /// Creates a new user or updates an existing user&apos;s information on a Data Box Edge/Data Box Gateway device.
+        /// Creates a new user or updates an existing user's information on a Data Box Edge/Data Box Gateway device.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         }
 
         /// <summary>
-        /// Creates a new user or updates an existing user&apos;s information on a Data Box Edge/Data Box Gateway device.
+        /// Creates a new user or updates an existing user's information on a Data Box Edge/Data Box Gateway device.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

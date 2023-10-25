@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Purview.Models
     {
         internal static PurviewPrivateLinkResourceProperties DeserializePurviewPrivateLinkResourceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> groupId = default;
             Optional<IReadOnlyList<string>> requiredMembers = default;
             Optional<IReadOnlyList<string>> requiredZoneNames = default;
@@ -29,7 +33,6 @@ namespace Azure.ResourceManager.Purview.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -44,7 +47,6 @@ namespace Azure.ResourceManager.Purview.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

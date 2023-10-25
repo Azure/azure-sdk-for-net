@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -32,7 +33,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="targetManagedDiskId"> The ARM Id of the target managed disk. </param>
         /// <param name="targetBlobUri"> The uri of the target blob. </param>
         /// <param name="targetDiskName"> The name for the target managed disk. </param>
-        internal VMwareCbtProtectedDiskDetails(string diskId, string diskName, DiskAccountType? diskType, string diskPath, string isOSDisk, long? capacityInBytes, string logStorageAccountId, string logStorageAccountSasSecretName, string diskEncryptionSetId, string seedManagedDiskId, Uri seedBlobUri, string targetManagedDiskId, Uri targetBlobUri, string targetDiskName)
+        /// <param name="gatewayOperationDetails"> A value indicating the gateway operation details. </param>
+        internal VMwareCbtProtectedDiskDetails(string diskId, string diskName, SiteRecoveryDiskAccountType? diskType, string diskPath, string isOSDisk, long? capacityInBytes, ResourceIdentifier logStorageAccountId, string logStorageAccountSasSecretName, ResourceIdentifier diskEncryptionSetId, string seedManagedDiskId, Uri seedBlobUri, string targetManagedDiskId, Uri targetBlobUri, string targetDiskName, GatewayOperationDetails gatewayOperationDetails)
         {
             DiskId = diskId;
             DiskName = diskName;
@@ -48,6 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             TargetManagedDiskId = targetManagedDiskId;
             TargetBlobUri = targetBlobUri;
             TargetDiskName = targetDiskName;
+            GatewayOperationDetails = gatewayOperationDetails;
         }
 
         /// <summary> The disk id. </summary>
@@ -55,7 +58,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The disk name. </summary>
         public string DiskName { get; }
         /// <summary> The disk type. </summary>
-        public DiskAccountType? DiskType { get; }
+        public SiteRecoveryDiskAccountType? DiskType { get; }
         /// <summary> The disk path. </summary>
         public string DiskPath { get; }
         /// <summary> A value indicating whether the disk is the OS disk. </summary>
@@ -63,11 +66,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The disk capacity in bytes. </summary>
         public long? CapacityInBytes { get; }
         /// <summary> The log storage account ARM Id. </summary>
-        public string LogStorageAccountId { get; }
+        public ResourceIdentifier LogStorageAccountId { get; }
         /// <summary> The key vault secret name of the log storage account. </summary>
         public string LogStorageAccountSasSecretName { get; }
         /// <summary> The DiskEncryptionSet ARM Id. </summary>
-        public string DiskEncryptionSetId { get; }
+        public ResourceIdentifier DiskEncryptionSetId { get; }
         /// <summary> The ARM Id of the seed managed disk. </summary>
         public string SeedManagedDiskId { get; }
         /// <summary> The uri of the seed blob. </summary>
@@ -78,5 +81,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public Uri TargetBlobUri { get; }
         /// <summary> The name for the target managed disk. </summary>
         public string TargetDiskName { get; }
+        /// <summary> A value indicating the gateway operation details. </summary>
+        public GatewayOperationDetails GatewayOperationDetails { get; }
     }
 }

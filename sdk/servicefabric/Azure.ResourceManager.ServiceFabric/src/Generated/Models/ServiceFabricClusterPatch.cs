@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public IList<ClusterClientCertificateCommonName> ClientCertificateCommonNames { get; }
         /// <summary> The list of client certificates referenced by thumbprint that are allowed to manage the cluster. This will overwrite the existing list. </summary>
         public IList<ClusterClientCertificateThumbprint> ClientCertificateThumbprints { get; }
-        /// <summary> The Service Fabric runtime version of the cluster. This property can only by set the user when **upgradeMode** is set to &apos;Manual&apos;. To get list of available Service Fabric versions for new clusters use [ClusterVersion API](./ClusterVersion.md). To get the list of available version for existing clusters use **availableClusterVersions**. </summary>
+        /// <summary> The Service Fabric runtime version of the cluster. This property can only by set the user when **upgradeMode** is set to 'Manual'. To get list of available Service Fabric versions for new clusters use [ClusterVersion API](./ClusterVersion.md). To get the list of available version for existing clusters use **availableClusterVersions**. </summary>
         public string ClusterCodeVersion { get; set; }
         /// <summary> Indicates if the event store service is enabled. </summary>
         public bool? IsEventStoreServiceEnabled { get; set; }
@@ -48,13 +48,13 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public IList<ClusterNodeTypeDescription> NodeTypes { get; }
         /// <summary>
         /// The reliability level sets the replica set size of system services. Learn about [ReliabilityLevel](https://docs.microsoft.com/azure/service-fabric/service-fabric-cluster-capacity).
-        /// 
+        ///
         ///   - None - Run the System services with a target replica set count of 1. This should only be used for test clusters.
         ///   - Bronze - Run the System services with a target replica set count of 3. This should only be used for test clusters.
         ///   - Silver - Run the System services with a target replica set count of 5.
         ///   - Gold - Run the System services with a target replica set count of 7.
         ///   - Platinum - Run the System services with a target replica set count of 9.
-        /// 
+        ///
         /// </summary>
         public ClusterReliabilityLevel? ReliabilityLevel { get; set; }
         /// <summary> The server certificate used by reverse proxy. </summary>
@@ -75,13 +75,13 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         /// <summary> The upgrade mode of the cluster when new Service Fabric runtime version is available. </summary>
         public ClusterUpgradeMode? UpgradeMode { get; set; }
-        /// <summary> This property controls the logical grouping of VMs in upgrade domains (UDs). This property can&apos;t be modified if a node type with multiple Availability Zones is already present in the cluster. </summary>
+        /// <summary> This property controls the logical grouping of VMs in upgrade domains (UDs). This property can't be modified if a node type with multiple Availability Zones is already present in the cluster. </summary>
         public SfZonalUpgradeMode? SfZonalUpgradeMode { get; set; }
         /// <summary> This property defines the upgrade mode for the virtual machine scale set, it is mandatory if a node type with multiple Availability Zones is added. </summary>
         public VmssZonalUpgradeMode? VmssZonalUpgradeMode { get; set; }
         /// <summary> Indicates if infrastructure service manager is enabled. </summary>
         public bool? IsInfrastructureServiceManagerEnabled { get; set; }
-        /// <summary> Indicates when new cluster runtime version upgrades will be applied after they are released. By default is Wave0. Only applies when **upgradeMode** is set to &apos;Automatic&apos;. </summary>
+        /// <summary> Indicates when new cluster runtime version upgrades will be applied after they are released. By default is Wave0. Only applies when **upgradeMode** is set to 'Automatic'. </summary>
         public ClusterUpgradeCadence? UpgradeWave { get; set; }
         /// <summary> The start timestamp to pause runtime version upgrades on the cluster (UTC). </summary>
         public DateTimeOffset? UpgradePauseStartOn { get; set; }

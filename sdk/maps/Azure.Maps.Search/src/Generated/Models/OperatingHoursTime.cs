@@ -16,7 +16,7 @@ namespace Azure.Maps.Search.Models
         }
 
         /// <summary> Initializes a new instance of OperatingHoursTime. </summary>
-        /// <param name="date"> Represents current calendar date in POI time zone, e.g. &quot;2019-02-07&quot;. </param>
+        /// <param name="date"> Represents current calendar date in POI time zone, e.g. "2019-02-07". </param>
         /// <param name="hour"> Hours are in the 24 hour format in the local time of a POI; possible values are 0 - 23. </param>
         /// <param name="minute"> Minutes are in the local time of a POI; possible values are 0 - 59. </param>
         internal OperatingHoursTime(string date, int? hour, int? minute)
@@ -26,7 +26,7 @@ namespace Azure.Maps.Search.Models
             Minute = minute;
         }
 
-        /// <summary> Represents current calendar date in POI time zone, e.g. &quot;2019-02-07&quot;. </summary>
+        /// <summary> Represents current calendar date in POI time zone, e.g. "2019-02-07". </summary>
         public string Date { get; }
         /// <summary> Hours are in the 24 hour format in the local time of a POI; possible values are 0 - 23. </summary>
         public int? Hour { get; }

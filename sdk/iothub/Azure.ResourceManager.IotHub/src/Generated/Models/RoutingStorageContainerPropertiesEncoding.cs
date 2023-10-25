@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    /// <summary> Encoding that is used to serialize messages to blobs. Supported values are &apos;avro&apos;, &apos;avrodeflate&apos;, and &apos;JSON&apos;. Default value is &apos;avro&apos;. </summary>
+    /// <summary> Encoding that is used to serialize messages to blobs. Supported values are 'avro', 'avrodeflate', and 'JSON'. Default value is 'avro'. </summary>
     public readonly partial struct RoutingStorageContainerPropertiesEncoding : IEquatable<RoutingStorageContainerPropertiesEncoding>
     {
         private readonly string _value;

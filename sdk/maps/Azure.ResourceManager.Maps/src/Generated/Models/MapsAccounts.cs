@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Maps.Models
         /// <param name="value"> a Maps Account. </param>
         /// <param name="nextLink">
         /// URL client should use to fetch the next page (per server side paging).
-        /// It&apos;s null for now, added for future use.
+        /// It's null for now, added for future use.
         /// </param>
         internal MapsAccounts(IReadOnlyList<MapsAccountData> value, string nextLink)
         {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Maps.Models
         public IReadOnlyList<MapsAccountData> Value { get; }
         /// <summary>
         /// URL client should use to fetch the next page (per server side paging).
-        /// It&apos;s null for now, added for future use.
+        /// It's null for now, added for future use.
         /// </summary>
         public string NextLink { get; }
     }

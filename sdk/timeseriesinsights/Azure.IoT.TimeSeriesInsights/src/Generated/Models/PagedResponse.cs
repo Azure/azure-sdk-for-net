@@ -16,13 +16,13 @@ namespace Azure.IoT.TimeSeriesInsights
         }
 
         /// <summary> Initializes a new instance of PagedResponse. </summary>
-        /// <param name="continuationToken"> If returned, this means that current results represent a partial result. Continuation token allows to get the next page of results. To get the next page of query results, send the same request with continuation token parameter in &quot;x-ms-continuation&quot; HTTP header. </param>
+        /// <param name="continuationToken"> If returned, this means that current results represent a partial result. Continuation token allows to get the next page of results. To get the next page of query results, send the same request with continuation token parameter in "x-ms-continuation" HTTP header. </param>
         internal PagedResponse(string continuationToken)
         {
             ContinuationToken = continuationToken;
         }
 
-        /// <summary> If returned, this means that current results represent a partial result. Continuation token allows to get the next page of results. To get the next page of query results, send the same request with continuation token parameter in &quot;x-ms-continuation&quot; HTTP header. </summary>
+        /// <summary> If returned, this means that current results represent a partial result. Continuation token allows to get the next page of results. To get the next page of query results, send the same request with continuation token parameter in "x-ms-continuation" HTTP header. </summary>
         public string ContinuationToken { get; }
     }
 }

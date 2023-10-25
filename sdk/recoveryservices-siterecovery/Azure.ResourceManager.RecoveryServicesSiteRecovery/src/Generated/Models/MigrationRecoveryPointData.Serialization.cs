@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     {
         internal static MigrationRecoveryPointData DeserializeMigrationRecoveryPointData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MigrationRecoveryPointProperties> properties = default;
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
@@ -28,7 +32,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = MigrationRecoveryPointProperties.DeserializeMigrationRecoveryPointProperties(property.Value);
@@ -38,7 +41,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
@@ -63,7 +65,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

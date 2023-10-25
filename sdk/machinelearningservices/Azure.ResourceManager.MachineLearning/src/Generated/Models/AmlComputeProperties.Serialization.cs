@@ -103,7 +103,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(PropertyBag);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(PropertyBag.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(PropertyBag))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
                 else
@@ -116,6 +119,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static AmlComputeProperties DeserializeAmlComputeProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MachineLearningOSType> osType = default;
             Optional<string> vmSize = default;
             Optional<MachineLearningVmPriority> vmPriority = default;
@@ -139,7 +146,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     osType = new MachineLearningOSType(property.Value.GetString());
@@ -154,7 +160,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     vmPriority = new MachineLearningVmPriority(property.Value.GetString());
@@ -174,7 +179,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isolatedNetwork = property.Value.GetBoolean();
@@ -184,7 +188,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     scaleSettings = AmlComputeScaleSettings.DeserializeAmlComputeScaleSettings(property.Value);
@@ -214,7 +217,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     remoteLoginPortPublicAccess = new MachineLearningRemoteLoginPortPublicAccess(property.Value.GetString());
@@ -224,7 +226,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     allocationState = new MachineLearningAllocationState(property.Value.GetString());
@@ -234,7 +235,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     allocationStateTransitionTime = property.Value.GetDateTimeOffset("O");

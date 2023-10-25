@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core.Pipeline;
+
 namespace Azure.Messaging.ServiceBus.Diagnostics
 {
     /// <summary>
@@ -9,17 +11,11 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
     ///
     internal static class DiagnosticProperty
     {
-        /// <summary>The attribute which represents a unique identifier for the diagnostics context.</summary>
-        public const string DiagnosticIdAttribute = "Diagnostic-Id";
+        /// <summary>The namespace used for the Service Bus diagnostic scope.</summary>
+        public const string DiagnosticNamespace = "Azure.Messaging.ServiceBus";
 
-        /// <summary>The attribute which represents the Azure service to associate with diagnostics information.</summary>
-        public const string ServiceContextAttribute = "component";
-
-        /// <summary>The attribute which represents the Service Bus entity instance to associate with diagnostics information.</summary>
-        public const string EntityAttribute = "message_bus.destination";
-
-        /// <summary>The attribute which represents the fully-qualified endpoint address of the Service Bus namespace to associate with diagnostics information.</summary>
-        public const string EndpointAttribute = "peer.address";
+        /// <summary>The namespace used for the Azure Resource Manager provider namespace.</summary>
+        public const string ResourceProviderNamespace = "Microsoft.ServiceBus";
 
         /// <summary>The value which identifies the Service Bus diagnostics context.</summary>
         public const string ServiceBusServiceContext = "servicebus";

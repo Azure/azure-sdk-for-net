@@ -11,6 +11,8 @@ namespace Azure.ResourceManager.ServiceNetworking
         public virtual Azure.Pageable<Azure.ResourceManager.ServiceNetworking.AssociationResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ServiceNetworking.AssociationResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceNetworking.AssociationResource>> GetAsync(string associationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ServiceNetworking.AssociationResource> GetIfExists(string associationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ServiceNetworking.AssociationResource>> GetIfExistsAsync(string associationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ServiceNetworking.AssociationResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ServiceNetworking.AssociationResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceNetworking.AssociationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceNetworking.AssociationResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -53,6 +55,8 @@ namespace Azure.ResourceManager.ServiceNetworking
         public virtual Azure.Pageable<Azure.ResourceManager.ServiceNetworking.FrontendResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ServiceNetworking.FrontendResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceNetworking.FrontendResource>> GetAsync(string frontendName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ServiceNetworking.FrontendResource> GetIfExists(string frontendName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ServiceNetworking.FrontendResource>> GetIfExistsAsync(string frontendName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ServiceNetworking.FrontendResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ServiceNetworking.FrontendResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceNetworking.FrontendResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceNetworking.FrontendResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -60,10 +64,8 @@ namespace Azure.ResourceManager.ServiceNetworking
     public partial class FrontendData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public FrontendData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ResourceManager.ServiceNetworking.Models.FrontendIPAddressVersion? IPAddressVersion { get { throw null; } set { } }
-        public Azure.ResourceManager.ServiceNetworking.Models.FrontendMode? Mode { get { throw null; } set { } }
+        public string Fqdn { get { throw null; } }
         public Azure.ResourceManager.ServiceNetworking.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.Core.ResourceIdentifier PublicIPAddressId { get { throw null; } set { } }
     }
     public partial class FrontendResource : Azure.ResourceManager.ArmResource
     {
@@ -107,6 +109,8 @@ namespace Azure.ResourceManager.ServiceNetworking
         public virtual Azure.Pageable<Azure.ResourceManager.ServiceNetworking.TrafficControllerResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ServiceNetworking.TrafficControllerResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceNetworking.TrafficControllerResource>> GetAsync(string trafficControllerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ServiceNetworking.TrafficControllerResource> GetIfExists(string trafficControllerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ServiceNetworking.TrafficControllerResource>> GetIfExistsAsync(string trafficControllerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ServiceNetworking.TrafficControllerResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ServiceNetworking.TrafficControllerResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceNetworking.TrafficControllerResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceNetworking.TrafficControllerResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -148,10 +152,17 @@ namespace Azure.ResourceManager.ServiceNetworking
 }
 namespace Azure.ResourceManager.ServiceNetworking.Models
 {
+    public static partial class ArmServiceNetworkingModelFactory
+    {
+        public static Azure.ResourceManager.ServiceNetworking.AssociationData AssociationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ServiceNetworking.Models.AssociationType? associationType = default(Azure.ResourceManager.ServiceNetworking.Models.AssociationType?), Azure.Core.ResourceIdentifier subnetId = null, Azure.ResourceManager.ServiceNetworking.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.ServiceNetworking.Models.ProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.ServiceNetworking.FrontendData FrontendData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string fqdn = null, Azure.ResourceManager.ServiceNetworking.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.ServiceNetworking.Models.ProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.ServiceNetworking.TrafficControllerData TrafficControllerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IEnumerable<string> configurationEndpoints = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> frontends = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> associations = null, Azure.ResourceManager.ServiceNetworking.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.ServiceNetworking.Models.ProvisioningState?)) { throw null; }
+    }
     public partial class AssociationPatch
     {
         public AssociationPatch() { }
-        public Azure.ResourceManager.ServiceNetworking.Models.AssociationUpdateProperties Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.ServiceNetworking.Models.AssociationType? AssociationType { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -171,46 +182,10 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         public static bool operator !=(Azure.ResourceManager.ServiceNetworking.Models.AssociationType left, Azure.ResourceManager.ServiceNetworking.Models.AssociationType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AssociationUpdateProperties
-    {
-        public AssociationUpdateProperties() { }
-        public Azure.ResourceManager.ServiceNetworking.Models.AssociationType? AssociationType { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
-    }
-    public enum FrontendIPAddressVersion
-    {
-        IPv4 = 0,
-        IPv6 = 1,
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct FrontendMode : System.IEquatable<Azure.ResourceManager.ServiceNetworking.Models.FrontendMode>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public FrontendMode(string value) { throw null; }
-        public static Azure.ResourceManager.ServiceNetworking.Models.FrontendMode Public { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ServiceNetworking.Models.FrontendMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ServiceNetworking.Models.FrontendMode left, Azure.ResourceManager.ServiceNetworking.Models.FrontendMode right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ServiceNetworking.Models.FrontendMode (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ServiceNetworking.Models.FrontendMode left, Azure.ResourceManager.ServiceNetworking.Models.FrontendMode right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class FrontendPatch
     {
         public FrontendPatch() { }
-        public Azure.ResourceManager.ServiceNetworking.Models.FrontendUpdateProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
-    public partial class FrontendUpdateProperties
-    {
-        public FrontendUpdateProperties() { }
-        public Azure.ResourceManager.ServiceNetworking.Models.FrontendIPAddressVersion? IPAddressVersion { get { throw null; } set { } }
-        public Azure.ResourceManager.ServiceNetworking.Models.FrontendMode? Mode { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier PublicIPAddressId { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ProvisioningState : System.IEquatable<Azure.ResourceManager.ServiceNetworking.Models.ProvisioningState>
@@ -238,7 +213,6 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
     public partial class TrafficControllerPatch
     {
         public TrafficControllerPatch() { }
-        public System.BinaryData Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
 }

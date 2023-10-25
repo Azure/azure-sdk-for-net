@@ -20,6 +20,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static StreamAnalyticsPrivateLinkConnectionState DeserializeStreamAnalyticsPrivateLinkConnectionState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> status = default;
             Optional<string> description = default;
             Optional<string> actionsRequired = default;

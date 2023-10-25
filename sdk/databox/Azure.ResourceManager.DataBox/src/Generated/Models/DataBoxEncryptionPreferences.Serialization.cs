@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    internal partial class DataBoxEncryptionPreferences : IUtf8JsonSerializable
+    public partial class DataBoxEncryptionPreferences : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,26 +20,44 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WritePropertyName("doubleEncryption"u8);
                 writer.WriteStringValue(DoubleEncryption.Value.ToSerialString());
             }
+            if (Optional.IsDefined(HardwareEncryption))
+            {
+                writer.WritePropertyName("hardwareEncryption"u8);
+                writer.WriteStringValue(HardwareEncryption.Value.ToSerialString());
+            }
             writer.WriteEndObject();
         }
 
         internal static DataBoxEncryptionPreferences DeserializeDataBoxEncryptionPreferences(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DataBoxDoubleEncryption> doubleEncryption = default;
+            Optional<HardwareEncryption> hardwareEncryption = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("doubleEncryption"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     doubleEncryption = property.Value.GetString().ToDataBoxDoubleEncryption();
                     continue;
                 }
+                if (property.NameEquals("hardwareEncryption"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    hardwareEncryption = property.Value.GetString().ToHardwareEncryption();
+                    continue;
+                }
             }
-            return new DataBoxEncryptionPreferences(Optional.ToNullable(doubleEncryption));
+            return new DataBoxEncryptionPreferences(Optional.ToNullable(doubleEncryption), Optional.ToNullable(hardwareEncryption));
         }
     }
 }

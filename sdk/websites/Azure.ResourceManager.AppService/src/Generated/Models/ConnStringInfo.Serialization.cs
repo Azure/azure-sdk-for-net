@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static ConnStringInfo DeserializeConnStringInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> connectionString = default;
             Optional<ConnectionStringType> type = default;
@@ -54,7 +58,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = property.Value.GetString().ToConnectionStringType();

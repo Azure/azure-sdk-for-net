@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         }
 
         /// <summary> Initializes a new instance of DiskExclusionProperties. </summary>
-        /// <param name="diskLunList"> List of Disks&apos; Logical Unit Numbers (LUN) to be used for VM Protection. </param>
+        /// <param name="diskLunList"> List of Disks' Logical Unit Numbers (LUN) to be used for VM Protection. </param>
         /// <param name="isInclusionList"> Flag to indicate whether DiskLunList is to be included/ excluded from backup. </param>
         internal DiskExclusionProperties(IList<int> diskLunList, bool? isInclusionList)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             IsInclusionList = isInclusionList;
         }
 
-        /// <summary> List of Disks&apos; Logical Unit Numbers (LUN) to be used for VM Protection. </summary>
+        /// <summary> List of Disks' Logical Unit Numbers (LUN) to be used for VM Protection. </summary>
         public IList<int> DiskLunList { get; }
         /// <summary> Flag to indicate whether DiskLunList is to be included/ excluded from backup. </summary>
         public bool? IsInclusionList { get; set; }

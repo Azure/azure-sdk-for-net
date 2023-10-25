@@ -7,8 +7,8 @@
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> The PostgreSqlFlexibleServerStorageTierCapability. </summary>
-    public partial class PostgreSqlFlexibleServerStorageTierCapability
+    /// <summary> Represents capability of a storage tier. </summary>
+    public partial class PostgreSqlFlexibleServerStorageTierCapability : PostgreSqlBaseCapability
     {
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerStorageTierCapability. </summary>
         internal PostgreSqlFlexibleServerStorageTierCapability()
@@ -16,29 +16,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of PostgreSqlFlexibleServerStorageTierCapability. </summary>
+        /// <param name="capabilityStatus"> The status of the capability. </param>
+        /// <param name="reason"> The reason for the capability not being available. </param>
         /// <param name="name"> Name to represent Storage tier capability. </param>
-        /// <param name="tierName"> Storage tier name. </param>
         /// <param name="iops"> Supported IOPS for this storage tier. </param>
-        /// <param name="isBaseline"> Indicates if this is a baseline storage tier or not. </param>
-        /// <param name="status"> Status os this storage tier. </param>
-        internal PostgreSqlFlexibleServerStorageTierCapability(string name, string tierName, long? iops, bool? isBaseline, string status)
+        internal PostgreSqlFlexibleServerStorageTierCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, string name, long? iops) : base(capabilityStatus, reason)
         {
             Name = name;
-            TierName = tierName;
             Iops = iops;
-            IsBaseline = isBaseline;
-            Status = status;
         }
 
         /// <summary> Name to represent Storage tier capability. </summary>
         public string Name { get; }
-        /// <summary> Storage tier name. </summary>
-        public string TierName { get; }
-        /// <summary> Supported IOPS for this storage tier. </summary>
-        public long? Iops { get; }
-        /// <summary> Indicates if this is a baseline storage tier or not. </summary>
-        public bool? IsBaseline { get; }
-        /// <summary> Status os this storage tier. </summary>
-        public string Status { get; }
     }
 }

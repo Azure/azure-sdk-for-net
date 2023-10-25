@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         }
 
         /// <summary> Initializes a new instance of ServiceBusFilterAction. </summary>
-        /// <param name="sqlExpression"> SQL expression. e.g. MyProperty=&apos;ABC&apos;. </param>
+        /// <param name="sqlExpression"> SQL expression. e.g. MyProperty='ABC'. </param>
         /// <param name="compatibilityLevel"> This property is reserved for future use. An integer value showing the compatibility level, currently hard-coded to 20. </param>
         /// <param name="requiresPreprocessing"> Value that indicates whether the rule action requires preprocessing. </param>
         internal ServiceBusFilterAction(string sqlExpression, int? compatibilityLevel, bool? requiresPreprocessing)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             RequiresPreprocessing = requiresPreprocessing;
         }
 
-        /// <summary> SQL expression. e.g. MyProperty=&apos;ABC&apos;. </summary>
+        /// <summary> SQL expression. e.g. MyProperty='ABC'. </summary>
         public string SqlExpression { get; set; }
         /// <summary> This property is reserved for future use. An integer value showing the compatibility level, currently hard-coded to 20. </summary>
         public int? CompatibilityLevel { get; set; }

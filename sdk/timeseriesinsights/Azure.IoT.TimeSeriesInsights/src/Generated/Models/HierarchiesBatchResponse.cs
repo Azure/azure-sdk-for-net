@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    /// <summary> Response of a single operation on a batch of time series hierarchies. Only one of &quot;get&quot;, &quot;put&quot; or &quot;delete&quot; will be set. </summary>
+    /// <summary> Response of a single operation on a batch of time series hierarchies. Only one of "get", "put" or "delete" will be set. </summary>
     internal partial class HierarchiesBatchResponse
     {
         /// <summary> Initializes a new instance of HierarchiesBatchResponse. </summary>
@@ -22,9 +22,9 @@ namespace Azure.IoT.TimeSeriesInsights
         }
 
         /// <summary> Initializes a new instance of HierarchiesBatchResponse. </summary>
-        /// <param name="get"> List of hierarchy or error objects corresponding by position to the &quot;get&quot; array in the request. Hierarchy object is set when operation is successful and error object is set when operation is unsuccessful. </param>
-        /// <param name="put"> List of hierarchy or error object corresponding by position to the &quot;put&quot; array in the request. Hierarchy object is set when operation is successful and error object is set when operation is unsuccessful. </param>
-        /// <param name="delete"> List of error objects corresponding by position to the &quot;delete&quot; array in the request - null when the operation is successful. </param>
+        /// <param name="get"> List of hierarchy or error objects corresponding by position to the "get" array in the request. Hierarchy object is set when operation is successful and error object is set when operation is unsuccessful. </param>
+        /// <param name="put"> List of hierarchy or error object corresponding by position to the "put" array in the request. Hierarchy object is set when operation is successful and error object is set when operation is unsuccessful. </param>
+        /// <param name="delete"> List of error objects corresponding by position to the "delete" array in the request - null when the operation is successful. </param>
         internal HierarchiesBatchResponse(IReadOnlyList<TimeSeriesHierarchyOperationResult> @get, IReadOnlyList<TimeSeriesHierarchyOperationResult> put, IReadOnlyList<TimeSeriesOperationError> delete)
         {
             Get = @get;
@@ -32,11 +32,11 @@ namespace Azure.IoT.TimeSeriesInsights
             Delete = delete;
         }
 
-        /// <summary> List of hierarchy or error objects corresponding by position to the &quot;get&quot; array in the request. Hierarchy object is set when operation is successful and error object is set when operation is unsuccessful. </summary>
+        /// <summary> List of hierarchy or error objects corresponding by position to the "get" array in the request. Hierarchy object is set when operation is successful and error object is set when operation is unsuccessful. </summary>
         public IReadOnlyList<TimeSeriesHierarchyOperationResult> Get { get; }
-        /// <summary> List of hierarchy or error object corresponding by position to the &quot;put&quot; array in the request. Hierarchy object is set when operation is successful and error object is set when operation is unsuccessful. </summary>
+        /// <summary> List of hierarchy or error object corresponding by position to the "put" array in the request. Hierarchy object is set when operation is successful and error object is set when operation is unsuccessful. </summary>
         public IReadOnlyList<TimeSeriesHierarchyOperationResult> Put { get; }
-        /// <summary> List of error objects corresponding by position to the &quot;delete&quot; array in the request - null when the operation is successful. </summary>
+        /// <summary> List of error objects corresponding by position to the "delete" array in the request - null when the operation is successful. </summary>
         public IReadOnlyList<TimeSeriesOperationError> Delete { get; }
     }
 }

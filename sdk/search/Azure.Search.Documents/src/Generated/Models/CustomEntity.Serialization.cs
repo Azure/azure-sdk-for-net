@@ -160,6 +160,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static CustomEntity DeserializeCustomEntity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<string> description = default;
             Optional<string> type = default;

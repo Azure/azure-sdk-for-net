@@ -14,9 +14,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static MachineLearningNotebookResourceInfo DeserializeMachineLearningNotebookResourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> fqdn = default;
-            Optional<string> resourceId = default;
+            Optional<bool> isPrivateLinkEnabled = default;
             Optional<MachineLearningNotebookPreparationError> notebookPreparationError = default;
+            Optional<string> resourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fqdn"u8))
@@ -24,23 +29,31 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     fqdn = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resourceId"u8))
+                if (property.NameEquals("isPrivateLinkEnabled"u8))
                 {
-                    resourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isPrivateLinkEnabled = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("notebookPreparationError"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        notebookPreparationError = null;
                         continue;
                     }
                     notebookPreparationError = MachineLearningNotebookPreparationError.DeserializeMachineLearningNotebookPreparationError(property.Value);
                     continue;
                 }
+                if (property.NameEquals("resourceId"u8))
+                {
+                    resourceId = property.Value.GetString();
+                    continue;
+                }
             }
-            return new MachineLearningNotebookResourceInfo(fqdn.Value, resourceId.Value, notebookPreparationError.Value);
+            return new MachineLearningNotebookResourceInfo(fqdn.Value, Optional.ToNullable(isPrivateLinkEnabled), notebookPreparationError.Value, resourceId.Value);
         }
     }
 }

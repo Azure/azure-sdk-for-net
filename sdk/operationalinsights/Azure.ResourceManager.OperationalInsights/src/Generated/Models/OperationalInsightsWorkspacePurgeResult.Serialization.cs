@@ -5,9 +5,7 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -15,12 +13,16 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     {
         internal static OperationalInsightsWorkspacePurgeResult DeserializeOperationalInsightsWorkspacePurgeResult(JsonElement element)
         {
-            Guid operationId = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string operationId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operationId"u8))
                 {
-                    operationId = property.Value.GetGuid();
+                    operationId = property.Value.GetString();
                     continue;
                 }
             }

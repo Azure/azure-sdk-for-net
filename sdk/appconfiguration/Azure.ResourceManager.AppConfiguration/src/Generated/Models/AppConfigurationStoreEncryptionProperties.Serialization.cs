@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 
         internal static AppConfigurationStoreEncryptionProperties DeserializeAppConfigurationStoreEncryptionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppConfigurationKeyVaultProperties> keyVaultProperties = default;
             foreach (var property in element.EnumerateObject())
             {

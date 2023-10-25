@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -14,6 +13,10 @@ namespace Azure.Communication.CallAutomation
     {
         internal static CommunicationErrorResponse DeserializeCommunicationErrorResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             CommunicationError error = default;
             foreach (var property in element.EnumerateObject())
             {

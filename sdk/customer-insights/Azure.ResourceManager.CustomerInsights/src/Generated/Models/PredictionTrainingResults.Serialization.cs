@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     {
         internal static PredictionTrainingResults DeserializePredictionTrainingResults(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Guid> tenantId = default;
             Optional<string> scoreName = default;
             Optional<PredictionDistributionDefinition> predictionDistribution = default;
@@ -27,7 +31,6 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tenantId = property.Value.GetGuid();
@@ -42,7 +45,6 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     predictionDistribution = PredictionDistributionDefinition.DeserializePredictionDistributionDefinition(property.Value);
@@ -52,7 +54,6 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CanonicalProfileDefinition> array = new List<CanonicalProfileDefinition>();
@@ -67,7 +68,6 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     primaryProfileInstanceCount = property.Value.GetInt64();

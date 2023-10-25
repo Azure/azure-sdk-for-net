@@ -19,7 +19,7 @@ namespace Azure.Security.Attestation
 
         /// <summary> Quote of the enclave to be attested. </summary>
         public byte[] Quote { get; set; }
-        /// <summary> Runtime data provided by the enclave at the time of quote generation. The MAA will verify that the first 32 bytes of the report_data field of the quote contains the SHA256 hash of the decoded &quot;data&quot; field of the runtime data. </summary>
+        /// <summary> Runtime data provided by the enclave at the time of quote generation. The MAA will verify that the first 32 bytes of the report_data field of the quote contains the SHA256 hash of the decoded "data" field of the runtime data. </summary>
         public RuntimeData RuntimeData { get; set; }
         /// <summary> Initialization data provided when the enclave is created. MAA will verify that the init data was known to the enclave. Note that InitTimeData is invalid for CoffeeLake processors. </summary>
         public InitTimeData InitTimeData { get; set; }

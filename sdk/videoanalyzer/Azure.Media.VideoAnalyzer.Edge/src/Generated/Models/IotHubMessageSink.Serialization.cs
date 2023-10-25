@@ -34,6 +34,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static IotHubMessageSink DeserializeIotHubMessageSink(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string hubOutputName = default;
             string type = default;
             string name = default;

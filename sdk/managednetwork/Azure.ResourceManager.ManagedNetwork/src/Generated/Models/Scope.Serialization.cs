@@ -62,6 +62,10 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
 
         internal static Scope DeserializeScope(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<WritableSubResource>> managementGroups = default;
             Optional<IList<WritableSubResource>> subscriptions = default;
             Optional<IList<WritableSubResource>> virtualNetworks = default;
@@ -72,7 +76,6 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<WritableSubResource> array = new List<WritableSubResource>();
@@ -87,7 +90,6 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<WritableSubResource> array = new List<WritableSubResource>();
@@ -102,7 +104,6 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<WritableSubResource> array = new List<WritableSubResource>();
@@ -117,7 +118,6 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<WritableSubResource> array = new List<WritableSubResource>();

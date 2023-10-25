@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static ContentKeyPolicyTokenClaim DeserializeContentKeyPolicyTokenClaim(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> claimType = default;
             Optional<string> claimValue = default;
             foreach (var property in element.EnumerateObject())

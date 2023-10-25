@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Authorization.Models
     {
         internal static RoleEligibilityScheduleRequestListResult DeserializeRoleEligibilityScheduleRequestListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<RoleEligibilityScheduleRequestData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.Authorization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RoleEligibilityScheduleRequestData> array = new List<RoleEligibilityScheduleRequestData>();

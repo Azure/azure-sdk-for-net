@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CassandraTableResourceInfo DeserializeCassandraTableResourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string id = default;
             Optional<int> defaultTtl = default;
             Optional<CassandraSchema> schema = default;
@@ -52,7 +56,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     defaultTtl = property.Value.GetInt32();
@@ -62,7 +65,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     schema = CassandraSchema.DeserializeCassandraSchema(property.Value);
@@ -72,7 +74,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     analyticalStorageTtl = property.Value.GetInt32();

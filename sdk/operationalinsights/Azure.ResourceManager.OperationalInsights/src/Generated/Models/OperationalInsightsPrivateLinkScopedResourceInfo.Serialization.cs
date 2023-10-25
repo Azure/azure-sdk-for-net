@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     {
         internal static OperationalInsightsPrivateLinkScopedResourceInfo DeserializeOperationalInsightsPrivateLinkScopedResourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> resourceId = default;
             Optional<string> scopeId = default;
             foreach (var property in element.EnumerateObject())
@@ -22,7 +26,6 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resourceId = new ResourceIdentifier(property.Value.GetString());

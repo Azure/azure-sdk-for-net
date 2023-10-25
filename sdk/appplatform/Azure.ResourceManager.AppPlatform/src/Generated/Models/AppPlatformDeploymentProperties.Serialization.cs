@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformDeploymentProperties DeserializeAppPlatformDeploymentProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppPlatformUserSourceInfo> source = default;
             Optional<AppPlatformDeploymentSettings> deploymentSettings = default;
             Optional<AppPlatformDeploymentProvisioningState> provisioningState = default;
@@ -48,7 +52,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     source = AppPlatformUserSourceInfo.DeserializeAppPlatformUserSourceInfo(property.Value);
@@ -58,7 +61,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     deploymentSettings = AppPlatformDeploymentSettings.DeserializeAppPlatformDeploymentSettings(property.Value);
@@ -68,7 +70,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new AppPlatformDeploymentProvisioningState(property.Value.GetString());
@@ -78,7 +79,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new AppPlatformDeploymentStatus(property.Value.GetString());
@@ -88,7 +88,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     active = property.Value.GetBoolean();
@@ -98,7 +97,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AppPlatformDeploymentInstance> array = new List<AppPlatformDeploymentInstance>();

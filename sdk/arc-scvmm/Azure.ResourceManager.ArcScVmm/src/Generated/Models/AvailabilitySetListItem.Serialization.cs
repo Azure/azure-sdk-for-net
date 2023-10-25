@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.ArcScVmm.Models
 
         internal static AvailabilitySetListItem DeserializeAvailabilitySetListItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<string> name = default;
             foreach (var property in element.EnumerateObject())

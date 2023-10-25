@@ -36,12 +36,16 @@ namespace Azure.ResourceManager.MobileNetwork
 
         internal static PacketCoreControlPlaneVersionData DeserializePacketCoreControlPlaneVersionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<IList<Platform>> platforms = default;
+            Optional<MobileNetworkProvisioningState> provisioningState = default;
+            Optional<IList<MobileNetworkPlatform>> platforms = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -63,7 +67,6 @@ namespace Azure.ResourceManager.MobileNetwork
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -82,23 +85,21 @@ namespace Azure.ResourceManager.MobileNetwork
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new MobileNetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("platforms"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Platform> array = new List<Platform>();
+                            List<MobileNetworkPlatform> array = new List<MobileNetworkPlatform>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Platform.DeserializePlatform(item));
+                                array.Add(MobileNetworkPlatform.DeserializeMobileNetworkPlatform(item));
                             }
                             platforms = array;
                             continue;

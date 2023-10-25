@@ -78,6 +78,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningSslConfiguration DeserializeMachineLearningSslConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MachineLearningSslConfigStatus> status = default;
             Optional<string> cert = default;
             Optional<string> key = default;
@@ -90,7 +94,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new MachineLearningSslConfigStatus(property.Value.GetString());
@@ -140,7 +143,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     overwriteExistingDomain = property.Value.GetBoolean();

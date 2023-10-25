@@ -19,7 +19,7 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <param name="answer"> Answer. </param>
         /// <param name="confidence"> answer confidence score, value ranges from 0 to 1. </param>
         /// <param name="id"> record ID. </param>
-        /// <param name="shortAnswer"> Answer span object with respect to user&apos;s question. </param>
+        /// <param name="shortAnswer"> Answer span object with respect to user's question. </param>
         /// <param name="offset"> The sentence offset from the start of the document. </param>
         /// <param name="length"> The length of the sentence. </param>
         internal TextAnswer(string answer, double? confidence, string id, AnswerSpan shortAnswer, int? offset, int? length)
@@ -38,7 +38,7 @@ namespace Azure.AI.Language.QuestionAnswering
         public double? Confidence { get; }
         /// <summary> record ID. </summary>
         public string Id { get; }
-        /// <summary> Answer span object with respect to user&apos;s question. </summary>
+        /// <summary> Answer span object with respect to user's question. </summary>
         public AnswerSpan ShortAnswer { get; }
         /// <summary> The sentence offset from the start of the document. </summary>
         public int? Offset { get; }

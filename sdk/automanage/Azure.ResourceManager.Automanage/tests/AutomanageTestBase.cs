@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Automanage.Tests
         /// <param name="collection">Configruation profile collection to perform actions against</param>
         /// <param name="profileName">Desired configuration profile name</param>
         /// <returns>ConfigurationProfileResource</returns>
-        protected async Task<ConfigurationProfileResource> CreateConfigurationProfile(ConfigurationProfileCollection collection, string profileName)
+        protected async Task<AutomanageConfigurationProfileResource> CreateConfigurationProfile(AutomanageConfigurationProfileCollection collection, string profileName)
         {
             string configuration = "{" +
                 "\"Antimalware/Enable\":true," +
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Automanage.Tests
                 "\"BootDiagnostics/Enable\":true" +
             "}";
 
-            ConfigurationProfileData data = new ConfigurationProfileData(DefaultLocation)
+            AutomanageConfigurationProfileData data = new AutomanageConfigurationProfileData(DefaultLocation)
             {
                 Configuration = new BinaryData(configuration)
             };
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Automanage.Tests
         {
             var data = new AutomanageConfigurationProfileAssignmentData()
             {
-                Properties = new ConfigurationProfileAssignmentProperties() { ConfigurationProfile = profileId }
+                Properties = new AutomanageConfigurationProfileAssignmentProperties() { ConfigurationProfile = new ResourceIdentifier(profileId) }
             };
 
             // fetch assignments collection

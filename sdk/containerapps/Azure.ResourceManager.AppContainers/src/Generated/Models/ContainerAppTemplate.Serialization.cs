@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("revisionSuffix"u8);
                 writer.WriteStringValue(RevisionSuffix);
             }
+            if (Optional.IsDefined(TerminationGracePeriodSeconds))
+            {
+                writer.WritePropertyName("terminationGracePeriodSeconds"u8);
+                writer.WriteNumberValue(TerminationGracePeriodSeconds.Value);
+            }
             if (Optional.IsCollectionDefined(InitContainers))
             {
                 writer.WritePropertyName("initContainers"u8);
@@ -56,16 +61,32 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(ServiceBinds))
+            {
+                writer.WritePropertyName("serviceBinds"u8);
+                writer.WriteStartArray();
+                foreach (var item in ServiceBinds)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
         }
 
         internal static ContainerAppTemplate DeserializeContainerAppTemplate(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> revisionSuffix = default;
+            Optional<long> terminationGracePeriodSeconds = default;
             Optional<IList<ContainerAppInitContainer>> initContainers = default;
             Optional<IList<ContainerAppContainer>> containers = default;
             Optional<ContainerAppScale> scale = default;
             Optional<IList<ContainerAppVolume>> volumes = default;
+            Optional<IList<ContainerAppServiceBind>> serviceBinds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("revisionSuffix"u8))
@@ -73,11 +94,19 @@ namespace Azure.ResourceManager.AppContainers.Models
                     revisionSuffix = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("terminationGracePeriodSeconds"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    terminationGracePeriodSeconds = property.Value.GetInt64();
+                    continue;
+                }
                 if (property.NameEquals("initContainers"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ContainerAppInitContainer> array = new List<ContainerAppInitContainer>();
@@ -92,7 +121,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ContainerAppContainer> array = new List<ContainerAppContainer>();
@@ -107,7 +135,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     scale = ContainerAppScale.DeserializeContainerAppScale(property.Value);
@@ -117,7 +144,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ContainerAppVolume> array = new List<ContainerAppVolume>();
@@ -128,8 +154,22 @@ namespace Azure.ResourceManager.AppContainers.Models
                     volumes = array;
                     continue;
                 }
+                if (property.NameEquals("serviceBinds"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ContainerAppServiceBind> array = new List<ContainerAppServiceBind>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ContainerAppServiceBind.DeserializeContainerAppServiceBind(item));
+                    }
+                    serviceBinds = array;
+                    continue;
+                }
             }
-            return new ContainerAppTemplate(revisionSuffix.Value, Optional.ToList(initContainers), Optional.ToList(containers), scale.Value, Optional.ToList(volumes));
+            return new ContainerAppTemplate(revisionSuffix.Value, Optional.ToNullable(terminationGracePeriodSeconds), Optional.ToList(initContainers), Optional.ToList(containers), scale.Value, Optional.ToList(volumes), Optional.ToList(serviceBinds));
         }
     }
 }

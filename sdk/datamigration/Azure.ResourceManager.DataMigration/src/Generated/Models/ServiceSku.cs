@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         /// <summary> Initializes a new instance of ServiceSku. </summary>
-        /// <param name="name"> The unique name of the SKU, such as &apos;P3&apos;. </param>
-        /// <param name="tier"> The tier of the SKU, such as &apos;Basic&apos;, &apos;General Purpose&apos;, or &apos;Business Critical&apos;. </param>
-        /// <param name="family"> The SKU family, used when the service has multiple performance classes within a tier, such as &apos;A&apos;, &apos;D&apos;, etc. for virtual machines. </param>
-        /// <param name="size"> The size of the SKU, used when the name alone does not denote a service size or when a SKU has multiple performance classes within a family, e.g. &apos;A1&apos; for virtual machines. </param>
+        /// <param name="name"> The unique name of the SKU, such as 'P3'. </param>
+        /// <param name="tier"> The tier of the SKU, such as 'Basic', 'General Purpose', or 'Business Critical'. </param>
+        /// <param name="family"> The SKU family, used when the service has multiple performance classes within a tier, such as 'A', 'D', etc. for virtual machines. </param>
+        /// <param name="size"> The size of the SKU, used when the name alone does not denote a service size or when a SKU has multiple performance classes within a family, e.g. 'A1' for virtual machines. </param>
         /// <param name="capacity"> The capacity of the SKU, if it supports scaling. </param>
         internal ServiceSku(string name, string tier, string family, string size, int? capacity)
         {
@@ -30,13 +30,13 @@ namespace Azure.ResourceManager.DataMigration.Models
             Capacity = capacity;
         }
 
-        /// <summary> The unique name of the SKU, such as &apos;P3&apos;. </summary>
+        /// <summary> The unique name of the SKU, such as 'P3'. </summary>
         public string Name { get; set; }
-        /// <summary> The tier of the SKU, such as &apos;Basic&apos;, &apos;General Purpose&apos;, or &apos;Business Critical&apos;. </summary>
+        /// <summary> The tier of the SKU, such as 'Basic', 'General Purpose', or 'Business Critical'. </summary>
         public string Tier { get; set; }
-        /// <summary> The SKU family, used when the service has multiple performance classes within a tier, such as &apos;A&apos;, &apos;D&apos;, etc. for virtual machines. </summary>
+        /// <summary> The SKU family, used when the service has multiple performance classes within a tier, such as 'A', 'D', etc. for virtual machines. </summary>
         public string Family { get; set; }
-        /// <summary> The size of the SKU, used when the name alone does not denote a service size or when a SKU has multiple performance classes within a family, e.g. &apos;A1&apos; for virtual machines. </summary>
+        /// <summary> The size of the SKU, used when the name alone does not denote a service size or when a SKU has multiple performance classes within a family, e.g. 'A1' for virtual machines. </summary>
         public string Size { get; set; }
         /// <summary> The capacity of the SKU, if it supports scaling. </summary>
         public int? Capacity { get; set; }

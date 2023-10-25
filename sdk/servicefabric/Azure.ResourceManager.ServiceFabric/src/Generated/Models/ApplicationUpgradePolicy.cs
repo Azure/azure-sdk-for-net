@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="rollingUpgradeMonitoringPolicy"> The policy used for monitoring the application upgrade. </param>
         /// <param name="applicationHealthPolicy">
         /// Defines a health policy used to evaluate the health of an application or one of its children entities.
-        /// 
+        ///
         /// </param>
         /// <param name="upgradeMode"> The mode used to monitor health during a rolling upgrade. The values are UnmonitoredAuto, UnmonitoredManual, and Monitored. </param>
         /// <param name="recreateApplication"> Determines whether the application should be recreated on update. If value=true, the rest of the upgrade policy parameters are not allowed and it will result in availability loss. </param>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         public ArmRollingUpgradeMonitoringPolicy RollingUpgradeMonitoringPolicy { get; set; }
         /// <summary>
         /// Defines a health policy used to evaluate the health of an application or one of its children entities.
-        /// 
+        ///
         /// </summary>
         public ArmApplicationHealthPolicy ApplicationHealthPolicy { get; set; }
         /// <summary> The mode used to monitor health during a rolling upgrade. The values are UnmonitoredAuto, UnmonitoredManual, and Monitored. </summary>

@@ -26,7 +26,7 @@ namespace Azure.Communication
         /// <summary> Initializes a new instance of MicrosoftTeamsUserIdentifierModel. </summary>
         /// <param name="userId"> The Id of the Microsoft Teams user. If not anonymous, this is the AAD object Id of the user. </param>
         /// <param name="isAnonymous"> True if the Microsoft Teams user is anonymous. By default false if missing. </param>
-        /// <param name="cloud"> The cloud that the Microsoft Teams user belongs to. By default &apos;public&apos; if missing. </param>
+        /// <param name="cloud"> The cloud that the Microsoft Teams user belongs to. By default 'public' if missing. </param>
         internal MicrosoftTeamsUserIdentifierModel(string userId, bool? isAnonymous, CommunicationCloudEnvironmentModel? cloud)
         {
             UserId = userId;
@@ -38,7 +38,7 @@ namespace Azure.Communication
         public string UserId { get; set; }
         /// <summary> True if the Microsoft Teams user is anonymous. By default false if missing. </summary>
         public bool? IsAnonymous { get; set; }
-        /// <summary> The cloud that the Microsoft Teams user belongs to. By default &apos;public&apos; if missing. </summary>
+        /// <summary> The cloud that the Microsoft Teams user belongs to. By default 'public' if missing. </summary>
         public CommunicationCloudEnvironmentModel? Cloud { get; set; }
     }
 }

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Reservations
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-03-01";
+            _apiVersion = apiVersion ?? "2022-11-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Calculate price for returning `Reservations` if there are no policy errors.
-        /// 
+        ///
         /// </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="content"> Information needed for calculating refund of a reservation. </param>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Reservations
 
         /// <summary>
         /// Calculate price for returning `Reservations` if there are no policy errors.
-        /// 
+        ///
         /// </summary>
         /// <param name="reservationOrderId"> Order Id of the reservation. </param>
         /// <param name="content"> Information needed for calculating refund of a reservation. </param>

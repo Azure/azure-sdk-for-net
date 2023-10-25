@@ -15,13 +15,15 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    internal partial struct ApiVersion { }
+    internal partial class AnalyzeDocumentRequest { }
 
     internal partial class AuthorizeCopyRequest { }
 
-    internal partial class AzureBlobContentSource { }
+    internal partial class BuildDocumentClassifierRequest { }
 
     internal partial class BuildDocumentModelRequest { }
+
+    internal partial class ClassifyDocumentRequest { }
 
     internal partial class ComponentDocumentModelDetails { }
 

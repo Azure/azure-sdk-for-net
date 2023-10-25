@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -14,6 +13,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     {
         internal static CachedImages DeserializeCachedImages(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string osType = default;
             string image = default;
             foreach (var property in element.EnumerateObject())

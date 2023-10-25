@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     {
         internal static ReplicationUsageListResult DeserializeReplicationUsageListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ReplicationUsage>> value = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -22,7 +26,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ReplicationUsage> array = new List<ReplicationUsage>();

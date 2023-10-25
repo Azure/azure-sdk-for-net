@@ -29,6 +29,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         private const string CanceledValue = "Canceled";
         private const string FailedValue = "Failed";
         private const string IdleDueToMirroredPartnerTopicDeletionValue = "IdleDueToMirroredPartnerTopicDeletion";
+        private const string IdleDueToMirroredPartnerDestinationDeletionValue = "IdleDueToMirroredPartnerDestinationDeletion";
 
         /// <summary> Creating. </summary>
         public static PartnerNamespaceChannelProvisioningState Creating { get; } = new PartnerNamespaceChannelProvisioningState(CreatingValue);
@@ -44,6 +45,8 @@ namespace Azure.ResourceManager.EventGrid.Models
         public static PartnerNamespaceChannelProvisioningState Failed { get; } = new PartnerNamespaceChannelProvisioningState(FailedValue);
         /// <summary> IdleDueToMirroredPartnerTopicDeletion. </summary>
         public static PartnerNamespaceChannelProvisioningState IdleDueToMirroredPartnerTopicDeletion { get; } = new PartnerNamespaceChannelProvisioningState(IdleDueToMirroredPartnerTopicDeletionValue);
+        /// <summary> IdleDueToMirroredPartnerDestinationDeletion. </summary>
+        public static PartnerNamespaceChannelProvisioningState IdleDueToMirroredPartnerDestinationDeletion { get; } = new PartnerNamespaceChannelProvisioningState(IdleDueToMirroredPartnerDestinationDeletionValue);
         /// <summary> Determines if two <see cref="PartnerNamespaceChannelProvisioningState"/> values are the same. </summary>
         public static bool operator ==(PartnerNamespaceChannelProvisioningState left, PartnerNamespaceChannelProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PartnerNamespaceChannelProvisioningState"/> values are not the same. </summary>

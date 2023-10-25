@@ -15,6 +15,10 @@ namespace Azure.Search.Documents.Models
     {
         internal static AnswerResult DeserializeAnswerResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<double> score = default;
             Optional<string> key = default;
             Optional<string> text = default;
@@ -27,7 +31,6 @@ namespace Azure.Search.Documents.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     score = property.Value.GetDouble();

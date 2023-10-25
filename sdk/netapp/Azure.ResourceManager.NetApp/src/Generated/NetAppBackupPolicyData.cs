@@ -13,7 +13,10 @@ using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    /// <summary> A class representing the NetAppBackupPolicy data model. </summary>
+    /// <summary>
+    /// A class representing the NetAppBackupPolicy data model.
+    /// Backup policy information
+    /// </summary>
     public partial class NetAppBackupPolicyData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of NetAppBackupPolicyData. </summary>

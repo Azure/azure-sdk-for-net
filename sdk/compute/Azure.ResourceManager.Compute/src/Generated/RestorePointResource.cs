@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; retrieves information about the run-time state of a restore point. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' retrieves information about the run-time state of a restore point. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<RestorePointResource>> GetAsync(RestorePointExpand? expand = null, CancellationToken cancellationToken = default)
         {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="expand"> The expand expression to apply on the operation. &apos;InstanceView&apos; retrieves information about the run-time state of a restore point. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' retrieves information about the run-time state of a restore point. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<RestorePointResource> Get(RestorePointExpand? expand = null, CancellationToken cancellationToken = default)
         {

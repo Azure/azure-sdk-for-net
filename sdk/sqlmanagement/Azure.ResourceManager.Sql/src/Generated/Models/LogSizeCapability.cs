@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of LogSizeCapability. </summary>
-        /// <param name="limit"> The log size limit (see &apos;unit&apos; for the units). </param>
+        /// <param name="limit"> The log size limit (see 'unit' for the units). </param>
         /// <param name="unit"> The units that the limit is expressed in. </param>
         internal LogSizeCapability(int? limit, LogSizeUnit? unit)
         {
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Sql.Models
             Unit = unit;
         }
 
-        /// <summary> The log size limit (see &apos;unit&apos; for the units). </summary>
+        /// <summary> The log size limit (see 'unit' for the units). </summary>
         public int? Limit { get; }
         /// <summary> The units that the limit is expressed in. </summary>
         public LogSizeUnit? Unit { get; }

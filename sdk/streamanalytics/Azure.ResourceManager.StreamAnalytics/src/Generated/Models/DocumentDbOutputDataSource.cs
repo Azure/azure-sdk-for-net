@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="accountKey"> The account key for the DocumentDB account. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="database"> The name of the DocumentDB database. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="collectionNamePattern"> The collection name pattern for the collections to be used. The collection name format can be constructed using the optional {partition} token, where partitions start from 0. See the DocumentDB section of https://docs.microsoft.com/en-us/rest/api/streamanalytics/stream-analytics-output for more information. Required on PUT (CreateOrReplace) requests. </param>
-        /// <param name="partitionKey"> The name of the field in output events used to specify the key for partitioning output across collections. If &apos;collectionNamePattern&apos; contains the {partition} token, this property is required to be specified. </param>
+        /// <param name="partitionKey"> The name of the field in output events used to specify the key for partitioning output across collections. If 'collectionNamePattern' contains the {partition} token, this property is required to be specified. </param>
         /// <param name="documentId"> The name of the field in output events used to specify the primary key which insert or update operations are based on. </param>
         /// <param name="authenticationMode"> Authentication Mode. </param>
         internal DocumentDbOutputDataSource(string outputDataSourceType, string accountId, string accountKey, string database, string collectionNamePattern, string partitionKey, string documentId, StreamAnalyticsAuthenticationMode? authenticationMode) : base(outputDataSourceType)
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public string Database { get; set; }
         /// <summary> The collection name pattern for the collections to be used. The collection name format can be constructed using the optional {partition} token, where partitions start from 0. See the DocumentDB section of https://docs.microsoft.com/en-us/rest/api/streamanalytics/stream-analytics-output for more information. Required on PUT (CreateOrReplace) requests. </summary>
         public string CollectionNamePattern { get; set; }
-        /// <summary> The name of the field in output events used to specify the key for partitioning output across collections. If &apos;collectionNamePattern&apos; contains the {partition} token, this property is required to be specified. </summary>
+        /// <summary> The name of the field in output events used to specify the key for partitioning output across collections. If 'collectionNamePattern' contains the {partition} token, this property is required to be specified. </summary>
         public string PartitionKey { get; set; }
         /// <summary> The name of the field in output events used to specify the primary key which insert or update operations are based on. </summary>
         public string DocumentId { get; set; }

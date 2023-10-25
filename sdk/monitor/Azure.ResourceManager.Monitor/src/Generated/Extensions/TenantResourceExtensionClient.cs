@@ -5,8 +5,8 @@
 
 #nullable disable
 
-using System;
 using System.Threading;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual AsyncPageable<MonitorLocalizableString> GetEventCategoriesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EventCategoriesRestClient.CreateListRequest();
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MonitorLocalizableString.DeserializeMonitorLocalizableString, EventCategoriesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetEventCategories", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MonitorLocalizableString.DeserializeMonitorLocalizableString, EventCategoriesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetEventCategories", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual Pageable<MonitorLocalizableString> GetEventCategories(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EventCategoriesRestClient.CreateListRequest();
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, MonitorLocalizableString.DeserializeMonitorLocalizableString, EventCategoriesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetEventCategories", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, MonitorLocalizableString.DeserializeMonitorLocalizableString, EventCategoriesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetEventCategories", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> Reduces the set of data collected. &lt;br&gt;The **$filter** is very restricted and allows only the following patterns.&lt;br&gt;- List events for a resource group: $filter=eventTimestamp ge &apos;&lt;Start Time&gt;&apos; and eventTimestamp le &apos;&lt;End Time&gt;&apos; and eventChannels eq &apos;Admin, Operation&apos; and resourceGroupName eq &apos;&lt;ResourceGroupName&gt;&apos;.&lt;br&gt;- List events for resource: $filter=eventTimestamp ge &apos;&lt;Start Time&gt;&apos; and eventTimestamp le &apos;&lt;End Time&gt;&apos; and eventChannels eq &apos;Admin, Operation&apos; and resourceUri eq &apos;&lt;ResourceURI&gt;&apos;.&lt;br&gt;- List events for a subscription: $filter=eventTimestamp ge &apos;&lt;Start Time&gt;&apos; and eventTimestamp le &apos;&lt;End Time&gt;&apos; and eventChannels eq &apos;Admin, Operation&apos;.&lt;br&gt;- List events for a resource provider: $filter=eventTimestamp ge &apos;&lt;Start Time&gt;&apos; and eventTimestamp le &apos;&lt;End Time&gt;&apos; and eventChannels eq &apos;Admin, Operation&apos; and resourceProvider eq &apos;&lt;ResourceProviderName&gt;&apos;.&lt;br&gt;- List events for a correlation Id: api-version=2014-04-01&amp;$filter=eventTimestamp ge &apos;2014-07-16T04:36:37.6407898Z&apos; and eventTimestamp le &apos;2014-07-20T04:36:37.6407898Z&apos; and eventChannels eq &apos;Admin, Operation&apos; and correlationId eq &apos;&lt;CorrelationID&gt;&apos;.&lt;br&gt;**NOTE**: No other syntax is allowed. </param>
+        /// <param name="filter"> Reduces the set of data collected. &lt;br&gt;The **$filter** is very restricted and allows only the following patterns.&lt;br&gt;- List events for a resource group: $filter=eventTimestamp ge '&lt;Start Time&gt;' and eventTimestamp le '&lt;End Time&gt;' and eventChannels eq 'Admin, Operation' and resourceGroupName eq '&lt;ResourceGroupName&gt;'.&lt;br&gt;- List events for resource: $filter=eventTimestamp ge '&lt;Start Time&gt;' and eventTimestamp le '&lt;End Time&gt;' and eventChannels eq 'Admin, Operation' and resourceUri eq '&lt;ResourceURI&gt;'.&lt;br&gt;- List events for a subscription: $filter=eventTimestamp ge '&lt;Start Time&gt;' and eventTimestamp le '&lt;End Time&gt;' and eventChannels eq 'Admin, Operation'.&lt;br&gt;- List events for a resource provider: $filter=eventTimestamp ge '&lt;Start Time&gt;' and eventTimestamp le '&lt;End Time&gt;' and eventChannels eq 'Admin, Operation' and resourceProvider eq '&lt;ResourceProviderName&gt;'.&lt;br&gt;- List events for a correlation Id: api-version=2014-04-01&amp;$filter=eventTimestamp ge '2014-07-16T04:36:37.6407898Z' and eventTimestamp le '2014-07-20T04:36:37.6407898Z' and eventChannels eq 'Admin, Operation' and correlationId eq '&lt;CorrelationID&gt;'.&lt;br&gt;**NOTE**: No other syntax is allowed. </param>
         /// <param name="select"> Used to fetch events with only the given properties.&lt;br&gt;The **$select** argument is a comma separated list of property names to be returned. Possible values are: *authorization*, *claims*, *correlationId*, *description*, *eventDataId*, *eventName*, *eventTimestamp*, *httpRequest*, *level*, *operationId*, *operationName*, *properties*, *resourceGroupName*, *resourceProviderName*, *resourceId*, *status*, *submissionTimestamp*, *subStatus*, *subscriptionId*. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="EventDataInfo" /> that may take multiple service requests to iterate over. </returns>
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Monitor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => TenantActivityLogsRestClient.CreateListRequest(filter, select);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => TenantActivityLogsRestClient.CreateListNextPageRequest(nextLink, filter, select);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, EventDataInfo.DeserializeEventDataInfo, TenantActivityLogsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetTenantActivityLogs", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, EventDataInfo.DeserializeEventDataInfo, TenantActivityLogsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetTenantActivityLogs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> Reduces the set of data collected. &lt;br&gt;The **$filter** is very restricted and allows only the following patterns.&lt;br&gt;- List events for a resource group: $filter=eventTimestamp ge &apos;&lt;Start Time&gt;&apos; and eventTimestamp le &apos;&lt;End Time&gt;&apos; and eventChannels eq &apos;Admin, Operation&apos; and resourceGroupName eq &apos;&lt;ResourceGroupName&gt;&apos;.&lt;br&gt;- List events for resource: $filter=eventTimestamp ge &apos;&lt;Start Time&gt;&apos; and eventTimestamp le &apos;&lt;End Time&gt;&apos; and eventChannels eq &apos;Admin, Operation&apos; and resourceUri eq &apos;&lt;ResourceURI&gt;&apos;.&lt;br&gt;- List events for a subscription: $filter=eventTimestamp ge &apos;&lt;Start Time&gt;&apos; and eventTimestamp le &apos;&lt;End Time&gt;&apos; and eventChannels eq &apos;Admin, Operation&apos;.&lt;br&gt;- List events for a resource provider: $filter=eventTimestamp ge &apos;&lt;Start Time&gt;&apos; and eventTimestamp le &apos;&lt;End Time&gt;&apos; and eventChannels eq &apos;Admin, Operation&apos; and resourceProvider eq &apos;&lt;ResourceProviderName&gt;&apos;.&lt;br&gt;- List events for a correlation Id: api-version=2014-04-01&amp;$filter=eventTimestamp ge &apos;2014-07-16T04:36:37.6407898Z&apos; and eventTimestamp le &apos;2014-07-20T04:36:37.6407898Z&apos; and eventChannels eq &apos;Admin, Operation&apos; and correlationId eq &apos;&lt;CorrelationID&gt;&apos;.&lt;br&gt;**NOTE**: No other syntax is allowed. </param>
+        /// <param name="filter"> Reduces the set of data collected. &lt;br&gt;The **$filter** is very restricted and allows only the following patterns.&lt;br&gt;- List events for a resource group: $filter=eventTimestamp ge '&lt;Start Time&gt;' and eventTimestamp le '&lt;End Time&gt;' and eventChannels eq 'Admin, Operation' and resourceGroupName eq '&lt;ResourceGroupName&gt;'.&lt;br&gt;- List events for resource: $filter=eventTimestamp ge '&lt;Start Time&gt;' and eventTimestamp le '&lt;End Time&gt;' and eventChannels eq 'Admin, Operation' and resourceUri eq '&lt;ResourceURI&gt;'.&lt;br&gt;- List events for a subscription: $filter=eventTimestamp ge '&lt;Start Time&gt;' and eventTimestamp le '&lt;End Time&gt;' and eventChannels eq 'Admin, Operation'.&lt;br&gt;- List events for a resource provider: $filter=eventTimestamp ge '&lt;Start Time&gt;' and eventTimestamp le '&lt;End Time&gt;' and eventChannels eq 'Admin, Operation' and resourceProvider eq '&lt;ResourceProviderName&gt;'.&lt;br&gt;- List events for a correlation Id: api-version=2014-04-01&amp;$filter=eventTimestamp ge '2014-07-16T04:36:37.6407898Z' and eventTimestamp le '2014-07-20T04:36:37.6407898Z' and eventChannels eq 'Admin, Operation' and correlationId eq '&lt;CorrelationID&gt;'.&lt;br&gt;**NOTE**: No other syntax is allowed. </param>
         /// <param name="select"> Used to fetch events with only the given properties.&lt;br&gt;The **$select** argument is a comma separated list of property names to be returned. Possible values are: *authorization*, *claims*, *correlationId*, *description*, *eventDataId*, *eventName*, *eventTimestamp*, *httpRequest*, *level*, *operationId*, *operationName*, *properties*, *resourceGroupName*, *resourceProviderName*, *resourceId*, *status*, *submissionTimestamp*, *subStatus*, *subscriptionId*. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EventDataInfo" /> that may take multiple service requests to iterate over. </returns>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Monitor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => TenantActivityLogsRestClient.CreateListRequest(filter, select);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => TenantActivityLogsRestClient.CreateListNextPageRequest(nextLink, filter, select);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, EventDataInfo.DeserializeEventDataInfo, TenantActivityLogsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetTenantActivityLogs", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, EventDataInfo.DeserializeEventDataInfo, TenantActivityLogsClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetTenantActivityLogs", "value", "nextLink", cancellationToken);
         }
     }
 }

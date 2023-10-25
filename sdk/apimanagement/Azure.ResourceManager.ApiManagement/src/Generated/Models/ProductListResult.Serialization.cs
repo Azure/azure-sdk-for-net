@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static ProductListResult DeserializeProductListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ApiManagementProductData>> value = default;
             Optional<long> count = default;
             Optional<string> nextLink = default;
@@ -25,7 +29,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ApiManagementProductData> array = new List<ApiManagementProductData>();
@@ -40,7 +43,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     count = property.Value.GetInt64();

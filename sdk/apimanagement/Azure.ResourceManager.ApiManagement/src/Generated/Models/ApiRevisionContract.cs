@@ -23,17 +23,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="createdOn"> The time the API Revision was created. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </param>
         /// <param name="updatedOn"> The time the API Revision were updated. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </param>
         /// <param name="description"> Description of the API Revision. </param>
-        /// <param name="privateUri"> Gateway URL for accessing the non-current API Revision. </param>
+        /// <param name="privateUriString"> Gateway URL for accessing the non-current API Revision. </param>
         /// <param name="isOnline"> Indicates if API revision is the current api revision. </param>
         /// <param name="isCurrent"> Indicates if API revision is accessible via the gateway. </param>
-        internal ApiRevisionContract(string apiId, string apiRevision, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string description, Uri privateUri, bool? isOnline, bool? isCurrent)
+        internal ApiRevisionContract(string apiId, string apiRevision, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string description, string privateUriString, bool? isOnline, bool? isCurrent)
         {
             ApiId = apiId;
             ApiRevision = apiRevision;
             CreatedOn = createdOn;
             UpdatedOn = updatedOn;
             Description = description;
-            PrivateUri = privateUri;
+            PrivateUriString = privateUriString;
             IsOnline = isOnline;
             IsCurrent = isCurrent;
         }
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Description of the API Revision. </summary>
         public string Description { get; }
         /// <summary> Gateway URL for accessing the non-current API Revision. </summary>
-        public Uri PrivateUri { get; }
+        public string PrivateUriString { get; }
         /// <summary> Indicates if API revision is the current api revision. </summary>
         public bool? IsOnline { get; }
         /// <summary> Indicates if API revision is accessible via the gateway. </summary>

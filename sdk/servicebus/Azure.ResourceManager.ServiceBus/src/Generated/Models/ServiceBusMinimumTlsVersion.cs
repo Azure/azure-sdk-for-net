@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    /// <summary> The minimum TLS version for the cluster to support, e.g. &apos;1.2&apos;. </summary>
+    /// <summary> The minimum TLS version for the cluster to support, e.g. '1.2'. </summary>
     public readonly partial struct ServiceBusMinimumTlsVersion : IEquatable<ServiceBusMinimumTlsVersion>
     {
         private readonly string _value;

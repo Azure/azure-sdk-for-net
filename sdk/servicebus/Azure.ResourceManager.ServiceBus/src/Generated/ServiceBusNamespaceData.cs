@@ -13,7 +13,10 @@ using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    /// <summary> A class representing the ServiceBusNamespace data model. </summary>
+    /// <summary>
+    /// A class representing the ServiceBusNamespace data model.
+    /// Description of a namespace resource.
+    /// </summary>
     public partial class ServiceBusNamespaceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ServiceBusNamespaceData. </summary>
@@ -32,7 +35,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="location"> The location. </param>
         /// <param name="sku"> Properties of SKU. </param>
         /// <param name="identity"> Properties of BYOK Identity description. </param>
-        /// <param name="minimumTlsVersion"> The minimum TLS version for the cluster to support, e.g. &apos;1.2&apos;. </param>
+        /// <param name="minimumTlsVersion"> The minimum TLS version for the cluster to support, e.g. '1.2'. </param>
         /// <param name="provisioningState"> Provisioning state of the namespace. </param>
         /// <param name="status"> Status of the namespace. </param>
         /// <param name="createdOn"> The time the namespace was created. </param>
@@ -70,7 +73,7 @@ namespace Azure.ResourceManager.ServiceBus
         public ServiceBusSku Sku { get; set; }
         /// <summary> Properties of BYOK Identity description. </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> The minimum TLS version for the cluster to support, e.g. &apos;1.2&apos;. </summary>
+        /// <summary> The minimum TLS version for the cluster to support, e.g. '1.2'. </summary>
         public ServiceBusMinimumTlsVersion? MinimumTlsVersion { get; set; }
         /// <summary> Provisioning state of the namespace. </summary>
         public string ProvisioningState { get; }

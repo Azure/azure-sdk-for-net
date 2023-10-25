@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.EventHubs.Models
     {
         internal static AuthorizationRuleListResult DeserializeAuthorizationRuleListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<EventHubsAuthorizationRuleData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.EventHubs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<EventHubsAuthorizationRuleData> array = new List<EventHubsAuthorizationRuleData>();

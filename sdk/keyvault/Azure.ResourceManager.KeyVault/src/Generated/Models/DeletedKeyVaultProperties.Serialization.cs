@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         internal static DeletedKeyVaultProperties DeserializeDeletedKeyVaultProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> vaultId = default;
             Optional<AzureLocation> location = default;
             Optional<DateTimeOffset> deletionDate = default;
@@ -28,7 +32,6 @@ namespace Azure.ResourceManager.KeyVault.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     vaultId = new ResourceIdentifier(property.Value.GetString());
@@ -38,7 +41,6 @@ namespace Azure.ResourceManager.KeyVault.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
@@ -48,7 +50,6 @@ namespace Azure.ResourceManager.KeyVault.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     deletionDate = property.Value.GetDateTimeOffset("O");
@@ -58,7 +59,6 @@ namespace Azure.ResourceManager.KeyVault.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     scheduledPurgeDate = property.Value.GetDateTimeOffset("O");
@@ -68,7 +68,6 @@ namespace Azure.ResourceManager.KeyVault.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -83,7 +82,6 @@ namespace Azure.ResourceManager.KeyVault.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     purgeProtectionEnabled = property.Value.GetBoolean();

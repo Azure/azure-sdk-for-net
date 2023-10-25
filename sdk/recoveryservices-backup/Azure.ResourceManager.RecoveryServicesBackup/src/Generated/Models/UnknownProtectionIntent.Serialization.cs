@@ -47,12 +47,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static UnknownProtectionIntent DeserializeUnknownProtectionIntent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ProtectionIntentItemType protectionIntentItemType = "Unknown";
             Optional<BackupManagementType> backupManagementType = default;
-            Optional<string> sourceResourceId = default;
-            Optional<string> itemId = default;
-            Optional<string> policyId = default;
-            Optional<ProtectionStatus> protectionState = default;
+            Optional<ResourceIdentifier> sourceResourceId = default;
+            Optional<ResourceIdentifier> itemId = default;
+            Optional<ResourceIdentifier> policyId = default;
+            Optional<BackupProtectionStatus> protectionState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("protectionIntentItemType"u8))
@@ -64,7 +68,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     backupManagementType = new BackupManagementType(property.Value.GetString());
@@ -72,27 +75,38 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (property.NameEquals("sourceResourceId"u8))
                 {
-                    sourceResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("itemId"u8))
                 {
-                    itemId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    itemId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("policyId"u8))
                 {
-                    policyId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    policyId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("protectionState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    protectionState = new ProtectionStatus(property.Value.GetString());
+                    protectionState = new BackupProtectionStatus(property.Value.GetString());
                     continue;
                 }
             }

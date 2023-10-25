@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.StorageSync.Models
     {
         internal static ServerEndpointSyncStatus DeserializeServerEndpointSyncStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ServerEndpointHealthState> downloadHealth = default;
             Optional<ServerEndpointHealthState> uploadHealth = default;
             Optional<ServerEndpointHealthState> combinedHealth = default;
@@ -33,7 +37,6 @@ namespace Azure.ResourceManager.StorageSync.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     downloadHealth = new ServerEndpointHealthState(property.Value.GetString());
@@ -43,7 +46,6 @@ namespace Azure.ResourceManager.StorageSync.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     uploadHealth = new ServerEndpointHealthState(property.Value.GetString());
@@ -53,7 +55,6 @@ namespace Azure.ResourceManager.StorageSync.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     combinedHealth = new ServerEndpointHealthState(property.Value.GetString());
@@ -63,7 +64,6 @@ namespace Azure.ResourceManager.StorageSync.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     syncActivity = new ServerEndpointSyncActivityState(property.Value.GetString());
@@ -73,7 +73,6 @@ namespace Azure.ResourceManager.StorageSync.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     totalPersistentFilesNotSyncingCount = property.Value.GetInt64();
@@ -83,7 +82,6 @@ namespace Azure.ResourceManager.StorageSync.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastUpdatedTimestamp = property.Value.GetDateTimeOffset("O");
@@ -93,7 +91,6 @@ namespace Azure.ResourceManager.StorageSync.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     uploadStatus = ServerEndpointSyncSessionStatus.DeserializeServerEndpointSyncSessionStatus(property.Value);
@@ -103,7 +100,6 @@ namespace Azure.ResourceManager.StorageSync.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     downloadStatus = ServerEndpointSyncSessionStatus.DeserializeServerEndpointSyncSessionStatus(property.Value);
@@ -113,7 +109,6 @@ namespace Azure.ResourceManager.StorageSync.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     uploadActivity = ServerEndpointSyncActivityStatus.DeserializeServerEndpointSyncActivityStatus(property.Value);
@@ -123,7 +118,6 @@ namespace Azure.ResourceManager.StorageSync.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     downloadActivity = ServerEndpointSyncActivityStatus.DeserializeServerEndpointSyncActivityStatus(property.Value);
@@ -133,7 +127,6 @@ namespace Azure.ResourceManager.StorageSync.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     offlineDataTransferStatus = new ServerEndpointOfflineDataTransferState(property.Value.GetString());
@@ -143,7 +136,6 @@ namespace Azure.ResourceManager.StorageSync.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     backgroundDataDownloadActivity = ServerEndpointBackgroundDataDownloadActivity.DeserializeServerEndpointBackgroundDataDownloadActivity(property.Value);

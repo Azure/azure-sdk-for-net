@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         public static ServiceBusNameUnavailableReason ToServiceBusNameUnavailableReason(this string value)
         {
-            if (string.Equals(value, "None", StringComparison.InvariantCultureIgnoreCase)) return ServiceBusNameUnavailableReason.None;
-            if (string.Equals(value, "InvalidName", StringComparison.InvariantCultureIgnoreCase)) return ServiceBusNameUnavailableReason.InvalidName;
-            if (string.Equals(value, "SubscriptionIsDisabled", StringComparison.InvariantCultureIgnoreCase)) return ServiceBusNameUnavailableReason.SubscriptionIsDisabled;
-            if (string.Equals(value, "NameInUse", StringComparison.InvariantCultureIgnoreCase)) return ServiceBusNameUnavailableReason.NameInUse;
-            if (string.Equals(value, "NameInLockdown", StringComparison.InvariantCultureIgnoreCase)) return ServiceBusNameUnavailableReason.NameInLockdown;
-            if (string.Equals(value, "TooManyNamespaceInCurrentSubscription", StringComparison.InvariantCultureIgnoreCase)) return ServiceBusNameUnavailableReason.TooManyNamespaceInCurrentSubscription;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return ServiceBusNameUnavailableReason.None;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "InvalidName")) return ServiceBusNameUnavailableReason.InvalidName;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "SubscriptionIsDisabled")) return ServiceBusNameUnavailableReason.SubscriptionIsDisabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NameInUse")) return ServiceBusNameUnavailableReason.NameInUse;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NameInLockdown")) return ServiceBusNameUnavailableReason.NameInLockdown;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "TooManyNamespaceInCurrentSubscription")) return ServiceBusNameUnavailableReason.TooManyNamespaceInCurrentSubscription;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ServiceBusNameUnavailableReason value.");
         }
     }

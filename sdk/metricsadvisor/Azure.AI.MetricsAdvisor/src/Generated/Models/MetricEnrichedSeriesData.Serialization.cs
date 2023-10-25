@@ -16,6 +16,10 @@ namespace Azure.AI.MetricsAdvisor.Models
     {
         internal static MetricEnrichedSeriesData DeserializeMetricEnrichedSeriesData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SeriesIdentity series = default;
             IReadOnlyList<DateTimeOffset> timestampList = default;
             IReadOnlyList<double> valueList = default;

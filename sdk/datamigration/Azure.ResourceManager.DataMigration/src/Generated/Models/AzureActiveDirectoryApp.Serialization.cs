@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static AzureActiveDirectoryApp DeserializeAzureActiveDirectoryApp(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> applicationId = default;
             Optional<string> appKey = default;
             Optional<Guid> tenantId = default;
@@ -61,7 +65,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tenantId = property.Value.GetGuid();
@@ -71,7 +74,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ignoreAzurePermissions = property.Value.GetBoolean();

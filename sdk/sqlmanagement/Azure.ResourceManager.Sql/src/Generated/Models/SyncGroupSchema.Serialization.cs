@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static SyncGroupSchema DeserializeSyncGroupSchema(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<SyncGroupSchemaTable>> tables = default;
             Optional<string> masterSyncMemberName = default;
             foreach (var property in element.EnumerateObject())
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SyncGroupSchemaTable> array = new List<SyncGroupSchemaTable>();

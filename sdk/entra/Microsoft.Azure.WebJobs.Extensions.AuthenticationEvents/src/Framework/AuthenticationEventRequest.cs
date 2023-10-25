@@ -14,7 +14,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
     /// <typeparam name="TData">The EventData model related to the request.</typeparam>
     /// <seealso cref="AuthenticationEventResponse" />
     /// <seealso cref="AuthenticationEventData" />
-    public abstract class AuthenticationEventRequest<TResponse, TData> : AuthenticationEventRequestBase where TResponse : AuthenticationEventResponse where TData : AuthenticationEventData
+    public abstract class AuthenticationEventRequest<TResponse, TData> : AuthenticationEventRequestBase
+        where TResponse : AuthenticationEventResponse , new()
+        where TData : AuthenticationEventData
     {
         /// <summary>Initializes a new instance of the <see cref="AuthenticationEventRequest{T, K}" /> class.</summary>
         /// <param name="request">The request.</param>
@@ -23,7 +25,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         /// <value>The response.</value>
         ///
         [JsonPropertyName("response")]
-        [Required]
         public TResponse Response { get; set; }
 
         /// <summary>Gets or sets the related EventData model.</summary>
@@ -62,6 +63,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
 
         internal override Task<AuthenticationEventResponse> Failed(Exception exception, bool internalError)
         {
+            if (Response == null)
+            {
+                Response = new TResponse();
+            }
+
             Response.MarkAsFailed(exception, internalError);
             return Task.FromResult<AuthenticationEventResponse>((TResponse)Response);
         }

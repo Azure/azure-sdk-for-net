@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Workloads.Models
     {
         internal static SapApplicationServerInstanceList DeserializeSapApplicationServerInstanceList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SapApplicationServerInstanceData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SapApplicationServerInstanceData> array = new List<SapApplicationServerInstanceData>();

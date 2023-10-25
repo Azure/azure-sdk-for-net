@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
 
         internal static NotificationHubWnsCredential DeserializeNotificationHubWnsCredential(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> packageSid = default;
             Optional<string> secretKey = default;
             Optional<Uri> windowsLiveEndpoint = default;
@@ -67,7 +71,6 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                windowsLiveEndpoint = null;
                                 continue;
                             }
                             windowsLiveEndpoint = new Uri(property0.Value.GetString());

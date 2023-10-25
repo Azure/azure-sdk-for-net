@@ -73,7 +73,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
@@ -81,6 +84,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         internal static ServiceAccountApiProperties DeserializeServiceAccountApiProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> qnaRuntimeEndpoint = default;
             Optional<string> qnaAzureSearchEndpointKey = default;
             Optional<ResourceIdentifier> qnaAzureSearchEndpointId = default;
@@ -109,7 +116,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     qnaAzureSearchEndpointId = new ResourceIdentifier(property.Value.GetString());
@@ -119,7 +125,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     statisticsEnabled = property.Value.GetBoolean();
@@ -139,7 +144,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     aadClientId = property.Value.GetGuid();
@@ -149,7 +153,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     aadTenantId = property.Value.GetGuid();

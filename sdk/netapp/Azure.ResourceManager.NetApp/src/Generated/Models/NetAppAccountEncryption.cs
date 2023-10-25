@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Initializes a new instance of NetAppAccountEncryption. </summary>
         /// <param name="keySource"> The encryption keySource (provider). Possible values (case-insensitive):  Microsoft.NetApp, Microsoft.KeyVault. </param>
-        /// <param name="keyVaultProperties"> Properties provided by KeVault. Applicable if keySource is &apos;Microsoft.KeyVault&apos;. </param>
-        /// <param name="identity"> Identity used to authenticate to KeyVault. Applicable if keySource is &apos;Microsoft.KeyVault&apos;. </param>
+        /// <param name="keyVaultProperties"> Properties provided by KeVault. Applicable if keySource is 'Microsoft.KeyVault'. </param>
+        /// <param name="identity"> Identity used to authenticate to KeyVault. Applicable if keySource is 'Microsoft.KeyVault'. </param>
         internal NetAppAccountEncryption(NetAppKeySource? keySource, NetAppKeyVaultProperties keyVaultProperties, NetAppEncryptionIdentity identity)
         {
             KeySource = keySource;
@@ -28,9 +28,9 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> The encryption keySource (provider). Possible values (case-insensitive):  Microsoft.NetApp, Microsoft.KeyVault. </summary>
         public NetAppKeySource? KeySource { get; set; }
-        /// <summary> Properties provided by KeVault. Applicable if keySource is &apos;Microsoft.KeyVault&apos;. </summary>
+        /// <summary> Properties provided by KeVault. Applicable if keySource is 'Microsoft.KeyVault'. </summary>
         public NetAppKeyVaultProperties KeyVaultProperties { get; set; }
-        /// <summary> Identity used to authenticate to KeyVault. Applicable if keySource is &apos;Microsoft.KeyVault&apos;. </summary>
+        /// <summary> Identity used to authenticate to KeyVault. Applicable if keySource is 'Microsoft.KeyVault'. </summary>
         public NetAppEncryptionIdentity Identity { get; set; }
     }
 }

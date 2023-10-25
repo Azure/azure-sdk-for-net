@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
         internal static AttestationEvidence DeserializeAttestationEvidence(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> description = default;
             Optional<Uri> sourceUri = default;
             foreach (var property in element.EnumerateObject())
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        sourceUri = null;
                         continue;
                     }
                     sourceUri = new Uri(property.Value.GetString());

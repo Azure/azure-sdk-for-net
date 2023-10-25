@@ -19,11 +19,13 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="properties"> Properties of the service tag information. </param>
         /// <param name="name"> The name of service tag. </param>
         /// <param name="id"> The ID of service tag. </param>
-        internal ServiceTagInformation(ServiceTagInformationPropertiesFormat properties, string name, string id)
+        /// <param name="serviceTagChangeNumber"> The iteration number of service tag object for region. </param>
+        internal ServiceTagInformation(ServiceTagInformationPropertiesFormat properties, string name, string id, string serviceTagChangeNumber)
         {
             Properties = properties;
             Name = name;
             Id = id;
+            ServiceTagChangeNumber = serviceTagChangeNumber;
         }
 
         /// <summary> Properties of the service tag information. </summary>
@@ -32,5 +34,7 @@ namespace Azure.ResourceManager.Network.Models
         public string Name { get; }
         /// <summary> The ID of service tag. </summary>
         public string Id { get; }
+        /// <summary> The iteration number of service tag object for region. </summary>
+        public string ServiceTagChangeNumber { get; }
     }
 }

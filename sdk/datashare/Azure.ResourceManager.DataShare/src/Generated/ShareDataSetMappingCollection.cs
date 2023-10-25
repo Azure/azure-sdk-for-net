@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.DataShare
         }
 
         /// <summary>
-        /// Create a DataSetMapping 
+        /// Create a DataSetMapping
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.DataShare
         }
 
         /// <summary>
-        /// Create a DataSetMapping 
+        /// Create a DataSetMapping
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -230,7 +231,7 @@ namespace Azure.ResourceManager.DataShare
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _shareDataSetMappingDataSetMappingsRestClient.CreateListByShareSubscriptionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _shareDataSetMappingDataSetMappingsRestClient.CreateListByShareSubscriptionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ShareDataSetMappingResource(Client, ShareDataSetMappingData.DeserializeShareDataSetMappingData(e)), _shareDataSetMappingDataSetMappingsClientDiagnostics, Pipeline, "ShareDataSetMappingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ShareDataSetMappingResource(Client, ShareDataSetMappingData.DeserializeShareDataSetMappingData(e)), _shareDataSetMappingDataSetMappingsClientDiagnostics, Pipeline, "ShareDataSetMappingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -255,7 +256,7 @@ namespace Azure.ResourceManager.DataShare
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _shareDataSetMappingDataSetMappingsRestClient.CreateListByShareSubscriptionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _shareDataSetMappingDataSetMappingsRestClient.CreateListByShareSubscriptionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ShareDataSetMappingResource(Client, ShareDataSetMappingData.DeserializeShareDataSetMappingData(e)), _shareDataSetMappingDataSetMappingsClientDiagnostics, Pipeline, "ShareDataSetMappingCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ShareDataSetMappingResource(Client, ShareDataSetMappingData.DeserializeShareDataSetMappingData(e)), _shareDataSetMappingDataSetMappingsClientDiagnostics, Pipeline, "ShareDataSetMappingCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -320,6 +321,80 @@ namespace Azure.ResourceManager.DataShare
             {
                 var response = _shareDataSetMappingDataSetMappingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataSetMappingName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/dataSetMappings/{dataSetMappingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataSetMappings_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dataSetMappingName"> The name of the dataSetMapping. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dataSetMappingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataSetMappingName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ShareDataSetMappingResource>> GetIfExistsAsync(string dataSetMappingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dataSetMappingName, nameof(dataSetMappingName));
+
+            using var scope = _shareDataSetMappingDataSetMappingsClientDiagnostics.CreateScope("ShareDataSetMappingCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _shareDataSetMappingDataSetMappingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataSetMappingName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ShareDataSetMappingResource>(response.GetRawResponse());
+                return Response.FromValue(new ShareDataSetMappingResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/dataSetMappings/{dataSetMappingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataSetMappings_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dataSetMappingName"> The name of the dataSetMapping. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dataSetMappingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataSetMappingName"/> is null. </exception>
+        public virtual NullableResponse<ShareDataSetMappingResource> GetIfExists(string dataSetMappingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dataSetMappingName, nameof(dataSetMappingName));
+
+            using var scope = _shareDataSetMappingDataSetMappingsClientDiagnostics.CreateScope("ShareDataSetMappingCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _shareDataSetMappingDataSetMappingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataSetMappingName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ShareDataSetMappingResource>(response.GetRawResponse());
+                return Response.FromValue(new ShareDataSetMappingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

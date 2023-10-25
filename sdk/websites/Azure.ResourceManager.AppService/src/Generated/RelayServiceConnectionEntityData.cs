@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the RelayServiceConnectionEntity data model. </summary>
+    /// <summary>
+    /// A class representing the RelayServiceConnectionEntity data model.
+    /// Hybrid Connection for an App Service app.
+    /// </summary>
     public partial class RelayServiceConnectionEntityData : ResourceData
     {
         /// <summary> Initializes a new instance of RelayServiceConnectionEntityData. </summary>

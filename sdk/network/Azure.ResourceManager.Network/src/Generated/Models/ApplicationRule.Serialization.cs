@@ -101,6 +101,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(HttpHeadersToInsert))
+            {
+                writer.WritePropertyName("httpHeadersToInsert"u8);
+                writer.WriteStartArray();
+                foreach (var item in HttpHeadersToInsert)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -118,6 +128,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationRule DeserializeApplicationRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> sourceAddresses = default;
             Optional<IList<string>> destinationAddresses = default;
             Optional<IList<FirewallPolicyRuleApplicationProtocol>> protocols = default;
@@ -127,6 +141,7 @@ namespace Azure.ResourceManager.Network.Models
             Optional<IList<string>> sourceIPGroups = default;
             Optional<bool> terminateTLS = default;
             Optional<IList<string>> webCategories = default;
+            Optional<IList<FirewallPolicyHttpHeaderToInsert>> httpHeadersToInsert = default;
             Optional<string> name = default;
             Optional<string> description = default;
             FirewallPolicyRuleType ruleType = default;
@@ -136,7 +151,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -151,7 +165,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -166,7 +179,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<FirewallPolicyRuleApplicationProtocol> array = new List<FirewallPolicyRuleApplicationProtocol>();
@@ -181,7 +193,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -196,7 +207,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -211,7 +221,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -226,7 +235,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -241,7 +249,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     terminateTLS = property.Value.GetBoolean();
@@ -251,7 +258,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -260,6 +266,20 @@ namespace Azure.ResourceManager.Network.Models
                         array.Add(item.GetString());
                     }
                     webCategories = array;
+                    continue;
+                }
+                if (property.NameEquals("httpHeadersToInsert"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<FirewallPolicyHttpHeaderToInsert> array = new List<FirewallPolicyHttpHeaderToInsert>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(FirewallPolicyHttpHeaderToInsert.DeserializeFirewallPolicyHttpHeaderToInsert(item));
+                    }
+                    httpHeadersToInsert = array;
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -278,7 +298,7 @@ namespace Azure.ResourceManager.Network.Models
                     continue;
                 }
             }
-            return new ApplicationRule(name.Value, description.Value, ruleType, Optional.ToList(sourceAddresses), Optional.ToList(destinationAddresses), Optional.ToList(protocols), Optional.ToList(targetFqdns), Optional.ToList(targetUrls), Optional.ToList(fqdnTags), Optional.ToList(sourceIPGroups), Optional.ToNullable(terminateTLS), Optional.ToList(webCategories));
+            return new ApplicationRule(name.Value, description.Value, ruleType, Optional.ToList(sourceAddresses), Optional.ToList(destinationAddresses), Optional.ToList(protocols), Optional.ToList(targetFqdns), Optional.ToList(targetUrls), Optional.ToList(fqdnTags), Optional.ToList(sourceIPGroups), Optional.ToNullable(terminateTLS), Optional.ToList(webCategories), Optional.ToList(httpHeadersToInsert));
         }
     }
 }

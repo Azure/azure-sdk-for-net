@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.DataShare
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataShareConsumerInvitationConsumerInvitationsRestClient.CreateListInvitationsRequest(skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataShareConsumerInvitationConsumerInvitationsRestClient.CreateListInvitationsNextPageRequest(nextLink, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataShareConsumerInvitationResource(Client, DataShareConsumerInvitationData.DeserializeDataShareConsumerInvitationData(e)), _dataShareConsumerInvitationConsumerInvitationsClientDiagnostics, Pipeline, "DataShareConsumerInvitationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataShareConsumerInvitationResource(Client, DataShareConsumerInvitationData.DeserializeDataShareConsumerInvitationData(e)), _dataShareConsumerInvitationConsumerInvitationsClientDiagnostics, Pipeline, "DataShareConsumerInvitationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -164,7 +165,7 @@ namespace Azure.ResourceManager.DataShare
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataShareConsumerInvitationConsumerInvitationsRestClient.CreateListInvitationsRequest(skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dataShareConsumerInvitationConsumerInvitationsRestClient.CreateListInvitationsNextPageRequest(nextLink, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataShareConsumerInvitationResource(Client, DataShareConsumerInvitationData.DeserializeDataShareConsumerInvitationData(e)), _dataShareConsumerInvitationConsumerInvitationsClientDiagnostics, Pipeline, "DataShareConsumerInvitationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataShareConsumerInvitationResource(Client, DataShareConsumerInvitationData.DeserializeDataShareConsumerInvitationData(e)), _dataShareConsumerInvitationConsumerInvitationsClientDiagnostics, Pipeline, "DataShareConsumerInvitationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -223,6 +224,74 @@ namespace Azure.ResourceManager.DataShare
             {
                 var response = _dataShareConsumerInvitationConsumerInvitationsRestClient.Get(location, invitationId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.DataShare/locations/{location}/consumerInvitations/{invitationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConsumerInvitations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> Location of the invitation. </param>
+        /// <param name="invitationId"> An invitation id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<DataShareConsumerInvitationResource>> GetIfExistsAsync(AzureLocation location, Guid invitationId, CancellationToken cancellationToken = default)
+        {
+            using var scope = _dataShareConsumerInvitationConsumerInvitationsClientDiagnostics.CreateScope("DataShareConsumerInvitationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _dataShareConsumerInvitationConsumerInvitationsRestClient.GetAsync(location, invitationId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DataShareConsumerInvitationResource>(response.GetRawResponse());
+                return Response.FromValue(new DataShareConsumerInvitationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.DataShare/locations/{location}/consumerInvitations/{invitationId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConsumerInvitations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> Location of the invitation. </param>
+        /// <param name="invitationId"> An invitation id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<DataShareConsumerInvitationResource> GetIfExists(AzureLocation location, Guid invitationId, CancellationToken cancellationToken = default)
+        {
+            using var scope = _dataShareConsumerInvitationConsumerInvitationsClientDiagnostics.CreateScope("DataShareConsumerInvitationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _dataShareConsumerInvitationConsumerInvitationsRestClient.Get(location, invitationId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DataShareConsumerInvitationResource>(response.GetRawResponse());
+                return Response.FromValue(new DataShareConsumerInvitationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="kind"> Type of the script. </param>
         /// <param name="containerSettings"> Container settings. </param>
         /// <param name="storageAccountSettings"> Storage Account settings. </param>
-        /// <param name="cleanupPreference"> The clean up preference when the script execution gets in a terminal state. Default setting is &apos;Always&apos;. </param>
+        /// <param name="cleanupPreference"> The clean up preference when the script execution gets in a terminal state. Default setting is 'Always'. </param>
         /// <param name="provisioningState"> State of the script execution. This only appears in the response. </param>
         /// <param name="status"> Contains the results of script execution. </param>
         /// <param name="outputs"> List of script outputs. </param>
         /// <param name="primaryScriptUri"> Uri for the script. This is the entry point for the external script. </param>
         /// <param name="supportingScriptUris"> Supporting files for the external script. </param>
         /// <param name="scriptContent"> Script body. </param>
-        /// <param name="arguments"> Command line arguments to pass to the script. Arguments are separated by spaces. ex: -Name blue* -Location &apos;West US 2&apos;. </param>
+        /// <param name="arguments"> Command line arguments to pass to the script. Arguments are separated by spaces. ex: -Name blue* -Location 'West US 2'. </param>
         /// <param name="environmentVariables"> The environment variables to pass over to the script. </param>
         /// <param name="forceUpdateTag"> Gets or sets how the deployment script should be forced to execute even if the script resource has not changed. Can be current time stamp or a GUID. </param>
         /// <param name="retentionInterval"> Interval for which the service retains the script resource after it reaches a terminal state. Resource will be deleted when this duration expires. Duration is based on ISO 8601 pattern (for example P1D means one day). </param>
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <summary> Container settings. </summary>
         internal ContainerConfiguration ContainerSettings { get; set; }
-        /// <summary> Container group name, if not specified then the name will get auto-generated. Not specifying a &apos;containerGroupName&apos; indicates the system to generate a unique name which might end up flagging an Azure Policy as non-compliant. Use &apos;containerGroupName&apos; when you have an Azure Policy that expects a specific naming convention or when you want to fully control the name. &apos;containerGroupName&apos; property must be between 1 and 63 characters long, must contain only lowercase letters, numbers, and dashes and it cannot start or end with a dash and consecutive dashes are not allowed. To specify a &apos;containerGroupName&apos;, add the following object to properties: { &quot;containerSettings&quot;: { &quot;containerGroupName&quot;: &quot;contoso-container&quot; } }. If you do not want to specify a &apos;containerGroupName&apos; then do not add &apos;containerSettings&apos; property. </summary>
+        /// <summary> Container group name, if not specified then the name will get auto-generated. Not specifying a 'containerGroupName' indicates the system to generate a unique name which might end up flagging an Azure Policy as non-compliant. Use 'containerGroupName' when you have an Azure Policy that expects a specific naming convention or when you want to fully control the name. 'containerGroupName' property must be between 1 and 63 characters long, must contain only lowercase letters, numbers, and dashes and it cannot start or end with a dash and consecutive dashes are not allowed. To specify a 'containerGroupName', add the following object to properties: { "containerSettings": { "containerGroupName": "contoso-container" } }. If you do not want to specify a 'containerGroupName' then do not add 'containerSettings' property. </summary>
         public string ContainerGroupName
         {
             get => ContainerSettings is null ? default : ContainerSettings.ContainerGroupName;
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         /// <summary> Storage Account settings. </summary>
         public ScriptStorageConfiguration StorageAccountSettings { get; set; }
-        /// <summary> The clean up preference when the script execution gets in a terminal state. Default setting is &apos;Always&apos;. </summary>
+        /// <summary> The clean up preference when the script execution gets in a terminal state. Default setting is 'Always'. </summary>
         public ScriptCleanupOptions? CleanupPreference { get; set; }
         /// <summary> State of the script execution. This only appears in the response. </summary>
         public ScriptProvisioningState? ProvisioningState { get; }
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Resources.Models
         public IList<Uri> SupportingScriptUris { get; }
         /// <summary> Script body. </summary>
         public string ScriptContent { get; set; }
-        /// <summary> Command line arguments to pass to the script. Arguments are separated by spaces. ex: -Name blue* -Location &apos;West US 2&apos;. </summary>
+        /// <summary> Command line arguments to pass to the script. Arguments are separated by spaces. ex: -Name blue* -Location 'West US 2'. </summary>
         public string Arguments { get; set; }
         /// <summary> The environment variables to pass over to the script. </summary>
         public IList<ScriptEnvironmentVariable> EnvironmentVariables { get; }

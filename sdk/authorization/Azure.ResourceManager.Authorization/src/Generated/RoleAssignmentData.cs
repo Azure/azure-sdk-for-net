@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Authorization
 {
-    /// <summary> A class representing the RoleAssignment data model. </summary>
+    /// <summary>
+    /// A class representing the RoleAssignment data model.
+    /// Role Assignments
+    /// </summary>
     public partial class RoleAssignmentData : ResourceData
     {
         /// <summary> Initializes a new instance of RoleAssignmentData. </summary>
@@ -30,8 +33,8 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="principalId"> The principal ID. </param>
         /// <param name="principalType"> The principal type of the assigned principal ID. </param>
         /// <param name="description"> Description of role assignment. </param>
-        /// <param name="condition"> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase &apos;foo_storage_container&apos;. </param>
-        /// <param name="conditionVersion"> Version of the condition. Currently the only accepted value is &apos;2.0&apos;. </param>
+        /// <param name="condition"> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase 'foo_storage_container'. </param>
+        /// <param name="conditionVersion"> Version of the condition. Currently the only accepted value is '2.0'. </param>
         /// <param name="createdOn"> Time it was created. </param>
         /// <param name="updatedOn"> Time it was updated. </param>
         /// <param name="createdBy"> Id of the user who created the assignment. </param>
@@ -63,9 +66,9 @@ namespace Azure.ResourceManager.Authorization
         public RoleManagementPrincipalType? PrincipalType { get; }
         /// <summary> Description of role assignment. </summary>
         public string Description { get; }
-        /// <summary> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase &apos;foo_storage_container&apos;. </summary>
+        /// <summary> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase 'foo_storage_container'. </summary>
         public string Condition { get; }
-        /// <summary> Version of the condition. Currently the only accepted value is &apos;2.0&apos;. </summary>
+        /// <summary> Version of the condition. Currently the only accepted value is '2.0'. </summary>
         public string ConditionVersion { get; }
         /// <summary> Time it was created. </summary>
         public DateTimeOffset? CreatedOn { get; }

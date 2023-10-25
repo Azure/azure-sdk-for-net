@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static UnknownEnvironmentData DeserializeUnknownEnvironmentData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             EnvironmentType environmentType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {

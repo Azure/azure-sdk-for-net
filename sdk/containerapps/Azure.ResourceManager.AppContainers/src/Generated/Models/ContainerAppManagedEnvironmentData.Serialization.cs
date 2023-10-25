@@ -24,11 +24,6 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Optional.IsDefined(Sku))
-            {
-                writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
-            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -84,14 +79,37 @@ namespace Azure.ResourceManager.AppContainers
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(KedaConfiguration))
+            {
+                writer.WritePropertyName("kedaConfiguration"u8);
+                writer.WriteObjectValue(KedaConfiguration);
+            }
+            if (Optional.IsDefined(DaprConfiguration))
+            {
+                writer.WritePropertyName("daprConfiguration"u8);
+                writer.WriteObjectValue(DaprConfiguration);
+            }
+            if (Optional.IsDefined(InfrastructureResourceGroup))
+            {
+                writer.WritePropertyName("infrastructureResourceGroup"u8);
+                writer.WriteStringValue(InfrastructureResourceGroup);
+            }
+            if (Optional.IsDefined(PeerAuthentication))
+            {
+                writer.WritePropertyName("peerAuthentication"u8);
+                writer.WriteObjectValue(PeerAuthentication);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static ContainerAppManagedEnvironmentData DeserializeContainerAppManagedEnvironmentData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
-            Optional<EnvironmentSkuProperties> sku = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -110,6 +128,10 @@ namespace Azure.ResourceManager.AppContainers
             Optional<ContainerAppCustomDomainConfiguration> customDomainConfiguration = default;
             Optional<string> eventStreamEndpoint = default;
             Optional<IList<ContainerAppWorkloadProfile>> workloadProfiles = default;
+            Optional<KedaConfiguration> kedaConfiguration = default;
+            Optional<DaprConfiguration> daprConfiguration = default;
+            Optional<string> infrastructureResourceGroup = default;
+            Optional<ManagedEnvironmentPropertiesPeerAuthentication> peerAuthentication = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -117,21 +139,10 @@ namespace Azure.ResourceManager.AppContainers
                     kind = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sku"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    sku = EnvironmentSkuProperties.DeserializeEnvironmentSkuProperties(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -166,7 +177,6 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -185,7 +195,6 @@ namespace Azure.ResourceManager.AppContainers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ContainerAppEnvironmentProvisioningState(property0.Value.GetString());
@@ -205,7 +214,6 @@ namespace Azure.ResourceManager.AppContainers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             vnetConfiguration = ContainerAppVnetConfiguration.DeserializeContainerAppVnetConfiguration(property0.Value);
@@ -225,7 +233,6 @@ namespace Azure.ResourceManager.AppContainers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             staticIP = IPAddress.Parse(property0.Value.GetString());
@@ -235,7 +242,6 @@ namespace Azure.ResourceManager.AppContainers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             appLogsConfiguration = ContainerAppLogsConfiguration.DeserializeContainerAppLogsConfiguration(property0.Value);
@@ -245,7 +251,6 @@ namespace Azure.ResourceManager.AppContainers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             zoneRedundant = property0.Value.GetBoolean();
@@ -255,7 +260,6 @@ namespace Azure.ResourceManager.AppContainers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             customDomainConfiguration = ContainerAppCustomDomainConfiguration.DeserializeContainerAppCustomDomainConfiguration(property0.Value);
@@ -270,7 +274,6 @@ namespace Azure.ResourceManager.AppContainers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ContainerAppWorkloadProfile> array = new List<ContainerAppWorkloadProfile>();
@@ -281,11 +284,43 @@ namespace Azure.ResourceManager.AppContainers
                             workloadProfiles = array;
                             continue;
                         }
+                        if (property0.NameEquals("kedaConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            kedaConfiguration = KedaConfiguration.DeserializeKedaConfiguration(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("daprConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            daprConfiguration = DaprConfiguration.DeserializeDaprConfiguration(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("infrastructureResourceGroup"u8))
+                        {
+                            infrastructureResourceGroup = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("peerAuthentication"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            peerAuthentication = ManagedEnvironmentPropertiesPeerAuthentication.DeserializeManagedEnvironmentPropertiesPeerAuthentication(property0.Value);
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ContainerAppManagedEnvironmentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, kind.Value, sku.Value, Optional.ToNullable(provisioningState), daprAIInstrumentationKey.Value, daprAIConnectionString.Value, vnetConfiguration.Value, deploymentErrors.Value, defaultDomain.Value, staticIP.Value, appLogsConfiguration.Value, Optional.ToNullable(zoneRedundant), customDomainConfiguration.Value, eventStreamEndpoint.Value, Optional.ToList(workloadProfiles));
+            return new ContainerAppManagedEnvironmentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, kind.Value, Optional.ToNullable(provisioningState), daprAIInstrumentationKey.Value, daprAIConnectionString.Value, vnetConfiguration.Value, deploymentErrors.Value, defaultDomain.Value, staticIP.Value, appLogsConfiguration.Value, Optional.ToNullable(zoneRedundant), customDomainConfiguration.Value, eventStreamEndpoint.Value, Optional.ToList(workloadProfiles), kedaConfiguration.Value, daprConfiguration.Value, infrastructureResourceGroup.Value, peerAuthentication.Value);
         }
     }
 }

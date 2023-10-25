@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static DataBoxCustomerDiskCopyLogDetails DeserializeDataBoxCustomerDiskCopyLogDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> serialNumber = default;
             Optional<string> errorLogLink = default;
             Optional<string> verboseLogLink = default;

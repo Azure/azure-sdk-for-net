@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    /// <summary> This imposes restrictions on which nodes can be assigned to the pool. Enabling this value can reduce the chance of the requested number of nodes to be allocated in the pool. If not specified, this value defaults to &apos;Disabled&apos;. </summary>
+    /// <summary> This imposes restrictions on which nodes can be assigned to the pool. Enabling this value can reduce the chance of the requested number of nodes to be allocated in the pool. If not specified, this value defaults to 'Disabled'. </summary>
     public enum InterNodeCommunicationState
     {
         /// <summary> Enable network communication between virtual machines. </summary>

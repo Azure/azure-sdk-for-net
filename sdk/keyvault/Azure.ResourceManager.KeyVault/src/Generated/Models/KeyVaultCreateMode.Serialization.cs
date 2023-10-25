@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         public static KeyVaultCreateMode ToKeyVaultCreateMode(this string value)
         {
-            if (string.Equals(value, "default", StringComparison.InvariantCultureIgnoreCase)) return KeyVaultCreateMode.Default;
-            if (string.Equals(value, "recover", StringComparison.InvariantCultureIgnoreCase)) return KeyVaultCreateMode.Recover;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "default")) return KeyVaultCreateMode.Default;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "recover")) return KeyVaultCreateMode.Recover;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown KeyVaultCreateMode value.");
         }
     }

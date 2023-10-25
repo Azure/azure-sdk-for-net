@@ -61,6 +61,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformCustomContainer DeserializeAppPlatformCustomContainer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> server = default;
             Optional<string> containerImage = default;
             Optional<IList<string>> command = default;
@@ -83,7 +87,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -98,7 +101,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -113,7 +115,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     imageRegistryCredential = AppPlatformImageRegistryCredential.DeserializeAppPlatformImageRegistryCredential(property.Value);

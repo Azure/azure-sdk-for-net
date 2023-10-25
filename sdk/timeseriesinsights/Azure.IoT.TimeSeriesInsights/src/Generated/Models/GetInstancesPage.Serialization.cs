@@ -15,6 +15,10 @@ namespace Azure.IoT.TimeSeriesInsights
     {
         internal static GetInstancesPage DeserializeGetInstancesPage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<TimeSeriesInstance>> instances = default;
             Optional<string> continuationToken = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +27,6 @@ namespace Azure.IoT.TimeSeriesInsights
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TimeSeriesInstance> array = new List<TimeSeriesInstance>();

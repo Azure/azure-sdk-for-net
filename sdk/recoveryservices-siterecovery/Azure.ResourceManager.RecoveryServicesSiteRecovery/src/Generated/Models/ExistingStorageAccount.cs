@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of ExistingStorageAccount. </summary>
         /// <param name="azureStorageAccountId"> The storage account Arm Id. Throw error, if resource does not exists. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="azureStorageAccountId"/> is null. </exception>
-        public ExistingStorageAccount(string azureStorageAccountId)
+        public ExistingStorageAccount(ResourceIdentifier azureStorageAccountId)
         {
             Argument.AssertNotNull(azureStorageAccountId, nameof(azureStorageAccountId));
 
@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of ExistingStorageAccount. </summary>
         /// <param name="resourceType"> The class type. </param>
         /// <param name="azureStorageAccountId"> The storage account Arm Id. Throw error, if resource does not exists. </param>
-        internal ExistingStorageAccount(string resourceType, string azureStorageAccountId) : base(resourceType)
+        internal ExistingStorageAccount(string resourceType, ResourceIdentifier azureStorageAccountId) : base(resourceType)
         {
             AzureStorageAccountId = azureStorageAccountId;
             ResourceType = resourceType ?? "Existing";
         }
 
         /// <summary> The storage account Arm Id. Throw error, if resource does not exists. </summary>
-        public string AzureStorageAccountId { get; set; }
+        public ResourceIdentifier AzureStorageAccountId { get; set; }
     }
 }

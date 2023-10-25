@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -223,13 +224,16 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </list>
         /// </summary>
         /// <param name="filter"> OData filter expression. Valid properties for filtering are applicationGroupType. </param>
+        /// <param name="pageSize"> Number of items per page. </param>
+        /// <param name="isDescending"> Indicates whether the collection is descending. </param>
+        /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualApplicationGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualApplicationGroupResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<VirtualApplicationGroupResource> GetAllAsync(string filter = null, int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualApplicationGroupApplicationGroupsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualApplicationGroupApplicationGroupsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualApplicationGroupResource(Client, VirtualApplicationGroupData.DeserializeVirtualApplicationGroupData(e)), _virtualApplicationGroupApplicationGroupsClientDiagnostics, Pipeline, "VirtualApplicationGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualApplicationGroupApplicationGroupsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, pageSizeHint, isDescending, initialSkip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualApplicationGroupApplicationGroupsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, pageSizeHint, isDescending, initialSkip);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualApplicationGroupResource(Client, VirtualApplicationGroupData.DeserializeVirtualApplicationGroupData(e)), _virtualApplicationGroupApplicationGroupsClientDiagnostics, Pipeline, "VirtualApplicationGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -246,13 +250,16 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </list>
         /// </summary>
         /// <param name="filter"> OData filter expression. Valid properties for filtering are applicationGroupType. </param>
+        /// <param name="pageSize"> Number of items per page. </param>
+        /// <param name="isDescending"> Indicates whether the collection is descending. </param>
+        /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualApplicationGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualApplicationGroupResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<VirtualApplicationGroupResource> GetAll(string filter = null, int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualApplicationGroupApplicationGroupsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualApplicationGroupApplicationGroupsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualApplicationGroupResource(Client, VirtualApplicationGroupData.DeserializeVirtualApplicationGroupData(e)), _virtualApplicationGroupApplicationGroupsClientDiagnostics, Pipeline, "VirtualApplicationGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualApplicationGroupApplicationGroupsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter, pageSizeHint, isDescending, initialSkip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualApplicationGroupApplicationGroupsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, filter, pageSizeHint, isDescending, initialSkip);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualApplicationGroupResource(Client, VirtualApplicationGroupData.DeserializeVirtualApplicationGroupData(e)), _virtualApplicationGroupApplicationGroupsClientDiagnostics, Pipeline, "VirtualApplicationGroupCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -317,6 +324,80 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 var response = _virtualApplicationGroupApplicationGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, applicationGroupName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGroups_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="applicationGroupName"> The name of the application group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="applicationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationGroupName"/> is null. </exception>
+        public virtual async Task<NullableResponse<VirtualApplicationGroupResource>> GetIfExistsAsync(string applicationGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(applicationGroupName, nameof(applicationGroupName));
+
+            using var scope = _virtualApplicationGroupApplicationGroupsClientDiagnostics.CreateScope("VirtualApplicationGroupCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _virtualApplicationGroupApplicationGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, applicationGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<VirtualApplicationGroupResource>(response.GetRawResponse());
+                return Response.FromValue(new VirtualApplicationGroupResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGroups_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="applicationGroupName"> The name of the application group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="applicationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationGroupName"/> is null. </exception>
+        public virtual NullableResponse<VirtualApplicationGroupResource> GetIfExists(string applicationGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(applicationGroupName, nameof(applicationGroupName));
+
+            using var scope = _virtualApplicationGroupApplicationGroupsClientDiagnostics.CreateScope("VirtualApplicationGroupCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _virtualApplicationGroupApplicationGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, applicationGroupName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<VirtualApplicationGroupResource>(response.GetRawResponse());
+                return Response.FromValue(new VirtualApplicationGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

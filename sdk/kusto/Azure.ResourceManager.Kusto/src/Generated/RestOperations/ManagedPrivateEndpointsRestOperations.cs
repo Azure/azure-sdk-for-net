@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Kusto
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-12-29";
+            _apiVersion = apiVersion ?? "2023-08-15";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Checks that the managed private endpoints resource name is valid and is not already in use. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="content"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -94,8 +94,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Checks that the managed private endpoints resource name is valid and is not already in use. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="content"> The name of the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -146,8 +146,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Returns the list of managed private endpoints. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
@@ -175,8 +175,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Returns the list of managed private endpoints. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is null. </exception>
@@ -226,8 +226,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Gets a managed private endpoint. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="managedPrivateEndpointName"> The name of the managed private endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -259,8 +259,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Gets a managed private endpoint. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="managedPrivateEndpointName"> The name of the managed private endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -318,8 +318,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Creates a managed private endpoint. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="managedPrivateEndpointName"> The name of the managed private endpoint. </param>
         /// <param name="data"> The managed private endpoint parameters. </param>
@@ -348,8 +348,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Creates a managed private endpoint. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="managedPrivateEndpointName"> The name of the managed private endpoint. </param>
         /// <param name="data"> The managed private endpoint parameters. </param>
@@ -404,8 +404,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Updates a managed private endpoint. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="managedPrivateEndpointName"> The name of the managed private endpoint. </param>
         /// <param name="data"> The managed private endpoint parameters. </param>
@@ -433,8 +433,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Updates a managed private endpoint. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="managedPrivateEndpointName"> The name of the managed private endpoint. </param>
         /// <param name="data"> The managed private endpoint parameters. </param>
@@ -484,8 +484,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Deletes a managed private endpoint. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="managedPrivateEndpointName"> The name of the managed private endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -512,8 +512,8 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary> Deletes a managed private endpoint. </summary>
-        /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> The name of the resource group containing the Kusto cluster. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="clusterName"> The name of the Kusto cluster. </param>
         /// <param name="managedPrivateEndpointName"> The name of the managed private endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

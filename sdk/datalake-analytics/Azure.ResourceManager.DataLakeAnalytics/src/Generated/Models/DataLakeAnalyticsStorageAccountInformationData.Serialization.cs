@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics
     {
         internal static DataLakeAnalyticsStorageAccountInformationData DeserializeDataLakeAnalyticsStorageAccountInformationData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -41,7 +45,6 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

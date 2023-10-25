@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         internal static EventSubscriptionRetryPolicy DeserializeEventSubscriptionRetryPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> maxDeliveryAttempts = default;
             Optional<int> eventTimeToLiveInMinutes = default;
             foreach (var property in element.EnumerateObject())
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxDeliveryAttempts = property.Value.GetInt32();
@@ -48,7 +51,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     eventTimeToLiveInMinutes = property.Value.GetInt32();

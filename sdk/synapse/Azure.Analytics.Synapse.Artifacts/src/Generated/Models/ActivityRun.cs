@@ -28,8 +28,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="activityRunId"> The id of the activity run. </param>
         /// <param name="linkedServiceName"> The name of the compute linked service. </param>
         /// <param name="status"> The status of the activity run. </param>
-        /// <param name="activityRunStart"> The start time of the activity run in &apos;ISO 8601&apos; format. </param>
-        /// <param name="activityRunEnd"> The end time of the activity run in &apos;ISO 8601&apos; format. </param>
+        /// <param name="activityRunStart"> The start time of the activity run in 'ISO 8601' format. </param>
+        /// <param name="activityRunEnd"> The end time of the activity run in 'ISO 8601' format. </param>
         /// <param name="durationInMs"> The duration of the activity run. </param>
         /// <param name="input"> The input for the activity. </param>
         /// <param name="output"> The output for the activity. </param>
@@ -67,9 +67,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public string LinkedServiceName { get; }
         /// <summary> The status of the activity run. </summary>
         public string Status { get; }
-        /// <summary> The start time of the activity run in &apos;ISO 8601&apos; format. </summary>
+        /// <summary> The start time of the activity run in 'ISO 8601' format. </summary>
         public DateTimeOffset? ActivityRunStart { get; }
-        /// <summary> The end time of the activity run in &apos;ISO 8601&apos; format. </summary>
+        /// <summary> The end time of the activity run in 'ISO 8601' format. </summary>
         public DateTimeOffset? ActivityRunEnd { get; }
         /// <summary> The duration of the activity run. </summary>
         public int? DurationInMs { get; }

@@ -15,9 +15,9 @@ namespace Azure.IoT.TimeSeriesInsights
         {
         }
 
-        /// <summary> Definition of whether to expand hierarchy nodes in the same search instances call. Optional, default is &apos;UntilChildren&apos;. </summary>
+        /// <summary> Definition of whether to expand hierarchy nodes in the same search instances call. Optional, default is 'UntilChildren'. </summary>
         public HierarchiesExpandParameter Expand { get; set; }
-        /// <summary> Definition of sorting of hierarchy nodes. Optional, default is &apos;CumulativeInstanceCount&apos;. </summary>
+        /// <summary> Definition of sorting of hierarchy nodes. Optional, default is 'CumulativeInstanceCount'. </summary>
         public HierarchiesSortParameter Sort { get; set; }
         /// <summary> Maximum number of hierarchies in the same level to return in the same page. Optional, default is 10 when not set. Range is from 1 to 100. If there are results beyond the page size, the continuation token can be used to fetch the next page. </summary>
         public int? PageSize { get; set; }

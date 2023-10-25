@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static OSVersionPropertiesBase DeserializeOSVersionPropertiesBase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> version = default;
             Optional<string> label = default;
             Optional<bool> isDefault = default;
@@ -34,7 +38,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isDefault = property.Value.GetBoolean();
@@ -44,7 +47,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isActive = property.Value.GetBoolean();

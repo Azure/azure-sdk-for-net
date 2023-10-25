@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Compute
     {
         internal static CloudServiceOSVersionData DeserializeCloudServiceOSVersionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -32,7 +36,6 @@ namespace Azure.ResourceManager.Compute
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
@@ -57,7 +60,6 @@ namespace Azure.ResourceManager.Compute
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -96,7 +98,6 @@ namespace Azure.ResourceManager.Compute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isDefault = property0.Value.GetBoolean();
@@ -106,7 +107,6 @@ namespace Azure.ResourceManager.Compute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isActive = property0.Value.GetBoolean();

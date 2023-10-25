@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tail"> The number of lines to show from the tail of the deployment script log. Valid value is a positive number up to 1000. If &apos;tail&apos; is not provided, all available logs are shown up to container instance log capacity of 4mb. </param>
+        /// <param name="tail"> The number of lines to show from the tail of the deployment script log. Valid value is a positive number up to 1000. If 'tail' is not provided, all available logs are shown up to container instance log capacity of 4mb. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ScriptLogResource>> GetAsync(int? tail = null, CancellationToken cancellationToken = default)
         {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Resources
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tail"> The number of lines to show from the tail of the deployment script log. Valid value is a positive number up to 1000. If &apos;tail&apos; is not provided, all available logs are shown up to container instance log capacity of 4mb. </param>
+        /// <param name="tail"> The number of lines to show from the tail of the deployment script log. Valid value is a positive number up to 1000. If 'tail' is not provided, all available logs are shown up to container instance log capacity of 4mb. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ScriptLogResource> Get(int? tail = null, CancellationToken cancellationToken = default)
         {

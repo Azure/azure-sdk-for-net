@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -25,13 +26,29 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                writer.WriteStringValue(Identity);
+            }
+            if (Optional.IsDefined(KeyVaultUri))
+            {
+                writer.WritePropertyName("keyVaultUrl"u8);
+                writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
+            }
             writer.WriteEndObject();
         }
 
         internal static ContainerAppWritableSecret DeserializeContainerAppWritableSecret(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> value = default;
+            Optional<string> identity = default;
+            Optional<Uri> keyVaultUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -44,8 +61,22 @@ namespace Azure.ResourceManager.AppContainers.Models
                     value = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("identity"u8))
+                {
+                    identity = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("keyVaultUrl"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    keyVaultUrl = new Uri(property.Value.GetString());
+                    continue;
+                }
             }
-            return new ContainerAppWritableSecret(name.Value, value.Value);
+            return new ContainerAppWritableSecret(name.Value, value.Value, identity.Value, keyVaultUrl.Value);
         }
     }
 }

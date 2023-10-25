@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> Recovery plan Automation runbook action details. </summary>
@@ -23,7 +25,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="runbookId"> The runbook ARM Id. </param>
         /// <param name="timeout"> The runbook timeout. </param>
         /// <param name="fabricLocation"> The fabric location. </param>
-        internal RecoveryPlanAutomationRunbookActionDetails(string instanceType, string runbookId, string timeout, RecoveryPlanActionLocation fabricLocation) : base(instanceType)
+        internal RecoveryPlanAutomationRunbookActionDetails(string instanceType, ResourceIdentifier runbookId, string timeout, RecoveryPlanActionLocation fabricLocation) : base(instanceType)
         {
             RunbookId = runbookId;
             Timeout = timeout;
@@ -32,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> The runbook ARM Id. </summary>
-        public string RunbookId { get; set; }
+        public ResourceIdentifier RunbookId { get; set; }
         /// <summary> The runbook timeout. </summary>
         public string Timeout { get; set; }
         /// <summary> The fabric location. </summary>

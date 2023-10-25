@@ -15,13 +15,17 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     {
         internal static Assessment DeserializeAssessment(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<AssessmentSeverity> severity = default;
             Optional<string> description = default;
             Optional<string> remediation = default;
             Optional<IsPass> isPass = default;
             Optional<string> policyId = default;
-            Optional<IReadOnlyList<AssessmentResource>> resourceList = default;
+            Optional<IReadOnlyList<AssessmentResourceContent>> resourceList = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -33,7 +37,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     severity = new AssessmentSeverity(property.Value.GetString());
@@ -53,7 +56,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isPass = new IsPass(property.Value.GetString());
@@ -68,13 +70,12 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AssessmentResource> array = new List<AssessmentResource>();
+                    List<AssessmentResourceContent> array = new List<AssessmentResourceContent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AssessmentResource.DeserializeAssessmentResource(item));
+                        array.Add(AssessmentResourceContent.DeserializeAssessmentResourceContent(item));
                     }
                     resourceList = array;
                     continue;

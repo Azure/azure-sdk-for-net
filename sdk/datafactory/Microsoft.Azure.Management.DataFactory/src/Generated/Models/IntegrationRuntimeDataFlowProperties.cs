@@ -47,13 +47,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="cleanup">Cluster will not be recycled and it will be
         /// used in next data flow activity run until TTL (time to live) is
         /// reached if this is set as false. Default is true.</param>
-        public IntegrationRuntimeDataFlowProperties(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string computeType = default(string), int? coreCount = default(int?), int? timeToLive = default(int?), bool? cleanup = default(bool?))
+        /// <param name="customProperties">Custom properties are used to tune
+        /// the data flow runtime performance.</param>
+        public IntegrationRuntimeDataFlowProperties(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string computeType = default(string), int? coreCount = default(int?), int? timeToLive = default(int?), bool? cleanup = default(bool?), IList<IntegrationRuntimeDataFlowPropertiesCustomPropertiesItem> customProperties = default(IList<IntegrationRuntimeDataFlowPropertiesCustomPropertiesItem>))
         {
             AdditionalProperties = additionalProperties;
             ComputeType = computeType;
             CoreCount = coreCount;
             TimeToLive = timeToLive;
             Cleanup = cleanup;
+            CustomProperties = customProperties;
             CustomInit();
         }
 
@@ -98,6 +101,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "cleanup")]
         public bool? Cleanup { get; set; }
+
+        /// <summary>
+        /// Gets or sets custom properties are used to tune the data flow
+        /// runtime performance.
+        /// </summary>
+        [JsonProperty(PropertyName = "customProperties")]
+        public IList<IntegrationRuntimeDataFlowPropertiesCustomPropertiesItem> CustomProperties { get; set; }
 
         /// <summary>
         /// Validate the object.

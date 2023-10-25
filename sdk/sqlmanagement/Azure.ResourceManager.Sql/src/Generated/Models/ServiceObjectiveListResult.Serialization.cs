@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -16,6 +15,10 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static ServiceObjectiveListResult DeserializeServiceObjectiveListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<ServiceObjectiveData> value = default;
             foreach (var property in element.EnumerateObject())
             {

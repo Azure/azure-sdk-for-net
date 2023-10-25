@@ -16,6 +16,10 @@ namespace Azure.Maps.Search.Models
     {
         internal static ReverseSearchAddressItem DeserializeReverseSearchAddressItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<MapsAddress> address = default;
             Optional<string> position = default;
             Optional<IReadOnlyList<RoadKind>> roadUse = default;
@@ -26,7 +30,6 @@ namespace Azure.Maps.Search.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     address = MapsAddress.DeserializeMapsAddress(property.Value);
@@ -41,7 +44,6 @@ namespace Azure.Maps.Search.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RoadKind> array = new List<RoadKind>();
@@ -56,7 +58,6 @@ namespace Azure.Maps.Search.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     matchType = new MapsSearchMatchType(property.Value.GetString());

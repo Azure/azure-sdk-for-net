@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DevCenter
     /// A Class representing an ImageVersion along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ImageVersionResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetImageVersionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ImageResource" /> using the GetImageVersion method.
+    /// Otherwise you can get one from its parent resource <see cref="DevCenterImageResource" /> using the GetImageVersion method.
     /// </summary>
     public partial class ImageVersionResource : ArmResource
     {

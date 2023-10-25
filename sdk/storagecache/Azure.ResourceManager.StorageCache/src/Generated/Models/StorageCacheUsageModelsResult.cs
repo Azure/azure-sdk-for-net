@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    /// <summary> A list of Cache usage models. </summary>
+    /// <summary> A list of cache usage models. </summary>
     internal partial class StorageCacheUsageModelsResult
     {
         /// <summary> Initializes a new instance of StorageCacheUsageModelsResult. </summary>
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.StorageCache.Models
         }
 
         /// <summary> Initializes a new instance of StorageCacheUsageModelsResult. </summary>
-        /// <param name="nextLink"> The URI to fetch the next page of Cache usage models. </param>
+        /// <param name="nextLink"> The URI to fetch the next page of cache usage models. </param>
         /// <param name="value"> The list of usage models available for the subscription. </param>
         internal StorageCacheUsageModelsResult(string nextLink, IReadOnlyList<StorageCacheUsageModel> value)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             Value = value;
         }
 
-        /// <summary> The URI to fetch the next page of Cache usage models. </summary>
+        /// <summary> The URI to fetch the next page of cache usage models. </summary>
         public string NextLink { get; }
         /// <summary> The list of usage models available for the subscription. </summary>
         public IReadOnlyList<StorageCacheUsageModel> Value { get; }

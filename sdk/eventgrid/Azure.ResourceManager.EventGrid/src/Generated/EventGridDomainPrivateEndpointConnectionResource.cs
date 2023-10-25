@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary>
-        /// Get a specific private endpoint connection under a topic, domain, or partner namespace.
+        /// Get a specific private endpoint connection under a topic, domain, or partner namespace or namespace.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary>
-        /// Get a specific private endpoint connection under a topic, domain, or partner namespace.
+        /// Get a specific private endpoint connection under a topic, domain, or partner namespace or namespace.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary>
-        /// Delete a specific private endpoint connection under a topic, domain, or partner namespace.
+        /// Delete a specific private endpoint connection under a topic, domain, or partner namespace or namespace.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary>
-        /// Delete a specific private endpoint connection under a topic, domain, or partner namespace.
+        /// Delete a specific private endpoint connection under a topic, domain, or partner namespace or namespace.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

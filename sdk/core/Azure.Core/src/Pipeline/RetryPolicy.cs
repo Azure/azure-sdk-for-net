@@ -14,30 +14,24 @@ namespace Azure.Core.Pipeline
     /// <summary>
     /// Represents a policy that can be overriden to customize whether or not a request will be retried and how long to wait before retrying.
     /// </summary>
-    internal abstract class RetryPolicy : HttpPipelinePolicy
+    public class RetryPolicy : HttpPipelinePolicy
     {
-        private readonly RetryMode _mode;
-        private readonly TimeSpan _delay;
-        private readonly TimeSpan _maxDelay;
         private readonly int _maxRetries;
 
-        private readonly Random _random = new ThreadSafeRandom();
-
-        private const string RetryAfterHeaderName = "Retry-After";
-        private const string RetryAfterMsHeaderName = "retry-after-ms";
-        private const string XRetryAfterMsHeaderName = "x-ms-retry-after-ms";
+        /// <summary>
+        /// Gets the delay to use for computing the interval between retry attempts.
+        /// </summary>
+        private readonly DelayStrategy _delayStrategy;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RetryPolicy"/> class.
         /// </summary>
-        /// <param name="options">The set of options to use for configuring the policy.</param>
-        protected RetryPolicy(RetryOptions? options = default)
+        /// <param name="maxRetries">The maximum number of retries to attempt.</param>
+        /// <param name="delayStrategy">The delay to use for computing the interval between retry attempts.</param>
+        public RetryPolicy(int maxRetries = 3, DelayStrategy? delayStrategy = default)
         {
-            options ??= ClientOptions.Default.Retry;
-            _mode = options.Mode;
-            _delay = options.Delay;
-            _maxDelay = options.MaxDelay;
-            _maxRetries = options.MaxRetries;
+            _maxRetries = maxRetries;
+            _delayStrategy = delayStrategy ?? DelayStrategy.CreateExponentialDelayStrategy();
         }
 
         /// <summary>
@@ -127,7 +121,8 @@ namespace Azure.Core.Pipeline
 
                 if (shouldRetry)
                 {
-                    TimeSpan delay = async ? await CalculateNextDelayAsync(message).ConfigureAwait(false) : CalculateNextDelay(message);
+                    var retryAfter = message.HasResponse ? message.Response.Headers.RetryAfter : default;
+                    TimeSpan delay = async ? await GetNextDelayAsync(message, retryAfter).ConfigureAwait(false) : GetNextDelay(message, retryAfter);
                     if (delay > TimeSpan.Zero)
                     {
                         if (async)
@@ -221,15 +216,17 @@ namespace Azure.Core.Pipeline
         /// This method can be overriden to control how long to delay before retrying. This method will only be called for sync methods.
         /// </summary>
         /// <param name="message">The message containing the request and response.</param>
+        /// <param name="retryAfter">The Retry-After header value, if any, returned from the service.</param>
         /// <returns>The amount of time to delay before retrying.</returns>
-        protected internal virtual TimeSpan CalculateNextDelay(HttpMessage message) => CalculateNextDelayInternal(message);
+        internal TimeSpan GetNextDelay(HttpMessage message, TimeSpan? retryAfter) => GetNextDelayInternal(message);
 
         /// <summary>
         /// This method can be overriden to control how long to delay before retrying. This method will only be called for async methods.
         /// </summary>
         /// <param name="message">The message containing the request and response.</param>
+        /// <param name="retryAfter">The Retry-After header value, if any, returned from the service.</param>
         /// <returns>The amount of time to delay before retrying.</returns>
-        protected internal virtual ValueTask<TimeSpan> CalculateNextDelayAsync(HttpMessage message) => new(CalculateNextDelayInternal(message));
+        internal ValueTask<TimeSpan> GetNextDelayAsync(HttpMessage message, TimeSpan? retryAfter) => new(GetNextDelayInternal(message));
 
         /// <summary>
         /// This method can be overridden to introduce logic before each request attempt is sent. This will run even for the first attempt.
@@ -263,73 +260,11 @@ namespace Azure.Core.Pipeline
         /// <param name="message">The message containing the request and response.</param>
         protected internal virtual ValueTask OnRequestSentAsync(HttpMessage message) => default;
 
-        private TimeSpan CalculateNextDelayInternal(HttpMessage message)
+        private TimeSpan GetNextDelayInternal(HttpMessage message)
         {
-            TimeSpan delay = TimeSpan.Zero;
-
-            switch (_mode)
-            {
-                case RetryMode.Fixed:
-                    delay = _delay;
-                    break;
-                case RetryMode.Exponential:
-                    delay = CalculateExponentialDelay(message.RetryNumber + 1);
-                    break;
-            }
-
-            TimeSpan serverDelay = GetServerDelay(message);
-            if (serverDelay > delay)
-            {
-                delay = serverDelay;
-            }
-
-            return delay;
-        }
-
-        /// <summary>
-        /// Gets the server specified delay. If the message has no response, <see cref="TimeSpan.Zero"/> is returned.
-        /// This method can be used to help calculate the next delay when overriding <see cref="CalculateNextDelay(HttpMessage)"/>, i.e.
-        /// implementors may want to add the server delay to their own custom delay.
-        /// </summary>
-        /// <param name="message">The message to inspect for the server specified delay.</param>
-        /// <returns>The server specified delay.</returns>
-        protected static TimeSpan GetServerDelay(HttpMessage message)
-        {
-            if (!message.HasResponse)
-            {
-                return TimeSpan.Zero;
-            }
-
-            if (message.Response.TryGetHeader(RetryAfterMsHeaderName, out var retryAfterValue) ||
-                message.Response.TryGetHeader(XRetryAfterMsHeaderName, out retryAfterValue))
-            {
-                if (int.TryParse(retryAfterValue, out var delaySeconds))
-                {
-                    return TimeSpan.FromMilliseconds(delaySeconds);
-                }
-            }
-
-            if (message.Response.TryGetHeader(RetryAfterHeaderName, out retryAfterValue))
-            {
-                if (int.TryParse(retryAfterValue, out var delaySeconds))
-                {
-                    return TimeSpan.FromSeconds(delaySeconds);
-                }
-                if (DateTimeOffset.TryParse(retryAfterValue, out DateTimeOffset delayTime))
-                {
-                    return delayTime - DateTimeOffset.Now;
-                }
-            }
-
-            return TimeSpan.Zero;
-        }
-
-        private TimeSpan CalculateExponentialDelay(int attempted)
-        {
-            return TimeSpan.FromMilliseconds(
-                Math.Min(
-                    (1 << (attempted - 1)) * _random.Next((int)(_delay.TotalMilliseconds * 0.8), (int)(_delay.TotalMilliseconds * 1.2)),
-                    _maxDelay.TotalMilliseconds));
+            return _delayStrategy.GetNextDelay(
+                message.HasResponse ? message.Response : default,
+                message.RetryNumber);
         }
     }
 }

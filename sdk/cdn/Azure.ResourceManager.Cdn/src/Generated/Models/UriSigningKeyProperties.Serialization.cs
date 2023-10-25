@@ -19,7 +19,8 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WritePropertyName("keyId"u8);
             writer.WriteStringValue(KeyId);
             writer.WritePropertyName("secretSource"u8);
-            JsonSerializer.Serialize(writer, SecretSource); if (Optional.IsDefined(SecretVersion))
+            JsonSerializer.Serialize(writer, SecretSource);
+            if (Optional.IsDefined(SecretVersion))
             {
                 writer.WritePropertyName("secretVersion"u8);
                 writer.WriteStringValue(SecretVersion);
@@ -31,6 +32,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static UriSigningKeyProperties DeserializeUriSigningKeyProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string keyId = default;
             WritableSubResource secretSource = default;
             Optional<string> secretVersion = default;

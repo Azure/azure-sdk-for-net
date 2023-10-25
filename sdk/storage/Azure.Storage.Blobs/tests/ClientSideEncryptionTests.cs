@@ -1534,6 +1534,41 @@ namespace Azure.Storage.Blobs.Test
             CollectionAssert.AreEqual(plaintext.ToArray(), roundtrippedPlaintext);
         }
 
+        [Test]
+        [Combinatorial]
+        [LiveOnly]
+        public async Task EncryptionDataCaseInsensitivity(
+            [Values("ENCRYPTIONDATA", "EncryptionData", "eNcRyPtIoNdAtA")] string newKey,
+            [ValueSource("GetEncryptionVersions")] ClientSideEncryptionVersion version)
+        {
+            // Arrange
+            ReadOnlyMemory<byte> data = GetRandomBuffer(Constants.KB);
+            Mock<IKeyEncryptionKey> mockKey1 = this.GetIKeyEncryptionKey(s_cancellationToken);
+            var encryptionOptions = new ClientSideEncryptionOptions(version)
+            {
+                KeyEncryptionKey = mockKey1.Object,
+                KeyWrapAlgorithm = s_algorithmName
+            };
+
+            await using var disposable = await GetTestContainerAsync();
+
+            BlobClient standardBlobClient = disposable.Container.GetBlobClient(GetNewBlobName());
+            BlobClient encryptedBlobClient = InstrumentClient(standardBlobClient.WithClientSideEncryptionOptions(encryptionOptions));
+
+            await encryptedBlobClient.UploadAsync(BinaryData.FromBytes(data), cancellationToken: s_cancellationToken);
+
+            // change casing of encryptiondata key
+            string rawEncryptiondata = (await standardBlobClient.GetPropertiesAsync()).Value.Metadata[EncryptionDataKey];
+            Assert.IsNotEmpty(rawEncryptiondata); // quick check we're testing the right thing
+            await standardBlobClient.SetMetadataAsync(new Dictionary<string, string> { { newKey, rawEncryptiondata } });
+
+            // Act
+            ReadOnlyMemory<byte> downloadedContent = (await encryptedBlobClient.DownloadContentAsync(s_cancellationToken)).Value.Content.ToMemory();
+
+            // Assert
+            Assert.IsTrue(data.Span.SequenceEqual(downloadedContent.Span));
+        }
+
         /// <summary>
         /// There's a few too many things to switch on for key updates. Separate method to determine the correct way to call it.
         /// </summary>

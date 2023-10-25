@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.SignalR.Models
 
         internal static SignalRResourceLogCategoryListResult DeserializeSignalRResourceLogCategoryListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<SignalRResourceLogCategory>> categories = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.SignalR.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SignalRResourceLogCategory> array = new List<SignalRResourceLogCategory>();

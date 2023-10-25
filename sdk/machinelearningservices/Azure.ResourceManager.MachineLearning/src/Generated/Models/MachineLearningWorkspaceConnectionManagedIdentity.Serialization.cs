@@ -15,42 +15,45 @@ namespace Azure.ResourceManager.MachineLearning.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ResourceId))
-            {
-                writer.WritePropertyName("resourceId"u8);
-                writer.WriteStringValue(ResourceId);
-            }
             if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
+            }
+            if (Optional.IsDefined(ResourceId))
+            {
+                writer.WritePropertyName("resourceId"u8);
+                writer.WriteStringValue(ResourceId);
             }
             writer.WriteEndObject();
         }
 
         internal static MachineLearningWorkspaceConnectionManagedIdentity DeserializeMachineLearningWorkspaceConnectionManagedIdentity(JsonElement element)
         {
-            Optional<ResourceIdentifier> resourceId = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> clientId = default;
+            Optional<ResourceIdentifier> resourceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourceId"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    resourceId = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("clientId"u8))
                 {
                     clientId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("resourceId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
             }
-            return new MachineLearningWorkspaceConnectionManagedIdentity(resourceId.Value, clientId.Value);
+            return new MachineLearningWorkspaceConnectionManagedIdentity(clientId.Value, resourceId.Value);
         }
     }
 }

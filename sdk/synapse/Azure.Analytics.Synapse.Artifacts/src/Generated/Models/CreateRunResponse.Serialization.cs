@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -17,6 +16,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static CreateRunResponse DeserializeCreateRunResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string runId = default;
             foreach (var property in element.EnumerateObject())
             {

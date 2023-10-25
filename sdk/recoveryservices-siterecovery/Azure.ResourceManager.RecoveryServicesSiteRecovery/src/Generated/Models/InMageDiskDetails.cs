@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of InMageDiskDetails. </summary>
         internal InMageDiskDetails()
         {
-            VolumeList = new ChangeTrackingList<DiskVolumeDetails>();
+            VolumeList = new ChangeTrackingList<SiteRecoveryDiskVolumeDetails>();
         }
 
         /// <summary> Initializes a new instance of InMageDiskDetails. </summary>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="diskType"> Whether disk is system disk or data disk. </param>
         /// <param name="diskConfiguration"> Whether disk is dynamic disk or basic disk. </param>
         /// <param name="volumeList"> Volumes of the disk. </param>
-        internal InMageDiskDetails(string diskId, string diskName, string diskSizeInMB, string diskType, string diskConfiguration, IReadOnlyList<DiskVolumeDetails> volumeList)
+        internal InMageDiskDetails(string diskId, string diskName, string diskSizeInMB, string diskType, string diskConfiguration, IReadOnlyList<SiteRecoveryDiskVolumeDetails> volumeList)
         {
             DiskId = diskId;
             DiskName = diskName;
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Whether disk is dynamic disk or basic disk. </summary>
         public string DiskConfiguration { get; }
         /// <summary> Volumes of the disk. </summary>
-        public IReadOnlyList<DiskVolumeDetails> VolumeList { get; }
+        public IReadOnlyList<SiteRecoveryDiskVolumeDetails> VolumeList { get; }
     }
 }

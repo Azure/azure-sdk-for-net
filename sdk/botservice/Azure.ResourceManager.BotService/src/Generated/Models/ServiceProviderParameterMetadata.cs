@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.BotService.Models
         /// <summary> the constraints of the bot meta data. </summary>
         internal ServiceProviderParameterMetadataConstraints Constraints { get; }
         /// <summary> Whether required the constraints of the bot meta data. </summary>
-        public bool? Required
+        public bool? IsRequired
         {
-            get => Constraints?.Required;
+            get => Constraints?.IsRequired;
         }
     }
 }

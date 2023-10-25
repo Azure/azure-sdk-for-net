@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of RuleEmailAction. </summary>
         /// <param name="odataType"> specifies the type of the action. There are two types of actions: RuleEmailAction and RuleWebhookAction. </param>
         /// <param name="sendToServiceOwners"> Whether the administrators (service and co-administrators) of the service should be notified when the alert is activated. </param>
-        /// <param name="customEmails"> the list of administrator&apos;s custom email addresses to notify of the activation of the alert. </param>
+        /// <param name="customEmails"> the list of administrator's custom email addresses to notify of the activation of the alert. </param>
         internal RuleEmailAction(string odataType, bool? sendToServiceOwners, IList<string> customEmails) : base(odataType)
         {
             SendToServiceOwners = sendToServiceOwners;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Whether the administrators (service and co-administrators) of the service should be notified when the alert is activated. </summary>
         public bool? SendToServiceOwners { get; set; }
-        /// <summary> the list of administrator&apos;s custom email addresses to notify of the activation of the alert. </summary>
+        /// <summary> the list of administrator's custom email addresses to notify of the activation of the alert. </summary>
         public IList<string> CustomEmails { get; }
     }
 }

@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <summary> Initializes a new instance of ConsumptionMeterDetails. </summary>
         /// <param name="meterName"> The name of the meter, within the given meter category. </param>
-        /// <param name="meterCategory"> The category of the meter, for example, &apos;Cloud services&apos;, &apos;Networking&apos;, etc.. </param>
-        /// <param name="meterSubCategory"> The subcategory of the meter, for example, &apos;A6 Cloud services&apos;, &apos;ExpressRoute (IXP)&apos;, etc.. </param>
-        /// <param name="unit"> The unit in which the meter consumption is charged, for example, &apos;Hours&apos;, &apos;GB&apos;, etc. </param>
+        /// <param name="meterCategory"> The category of the meter, for example, 'Cloud services', 'Networking', etc.. </param>
+        /// <param name="meterSubCategory"> The subcategory of the meter, for example, 'A6 Cloud services', 'ExpressRoute (IXP)', etc.. </param>
+        /// <param name="unit"> The unit in which the meter consumption is charged, for example, 'Hours', 'GB', etc. </param>
         /// <param name="meterLocation"> The location in which the Azure service is available. </param>
         /// <param name="totalIncludedQuantity"> The total included quantity associated with the offer. </param>
         /// <param name="pretaxStandardRate"> The pretax listing price. </param>
@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <summary> The name of the meter, within the given meter category. </summary>
         public string MeterName { get; }
-        /// <summary> The category of the meter, for example, &apos;Cloud services&apos;, &apos;Networking&apos;, etc.. </summary>
+        /// <summary> The category of the meter, for example, 'Cloud services', 'Networking', etc.. </summary>
         public string MeterCategory { get; }
-        /// <summary> The subcategory of the meter, for example, &apos;A6 Cloud services&apos;, &apos;ExpressRoute (IXP)&apos;, etc.. </summary>
+        /// <summary> The subcategory of the meter, for example, 'A6 Cloud services', 'ExpressRoute (IXP)', etc.. </summary>
         public string MeterSubCategory { get; }
-        /// <summary> The unit in which the meter consumption is charged, for example, &apos;Hours&apos;, &apos;GB&apos;, etc. </summary>
+        /// <summary> The unit in which the meter consumption is charged, for example, 'Hours', 'GB', etc. </summary>
         public string Unit { get; }
         /// <summary> The location in which the Azure service is available. </summary>
         public string MeterLocation { get; }

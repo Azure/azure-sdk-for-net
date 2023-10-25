@@ -20,9 +20,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of DiagnosticMetricSample. </summary>
         /// <param name="timestamp"> Time at which metric is measured. </param>
         /// <param name="roleInstance">
-        /// Role Instance. Null if this counter is not per instance 
+        /// Role Instance. Null if this counter is not per instance
         /// This is returned and should be whichever instance name we desire to be returned
-        /// i.e. CPU and Memory return RDWORKERNAME (LargeDed..._IN_0) 
+        /// i.e. CPU and Memory return RDWORKERNAME (LargeDed..._IN_0)
         /// where RDWORKERNAME is Machine name below and RoleInstance name in parenthesis
         /// </param>
         /// <param name="total"> Total value of the metric. If multiple measurements are made this will have sum of all. </param>
@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Time at which metric is measured. </summary>
         public DateTimeOffset? Timestamp { get; set; }
         /// <summary>
-        /// Role Instance. Null if this counter is not per instance 
+        /// Role Instance. Null if this counter is not per instance
         /// This is returned and should be whichever instance name we desire to be returned
-        /// i.e. CPU and Memory return RDWORKERNAME (LargeDed..._IN_0) 
+        /// i.e. CPU and Memory return RDWORKERNAME (LargeDed..._IN_0)
         /// where RDWORKERNAME is Machine name below and RoleInstance name in parenthesis
         /// </summary>
         public string RoleInstance { get; set; }

@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static AutomaticOSUpgradePolicy DeserializeAutomaticOSUpgradePolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enableAutomaticOSUpgrade = default;
             Optional<bool> disableAutomaticRollback = default;
             Optional<bool> useRollingUpgradePolicy = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableAutomaticOSUpgrade = property.Value.GetBoolean();
@@ -54,7 +57,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     disableAutomaticRollback = property.Value.GetBoolean();
@@ -64,7 +66,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     useRollingUpgradePolicy = property.Value.GetBoolean();

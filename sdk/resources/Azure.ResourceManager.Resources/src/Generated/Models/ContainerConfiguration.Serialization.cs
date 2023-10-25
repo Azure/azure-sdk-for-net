@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ContainerConfiguration DeserializeContainerConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> containerGroupName = default;
             foreach (var property in element.EnumerateObject())
             {

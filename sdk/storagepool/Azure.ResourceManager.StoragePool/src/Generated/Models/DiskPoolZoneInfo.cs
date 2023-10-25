@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.StoragePool.Models
         }
 
         /// <summary> Initializes a new instance of DiskPoolZoneInfo. </summary>
-        /// <param name="availabilityZones"> Logical zone for Disk Pool resource; example: [&quot;1&quot;]. </param>
+        /// <param name="availabilityZones"> Logical zone for Disk Pool resource; example: ["1"]. </param>
         /// <param name="additionalCapabilities"> List of additional capabilities for Disk Pool. </param>
         /// <param name="sku"> Determines the SKU of VM deployed for Disk Pool. </param>
         internal DiskPoolZoneInfo(IReadOnlyList<string> availabilityZones, IReadOnlyList<string> additionalCapabilities, StoragePoolSku sku)
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             Sku = sku;
         }
 
-        /// <summary> Logical zone for Disk Pool resource; example: [&quot;1&quot;]. </summary>
+        /// <summary> Logical zone for Disk Pool resource; example: ["1"]. </summary>
         public IReadOnlyList<string> AvailabilityZones { get; }
         /// <summary> List of additional capabilities for Disk Pool. </summary>
         public IReadOnlyList<string> AdditionalCapabilities { get; }

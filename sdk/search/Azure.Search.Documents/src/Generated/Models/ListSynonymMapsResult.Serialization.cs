@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -15,6 +14,10 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         internal static ListSynonymMapsResult DeserializeListSynonymMapsResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<SynonymMap> value = default;
             foreach (var property in element.EnumerateObject())
             {

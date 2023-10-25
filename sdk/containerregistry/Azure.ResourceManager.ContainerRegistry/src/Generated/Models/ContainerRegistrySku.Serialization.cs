@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static ContainerRegistrySku DeserializeContainerRegistrySku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ContainerRegistrySkuName name = default;
             Optional<ContainerRegistrySkuTier> tier = default;
             foreach (var property in element.EnumerateObject())
@@ -35,7 +39,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tier = new ContainerRegistrySkuTier(property.Value.GetString());

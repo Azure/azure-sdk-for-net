@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -14,6 +13,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
     {
         internal static LinkedOperationRule DeserializeLinkedOperationRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             LinkedOperation linkedOperation = default;
             LinkedAction linkedAction = default;
             foreach (var property in element.EnumerateObject())

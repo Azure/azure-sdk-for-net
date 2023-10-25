@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Storage.Tests.Helpers;
 using Azure.ResourceManager.Storage.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Tests
 {
-    public class FileShareTests : StorageTestBase
+    public class FileShareTests : StorageManagementTestBase
     {
         private ResourceGroupResource _resourceGroup;
         private StorageAccountResource _storageAccount;

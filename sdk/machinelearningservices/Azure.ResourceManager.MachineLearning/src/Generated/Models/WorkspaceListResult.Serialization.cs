@@ -16,15 +16,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static WorkspaceListResult DeserializeWorkspaceListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<MachineLearningWorkspaceData>> value = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
+            Optional<IReadOnlyList<MachineLearningWorkspaceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("nextLink"u8))
+                {
+                    nextLink = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MachineLearningWorkspaceData> array = new List<MachineLearningWorkspaceData>();
@@ -35,13 +43,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"u8))
-                {
-                    nextLink = property.Value.GetString();
-                    continue;
-                }
             }
-            return new WorkspaceListResult(Optional.ToList(value), nextLink.Value);
+            return new WorkspaceListResult(nextLink.Value, Optional.ToList(value));
         }
     }
 }

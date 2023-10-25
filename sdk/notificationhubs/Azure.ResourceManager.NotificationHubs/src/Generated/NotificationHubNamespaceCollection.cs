@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary>
-        /// Creates/Updates a service namespace. Once created, this namespace&apos;s resource manifest is immutable. This operation is idempotent.
+        /// Creates/Updates a service namespace. Once created, this namespace's resource manifest is immutable. This operation is idempotent.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary>
-        /// Creates/Updates a service namespace. Once created, this namespace&apos;s resource manifest is immutable. This operation is idempotent.
+        /// Creates/Updates a service namespace. Once created, this namespace's resource manifest is immutable. This operation is idempotent.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -229,7 +230,7 @@ namespace Azure.ResourceManager.NotificationHubs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _notificationHubNamespaceNamespacesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _notificationHubNamespaceNamespacesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NotificationHubNamespaceResource(Client, NotificationHubNamespaceData.DeserializeNotificationHubNamespaceData(e)), _notificationHubNamespaceNamespacesClientDiagnostics, Pipeline, "NotificationHubNamespaceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NotificationHubNamespaceResource(Client, NotificationHubNamespaceData.DeserializeNotificationHubNamespaceData(e)), _notificationHubNamespaceNamespacesClientDiagnostics, Pipeline, "NotificationHubNamespaceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +252,7 @@ namespace Azure.ResourceManager.NotificationHubs
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _notificationHubNamespaceNamespacesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _notificationHubNamespaceNamespacesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NotificationHubNamespaceResource(Client, NotificationHubNamespaceData.DeserializeNotificationHubNamespaceData(e)), _notificationHubNamespaceNamespacesClientDiagnostics, Pipeline, "NotificationHubNamespaceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NotificationHubNamespaceResource(Client, NotificationHubNamespaceData.DeserializeNotificationHubNamespaceData(e)), _notificationHubNamespaceNamespacesClientDiagnostics, Pipeline, "NotificationHubNamespaceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -316,6 +317,80 @@ namespace Azure.ResourceManager.NotificationHubs
             {
                 var response = _notificationHubNamespaceNamespacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="namespaceName"> The namespace name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
+        public virtual async Task<NullableResponse<NotificationHubNamespaceResource>> GetIfExistsAsync(string namespaceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
+
+            using var scope = _notificationHubNamespaceNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _notificationHubNamespaceNamespacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<NotificationHubNamespaceResource>(response.GetRawResponse());
+                return Response.FromValue(new NotificationHubNamespaceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Namespaces_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="namespaceName"> The namespace name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="namespaceName"/> is null. </exception>
+        public virtual NullableResponse<NotificationHubNamespaceResource> GetIfExists(string namespaceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
+
+            using var scope = _notificationHubNamespaceNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _notificationHubNamespaceNamespacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, namespaceName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<NotificationHubNamespaceResource>(response.GetRawResponse());
+                return Response.FromValue(new NotificationHubNamespaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

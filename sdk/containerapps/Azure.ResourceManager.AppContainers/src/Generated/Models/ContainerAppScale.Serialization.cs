@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppScale DeserializeContainerAppScale(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> minReplicas = default;
             Optional<int> maxReplicas = default;
             Optional<IList<ContainerAppScaleRule>> rules = default;
@@ -50,7 +54,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minReplicas = property.Value.GetInt32();
@@ -60,7 +63,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxReplicas = property.Value.GetInt32();
@@ -70,7 +72,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ContainerAppScaleRule> array = new List<ContainerAppScaleRule>();

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public IList<string> ContentTypesToCompress { get; }
         /// <summary> The host header value sent to the origin with each request. This property at Endpoint is only allowed when endpoint uses single origin and can be overridden by the same property specified at origin.If you leave this blank, the request hostname determines this value. Azure CDN origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default. </summary>
         public string OriginHostHeader { get; set; }
-        /// <summary> Indicates whether content compression is enabled on CDN. Default value is false. If compression is enabled, content will be served as compressed if user requests for a compressed version. Content won&apos;t be compressed on CDN when requested content is smaller than 1 byte or larger than 1 MB. </summary>
+        /// <summary> Indicates whether content compression is enabled on CDN. Default value is false. If compression is enabled, content will be served as compressed if user requests for a compressed version. Content won't be compressed on CDN when requested content is smaller than 1 byte or larger than 1 MB. </summary>
         public bool? IsCompressionEnabled { get; set; }
         /// <summary> Indicates whether HTTP traffic is allowed on the endpoint. Default value is true. At least one protocol (HTTP or HTTPS) must be allowed. </summary>
         public bool? IsHttpAllowed { get; set; }
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public OptimizationType? OptimizationType { get; set; }
         /// <summary> Path to a file hosted on the origin which helps accelerate delivery of the dynamic content and calculate the most optimal routes for the CDN. This is relative to the origin path. This property is only relevant when using a single origin. </summary>
         public string ProbePath { get; set; }
-        /// <summary> List of rules defining the user&apos;s geo access within a CDN endpoint. Each geo filter defines an access rule to a specified path or content, e.g. block APAC for path /pictures/. </summary>
+        /// <summary> List of rules defining the user's geo access within a CDN endpoint. Each geo filter defines an access rule to a specified path or content, e.g. block APAC for path /pictures/. </summary>
         public IList<GeoFilter> GeoFilters { get; }
         /// <summary> A reference to the origin group. </summary>
         internal EndpointPropertiesUpdateParametersDefaultOriginGroup DefaultOriginGroup { get; set; }

@@ -36,7 +36,7 @@ namespace Compute.Tests
                     //Verify proximityPlacementGroups operation
                     VerifyPutPatchGetAndDeleteWithDefaultValues_Success();
 
-                    VerifyPutPatchGetAndDeleteWithNonDefaultValues_Success();
+                    //VerifyPutPatchGetAndDeleteWithNonDefaultValues_Success(); comment due to Ultra PPG no longer supported from backend
 
                     VerifyPutPatchGetAndDeleteWithInvalidValues_Failure();
 
@@ -160,7 +160,7 @@ namespace Compute.Tests
                 }
                 else if (ex.Response.StatusCode == HttpStatusCode.BadRequest)
                 {
-                    Assert.Equal("The subscription is not registered for private preview of Ultra Proximity Placement Groups.", ex.Message, StringComparer.OrdinalIgnoreCase);
+                    Assert.Equal("The value of parameter proximityPlacementGroup.properties.proximityPlacementGroupType is invalid.", ex.Message, StringComparer.OrdinalIgnoreCase);
                 }
                 else
                 {

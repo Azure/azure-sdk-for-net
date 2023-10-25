@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Hci.Models
     {
         internal static HciClusterReportedProperties DeserializeHciClusterReportedProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> clusterName = default;
             Optional<Guid> clusterId = default;
             Optional<string> clusterVersion = default;
@@ -23,6 +27,7 @@ namespace Azure.ResourceManager.Hci.Models
             Optional<DateTimeOffset> lastUpdated = default;
             Optional<ImdsAttestationState> imdsAttestation = default;
             Optional<HciClusterDiagnosticLevel> diagnosticLevel = default;
+            Optional<IReadOnlyList<string>> supportedCapabilities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clusterName"u8))
@@ -34,7 +39,6 @@ namespace Azure.ResourceManager.Hci.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     clusterId = property.Value.GetGuid();
@@ -49,7 +53,6 @@ namespace Azure.ResourceManager.Hci.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<HciClusterNode> array = new List<HciClusterNode>();
@@ -64,7 +67,6 @@ namespace Azure.ResourceManager.Hci.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastUpdated = property.Value.GetDateTimeOffset("O");
@@ -74,7 +76,6 @@ namespace Azure.ResourceManager.Hci.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     imdsAttestation = new ImdsAttestationState(property.Value.GetString());
@@ -84,14 +85,27 @@ namespace Azure.ResourceManager.Hci.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     diagnosticLevel = new HciClusterDiagnosticLevel(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("supportedCapabilities"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    supportedCapabilities = array;
+                    continue;
+                }
             }
-            return new HciClusterReportedProperties(clusterName.Value, Optional.ToNullable(clusterId), clusterVersion.Value, Optional.ToList(nodes), Optional.ToNullable(lastUpdated), Optional.ToNullable(imdsAttestation), Optional.ToNullable(diagnosticLevel));
+            return new HciClusterReportedProperties(clusterName.Value, Optional.ToNullable(clusterId), clusterVersion.Value, Optional.ToList(nodes), Optional.ToNullable(lastUpdated), Optional.ToNullable(imdsAttestation), Optional.ToNullable(diagnosticLevel), Optional.ToList(supportedCapabilities));
         }
     }
 }

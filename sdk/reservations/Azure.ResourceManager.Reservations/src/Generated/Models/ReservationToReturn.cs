@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Reservations.Models
         {
         }
 
-        /// <summary> Fully qualified identifier of the Reservation being returned. </summary>
+        /// <summary> Fully qualified identifier of the reservation being returned. </summary>
         public ResourceIdentifier ReservationId { get; set; }
         /// <summary> Quantity to be returned. Must be greater than zero. </summary>
         public int? Quantity { get; set; }

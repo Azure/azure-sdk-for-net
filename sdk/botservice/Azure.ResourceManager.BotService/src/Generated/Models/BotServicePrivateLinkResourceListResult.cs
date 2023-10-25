@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.BotService.Models
         /// <summary> Initializes a new instance of BotServicePrivateLinkResourceListResult. </summary>
         internal BotServicePrivateLinkResourceListResult()
         {
-            Value = new ChangeTrackingList<BotServicePrivateLinkResource>();
+            Value = new ChangeTrackingList<BotServicePrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of BotServicePrivateLinkResourceListResult. </summary>
         /// <param name="value"> Array of private link resources. </param>
-        internal BotServicePrivateLinkResourceListResult(IReadOnlyList<BotServicePrivateLinkResource> value)
+        internal BotServicePrivateLinkResourceListResult(IReadOnlyList<BotServicePrivateLinkResourceData> value)
         {
             Value = value;
         }
 
         /// <summary> Array of private link resources. </summary>
-        public IReadOnlyList<BotServicePrivateLinkResource> Value { get; }
+        public IReadOnlyList<BotServicePrivateLinkResourceData> Value { get; }
     }
 }

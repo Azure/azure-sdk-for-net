@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static DDAudio DeserializeDDAudio(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> channels = default;
             Optional<int> samplingRate = default;
             Optional<int> bitrate = default;
@@ -53,7 +57,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     channels = property.Value.GetInt32();
@@ -63,7 +66,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     samplingRate = property.Value.GetInt32();
@@ -73,7 +75,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     bitrate = property.Value.GetInt32();

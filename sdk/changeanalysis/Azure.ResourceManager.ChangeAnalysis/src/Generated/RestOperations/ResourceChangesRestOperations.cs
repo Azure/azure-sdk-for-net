@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
             return message;
         }
 
-        /// <summary> List the changes of a resource within the specified time range. Customer data will be masked if the user doesn&apos;t have access. </summary>
+        /// <summary> List the changes of a resource within the specified time range. Customer data will be masked if the user doesn't have access. </summary>
         /// <param name="resourceId"> The identifier of the resource. </param>
         /// <param name="startTime"> Specifies the start time of the changes request. </param>
         /// <param name="endTime"> Specifies the end time of the changes request. </param>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
             }
         }
 
-        /// <summary> List the changes of a resource within the specified time range. Customer data will be masked if the user doesn&apos;t have access. </summary>
+        /// <summary> List the changes of a resource within the specified time range. Customer data will be masked if the user doesn't have access. </summary>
         /// <param name="resourceId"> The identifier of the resource. </param>
         /// <param name="startTime"> Specifies the start time of the changes request. </param>
         /// <param name="endTime"> Specifies the end time of the changes request. </param>
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
             return message;
         }
 
-        /// <summary> List the changes of a resource within the specified time range. Customer data will be masked if the user doesn&apos;t have access. </summary>
+        /// <summary> List the changes of a resource within the specified time range. Customer data will be masked if the user doesn't have access. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceId"> The identifier of the resource. </param>
         /// <param name="startTime"> Specifies the start time of the changes request. </param>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
             }
         }
 
-        /// <summary> List the changes of a resource within the specified time range. Customer data will be masked if the user doesn&apos;t have access. </summary>
+        /// <summary> List the changes of a resource within the specified time range. Customer data will be masked if the user doesn't have access. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="resourceId"> The identifier of the resource. </param>
         /// <param name="startTime"> Specifies the start time of the changes request. </param>

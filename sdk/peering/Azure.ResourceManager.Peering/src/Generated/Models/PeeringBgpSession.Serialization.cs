@@ -66,6 +66,10 @@ namespace Azure.ResourceManager.Peering.Models
 
         internal static PeeringBgpSession DeserializePeeringBgpSession(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> sessionPrefixV4 = default;
             Optional<string> sessionPrefixV6 = default;
             Optional<IPAddress> microsoftSessionIPv4Address = default;
@@ -91,9 +95,8 @@ namespace Azure.ResourceManager.Peering.Models
                 }
                 if (property.NameEquals("microsoftSessionIPv4Address"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     microsoftSessionIPv4Address = IPAddress.Parse(property.Value.GetString());
@@ -101,9 +104,8 @@ namespace Azure.ResourceManager.Peering.Models
                 }
                 if (property.NameEquals("microsoftSessionIPv6Address"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     microsoftSessionIPv6Address = IPAddress.Parse(property.Value.GetString());
@@ -111,9 +113,8 @@ namespace Azure.ResourceManager.Peering.Models
                 }
                 if (property.NameEquals("peerSessionIPv4Address"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     peerSessionIPv4Address = IPAddress.Parse(property.Value.GetString());
@@ -121,9 +122,8 @@ namespace Azure.ResourceManager.Peering.Models
                 }
                 if (property.NameEquals("peerSessionIPv6Address"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     peerSessionIPv6Address = IPAddress.Parse(property.Value.GetString());
@@ -133,7 +133,6 @@ namespace Azure.ResourceManager.Peering.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sessionStateV4 = new PeeringSessionStateV4(property.Value.GetString());
@@ -143,7 +142,6 @@ namespace Azure.ResourceManager.Peering.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sessionStateV6 = new PeeringSessionStateV6(property.Value.GetString());
@@ -153,7 +151,6 @@ namespace Azure.ResourceManager.Peering.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxPrefixesAdvertisedV4 = property.Value.GetInt32();
@@ -163,7 +160,6 @@ namespace Azure.ResourceManager.Peering.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxPrefixesAdvertisedV6 = property.Value.GetInt32();

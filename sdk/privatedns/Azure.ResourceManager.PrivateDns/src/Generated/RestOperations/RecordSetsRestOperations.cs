@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="data"> Parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="ifMatch"> The ETag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateZoneName"/>, <paramref name="relativeRecordSetName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="data"> Parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="ifMatch"> The ETag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing record set. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="privateZoneName"/>, <paramref name="relativeRecordSetName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="privateZoneName"> The name of the Private DNS zone (without a terminating dot). </param>
         /// <param name="recordType"> The type of record sets to enumerate. </param>
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
-        /// <param name="recordsetnamesuffix"> The suffix label of the record set name to be used to filter the record set enumeration. If this parameter is specified, the returned enumeration will only contain records that end with &quot;.&lt;recordsetnamesuffix&gt;&quot;. </param>
+        /// <param name="recordsetnamesuffix"> The suffix label of the record set name to be used to filter the record set enumeration. If this parameter is specified, the returned enumeration will only contain records that end with ".&lt;recordsetnamesuffix&gt;". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="privateZoneName"> The name of the Private DNS zone (without a terminating dot). </param>
         /// <param name="recordType"> The type of record sets to enumerate. </param>
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
-        /// <param name="recordsetnamesuffix"> The suffix label of the record set name to be used to filter the record set enumeration. If this parameter is specified, the returned enumeration will only contain records that end with &quot;.&lt;recordsetnamesuffix&gt;&quot;. </param>
+        /// <param name="recordsetnamesuffix"> The suffix label of the record set name to be used to filter the record set enumeration. If this parameter is specified, the returned enumeration will only contain records that end with ".&lt;recordsetnamesuffix&gt;". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="privateZoneName"> The name of the Private DNS zone (without a terminating dot). </param>
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
-        /// <param name="recordsetnamesuffix"> The suffix label of the record set name to be used to filter the record set enumeration. If this parameter is specified, the returned enumeration will only contain records that end with &quot;.&lt;recordsetnamesuffix&gt;&quot;. </param>
+        /// <param name="recordsetnamesuffix"> The suffix label of the record set name to be used to filter the record set enumeration. If this parameter is specified, the returned enumeration will only contain records that end with ".&lt;recordsetnamesuffix&gt;". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -586,7 +586,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="privateZoneName"> The name of the Private DNS zone (without a terminating dot). </param>
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
-        /// <param name="recordsetnamesuffix"> The suffix label of the record set name to be used to filter the record set enumeration. If this parameter is specified, the returned enumeration will only contain records that end with &quot;.&lt;recordsetnamesuffix&gt;&quot;. </param>
+        /// <param name="recordsetnamesuffix"> The suffix label of the record set name to be used to filter the record set enumeration. If this parameter is specified, the returned enumeration will only contain records that end with ".&lt;recordsetnamesuffix&gt;". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -633,7 +633,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="privateZoneName"> The name of the Private DNS zone (without a terminating dot). </param>
         /// <param name="recordType"> The type of record sets to enumerate. </param>
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
-        /// <param name="recordsetnamesuffix"> The suffix label of the record set name to be used to filter the record set enumeration. If this parameter is specified, the returned enumeration will only contain records that end with &quot;.&lt;recordsetnamesuffix&gt;&quot;. </param>
+        /// <param name="recordsetnamesuffix"> The suffix label of the record set name to be used to filter the record set enumeration. If this parameter is specified, the returned enumeration will only contain records that end with ".&lt;recordsetnamesuffix&gt;". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -667,7 +667,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="privateZoneName"> The name of the Private DNS zone (without a terminating dot). </param>
         /// <param name="recordType"> The type of record sets to enumerate. </param>
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
-        /// <param name="recordsetnamesuffix"> The suffix label of the record set name to be used to filter the record set enumeration. If this parameter is specified, the returned enumeration will only contain records that end with &quot;.&lt;recordsetnamesuffix&gt;&quot;. </param>
+        /// <param name="recordsetnamesuffix"> The suffix label of the record set name to be used to filter the record set enumeration. If this parameter is specified, the returned enumeration will only contain records that end with ".&lt;recordsetnamesuffix&gt;". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -714,7 +714,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="privateZoneName"> The name of the Private DNS zone (without a terminating dot). </param>
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
-        /// <param name="recordsetnamesuffix"> The suffix label of the record set name to be used to filter the record set enumeration. If this parameter is specified, the returned enumeration will only contain records that end with &quot;.&lt;recordsetnamesuffix&gt;&quot;. </param>
+        /// <param name="recordsetnamesuffix"> The suffix label of the record set name to be used to filter the record set enumeration. If this parameter is specified, the returned enumeration will only contain records that end with ".&lt;recordsetnamesuffix&gt;". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -747,7 +747,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="privateZoneName"> The name of the Private DNS zone (without a terminating dot). </param>
         /// <param name="top"> The maximum number of record sets to return. If not specified, returns up to 100 record sets. </param>
-        /// <param name="recordsetnamesuffix"> The suffix label of the record set name to be used to filter the record set enumeration. If this parameter is specified, the returned enumeration will only contain records that end with &quot;.&lt;recordsetnamesuffix&gt;&quot;. </param>
+        /// <param name="recordsetnamesuffix"> The suffix label of the record set name to be used to filter the record set enumeration. If this parameter is specified, the returned enumeration will only contain records that end with ".&lt;recordsetnamesuffix&gt;". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateZoneName"/> is an empty string, and was expected to be non-empty. </exception>

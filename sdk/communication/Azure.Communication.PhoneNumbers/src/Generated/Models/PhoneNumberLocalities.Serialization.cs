@@ -13,34 +13,5 @@ namespace Azure.Communication.PhoneNumbers
 {
     internal partial class PhoneNumberLocalities
     {
-        internal static PhoneNumberLocalities DeserializePhoneNumberLocalities(JsonElement element)
-        {
-            Optional<IReadOnlyList<PhoneNumberLocality>> phoneNumberLocalities = default;
-            Optional<string> nextLink = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("phoneNumberLocalities"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<PhoneNumberLocality> array = new List<PhoneNumberLocality>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(PhoneNumberLocality.DeserializePhoneNumberLocality(item));
-                    }
-                    phoneNumberLocalities = array;
-                    continue;
-                }
-                if (property.NameEquals("nextLink"u8))
-                {
-                    nextLink = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new PhoneNumberLocalities(Optional.ToList(phoneNumberLocalities), nextLink.Value);
-        }
     }
 }

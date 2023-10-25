@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static WebAppCookieExpiration DeserializeWebAppCookieExpiration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CookieExpirationConvention> convention = default;
             Optional<string> timeToExpiration = default;
             foreach (var property in element.EnumerateObject())
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     convention = property.Value.GetString().ToCookieExpirationConvention();

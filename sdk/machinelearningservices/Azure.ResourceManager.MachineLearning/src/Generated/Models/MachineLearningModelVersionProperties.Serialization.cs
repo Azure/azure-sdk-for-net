@@ -35,6 +35,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("flavors");
                 }
             }
+            if (Optional.IsDefined(IntellectualProperty))
+            {
+                if (IntellectualProperty != null)
+                {
+                    writer.WritePropertyName("intellectualProperty"u8);
+                    writer.WriteObjectValue(IntellectualProperty);
+                }
+                else
+                {
+                    writer.WriteNull("intellectualProperty");
+                }
+            }
             if (Optional.IsDefined(JobName))
             {
                 if (JobName != null)
@@ -69,6 +81,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 else
                 {
                     writer.WriteNull("modelUri");
+                }
+            }
+            if (Optional.IsDefined(Stage))
+            {
+                if (Stage != null)
+                {
+                    writer.WritePropertyName("stage"u8);
+                    writer.WriteStringValue(Stage);
+                }
+                else
+                {
+                    writer.WriteNull("stage");
+                }
+            }
+            if (Optional.IsDefined(AutoDeleteSetting))
+            {
+                if (AutoDeleteSetting != null)
+                {
+                    writer.WritePropertyName("autoDeleteSetting"u8);
+                    writer.WriteObjectValue(AutoDeleteSetting);
+                }
+                else
+                {
+                    writer.WriteNull("autoDeleteSetting");
                 }
             }
             if (Optional.IsDefined(IsAnonymous))
@@ -134,10 +170,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningModelVersionProperties DeserializeMachineLearningModelVersionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, MachineLearningFlavorData>> flavors = default;
+            Optional<IntellectualProperty> intellectualProperty = default;
             Optional<string> jobName = default;
             Optional<string> modelType = default;
             Optional<Uri> modelUri = default;
+            Optional<RegistryAssetProvisioningState> provisioningState = default;
+            Optional<string> stage = default;
+            Optional<AutoDeleteSetting> autoDeleteSetting = default;
             Optional<bool> isAnonymous = default;
             Optional<bool> isArchived = default;
             Optional<string> description = default;
@@ -155,16 +199,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, MachineLearningFlavorData> dictionary = new Dictionary<string, MachineLearningFlavorData>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, MachineLearningFlavorData.DeserializeMachineLearningFlavorData(property0.Value));
-                        }
+                        dictionary.Add(property0.Name, MachineLearningFlavorData.DeserializeMachineLearningFlavorData(property0.Value));
                     }
                     flavors = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("intellectualProperty"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        intellectualProperty = null;
+                        continue;
+                    }
+                    intellectualProperty = IntellectualProperty.DeserializeIntellectualProperty(property.Value);
                     continue;
                 }
                 if (property.NameEquals("jobName"u8))
@@ -197,11 +244,39 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     modelUri = new Uri(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("provisioningState"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisioningState = new RegistryAssetProvisioningState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("stage"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        stage = null;
+                        continue;
+                    }
+                    stage = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("autoDeleteSetting"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        autoDeleteSetting = null;
+                        continue;
+                    }
+                    autoDeleteSetting = AutoDeleteSetting.DeserializeAutoDeleteSetting(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("isAnonymous"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isAnonymous = property.Value.GetBoolean();
@@ -211,7 +286,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isArchived = property.Value.GetBoolean();
@@ -237,14 +311,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     properties = dictionary;
                     continue;
@@ -259,20 +326,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
                     continue;
                 }
             }
-            return new MachineLearningModelVersionProperties(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), Optional.ToNullable(isAnonymous), Optional.ToNullable(isArchived), Optional.ToDictionary(flavors), jobName.Value, modelType.Value, modelUri.Value);
+            return new MachineLearningModelVersionProperties(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), autoDeleteSetting.Value, Optional.ToNullable(isAnonymous), Optional.ToNullable(isArchived), Optional.ToDictionary(flavors), intellectualProperty.Value, jobName.Value, modelType.Value, modelUri.Value, Optional.ToNullable(provisioningState), stage.Value);
         }
     }
 }

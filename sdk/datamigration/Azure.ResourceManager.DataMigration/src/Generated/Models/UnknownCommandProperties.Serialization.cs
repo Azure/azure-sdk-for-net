@@ -23,6 +23,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static UnknownCommandProperties DeserializeUnknownCommandProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             CommandType commandType = "Unknown";
             Optional<IReadOnlyList<ODataError>> errors = default;
             Optional<CommandState> state = default;
@@ -37,7 +41,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ODataError> array = new List<ODataError>();
@@ -52,7 +55,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     state = new CommandState(property.Value.GetString());

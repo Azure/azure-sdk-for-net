@@ -11,7 +11,10 @@ using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    /// <summary> A class representing the ServiceBusDisasterRecovery data model. </summary>
+    /// <summary>
+    /// A class representing the ServiceBusDisasterRecovery data model.
+    /// Single item in List or Get Alias(Disaster Recovery configuration) operation
+    /// </summary>
     public partial class ServiceBusDisasterRecoveryData : ResourceData
     {
         /// <summary> Initializes a new instance of ServiceBusDisasterRecoveryData. </summary>
@@ -24,11 +27,11 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> Provisioning state of the Alias(Disaster Recovery configuration) - possible values &apos;Accepted&apos; or &apos;Succeeded&apos; or &apos;Failed&apos;. </param>
+        /// <param name="provisioningState"> Provisioning state of the Alias(Disaster Recovery configuration) - possible values 'Accepted' or 'Succeeded' or 'Failed'. </param>
         /// <param name="pendingReplicationOperationsCount"> Number of entities pending to be replicated. </param>
         /// <param name="partnerNamespace"> ARM Id of the Primary/Secondary eventhub namespace name, which is part of GEO DR pairing. </param>
         /// <param name="alternateName"> Primary/Secondary eventhub namespace name, which is part of GEO DR pairing. </param>
-        /// <param name="role"> role of namespace in GEO DR - possible values &apos;Primary&apos; or &apos;PrimaryNotReplicating&apos; or &apos;Secondary&apos;. </param>
+        /// <param name="role"> role of namespace in GEO DR - possible values 'Primary' or 'PrimaryNotReplicating' or 'Secondary'. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         internal ServiceBusDisasterRecoveryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ServiceBusDisasterRecoveryProvisioningState? provisioningState, long? pendingReplicationOperationsCount, string partnerNamespace, string alternateName, ServiceBusDisasterRecoveryRole? role, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
@@ -40,7 +43,7 @@ namespace Azure.ResourceManager.ServiceBus
             Location = location;
         }
 
-        /// <summary> Provisioning state of the Alias(Disaster Recovery configuration) - possible values &apos;Accepted&apos; or &apos;Succeeded&apos; or &apos;Failed&apos;. </summary>
+        /// <summary> Provisioning state of the Alias(Disaster Recovery configuration) - possible values 'Accepted' or 'Succeeded' or 'Failed'. </summary>
         public ServiceBusDisasterRecoveryProvisioningState? ProvisioningState { get; }
         /// <summary> Number of entities pending to be replicated. </summary>
         public long? PendingReplicationOperationsCount { get; }
@@ -48,7 +51,7 @@ namespace Azure.ResourceManager.ServiceBus
         public string PartnerNamespace { get; set; }
         /// <summary> Primary/Secondary eventhub namespace name, which is part of GEO DR pairing. </summary>
         public string AlternateName { get; set; }
-        /// <summary> role of namespace in GEO DR - possible values &apos;Primary&apos; or &apos;PrimaryNotReplicating&apos; or &apos;Secondary&apos;. </summary>
+        /// <summary> role of namespace in GEO DR - possible values 'Primary' or 'PrimaryNotReplicating' or 'Secondary'. </summary>
         public ServiceBusDisasterRecoveryRole? Role { get; }
         /// <summary> The geo-location where the resource lives. </summary>
         public AzureLocation? Location { get; }

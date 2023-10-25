@@ -70,13 +70,13 @@ namespace Azure.ResourceManager.WorkloadMonitor
             return message;
         }
 
-        /// <summary> Get the current health status of all monitors of a virtual machine. Optional parameters: $expand (retrieve the monitor&apos;s evidence and configuration) and $filter (filter by monitor name). </summary>
+        /// <summary> Get the current health status of all monitors of a virtual machine. Optional parameters: $expand (retrieve the monitor's evidence and configuration) and $filter (filter by monitor name). </summary>
         /// <param name="subscriptionId"> The subscription Id of the virtual machine. </param>
         /// <param name="resourceGroupName"> The resource group of the virtual machine. </param>
         /// <param name="providerName"> The provider name (ex: Microsoft.Compute for virtual machines). </param>
         /// <param name="resourceCollectionName"> The resource collection name (ex: virtualMachines for virtual machines). </param>
         /// <param name="resourceName"> The name of the virtual machine. </param>
-        /// <param name="filter"> Optionally filter by monitor name. Example: $filter=monitorName eq &apos;logical-disks|C:|disk-free-space-mb.&apos;. </param>
+        /// <param name="filter"> Optionally filter by monitor name. Example: $filter=monitorName eq 'logical-disks|C:|disk-free-space-mb.'. </param>
         /// <param name="expand"> Optionally expand the monitor’s evidence and/or configuration. Example: $expand=evidence,configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceCollectionName"/> or <paramref name="resourceName"/> is null. </exception>
@@ -105,13 +105,13 @@ namespace Azure.ResourceManager.WorkloadMonitor
             }
         }
 
-        /// <summary> Get the current health status of all monitors of a virtual machine. Optional parameters: $expand (retrieve the monitor&apos;s evidence and configuration) and $filter (filter by monitor name). </summary>
+        /// <summary> Get the current health status of all monitors of a virtual machine. Optional parameters: $expand (retrieve the monitor's evidence and configuration) and $filter (filter by monitor name). </summary>
         /// <param name="subscriptionId"> The subscription Id of the virtual machine. </param>
         /// <param name="resourceGroupName"> The resource group of the virtual machine. </param>
         /// <param name="providerName"> The provider name (ex: Microsoft.Compute for virtual machines). </param>
         /// <param name="resourceCollectionName"> The resource collection name (ex: virtualMachines for virtual machines). </param>
         /// <param name="resourceName"> The name of the virtual machine. </param>
-        /// <param name="filter"> Optionally filter by monitor name. Example: $filter=monitorName eq &apos;logical-disks|C:|disk-free-space-mb.&apos;. </param>
+        /// <param name="filter"> Optionally filter by monitor name. Example: $filter=monitorName eq 'logical-disks|C:|disk-free-space-mb.'. </param>
         /// <param name="expand"> Optionally expand the monitor’s evidence and/or configuration. Example: $expand=evidence,configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceCollectionName"/> or <paramref name="resourceName"/> is null. </exception>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
             return message;
         }
 
-        /// <summary> Get the current health status of a monitor of a virtual machine. Optional parameter: $expand (retrieve the monitor&apos;s evidence and configuration). </summary>
+        /// <summary> Get the current health status of a monitor of a virtual machine. Optional parameter: $expand (retrieve the monitor's evidence and configuration). </summary>
         /// <param name="subscriptionId"> The subscription Id of the virtual machine. </param>
         /// <param name="resourceGroupName"> The resource group of the virtual machine. </param>
         /// <param name="providerName"> The provider name (ex: Microsoft.Compute for virtual machines). </param>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
             }
         }
 
-        /// <summary> Get the current health status of a monitor of a virtual machine. Optional parameter: $expand (retrieve the monitor&apos;s evidence and configuration). </summary>
+        /// <summary> Get the current health status of a monitor of a virtual machine. Optional parameter: $expand (retrieve the monitor's evidence and configuration). </summary>
         /// <param name="subscriptionId"> The subscription Id of the virtual machine. </param>
         /// <param name="resourceGroupName"> The resource group of the virtual machine. </param>
         /// <param name="providerName"> The provider name (ex: Microsoft.Compute for virtual machines). </param>
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
             return message;
         }
 
-        /// <summary> Get the health state changes of a monitor of a virtual machine within the provided time window (default is the last 24 hours). Optional parameters: $expand (retrieve the monitor&apos;s evidence and configuration) and $filter (filter by heartbeat condition). </summary>
+        /// <summary> Get the health state changes of a monitor of a virtual machine within the provided time window (default is the last 24 hours). Optional parameters: $expand (retrieve the monitor's evidence and configuration) and $filter (filter by heartbeat condition). </summary>
         /// <param name="subscriptionId"> The subscription Id of the virtual machine. </param>
         /// <param name="resourceGroupName"> The resource group of the virtual machine. </param>
         /// <param name="providerName"> The provider name (ex: Microsoft.Compute for virtual machines). </param>
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
             }
         }
 
-        /// <summary> Get the health state changes of a monitor of a virtual machine within the provided time window (default is the last 24 hours). Optional parameters: $expand (retrieve the monitor&apos;s evidence and configuration) and $filter (filter by heartbeat condition). </summary>
+        /// <summary> Get the health state changes of a monitor of a virtual machine within the provided time window (default is the last 24 hours). Optional parameters: $expand (retrieve the monitor's evidence and configuration) and $filter (filter by heartbeat condition). </summary>
         /// <param name="subscriptionId"> The subscription Id of the virtual machine. </param>
         /// <param name="resourceGroupName"> The resource group of the virtual machine. </param>
         /// <param name="providerName"> The provider name (ex: Microsoft.Compute for virtual machines). </param>
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
             return message;
         }
 
-        /// <summary> Get the health state change of a monitor of a virtual machine at the provided timestamp. Optional parameter: $expand (retrieve the monitor&apos;s evidence and configuration). </summary>
+        /// <summary> Get the health state change of a monitor of a virtual machine at the provided timestamp. Optional parameter: $expand (retrieve the monitor's evidence and configuration). </summary>
         /// <param name="subscriptionId"> The subscription Id of the virtual machine. </param>
         /// <param name="resourceGroupName"> The resource group of the virtual machine. </param>
         /// <param name="providerName"> The provider name (ex: Microsoft.Compute for virtual machines). </param>
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
             }
         }
 
-        /// <summary> Get the health state change of a monitor of a virtual machine at the provided timestamp. Optional parameter: $expand (retrieve the monitor&apos;s evidence and configuration). </summary>
+        /// <summary> Get the health state change of a monitor of a virtual machine at the provided timestamp. Optional parameter: $expand (retrieve the monitor's evidence and configuration). </summary>
         /// <param name="subscriptionId"> The subscription Id of the virtual machine. </param>
         /// <param name="resourceGroupName"> The resource group of the virtual machine. </param>
         /// <param name="providerName"> The provider name (ex: Microsoft.Compute for virtual machines). </param>
@@ -493,14 +493,14 @@ namespace Azure.ResourceManager.WorkloadMonitor
             return message;
         }
 
-        /// <summary> Get the current health status of all monitors of a virtual machine. Optional parameters: $expand (retrieve the monitor&apos;s evidence and configuration) and $filter (filter by monitor name). </summary>
+        /// <summary> Get the current health status of all monitors of a virtual machine. Optional parameters: $expand (retrieve the monitor's evidence and configuration) and $filter (filter by monitor name). </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The subscription Id of the virtual machine. </param>
         /// <param name="resourceGroupName"> The resource group of the virtual machine. </param>
         /// <param name="providerName"> The provider name (ex: Microsoft.Compute for virtual machines). </param>
         /// <param name="resourceCollectionName"> The resource collection name (ex: virtualMachines for virtual machines). </param>
         /// <param name="resourceName"> The name of the virtual machine. </param>
-        /// <param name="filter"> Optionally filter by monitor name. Example: $filter=monitorName eq &apos;logical-disks|C:|disk-free-space-mb.&apos;. </param>
+        /// <param name="filter"> Optionally filter by monitor name. Example: $filter=monitorName eq 'logical-disks|C:|disk-free-space-mb.'. </param>
         /// <param name="expand"> Optionally expand the monitor’s evidence and/or configuration. Example: $expand=evidence,configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceCollectionName"/> or <paramref name="resourceName"/> is null. </exception>
@@ -530,14 +530,14 @@ namespace Azure.ResourceManager.WorkloadMonitor
             }
         }
 
-        /// <summary> Get the current health status of all monitors of a virtual machine. Optional parameters: $expand (retrieve the monitor&apos;s evidence and configuration) and $filter (filter by monitor name). </summary>
+        /// <summary> Get the current health status of all monitors of a virtual machine. Optional parameters: $expand (retrieve the monitor's evidence and configuration) and $filter (filter by monitor name). </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The subscription Id of the virtual machine. </param>
         /// <param name="resourceGroupName"> The resource group of the virtual machine. </param>
         /// <param name="providerName"> The provider name (ex: Microsoft.Compute for virtual machines). </param>
         /// <param name="resourceCollectionName"> The resource collection name (ex: virtualMachines for virtual machines). </param>
         /// <param name="resourceName"> The name of the virtual machine. </param>
-        /// <param name="filter"> Optionally filter by monitor name. Example: $filter=monitorName eq &apos;logical-disks|C:|disk-free-space-mb.&apos;. </param>
+        /// <param name="filter"> Optionally filter by monitor name. Example: $filter=monitorName eq 'logical-disks|C:|disk-free-space-mb.'. </param>
         /// <param name="expand"> Optionally expand the monitor’s evidence and/or configuration. Example: $expand=evidence,configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceCollectionName"/> or <paramref name="resourceName"/> is null. </exception>
@@ -581,7 +581,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
             return message;
         }
 
-        /// <summary> Get the health state changes of a monitor of a virtual machine within the provided time window (default is the last 24 hours). Optional parameters: $expand (retrieve the monitor&apos;s evidence and configuration) and $filter (filter by heartbeat condition). </summary>
+        /// <summary> Get the health state changes of a monitor of a virtual machine within the provided time window (default is the last 24 hours). Optional parameters: $expand (retrieve the monitor's evidence and configuration) and $filter (filter by heartbeat condition). </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The subscription Id of the virtual machine. </param>
         /// <param name="resourceGroupName"> The resource group of the virtual machine. </param>
@@ -622,7 +622,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
             }
         }
 
-        /// <summary> Get the health state changes of a monitor of a virtual machine within the provided time window (default is the last 24 hours). Optional parameters: $expand (retrieve the monitor&apos;s evidence and configuration) and $filter (filter by heartbeat condition). </summary>
+        /// <summary> Get the health state changes of a monitor of a virtual machine within the provided time window (default is the last 24 hours). Optional parameters: $expand (retrieve the monitor's evidence and configuration) and $filter (filter by heartbeat condition). </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The subscription Id of the virtual machine. </param>
         /// <param name="resourceGroupName"> The resource group of the virtual machine. </param>

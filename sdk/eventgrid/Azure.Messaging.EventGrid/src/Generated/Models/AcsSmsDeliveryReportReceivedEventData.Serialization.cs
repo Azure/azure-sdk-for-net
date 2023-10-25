@@ -18,6 +18,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static AcsSmsDeliveryReportReceivedEventData DeserializeAcsSmsDeliveryReportReceivedEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> deliveryStatus = default;
             Optional<string> deliveryStatusDetails = default;
             Optional<IReadOnlyList<AcsSmsDeliveryAttemptProperties>> deliveryAttempts = default;
@@ -42,7 +46,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AcsSmsDeliveryAttemptProperties> array = new List<AcsSmsDeliveryAttemptProperties>();
@@ -57,7 +60,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     receivedTimestamp = property.Value.GetDateTimeOffset("O");

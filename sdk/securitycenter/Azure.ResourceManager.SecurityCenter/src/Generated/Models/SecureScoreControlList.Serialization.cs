@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static SecureScoreControlList DeserializeSecureScoreControlList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<SecureScoreControlDetails>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SecureScoreControlDetails> array = new List<SecureScoreControlDetails>();

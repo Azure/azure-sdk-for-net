@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static SelfHostedIntegrationRuntimeStatus DeserializeSelfHostedIntegrationRuntimeStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IntegrationRuntimeType type = default;
             Optional<string> dataFactoryName = default;
             Optional<IntegrationRuntimeState> state = default;
@@ -28,13 +32,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<TimeSpan> updateDelayOffset = default;
             Optional<TimeSpan> localTimeZoneOffset = default;
             Optional<IReadOnlyDictionary<string, string>> capabilities = default;
-            Optional<IReadOnlyList<Uri>> serviceUrls = default;
-            Optional<IntegrationRuntimeAutoUpdate> autoUpdate = default;
+            Optional<IReadOnlyList<string>> serviceUrls = default;
+            Optional<IntegrationRuntimeAutoUpdateState> autoUpdate = default;
             Optional<string> versionStatus = default;
             Optional<IReadOnlyList<LinkedIntegrationRuntime>> links = default;
             Optional<string> pushedVersion = default;
             Optional<string> latestVersion = default;
             Optional<DateTimeOffset> autoUpdateEta = default;
+            Optional<bool> selfContainedInteractiveAuthoringEnabled = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -53,7 +58,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     state = new IntegrationRuntimeState(property.Value.GetString());
@@ -72,7 +76,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createTime = property0.Value.GetDateTimeOffset("O");
@@ -82,7 +85,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             taskQueueId = property0.Value.GetGuid();
@@ -92,7 +94,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             internalChannelEncryption = new IntegrationRuntimeInternalChannelEncryptionMode(property0.Value.GetString());
@@ -107,7 +108,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<SelfHostedIntegrationRuntimeNode> array = new List<SelfHostedIntegrationRuntimeNode>();
@@ -122,7 +122,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             scheduledUpdateDate = property0.Value.GetDateTimeOffset("O");
@@ -132,7 +131,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             updateDelayOffset = property0.Value.GetTimeSpan("P");
@@ -142,7 +140,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             localTimeZoneOffset = property0.Value.GetTimeSpan("P");
@@ -152,7 +149,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -167,13 +163,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<Uri> array = new List<Uri>();
+                            List<string> array = new List<string>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new Uri(item.GetString()));
+                                array.Add(item.GetString());
                             }
                             serviceUrls = array;
                             continue;
@@ -182,10 +177,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            autoUpdate = new IntegrationRuntimeAutoUpdate(property0.Value.GetString());
+                            autoUpdate = new IntegrationRuntimeAutoUpdateState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("versionStatus"u8))
@@ -197,7 +191,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<LinkedIntegrationRuntime> array = new List<LinkedIntegrationRuntime>();
@@ -222,10 +215,18 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             autoUpdateEta = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("selfContainedInteractiveAuthoringEnabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            selfContainedInteractiveAuthoringEnabled = property0.Value.GetBoolean();
                             continue;
                         }
                     }
@@ -234,7 +235,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SelfHostedIntegrationRuntimeStatus(type, dataFactoryName.Value, Optional.ToNullable(state), additionalProperties, Optional.ToNullable(createTime), Optional.ToNullable(taskQueueId), Optional.ToNullable(internalChannelEncryption), version.Value, Optional.ToList(nodes), Optional.ToNullable(scheduledUpdateDate), Optional.ToNullable(updateDelayOffset), Optional.ToNullable(localTimeZoneOffset), Optional.ToDictionary(capabilities), Optional.ToList(serviceUrls), Optional.ToNullable(autoUpdate), versionStatus.Value, Optional.ToList(links), pushedVersion.Value, latestVersion.Value, Optional.ToNullable(autoUpdateEta));
+            return new SelfHostedIntegrationRuntimeStatus(type, dataFactoryName.Value, Optional.ToNullable(state), additionalProperties, Optional.ToNullable(createTime), Optional.ToNullable(taskQueueId), Optional.ToNullable(internalChannelEncryption), version.Value, Optional.ToList(nodes), Optional.ToNullable(scheduledUpdateDate), Optional.ToNullable(updateDelayOffset), Optional.ToNullable(localTimeZoneOffset), Optional.ToDictionary(capabilities), Optional.ToList(serviceUrls), Optional.ToNullable(autoUpdate), versionStatus.Value, Optional.ToList(links), pushedVersion.Value, latestVersion.Value, Optional.ToNullable(autoUpdateEta), Optional.ToNullable(selfContainedInteractiveAuthoringEnabled));
         }
     }
 }

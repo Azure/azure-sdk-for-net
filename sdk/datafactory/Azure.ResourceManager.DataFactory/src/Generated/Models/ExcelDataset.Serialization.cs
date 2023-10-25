@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -27,23 +28,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Structure))
             {
                 writer.WritePropertyName("structure"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Structure);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Structure.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Structure);
             }
             if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Schema);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Schema.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Schema);
             }
             writer.WritePropertyName("linkedServiceName"u8);
-            writer.WriteObjectValue(LinkedServiceName);
+            JsonSerializer.Serialize(writer, LinkedServiceName);
             if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
@@ -61,10 +54,18 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
                 writer.WriteEndArray();
@@ -84,38 +85,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(SheetName))
             {
                 writer.WritePropertyName("sheetName"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SheetName);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(SheetName.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, SheetName);
             }
             if (Optional.IsDefined(SheetIndex))
             {
                 writer.WritePropertyName("sheetIndex"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SheetIndex);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(SheetIndex.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, SheetIndex);
             }
             if (Optional.IsDefined(Range))
             {
                 writer.WritePropertyName("range"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Range);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Range.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Range);
             }
             if (Optional.IsDefined(FirstRowAsHeader))
             {
                 writer.WritePropertyName("firstRowAsHeader"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(FirstRowAsHeader);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(FirstRowAsHeader.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, FirstRowAsHeader);
             }
             if (Optional.IsDefined(Compression))
             {
@@ -125,11 +110,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(NullValue))
             {
                 writer.WritePropertyName("nullValue"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(NullValue);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(NullValue.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, NullValue);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -138,7 +119,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
@@ -146,21 +130,25 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static ExcelDataset DeserializeExcelDataset(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             Optional<string> description = default;
-            Optional<BinaryData> structure = default;
-            Optional<BinaryData> schema = default;
-            FactoryLinkedServiceReference linkedServiceName = default;
+            Optional<DataFactoryElement<IList<DatasetDataElement>>> structure = default;
+            Optional<DataFactoryElement<IList<DatasetSchemaDataElement>>> schema = default;
+            DataFactoryLinkedServiceReference linkedServiceName = default;
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
             Optional<DatasetFolder> folder = default;
             Optional<DatasetLocation> location = default;
-            Optional<BinaryData> sheetName = default;
-            Optional<BinaryData> sheetIndex = default;
-            Optional<BinaryData> range = default;
-            Optional<BinaryData> firstRowAsHeader = default;
+            Optional<DataFactoryElement<string>> sheetName = default;
+            Optional<DataFactoryElement<int>> sheetIndex = default;
+            Optional<DataFactoryElement<string>> range = default;
+            Optional<DataFactoryElement<bool>> firstRowAsHeader = default;
             Optional<DatasetCompression> compression = default;
-            Optional<BinaryData> nullValue = default;
+            Optional<DataFactoryElement<string>> nullValue = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -179,32 +167,29 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    structure = BinaryData.FromString(property.Value.GetRawText());
+                    structure = JsonSerializer.Deserialize<DataFactoryElement<IList<DatasetDataElement>>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("schema"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    schema = BinaryData.FromString(property.Value.GetRawText());
+                    schema = JsonSerializer.Deserialize<DataFactoryElement<IList<DatasetSchemaDataElement>>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("linkedServiceName"u8))
                 {
-                    linkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
+                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("parameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, EntityParameterSpecification> dictionary = new Dictionary<string, EntityParameterSpecification>();
@@ -219,13 +204,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<BinaryData> array = new List<BinaryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BinaryData.FromString(item.GetRawText()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BinaryData.FromString(item.GetRawText()));
+                        }
                     }
                     annotations = array;
                     continue;
@@ -234,7 +225,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     folder = DatasetFolder.DeserializeDatasetFolder(property.Value);
@@ -253,7 +243,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             location = DatasetLocation.DeserializeDatasetLocation(property0.Value);
@@ -263,47 +252,42 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            sheetName = BinaryData.FromString(property0.Value.GetRawText());
+                            sheetName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("sheetIndex"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            sheetIndex = BinaryData.FromString(property0.Value.GetRawText());
+                            sheetIndex = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("range"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            range = BinaryData.FromString(property0.Value.GetRawText());
+                            range = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("firstRowAsHeader"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            firstRowAsHeader = BinaryData.FromString(property0.Value.GetRawText());
+                            firstRowAsHeader = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("compression"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             compression = DatasetCompression.DeserializeDatasetCompression(property0.Value);
@@ -313,10 +297,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            nullValue = BinaryData.FromString(property0.Value.GetRawText());
+                            nullValue = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                     }

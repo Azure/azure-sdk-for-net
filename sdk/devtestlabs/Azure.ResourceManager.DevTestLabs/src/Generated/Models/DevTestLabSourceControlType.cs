@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary> The artifact source&apos;s type. </summary>
+    /// <summary> The artifact source's type. </summary>
     public readonly partial struct DevTestLabSourceControlType : IEquatable<DevTestLabSourceControlType>
     {
         private readonly string _value;

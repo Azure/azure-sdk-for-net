@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    /// <summary> Defines the SAP enqueue server properties. </summary>
+    /// <summary> Defines the SAP Enqueue Server properties. </summary>
     public partial class EnqueueServerProperties
     {
         /// <summary> Initializes a new instance of EnqueueServerProperties. </summary>
@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.Workloads.Models
         }
 
         /// <summary> Initializes a new instance of EnqueueServerProperties. </summary>
-        /// <param name="hostname"> The enqueue server SAP host name. </param>
-        /// <param name="ipAddress"> The enqueue server SAP IP Address. </param>
-        /// <param name="port"> The enqueue server Port. </param>
-        /// <param name="health"> Defines the SAP Instance health. </param>
+        /// <param name="hostname"> Enqueue Server SAP Hostname. </param>
+        /// <param name="ipAddress"> Enqueue Server SAP IP Address. </param>
+        /// <param name="port"> Enqueue Server Port. </param>
+        /// <param name="health"> Defines the health of SAP Instances. </param>
         internal EnqueueServerProperties(string hostname, string ipAddress, long? port, SapHealthState? health)
         {
             Hostname = hostname;
@@ -28,13 +28,13 @@ namespace Azure.ResourceManager.Workloads.Models
             Health = health;
         }
 
-        /// <summary> The enqueue server SAP host name. </summary>
+        /// <summary> Enqueue Server SAP Hostname. </summary>
         public string Hostname { get; }
-        /// <summary> The enqueue server SAP IP Address. </summary>
+        /// <summary> Enqueue Server SAP IP Address. </summary>
         public string IPAddress { get; }
-        /// <summary> The enqueue server Port. </summary>
+        /// <summary> Enqueue Server Port. </summary>
         public long? Port { get; }
-        /// <summary> Defines the SAP Instance health. </summary>
+        /// <summary> Defines the health of SAP Instances. </summary>
         public SapHealthState? Health { get; }
     }
 }

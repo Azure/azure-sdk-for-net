@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
     {
         internal static ConfigurationExtension DeserializeConfigurationExtension(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> publisher = default;
             Optional<string> type = default;
             foreach (var property in element.EnumerateObject())

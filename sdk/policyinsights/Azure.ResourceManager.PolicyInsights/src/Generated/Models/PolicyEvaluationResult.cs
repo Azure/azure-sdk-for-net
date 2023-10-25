@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
         /// <summary> Initializes a new instance of PolicyEvaluationResult. </summary>
         /// <param name="policyInfo"> The details of the policy that was evaluated. </param>
-        /// <param name="evaluationResult"> The result of the policy evaluation against the resource. This will typically be &apos;NonCompliant&apos; but may contain other values if errors were encountered. </param>
+        /// <param name="evaluationResult"> The result of the policy evaluation against the resource. This will typically be 'NonCompliant' but may contain other values if errors were encountered. </param>
         /// <param name="evaluationDetails"> The detailed results of the policy expressions and values that were evaluated. </param>
         internal PolicyEvaluationResult(PolicyReference policyInfo, string evaluationResult, PolicyEvaluationDetails evaluationDetails)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
         /// <summary> The details of the policy that was evaluated. </summary>
         public PolicyReference PolicyInfo { get; }
-        /// <summary> The result of the policy evaluation against the resource. This will typically be &apos;NonCompliant&apos; but may contain other values if errors were encountered. </summary>
+        /// <summary> The result of the policy evaluation against the resource. This will typically be 'NonCompliant' but may contain other values if errors were encountered. </summary>
         public string EvaluationResult { get; }
         /// <summary> The detailed results of the policy expressions and values that were evaluated. </summary>
         public PolicyEvaluationDetails EvaluationDetails { get; }

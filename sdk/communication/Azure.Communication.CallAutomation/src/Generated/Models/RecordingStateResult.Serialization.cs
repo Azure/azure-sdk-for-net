@@ -14,8 +14,13 @@ namespace Azure.Communication.CallAutomation
     {
         internal static RecordingStateResult DeserializeRecordingStateResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> recordingId = default;
             Optional<RecordingState> recordingState = default;
+            Optional<RecordingType> recordingType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recordingId"u8))
@@ -27,14 +32,22 @@ namespace Azure.Communication.CallAutomation
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     recordingState = new RecordingState(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("recordingType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recordingType = new RecordingType(property.Value.GetString());
+                    continue;
+                }
             }
-            return new RecordingStateResult(recordingId.Value, Optional.ToNullable(recordingState));
+            return new RecordingStateResult(recordingId.Value, Optional.ToNullable(recordingState), Optional.ToNullable(recordingType));
         }
     }
 }

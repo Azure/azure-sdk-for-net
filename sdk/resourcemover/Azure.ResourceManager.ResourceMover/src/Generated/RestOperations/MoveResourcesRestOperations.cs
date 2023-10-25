@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ResourceMover
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-08-01";
+            _apiVersion = apiVersion ?? "2023-08-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="moverResourceSetName"> The Move Collection Name. </param>
-        /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=Properties/ProvisioningState eq &apos;Succeeded&apos;. </param>
+        /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=Properties/ProvisioningState eq 'Succeeded'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moverResourceSetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moverResourceSetName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="moverResourceSetName"> The Move Collection Name. </param>
-        /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=Properties/ProvisioningState eq &apos;Succeeded&apos;. </param>
+        /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=Properties/ProvisioningState eq 'Succeeded'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moverResourceSetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moverResourceSetName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="moverResourceSetName"> The Move Collection Name. </param>
-        /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=Properties/ProvisioningState eq &apos;Succeeded&apos;. </param>
+        /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=Properties/ProvisioningState eq 'Succeeded'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moverResourceSetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moverResourceSetName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// <param name="subscriptionId"> The Subscription ID. </param>
         /// <param name="resourceGroupName"> The Resource Group Name. </param>
         /// <param name="moverResourceSetName"> The Move Collection Name. </param>
-        /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=Properties/ProvisioningState eq &apos;Succeeded&apos;. </param>
+        /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=Properties/ProvisioningState eq 'Succeeded'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moverResourceSetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="moverResourceSetName"/> is an empty string, and was expected to be non-empty. </exception>

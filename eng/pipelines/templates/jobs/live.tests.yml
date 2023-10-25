@@ -26,6 +26,9 @@ parameters:
 - name: ServiceDirectory
   type: string
   default: not-specified
+- name: TestResourceDirectories
+  type: object
+  default:
 - name: Project
   type: string
   default: '**'
@@ -101,6 +104,7 @@ jobs:
         parameters:
           SubscriptionConfiguration: ${{ parameters.CloudConfig.SubscriptionConfiguration }}
           SubscriptionConfigurations: ${{ parameters.CloudConfig.SubscriptionConfigurations }}
+          EnvVars: ${{ parameters.EnvVars }}
 
       - pwsh: |
           $project = "${{ parameters.Project }}"
@@ -113,14 +117,25 @@ jobs:
         displayName: Set TestResources Location
 
       - ${{ if parameters.DeployTestResources }}:
-        - template: /eng/common/TestResources/deploy-test-resources.yml
-          parameters:
-            ${{ if or(parameters.Location, parameters.CloudConfig.Location) }}:
-              Location: ${{ coalesce(parameters.Location, parameters.CloudConfig.Location) }}
-            ServiceDirectory: '${{ parameters.ServiceDirectory }}'
-            TestResourcesDirectory: '$(TestResourcesDirectory)'
-            SubscriptionConfiguration: $(SubscriptionConfiguration)
-            ArmTemplateParameters: $(ArmTemplateParameters)
+        - ${{ if parameters.TestResourceDirectories }}:
+          - ${{ each directory in parameters.TestResourceDirectories }}:
+            - template: /eng/common/TestResources/deploy-test-resources.yml
+              parameters:
+                ${{ if or(parameters.Location, parameters.CloudConfig.Location) }}:
+                  Location: ${{ coalesce(parameters.Location, parameters.CloudConfig.Location) }}
+                ServiceDirectory: '${{ directory }}'
+                TestResourcesDirectory: '$(TestResourcesDirectory)'
+                SubscriptionConfiguration: $(SubscriptionConfiguration)
+                ArmTemplateParameters: $(ArmTemplateParameters)
+        - ${{ if not(parameters.TestResourceDirectories) }}:
+          - template: /eng/common/TestResources/deploy-test-resources.yml
+            parameters:
+              ${{ if or(parameters.Location, parameters.CloudConfig.Location) }}:
+                Location: ${{ coalesce(parameters.Location, parameters.CloudConfig.Location) }}
+              ServiceDirectory: '${{ parameters.ServiceDirectory }}'
+              TestResourcesDirectory: '$(TestResourcesDirectory)'
+              SubscriptionConfiguration: $(SubscriptionConfiguration)
+              ArmTemplateParameters: $(ArmTemplateParameters)
 
       - pwsh: |
           if ($env:SupportsRecording -and $env:Record) {
@@ -154,10 +169,17 @@ jobs:
             ${{ var.key }}: ${{ var.value }}
 
       - ${{ if parameters.DeployTestResources }}:
-        - template: /eng/common/TestResources/remove-test-resources.yml
-          parameters:
-            ServiceDirectory: '${{ parameters.ServiceDirectory }}'
-            SubscriptionConfiguration: $(SubscriptionConfiguration)
+        - ${{ if parameters.TestResourceDirectories }}:
+          - ${{ each directory in parameters.TestResourceDirectories }}:
+            - template: /eng/common/TestResources/remove-test-resources.yml
+              parameters:
+                ServiceDirectory: '${{ directory }}'
+                SubscriptionConfiguration: $(SubscriptionConfiguration)
+        - ${{ if not(parameters.TestResourceDirectories) }}:
+            - template: /eng/common/TestResources/remove-test-resources.yml
+              parameters:
+                ServiceDirectory: '${{ parameters.ServiceDirectory }}'
+                SubscriptionConfiguration: $(SubscriptionConfiguration)
 
       - task: PublishTestResults@2
         condition: always()

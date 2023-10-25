@@ -24,13 +24,19 @@ namespace Azure.ResourceManager.Synapse.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(TargetName);
 #else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(TargetName.ToString()).RootElement);
+            using (JsonDocument document = JsonDocument.Parse(TargetName))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
 #endif
             writer.WritePropertyName("userName"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(UserName);
 #else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(UserName.ToString()).RootElement);
+            using (JsonDocument document = JsonDocument.Parse(UserName))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
 #endif
             writer.WritePropertyName("password"u8);
             writer.WriteObjectValue(Password);
@@ -40,6 +46,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseCmdkeySetup DeserializeSynapseCmdkeySetup(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             BinaryData targetName = default;
             BinaryData userName = default;

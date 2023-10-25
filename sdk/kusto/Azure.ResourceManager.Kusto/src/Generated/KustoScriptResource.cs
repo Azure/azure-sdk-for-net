@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary>
-        /// Deletes a Kusto principalAssignment.
+        /// Deletes a Kusto database script.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Kusto
         }
 
         /// <summary>
-        /// Deletes a Kusto principalAssignment.
+        /// Deletes a Kusto database script.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

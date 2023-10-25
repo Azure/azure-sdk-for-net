@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    /// <summary> The project&apos;s provisioning state. </summary>
+    /// <summary> The project's provisioning state. </summary>
     public readonly partial struct ProjectProvisioningState : IEquatable<ProjectProvisioningState>
     {
         private readonly string _value;

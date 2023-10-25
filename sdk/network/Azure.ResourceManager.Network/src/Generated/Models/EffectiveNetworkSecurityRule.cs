@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="protocol"> The network protocol this rule applies to. </param>
         /// <param name="sourcePortRange"> The source port or range. </param>
         /// <param name="destinationPortRange"> The destination port or range. </param>
-        /// <param name="sourcePortRanges"> The source port ranges. Expected values include a single integer between 0 and 65535, a range using &apos;-&apos; as separator (e.g. 100-400), or an asterisk (*). </param>
-        /// <param name="destinationPortRanges"> The destination port ranges. Expected values include a single integer between 0 and 65535, a range using &apos;-&apos; as separator (e.g. 100-400), or an asterisk (*). </param>
+        /// <param name="sourcePortRanges"> The source port ranges. Expected values include a single integer between 0 and 65535, a range using '-' as separator (e.g. 100-400), or an asterisk (*). </param>
+        /// <param name="destinationPortRanges"> The destination port ranges. Expected values include a single integer between 0 and 65535, a range using '-' as separator (e.g. 100-400), or an asterisk (*). </param>
         /// <param name="sourceAddressPrefix"> The source address prefix. </param>
         /// <param name="destinationAddressPrefix"> The destination address prefix. </param>
         /// <param name="sourceAddressPrefixes"> The source address prefixes. Expected values include CIDR IP ranges, Default Tags (VirtualNetwork, AzureLoadBalancer, Internet), System Tags, and the asterisk (*). </param>
@@ -67,9 +67,9 @@ namespace Azure.ResourceManager.Network.Models
         public string SourcePortRange { get; }
         /// <summary> The destination port or range. </summary>
         public string DestinationPortRange { get; }
-        /// <summary> The source port ranges. Expected values include a single integer between 0 and 65535, a range using &apos;-&apos; as separator (e.g. 100-400), or an asterisk (*). </summary>
+        /// <summary> The source port ranges. Expected values include a single integer between 0 and 65535, a range using '-' as separator (e.g. 100-400), or an asterisk (*). </summary>
         public IReadOnlyList<string> SourcePortRanges { get; }
-        /// <summary> The destination port ranges. Expected values include a single integer between 0 and 65535, a range using &apos;-&apos; as separator (e.g. 100-400), or an asterisk (*). </summary>
+        /// <summary> The destination port ranges. Expected values include a single integer between 0 and 65535, a range using '-' as separator (e.g. 100-400), or an asterisk (*). </summary>
         public IReadOnlyList<string> DestinationPortRanges { get; }
         /// <summary> The source address prefix. </summary>
         public string SourceAddressPrefix { get; }

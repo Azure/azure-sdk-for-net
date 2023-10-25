@@ -16,13 +16,13 @@ namespace Azure.Analytics.Synapse.Spark.Models
         }
 
         /// <summary> Initializes a new instance of SparkStatementCancellationResult. </summary>
-        /// <param name="message"> The msg property from the Livy API. The value is always &quot;canceled&quot;. </param>
+        /// <param name="message"> The msg property from the Livy API. The value is always "canceled". </param>
         internal SparkStatementCancellationResult(string message)
         {
             Message = message;
         }
 
-        /// <summary> The msg property from the Livy API. The value is always &quot;canceled&quot;. </summary>
+        /// <summary> The msg property from the Livy API. The value is always "canceled". </summary>
         public string Message { get; }
     }
 }

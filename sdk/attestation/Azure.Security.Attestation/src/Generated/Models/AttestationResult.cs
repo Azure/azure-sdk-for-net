@@ -10,7 +10,6 @@ namespace Azure.Security.Attestation
     /// <summary> A Microsoft Azure Attestation response token body - the body of a response token issued by MAA. </summary>
     public partial class AttestationResult
     {
-
         /// <summary> Initializes a new instance of AttestationResult. </summary>
         /// <param name="internalJti"> Unique Identifier for the token. </param>
         /// <param name="internalIss"> The Principal who issued the token. </param>

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.StorageCache.Models
     {
         internal static StorageCacheUsageModel DeserializeStorageCacheUsageModel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StorageCacheUsageModelDisplay> display = default;
             Optional<string> modelName = default;
             Optional<string> targetType = default;
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.StorageCache.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     display = StorageCacheUsageModelDisplay.DeserializeStorageCacheUsageModelDisplay(property.Value);

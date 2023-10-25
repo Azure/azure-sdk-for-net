@@ -5,8 +5,8 @@
 
 #nullable disable
 
-using System;
 using System.Threading;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualWorkspaceWorkspacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualWorkspaceWorkspacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualWorkspaceResource(Client, VirtualWorkspaceData.DeserializeVirtualWorkspaceData(e)), VirtualWorkspaceWorkspacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualWorkspaces", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualWorkspaceResource(Client, VirtualWorkspaceData.DeserializeVirtualWorkspaceData(e)), VirtualWorkspaceWorkspacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualWorkspaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualWorkspaceWorkspacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualWorkspaceWorkspacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualWorkspaceResource(Client, VirtualWorkspaceData.DeserializeVirtualWorkspaceData(e)), VirtualWorkspaceWorkspacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualWorkspaces", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualWorkspaceResource(Client, VirtualWorkspaceData.DeserializeVirtualWorkspaceData(e)), VirtualWorkspaceWorkspacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualWorkspaces", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -110,13 +110,16 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="pageSize"> Number of items per page. </param>
+        /// <param name="isDescending"> Indicates whether the collection is descending. </param>
+        /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ScalingPlanResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ScalingPlanResource> GetScalingPlansAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ScalingPlanResource> GetScalingPlansAsync(int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ScalingPlanRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScalingPlanRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScalingPlanResource(Client, ScalingPlanData.DeserializeScalingPlanData(e)), ScalingPlanClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetScalingPlans", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ScalingPlanRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, pageSizeHint, isDescending, initialSkip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScalingPlanRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, pageSizeHint, isDescending, initialSkip);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScalingPlanResource(Client, ScalingPlanData.DeserializeScalingPlanData(e)), ScalingPlanClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetScalingPlans", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -132,13 +135,16 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="pageSize"> Number of items per page. </param>
+        /// <param name="isDescending"> Indicates whether the collection is descending. </param>
+        /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ScalingPlanResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ScalingPlanResource> GetScalingPlans(CancellationToken cancellationToken = default)
+        public virtual Pageable<ScalingPlanResource> GetScalingPlans(int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ScalingPlanRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScalingPlanRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScalingPlanResource(Client, ScalingPlanData.DeserializeScalingPlanData(e)), ScalingPlanClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetScalingPlans", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ScalingPlanRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, pageSizeHint, isDescending, initialSkip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScalingPlanRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, pageSizeHint, isDescending, initialSkip);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScalingPlanResource(Client, ScalingPlanData.DeserializeScalingPlanData(e)), ScalingPlanClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetScalingPlans", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -161,7 +167,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualApplicationGroupApplicationGroupsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualApplicationGroupApplicationGroupsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualApplicationGroupResource(Client, VirtualApplicationGroupData.DeserializeVirtualApplicationGroupData(e)), VirtualApplicationGroupApplicationGroupsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualApplicationGroups", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualApplicationGroupResource(Client, VirtualApplicationGroupData.DeserializeVirtualApplicationGroupData(e)), VirtualApplicationGroupApplicationGroupsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualApplicationGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -184,7 +190,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualApplicationGroupApplicationGroupsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => VirtualApplicationGroupApplicationGroupsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualApplicationGroupResource(Client, VirtualApplicationGroupData.DeserializeVirtualApplicationGroupData(e)), VirtualApplicationGroupApplicationGroupsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualApplicationGroups", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualApplicationGroupResource(Client, VirtualApplicationGroupData.DeserializeVirtualApplicationGroupData(e)), VirtualApplicationGroupApplicationGroupsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetVirtualApplicationGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -200,13 +206,16 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="pageSize"> Number of items per page. </param>
+        /// <param name="isDescending"> Indicates whether the collection is descending. </param>
+        /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="HostPoolResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<HostPoolResource> GetHostPoolsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<HostPoolResource> GetHostPoolsAsync(int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => HostPoolRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HostPoolRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HostPoolResource(Client, HostPoolData.DeserializeHostPoolData(e)), HostPoolClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHostPools", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HostPoolRestClient.CreateListRequest(Id.SubscriptionId, pageSizeHint, isDescending, initialSkip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HostPoolRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, pageSizeHint, isDescending, initialSkip);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HostPoolResource(Client, HostPoolData.DeserializeHostPoolData(e)), HostPoolClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHostPools", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -222,13 +231,16 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="pageSize"> Number of items per page. </param>
+        /// <param name="isDescending"> Indicates whether the collection is descending. </param>
+        /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HostPoolResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<HostPoolResource> GetHostPools(CancellationToken cancellationToken = default)
+        public virtual Pageable<HostPoolResource> GetHostPools(int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => HostPoolRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HostPoolRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HostPoolResource(Client, HostPoolData.DeserializeHostPoolData(e)), HostPoolClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHostPools", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => HostPoolRestClient.CreateListRequest(Id.SubscriptionId, pageSizeHint, isDescending, initialSkip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => HostPoolRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, pageSizeHint, isDescending, initialSkip);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HostPoolResource(Client, HostPoolData.DeserializeHostPoolData(e)), HostPoolClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetHostPools", "value", "nextLink", cancellationToken);
         }
     }
 }

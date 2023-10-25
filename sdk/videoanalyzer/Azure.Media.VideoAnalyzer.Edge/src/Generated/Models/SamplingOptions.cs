@@ -16,7 +16,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         }
 
         /// <summary> Initializes a new instance of SamplingOptions. </summary>
-        /// <param name="skipSamplesWithoutAnnotation"> When set to &apos;true&apos;, prevents frames without upstream inference data to be sent to the extension plugin. This is useful to limit the frames sent to the extension to pre-analyzed frames only. For example, when used downstream from a motion detector, this can enable for only frames in which motion has been detected to be further analyzed. </param>
+        /// <param name="skipSamplesWithoutAnnotation"> When set to 'true', prevents frames without upstream inference data to be sent to the extension plugin. This is useful to limit the frames sent to the extension to pre-analyzed frames only. For example, when used downstream from a motion detector, this can enable for only frames in which motion has been detected to be further analyzed. </param>
         /// <param name="maximumSamplesPerSecond"> Maximum rate of samples submitted to the extension. This prevents an extension plugin to be overloaded with data. </param>
         internal SamplingOptions(string skipSamplesWithoutAnnotation, string maximumSamplesPerSecond)
         {
@@ -24,7 +24,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             MaximumSamplesPerSecond = maximumSamplesPerSecond;
         }
 
-        /// <summary> When set to &apos;true&apos;, prevents frames without upstream inference data to be sent to the extension plugin. This is useful to limit the frames sent to the extension to pre-analyzed frames only. For example, when used downstream from a motion detector, this can enable for only frames in which motion has been detected to be further analyzed. </summary>
+        /// <summary> When set to 'true', prevents frames without upstream inference data to be sent to the extension plugin. This is useful to limit the frames sent to the extension to pre-analyzed frames only. For example, when used downstream from a motion detector, this can enable for only frames in which motion has been detected to be further analyzed. </summary>
         public string SkipSamplesWithoutAnnotation { get; set; }
         /// <summary> Maximum rate of samples submitted to the extension. This prevents an extension plugin to be overloaded with data. </summary>
         public string MaximumSamplesPerSecond { get; set; }

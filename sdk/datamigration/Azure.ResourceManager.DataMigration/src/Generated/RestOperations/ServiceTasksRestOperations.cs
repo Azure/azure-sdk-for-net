@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.DataMigration
             return message;
         }
 
-        /// <summary> The service tasks resource is a nested, proxy-only resource representing work performed by a DMS instance. The DELETE method deletes a service task, canceling it first if it&apos;s running. </summary>
+        /// <summary> The service tasks resource is a nested, proxy-only resource representing work performed by a DMS instance. The DELETE method deletes a service task, canceling it first if it's running. </summary>
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="groupName"> Name of the resource group. </param>
         /// <param name="serviceName"> Name of the service. </param>
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.DataMigration
             }
         }
 
-        /// <summary> The service tasks resource is a nested, proxy-only resource representing work performed by a DMS instance. The DELETE method deletes a service task, canceling it first if it&apos;s running. </summary>
+        /// <summary> The service tasks resource is a nested, proxy-only resource representing work performed by a DMS instance. The DELETE method deletes a service task, canceling it first if it's running. </summary>
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="groupName"> Name of the resource group. </param>
         /// <param name="serviceName"> Name of the service. </param>
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.DataMigration
             return message;
         }
 
-        /// <summary> The service tasks resource is a nested, proxy-only resource representing work performed by a DMS instance. This method cancels a service task if it&apos;s currently queued or running. </summary>
+        /// <summary> The service tasks resource is a nested, proxy-only resource representing work performed by a DMS instance. This method cancels a service task if it's currently queued or running. </summary>
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="groupName"> Name of the resource group. </param>
         /// <param name="serviceName"> Name of the service. </param>
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.DataMigration
             }
         }
 
-        /// <summary> The service tasks resource is a nested, proxy-only resource representing work performed by a DMS instance. This method cancels a service task if it&apos;s currently queued or running. </summary>
+        /// <summary> The service tasks resource is a nested, proxy-only resource representing work performed by a DMS instance. This method cancels a service task if it's currently queued or running. </summary>
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="groupName"> Name of the resource group. </param>
         /// <param name="serviceName"> Name of the service. </param>

@@ -14,7 +14,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Batch
 {
-    /// <summary> A class representing the BatchAccountPool data model. </summary>
+    /// <summary>
+    /// A class representing the BatchAccountPool data model.
+    /// Contains information about a pool.
+    /// </summary>
     public partial class BatchAccountPoolData : ResourceData
     {
         /// <summary> Initializes a new instance of BatchAccountPoolData. </summary>
@@ -45,9 +48,9 @@ namespace Azure.ResourceManager.Batch
         /// <param name="deploymentConfiguration"> Using CloudServiceConfiguration specifies that the nodes should be creating using Azure Cloud Services (PaaS), while VirtualMachineConfiguration uses Azure Virtual Machines (IaaS). </param>
         /// <param name="currentDedicatedNodes"> The number of dedicated compute nodes currently in the pool. </param>
         /// <param name="currentLowPriorityNodes"> The number of Spot/low-priority compute nodes currently in the pool. </param>
-        /// <param name="scaleSettings"> Defines the desired size of the pool. This can either be &apos;fixedScale&apos; where the requested targetDedicatedNodes is specified, or &apos;autoScale&apos; which defines a formula which is periodically reevaluated. If this property is not specified, the pool will have a fixed scale with 0 targetDedicatedNodes. </param>
+        /// <param name="scaleSettings"> Defines the desired size of the pool. This can either be 'fixedScale' where the requested targetDedicatedNodes is specified, or 'autoScale' which defines a formula which is periodically reevaluated. If this property is not specified, the pool will have a fixed scale with 0 targetDedicatedNodes. </param>
         /// <param name="autoScaleRun"> This property is set only if the pool automatically scales, i.e. autoScaleSettings are used. </param>
-        /// <param name="interNodeCommunication"> This imposes restrictions on which nodes can be assigned to the pool. Enabling this value can reduce the chance of the requested number of nodes to be allocated in the pool. If not specified, this value defaults to &apos;Disabled&apos;. </param>
+        /// <param name="interNodeCommunication"> This imposes restrictions on which nodes can be assigned to the pool. Enabling this value can reduce the chance of the requested number of nodes to be allocated in the pool. If not specified, this value defaults to 'Disabled'. </param>
         /// <param name="networkConfiguration"> The network configuration for a pool. </param>
         /// <param name="taskSlotsPerNode"> The default value is 1. The maximum value is the smaller of 4 times the number of cores of the vmSize of the pool or 256. </param>
         /// <param name="taskSchedulingPolicy"> If not specified, the default is spread. </param>
@@ -55,8 +58,8 @@ namespace Azure.ResourceManager.Batch
         /// <param name="metadata"> The Batch service does not assign any meaning to metadata; it is solely for the use of user code. </param>
         /// <param name="startTask"> In an PATCH (update) operation, this property can be set to an empty object to remove the start task from the pool. </param>
         /// <param name="certificates">
-        /// For Windows compute nodes, the Batch service installs the certificates to the specified certificate store and location. For Linux compute nodes, the certificates are stored in a directory inside the task working directory and an environment variable AZ_BATCH_CERTIFICATES_DIR is supplied to the task to query for this location. For certificates with visibility of &apos;remoteUser&apos;, a &apos;certs&apos; directory is created in the user&apos;s home directory (e.g., /home/{user-name}/certs) and certificates are placed in that directory.
-        /// 
+        /// For Windows compute nodes, the Batch service installs the certificates to the specified certificate store and location. For Linux compute nodes, the certificates are stored in a directory inside the task working directory and an environment variable AZ_BATCH_CERTIFICATES_DIR is supplied to the task to query for this location. For certificates with visibility of 'remoteUser', a 'certs' directory is created in the user's home directory (e.g., /home/{user-name}/certs) and certificates are placed in that directory.
+        ///
         /// Warning: This property is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.
         /// </param>
         /// <param name="applicationPackages"> Changes to application package references affect all new compute nodes joining the pool, but do not affect compute nodes that are already in the pool until they are rebooted or reimaged. There is a maximum of 10 application package references on any given pool. </param>
@@ -123,11 +126,11 @@ namespace Azure.ResourceManager.Batch
         public int? CurrentDedicatedNodes { get; }
         /// <summary> The number of Spot/low-priority compute nodes currently in the pool. </summary>
         public int? CurrentLowPriorityNodes { get; }
-        /// <summary> Defines the desired size of the pool. This can either be &apos;fixedScale&apos; where the requested targetDedicatedNodes is specified, or &apos;autoScale&apos; which defines a formula which is periodically reevaluated. If this property is not specified, the pool will have a fixed scale with 0 targetDedicatedNodes. </summary>
+        /// <summary> Defines the desired size of the pool. This can either be 'fixedScale' where the requested targetDedicatedNodes is specified, or 'autoScale' which defines a formula which is periodically reevaluated. If this property is not specified, the pool will have a fixed scale with 0 targetDedicatedNodes. </summary>
         public BatchAccountPoolScaleSettings ScaleSettings { get; set; }
         /// <summary> This property is set only if the pool automatically scales, i.e. autoScaleSettings are used. </summary>
         public BatchAccountPoolAutoScaleRun AutoScaleRun { get; }
-        /// <summary> This imposes restrictions on which nodes can be assigned to the pool. Enabling this value can reduce the chance of the requested number of nodes to be allocated in the pool. If not specified, this value defaults to &apos;Disabled&apos;. </summary>
+        /// <summary> This imposes restrictions on which nodes can be assigned to the pool. Enabling this value can reduce the chance of the requested number of nodes to be allocated in the pool. If not specified, this value defaults to 'Disabled'. </summary>
         public InterNodeCommunicationState? InterNodeCommunication { get; set; }
         /// <summary> The network configuration for a pool. </summary>
         public BatchNetworkConfiguration NetworkConfiguration { get; set; }
@@ -152,8 +155,8 @@ namespace Azure.ResourceManager.Batch
         /// <summary> In an PATCH (update) operation, this property can be set to an empty object to remove the start task from the pool. </summary>
         public BatchAccountPoolStartTask StartTask { get; set; }
         /// <summary>
-        /// For Windows compute nodes, the Batch service installs the certificates to the specified certificate store and location. For Linux compute nodes, the certificates are stored in a directory inside the task working directory and an environment variable AZ_BATCH_CERTIFICATES_DIR is supplied to the task to query for this location. For certificates with visibility of &apos;remoteUser&apos;, a &apos;certs&apos; directory is created in the user&apos;s home directory (e.g., /home/{user-name}/certs) and certificates are placed in that directory.
-        /// 
+        /// For Windows compute nodes, the Batch service installs the certificates to the specified certificate store and location. For Linux compute nodes, the certificates are stored in a directory inside the task working directory and an environment variable AZ_BATCH_CERTIFICATES_DIR is supplied to the task to query for this location. For certificates with visibility of 'remoteUser', a 'certs' directory is created in the user's home directory (e.g., /home/{user-name}/certs) and certificates are placed in that directory.
+        ///
         /// Warning: This property is deprecated and will be removed after February, 2024. Please use the [Azure KeyVault Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide) instead.
         /// </summary>
         public IList<BatchCertificateReference> Certificates { get; }

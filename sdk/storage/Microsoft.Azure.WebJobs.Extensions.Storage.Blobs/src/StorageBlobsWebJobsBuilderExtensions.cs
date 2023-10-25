@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.EventGrid;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs;
@@ -11,6 +12,7 @@ using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Triggers;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
 using Microsoft.Azure.WebJobs.Host;
+using Microsoft.Azure.WebJobs.Host.Scale;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -60,6 +62,23 @@ namespace Microsoft.Extensions.Hosting
             {
                 builder.Services.Configure<BlobsOptions>(configureBlobs);
             }
+
+            return builder;
+        }
+
+        /// <summary>
+        /// Adds the Storage Queues extension to the provided <see cref="IWebJobsBuilder"/>.
+        /// </summary>
+        /// <param name="builder"></param>
+        /// <param name="triggerMetadata">Trigger metadata.</param>
+        /// <returns></returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static IWebJobsBuilder AddAzureStorageBlobsScaleForTrigger(this IWebJobsBuilder builder, TriggerMetadata triggerMetadata)
+        {
+            builder.Services.AddSingleton<IScaleMonitorProvider>(serviceProvider =>
+            {
+                return new BlobScalerMonitorProvider(serviceProvider, triggerMetadata);
+            });
 
             return builder;
         }

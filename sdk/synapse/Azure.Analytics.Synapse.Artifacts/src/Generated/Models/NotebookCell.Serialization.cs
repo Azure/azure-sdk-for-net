@@ -62,6 +62,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static NotebookCell DeserializeNotebookCell(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string cellType = default;
             object metadata = default;
             IList<string> source = default;
@@ -105,7 +109,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<NotebookCellOutputItem> array = new List<NotebookCellOutputItem>();

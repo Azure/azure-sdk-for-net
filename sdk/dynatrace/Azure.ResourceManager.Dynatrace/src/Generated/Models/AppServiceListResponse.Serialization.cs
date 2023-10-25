@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Dynatrace.Models
     {
         internal static AppServiceListResponse DeserializeAppServiceListResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DynatraceOneAgentEnabledAppServiceInfo>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DynatraceOneAgentEnabledAppServiceInfo> array = new List<DynatraceOneAgentEnabledAppServiceInfo>();

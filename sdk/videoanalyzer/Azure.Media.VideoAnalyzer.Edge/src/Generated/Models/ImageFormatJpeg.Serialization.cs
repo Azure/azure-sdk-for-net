@@ -27,6 +27,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static ImageFormatJpeg DeserializeImageFormatJpeg(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> quality = default;
             string type = default;
             foreach (var property in element.EnumerateObject())

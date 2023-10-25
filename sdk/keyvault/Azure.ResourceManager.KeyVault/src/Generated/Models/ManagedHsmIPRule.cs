@@ -10,11 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    /// <summary> A rule governing the accessibility of a managed hsm pool from a specific ip address or ip range. </summary>
+    /// <summary> A rule governing the accessibility of a managed HSM pool from a specific IP address or IP range. </summary>
     public partial class ManagedHsmIPRule
     {
         /// <summary> Initializes a new instance of ManagedHsmIPRule. </summary>
-        /// <param name="addressRange"> An IPv4 address range in CIDR notation, such as &apos;124.56.78.91&apos; (simple IP address) or &apos;124.56.78.0/24&apos; (all addresses that start with 124.56.78). </param>
+        /// <param name="addressRange"> An IPv4 address range in CIDR notation, such as '124.56.78.91' (simple IP address) or '124.56.78.0/24' (all addresses that start with 124.56.78). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="addressRange"/> is null. </exception>
         public ManagedHsmIPRule(string addressRange)
         {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             AddressRange = addressRange;
         }
 
-        /// <summary> An IPv4 address range in CIDR notation, such as &apos;124.56.78.91&apos; (simple IP address) or &apos;124.56.78.0/24&apos; (all addresses that start with 124.56.78). </summary>
+        /// <summary> An IPv4 address range in CIDR notation, such as '124.56.78.91' (simple IP address) or '124.56.78.0/24' (all addresses that start with 124.56.78). </summary>
         public string AddressRange { get; set; }
     }
 }

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
     {
         internal static VirtualScsiController DeserializeVirtualScsiController(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ScsiControllerType> type = default;
             Optional<int> controllerKey = default;
             Optional<int> busNumber = default;
@@ -25,7 +29,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new ScsiControllerType(property.Value.GetString());
@@ -35,7 +38,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     controllerKey = property.Value.GetInt32();
@@ -45,7 +47,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     busNumber = property.Value.GetInt32();
@@ -55,7 +56,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     scsiCtlrUnitNumber = property.Value.GetInt32();
@@ -65,7 +65,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sharing = new VirtualScsiSharing(property.Value.GetString());

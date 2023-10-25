@@ -33,6 +33,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static AutoPauseProperties DeserializeAutoPauseProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> delayInMinutes = default;
             Optional<bool> enabled = default;
             foreach (var property in element.EnumerateObject())
@@ -41,7 +45,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     delayInMinutes = property.Value.GetInt32();
@@ -51,7 +54,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enabled = property.Value.GetBoolean();

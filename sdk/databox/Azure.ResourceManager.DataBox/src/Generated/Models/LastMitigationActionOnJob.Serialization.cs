@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static LastMitigationActionOnJob DeserializeLastMitigationActionOnJob(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> actionDateTimeInUtc = default;
             Optional<bool> isPerformedByCustomer = default;
             Optional<CustomerResolutionCode> customerResolution = default;
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.DataBox.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     actionDateTimeInUtc = property.Value.GetDateTimeOffset("O");
@@ -34,7 +37,6 @@ namespace Azure.ResourceManager.DataBox.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isPerformedByCustomer = property.Value.GetBoolean();
@@ -44,7 +46,6 @@ namespace Azure.ResourceManager.DataBox.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     customerResolution = property.Value.GetString().ToCustomerResolutionCode();

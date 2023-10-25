@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="workspaceName"> The name of the workspace. </param>
         /// <param name="kustoPoolName"> The name of the Kusto pool. </param>
         /// <param name="principalAssignmentName"> The name of the Kusto principalAssignment. </param>
-        /// <param name="data"> The Kusto pool principalAssignment&apos;s parameters supplied for the operation. </param>
+        /// <param name="data"> The Kusto pool principalAssignment's parameters supplied for the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="kustoPoolName"/>, <paramref name="principalAssignmentName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="kustoPoolName"/> or <paramref name="principalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="workspaceName"> The name of the workspace. </param>
         /// <param name="kustoPoolName"> The name of the Kusto pool. </param>
         /// <param name="principalAssignmentName"> The name of the Kusto principalAssignment. </param>
-        /// <param name="data"> The Kusto pool principalAssignment&apos;s parameters supplied for the operation. </param>
+        /// <param name="data"> The Kusto pool principalAssignment's parameters supplied for the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="kustoPoolName"/>, <paramref name="principalAssignmentName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="kustoPoolName"/> or <paramref name="principalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>

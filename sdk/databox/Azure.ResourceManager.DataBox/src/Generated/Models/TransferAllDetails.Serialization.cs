@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static TransferAllDetails DeserializeTransferAllDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DataAccountType dataAccountType = default;
             Optional<bool> transferAllBlobs = default;
             Optional<bool> transferAllFiles = default;
@@ -46,7 +50,6 @@ namespace Azure.ResourceManager.DataBox.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     transferAllBlobs = property.Value.GetBoolean();
@@ -56,7 +59,6 @@ namespace Azure.ResourceManager.DataBox.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     transferAllFiles = property.Value.GetBoolean();

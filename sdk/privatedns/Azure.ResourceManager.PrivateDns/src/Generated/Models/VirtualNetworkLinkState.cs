@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PrivateDns.Models
 {
-    /// <summary> The status of the virtual network link to the Private DNS zone. Possible values are &apos;InProgress&apos; and &apos;Done&apos;. This is a read-only property and any attempt to set this value will be ignored. </summary>
+    /// <summary> The status of the virtual network link to the Private DNS zone. Possible values are 'InProgress' and 'Done'. This is a read-only property and any attempt to set this value will be ignored. </summary>
     public readonly partial struct VirtualNetworkLinkState : IEquatable<VirtualNetworkLinkState>
     {
         private readonly string _value;

@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.ApiManagement
 
         internal static ApiManagementDeletedServiceData DeserializeApiManagementDeletedServiceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -54,7 +58,6 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
@@ -79,7 +82,6 @@ namespace Azure.ResourceManager.ApiManagement
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -98,7 +100,6 @@ namespace Azure.ResourceManager.ApiManagement
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             serviceId = new ResourceIdentifier(property0.Value.GetString());
@@ -108,7 +109,6 @@ namespace Azure.ResourceManager.ApiManagement
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             scheduledPurgeDate = property0.Value.GetDateTimeOffset("O");
@@ -118,7 +118,6 @@ namespace Azure.ResourceManager.ApiManagement
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             deletionDate = property0.Value.GetDateTimeOffset("O");

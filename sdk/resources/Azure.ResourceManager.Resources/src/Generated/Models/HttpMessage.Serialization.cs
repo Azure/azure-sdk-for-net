@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static HttpMessage DeserializeHttpMessage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> content = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -22,7 +26,6 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     content = BinaryData.FromString(property.Value.GetRawText());

@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary>
-        /// Gets the Primary and Secondary ConnectionStrings to the namespace 
+        /// Gets the Primary and Secondary ConnectionStrings to the namespace
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary>
-        /// Gets the Primary and Secondary ConnectionStrings to the namespace 
+        /// Gets the Primary and Secondary ConnectionStrings to the namespace
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Nginx.Models
     {
         internal static NginxDeploymentListResponse DeserializeNginxDeploymentListResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<NginxDeploymentData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.Nginx.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<NginxDeploymentData> array = new List<NginxDeploymentData>();

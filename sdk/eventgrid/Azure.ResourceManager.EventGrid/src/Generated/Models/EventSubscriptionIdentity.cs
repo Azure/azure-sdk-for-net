@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> Initializes a new instance of EventSubscriptionIdentity. </summary>
-        /// <param name="identityType"> The type of managed identity used. The type &apos;SystemAssigned, UserAssigned&apos; includes both an implicitly created identity and a set of user-assigned identities. The type &apos;None&apos; will remove any identity. </param>
+        /// <param name="identityType"> The type of managed identity used. The type 'SystemAssigned, UserAssigned' includes both an implicitly created identity and a set of user-assigned identities. The type 'None' will remove any identity. </param>
         /// <param name="userAssignedIdentity"> The user identity associated with the resource. </param>
         internal EventSubscriptionIdentity(EventSubscriptionIdentityType? identityType, string userAssignedIdentity)
         {
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             UserAssignedIdentity = userAssignedIdentity;
         }
 
-        /// <summary> The type of managed identity used. The type &apos;SystemAssigned, UserAssigned&apos; includes both an implicitly created identity and a set of user-assigned identities. The type &apos;None&apos; will remove any identity. </summary>
+        /// <summary> The type of managed identity used. The type 'SystemAssigned, UserAssigned' includes both an implicitly created identity and a set of user-assigned identities. The type 'None' will remove any identity. </summary>
         public EventSubscriptionIdentityType? IdentityType { get; set; }
         /// <summary> The user identity associated with the resource. </summary>
         public string UserAssignedIdentity { get; set; }

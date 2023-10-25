@@ -19,7 +19,7 @@ namespace Azure.Data.Tables.Models
         public OdataMetadataFormat? Format { get; set; }
         /// <summary> Maximum number of records to return. </summary>
         public int? Top { get; set; }
-        /// <summary> Select expression using OData notation. Limits the columns on each record to just those requested, e.g. &quot;$select=PolicyAssignmentId, ResourceId&quot;. </summary>
+        /// <summary> Select expression using OData notation. Limits the columns on each record to just those requested, e.g. "$select=PolicyAssignmentId, ResourceId". </summary>
         public string Select { get; set; }
         /// <summary> OData filter expression. </summary>
         public string Filter { get; set; }

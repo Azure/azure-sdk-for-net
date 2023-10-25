@@ -17,9 +17,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <summary> Principal (User) Identifier. </summary>
         public string PrincipalId { get; set; }
-        /// <summary> Primary access key. This property will not be filled on &apos;GET&apos; operations! Use &apos;/listSecrets&apos; POST request to get the value. </summary>
+        /// <summary> Primary access key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </summary>
         public string PrimaryKey { get; set; }
-        /// <summary> Secondary access key. This property will not be filled on &apos;GET&apos; operations! Use &apos;/listSecrets&apos; POST request to get the value. </summary>
+        /// <summary> Secondary access key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </summary>
         public string SecondaryKey { get; set; }
         /// <summary> Determines whether direct access is enabled. </summary>
         public bool? IsDirectAccessEnabled { get; set; }

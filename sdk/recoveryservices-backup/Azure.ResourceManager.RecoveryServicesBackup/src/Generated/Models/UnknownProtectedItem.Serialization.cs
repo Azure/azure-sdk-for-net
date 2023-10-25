@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);
             }
-            if (Optional.IsDefined(LastRecoveryPoint))
+            if (Optional.IsDefined(LastRecoverOn))
             {
                 writer.WritePropertyName("lastRecoveryPoint"u8);
-                writer.WriteStringValue(LastRecoveryPoint.Value, "O");
+                writer.WriteStringValue(LastRecoverOn.Value, "O");
             }
             if (Optional.IsDefined(BackupSetName))
             {
@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("createMode"u8);
                 writer.WriteStringValue(CreateMode.Value.ToString());
             }
-            if (Optional.IsDefined(DeferredDeleteTimeInUTC))
+            if (Optional.IsDefined(DeferredDeletedOn))
             {
                 writer.WritePropertyName("deferredDeleteTimeInUTC"u8);
-                writer.WriteStringValue(DeferredDeleteTimeInUTC.Value, "O");
+                writer.WriteStringValue(DeferredDeletedOn.Value, "O");
             }
             if (Optional.IsDefined(IsScheduledForDeferredDelete))
             {
@@ -94,25 +94,29 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("policyName"u8);
                 writer.WriteStringValue(PolicyName);
             }
-            if (Optional.IsDefined(SoftDeleteRetentionPeriod))
+            if (Optional.IsDefined(SoftDeleteRetentionPeriodInDays))
             {
-                writer.WritePropertyName("softDeleteRetentionPeriod"u8);
-                writer.WriteNumberValue(SoftDeleteRetentionPeriod.Value);
+                writer.WritePropertyName("softDeleteRetentionPeriodInDays"u8);
+                writer.WriteNumberValue(SoftDeleteRetentionPeriodInDays.Value);
             }
             writer.WriteEndObject();
         }
 
         internal static UnknownProtectedItem DeserializeUnknownProtectedItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string protectedItemType = "Unknown";
             Optional<BackupManagementType> backupManagementType = default;
-            Optional<DataSourceType> workloadType = default;
+            Optional<BackupDataSourceType> workloadType = default;
             Optional<string> containerName = default;
-            Optional<string> sourceResourceId = default;
-            Optional<string> policyId = default;
+            Optional<ResourceIdentifier> sourceResourceId = default;
+            Optional<ResourceIdentifier> policyId = default;
             Optional<DateTimeOffset> lastRecoveryPoint = default;
             Optional<string> backupSetName = default;
-            Optional<CreateMode> createMode = default;
+            Optional<BackupCreateMode> createMode = default;
             Optional<DateTimeOffset> deferredDeleteTimeInUTC = default;
             Optional<bool> isScheduledForDeferredDelete = default;
             Optional<string> deferredDeleteTimeRemaining = default;
@@ -121,7 +125,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<IList<string>> resourceGuardOperationRequests = default;
             Optional<bool> isArchiveEnabled = default;
             Optional<string> policyName = default;
-            Optional<int> softDeleteRetentionPeriod = default;
+            Optional<int> softDeleteRetentionPeriodInDays = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("protectedItemType"u8))
@@ -133,7 +137,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     backupManagementType = new BackupManagementType(property.Value.GetString());
@@ -143,10 +146,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    workloadType = new DataSourceType(property.Value.GetString());
+                    workloadType = new BackupDataSourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("containerName"u8))
@@ -156,19 +158,26 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (property.NameEquals("sourceResourceId"u8))
                 {
-                    sourceResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("policyId"u8))
                 {
-                    policyId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    policyId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("lastRecoveryPoint"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastRecoveryPoint = property.Value.GetDateTimeOffset("O");
@@ -183,17 +192,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    createMode = new CreateMode(property.Value.GetString());
+                    createMode = new BackupCreateMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("deferredDeleteTimeInUTC"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     deferredDeleteTimeInUTC = property.Value.GetDateTimeOffset("O");
@@ -203,7 +210,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isScheduledForDeferredDelete = property.Value.GetBoolean();
@@ -218,7 +224,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isDeferredDeleteScheduleUpcoming = property.Value.GetBoolean();
@@ -228,7 +233,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isRehydrate = property.Value.GetBoolean();
@@ -238,7 +242,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -253,7 +256,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isArchiveEnabled = property.Value.GetBoolean();
@@ -264,18 +266,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     policyName = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("softDeleteRetentionPeriod"u8))
+                if (property.NameEquals("softDeleteRetentionPeriodInDays"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    softDeleteRetentionPeriod = property.Value.GetInt32();
+                    softDeleteRetentionPeriodInDays = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new UnknownProtectedItem(protectedItemType, Optional.ToNullable(backupManagementType), Optional.ToNullable(workloadType), containerName.Value, sourceResourceId.Value, policyId.Value, Optional.ToNullable(lastRecoveryPoint), backupSetName.Value, Optional.ToNullable(createMode), Optional.ToNullable(deferredDeleteTimeInUTC), Optional.ToNullable(isScheduledForDeferredDelete), deferredDeleteTimeRemaining.Value, Optional.ToNullable(isDeferredDeleteScheduleUpcoming), Optional.ToNullable(isRehydrate), Optional.ToList(resourceGuardOperationRequests), Optional.ToNullable(isArchiveEnabled), policyName.Value, Optional.ToNullable(softDeleteRetentionPeriod));
+            return new UnknownProtectedItem(protectedItemType, Optional.ToNullable(backupManagementType), Optional.ToNullable(workloadType), containerName.Value, sourceResourceId.Value, policyId.Value, Optional.ToNullable(lastRecoveryPoint), backupSetName.Value, Optional.ToNullable(createMode), Optional.ToNullable(deferredDeleteTimeInUTC), Optional.ToNullable(isScheduledForDeferredDelete), deferredDeleteTimeRemaining.Value, Optional.ToNullable(isDeferredDeleteScheduleUpcoming), Optional.ToNullable(isRehydrate), Optional.ToList(resourceGuardOperationRequests), Optional.ToNullable(isArchiveEnabled), policyName.Value, Optional.ToNullable(softDeleteRetentionPeriodInDays));
         }
     }
 }

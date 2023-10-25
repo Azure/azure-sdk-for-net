@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> the authorization used by the user who has performed the operation that led to this event. This captures the RBAC properties of the event. These usually include the &apos;action&apos;, &apos;role&apos; and the &apos;scope&apos;. </summary>
+    /// <summary> the authorization used by the user who has performed the operation that led to this event. This captures the RBAC properties of the event. These usually include the 'action', 'role' and the 'scope'. </summary>
     public partial class SenderAuthorization
     {
         /// <summary> Initializes a new instance of SenderAuthorization. </summary>

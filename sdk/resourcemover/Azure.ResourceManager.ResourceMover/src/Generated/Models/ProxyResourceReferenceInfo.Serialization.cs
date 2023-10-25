@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
 
         internal static ProxyResourceReferenceInfo DeserializeProxyResourceReferenceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             ResourceIdentifier sourceArmResourceId = default;
             foreach (var property in element.EnumerateObject())

@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static FirewallPolicyRuleCollectionInfo DeserializeFirewallPolicyRuleCollectionInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("ruleCollectionType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

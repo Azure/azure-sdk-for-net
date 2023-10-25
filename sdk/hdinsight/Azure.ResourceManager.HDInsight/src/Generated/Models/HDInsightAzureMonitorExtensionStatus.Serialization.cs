@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.HDInsight.Models
     {
         internal static HDInsightAzureMonitorExtensionStatus DeserializeHDInsightAzureMonitorExtensionStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> clusterMonitoringEnabled = default;
             Optional<string> workspaceId = default;
             Optional<HDInsightAzureMonitorSelectedConfigurations> selectedConfigurations = default;
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     clusterMonitoringEnabled = property.Value.GetBoolean();
@@ -38,7 +41,6 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     selectedConfigurations = HDInsightAzureMonitorSelectedConfigurations.DeserializeHDInsightAzureMonitorSelectedConfigurations(property.Value);

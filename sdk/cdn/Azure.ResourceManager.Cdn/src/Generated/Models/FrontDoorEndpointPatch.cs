@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public IDictionary<string, string> Tags { get; }
         /// <summary> The name of the profile which holds the endpoint. </summary>
         public string ProfileName { get; }
-        /// <summary> Whether to enable use of this rule. Permitted values are &apos;Enabled&apos; or &apos;Disabled&apos;. </summary>
+        /// <summary> Whether to enable use of this rule. Permitted values are 'Enabled' or 'Disabled'. </summary>
         public EnabledState? EnabledState { get; set; }
     }
 }

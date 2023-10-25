@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     {
         internal static SavingsPlanSummary DeserializeSavingsPlanSummary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<SavingsPlanSummaryCount> value = default;
             foreach (var property in element.EnumerateObject())
@@ -27,7 +31,6 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     value = SavingsPlanSummaryCount.DeserializeSavingsPlanSummaryCount(property.Value);

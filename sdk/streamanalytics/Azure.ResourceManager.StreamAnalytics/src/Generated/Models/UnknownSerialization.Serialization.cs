@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static UnknownSerialization DeserializeUnknownSerialization(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             EventSerializationType type = "Unknown";
             foreach (var property in element.EnumerateObject())
             {

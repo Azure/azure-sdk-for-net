@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -16,16 +15,6 @@ namespace Azure.AI.TextAnalytics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(FhirVersion))
-            {
-                writer.WritePropertyName("fhirVersion"u8);
-                writer.WriteStringValue(FhirVersion.Value.ToString());
-            }
-            if (Optional.IsDefined(DocumentType))
-            {
-                writer.WritePropertyName("documentType"u8);
-                writer.WriteStringValue(DocumentType.Value.ToString());
-            }
             if (Optional.IsDefined(StringIndexType))
             {
                 writer.WritePropertyName("stringIndexType"u8);
@@ -46,38 +35,19 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static HealthcareTaskParameters DeserializeHealthcareTaskParameters(JsonElement element)
         {
-            Optional<WellKnownFhirVersion> fhirVersion = default;
-            Optional<HealthcareDocumentType> documentType = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StringIndexType> stringIndexType = default;
             Optional<string> modelVersion = default;
             Optional<bool> loggingOptOut = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("fhirVersion"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    fhirVersion = new WellKnownFhirVersion(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("documentType"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    documentType = new HealthcareDocumentType(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("stringIndexType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     stringIndexType = new StringIndexType(property.Value.GetString());
@@ -92,14 +62,13 @@ namespace Azure.AI.TextAnalytics.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     loggingOptOut = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new HealthcareTaskParameters(Optional.ToNullable(loggingOptOut), modelVersion.Value, Optional.ToNullable(fhirVersion), Optional.ToNullable(documentType), Optional.ToNullable(stringIndexType));
+            return new HealthcareTaskParameters(Optional.ToNullable(loggingOptOut), modelVersion.Value, Optional.ToNullable(stringIndexType));
         }
     }
 }

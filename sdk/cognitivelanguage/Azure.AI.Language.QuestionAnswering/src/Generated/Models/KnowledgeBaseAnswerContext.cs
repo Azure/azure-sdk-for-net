@@ -7,7 +7,7 @@
 
 namespace Azure.AI.Language.QuestionAnswering
 {
-    /// <summary> Context object with previous QnA&apos;s information. </summary>
+    /// <summary> Context object with previous QnA's information. </summary>
     public partial class KnowledgeBaseAnswerContext
     {
         /// <summary> Initializes a new instance of KnowledgeBaseAnswerContext. </summary>

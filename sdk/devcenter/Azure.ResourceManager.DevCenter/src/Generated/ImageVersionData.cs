@@ -7,11 +7,15 @@
 
 using System;
 using Azure.Core;
+using Azure.ResourceManager.DevCenter.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    /// <summary> A class representing the ImageVersion data model. </summary>
+    /// <summary>
+    /// A class representing the ImageVersion data model.
+    /// Represents an image version.
+    /// </summary>
     public partial class ImageVersionData : ResourceData
     {
         /// <summary> Initializes a new instance of ImageVersionData. </summary>
@@ -26,15 +30,15 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="systemData"> The systemData. </param>
         /// <param name="namePropertiesName"> The semantic version string. </param>
         /// <param name="publishedOn"> The datetime that the backing image version was published. </param>
-        /// <param name="excludeFromLatest"> If the version should be excluded from being treated as the latest version. </param>
-        /// <param name="osDiskImageSizeInGb"> The size of the OS disk image, in GB. </param>
+        /// <param name="isExcludedFromLatest"> If the version should be excluded from being treated as the latest version. </param>
+        /// <param name="osDiskImageSizeInGB"> The size of the OS disk image, in GB. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal ImageVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string namePropertiesName, DateTimeOffset? publishedOn, bool? excludeFromLatest, int? osDiskImageSizeInGb, string provisioningState) : base(id, name, resourceType, systemData)
+        internal ImageVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string namePropertiesName, DateTimeOffset? publishedOn, bool? isExcludedFromLatest, int? osDiskImageSizeInGB, DevCenterProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             NamePropertiesName = namePropertiesName;
             PublishedOn = publishedOn;
-            ExcludeFromLatest = excludeFromLatest;
-            OSDiskImageSizeInGb = osDiskImageSizeInGb;
+            IsExcludedFromLatest = isExcludedFromLatest;
+            OSDiskImageSizeInGB = osDiskImageSizeInGB;
             ProvisioningState = provisioningState;
         }
 
@@ -43,10 +47,10 @@ namespace Azure.ResourceManager.DevCenter
         /// <summary> The datetime that the backing image version was published. </summary>
         public DateTimeOffset? PublishedOn { get; }
         /// <summary> If the version should be excluded from being treated as the latest version. </summary>
-        public bool? ExcludeFromLatest { get; }
+        public bool? IsExcludedFromLatest { get; }
         /// <summary> The size of the OS disk image, in GB. </summary>
-        public int? OSDiskImageSizeInGb { get; }
+        public int? OSDiskImageSizeInGB { get; }
         /// <summary> The provisioning state of the resource. </summary>
-        public string ProvisioningState { get; }
+        public DevCenterProvisioningState? ProvisioningState { get; }
     }
 }

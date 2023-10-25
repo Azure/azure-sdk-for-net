@@ -37,6 +37,10 @@ param(
     [boolean] $AmendCommit = $false
 )
 
+# Explicit set arg parsing to Legacy mode because some of the git calls in this script depend on empty strings being empty and not passing a "" git.
+# more info https://learn.microsoft.com/en-us/powershell/scripting/learn/experimental-features?view=powershell-7.3#psnativecommandargumentpassing
+$PSNativeCommandArgumentPassing = "Legacy"
+
 # This is necessary because of the git command output writing to stderr.
 # Without explicitly setting the ErrorActionPreference to continue the script
 # would fail the first time git wrote command output.

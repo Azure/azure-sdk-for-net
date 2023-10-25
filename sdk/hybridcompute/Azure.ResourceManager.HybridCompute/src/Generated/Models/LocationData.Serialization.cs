@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         internal static LocationData DeserializeLocationData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<string> city = default;
             Optional<string> district = default;

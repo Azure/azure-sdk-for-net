@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Criteria to limit import of WSDL to a subset of the document. </summary>
         public ApiCreateOrUpdatePropertiesWsdlSelector WsdlSelector { get; set; }
         /// <summary>
-        /// Type of API to create. 
-        ///  * `http` creates a REST API 
-        ///  * `soap` creates a SOAP pass-through API  
-        ///  * `websocket` creates websocket API 
+        /// Type of API to create.
+        ///  * `http` creates a REST API
+        ///  * `soap` creates a SOAP pass-through API
+        ///  * `websocket` creates websocket API
         ///  * `graphql` creates GraphQL API.
         /// </summary>
         public SoapApiType? SoapApiType { get; set; }

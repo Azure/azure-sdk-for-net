@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.HealthBot.Models
 
         internal static HealthBotSku DeserializeHealthBotSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             HealthBotSkuName name = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.MobileNetwork
             return GetCachedClient(Client => new PacketCoreControlPlaneCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of SimGroupResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of SimGroupResources and their operations over a SimGroupResource. </returns>
-        public virtual SimGroupCollection GetSimGroups()
+        /// <summary> Gets a collection of MobileNetworkSimGroupResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of MobileNetworkSimGroupResources and their operations over a MobileNetworkSimGroupResource. </returns>
+        public virtual MobileNetworkSimGroupCollection GetMobileNetworkSimGroups()
         {
-            return GetCachedClient(Client => new SimGroupCollection(Client, Id));
+            return GetCachedClient(Client => new MobileNetworkSimGroupCollection(Client, Id));
         }
     }
 }

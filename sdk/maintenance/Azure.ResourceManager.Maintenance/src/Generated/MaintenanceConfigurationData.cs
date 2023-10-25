@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Maintenance
 {
-    /// <summary> A class representing the MaintenanceConfiguration data model. </summary>
+    /// <summary>
+    /// A class representing the MaintenanceConfiguration data model.
+    /// Maintenance configuration record type
+    /// </summary>
     public partial class MaintenanceConfigurationData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of MaintenanceConfigurationData. </summary>
@@ -33,18 +36,20 @@ namespace Azure.ResourceManager.Maintenance
         /// <param name="namespace"> Gets or sets namespace of the resource. </param>
         /// <param name="extensionProperties"> Gets or sets extensionProperties of the maintenanceConfiguration. </param>
         /// <param name="maintenanceScope"> Gets or sets maintenanceScope of the configuration. </param>
-        /// <param name="visibility"> Gets or sets the visibility of the configuration. The default value is &apos;Custom&apos;. </param>
+        /// <param name="visibility"> Gets or sets the visibility of the configuration. The default value is 'Custom'. </param>
+        /// <param name="installPatches"> The input parameters to be passed to the patch run operation. </param>
         /// <param name="startOn"> Effective start date of the maintenance window in YYYY-MM-DD hh:mm format. The start date can be set to either the current date or future date. The window will be created in the time zone provided and adjusted to daylight savings according to that time zone. </param>
         /// <param name="expireOn"> Effective expiration date of the maintenance window in YYYY-MM-DD hh:mm format. The window will be created in the time zone provided and adjusted to daylight savings according to that time zone. Expiration date must be set to a future date. If not provided, it will be set to the maximum datetime 9999-12-31 23:59:59. </param>
         /// <param name="duration"> Duration of the maintenance window in HH:mm format. If not provided, default value will be used based on maintenance scope provided. Example: 05:00. </param>
         /// <param name="timeZone"> Name of the timezone. List of timezones can be obtained by executing [System.TimeZoneInfo]::GetSystemTimeZones() in PowerShell. Example: Pacific Standard Time, UTC, W. Europe Standard Time, Korea Standard Time, Cen. Australia Standard Time. </param>
-        /// <param name="recurEvery"> Rate at which a Maintenance window is expected to recur. The rate can be expressed as daily, weekly, or monthly schedules. Daily schedule are formatted as recurEvery: [Frequency as integer][&apos;Day(s)&apos;]. If no frequency is provided, the default frequency is 1. Daily schedule examples are recurEvery: Day, recurEvery: 3Days.  Weekly schedule are formatted as recurEvery: [Frequency as integer][&apos;Week(s)&apos;] [Optional comma separated list of weekdays Monday-Sunday]. Weekly schedule examples are recurEvery: 3Weeks, recurEvery: Week Saturday,Sunday. Monthly schedules are formatted as [Frequency as integer][&apos;Month(s)&apos;] [Comma separated list of month days] or [Frequency as integer][&apos;Month(s)&apos;] [Week of Month (First, Second, Third, Fourth, Last)] [Weekday Monday-Sunday]. Monthly schedule examples are recurEvery: Month, recurEvery: 2Months, recurEvery: Month day23,day24, recurEvery: Month Last Sunday, recurEvery: Month Fourth Monday. </param>
-        internal MaintenanceConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string @namespace, IDictionary<string, string> extensionProperties, MaintenanceScope? maintenanceScope, MaintenanceConfigurationVisibility? visibility, DateTimeOffset? startOn, DateTimeOffset? expireOn, TimeSpan? duration, string timeZone, string recurEvery) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="recurEvery"> Rate at which a Maintenance window is expected to recur. The rate can be expressed as daily, weekly, or monthly schedules. Daily schedule are formatted as recurEvery: [Frequency as integer]['Day(s)']. If no frequency is provided, the default frequency is 1. Daily schedule examples are recurEvery: Day, recurEvery: 3Days.  Weekly schedule are formatted as recurEvery: [Frequency as integer]['Week(s)'] [Optional comma separated list of weekdays Monday-Sunday]. Weekly schedule examples are recurEvery: 3Weeks, recurEvery: Week Saturday,Sunday. Monthly schedules are formatted as [Frequency as integer]['Month(s)'] [Comma separated list of month days] or [Frequency as integer]['Month(s)'] [Week of Month (First, Second, Third, Fourth, Last)] [Weekday Monday-Sunday] [Optional Offset(No. of days)]. Offset value must be between -6 to 6 inclusive. Monthly schedule examples are recurEvery: Month, recurEvery: 2Months, recurEvery: Month day23,day24, recurEvery: Month Last Sunday, recurEvery: Month Fourth Monday, recurEvery: Month Last Sunday Offset-3, recurEvery: Month Third Sunday Offset6. </param>
+        internal MaintenanceConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string @namespace, IDictionary<string, string> extensionProperties, MaintenanceScope? maintenanceScope, MaintenanceConfigurationVisibility? visibility, MaintenancePatchConfiguration installPatches, DateTimeOffset? startOn, DateTimeOffset? expireOn, TimeSpan? duration, string timeZone, string recurEvery) : base(id, name, resourceType, systemData, tags, location)
         {
             Namespace = @namespace;
             ExtensionProperties = extensionProperties;
             MaintenanceScope = maintenanceScope;
             Visibility = visibility;
+            InstallPatches = installPatches;
             StartOn = startOn;
             ExpireOn = expireOn;
             Duration = duration;
@@ -58,17 +63,15 @@ namespace Azure.ResourceManager.Maintenance
         public IDictionary<string, string> ExtensionProperties { get; }
         /// <summary> Gets or sets maintenanceScope of the configuration. </summary>
         public MaintenanceScope? MaintenanceScope { get; set; }
-        /// <summary> Gets or sets the visibility of the configuration. The default value is &apos;Custom&apos;. </summary>
+        /// <summary> Gets or sets the visibility of the configuration. The default value is 'Custom'. </summary>
         public MaintenanceConfigurationVisibility? Visibility { get; set; }
-        /// <summary> Effective start date of the maintenance window in YYYY-MM-DD hh:mm format. The start date can be set to either the current date or future date. The window will be created in the time zone provided and adjusted to daylight savings according to that time zone. </summary>
-        public DateTimeOffset? StartOn { get; set; }
-        /// <summary> Effective expiration date of the maintenance window in YYYY-MM-DD hh:mm format. The window will be created in the time zone provided and adjusted to daylight savings according to that time zone. Expiration date must be set to a future date. If not provided, it will be set to the maximum datetime 9999-12-31 23:59:59. </summary>
-        public DateTimeOffset? ExpireOn { get; set; }
+        /// <summary> The input parameters to be passed to the patch run operation. </summary>
+        public MaintenancePatchConfiguration InstallPatches { get; set; }
         /// <summary> Duration of the maintenance window in HH:mm format. If not provided, default value will be used based on maintenance scope provided. Example: 05:00. </summary>
         public TimeSpan? Duration { get; set; }
         /// <summary> Name of the timezone. List of timezones can be obtained by executing [System.TimeZoneInfo]::GetSystemTimeZones() in PowerShell. Example: Pacific Standard Time, UTC, W. Europe Standard Time, Korea Standard Time, Cen. Australia Standard Time. </summary>
         public string TimeZone { get; set; }
-        /// <summary> Rate at which a Maintenance window is expected to recur. The rate can be expressed as daily, weekly, or monthly schedules. Daily schedule are formatted as recurEvery: [Frequency as integer][&apos;Day(s)&apos;]. If no frequency is provided, the default frequency is 1. Daily schedule examples are recurEvery: Day, recurEvery: 3Days.  Weekly schedule are formatted as recurEvery: [Frequency as integer][&apos;Week(s)&apos;] [Optional comma separated list of weekdays Monday-Sunday]. Weekly schedule examples are recurEvery: 3Weeks, recurEvery: Week Saturday,Sunday. Monthly schedules are formatted as [Frequency as integer][&apos;Month(s)&apos;] [Comma separated list of month days] or [Frequency as integer][&apos;Month(s)&apos;] [Week of Month (First, Second, Third, Fourth, Last)] [Weekday Monday-Sunday]. Monthly schedule examples are recurEvery: Month, recurEvery: 2Months, recurEvery: Month day23,day24, recurEvery: Month Last Sunday, recurEvery: Month Fourth Monday. </summary>
+        /// <summary> Rate at which a Maintenance window is expected to recur. The rate can be expressed as daily, weekly, or monthly schedules. Daily schedule are formatted as recurEvery: [Frequency as integer]['Day(s)']. If no frequency is provided, the default frequency is 1. Daily schedule examples are recurEvery: Day, recurEvery: 3Days.  Weekly schedule are formatted as recurEvery: [Frequency as integer]['Week(s)'] [Optional comma separated list of weekdays Monday-Sunday]. Weekly schedule examples are recurEvery: 3Weeks, recurEvery: Week Saturday,Sunday. Monthly schedules are formatted as [Frequency as integer]['Month(s)'] [Comma separated list of month days] or [Frequency as integer]['Month(s)'] [Week of Month (First, Second, Third, Fourth, Last)] [Weekday Monday-Sunday] [Optional Offset(No. of days)]. Offset value must be between -6 to 6 inclusive. Monthly schedule examples are recurEvery: Month, recurEvery: 2Months, recurEvery: Month day23,day24, recurEvery: Month Last Sunday, recurEvery: Month Fourth Monday, recurEvery: Month Last Sunday Offset-3, recurEvery: Month Third Sunday Offset6. </summary>
         public string RecurEvery { get; set; }
     }
 }

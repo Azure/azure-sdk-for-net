@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
@@ -14,6 +13,10 @@ namespace Azure.ResourceManager.DataShare.Models
     {
         internal static UnknownSourceShareSynchronizationSetting DeserializeUnknownSourceShareSynchronizationSetting(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SourceShareSynchronizationSettingKind kind = "Unknown";
             foreach (var property in element.EnumerateObject())
             {

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
@@ -15,6 +14,10 @@ namespace Azure.ResourceManager.ResourceGraph.Models
     {
         internal static FacetError DeserializeFacetError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<FacetErrorDetails> errors = default;
             string expression = default;
             string resultType = default;

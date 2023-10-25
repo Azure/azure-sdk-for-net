@@ -15,73 +15,34 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     {
         internal static PostgreSqlFlexibleServerCapabilityProperties DeserializePostgreSqlFlexibleServerCapabilityProperties(JsonElement element)
         {
-            Optional<string> zone = default;
-            Optional<IReadOnlyList<string>> supportedHAMode = default;
-            Optional<bool> geoBackupSupported = default;
-            Optional<bool> zoneRedundantHaSupported = default;
-            Optional<bool> zoneRedundantHaAndGeoBackupSupported = default;
-            Optional<IReadOnlyList<PostgreSqlFlexibleServerEditionCapability>> supportedFlexibleServerEditions = default;
-            Optional<IReadOnlyList<PostgreSqlFlexibleServerHyperscaleNodeEditionCapability>> supportedHyperscaleNodeEditions = default;
-            Optional<bool> fastProvisioningSupported = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> name = default;
+            Optional<IReadOnlyList<PostgreSqlFlexibleServerEditionCapability>> supportedServerEditions = default;
+            Optional<IReadOnlyList<PostgreSqlFlexibleServerServerVersionCapability>> supportedServerVersions = default;
+            Optional<PostgreSqlFlexibleServerFastProvisioningSupported> fastProvisioningSupported = default;
             Optional<IReadOnlyList<PostgreSqlFlexibleServerFastProvisioningEditionCapability>> supportedFastProvisioningEditions = default;
-            Optional<string> status = default;
+            Optional<PostgreSqlFlexibleServerGeoBackupSupported> geoBackupSupported = default;
+            Optional<PostgreSqlFlexibleServerZoneRedundantHaSupported> zoneRedundantHaSupported = default;
+            Optional<PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported> zoneRedundantHaAndGeoBackupSupported = default;
+            Optional<PostgreSqlFlexibleServerStorageAutoGrowthSupported> storageAutoGrowthSupported = default;
+            Optional<PostgreSqlFlexibleServerOnlineResizeSupported> onlineResizeSupported = default;
+            Optional<PostgreSqlFlexibleServerZoneRedundantRestricted> restricted = default;
+            Optional<PostgreSqlFlexbileServerCapabilityStatus> status = default;
+            Optional<string> reason = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("zone"u8))
+                if (property.NameEquals("name"u8))
                 {
-                    zone = property.Value.GetString();
+                    name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("supportedHAMode"u8))
+                if (property.NameEquals("supportedServerEditions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    supportedHAMode = array;
-                    continue;
-                }
-                if (property.NameEquals("geoBackupSupported"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    geoBackupSupported = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("zoneRedundantHaSupported"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    zoneRedundantHaSupported = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("zoneRedundantHaAndGeoBackupSupported"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    zoneRedundantHaAndGeoBackupSupported = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("supportedFlexibleServerEditions"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PostgreSqlFlexibleServerEditionCapability> array = new List<PostgreSqlFlexibleServerEditionCapability>();
@@ -89,39 +50,36 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         array.Add(PostgreSqlFlexibleServerEditionCapability.DeserializePostgreSqlFlexibleServerEditionCapability(item));
                     }
-                    supportedFlexibleServerEditions = array;
+                    supportedServerEditions = array;
                     continue;
                 }
-                if (property.NameEquals("supportedHyperscaleNodeEditions"u8))
+                if (property.NameEquals("supportedServerVersions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PostgreSqlFlexibleServerHyperscaleNodeEditionCapability> array = new List<PostgreSqlFlexibleServerHyperscaleNodeEditionCapability>();
+                    List<PostgreSqlFlexibleServerServerVersionCapability> array = new List<PostgreSqlFlexibleServerServerVersionCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PostgreSqlFlexibleServerHyperscaleNodeEditionCapability.DeserializePostgreSqlFlexibleServerHyperscaleNodeEditionCapability(item));
+                        array.Add(PostgreSqlFlexibleServerServerVersionCapability.DeserializePostgreSqlFlexibleServerServerVersionCapability(item));
                     }
-                    supportedHyperscaleNodeEditions = array;
+                    supportedServerVersions = array;
                     continue;
                 }
                 if (property.NameEquals("fastProvisioningSupported"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    fastProvisioningSupported = property.Value.GetBoolean();
+                    fastProvisioningSupported = new PostgreSqlFlexibleServerFastProvisioningSupported(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("supportedFastProvisioningEditions"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PostgreSqlFlexibleServerFastProvisioningEditionCapability> array = new List<PostgreSqlFlexibleServerFastProvisioningEditionCapability>();
@@ -132,13 +90,76 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     supportedFastProvisioningEditions = array;
                     continue;
                 }
+                if (property.NameEquals("geoBackupSupported"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    geoBackupSupported = new PostgreSqlFlexibleServerGeoBackupSupported(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("zoneRedundantHaSupported"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    zoneRedundantHaSupported = new PostgreSqlFlexibleServerZoneRedundantHaSupported(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("zoneRedundantHaAndGeoBackupSupported"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    zoneRedundantHaAndGeoBackupSupported = new PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("storageAutoGrowthSupported"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storageAutoGrowthSupported = new PostgreSqlFlexibleServerStorageAutoGrowthSupported(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("onlineResizeSupported"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    onlineResizeSupported = new PostgreSqlFlexibleServerOnlineResizeSupported(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("restricted"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    restricted = new PostgreSqlFlexibleServerZoneRedundantRestricted(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("status"u8))
                 {
-                    status = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    status = property.Value.GetString().ToPostgreSqlFlexbileServerCapabilityStatus();
+                    continue;
+                }
+                if (property.NameEquals("reason"u8))
+                {
+                    reason = property.Value.GetString();
                     continue;
                 }
             }
-            return new PostgreSqlFlexibleServerCapabilityProperties(zone.Value, Optional.ToList(supportedHAMode), Optional.ToNullable(geoBackupSupported), Optional.ToNullable(zoneRedundantHaSupported), Optional.ToNullable(zoneRedundantHaAndGeoBackupSupported), Optional.ToList(supportedFlexibleServerEditions), Optional.ToList(supportedHyperscaleNodeEditions), Optional.ToNullable(fastProvisioningSupported), Optional.ToList(supportedFastProvisioningEditions), status.Value);
+            return new PostgreSqlFlexibleServerCapabilityProperties(Optional.ToNullable(status), reason.Value, name.Value, Optional.ToList(supportedServerEditions), Optional.ToList(supportedServerVersions), Optional.ToNullable(fastProvisioningSupported), Optional.ToList(supportedFastProvisioningEditions), Optional.ToNullable(geoBackupSupported), Optional.ToNullable(zoneRedundantHaSupported), Optional.ToNullable(zoneRedundantHaAndGeoBackupSupported), Optional.ToNullable(storageAutoGrowthSupported), Optional.ToNullable(onlineResizeSupported), Optional.ToNullable(restricted));
         }
     }
 }

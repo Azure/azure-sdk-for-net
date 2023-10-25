@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public string Description { get; set; }
         /// <summary>
         /// The list of scope permissions for registry artifacts.
-        /// E.g. repositories/repository-name/pull, 
+        /// E.g. repositories/repository-name/pull,
         /// repositories/repository-name/delete
         /// </summary>
         public IList<string> Actions { get; }

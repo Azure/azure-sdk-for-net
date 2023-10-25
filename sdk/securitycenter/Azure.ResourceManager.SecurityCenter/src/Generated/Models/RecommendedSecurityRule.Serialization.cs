@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static RecommendedSecurityRule DeserializeRecommendedSecurityRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<SecurityTrafficDirection> direction = default;
             Optional<int> destinationPort = default;
@@ -72,7 +76,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     direction = new SecurityTrafficDirection(property.Value.GetString());
@@ -82,7 +85,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     destinationPort = property.Value.GetInt32();
@@ -92,7 +94,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SecurityTransportProtocol> array = new List<SecurityTransportProtocol>();
@@ -107,7 +108,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

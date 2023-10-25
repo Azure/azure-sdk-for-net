@@ -1,0 +1,8 @@
+{
+    "appLocation": "eastus2",
+    "environment": "Prod",
+    "sapProduct": "S4HANA",
+    "deploymentType": "ThreeTier",
+    "databaseType": "HANA",
+    "highAvailabilityType": "AvailabilitySet"
+}

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DnsResolver.Models
     {
         internal static VirtualNetworkDnsForwardingRuleset DeserializeVirtualNetworkDnsForwardingRuleset(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<WritableSubResource> virtualNetworkLink = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -42,7 +45,6 @@ namespace Azure.ResourceManager.DnsResolver.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             virtualNetworkLink = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         internal static DataBoxEdgeNodeList DeserializeDataBoxEdgeNodeList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DataBoxEdgeNode>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DataBoxEdgeNode> array = new List<DataBoxEdgeNode>();

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Xml.Linq;
 using Azure.Core;
 
@@ -23,6 +24,7 @@ namespace Azure.Storage.Files.Shares.Models
             string clientIp = default;
             DateTimeOffset openTime = default;
             DateTimeOffset? lastReconnectTime = default;
+            IReadOnlyList<AccessRight> accessRightList = default;
             if (element.Element("HandleId") is XElement handleIdElement)
             {
                 handleId = (string)handleIdElement;
@@ -55,7 +57,16 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 lastReconnectTime = lastReconnectTimeElement.GetDateTimeOffsetValue("R");
             }
-            return new HandleItem(handleId, path, fileId, parentId, sessionId, clientIp, openTime, lastReconnectTime);
+            if (element.Element("AccessRightList") is XElement accessRightListElement)
+            {
+                var array = new List<AccessRight>();
+                foreach (var e in accessRightListElement.Elements("AccessRight"))
+                {
+                    array.Add(e.Value.ToAccessRight());
+                }
+                accessRightList = array;
+            }
+            return new HandleItem(handleId, path, fileId, parentId, sessionId, clientIp, openTime, lastReconnectTime, accessRightList);
         }
     }
 }

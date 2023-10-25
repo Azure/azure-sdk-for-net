@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
-    /// <summary> A class representing the CognitiveServicesAccountDeployment data model. </summary>
+    /// <summary>
+    /// A class representing the CognitiveServicesAccountDeployment data model.
+    /// Cognitive Services account deployment.
+    /// </summary>
     public partial class CognitiveServicesAccountDeploymentData : ResourceData
     {
         /// <summary> Initializes a new instance of CognitiveServicesAccountDeploymentData. </summary>
@@ -25,14 +28,18 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="sku"> The resource model definition representing SKU. </param>
         /// <param name="etag"> Resource Etag. </param>
         /// <param name="properties"> Properties of Cognitive Services account deployment. </param>
-        internal CognitiveServicesAccountDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, CognitiveServicesAccountDeploymentProperties properties) : base(id, name, resourceType, systemData)
+        internal CognitiveServicesAccountDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CognitiveServicesSku sku, ETag? etag, CognitiveServicesAccountDeploymentProperties properties) : base(id, name, resourceType, systemData)
         {
+            Sku = sku;
             ETag = etag;
             Properties = properties;
         }
 
+        /// <summary> The resource model definition representing SKU. </summary>
+        public CognitiveServicesSku Sku { get; set; }
         /// <summary> Resource Etag. </summary>
         public ETag? ETag { get; }
         /// <summary> Properties of Cognitive Services account deployment. </summary>

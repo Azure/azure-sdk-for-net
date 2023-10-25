@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static RegionListResult DeserializeRegionListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<RegionContract>> value = default;
             Optional<long> count = default;
             Optional<string> nextLink = default;
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RegionContract> array = new List<RegionContract>();
@@ -39,7 +42,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     count = property.Value.GetInt64();

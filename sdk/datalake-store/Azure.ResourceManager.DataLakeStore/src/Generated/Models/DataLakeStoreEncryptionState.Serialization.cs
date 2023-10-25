@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DataLakeStore.Models
 
         public static DataLakeStoreEncryptionState ToDataLakeStoreEncryptionState(this string value)
         {
-            if (string.Equals(value, "Enabled", StringComparison.InvariantCultureIgnoreCase)) return DataLakeStoreEncryptionState.Enabled;
-            if (string.Equals(value, "Disabled", StringComparison.InvariantCultureIgnoreCase)) return DataLakeStoreEncryptionState.Disabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Enabled")) return DataLakeStoreEncryptionState.Enabled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Disabled")) return DataLakeStoreEncryptionState.Disabled;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataLakeStoreEncryptionState value.");
         }
     }

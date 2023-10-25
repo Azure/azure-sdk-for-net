@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     {
         internal static VirtualNetworksPropertiesStatusProvisioningStatus DeserializeVirtualNetworksPropertiesStatusProvisioningStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<VirtualNetworksPropertiesStatusProvisioningStatusError> error = default;
             Optional<string> operationId = default;
             Optional<string> phase = default;
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     error = VirtualNetworksPropertiesStatusProvisioningStatusError.DeserializeVirtualNetworksPropertiesStatusProvisioningStatusError(property.Value);

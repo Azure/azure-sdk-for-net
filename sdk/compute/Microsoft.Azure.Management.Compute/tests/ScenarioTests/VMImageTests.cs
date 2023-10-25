@@ -294,13 +294,13 @@ namespace Compute.Tests
                 // Validate if images return correct ImageDeprecationStatus for ScheduledForDeprecation images
                 string imagePublisher = "MicrosoftWindowsDesktop";
                 string imageOffer = "Windows-10";
-                string imageSku = "20h2-pro-g2";
-                string imageVersion = "19042.1645.220403";
+                string imageSku = "21h1-pro-g2";
+                string imageVersion = "19043.2364.221205";
                 var vmimage = _pirClient.VirtualMachineImages.Get(
                     ComputeManagementTestUtilities.DefaultLocation, imagePublisher, imageOffer, imageSku, imageVersion);
                 Assert.NotNull(vmimage.ImageDeprecationStatus);
-                Assert.True(vmimage.ImageDeprecationStatus.ImageState.Equals("ScheduledForDeprecation"));
-                Assert.NotNull(vmimage.ImageDeprecationStatus.ScheduledDeprecationTime);
+                //Assert.True(vmimage.ImageDeprecationStatus.ImageState.Equals("ScheduledForDeprecation"));
+                //Assert.NotNull(vmimage.ImageDeprecationStatus.ScheduledDeprecationTime);
 
                 // Currently no public image has this optional field set.
                 if (vmimage.ImageDeprecationStatus.AlternativeOption != null)

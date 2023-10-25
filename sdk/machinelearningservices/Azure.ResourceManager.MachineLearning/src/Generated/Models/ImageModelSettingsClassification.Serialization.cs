@@ -438,6 +438,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static ImageModelSettingsClassification DeserializeImageModelSettingsClassification(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int?> trainingCropSize = default;
             Optional<int?> validationCropSize = default;
             Optional<int?> validationResizeSize = default;
@@ -690,7 +694,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     learningRateScheduler = new LearningRateScheduler(property.Value.GetString());
@@ -750,7 +753,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     optimizer = new StochasticOptimizer(property.Value.GetString());

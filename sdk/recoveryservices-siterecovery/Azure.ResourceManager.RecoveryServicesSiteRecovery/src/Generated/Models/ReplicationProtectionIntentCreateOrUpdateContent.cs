@@ -16,19 +16,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Create protection intent input properties. </summary>
-        internal CreateProtectionIntentProperties Properties { get; set; }
+        internal SiteRecoveryCreateProtectionIntentProperties Properties { get; set; }
         /// <summary>
         /// The ReplicationProviderInput. For A2A provider, it will be A2ACreateProtectionIntentInput object.
-        /// Please note <see cref="CreateProtectionIntentProviderSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="A2ACreateProtectionIntentInput"/>.
+        /// Please note <see cref="SiteRecoveryCreateProtectionIntentProviderDetail"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="A2ACreateProtectionIntentContent"/>.
         /// </summary>
-        public CreateProtectionIntentProviderSpecificDetails CreateProtectionIntentProviderSpecificDetails
+        public SiteRecoveryCreateProtectionIntentProviderDetail SiteRecoveryCreateProtectionIntentProviderSpecificDetails
         {
             get => Properties is null ? default : Properties.ProviderSpecificDetails;
             set
             {
                 if (Properties is null)
-                    Properties = new CreateProtectionIntentProperties();
+                    Properties = new SiteRecoveryCreateProtectionIntentProperties();
                 Properties.ProviderSpecificDetails = value;
             }
         }

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static RecordSet DeserializeRecordSet(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> recordType = default;
             Optional<string> recordSetName = default;
             Optional<string> fqdn = default;
@@ -42,7 +46,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new NetworkProvisioningState(property.Value.GetString());
@@ -52,7 +55,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ttl = property.Value.GetInt32();
@@ -62,7 +64,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

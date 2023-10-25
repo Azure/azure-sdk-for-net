@@ -14,7 +14,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    /// <summary> A class representing the KeyVaultPrivateEndpointConnection data model. </summary>
+    /// <summary>
+    /// A class representing the KeyVaultPrivateEndpointConnection data model.
+    /// Private endpoint connection resource.
+    /// </summary>
     public partial class KeyVaultPrivateEndpointConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of KeyVaultPrivateEndpointConnectionData. </summary>

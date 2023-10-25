@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Initializes a new instance of AzureMonitorMetricsDestination. </summary>
         /// <param name="name">
-        /// A friendly name for the destination. 
+        /// A friendly name for the destination.
         /// This name should be unique across all destinations (regardless of type) within the data collection rule.
         /// </param>
         internal AzureMonitorMetricsDestination(string name)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary>
-        /// A friendly name for the destination. 
+        /// A friendly name for the destination.
         /// This name should be unique across all destinations (regardless of type) within the data collection rule.
         /// </summary>
         public string Name { get; set; }

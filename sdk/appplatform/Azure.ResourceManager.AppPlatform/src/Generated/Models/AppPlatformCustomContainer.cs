@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of AppPlatformCustomContainer. </summary>
         /// <param name="server"> The name of the registry that contains the container image. </param>
         /// <param name="containerImage"> Container image of the custom container. This should be in the form of &lt;repository&gt;:&lt;tag&gt; without the server name of the registry. </param>
-        /// <param name="command"> Entrypoint array. Not executed within a shell. The docker image&apos;s ENTRYPOINT is used if this is not provided. </param>
-        /// <param name="args"> Arguments to the entrypoint. The docker image&apos;s CMD is used if this is not provided. </param>
+        /// <param name="command"> Entrypoint array. Not executed within a shell. The docker image's ENTRYPOINT is used if this is not provided. </param>
+        /// <param name="args"> Arguments to the entrypoint. The docker image's CMD is used if this is not provided. </param>
         /// <param name="imageRegistryCredential"> Credential of the image registry. </param>
         /// <param name="languageFramework"> Language framework of the container image uploaded. </param>
         internal AppPlatformCustomContainer(string server, string containerImage, IList<string> command, IList<string> args, AppPlatformImageRegistryCredential imageRegistryCredential, string languageFramework)
@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public string Server { get; set; }
         /// <summary> Container image of the custom container. This should be in the form of &lt;repository&gt;:&lt;tag&gt; without the server name of the registry. </summary>
         public string ContainerImage { get; set; }
-        /// <summary> Entrypoint array. Not executed within a shell. The docker image&apos;s ENTRYPOINT is used if this is not provided. </summary>
+        /// <summary> Entrypoint array. Not executed within a shell. The docker image's ENTRYPOINT is used if this is not provided. </summary>
         public IList<string> Command { get; }
-        /// <summary> Arguments to the entrypoint. The docker image&apos;s CMD is used if this is not provided. </summary>
+        /// <summary> Arguments to the entrypoint. The docker image's CMD is used if this is not provided. </summary>
         public IList<string> Args { get; }
         /// <summary> Credential of the image registry. </summary>
         public AppPlatformImageRegistryCredential ImageRegistryCredential { get; set; }

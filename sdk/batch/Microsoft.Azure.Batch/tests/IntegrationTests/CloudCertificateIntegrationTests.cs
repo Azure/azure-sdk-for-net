@@ -31,6 +31,7 @@
         [Fact]
         [LiveTest]
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.LongLongDuration)]
+        [Obsolete]
         public async Task TestCertificateVerbs()
         {
             async Task test()
@@ -185,8 +186,10 @@
             CertificateBuilder.CreateSelfSignedInFile("Foo", cerFilePath, CertificateBuilder.Sha1Algorithm);
             CertificateBuilder.CreateSelfSignedInFile("Foo", pfxFilePath, CertificateBuilder.Sha1Algorithm, password: CommonResources.CertificatePassword);
 
+#pragma warning disable CS0618 // Type or member is obsolete
             Certificate cerCertificate = batchClient.CertificateOperations.CreateCertificateFromCer(cerFilePath);
             Certificate pfxCertificate = batchClient.CertificateOperations.CreateCertificateFromPfx(pfxFilePath, CommonResources.CertificatePassword);
+#pragma warning restore CS0618 // Type or member is obsolete
 
             return new List<Certificate>
                 {

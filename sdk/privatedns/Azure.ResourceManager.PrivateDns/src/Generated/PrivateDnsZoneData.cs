@@ -13,7 +13,10 @@ using Azure.ResourceManager.PrivateDns.Models;
 
 namespace Azure.ResourceManager.PrivateDns
 {
-    /// <summary> A class representing the PrivateDnsZone data model. </summary>
+    /// <summary>
+    /// A class representing the PrivateDnsZone data model.
+    /// Describes a Private DNS zone.
+    /// </summary>
     public partial class PrivateDnsZoneData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of PrivateDnsZoneData. </summary>

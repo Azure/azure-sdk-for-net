@@ -13,7 +13,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the LoadBalancingRule data model. </summary>
+    /// <summary>
+    /// A class representing the LoadBalancingRule data model.
+    /// A load balancing rule for a load balancer.
+    /// </summary>
     public partial class LoadBalancingRuleData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of LoadBalancingRuleData. </summary>
@@ -33,10 +36,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="probe"> The reference to the load balancer probe used by the load balancing rule. </param>
         /// <param name="protocol"> The reference to the transport protocol used by the load balancing rule. </param>
         /// <param name="loadDistribution"> The load distribution policy for this rule. </param>
-        /// <param name="frontendPort"> The port for the external endpoint. Port numbers for each rule must be unique within the Load Balancer. Acceptable values are between 0 and 65534. Note that value 0 enables &quot;Any Port&quot;. </param>
-        /// <param name="backendPort"> The port used for internal connections on the endpoint. Acceptable values are between 0 and 65535. Note that value 0 enables &quot;Any Port&quot;. </param>
+        /// <param name="frontendPort"> The port for the external endpoint. Port numbers for each rule must be unique within the Load Balancer. Acceptable values are between 0 and 65534. Note that value 0 enables "Any Port". </param>
+        /// <param name="backendPort"> The port used for internal connections on the endpoint. Acceptable values are between 0 and 65535. Note that value 0 enables "Any Port". </param>
         /// <param name="idleTimeoutInMinutes"> The timeout for the TCP idle connection. The value can be set between 4 and 30 minutes. The default value is 4 minutes. This element is only used when the protocol is set to TCP. </param>
-        /// <param name="enableFloatingIP"> Configures a virtual machine&apos;s endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability Group. This setting is required when using the SQL AlwaysOn Availability Groups in SQL server. This setting can&apos;t be changed after you create the endpoint. </param>
+        /// <param name="enableFloatingIP"> Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability Group. This setting is required when using the SQL AlwaysOn Availability Groups in SQL server. This setting can't be changed after you create the endpoint. </param>
         /// <param name="enableTcpReset"> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </param>
         /// <param name="disableOutboundSnat"> Configures SNAT for the VMs in the backend pool to use the publicIP address specified in the frontend of the load balancing rule. </param>
         /// <param name="provisioningState"> The provisioning state of the load balancing rule resource. </param>
@@ -108,13 +111,13 @@ namespace Azure.ResourceManager.Network
         public LoadBalancingTransportProtocol? Protocol { get; set; }
         /// <summary> The load distribution policy for this rule. </summary>
         public LoadDistribution? LoadDistribution { get; set; }
-        /// <summary> The port for the external endpoint. Port numbers for each rule must be unique within the Load Balancer. Acceptable values are between 0 and 65534. Note that value 0 enables &quot;Any Port&quot;. </summary>
+        /// <summary> The port for the external endpoint. Port numbers for each rule must be unique within the Load Balancer. Acceptable values are between 0 and 65534. Note that value 0 enables "Any Port". </summary>
         public int? FrontendPort { get; set; }
-        /// <summary> The port used for internal connections on the endpoint. Acceptable values are between 0 and 65535. Note that value 0 enables &quot;Any Port&quot;. </summary>
+        /// <summary> The port used for internal connections on the endpoint. Acceptable values are between 0 and 65535. Note that value 0 enables "Any Port". </summary>
         public int? BackendPort { get; set; }
         /// <summary> The timeout for the TCP idle connection. The value can be set between 4 and 30 minutes. The default value is 4 minutes. This element is only used when the protocol is set to TCP. </summary>
         public int? IdleTimeoutInMinutes { get; set; }
-        /// <summary> Configures a virtual machine&apos;s endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability Group. This setting is required when using the SQL AlwaysOn Availability Groups in SQL server. This setting can&apos;t be changed after you create the endpoint. </summary>
+        /// <summary> Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability Group. This setting is required when using the SQL AlwaysOn Availability Groups in SQL server. This setting can't be changed after you create the endpoint. </summary>
         public bool? EnableFloatingIP { get; set; }
         /// <summary> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </summary>
         public bool? EnableTcpReset { get; set; }

@@ -10,6 +10,29 @@
 
 ### Other Changes
 
+## 1.0.2 (2023-05-29)
+
+### Features Added
+
+- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+- Added support for service version 2022-12-01.
+- Added changes to support reverse shipping address updates, hardware encryption and customer resolution flows
+
+### Other Changes
+
+- Added `ReverseShippingDetails` property tp `DataBoxBasicJobDetails`
+- Added `DataBoxDiskGranularCopyLogDetails` property to `DataBoxDiskCopyProgress` 
+- Added `SerialNumberCustomerResolutionMap` property to `MitigateJobContent` which replaces `CustomerResolutionCode`
+- Upgraded dependent Azure.Core to 1.32.0.
+- Upgraded dependent Azure.ResourceManager to 1.6.0.
+
+## 1.0.1 (2023-02-16)
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.28.0`.
+- Upgraded dependent `Azure.ResourceManager` to `1.4.0`.
+
 ## 1.0.0 (2022-09-13)
 
 This release is the first stable release of the Data Box management library.

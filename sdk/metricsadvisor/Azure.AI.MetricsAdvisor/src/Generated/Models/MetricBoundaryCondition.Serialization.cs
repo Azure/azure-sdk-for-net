@@ -47,6 +47,10 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static MetricBoundaryCondition DeserializeMetricBoundaryCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<double> lower = default;
             Optional<double> upper = default;
             BoundaryDirection direction = default;
@@ -59,7 +63,6 @@ namespace Azure.AI.MetricsAdvisor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lower = property.Value.GetDouble();
@@ -69,7 +72,6 @@ namespace Azure.AI.MetricsAdvisor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     upper = property.Value.GetDouble();
@@ -84,7 +86,6 @@ namespace Azure.AI.MetricsAdvisor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new BoundaryMeasureType(property.Value.GetString());
@@ -99,7 +100,6 @@ namespace Azure.AI.MetricsAdvisor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     triggerForMissing = property.Value.GetBoolean();

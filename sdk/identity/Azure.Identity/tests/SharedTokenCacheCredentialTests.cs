@@ -33,8 +33,8 @@ namespace Azure.Identity.Tests
             var options = new SharedTokenCacheCredentialOptions(tokenCacheOptions)
             {
                 Transport = config.Transport,
-                AdditionallyAllowedTenantsCore = config.AdditionallyAllowedTenants,
-                DisableInstanceDiscovery = config.DisableMetadataDiscovery ?? false
+                DisableInstanceDiscovery = config.DisableInstanceDiscovery,
+                IsUnsafeSupportLoggingEnabled = config.IsUnsafeSupportLoggingEnabled,
             };
             var pipeline = CredentialPipeline.GetInstance(options);
             return InstrumentClient(new SharedTokenCacheCredential(config.TenantId, null, options, pipeline, null));
@@ -81,15 +81,6 @@ namespace Azure.Identity.Tests
             AccessToken token = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
             Assert.IsTrue(acquireTokenSilentCalled);
-        }
-
-        [Test]
-        public void RespectsIsPIILoggingEnabled([Values(true, false)] bool isLoggingPIIEnabled)
-        {
-            var credential = new SharedTokenCacheCredential(new SharedTokenCacheCredentialOptions { IsLoggingPIIEnabled = isLoggingPIIEnabled });
-
-            Assert.NotNull(credential.Client);
-            Assert.AreEqual(isLoggingPIIEnabled, credential.Client.IsPiiLoggingEnabled);
         }
 
         [Test]

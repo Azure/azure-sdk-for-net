@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static ComputeResourceSkuRestrictions DeserializeComputeResourceSkuRestrictions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ComputeResourceSkuRestrictionsType> type = default;
             Optional<IReadOnlyList<string>> values = default;
             Optional<ComputeResourceSkuRestrictionInfo> restrictionInfo = default;
@@ -25,7 +29,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = property.Value.GetString().ToComputeResourceSkuRestrictionsType();
@@ -35,7 +38,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -50,7 +52,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     restrictionInfo = ComputeResourceSkuRestrictionInfo.DeserializeComputeResourceSkuRestrictionInfo(property.Value);
@@ -60,7 +61,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     reasonCode = property.Value.GetString().ToComputeResourceSkuRestrictionsReasonCode();

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 
         public static HealthcareApisNameUnavailableReason ToHealthcareApisNameUnavailableReason(this string value)
         {
-            if (string.Equals(value, "Invalid", StringComparison.InvariantCultureIgnoreCase)) return HealthcareApisNameUnavailableReason.Invalid;
-            if (string.Equals(value, "AlreadyExists", StringComparison.InvariantCultureIgnoreCase)) return HealthcareApisNameUnavailableReason.AlreadyExists;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Invalid")) return HealthcareApisNameUnavailableReason.Invalid;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AlreadyExists")) return HealthcareApisNameUnavailableReason.AlreadyExists;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown HealthcareApisNameUnavailableReason value.");
         }
     }

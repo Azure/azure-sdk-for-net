@@ -19,33 +19,28 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> Initializes a new instance of DdosSettings. </summary>
-        /// <param name="ddosCustomPolicy"> The DDoS custom policy associated with the public IP. </param>
-        /// <param name="protectionCoverage"> The DDoS protection policy customizability of the public IP. Only standard coverage will have the ability to be customized. </param>
-        /// <param name="protectedIP"> Enables DDoS protection on the public IP. </param>
-        internal DdosSettings(WritableSubResource ddosCustomPolicy, DdosSettingsProtectionCoverage? protectionCoverage, bool? protectedIP)
+        /// <param name="protectionMode"> The DDoS protection mode of the public IP. </param>
+        /// <param name="ddosProtectionPlan"> The DDoS protection plan associated with the public IP. Can only be set if ProtectionMode is Enabled. </param>
+        internal DdosSettings(DdosSettingsProtectionMode? protectionMode, WritableSubResource ddosProtectionPlan)
         {
-            DdosCustomPolicy = ddosCustomPolicy;
-            ProtectionCoverage = protectionCoverage;
-            ProtectedIP = protectedIP;
+            ProtectionMode = protectionMode;
+            DdosProtectionPlan = ddosProtectionPlan;
         }
 
-        /// <summary> The DDoS custom policy associated with the public IP. </summary>
-        internal WritableSubResource DdosCustomPolicy { get; set; }
+        /// <summary> The DDoS protection mode of the public IP. </summary>
+        public DdosSettingsProtectionMode? ProtectionMode { get; set; }
+        /// <summary> The DDoS protection plan associated with the public IP. Can only be set if ProtectionMode is Enabled. </summary>
+        internal WritableSubResource DdosProtectionPlan { get; set; }
         /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier DdosCustomPolicyId
+        public ResourceIdentifier DdosProtectionPlanId
         {
-            get => DdosCustomPolicy is null ? default : DdosCustomPolicy.Id;
+            get => DdosProtectionPlan is null ? default : DdosProtectionPlan.Id;
             set
             {
-                if (DdosCustomPolicy is null)
-                    DdosCustomPolicy = new WritableSubResource();
-                DdosCustomPolicy.Id = value;
+                if (DdosProtectionPlan is null)
+                    DdosProtectionPlan = new WritableSubResource();
+                DdosProtectionPlan.Id = value;
             }
         }
-
-        /// <summary> The DDoS protection policy customizability of the public IP. Only standard coverage will have the ability to be customized. </summary>
-        public DdosSettingsProtectionCoverage? ProtectionCoverage { get; set; }
-        /// <summary> Enables DDoS protection on the public IP. </summary>
-        public bool? ProtectedIP { get; set; }
     }
 }

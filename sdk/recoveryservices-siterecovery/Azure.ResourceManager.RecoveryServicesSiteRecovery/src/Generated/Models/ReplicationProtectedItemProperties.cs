@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         internal ReplicationProtectedItemProperties()
         {
             AllowedOperations = new ChangeTrackingList<string>();
-            HealthErrors = new ChangeTrackingList<HealthError>();
+            HealthErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
         }
 
         /// <summary> Initializes a new instance of ReplicationProtectedItemProperties. </summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="switchProviderState"> The switch provider state. </param>
         /// <param name="switchProviderStateDescription"> The switch provider state description. </param>
         /// <param name="allowedOperations"> The allowed operations on the Replication protected item. </param>
-        /// <param name="replicationHealth"> The consolidated protection health for the VM taking any issues with SRS as well as all the replication units associated with the VM&apos;s replication group into account. This is a string representation of the ProtectionHealth enumeration. </param>
+        /// <param name="replicationHealth"> The consolidated protection health for the VM taking any issues with SRS as well as all the replication units associated with the VM's replication group into account. This is a string representation of the ProtectionHealth enumeration. </param>
         /// <param name="failoverHealth"> The consolidated failover health for the VM. </param>
         /// <param name="healthErrors"> List of health errors. </param>
         /// <param name="policyId"> The ID of Policy governing this PE. </param>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// </param>
         /// <param name="recoveryContainerId"> The recovery container Id. </param>
         /// <param name="eventCorrelationId"> The correlation Id for events associated with this protected item. </param>
-        internal ReplicationProtectedItemProperties(string friendlyName, string protectedItemType, string protectableItemId, string recoveryServicesProviderId, string primaryFabricFriendlyName, string primaryFabricProvider, string recoveryFabricFriendlyName, string recoveryFabricId, string primaryProtectionContainerFriendlyName, string recoveryProtectionContainerFriendlyName, string protectionState, string protectionStateDescription, string activeLocation, string testFailoverState, string testFailoverStateDescription, string switchProviderState, string switchProviderStateDescription, IReadOnlyList<string> allowedOperations, string replicationHealth, string failoverHealth, IReadOnlyList<HealthError> healthErrors, string policyId, string policyFriendlyName, DateTimeOffset? lastSuccessfulFailoverOn, DateTimeOffset? lastSuccessfulTestFailoverOn, CurrentScenarioDetails currentScenario, string failoverRecoveryPointId, ReplicationProviderSpecificSettings providerSpecificDetails, string recoveryContainerId, string eventCorrelationId)
+        internal ReplicationProtectedItemProperties(string friendlyName, string protectedItemType, ResourceIdentifier protectableItemId, string recoveryServicesProviderId, string primaryFabricFriendlyName, string primaryFabricProvider, string recoveryFabricFriendlyName, ResourceIdentifier recoveryFabricId, string primaryProtectionContainerFriendlyName, string recoveryProtectionContainerFriendlyName, string protectionState, string protectionStateDescription, string activeLocation, string testFailoverState, string testFailoverStateDescription, string switchProviderState, string switchProviderStateDescription, IReadOnlyList<string> allowedOperations, string replicationHealth, string failoverHealth, IReadOnlyList<SiteRecoveryHealthError> healthErrors, ResourceIdentifier policyId, string policyFriendlyName, DateTimeOffset? lastSuccessfulFailoverOn, DateTimeOffset? lastSuccessfulTestFailoverOn, CurrentScenarioDetails currentScenario, ResourceIdentifier failoverRecoveryPointId, ReplicationProviderSpecificSettings providerSpecificDetails, ResourceIdentifier recoveryContainerId, Guid? eventCorrelationId)
         {
             FriendlyName = friendlyName;
             ProtectedItemType = protectedItemType;
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The type of protected item type. </summary>
         public string ProtectedItemType { get; }
         /// <summary> The protected item ARM Id. </summary>
-        public string ProtectableItemId { get; }
+        public ResourceIdentifier ProtectableItemId { get; }
         /// <summary> The recovery provider ARM Id. </summary>
         public string RecoveryServicesProviderId { get; }
         /// <summary> The friendly name of the primary fabric. </summary>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The friendly name of recovery fabric. </summary>
         public string RecoveryFabricFriendlyName { get; }
         /// <summary> The Arm Id of recovery fabric. </summary>
-        public string RecoveryFabricId { get; }
+        public ResourceIdentifier RecoveryFabricId { get; }
         /// <summary> The name of primary protection container friendly name. </summary>
         public string PrimaryProtectionContainerFriendlyName { get; }
         /// <summary> The name of recovery container friendly name. </summary>
@@ -126,14 +126,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public string SwitchProviderStateDescription { get; }
         /// <summary> The allowed operations on the Replication protected item. </summary>
         public IReadOnlyList<string> AllowedOperations { get; }
-        /// <summary> The consolidated protection health for the VM taking any issues with SRS as well as all the replication units associated with the VM&apos;s replication group into account. This is a string representation of the ProtectionHealth enumeration. </summary>
+        /// <summary> The consolidated protection health for the VM taking any issues with SRS as well as all the replication units associated with the VM's replication group into account. This is a string representation of the ProtectionHealth enumeration. </summary>
         public string ReplicationHealth { get; }
         /// <summary> The consolidated failover health for the VM. </summary>
         public string FailoverHealth { get; }
         /// <summary> List of health errors. </summary>
-        public IReadOnlyList<HealthError> HealthErrors { get; }
+        public IReadOnlyList<SiteRecoveryHealthError> HealthErrors { get; }
         /// <summary> The ID of Policy governing this PE. </summary>
-        public string PolicyId { get; }
+        public ResourceIdentifier PolicyId { get; }
         /// <summary> The name of Policy governing this PE. </summary>
         public string PolicyFriendlyName { get; }
         /// <summary> The Last successful failover time. </summary>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The current scenario. </summary>
         public CurrentScenarioDetails CurrentScenario { get; }
         /// <summary> The recovery point ARM Id to which the Vm was failed over. </summary>
-        public string FailoverRecoveryPointId { get; }
+        public ResourceIdentifier FailoverRecoveryPointId { get; }
         /// <summary>
         /// The Replication provider custom settings.
         /// Please note <see cref="ReplicationProviderSpecificSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -151,8 +151,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// </summary>
         public ReplicationProviderSpecificSettings ProviderSpecificDetails { get; }
         /// <summary> The recovery container Id. </summary>
-        public string RecoveryContainerId { get; }
+        public ResourceIdentifier RecoveryContainerId { get; }
         /// <summary> The correlation Id for events associated with this protected item. </summary>
-        public string EventCorrelationId { get; }
+        public Guid? EventCorrelationId { get; }
     }
 }

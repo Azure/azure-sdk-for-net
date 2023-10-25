@@ -18,41 +18,109 @@ namespace Azure.ResourceManager.GuestConfiguration
     /// <summary> A class to add extension methods to Azure.ResourceManager.GuestConfiguration. </summary>
     public static partial class GuestConfigurationExtensions
     {
-        private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
+        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmResource resource)
         {
-            return subscriptionResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
-            }
-            );
+                return new ArmResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        private static ResourceGroupResourceExtensionClient GetExtensionClient(ResourceGroupResource resourceGroupResource)
-        {
-            return resourceGroupResource.GetCachedClient((client) =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, resourceGroupResource.Id);
-            }
-            );
-        }
-
-        private static ArmResourceExtensionClient GetExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
             return client.GetResourceClient(() =>
             {
                 return new ArmResourceExtensionClient(client, scope);
-            }
-            );
+            });
         }
 
-        private static ArmResourceExtensionClient GetExtensionClient(ArmResource armResource)
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
         {
-            return armResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new ArmResourceExtensionClient(client, armResource.Id);
+                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, scope);
+            });
+        }
+
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new SubscriptionResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new SubscriptionResourceExtensionClient(client, scope);
+            });
+        }
+        #region GuestConfigurationVmAssignmentResource
+        /// <summary>
+        /// Gets an object representing a <see cref="GuestConfigurationVmAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GuestConfigurationVmAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="GuestConfigurationVmAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="GuestConfigurationVmAssignmentResource" /> object. </returns>
+        public static GuestConfigurationVmAssignmentResource GetGuestConfigurationVmAssignmentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                GuestConfigurationVmAssignmentResource.ValidateResourceId(id);
+                return new GuestConfigurationVmAssignmentResource(client, id);
             }
             );
         }
+        #endregion
+
+        #region GuestConfigurationHcrpAssignmentResource
+        /// <summary>
+        /// Gets an object representing a <see cref="GuestConfigurationHcrpAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GuestConfigurationHcrpAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="GuestConfigurationHcrpAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="GuestConfigurationHcrpAssignmentResource" /> object. </returns>
+        public static GuestConfigurationHcrpAssignmentResource GetGuestConfigurationHcrpAssignmentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                GuestConfigurationHcrpAssignmentResource.ValidateResourceId(id);
+                return new GuestConfigurationHcrpAssignmentResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region GuestConfigurationVmssAssignmentResource
+        /// <summary>
+        /// Gets an object representing a <see cref="GuestConfigurationVmssAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GuestConfigurationVmssAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="GuestConfigurationVmssAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="GuestConfigurationVmssAssignmentResource" /> object. </returns>
+        public static GuestConfigurationVmssAssignmentResource GetGuestConfigurationVmssAssignmentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                GuestConfigurationVmssAssignmentResource.ValidateResourceId(id);
+                return new GuestConfigurationVmssAssignmentResource(client, id);
+            }
+            );
+        }
+        #endregion
 
         /// <summary> Gets a collection of GuestConfigurationVmAssignmentResources in the ArmResource. </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -64,7 +132,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             {
                 throw new ArgumentException(string.Format("Invalid resource type {0} expected Microsoft.Compute/virtualMachines", scope.ResourceType));
             }
-            return GetExtensionClient(client, scope).GetGuestConfigurationVmAssignments();
+            return GetArmResourceExtensionClient(client, scope).GetGuestConfigurationVmAssignments();
         }
 
         /// <summary>
@@ -135,7 +203,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             {
                 throw new ArgumentException(string.Format("Invalid resource type {0} expected Microsoft.HybridCompute/machines", scope.ResourceType));
             }
-            return GetExtensionClient(client, scope).GetGuestConfigurationHcrpAssignments();
+            return GetArmResourceExtensionClient(client, scope).GetGuestConfigurationHcrpAssignments();
         }
 
         /// <summary>
@@ -206,7 +274,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             {
                 throw new ArgumentException(string.Format("Invalid resource type {0} expected Microsoft.Compute/virtualMachineScaleSets", scope.ResourceType));
             }
-            return GetExtensionClient(client, scope).GetGuestConfigurationVmssAssignments();
+            return GetArmResourceExtensionClient(client, scope).GetGuestConfigurationVmssAssignments();
         }
 
         /// <summary>
@@ -266,62 +334,5 @@ namespace Azure.ResourceManager.GuestConfiguration
             }
             return client.GetGuestConfigurationVmssAssignments(scope).Get(name, cancellationToken);
         }
-
-        #region GuestConfigurationVmAssignmentResource
-        /// <summary>
-        /// Gets an object representing a <see cref="GuestConfigurationVmAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="GuestConfigurationVmAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="GuestConfigurationVmAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GuestConfigurationVmAssignmentResource" /> object. </returns>
-        public static GuestConfigurationVmAssignmentResource GetGuestConfigurationVmAssignmentResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                GuestConfigurationVmAssignmentResource.ValidateResourceId(id);
-                return new GuestConfigurationVmAssignmentResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region GuestConfigurationHcrpAssignmentResource
-        /// <summary>
-        /// Gets an object representing a <see cref="GuestConfigurationHcrpAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="GuestConfigurationHcrpAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="GuestConfigurationHcrpAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GuestConfigurationHcrpAssignmentResource" /> object. </returns>
-        public static GuestConfigurationHcrpAssignmentResource GetGuestConfigurationHcrpAssignmentResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                GuestConfigurationHcrpAssignmentResource.ValidateResourceId(id);
-                return new GuestConfigurationHcrpAssignmentResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region GuestConfigurationVmssAssignmentResource
-        /// <summary>
-        /// Gets an object representing a <see cref="GuestConfigurationVmssAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="GuestConfigurationVmssAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="GuestConfigurationVmssAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GuestConfigurationVmssAssignmentResource" /> object. </returns>
-        public static GuestConfigurationVmssAssignmentResource GetGuestConfigurationVmssAssignmentResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                GuestConfigurationVmssAssignmentResource.ValidateResourceId(id);
-                return new GuestConfigurationVmssAssignmentResource(client, id);
-            }
-            );
-        }
-        #endregion
     }
 }

@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static StorageSshPublicKey DeserializeStorageSshPublicKey(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> description = default;
             Optional<string> key = default;
             foreach (var property in element.EnumerateObject())

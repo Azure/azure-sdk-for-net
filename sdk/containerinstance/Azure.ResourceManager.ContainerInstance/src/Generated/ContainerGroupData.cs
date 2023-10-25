@@ -14,7 +14,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerInstance
 {
-    /// <summary> A class representing the ContainerGroup data model. </summary>
+    /// <summary>
+    /// A class representing the ContainerGroup data model.
+    /// A container group.
+    /// </summary>
     public partial class ContainerGroupData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ContainerGroupData. </summary>
@@ -49,11 +52,11 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="containers"> The containers within the container group. </param>
         /// <param name="imageRegistryCredentials"> The image registry credentials by which the container group is created from. </param>
         /// <param name="restartPolicy">
-        /// Restart policy for all containers within the container group. 
+        /// Restart policy for all containers within the container group.
         /// - `Always` Always restart
         /// - `OnFailure` Restart on failure
         /// - `Never` Never restart
-        /// 
+        ///
         /// </param>
         /// <param name="ipAddress"> The IP address type of the container group. </param>
         /// <param name="osType"> The operating system type required by the containers in the container group. </param>
@@ -102,11 +105,11 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <summary> The image registry credentials by which the container group is created from. </summary>
         public IList<ContainerGroupImageRegistryCredential> ImageRegistryCredentials { get; }
         /// <summary>
-        /// Restart policy for all containers within the container group. 
+        /// Restart policy for all containers within the container group.
         /// - `Always` Always restart
         /// - `OnFailure` Restart on failure
         /// - `Never` Never restart
-        /// 
+        ///
         /// </summary>
         public ContainerGroupRestartPolicy? RestartPolicy { get; set; }
         /// <summary> The IP address type of the container group. </summary>

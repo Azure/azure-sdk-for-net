@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Marketplace.Models
     {
         internal static QueryApprovedPlansResult DeserializeQueryApprovedPlansResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<QueryApprovedPlansDetails>> details = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -22,7 +26,6 @@ namespace Azure.ResourceManager.Marketplace.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<QueryApprovedPlansDetails> array = new List<QueryApprovedPlansDetails>();

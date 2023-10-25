@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string ActiveValue = "Active";
         private const string ClosedValue = "Closed";
 
-        /// <summary> An active incident which isn&apos;t being handled currently. </summary>
+        /// <summary> An active incident which isn't being handled currently. </summary>
         public static SecurityInsightsIncidentStatus New { get; } = new SecurityInsightsIncidentStatus(NewValue);
         /// <summary> An active incident which is being handled. </summary>
         public static SecurityInsightsIncidentStatus Active { get; } = new SecurityInsightsIncidentStatus(ActiveValue);

@@ -55,7 +55,10 @@ namespace Azure.ResourceManager.Monitor.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
@@ -63,6 +66,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MetricCriteria DeserializeMetricCriteria(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             MetricCriteriaOperator @operator = default;
             double threshold = default;
             CriterionType criterionType = default;
@@ -115,7 +122,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MetricDimension> array = new List<MetricDimension>();
@@ -130,7 +136,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     skipMetricValidation = property.Value.GetBoolean();

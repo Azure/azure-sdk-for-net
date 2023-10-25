@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.SignalR.Models
     {
         internal static SignalRUsageName DeserializeSignalRUsageName(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> value = default;
             Optional<string> localizedValue = default;
             foreach (var property in element.EnumerateObject())

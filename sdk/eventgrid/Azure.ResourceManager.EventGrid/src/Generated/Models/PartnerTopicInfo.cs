@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// </param>
         /// <param name="name"> Name of the partner topic associated with the channel. </param>
         /// <param name="eventTypeInfo">
-        /// Event Type Information for the partner topic. This information is provided by the publisher and can be used by the 
+        /// Event Type Information for the partner topic. This information is provided by the publisher and can be used by the
         /// subscriber to view different types of events that are published.
         /// </param>
         /// <param name="source">
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Name of the partner topic associated with the channel. </summary>
         public string Name { get; set; }
         /// <summary>
-        /// Event Type Information for the partner topic. This information is provided by the publisher and can be used by the 
+        /// Event Type Information for the partner topic. This information is provided by the publisher and can be used by the
         /// subscriber to view different types of events that are published.
         /// </summary>
         public PartnerTopicEventTypeInfo EventTypeInfo { get; set; }

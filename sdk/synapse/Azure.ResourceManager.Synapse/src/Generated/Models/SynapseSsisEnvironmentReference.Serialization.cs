@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static SynapseSsisEnvironmentReference DeserializeSynapseSsisEnvironmentReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> id = default;
             Optional<string> environmentFolderName = default;
             Optional<string> environmentName = default;
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = property.Value.GetInt64();

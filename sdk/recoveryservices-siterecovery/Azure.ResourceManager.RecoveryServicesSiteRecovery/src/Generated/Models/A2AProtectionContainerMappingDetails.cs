@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> A2A provider specific settings. </summary>
@@ -23,7 +25,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="automationAccountAuthenticationType"> A value indicating the type authentication to use for automation Account. </param>
         /// <param name="scheduleName"> The schedule arm name. </param>
         /// <param name="jobScheduleName"> The job schedule arm name. </param>
-        internal A2AProtectionContainerMappingDetails(string instanceType, AgentAutoUpdateStatus? agentAutoUpdateStatus, string automationAccountArmId, AutomationAccountAuthenticationType? automationAccountAuthenticationType, string scheduleName, string jobScheduleName) : base(instanceType)
+        internal A2AProtectionContainerMappingDetails(string instanceType, SiteRecoveryAgentAutoUpdateStatus? agentAutoUpdateStatus, ResourceIdentifier automationAccountArmId, AutomationAccountAuthenticationType? automationAccountAuthenticationType, string scheduleName, string jobScheduleName) : base(instanceType)
         {
             AgentAutoUpdateStatus = agentAutoUpdateStatus;
             AutomationAccountArmId = automationAccountArmId;
@@ -34,9 +36,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> A value indicating whether the auto update is enabled. </summary>
-        public AgentAutoUpdateStatus? AgentAutoUpdateStatus { get; }
+        public SiteRecoveryAgentAutoUpdateStatus? AgentAutoUpdateStatus { get; }
         /// <summary> The automation account arm id. </summary>
-        public string AutomationAccountArmId { get; }
+        public ResourceIdentifier AutomationAccountArmId { get; }
         /// <summary> A value indicating the type authentication to use for automation Account. </summary>
         public AutomationAccountAuthenticationType? AutomationAccountAuthenticationType { get; }
         /// <summary> The schedule arm name. </summary>

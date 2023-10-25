@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    /// <summary> A class representing the AvsPrivateCloudCluster data model. </summary>
+    /// <summary>
+    /// A class representing the AvsPrivateCloudCluster data model.
+    /// A cluster resource
+    /// </summary>
     public partial class AvsPrivateCloudClusterData : ResourceData
     {
         /// <summary> Initializes a new instance of AvsPrivateCloudClusterData. </summary>

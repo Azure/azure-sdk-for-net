@@ -82,7 +82,7 @@ namespace Azure.Messaging.WebPubSub.Clients
         /// <summary>
         /// The connection ID of the client. The ID is assigned when the client connects.
         /// </summary>
-        public string ConnectionId { get; }
+        public string ConnectionId => _connectionId;
 
         // Some exposed properties for testing
         internal IWebSocketClientFactory WebSocketClientFactory { get; set; }
@@ -231,9 +231,7 @@ namespace Azure.Messaging.WebPubSub.Clients
         /// Stop the client.
         /// </summary>
         /// <returns></returns>
-#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public virtual Task StopAsync()
-#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         {
             ThrowIfDisposed();
 
@@ -284,9 +282,7 @@ namespace Azure.Messaging.WebPubSub.Clients
         /// </summary>
         /// <returns></returns>
 #pragma warning disable AZC0003 // DO make service methods virtual.
-#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         public async ValueTask DisposeAsync()
-#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
 #pragma warning restore AZC0003 // DO make service methods virtual.
         {
             // Perform async cleanup.
@@ -518,8 +514,10 @@ namespace Azure.Messaging.WebPubSub.Clients
                     {
                         try
                         {
-                            var message = _protocol.ParseMessage(result.Payload);
-                            await HandleMessageAsync(message, token).ConfigureAwait(false);
+                            foreach (var message in _protocol.ParseMessage(result.Payload))
+                            {
+                                await HandleMessageAsync(message, token).ConfigureAwait(false);
+                            }
                         }
                         catch (Exception ex)
                         {

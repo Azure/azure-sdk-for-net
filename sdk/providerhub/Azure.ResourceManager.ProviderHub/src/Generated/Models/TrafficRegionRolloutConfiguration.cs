@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of TrafficRegionRolloutConfiguration. </summary>
         /// <param name="regions"></param>
         /// <param name="waitDuration"></param>
-        internal TrafficRegionRolloutConfiguration(IList<string> regions, TimeSpan? waitDuration) : base(regions)
+        internal TrafficRegionRolloutConfiguration(IList<AzureLocation> regions, TimeSpan? waitDuration) : base(regions)
         {
             WaitDuration = waitDuration;
         }

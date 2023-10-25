@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    /// <summary> The type of item included in the filter. Currently only &apos;AgentAddress&apos; is supported. </summary>
+    /// <summary> The type of item included in the filter. Currently only 'AgentAddress' is supported. </summary>
     public readonly partial struct ConnectionMonitorEndpointFilterItemType : IEquatable<ConnectionMonitorEndpointFilterItemType>
     {
         private readonly string _value;

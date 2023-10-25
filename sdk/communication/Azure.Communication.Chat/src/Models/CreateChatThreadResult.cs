@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Communication.Chat
 {
@@ -14,6 +15,12 @@ namespace Azure.Communication.Chat
         {
             ChatThread = new ChatThreadProperties(createChatThreadResultInternal.ChatThread);
             InvalidParticipants = createChatThreadResultInternal.InvalidParticipants;
+        }
+
+        internal CreateChatThreadResult(ChatThreadProperties chatThread, IEnumerable<ChatError> invalidParticipants)
+        {
+            ChatThread = chatThread;
+            InvalidParticipants = invalidParticipants?.ToList();
         }
 
         /// <summary> Chat thread. </summary>

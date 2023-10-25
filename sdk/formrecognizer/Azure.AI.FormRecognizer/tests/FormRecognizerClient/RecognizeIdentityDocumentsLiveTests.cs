@@ -2,22 +2,21 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.FormRecognizer.Models;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-/// <summary>
-/// The suite of tests for the `StartRecognizeIdentityDocuments` methods in the <see cref="FormRecognizerClient"/> class.
-/// </summary>
-/// <remarks>
-/// These tests have a dependency on live Azure services and may incur costs for the associated
-/// Azure subscription.
-/// </remarks>
 namespace Azure.AI.FormRecognizer.Tests
 {
+    /// <summary>
+    /// The suite of tests for the `StartRecognizeIdentityDocuments` methods in the <see cref="FormRecognizerClient"/> class.
+    /// </summary>
+    /// <remarks>
+    /// These tests have a dependency on live Azure services and may incur costs for the associated
+    /// Azure subscription.
+    /// </remarks>
     [ClientTestFixture(FormRecognizerClientOptions.ServiceVersion.V2_1)]
     public class RecognizeIdentityDocumentsLiveTests : FormRecognizerLiveTestBase
     {
@@ -160,20 +159,6 @@ namespace Azure.AI.FormRecognizer.Tests
             RecognizedFormCollection recognizedForms = await operation.WaitForCompletionAsync();
 
             Assert.IsEmpty(recognizedForms);
-        }
-
-        [RecordedTest]
-        public void StartRecognizeIdentityDocumentsThrowsForDamagedFile()
-        {
-            var client = CreateFormRecognizerClient();
-
-            // First 4 bytes are PDF signature, but fill the rest of the "file" with garbage.
-
-            var damagedFile = new byte[] { 0x25, 0x50, 0x44, 0x46, 0x55, 0x55, 0x55 };
-            using var stream = new MemoryStream(damagedFile);
-
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.StartRecognizeIdentityDocumentsAsync(stream));
-            Assert.AreEqual("BadArgument", ex.ErrorCode);
         }
 
         /// <summary>

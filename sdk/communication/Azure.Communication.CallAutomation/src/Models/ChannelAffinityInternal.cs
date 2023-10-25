@@ -8,10 +8,5 @@ namespace Azure.Communication.CallAutomation
     [CodeGenModel("ChannelAffinity")]
     internal partial class ChannelAffinityInternal
     {
-        /// <summary>
-        /// The identifier for the participant whose bitstream will be written to the channel.
-        /// represented by the channel number.
-        /// </summary>
-        public CommunicationIdentifierModel Participant { get; set; }
     }
 }

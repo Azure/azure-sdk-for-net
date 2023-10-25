@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
     {
         internal static AppInsightsCredentials DeserializeAppInsightsCredentials(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> appId = default;
             Optional<string> instrumentationKey = default;
             foreach (var property in element.EnumerateObject())

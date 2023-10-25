@@ -18,9 +18,9 @@ namespace Azure.Storage.Blobs
         {
             _response = response;
         }
-        /// <summary> Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob&apos;s metadata or properties, changes the last-modified time of the blob. </summary>
+        /// <summary> Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob. </summary>
         public DateTimeOffset? LastModified => _response.Headers.TryGetValue("Last-Modified", out DateTimeOffset? value) ? value : null;
-        /// <summary> The media type of the body of the response. For Get Block List this is &apos;application/xml&apos;. </summary>
+        /// <summary> The media type of the body of the response. For Get Block List this is 'application/xml'. </summary>
         public string ContentType => _response.Headers.TryGetValue("Content-Type", out string value) ? value : null;
         /// <summary> The size of the blob in bytes. </summary>
         public long? BlobContentLength => _response.Headers.TryGetValue("x-ms-blob-content-length", out long? value) ? value : null;

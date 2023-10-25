@@ -22,7 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Initializes a new instance of DWCopyCommandSettings. </summary>
         /// <param name="defaultValues"> Specifies the default values for each target column in SQL DW. The default values in the property overwrite the DEFAULT constraint set in the DB, and identity column cannot have a default value. Type: array of objects (or Expression with resultType array of objects). </param>
-        /// <param name="additionalOptions"> Additional options directly passed to SQL DW in Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: &quot;additionalOptions&quot;: { &quot;MAXERRORS&quot;: &quot;1000&quot;, &quot;DATEFORMAT&quot;: &quot;&apos;ymd&apos;&quot; }. </param>
+        /// <param name="additionalOptions"> Additional options directly passed to SQL DW in Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: "additionalOptions": { "MAXERRORS": "1000", "DATEFORMAT": "'ymd'" }. </param>
         internal DWCopyCommandSettings(IList<DWCopyCommandDefaultValue> defaultValues, IDictionary<string, string> additionalOptions)
         {
             DefaultValues = defaultValues;
@@ -31,7 +31,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Specifies the default values for each target column in SQL DW. The default values in the property overwrite the DEFAULT constraint set in the DB, and identity column cannot have a default value. Type: array of objects (or Expression with resultType array of objects). </summary>
         public IList<DWCopyCommandDefaultValue> DefaultValues { get; }
-        /// <summary> Additional options directly passed to SQL DW in Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: &quot;additionalOptions&quot;: { &quot;MAXERRORS&quot;: &quot;1000&quot;, &quot;DATEFORMAT&quot;: &quot;&apos;ymd&apos;&quot; }. </summary>
+        /// <summary> Additional options directly passed to SQL DW in Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: "additionalOptions": { "MAXERRORS": "1000", "DATEFORMAT": "'ymd'" }. </summary>
         public IDictionary<string, string> AdditionalOptions { get; }
     }
 }

@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridContainerService
 {
-    /// <summary> A class representing the StorageSpace data model. </summary>
+    /// <summary>
+    /// A class representing the StorageSpace data model.
+    /// The storageSpaces resource definition.
+    /// </summary>
     public partial class StorageSpaceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of StorageSpaceData. </summary>

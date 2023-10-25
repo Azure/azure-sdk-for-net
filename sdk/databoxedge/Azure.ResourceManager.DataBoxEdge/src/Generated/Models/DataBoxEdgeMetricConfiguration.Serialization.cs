@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static DataBoxEdgeMetricConfiguration DeserializeDataBoxEdgeMetricConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier resourceId = default;
             Optional<string> mdmAccount = default;
             Optional<string> metricNameSpace = default;

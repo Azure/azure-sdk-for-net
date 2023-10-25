@@ -14,7 +14,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             Assert.IsNotNull(labelValue);
             var testValue1 = new LabelValue(null);
             Assert.AreEqual(labelValue, testValue1);
-            var testValue2 = new LabelValue();
+            var testValue2 = new LabelValue(null);
             Assert.AreEqual(labelValue, testValue2);
         }
 
@@ -22,16 +22,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         public void LabelValueAcceptsInt16()
         {
             short input = 1;
-            var labelValue = new LabelValue(input);
-            Assert.IsNotNull(labelValue);
-            var testValue = new LabelValue(input);
-            Assert.AreEqual(labelValue, testValue);
-        }
-
-        [Test]
-        public void LabelValueAcceptsUInt16()
-        {
-            ushort input = 1;
             var labelValue = new LabelValue(input);
             Assert.IsNotNull(labelValue);
             var testValue = new LabelValue(input);
@@ -49,29 +39,9 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         }
 
         [Test]
-        public void LabelValueAcceptsUInt32()
-        {
-            uint input = 1;
-            var labelValue = new LabelValue(input);
-            Assert.IsNotNull(labelValue);
-            var testValue = new LabelValue(input);
-            Assert.AreEqual(labelValue, testValue);
-        }
-
-        [Test]
         public void LabelValueAcceptsInt64()
         {
             long input = 1;
-            var labelValue = new LabelValue(input);
-            Assert.IsNotNull(labelValue);
-            var testValue = new LabelValue(input);
-            Assert.AreEqual(labelValue, testValue);
-        }
-
-        [Test]
-        public void LabelValueAcceptsUInt64()
-        {
-            ulong input = 1;
             var labelValue = new LabelValue(input);
             Assert.IsNotNull(labelValue);
             var testValue = new LabelValue(input);
@@ -109,16 +79,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         }
 
         [Test]
-        public void LabelValueAcceptsChar()
-        {
-            char input = '1';
-            var labelValue = new LabelValue(input);
-            Assert.IsNotNull(labelValue);
-            var testValue = new LabelValue(input);
-            Assert.AreEqual(labelValue, testValue);
-        }
-
-        [Test]
         public void LabelValueAcceptsString()
         {
             string input = "1";
@@ -137,6 +97,14 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             Assert.IsNotNull(labelValue);
             var testValue = new LabelValue(input);
             Assert.AreEqual(labelValue, testValue);
+        }
+
+        [Test]
+        public void LabelValueOverrideToString()
+        {
+            string input = "1";
+            var labelValue = new LabelValue(input);
+            Assert.AreEqual(labelValue.ToString(), labelValue.Value.ToString());
         }
     }
 }

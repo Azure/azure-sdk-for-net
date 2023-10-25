@@ -21,7 +21,7 @@ namespace Azure.AI.TextAnalytics.Legacy
 
         /// <summary> Initializes a new instance of HealthcareLinkingProperties. </summary>
         /// <param name="assertion"></param>
-        /// <param name="name"> Preferred name for the entity. Example: &apos;histologically&apos; would have a &apos;name&apos; of &apos;histologic&apos;. </param>
+        /// <param name="name"> Preferred name for the entity. Example: 'histologically' would have a 'name' of 'histologic'. </param>
         /// <param name="links"> Entity references in known data sources. </param>
         internal HealthcareLinkingProperties(HealthcareAssertion assertion, string name, IReadOnlyList<HealthcareEntityLink> links)
         {
@@ -32,7 +32,7 @@ namespace Azure.AI.TextAnalytics.Legacy
 
         /// <summary> Gets the assertion. </summary>
         public HealthcareAssertion Assertion { get; }
-        /// <summary> Preferred name for the entity. Example: &apos;histologically&apos; would have a &apos;name&apos; of &apos;histologic&apos;. </summary>
+        /// <summary> Preferred name for the entity. Example: 'histologically' would have a 'name' of 'histologic'. </summary>
         public string Name { get; }
         /// <summary> Entity references in known data sources. </summary>
         public IReadOnlyList<HealthcareEntityLink> Links { get; }

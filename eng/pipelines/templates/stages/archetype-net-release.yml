@@ -6,6 +6,7 @@ parameters:
   DevOpsFeedId: '29ec6040-b234-4e31-b139-33dc4287b756/fa8c16a3-dbe0-4de2-a297-03065ec1ba3f'
   TargetDocRepoOwner: 'not-specified'
   TargetDocRepoName: 'not-specified'
+  Environment: nuget
 stages:
   - stage: Signing
     dependsOn: ${{parameters.DependsOn}}
@@ -14,7 +15,7 @@ stages:
         environment: esrp
         pool:
           name: azsdk-pool-mms-win-2022-general
-          vmImage: MMS2022
+          vmImage: windows-2022
 
         strategy:
           runOnce:
@@ -49,11 +50,11 @@ stages:
               - deployment: TagRepository
                 displayName: "Create release tag"
                 condition: ne(variables['Skip.TagRepository'], 'true')
-                environment: github
+                environment: ${{parameters.Environment}}
 
                 pool:
                   name: azsdk-pool-mms-win-2022-general
-                  vmImage: MMS2022
+                  vmImage: windows-2022
 
                 strategy:
                   runOnce:
@@ -96,7 +97,7 @@ stages:
               - deployment: PublishPackage
                 displayName: Publish package to Nuget.org and DevOps Feed
                 condition: and(succeeded(), ne(variables['Skip.PublishPackage'], 'true'))
-                environment: nuget
+                environment: ${{parameters.Environment}}
                 dependsOn: TagRepository
 
                 pool:
@@ -126,12 +127,12 @@ stages:
               - deployment: UploadSymbols
                 displayName: Upload Symbols to Symbols Server
                 condition: and(succeeded(), ne(variables['Skip.SymbolsUpload'], 'true'))
-                environment: nuget
+                environment: ${{parameters.Environment}}
                 dependsOn: PublishPackage
 
                 pool:
                   name: azsdk-pool-mms-win-2022-general
-                  vmImage: MMS2022
+                  vmImage: windows-2022
 
                 strategy:
                   runOnce:
@@ -153,7 +154,7 @@ stages:
               - deployment: PublicDocsMS
                 displayName: Publish to Docs.MS
                 condition: and(succeeded(), ne(variables['Skip.PublishDocs'], 'true'))
-                environment: githubio
+                environment: ${{parameters.Environment}}
                 dependsOn: PublishPackage
 
                 pool:
@@ -186,12 +187,12 @@ stages:
               - deployment: PublishDocs
                 displayName: Publish Docs to GitHub pages
                 condition: and(succeeded(), ne(variables['Skip.PublishDocs'], 'true'))
-                environment: githubio
+                environment: ${{parameters.Environment}}
                 dependsOn: PublishPackage
 
                 pool:
                   name: azsdk-pool-mms-win-2022-general
-                  vmImage: MMS2022
+                  vmImage: windows-2022
 
                 strategy:
                   runOnce:
@@ -212,12 +213,12 @@ stages:
               - deployment: UpdatePackageVersion
                 displayName: "Update Package Version"
                 condition: and(succeeded(), ne(variables['Skip.UpdatePackageVersion'], 'true'))
-                environment: github
+                environment: ${{parameters.Environment}}
                 dependsOn: PublishPackage
 
                 pool:
                   name: azsdk-pool-mms-win-2022-general
-                  vmImage: MMS2022
+                  vmImage: windows-2022
 
                 strategy:
                   runOnce:
@@ -236,7 +237,6 @@ stages:
                             PRBranchName: increment-package-version-${{ parameters.ServiceDirectory }}-$(Build.BuildId)
                             CommitMsg: "Increment package version after release of ${{ artifact.name }}"
                             PRTitle: "Increment version for ${{ parameters.ServiceDirectory }} releases"
-                            PRLabels: "auto-merge"
                             CloseAfterOpenForTesting: '${{ parameters.TestPipeline }}'
 
             - ${{if ne(artifact.skipSmokeTests, 'true')}}:
@@ -255,7 +255,7 @@ stages:
       displayName: Publish package to daily feed
       pool:
         name: azsdk-pool-mms-win-2022-general
-        vmImage: MMS2022
+        vmImage: windows-2022
       steps:
       - checkout: none
       - template: tools/clone-buildtools/clone-buildtools.yml@azure-sdk-build-tools

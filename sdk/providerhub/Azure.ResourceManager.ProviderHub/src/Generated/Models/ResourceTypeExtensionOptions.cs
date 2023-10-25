@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> Initializes a new instance of ResourceTypeExtensionOptions. </summary>
         /// <param name="resourceCreationBegin"></param>
-        internal ResourceTypeExtensionOptions(ResourceTypeExtensionOptionsResourceCreationBegin resourceCreationBegin)
+        internal ResourceTypeExtensionOptions(ExtensionOptions resourceCreationBegin)
         {
             ResourceCreationBegin = resourceCreationBegin;
         }
 
         /// <summary> Gets or sets the resource creation begin. </summary>
-        public ResourceTypeExtensionOptionsResourceCreationBegin ResourceCreationBegin { get; set; }
+        public ExtensionOptions ResourceCreationBegin { get; set; }
     }
 }

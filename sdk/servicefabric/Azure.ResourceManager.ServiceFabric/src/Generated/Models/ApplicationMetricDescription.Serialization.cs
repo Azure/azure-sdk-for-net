@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static ApplicationMetricDescription DeserializeApplicationMetricDescription(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<long> maximumCapacity = default;
             Optional<long> reservationCapacity = default;
@@ -55,7 +59,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maximumCapacity = property.Value.GetInt64();
@@ -65,7 +68,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     reservationCapacity = property.Value.GetInt64();
@@ -75,7 +77,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     totalApplicationCapacity = property.Value.GetInt64();

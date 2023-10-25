@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServices
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-01-01";
+            _apiVersion = apiVersion ?? "2023-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <summary>
         /// API to check for resource name availability.
         /// A name is available if no other resource exists that has the same SubscriptionId, Resource Name and Type
-        /// or if one or more such resources exist, each of these must be GC&apos;d and their time of deletion be more than 24 Hours Ago
+        /// or if one or more such resources exist, each of these must be GC'd and their time of deletion be more than 24 Hours Ago
         /// </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <summary>
         /// API to check for resource name availability.
         /// A name is available if no other resource exists that has the same SubscriptionId, Resource Name and Type
-        /// or if one or more such resources exist, each of these must be GC&apos;d and their time of deletion be more than 24 Hours Ago
+        /// or if one or more such resources exist, each of these must be GC'd and their time of deletion be more than 24 Hours Ago
         /// </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>

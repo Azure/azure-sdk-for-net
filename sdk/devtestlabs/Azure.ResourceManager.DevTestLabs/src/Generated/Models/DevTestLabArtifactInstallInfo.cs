@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <summary> Initializes a new instance of DevTestLabArtifactInstallInfo. </summary>
-        /// <param name="artifactId"> The artifact&apos;s identifier. </param>
-        /// <param name="artifactTitle"> The artifact&apos;s title. </param>
+        /// <param name="artifactId"> The artifact's identifier. </param>
+        /// <param name="artifactTitle"> The artifact's title. </param>
         /// <param name="parameters"> The parameters of the artifact. </param>
         /// <param name="status"> The status of the artifact. </param>
         /// <param name="deploymentStatusMessage"> The status message from the deployment. </param>
@@ -39,9 +39,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             InstallOn = installOn;
         }
 
-        /// <summary> The artifact&apos;s identifier. </summary>
+        /// <summary> The artifact's identifier. </summary>
         public string ArtifactId { get; set; }
-        /// <summary> The artifact&apos;s title. </summary>
+        /// <summary> The artifact's title. </summary>
         public string ArtifactTitle { get; set; }
         /// <summary> The parameters of the artifact. </summary>
         public IList<DevTestLabArtifactParameter> Parameters { get; }

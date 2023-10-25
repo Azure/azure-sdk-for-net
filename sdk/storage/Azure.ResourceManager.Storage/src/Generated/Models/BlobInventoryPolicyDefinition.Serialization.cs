@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static BlobInventoryPolicyDefinition DeserializeBlobInventoryPolicyDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BlobInventoryPolicyFilter> filters = default;
             BlobInventoryPolicyFormat format = default;
             BlobInventoryPolicySchedule schedule = default;
@@ -50,7 +54,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     filters = BlobInventoryPolicyFilter.DeserializeBlobInventoryPolicyFilter(property.Value);

@@ -25,13 +25,23 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("mountPath"u8);
                 writer.WriteStringValue(MountPath);
             }
+            if (Optional.IsDefined(SubPath))
+            {
+                writer.WritePropertyName("subPath"u8);
+                writer.WriteStringValue(SubPath);
+            }
             writer.WriteEndObject();
         }
 
         internal static ContainerAppVolumeMount DeserializeContainerAppVolumeMount(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> volumeName = default;
             Optional<string> mountPath = default;
+            Optional<string> subPath = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("volumeName"u8))
@@ -44,8 +54,13 @@ namespace Azure.ResourceManager.AppContainers.Models
                     mountPath = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("subPath"u8))
+                {
+                    subPath = property.Value.GetString();
+                    continue;
+                }
             }
-            return new ContainerAppVolumeMount(volumeName.Value, mountPath.Value);
+            return new ContainerAppVolumeMount(volumeName.Value, mountPath.Value, subPath.Value);
         }
     }
 }

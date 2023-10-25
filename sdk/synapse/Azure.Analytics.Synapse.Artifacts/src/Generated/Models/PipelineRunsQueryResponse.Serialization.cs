@@ -18,6 +18,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static PipelineRunsQueryResponse DeserializePipelineRunsQueryResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<PipelineRun> value = default;
             Optional<string> continuationToken = default;
             foreach (var property in element.EnumerateObject())

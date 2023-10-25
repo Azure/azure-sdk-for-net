@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         /// <summary> Initializes a new instance of AppPlatformAppProperties. </summary>
         /// <param name="isPublic"> Indicates whether the App exposes public endpoint. </param>
-        /// <param name="uri"> URL of the App. </param>
+        /// <param name="uriString"> URL of the App. </param>
         /// <param name="addonConfigs"> Collection of addons. </param>
         /// <param name="provisioningState"> Provisioning state of the App. </param>
         /// <param name="fqdn"> Fully qualified dns Name. </param>
@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="loadedCertificates"> Collection of loaded certificates. </param>
         /// <param name="vnetAddons"> Additional App settings in vnet injection instance. </param>
         /// <param name="ingressSettings"> App ingress settings payload. </param>
-        internal AppPlatformAppProperties(bool? isPublic, Uri uri, IDictionary<string, IDictionary<string, BinaryData>> addonConfigs, AppPlatformAppProvisioningState? provisioningState, string fqdn, bool? isHttpsOnly, AppTemporaryDisk temporaryDisk, AppPersistentDisk persistentDisk, IList<AppCustomPersistentDisk> customPersistentDisks, bool? isEndToEndTlsEnabled, IList<AppLoadedCertificate> loadedCertificates, AppVnetAddons vnetAddons, AppIngressSettings ingressSettings)
+        internal AppPlatformAppProperties(bool? isPublic, string uriString, IDictionary<string, IDictionary<string, BinaryData>> addonConfigs, AppPlatformAppProvisioningState? provisioningState, string fqdn, bool? isHttpsOnly, AppTemporaryDisk temporaryDisk, AppPersistentDisk persistentDisk, IList<AppCustomPersistentDisk> customPersistentDisks, bool? isEndToEndTlsEnabled, IList<AppLoadedCertificate> loadedCertificates, AppVnetAddons vnetAddons, AppIngressSettings ingressSettings)
         {
             IsPublic = isPublic;
-            Uri = uri;
+            UriString = uriString;
             AddonConfigs = addonConfigs;
             ProvisioningState = provisioningState;
             Fqdn = fqdn;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Indicates whether the App exposes public endpoint. </summary>
         public bool? IsPublic { get; set; }
         /// <summary> URL of the App. </summary>
-        public Uri Uri { get; }
+        public string UriString { get; }
         /// <summary> Collection of addons. </summary>
         public IDictionary<string, IDictionary<string, BinaryData>> AddonConfigs { get; }
         /// <summary> Provisioning state of the App. </summary>

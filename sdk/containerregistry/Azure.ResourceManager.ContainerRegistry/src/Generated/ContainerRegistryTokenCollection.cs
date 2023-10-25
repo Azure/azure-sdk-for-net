@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             try
             {
                 var response = await _containerRegistryTokenTokensRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tokenName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerRegistryArmOperation<ContainerRegistryTokenResource>(new ContainerRegistryTokenOperationSource(Client), _containerRegistryTokenTokensClientDiagnostics, Pipeline, _containerRegistryTokenTokensRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tokenName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ContainerRegistryArmOperation<ContainerRegistryTokenResource>(new ContainerRegistryTokenOperationSource(Client), _containerRegistryTokenTokensClientDiagnostics, Pipeline, _containerRegistryTokenTokensRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tokenName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             try
             {
                 var response = _containerRegistryTokenTokensRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tokenName, data, cancellationToken);
-                var operation = new ContainerRegistryArmOperation<ContainerRegistryTokenResource>(new ContainerRegistryTokenOperationSource(Client), _containerRegistryTokenTokensClientDiagnostics, Pipeline, _containerRegistryTokenTokensRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tokenName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new ContainerRegistryArmOperation<ContainerRegistryTokenResource>(new ContainerRegistryTokenOperationSource(Client), _containerRegistryTokenTokensClientDiagnostics, Pipeline, _containerRegistryTokenTokensRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tokenName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerRegistryTokenTokensRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerRegistryTokenTokensRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerRegistryTokenResource(Client, ContainerRegistryTokenData.DeserializeContainerRegistryTokenData(e)), _containerRegistryTokenTokensClientDiagnostics, Pipeline, "ContainerRegistryTokenCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerRegistryTokenResource(Client, ContainerRegistryTokenData.DeserializeContainerRegistryTokenData(e)), _containerRegistryTokenTokensClientDiagnostics, Pipeline, "ContainerRegistryTokenCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +250,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerRegistryTokenTokensRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerRegistryTokenTokensRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerRegistryTokenResource(Client, ContainerRegistryTokenData.DeserializeContainerRegistryTokenData(e)), _containerRegistryTokenTokensClientDiagnostics, Pipeline, "ContainerRegistryTokenCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerRegistryTokenResource(Client, ContainerRegistryTokenData.DeserializeContainerRegistryTokenData(e)), _containerRegistryTokenTokensClientDiagnostics, Pipeline, "ContainerRegistryTokenCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -314,6 +315,80 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 var response = _containerRegistryTokenTokensRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tokenName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/tokens/{tokenName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Tokens_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tokenName"> The name of the token. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="tokenName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tokenName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ContainerRegistryTokenResource>> GetIfExistsAsync(string tokenName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(tokenName, nameof(tokenName));
+
+            using var scope = _containerRegistryTokenTokensClientDiagnostics.CreateScope("ContainerRegistryTokenCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _containerRegistryTokenTokensRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tokenName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ContainerRegistryTokenResource>(response.GetRawResponse());
+                return Response.FromValue(new ContainerRegistryTokenResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/tokens/{tokenName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Tokens_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tokenName"> The name of the token. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="tokenName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tokenName"/> is null. </exception>
+        public virtual NullableResponse<ContainerRegistryTokenResource> GetIfExists(string tokenName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(tokenName, nameof(tokenName));
+
+            using var scope = _containerRegistryTokenTokensClientDiagnostics.CreateScope("ContainerRegistryTokenCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _containerRegistryTokenTokensRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tokenName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ContainerRegistryTokenResource>(response.GetRawResponse());
+                return Response.FromValue(new ContainerRegistryTokenResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -58,6 +58,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static StorageAccountNetworkRuleSet DeserializeStorageAccountNetworkRuleSet(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StorageNetworkBypass> bypass = default;
             Optional<IList<StorageAccountResourceAccessRule>> resourceAccessRules = default;
             Optional<IList<StorageAccountVirtualNetworkRule>> virtualNetworkRules = default;
@@ -69,7 +73,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     bypass = new StorageNetworkBypass(property.Value.GetString());
@@ -79,7 +82,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<StorageAccountResourceAccessRule> array = new List<StorageAccountResourceAccessRule>();
@@ -94,7 +96,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<StorageAccountVirtualNetworkRule> array = new List<StorageAccountVirtualNetworkRule>();
@@ -109,7 +110,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<StorageAccountIPRule> array = new List<StorageAccountIPRule>();

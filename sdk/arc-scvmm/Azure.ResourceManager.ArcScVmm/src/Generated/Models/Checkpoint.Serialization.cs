@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.ArcScVmm.Models
 
         internal static Checkpoint DeserializeCheckpoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> parentCheckpointId = default;
             Optional<string> checkpointId = default;
             Optional<string> name = default;

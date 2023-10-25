@@ -24,13 +24,20 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(CertificateIssuerThumbprint);
 #else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(CertificateIssuerThumbprint.ToString()).RootElement);
+            using (JsonDocument document = JsonDocument.Parse(CertificateIssuerThumbprint))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
 #endif
             writer.WriteEndObject();
         }
 
         internal static ClusterClientCertificateCommonName DeserializeClusterClientCertificateCommonName(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool isAdmin = default;
             string certificateCommonName = default;
             BinaryData certificateIssuerThumbprint = default;

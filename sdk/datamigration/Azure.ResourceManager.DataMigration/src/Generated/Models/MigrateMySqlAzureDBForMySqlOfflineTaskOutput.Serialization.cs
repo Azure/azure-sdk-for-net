@@ -13,6 +13,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static MigrateMySqlAzureDBForMySqlOfflineTaskOutput DeserializeMigrateMySqlAzureDBForMySqlOfflineTaskOutput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("resultType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

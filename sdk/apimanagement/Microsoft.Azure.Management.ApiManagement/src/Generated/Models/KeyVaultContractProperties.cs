@@ -33,9 +33,9 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// fetching secret. Providing a versioned secret will prevent
         /// auto-refresh. This requires API Management service to be configured
         /// with aka.ms/apimmsi</param>
-        /// <param name="identityClientId">SystemAssignedIdentity or
-        /// UserAssignedIdentity Client Id which will be used to access key
-        /// vault secret.</param>
+        /// <param name="identityClientId">Null for SystemAssignedIdentity or
+        /// Client Id for UserAssignedIdentity , which will be used to access
+        /// key vault secret.</param>
         /// <param name="lastStatus">Last time sync and refresh status of
         /// secret from key vault.</param>
         public KeyVaultContractProperties(string secretIdentifier = default(string), string identityClientId = default(string), KeyVaultLastAccessStatusContractProperties lastStatus = default(KeyVaultLastAccessStatusContractProperties))

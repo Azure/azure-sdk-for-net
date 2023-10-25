@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.StorageSync.Models
     {
         internal static CloudEndpointAfsShareMetadataCertificatePublicKeys DeserializeCloudEndpointAfsShareMetadataCertificatePublicKeys(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> firstKey = default;
             Optional<string> secondKey = default;
             foreach (var property in element.EnumerateObject())

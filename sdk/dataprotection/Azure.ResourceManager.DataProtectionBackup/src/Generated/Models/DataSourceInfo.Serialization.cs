@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -43,23 +42,33 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Optional.IsDefined(ResourceUri))
+            if (Optional.IsDefined(ResourceUriString))
             {
                 writer.WritePropertyName("resourceUri"u8);
-                writer.WriteStringValue(ResourceUri.AbsoluteUri);
+                writer.WriteStringValue(ResourceUriString);
+            }
+            if (Optional.IsDefined(ResourceProperties))
+            {
+                writer.WritePropertyName("resourceProperties"u8);
+                writer.WriteObjectValue(ResourceProperties);
             }
             writer.WriteEndObject();
         }
 
         internal static DataSourceInfo DeserializeDataSourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> datasourceType = default;
             Optional<string> objectType = default;
             ResourceIdentifier resourceId = default;
             Optional<AzureLocation> resourceLocation = default;
             Optional<string> resourceName = default;
             Optional<ResourceType> resourceType = default;
-            Optional<Uri> resourceUri = default;
+            Optional<string> resourceUri = default;
+            Optional<BaseResourceProperties> resourceProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("datasourceType"u8))
@@ -81,7 +90,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resourceLocation = new AzureLocation(property.Value.GetString());
@@ -96,7 +104,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resourceType = new ResourceType(property.Value.GetString());
@@ -104,16 +111,20 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (property.NameEquals("resourceUri"u8))
                 {
+                    resourceUri = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("resourceProperties"u8))
+                {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        resourceUri = null;
                         continue;
                     }
-                    resourceUri = new Uri(property.Value.GetString());
+                    resourceProperties = BaseResourceProperties.DeserializeBaseResourceProperties(property.Value);
                     continue;
                 }
             }
-            return new DataSourceInfo(datasourceType.Value, objectType.Value, resourceId, Optional.ToNullable(resourceLocation), resourceName.Value, Optional.ToNullable(resourceType), resourceUri.Value);
+            return new DataSourceInfo(datasourceType.Value, objectType.Value, resourceId, Optional.ToNullable(resourceLocation), resourceName.Value, Optional.ToNullable(resourceType), resourceUri.Value, resourceProperties.Value);
         }
     }
 }

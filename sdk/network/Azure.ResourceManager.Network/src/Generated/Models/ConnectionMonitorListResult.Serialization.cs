@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static ConnectionMonitorListResult DeserializeConnectionMonitorListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ConnectionMonitorData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ConnectionMonitorData> array = new List<ConnectionMonitorData>();

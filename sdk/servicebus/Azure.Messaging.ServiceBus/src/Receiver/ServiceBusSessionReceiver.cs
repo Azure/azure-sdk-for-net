@@ -2,10 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Core.Shared;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
 
@@ -146,9 +148,9 @@ namespace Azure.Messaging.ServiceBus
             _connection.ThrowIfClosed();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.GetSessionStateStart(Identifier, SessionId);
-            using DiagnosticScope scope = ScopeFactory.CreateScope(
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope(
                 DiagnosticProperty.GetSessionStateActivityName,
-                DiagnosticScope.ActivityKind.Client);
+                ActivityKind.Client);
             scope.Start();
 
             BinaryData sessionState;
@@ -190,9 +192,9 @@ namespace Azure.Messaging.ServiceBus
             _connection.ThrowIfClosed();
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.SetSessionStateStart(Identifier, SessionId);
-            using DiagnosticScope scope = ScopeFactory.CreateScope(
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope(
                 DiagnosticProperty.SetSessionStateActivityName,
-                DiagnosticScope.ActivityKind.Client);
+                ActivityKind.Client);
             scope.Start();
 
             try
@@ -234,9 +236,9 @@ namespace Azure.Messaging.ServiceBus
             Argument.AssertNotDisposed(IsDisposed, nameof(ServiceBusSessionReceiver));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
             Logger.RenewSessionLockStart(Identifier, SessionId);
-            using DiagnosticScope scope = ScopeFactory.CreateScope(
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope(
                 DiagnosticProperty.RenewSessionLockActivityName,
-                DiagnosticScope.ActivityKind.Client);
+                ActivityKind.Client);
             scope.Start();
 
             try

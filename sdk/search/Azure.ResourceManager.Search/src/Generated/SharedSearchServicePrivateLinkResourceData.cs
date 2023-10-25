@@ -11,7 +11,10 @@ using Azure.ResourceManager.Search.Models;
 
 namespace Azure.ResourceManager.Search
 {
-    /// <summary> A class representing the SharedSearchServicePrivateLinkResource data model. </summary>
+    /// <summary>
+    /// A class representing the SharedSearchServicePrivateLinkResource data model.
+    /// Describes a Shared Private Link Resource managed by the Azure Cognitive Search service.
+    /// </summary>
     public partial class SharedSearchServicePrivateLinkResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of SharedSearchServicePrivateLinkResourceData. </summary>

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.TestFramework
         private ResourceType _resourceType;
         protected string ApiVersion { get; }
 
-        protected ManagementRecordedTestBase(bool isAsync, RecordedTestMode? mode = default, bool ignoreArmCoreDependencyVersions = true)
+        protected ManagementRecordedTestBase(bool isAsync, RecordedTestMode? mode = default)
             : base(isAsync, mode)
         {
             AdditionalInterceptors = new[] { new ManagementInterceptor(this) };
@@ -47,14 +47,11 @@ namespace Azure.ResourceManager.TestFramework
             SessionEnvironment = new TEnvironment();
             SessionEnvironment.Mode = Mode;
             Initialize();
-            if (ignoreArmCoreDependencyVersions)
-            {
-                IgnoreArmCoreDependencyVersions();
-            }
+            IgnoredQueryParameters.Add("api-version");
         }
 
-        protected ManagementRecordedTestBase(bool isAsync, ResourceType resourceType, string apiVersion, RecordedTestMode? mode = default, bool ignoreArmCoreDependencyVersions = true)
-            : this(isAsync, mode, ignoreArmCoreDependencyVersions)
+        protected ManagementRecordedTestBase(bool isAsync, ResourceType resourceType, string apiVersion, RecordedTestMode? mode = default)
+            : this(isAsync, mode)
         {
             _resourceType = resourceType;
             ApiVersion = apiVersion;
@@ -71,32 +68,33 @@ namespace Azure.ResourceManager.TestFramework
             _waitForCleanup = Mode == RecordedTestMode.Live ? WaitUntil.Completed : WaitUntil.Started;
         }
 
-        private void IgnoreArmCoreDependencyVersions()
+        protected void IgnoreNetworkDependencyVersions()
         {
-            // Ignore the api-version of resource group operations
+            // Ignore the api-version of Network operations
             UriRegexSanitizers.Add(new UriRegexSanitizer(
-                @"/resourcegroups/[^/]+api-version=(?<group>[a-z0-9-]+)", "**"
+                @"/providers\/Microsoft.Network\/(.*?)\?api-version=(?<group>[a-z0-9-]+)", "**"
             )
             {
                 GroupForReplace = "group"
             });
-            // Ignore the api-version of LRO query status operation for resource group deletion
+        }
+
+        protected void IgnoreKeyVaultDependencyVersions()
+        {
+            // Ignore the api-version of KeyVault operations
             UriRegexSanitizers.Add(new UriRegexSanitizer(
-                @"/subscriptions/[^/]+/operationresults/[^/]+api-version=(?<group>[a-z0-9-]+)", "**"
+                @"/providers\/Microsoft.KeyVault\/(.*?)\?api-version=(?<group>[a-z0-9-]+)", "**"
             )
             {
                 GroupForReplace = "group"
             });
-            // Ignore the api-version of TagResource operations
+        }
+
+        protected void IgnoreManagedIdentityDependencyVersions()
+        {
+            // Ignore the api-version of ManagedIdentity operations
             UriRegexSanitizers.Add(new UriRegexSanitizer(
-                @"/providers/Microsoft.Resources/tags/default\?api-version=(?<group>[a-z0-9-]+)", "**"
-            )
-            {
-                GroupForReplace = "group"
-            });
-            // Ignore the api-version of the operation to query resource providers
-            UriRegexSanitizers.Add(new UriRegexSanitizer(
-                @"/providers/([^/]+)api-version=(?<group>[a-z0-9-]+)", "**"
+                @"/providers\/Microsoft.ManagedIdentity\/(.*?)\?api-version=(?<group>[a-z0-9-]+)", "**"
             )
             {
                 GroupForReplace = "group"
@@ -110,7 +108,7 @@ namespace Azure.ResourceManager.TestFramework
                 return new ArmClient(
                     TestEnvironment.Credential,
                     TestEnvironment.SubscriptionId,
-                    new ArmClientOptions() { Environment = GetEnvironment(TestEnvironment.ResourceManagerUrl) });
+                    new ArmClientOptions() { Environment = GetArmEnvironment(TestEnvironment) });
             }
             return null;
         }
@@ -120,7 +118,7 @@ namespace Azure.ResourceManager.TestFramework
         protected ArmClient GetArmClient(ArmClientOptions clientOptions = default, string subscriptionId = default, bool enableDeleteAfter = false)
         {
             var options = InstrumentClientOptions(clientOptions ?? new ArmClientOptions());
-            options.Environment = GetEnvironment(TestEnvironment.ResourceManagerUrl);
+            options.Environment = GetArmEnvironment(TestEnvironment);
             options.AddPolicy(ResourceGroupCleanupPolicy, HttpPipelinePosition.PerCall);
             options.AddPolicy(ManagementGroupCleanupPolicy, HttpPipelinePosition.PerCall);
             options.AddPolicy(NullFilterPolicy, HttpPipelinePosition.PerRetry);
@@ -138,8 +136,9 @@ namespace Azure.ResourceManager.TestFramework
                 options), new IInterceptor[] { new ManagementInterceptor(this) });
         }
 
-        private ArmEnvironment GetEnvironment(string endpoint)
+        private ArmEnvironment GetArmEnvironment(TestEnvironment environment)
         {
+            var endpoint = environment.ResourceManagerUrl;
             if (string.IsNullOrEmpty(endpoint))
             {
                 return ArmEnvironment.AzurePublicCloud;
@@ -159,7 +158,7 @@ namespace Azure.ResourceManager.TestFramework
             if (baseUri == ArmEnvironment.AzureGovernment.Endpoint)
                 return ArmEnvironment.AzureGovernment;
 
-            return new ArmEnvironment(new Uri(endpoint), TestEnvironment.ServiceManagementUrl ?? $"{endpoint}/.default");
+            return new ArmEnvironment(new Uri(endpoint), SessionEnvironment.ServiceManagementUrl ?? $"{endpoint}/.default");
         }
 
         [SetUp]
@@ -242,7 +241,7 @@ namespace Azure.ResourceManager.TestFramework
             var options = InstrumentClientOptions(new ArmClientOptions(), SessionRecording);
             options.AddPolicy(OneTimeResourceGroupCleanupPolicy, HttpPipelinePosition.PerCall);
             options.AddPolicy(OneTimeManagementGroupCleanupPolicy, HttpPipelinePosition.PerCall);
-            options.Environment = GetEnvironment(SessionEnvironment.ResourceManagerUrl);
+            options.Environment = GetArmEnvironment(SessionEnvironment);
 
             GlobalClient = InstrumentClient(new ArmClient(
                 SessionEnvironment.Credential,

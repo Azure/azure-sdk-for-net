@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static SoftwareUpdateConfigurationTasks DeserializeSoftwareUpdateConfigurationTasks(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SoftwareUpdateConfigurationTaskProperties> preTask = default;
             Optional<SoftwareUpdateConfigurationTaskProperties> postTask = default;
             foreach (var property in element.EnumerateObject())
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.Automation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     preTask = SoftwareUpdateConfigurationTaskProperties.DeserializeSoftwareUpdateConfigurationTaskProperties(property.Value);
@@ -48,7 +51,6 @@ namespace Azure.ResourceManager.Automation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     postTask = SoftwareUpdateConfigurationTaskProperties.DeserializeSoftwareUpdateConfigurationTaskProperties(property.Value);

@@ -16,7 +16,11 @@ namespace Azure.AI.AnomalyDetector
     {
         internal static AnomalyDetectionModel DeserializeAnomalyDetectionModel(JsonElement element)
         {
-            string modelId = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Guid modelId = default;
             DateTimeOffset createdTime = default;
             DateTimeOffset lastUpdatedTime = default;
             Optional<ModelInfo> modelInfo = default;
@@ -24,7 +28,7 @@ namespace Azure.AI.AnomalyDetector
             {
                 if (property.NameEquals("modelId"u8))
                 {
-                    modelId = property.Value.GetString();
+                    modelId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("createdTime"u8))
@@ -41,14 +45,13 @@ namespace Azure.AI.AnomalyDetector
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     modelInfo = ModelInfo.DeserializeModelInfo(property.Value);
                     continue;
                 }
             }
-            return new AnomalyDetectionModel(modelId, createdTime, lastUpdatedTime, modelInfo);
+            return new AnomalyDetectionModel(modelId, createdTime, lastUpdatedTime, modelInfo.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

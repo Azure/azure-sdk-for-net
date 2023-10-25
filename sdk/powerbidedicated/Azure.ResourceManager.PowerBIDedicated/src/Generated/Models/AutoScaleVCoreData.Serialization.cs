@@ -55,6 +55,10 @@ namespace Azure.ResourceManager.PowerBIDedicated
 
         internal static AutoScaleVCoreData DeserializeAutoScaleVCoreData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AutoScaleVCoreSku sku = default;
             Optional<string> id = default;
             Optional<string> name = default;
@@ -96,7 +100,6 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -111,7 +114,6 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = SystemData.DeserializeSystemData(property.Value);
@@ -130,7 +132,6 @@ namespace Azure.ResourceManager.PowerBIDedicated
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             capacityLimit = property0.Value.GetInt32();
@@ -145,7 +146,6 @@ namespace Azure.ResourceManager.PowerBIDedicated
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new VCoreProvisioningState(property0.Value.GetString());

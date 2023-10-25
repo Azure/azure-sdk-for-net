@@ -38,18 +38,34 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("resource"u8);
-                writer.WriteStringValue(Resource);
+                writer.WriteObjectValue(Resource);
+            }
+            if (Optional.IsDefined(UserTenant))
+            {
+                writer.WritePropertyName("userTenant"u8);
+                writer.WriteObjectValue(UserTenant);
+            }
+            if (Optional.IsDefined(Credential))
+            {
+                writer.WritePropertyName("credential"u8);
+                writer.WriteObjectValue(Credential);
             }
             writer.WriteEndObject();
         }
 
         internal static WebActivityAuthentication DeserializeWebActivityAuthentication(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             Optional<SecretBase> pfx = default;
             Optional<string> username = default;
             Optional<SecretBase> password = default;
-            Optional<string> resource = default;
+            Optional<object> resource = default;
+            Optional<object> userTenant = default;
+            Optional<CredentialReference> credential = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -61,7 +77,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     pfx = SecretBase.DeserializeSecretBase(property.Value);
@@ -76,7 +91,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     password = SecretBase.DeserializeSecretBase(property.Value);
@@ -84,11 +98,33 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("resource"u8))
                 {
-                    resource = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resource = property.Value.GetObject();
+                    continue;
+                }
+                if (property.NameEquals("userTenant"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    userTenant = property.Value.GetObject();
+                    continue;
+                }
+                if (property.NameEquals("credential"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    credential = CredentialReference.DeserializeCredentialReference(property.Value);
                     continue;
                 }
             }
-            return new WebActivityAuthentication(type, pfx.Value, username.Value, password.Value, resource.Value);
+            return new WebActivityAuthentication(type, pfx.Value, username.Value, password.Value, resource.Value, userTenant.Value, credential.Value);
         }
 
         internal partial class WebActivityAuthenticationConverter : JsonConverter<WebActivityAuthentication>

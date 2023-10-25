@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static UriSigningParamIdentifier DeserializeUriSigningParamIdentifier(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ParamIndicator paramIndicator = default;
             string paramName = default;
             foreach (var property in element.EnumerateObject())

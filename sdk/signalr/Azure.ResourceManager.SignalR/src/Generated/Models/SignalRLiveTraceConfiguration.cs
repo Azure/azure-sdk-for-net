@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <summary> Initializes a new instance of SignalRLiveTraceConfiguration. </summary>
         /// <param name="enabled">
         /// Indicates whether or not enable live trace.
-        /// When it&apos;s set to true, live trace client can connect to the service.
-        /// Otherwise, live trace client can&apos;t connect to the service, so that you are unable to receive any log, no matter what you configure in &quot;categories&quot;.
+        /// When it's set to true, live trace client can connect to the service.
+        /// Otherwise, live trace client can't connect to the service, so that you are unable to receive any log, no matter what you configure in "categories".
         /// Available values: true, false.
         /// Case insensitive.
         /// </param>
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.SignalR.Models
 
         /// <summary>
         /// Indicates whether or not enable live trace.
-        /// When it&apos;s set to true, live trace client can connect to the service.
-        /// Otherwise, live trace client can&apos;t connect to the service, so that you are unable to receive any log, no matter what you configure in &quot;categories&quot;.
+        /// When it's set to true, live trace client can connect to the service.
+        /// Otherwise, live trace client can't connect to the service, so that you are unable to receive any log, no matter what you configure in "categories".
         /// Available values: true, false.
         /// Case insensitive.
         /// </summary>

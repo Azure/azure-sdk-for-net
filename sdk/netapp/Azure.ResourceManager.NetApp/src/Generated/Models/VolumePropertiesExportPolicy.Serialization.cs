@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.NetApp.Models
 
         internal static VolumePropertiesExportPolicy DeserializeVolumePropertiesExportPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<NetAppVolumeExportPolicyRule>> rules = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<NetAppVolumeExportPolicyRule> array = new List<NetAppVolumeExportPolicyRule>();

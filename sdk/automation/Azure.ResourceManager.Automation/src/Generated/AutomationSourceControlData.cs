@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    /// <summary> A class representing the AutomationSourceControl data model. </summary>
+    /// <summary>
+    /// A class representing the AutomationSourceControl data model.
+    /// Definition of the source control.
+    /// </summary>
     public partial class AutomationSourceControlData : ResourceData
     {
         /// <summary> Initializes a new instance of AutomationSourceControlData. </summary>

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="outputName"> The name of the output. </param>
         /// <param name="data"> The definition of the output that will be used to create a new output or replace the existing one under the streaming job. </param>
         /// <param name="ifMatch"> The ETag of the output. Omit this value to always overwrite the current output. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new output to be created, but to prevent updating an existing output. Other values will result in a 412 Pre-condition Failed response. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new output to be created, but to prevent updating an existing output. Other values will result in a 412 Pre-condition Failed response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="outputName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="outputName"/> or <paramref name="data"/> is null. </exception>
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <param name="outputName"> The name of the output. </param>
         /// <param name="data"> The definition of the output that will be used to create a new output or replace the existing one under the streaming job. </param>
         /// <param name="ifMatch"> The ETag of the output. Omit this value to always overwrite the current output. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new output to be created, but to prevent updating an existing output. Other values will result in a 412 Pre-condition Failed response. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new output to be created, but to prevent updating an existing output. Other values will result in a 412 Pre-condition Failed response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="outputName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="outputName"/> or <paramref name="data"/> is null. </exception>
@@ -225,14 +226,14 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="select"> The $select OData query parameter. This is a comma-separated list of structural properties to include in the response, or &quot;*&quot; to include all properties. By default, all properties are returned except diagnostics. Currently only accepts &apos;*&apos; as a valid value. </param>
+        /// <param name="select"> The $select OData query parameter. This is a comma-separated list of structural properties to include in the response, or "*" to include all properties. By default, all properties are returned except diagnostics. Currently only accepts '*' as a valid value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="StreamingJobOutputResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StreamingJobOutputResource> GetAllAsync(string select = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamingJobOutputOutputsRestClient.CreateListByStreamingJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, select);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _streamingJobOutputOutputsRestClient.CreateListByStreamingJobNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, select);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StreamingJobOutputResource(Client, StreamingJobOutputData.DeserializeStreamingJobOutputData(e)), _streamingJobOutputOutputsClientDiagnostics, Pipeline, "StreamingJobOutputCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StreamingJobOutputResource(Client, StreamingJobOutputData.DeserializeStreamingJobOutputData(e)), _streamingJobOutputOutputsClientDiagnostics, Pipeline, "StreamingJobOutputCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -248,14 +249,14 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="select"> The $select OData query parameter. This is a comma-separated list of structural properties to include in the response, or &quot;*&quot; to include all properties. By default, all properties are returned except diagnostics. Currently only accepts &apos;*&apos; as a valid value. </param>
+        /// <param name="select"> The $select OData query parameter. This is a comma-separated list of structural properties to include in the response, or "*" to include all properties. By default, all properties are returned except diagnostics. Currently only accepts '*' as a valid value. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StreamingJobOutputResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StreamingJobOutputResource> GetAll(string select = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamingJobOutputOutputsRestClient.CreateListByStreamingJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, select);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _streamingJobOutputOutputsRestClient.CreateListByStreamingJobNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, select);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StreamingJobOutputResource(Client, StreamingJobOutputData.DeserializeStreamingJobOutputData(e)), _streamingJobOutputOutputsClientDiagnostics, Pipeline, "StreamingJobOutputCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StreamingJobOutputResource(Client, StreamingJobOutputData.DeserializeStreamingJobOutputData(e)), _streamingJobOutputOutputsClientDiagnostics, Pipeline, "StreamingJobOutputCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -320,6 +321,80 @@ namespace Azure.ResourceManager.StreamAnalytics
             {
                 var response = _streamingJobOutputOutputsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outputName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StreamAnalytics/streamingjobs/{jobName}/outputs/{outputName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Outputs_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="outputName"> The name of the output. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="outputName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="outputName"/> is null. </exception>
+        public virtual async Task<NullableResponse<StreamingJobOutputResource>> GetIfExistsAsync(string outputName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(outputName, nameof(outputName));
+
+            using var scope = _streamingJobOutputOutputsClientDiagnostics.CreateScope("StreamingJobOutputCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _streamingJobOutputOutputsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outputName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<StreamingJobOutputResource>(response.GetRawResponse());
+                return Response.FromValue(new StreamingJobOutputResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.StreamAnalytics/streamingjobs/{jobName}/outputs/{outputName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Outputs_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="outputName"> The name of the output. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="outputName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="outputName"/> is null. </exception>
+        public virtual NullableResponse<StreamingJobOutputResource> GetIfExists(string outputName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(outputName, nameof(outputName));
+
+            using var scope = _streamingJobOutputOutputsClientDiagnostics.CreateScope("StreamingJobOutputCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _streamingJobOutputOutputsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outputName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<StreamingJobOutputResource>(response.GetRawResponse());
+                return Response.FromValue(new StreamingJobOutputResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

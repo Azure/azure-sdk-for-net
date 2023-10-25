@@ -9,6 +9,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Data.Tables.Models;
@@ -28,9 +29,9 @@ namespace Azure.Data.Tables
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account or table that is the target of the desired operation. </param>
-        /// <param name="version"> Specifies the version of the operation to use for this request. </param>
+        /// <param name="version"> Specifies the version of the operation to use for this request. The default value is "2019-02-02". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="url"/> or <paramref name="version"/> is null. </exception>
-        public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version = "2019-02-02")
+        public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version)
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -62,7 +63,7 @@ namespace Azure.Data.Tables
             return message;
         }
 
-        /// <summary> Sets properties for an account&apos;s Table service endpoint, including properties for Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <summary> Sets properties for an account's Table service endpoint, including properties for Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
         /// <param name="tableServiceProperties"> The Table Service properties. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -82,11 +83,11 @@ namespace Azure.Data.Tables
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Sets properties for an account&apos;s Table service endpoint, including properties for Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <summary> Sets properties for an account's Table service endpoint, including properties for Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
         /// <param name="tableServiceProperties"> The Table Service properties. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -106,7 +107,7 @@ namespace Azure.Data.Tables
                 case 202:
                     return ResponseWithHeaders.FromValue(headers, message.Response);
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -130,7 +131,7 @@ namespace Azure.Data.Tables
             return message;
         }
 
-        /// <summary> Gets the properties of an account&apos;s Table service, including properties for Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <summary> Gets the properties of an account's Table service, including properties for Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<ResponseWithHeaders<TableServiceProperties, ServiceGetPropertiesHeaders>> GetPropertiesAsync(int? timeout = null, CancellationToken cancellationToken = default)
@@ -151,11 +152,11 @@ namespace Azure.Data.Tables
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Gets the properties of an account&apos;s Table service, including properties for Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
+        /// <summary> Gets the properties of an account's Table service, including properties for Analytics and CORS (Cross-Origin Resource Sharing) rules. </summary>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public ResponseWithHeaders<TableServiceProperties, ServiceGetPropertiesHeaders> GetProperties(int? timeout = null, CancellationToken cancellationToken = default)
@@ -176,7 +177,7 @@ namespace Azure.Data.Tables
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -221,7 +222,7 @@ namespace Azure.Data.Tables
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                    throw new RequestFailedException(message.Response);
             }
         }
 
@@ -246,7 +247,7 @@ namespace Azure.Data.Tables
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
     }

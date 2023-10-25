@@ -15,8 +15,7 @@ namespace Microsoft.Azure.Management.Compute.Models
 
     /// <summary>
     /// Specifies the security settings like secure boot and vTPM used while
-    /// creating the virtual machine. &lt;br&gt;&lt;br&gt;Minimum api-version:
-    /// 2020-12-01
+    /// creating the virtual machine. Minimum api-version: 2020-12-01.
     /// </summary>
     public partial class UefiSettings
     {
@@ -32,11 +31,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the UefiSettings class.
         /// </summary>
         /// <param name="secureBootEnabled">Specifies whether secure boot
-        /// should be enabled on the virtual machine.
-        /// &lt;br&gt;&lt;br&gt;Minimum api-version: 2020-12-01</param>
+        /// should be enabled on the virtual machine. Minimum api-version:
+        /// 2020-12-01.</param>
         /// <param name="vTpmEnabled">Specifies whether vTPM should be enabled
-        /// on the virtual machine. &lt;br&gt;&lt;br&gt;Minimum api-version:
-        /// 2020-12-01</param>
+        /// on the virtual machine. Minimum api-version: 2020-12-01.</param>
         public UefiSettings(bool? secureBootEnabled = default(bool?), bool? vTpmEnabled = default(bool?))
         {
             SecureBootEnabled = secureBootEnabled;
@@ -51,16 +49,14 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets specifies whether secure boot should be enabled on the
-        /// virtual machine. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum
-        /// api-version: 2020-12-01
+        /// virtual machine. Minimum api-version: 2020-12-01.
         /// </summary>
         [JsonProperty(PropertyName = "secureBootEnabled")]
         public bool? SecureBootEnabled { get; set; }
 
         /// <summary>
         /// Gets or sets specifies whether vTPM should be enabled on the
-        /// virtual machine. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum
-        /// api-version: 2020-12-01
+        /// virtual machine. Minimum api-version: 2020-12-01.
         /// </summary>
         [JsonProperty(PropertyName = "vTpmEnabled")]
         public bool? VTpmEnabled { get; set; }

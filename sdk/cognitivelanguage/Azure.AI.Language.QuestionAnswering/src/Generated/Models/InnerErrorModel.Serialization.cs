@@ -15,6 +15,10 @@ namespace Azure.AI.Language.QuestionAnswering
     {
         internal static InnerErrorModel DeserializeInnerErrorModel(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             InnerErrorCode code = default;
             string message = default;
             Optional<IReadOnlyDictionary<string, string>> details = default;
@@ -36,7 +40,6 @@ namespace Azure.AI.Language.QuestionAnswering
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -56,7 +59,6 @@ namespace Azure.AI.Language.QuestionAnswering
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     innererror = DeserializeInnerErrorModel(property.Value);

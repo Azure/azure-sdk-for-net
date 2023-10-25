@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static StorageAccountVirtualNetworkRule DeserializeStorageAccountVirtualNetworkRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             Optional<StorageAccountNetworkRuleAction> action = default;
             Optional<StorageAccountNetworkRuleState> state = default;
@@ -46,7 +50,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     action = new StorageAccountNetworkRuleAction(property.Value.GetString());
@@ -56,7 +59,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     state = new StorageAccountNetworkRuleState(property.Value.GetString());

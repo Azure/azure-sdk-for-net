@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    /// <summary> A class representing the CosmosDBSqlRoleAssignment data model. </summary>
+    /// <summary>
+    /// A class representing the CosmosDBSqlRoleAssignment data model.
+    /// An Azure Cosmos DB Role Assignment
+    /// </summary>
     public partial class CosmosDBSqlRoleAssignmentData : ResourceData
     {
         /// <summary> Initializes a new instance of CosmosDBSqlRoleAssignmentData. </summary>

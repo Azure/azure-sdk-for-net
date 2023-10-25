@@ -16,5 +16,5 @@ description: Samples for the Azure.Core client library
 - [Long Running Operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md)
 - [Events](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Events.md)
 - [Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md)
-- [Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Mocking.md)
+- [Mocking](https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking)
 - [Protocol Methods](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md)

@@ -28,6 +28,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static VirtualNetworkProfile DeserializeVirtualNetworkProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> computeSubnetId = default;
             foreach (var property in element.EnumerateObject())
             {

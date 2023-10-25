@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         internal static PredictionMappings DeserializePredictionMappings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string score = default;
             string grade = default;
             string reason = default;

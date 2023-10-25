@@ -44,10 +44,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in Jobs)
                     {
                         writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                        JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                        using (JsonDocument document = JsonDocument.Parse(item.Value))
+                        {
+                            JsonSerializer.Serialize(writer, document.RootElement);
+                        }
 #endif
                     }
                     writer.WriteEndObject();
@@ -83,7 +91,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Settings);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(Settings.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(Settings))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
                 else
@@ -163,6 +174,36 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("jobType"u8);
             writer.WriteStringValue(JobType.ToString());
+            if (Optional.IsDefined(NotificationSetting))
+            {
+                if (NotificationSetting != null)
+                {
+                    writer.WritePropertyName("notificationSetting"u8);
+                    writer.WriteObjectValue(NotificationSetting);
+                }
+                else
+                {
+                    writer.WriteNull("notificationSetting");
+                }
+            }
+            if (Optional.IsCollectionDefined(SecretsConfiguration))
+            {
+                if (SecretsConfiguration != null)
+                {
+                    writer.WritePropertyName("secretsConfiguration"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in SecretsConfiguration)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteObjectValue(item.Value);
+                    }
+                    writer.WriteEndObject();
+                }
+                else
+                {
+                    writer.WriteNull("secretsConfiguration");
+                }
+            }
             if (Optional.IsCollectionDefined(Services))
             {
                 if (Services != null)
@@ -234,6 +275,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningPipelineJob DeserializeMachineLearningPipelineJob(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, MachineLearningJobInput>> inputs = default;
             Optional<IDictionary<string, BinaryData>> jobs = default;
             Optional<IDictionary<string, MachineLearningJobOutput>> outputs = default;
@@ -246,6 +291,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<MachineLearningIdentityConfiguration> identity = default;
             Optional<bool> isArchived = default;
             JobType jobType = default;
+            Optional<NotificationSetting> notificationSetting = default;
+            Optional<IDictionary<string, SecretConfiguration>> secretsConfiguration = default;
             Optional<IDictionary<string, MachineLearningJobService>> services = default;
             Optional<MachineLearningJobStatus> status = default;
             Optional<string> description = default;
@@ -263,14 +310,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, MachineLearningJobInput> dictionary = new Dictionary<string, MachineLearningJobInput>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, MachineLearningJobInput.DeserializeMachineLearningJobInput(property0.Value));
-                        }
+                        dictionary.Add(property0.Name, MachineLearningJobInput.DeserializeMachineLearningJobInput(property0.Value));
                     }
                     inputs = dictionary;
                     continue;
@@ -285,7 +325,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                        }
                     }
                     jobs = dictionary;
                     continue;
@@ -300,14 +347,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, MachineLearningJobOutput> dictionary = new Dictionary<string, MachineLearningJobOutput>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, MachineLearningJobOutput.DeserializeMachineLearningJobOutput(property0.Value));
-                        }
+                        dictionary.Add(property0.Name, MachineLearningJobOutput.DeserializeMachineLearningJobOutput(property0.Value));
                     }
                     outputs = dictionary;
                     continue;
@@ -381,7 +421,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isArchived = property.Value.GetBoolean();
@@ -390,6 +429,31 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (property.NameEquals("jobType"u8))
                 {
                     jobType = new JobType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("notificationSetting"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        notificationSetting = null;
+                        continue;
+                    }
+                    notificationSetting = NotificationSetting.DeserializeNotificationSetting(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("secretsConfiguration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        secretsConfiguration = null;
+                        continue;
+                    }
+                    Dictionary<string, SecretConfiguration> dictionary = new Dictionary<string, SecretConfiguration>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, SecretConfiguration.DeserializeSecretConfiguration(property0.Value));
+                    }
+                    secretsConfiguration = dictionary;
                     continue;
                 }
                 if (property.NameEquals("services"u8))
@@ -402,14 +466,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, MachineLearningJobService> dictionary = new Dictionary<string, MachineLearningJobService>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, MachineLearningJobService.DeserializeMachineLearningJobService(property0.Value));
-                        }
+                        dictionary.Add(property0.Name, MachineLearningJobService.DeserializeMachineLearningJobService(property0.Value));
                     }
                     services = dictionary;
                     continue;
@@ -418,7 +475,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new MachineLearningJobStatus(property.Value.GetString());
@@ -444,14 +500,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     properties = dictionary;
                     continue;
@@ -466,20 +515,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
                     continue;
                 }
             }
-            return new MachineLearningPipelineJob(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), componentId.Value, computeId.Value, displayName.Value, experimentName.Value, identity.Value, Optional.ToNullable(isArchived), jobType, Optional.ToDictionary(services), Optional.ToNullable(status), Optional.ToDictionary(inputs), Optional.ToDictionary(jobs), Optional.ToDictionary(outputs), settings.Value, sourceJobId.Value);
+            return new MachineLearningPipelineJob(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), componentId.Value, computeId.Value, displayName.Value, experimentName.Value, identity.Value, Optional.ToNullable(isArchived), jobType, notificationSetting.Value, Optional.ToDictionary(secretsConfiguration), Optional.ToDictionary(services), Optional.ToNullable(status), Optional.ToDictionary(inputs), Optional.ToDictionary(jobs), Optional.ToDictionary(outputs), settings.Value, sourceJobId.Value);
         }
     }
 }

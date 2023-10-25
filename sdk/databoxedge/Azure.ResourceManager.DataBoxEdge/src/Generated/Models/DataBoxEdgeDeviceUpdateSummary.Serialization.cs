@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static DataBoxEdgeDeviceUpdateSummary DeserializeDataBoxEdgeDeviceUpdateSummary(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -106,7 +110,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -135,7 +138,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             deviceLastScannedDateTime = property0.Value.GetDateTimeOffset("O");
@@ -145,7 +147,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastCompletedScanJobDateTime = property0.Value.GetDateTimeOffset("O");
@@ -155,7 +156,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastSuccessfulScanJobTime = property0.Value.GetDateTimeOffset("O");
@@ -165,7 +165,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastCompletedDownloadJobDateTime = property0.Value.GetDateTimeOffset("O");
@@ -175,7 +174,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastCompletedDownloadJobId = new ResourceIdentifier(property0.Value.GetString());
@@ -185,7 +183,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastDownloadJobStatus = new DataBoxEdgeJobStatus(property0.Value.GetString());
@@ -195,7 +192,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastSuccessfulInstallJobDateTime = property0.Value.GetDateTimeOffset("O");
@@ -205,7 +201,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastCompletedInstallJobDateTime = property0.Value.GetDateTimeOffset("O");
@@ -215,7 +210,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastCompletedInstallJobId = new ResourceIdentifier(property0.Value.GetString());
@@ -225,7 +219,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastInstallJobStatus = new DataBoxEdgeJobStatus(property0.Value.GetString());
@@ -235,7 +228,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             totalNumberOfUpdatesAvailable = property0.Value.GetInt32();
@@ -245,7 +237,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             totalNumberOfUpdatesPendingDownload = property0.Value.GetInt32();
@@ -255,7 +246,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             totalNumberOfUpdatesPendingInstall = property0.Value.GetInt32();
@@ -265,7 +255,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             rebootBehavior = new InstallRebootBehavior(property0.Value.GetString());
@@ -275,7 +264,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             ongoingUpdateOperation = new DataBoxEdgeUpdateOperation(property0.Value.GetString());
@@ -285,7 +273,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             inProgressDownloadJobId = new ResourceIdentifier(property0.Value.GetString());
@@ -295,7 +282,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             inProgressInstallJobId = new ResourceIdentifier(property0.Value.GetString());
@@ -305,7 +291,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             inProgressDownloadJobStartedDateTime = property0.Value.GetDateTimeOffset("O");
@@ -315,7 +300,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             inProgressInstallJobStartedDateTime = property0.Value.GetDateTimeOffset("O");
@@ -325,7 +309,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -340,7 +323,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<DataBoxEdgeUpdateDetails> array = new List<DataBoxEdgeUpdateDetails>();
@@ -355,7 +337,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             totalUpdateSizeInBytes = property0.Value.GetDouble();
@@ -365,7 +346,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             totalTimeInMinutes = property0.Value.GetInt32();

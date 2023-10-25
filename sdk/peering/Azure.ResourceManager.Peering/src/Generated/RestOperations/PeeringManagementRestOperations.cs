@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Peering
             return message;
         }
 
-        /// <summary> Checks if the peering service provider is present within 1000 miles of customer&apos;s location. </summary>
+        /// <summary> Checks if the peering service provider is present within 1000 miles of customer's location. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. </param>
         /// <param name="content"> The CheckServiceProviderAvailabilityInput indicating customer location and service provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Peering
             }
         }
 
-        /// <summary> Checks if the peering service provider is present within 1000 miles of customer&apos;s location. </summary>
+        /// <summary> Checks if the peering service provider is present within 1000 miles of customer's location. </summary>
         /// <param name="subscriptionId"> The Azure subscription ID. </param>
         /// <param name="content"> The CheckServiceProviderAvailabilityInput indicating customer location and service provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

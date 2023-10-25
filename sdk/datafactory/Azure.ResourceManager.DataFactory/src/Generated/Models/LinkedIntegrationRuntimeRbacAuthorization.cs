@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of LinkedIntegrationRuntimeRbacAuthorization. </summary>
         /// <param name="resourceId"> The resource identifier of the integration runtime to be shared. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        public LinkedIntegrationRuntimeRbacAuthorization(string resourceId)
+        public LinkedIntegrationRuntimeRbacAuthorization(ResourceIdentifier resourceId)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
 
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="authorizationType"> The authorization type for integration runtime sharing. </param>
         /// <param name="resourceId"> The resource identifier of the integration runtime to be shared. </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
-        internal LinkedIntegrationRuntimeRbacAuthorization(string authorizationType, string resourceId, FactoryCredentialReference credential) : base(authorizationType)
+        internal LinkedIntegrationRuntimeRbacAuthorization(string authorizationType, ResourceIdentifier resourceId, DataFactoryCredentialReference credential) : base(authorizationType)
         {
             ResourceId = resourceId;
             Credential = credential;
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The resource identifier of the integration runtime to be shared. </summary>
-        public string ResourceId { get; set; }
+        public ResourceIdentifier ResourceId { get; set; }
         /// <summary> The credential reference containing authentication information. </summary>
-        public FactoryCredentialReference Credential { get; set; }
+        public DataFactoryCredentialReference Credential { get; set; }
     }
 }

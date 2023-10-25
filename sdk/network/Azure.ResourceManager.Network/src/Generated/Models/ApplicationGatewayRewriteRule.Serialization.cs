@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayRewriteRule DeserializeApplicationGatewayRewriteRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<int> ruleSequence = default;
             Optional<IList<ApplicationGatewayRewriteRuleCondition>> conditions = default;
@@ -61,7 +65,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ruleSequence = property.Value.GetInt32();
@@ -71,7 +74,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ApplicationGatewayRewriteRuleCondition> array = new List<ApplicationGatewayRewriteRuleCondition>();
@@ -86,7 +88,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     actionSet = ApplicationGatewayRewriteRuleActionSet.DeserializeApplicationGatewayRewriteRuleActionSet(property.Value);

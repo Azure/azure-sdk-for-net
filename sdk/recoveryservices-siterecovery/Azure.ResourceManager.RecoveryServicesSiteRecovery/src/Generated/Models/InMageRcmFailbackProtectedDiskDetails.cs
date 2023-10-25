@@ -28,8 +28,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="isInitialReplicationComplete"> A value indicating whether initial replication is complete or not. </param>
         /// <param name="irDetails"> The initial replication details. </param>
         /// <param name="resyncDetails"> The resync details. </param>
-        /// <param name="lastSyncOn"> The last sync time. </param>
-        internal InMageRcmFailbackProtectedDiskDetails(string diskId, string diskName, string isOSDisk, long? capacityInBytes, string diskUuid, double? dataPendingInLogDataStoreInMB, double? dataPendingAtSourceAgentInMB, string isInitialReplicationComplete, InMageRcmFailbackSyncDetails irDetails, InMageRcmFailbackSyncDetails resyncDetails, DateTimeOffset? lastSyncOn)
+        /// <param name="lastSyncedOn"> The last sync time. </param>
+        internal InMageRcmFailbackProtectedDiskDetails(string diskId, string diskName, string isOSDisk, long? capacityInBytes, string diskUuid, double? dataPendingInLogDataStoreInMB, double? dataPendingAtSourceAgentInMB, string isInitialReplicationComplete, InMageRcmFailbackSyncDetails irDetails, InMageRcmFailbackSyncDetails resyncDetails, DateTimeOffset? lastSyncedOn)
         {
             DiskId = diskId;
             DiskName = diskName;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             IsInitialReplicationComplete = isInitialReplicationComplete;
             IrDetails = irDetails;
             ResyncDetails = resyncDetails;
-            LastSyncOn = lastSyncOn;
+            LastSyncedOn = lastSyncedOn;
         }
 
         /// <summary> The disk Id (reported by source agent). </summary>
@@ -65,6 +65,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The resync details. </summary>
         public InMageRcmFailbackSyncDetails ResyncDetails { get; }
         /// <summary> The last sync time. </summary>
-        public DateTimeOffset? LastSyncOn { get; }
+        public DateTimeOffset? LastSyncedOn { get; }
     }
 }

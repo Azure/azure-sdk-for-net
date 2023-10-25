@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -25,6 +26,20 @@ namespace Azure.ResourceManager.Network.Models
             MatchVariable = matchVariable;
             SelectorMatchOperator = selectorMatchOperator;
             Selector = selector;
+            ExclusionManagedRuleSets = new ChangeTrackingList<ExclusionManagedRuleSet>();
+        }
+
+        /// <summary> Initializes a new instance of OwaspCrsExclusionEntry. </summary>
+        /// <param name="matchVariable"> The variable to be excluded. </param>
+        /// <param name="selectorMatchOperator"> When matchVariable is a collection, operate on the selector to specify which elements in the collection this exclusion applies to. </param>
+        /// <param name="selector"> When matchVariable is a collection, operator used to specify which elements in the collection this exclusion applies to. </param>
+        /// <param name="exclusionManagedRuleSets"> The managed rule sets that are associated with the exclusion. </param>
+        internal OwaspCrsExclusionEntry(OwaspCrsExclusionEntryMatchVariable matchVariable, OwaspCrsExclusionEntrySelectorMatchOperator selectorMatchOperator, string selector, IList<ExclusionManagedRuleSet> exclusionManagedRuleSets)
+        {
+            MatchVariable = matchVariable;
+            SelectorMatchOperator = selectorMatchOperator;
+            Selector = selector;
+            ExclusionManagedRuleSets = exclusionManagedRuleSets;
         }
 
         /// <summary> The variable to be excluded. </summary>
@@ -33,5 +48,7 @@ namespace Azure.ResourceManager.Network.Models
         public OwaspCrsExclusionEntrySelectorMatchOperator SelectorMatchOperator { get; set; }
         /// <summary> When matchVariable is a collection, operator used to specify which elements in the collection this exclusion applies to. </summary>
         public string Selector { get; set; }
+        /// <summary> The managed rule sets that are associated with the exclusion. </summary>
+        public IList<ExclusionManagedRuleSet> ExclusionManagedRuleSets { get; }
     }
 }

@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Media
 {
-    /// <summary> A class representing the StreamingEndpoint data model. </summary>
+    /// <summary>
+    /// A class representing the StreamingEndpoint data model.
+    /// The streaming endpoint.
+    /// </summary>
     public partial class StreamingEndpointData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of StreamingEndpointData. </summary>

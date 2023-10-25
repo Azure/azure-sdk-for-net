@@ -5,17 +5,22 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
-generate-model-factory: false
+generate-model-factory: true
 csharp: true
 library-name: DevCenter
 namespace: Azure.ResourceManager.DevCenter
-# default tag is a preview version
-require: https://github.com/Azure/azure-rest-api-specs/blob/1b3b9c1dd4d2c875997ea0b392dc71418fb1f28d/specification/devcenter/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/07c55de803057861912799405580ea9d022853fc/specification/devcenter/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+
+# mgmt-debug:
+#   show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -24,7 +29,40 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+prepend-rp-prefix:
+  - Capability
+  - CatalogListResult
+  - Catalog
+  - EndpointDetail
+  - EnvironmentRole
+  - EnvironmentType
+  - Gallery
+  - GitCatalog
+  - HealthCheck
+  - HealthCheckStatus
+  - HealthStatus
+  - HealthStatusDetail
+  - HibernateSupport
+  - Image
+  - ImageListResult
+  - ImageReference
+  - LicenseType
+  - NetworkConnection
+  - OperationStatus
+  - Pool
+  - Project
+  - ProvisioningState
+  - ResourceRange
+  - Schedule
+  - ScheduledType
+  - ScheduledFrequency
+  - ScheduleEnableStatus
+  - TrackedResourceUpdate
+  - UsageName
+  - UsageUnit
+  - CatalogSyncState
+
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   VCPU: vCpu
@@ -51,6 +89,46 @@ rename-rules:
 
 rename-mapping:
   DevCenterSku: DevCenterSkuDetails
+  Gallery.properties.galleryResourceId: -|arm-id
+  AttachedNetworkConnection.properties.networkConnectionId: -|arm-id
+  NetworkConnectionUpdate.properties.subnetId: -|arm-id
+  NetworkConnection.properties.subnetId: -|arm-id
+  Project.properties.devCenterId: -|arm-id
+  ProjectUpdate.properties.devCenterId: -|arm-id
+  ProjectEnvironmentType.properties.deploymentTargetId: -|arm-id
+  ProjectEnvironmentTypeUpdate.properties.deploymentTargetId: -|arm-id
+  ImageReference.id: -|arm-id
+  OperationStatus.resourceId: -|arm-id
+  DevCenterSku.resourceType: -|resource-type
+  CheckNameAvailabilityRequest.type: -|resource-type
+  EnvironmentTypeEnableStatus.Enabled: IsEnabled
+  EnvironmentTypeEnableStatus.Disabled: IsDisabled
+  HibernateSupport.Enabled: IsEnabled
+  HibernateSupport.Disabled: IsDisabled
+  LocalAdminStatus.Enabled: IsEnabled
+  LocalAdminStatus.Disabled: IsDisabled
+  ScheduleEnableStatus.Enabled: IsEnabled
+  ScheduleEnableStatus.Disabled: IsDisabled
+  StopOnDisconnectEnableStatus.Enabled: IsEnabled
+  StopOnDisconnectEnableStatus.Disabled: IsDisabled
+  AttachedNetworkConnection.properties.networkConnectionLocation: -|azure-location
+  UserRoleAssignmentValue: DevCenterUserRoleAssignments
+  DomainJoinType.HybridAzureADJoin: HybridAadJoin
+  DomainJoinType.AzureADJoin: AadJoin
+  CheckNameAvailabilityResponse.nameAvailable: IsNameAvailable
+  CheckNameAvailabilityRequest: DevCenterNameAvailabilityContent
+  CheckNameAvailabilityResponse: DevCenterNameAvailabilityResult
+  CheckNameAvailabilityReason: DevCenterNameUnavailableReason
+  ProjectEnvironmentType: DevCenterProjectEnvironment
+  ImageVersion.properties.osDiskImageSizeInGb:  OsDiskImageSizeInGB
+  ImageVersion.properties.excludeFromLatest: IsExcludedFromLatest
+
+override-operation-name:
+  OperationStatuses_Get: GetDevCenterOperationStatus
+  Usages_ListByLocation: GetDevCenterUsagesByLocation
+  CheckNameAvailability_Execute: CheckDevCenterNameAvailability
+  Skus_ListBySubscription: GetDevCenterSkusBySubscription
+  NetworkConnections_ListOutboundNetworkDependenciesEndpoints: GetOutboundEnvironmentEndpoints
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/attachednetworks: AttachedNetworkConnection
@@ -62,4 +140,14 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/devboxdefinitions: ProjectDevBoxDefinition
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/devboxdefinitions/{devBoxDefinitionName}: ProjectDevBoxDefinition
 
+### Directive renaming "type" property of ScheduleUpdateProperties to "ScheduledType" (to avoid it being generated as TypePropertiesType)
+directive:
+    - from: swagger-document
+      where: "$.definitions.ScheduleUpdateProperties.properties.type"
+      transform: >
+        $["x-ms-client-name"] = "ScheduledType";
+    - from: types.json
+      where: $.definitions.OperationStatusResult
+      transform: >
+        $.properties.id['x-ms-format'] = 'arm-id';
 ```

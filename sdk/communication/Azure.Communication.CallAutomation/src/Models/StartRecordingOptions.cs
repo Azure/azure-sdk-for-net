@@ -18,7 +18,6 @@ namespace Azure.Communication.CallAutomation
         public StartRecordingOptions(CallLocator callLocator)
         {
             CallLocator = callLocator ?? throw new ArgumentNullException(nameof(callLocator));
-            RepeatabilityHeaders = new RepeatabilityHeaders();
         }
 
         /// <summary>
@@ -29,7 +28,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// The callLocator.
         /// </summary>
-        public Uri RecordingStateCallbackEndpoint { get; set; }
+        public Uri RecordingStateCallbackUri { get; set; }
 
         /// <summary>
         /// The recording channel.
@@ -47,9 +46,9 @@ namespace Azure.Communication.CallAutomation
         public RecordingFormat RecordingFormat { get; set; }
 
         /// <summary>
-        /// Repeatability Headers.
+        /// The pause on start option.
         /// </summary>
-        public RepeatabilityHeaders RepeatabilityHeaders { get; set; }
+        public bool PauseOnStart { get; set; }
 
         /// <summary>
         /// The sequential order in which audio channels are assigned to participants in the unmixed recording.
@@ -60,10 +59,15 @@ namespace Azure.Communication.CallAutomation
         public IList<CommunicationIdentifier> AudioChannelParticipantOrdering { get; } =
             new List<CommunicationIdentifier>();
 
-        /// <summary> Recording storage mode. `External` enables bring your own storage. </summary>
-        public RecordingStorageType? RecordingStorageType { get; set; }
+        /// <summary>
+        /// The channel affinity of call recording
+        /// When &apos;recordingChannelType&apos; is set to &apos;unmixed&apos;, if channelAffinity is not specified, &apos;channel&apos; will be automatically assigned.
+        /// Channel-Participant mapping details can be found in the metadata of the recording.
+        /// ///
+        /// </summary>
+        public IList<ChannelAffinity> ChannelAffinity { get; set; }
 
-        /// <summary> The location where recording is stored, when RecordingStorageType is set to BlobStorage. </summary>
-        public Uri ExternalStorageLocation { get; set; }
+        /// <summary> (Optional) Used to specify external storage for call recording. </summary>
+        public ExternalStorage ExternalStorage { get; set; }
     }
 }

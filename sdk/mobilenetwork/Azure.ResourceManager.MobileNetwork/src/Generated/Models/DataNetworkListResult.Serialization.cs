@@ -16,7 +16,11 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     {
         internal static DataNetworkListResult DeserializeDataNetworkListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<DataNetworkData>> value = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IReadOnlyList<MobileDataNetworkData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -24,13 +28,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DataNetworkData> array = new List<DataNetworkData>();
+                    List<MobileDataNetworkData> array = new List<MobileDataNetworkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataNetworkData.DeserializeDataNetworkData(item));
+                        array.Add(MobileDataNetworkData.DeserializeMobileDataNetworkData(item));
                     }
                     value = array;
                     continue;

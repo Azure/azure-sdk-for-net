@@ -12,7 +12,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn
 {
-    /// <summary> A class representing the FrontDoorCustomDomain data model. </summary>
+    /// <summary>
+    /// A class representing the FrontDoorCustomDomain data model.
+    /// Friendly domain name mapping to the endpoint hostname that the customer provides for branding purposes, e.g. www.contoso.com.
+    /// </summary>
     public partial class FrontDoorCustomDomainData : ResourceData
     {
         /// <summary> Initializes a new instance of FrontDoorCustomDomainData. </summary>
@@ -26,7 +29,7 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="profileName"> The name of the profile which holds the domain. </param>
-        /// <param name="tlsSettings"> The configuration specifying how to enable HTTPS for the domain - using AzureFrontDoor managed certificate or user&apos;s own certificate. If not specified, enabling ssl uses AzureFrontDoor managed certificate by default. </param>
+        /// <param name="tlsSettings"> The configuration specifying how to enable HTTPS for the domain - using AzureFrontDoor managed certificate or user's own certificate. If not specified, enabling ssl uses AzureFrontDoor managed certificate by default. </param>
         /// <param name="dnsZone"> Resource reference to the Azure DNS zone. </param>
         /// <param name="preValidatedCustomDomainResource"> Resource reference to the Azure resource where custom domain ownership was prevalidated. </param>
         /// <param name="provisioningState"> Provisioning status. </param>
@@ -49,7 +52,7 @@ namespace Azure.ResourceManager.Cdn
 
         /// <summary> The name of the profile which holds the domain. </summary>
         public string ProfileName { get; }
-        /// <summary> The configuration specifying how to enable HTTPS for the domain - using AzureFrontDoor managed certificate or user&apos;s own certificate. If not specified, enabling ssl uses AzureFrontDoor managed certificate by default. </summary>
+        /// <summary> The configuration specifying how to enable HTTPS for the domain - using AzureFrontDoor managed certificate or user's own certificate. If not specified, enabling ssl uses AzureFrontDoor managed certificate by default. </summary>
         public FrontDoorCustomDomainHttpsContent TlsSettings { get; set; }
         /// <summary> Resource reference to the Azure DNS zone. </summary>
         internal WritableSubResource DnsZone { get; set; }

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static MongoDBDatabaseProgress DeserializeMongoDBDatabaseProgress(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyDictionary<string, MongoDBCollectionProgress>> collections = default;
             long bytesCopied = default;
             long documentsCopied = default;
@@ -37,7 +41,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, MongoDBCollectionProgress> dictionary = new Dictionary<string, MongoDBCollectionProgress>();
@@ -87,7 +90,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastEventTime = property.Value.GetDateTimeOffset("O");
@@ -97,7 +99,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastReplayTime = property.Value.GetDateTimeOffset("O");

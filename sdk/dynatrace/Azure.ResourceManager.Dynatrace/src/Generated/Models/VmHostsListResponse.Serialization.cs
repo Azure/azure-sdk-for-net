@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Dynatrace.Models
     {
         internal static VmHostsListResponse DeserializeVmHostsListResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DynatraceMonitorVmInfo>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DynatraceMonitorVmInfo> array = new List<DynatraceMonitorVmInfo>();

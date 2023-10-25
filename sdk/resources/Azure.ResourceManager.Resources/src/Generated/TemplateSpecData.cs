@@ -13,7 +13,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing the TemplateSpec data model. </summary>
+    /// <summary>
+    /// A class representing the TemplateSpec data model.
+    /// Template Spec object.
+    /// </summary>
     public partial class TemplateSpecData : ResourceData
     {
         /// <summary> Initializes a new instance of TemplateSpecData. </summary>
@@ -35,7 +38,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="description"> Template Spec description. </param>
         /// <param name="displayName"> Template Spec display name. </param>
         /// <param name="metadata"> The Template Spec metadata. Metadata is an open-ended object and is typically a collection of key-value pairs. </param>
-        /// <param name="versions"> High-level information about the versions within this Template Spec. The keys are the version names. Only populated if the $expand query parameter is set to &apos;versions&apos;. </param>
+        /// <param name="versions"> High-level information about the versions within this Template Spec. The keys are the version names. Only populated if the $expand query parameter is set to 'versions'. </param>
         internal TemplateSpecData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation location, IDictionary<string, string> tags, string description, string displayName, BinaryData metadata, IReadOnlyDictionary<string, TemplateSpecVersionInfo> versions) : base(id, name, resourceType, systemData)
         {
             Location = location;
@@ -85,7 +88,7 @@ namespace Azure.ResourceManager.Resources
         /// </para>
         /// </summary>
         public BinaryData Metadata { get; set; }
-        /// <summary> High-level information about the versions within this Template Spec. The keys are the version names. Only populated if the $expand query parameter is set to &apos;versions&apos;. </summary>
+        /// <summary> High-level information about the versions within this Template Spec. The keys are the version names. Only populated if the $expand query parameter is set to 'versions'. </summary>
         public IReadOnlyDictionary<string, TemplateSpecVersionInfo> Versions { get; }
     }
 }

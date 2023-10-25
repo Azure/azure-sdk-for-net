@@ -60,17 +60,22 @@ namespace Azure.ResourceManager.Maintenance
                 writer.WritePropertyName("visibility"u8);
                 writer.WriteStringValue(Visibility.Value.ToString());
             }
+            if (Optional.IsDefined(InstallPatches))
+            {
+                writer.WritePropertyName("installPatches"u8);
+                writer.WriteObjectValue(InstallPatches);
+            }
             writer.WritePropertyName("maintenanceWindow"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startDateTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                SerializeStartOn(writer);
             }
             if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationDateTime"u8);
-                writer.WriteStringValue(ExpireOn.Value, "O");
+                SerializeExpireOn(writer);
             }
             if (Optional.IsDefined(Duration))
             {
@@ -94,6 +99,10 @@ namespace Azure.ResourceManager.Maintenance
 
         internal static MaintenanceConfigurationData DeserializeMaintenanceConfigurationData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -104,6 +113,7 @@ namespace Azure.ResourceManager.Maintenance
             Optional<IDictionary<string, string>> extensionProperties = default;
             Optional<MaintenanceScope> maintenanceScope = default;
             Optional<MaintenanceConfigurationVisibility> visibility = default;
+            Optional<MaintenancePatchConfiguration> installPatches = default;
             Optional<DateTimeOffset> startDateTime = default;
             Optional<DateTimeOffset> expirationDateTime = default;
             Optional<TimeSpan> duration = default;
@@ -115,7 +125,6 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -150,7 +159,6 @@ namespace Azure.ResourceManager.Maintenance
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -174,7 +182,6 @@ namespace Azure.ResourceManager.Maintenance
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -189,7 +196,6 @@ namespace Azure.ResourceManager.Maintenance
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             maintenanceScope = new MaintenanceScope(property0.Value.GetString());
@@ -199,10 +205,18 @@ namespace Azure.ResourceManager.Maintenance
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             visibility = new MaintenanceConfigurationVisibility(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("installPatches"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            installPatches = MaintenancePatchConfiguration.DeserializeMaintenancePatchConfiguration(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("maintenanceWindow"u8))
@@ -218,7 +232,6 @@ namespace Azure.ResourceManager.Maintenance
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
-                                        property1.ThrowNonNullablePropertyIsNull();
                                         continue;
                                     }
                                     startDateTime = property1.Value.GetDateTimeOffset("O");
@@ -228,7 +241,6 @@ namespace Azure.ResourceManager.Maintenance
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
-                                        property1.ThrowNonNullablePropertyIsNull();
                                         continue;
                                     }
                                     expirationDateTime = property1.Value.GetDateTimeOffset("O");
@@ -238,7 +250,6 @@ namespace Azure.ResourceManager.Maintenance
                                 {
                                     if (property1.Value.ValueKind == JsonValueKind.Null)
                                     {
-                                        property1.ThrowNonNullablePropertyIsNull();
                                         continue;
                                     }
                                     duration = property1.Value.GetTimeSpan("c");
@@ -261,7 +272,7 @@ namespace Azure.ResourceManager.Maintenance
                     continue;
                 }
             }
-            return new MaintenanceConfigurationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, @namespace.Value, Optional.ToDictionary(extensionProperties), Optional.ToNullable(maintenanceScope), Optional.ToNullable(visibility), Optional.ToNullable(startDateTime), Optional.ToNullable(expirationDateTime), Optional.ToNullable(duration), timeZone.Value, recurEvery.Value);
+            return new MaintenanceConfigurationData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, @namespace.Value, Optional.ToDictionary(extensionProperties), Optional.ToNullable(maintenanceScope), Optional.ToNullable(visibility), installPatches.Value, Optional.ToNullable(startDateTime), Optional.ToNullable(expirationDateTime), Optional.ToNullable(duration), timeZone.Value, recurEvery.Value);
         }
     }
 }

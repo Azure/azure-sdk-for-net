@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets an app&apos;s Virtual Network gateway.
+        /// Description for Gets an app's Virtual Network gateway.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets an app&apos;s Virtual Network gateway.
+        /// Description for Gets an app's Virtual Network gateway.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

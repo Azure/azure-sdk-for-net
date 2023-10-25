@@ -43,6 +43,11 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(MinimumTlsVersionAllowed))
+            {
+                writer.WritePropertyName("minimumTlsVersionAllowed"u8);
+                writer.WriteStringValue(MinimumTlsVersionAllowed.Value.ToString());
+            }
             if (Optional.IsDefined(IsLocalAuthDisabled))
             {
                 writer.WritePropertyName("disableLocalAuth"u8);

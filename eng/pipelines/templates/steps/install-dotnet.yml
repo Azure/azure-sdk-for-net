@@ -26,15 +26,6 @@ steps:
       packageType: sdk
       performMultiLevelLookup: true
       version: "6.0.x"
-  - task: UseDotNet@2
-    condition: and(succeeded(), ne(variables['Agent.OS'], 'Windows_NT')) # Windows supports MultiLevelLookup and doesn't need explicit framework installation
-    displayName: 'Use .NET Core 3.1 SDK'
-    retryCountOnTaskFailure: 3
-    inputs:
-      # AspNetCore runtime pack can't be installed outside of SDK and we need it for intergation tests
-      packageType: sdk
-      performMultiLevelLookup: true
-      version: "3.1.x"
   - task: Cache@2
     inputs:
       key: 'nuget | "$(Agent.OS)" | $(Build.SourcesDirectory)/eng/Packages.Data.props | ${{parameters.NuGetCacheKey}}'

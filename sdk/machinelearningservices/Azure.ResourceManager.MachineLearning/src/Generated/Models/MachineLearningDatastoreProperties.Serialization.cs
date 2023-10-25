@@ -20,6 +20,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteObjectValue(Credentials);
             writer.WritePropertyName("datastoreType"u8);
             writer.WriteStringValue(DatastoreType.ToString());
+            if (Optional.IsDefined(IntellectualProperty))
+            {
+                if (IntellectualProperty != null)
+                {
+                    writer.WritePropertyName("intellectualProperty"u8);
+                    writer.WriteObjectValue(IntellectualProperty);
+                }
+                else
+                {
+                    writer.WriteNull("intellectualProperty");
+                }
+            }
             if (Optional.IsDefined(Description))
             {
                 if (Description != null)
@@ -73,6 +85,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningDatastoreProperties DeserializeMachineLearningDatastoreProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("datastoreType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
@@ -81,10 +97,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "AzureDataLakeGen1": return MachineLearningAzureDataLakeGen1Datastore.DeserializeMachineLearningAzureDataLakeGen1Datastore(element);
                     case "AzureDataLakeGen2": return MachineLearningAzureDataLakeGen2Datastore.DeserializeMachineLearningAzureDataLakeGen2Datastore(element);
                     case "AzureFile": return MachineLearningAzureFileDatastore.DeserializeMachineLearningAzureFileDatastore(element);
+                    case "Hdfs": return HdfsDatastore.DeserializeHdfsDatastore(element);
+                    case "OneLake": return OneLakeDatastore.DeserializeOneLakeDatastore(element);
                 }
             }
             MachineLearningDatastoreCredentials credentials = default;
             DatastoreType datastoreType = default;
+            Optional<IntellectualProperty> intellectualProperty = default;
             Optional<bool> isDefault = default;
             Optional<string> description = default;
             Optional<IDictionary<string, string>> properties = default;
@@ -101,11 +120,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     datastoreType = new DatastoreType(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("intellectualProperty"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        intellectualProperty = null;
+                        continue;
+                    }
+                    intellectualProperty = IntellectualProperty.DeserializeIntellectualProperty(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("isDefault"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isDefault = property.Value.GetBoolean();
@@ -131,14 +159,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     properties = dictionary;
                     continue;
@@ -153,20 +174,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     tags = dictionary;
                     continue;
                 }
             }
-            return new MachineLearningDatastoreProperties(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), credentials, datastoreType, Optional.ToNullable(isDefault));
+            return new MachineLearningDatastoreProperties(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), credentials, datastoreType, intellectualProperty.Value, Optional.ToNullable(isDefault));
         }
     }
 }

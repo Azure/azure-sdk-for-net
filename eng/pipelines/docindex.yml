@@ -1,5 +1,12 @@
 trigger: none
 
+variables:
+  - template: /eng/pipelines/templates/variables/globals.yml
+
+  # Globals sets skipComponentGovernanceDetection by default
+  - name: skipComponentGovernanceDetection
+    value: false
+
 jobs:
   - template: /eng/common/pipelines/templates/jobs/docindex.yml
 
@@ -16,7 +23,7 @@ jobs:
       - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
         parameters:
           SkipCheckoutNone: true
-          Paths: 
+          Paths:
             # This is for retrieving code owners for service level readme metadata
             - .github/CODEOWNERS
 
@@ -31,12 +38,22 @@ jobs:
           Repositories:
             - Name: $(DocRepoOwner)/$(DocRepoName)
               WorkingDirectory: $(DocRepoLocation)
+      
       # Install the tool for toc step to use
       - task: NuGetToolInstaller@1
         inputs:
           versionSpec: 6.3.1
-      # Call update docs ci script to onboard packages
+
       - template: /eng/common/pipelines/templates/steps/set-default-branch.yml
+
+      - task: Powershell@2
+        inputs:
+          pwsh: true
+          filePath: eng/common/scripts/Update-DocsMsPackageMonikers.ps1
+          arguments: -DocRepoLocation $(DocRepoLocation)
+        displayName: Move deprecated packages to legacy moniker
+        condition: and(succeeded(), or(eq(variables['Build.Reason'], 'Schedule'), eq(variables['Force.MainUpdate'], 'true')))
+
       - task: Powershell@2
         inputs:
           pwsh: true
@@ -50,9 +67,6 @@ jobs:
           filePath: eng/common/scripts/Service-Level-Readme-Automation.ps1
           arguments: >-
             -DocRepoLocation $(DocRepoLocation)
-            -TenantId '$(opensource-aad-tenant-id)'
-            -ClientId '$(opensource-aad-app-id)'
-            -ClientSecret '$(opensource-aad-secret)'
             -ReadmeFolderRoot 'api/overview/azure'
         displayName: Generate Service Level Readme for main branch
         condition: and(succeeded(), or(eq(variables['Build.Reason'], 'Schedule'), eq(variables['Force.MainUpdate'], 'true')))
@@ -66,6 +80,14 @@ jobs:
             -ReadmeFolderRoot "api/overview/azure"
         displayName: Generate ToC for main branch
         condition: and(succeeded(), or(eq(variables['Build.Reason'], 'Schedule'), eq(variables['Force.MainUpdate'], 'true')))
+
+      - task: Powershell@2
+        inputs:
+          pwsh: true
+          filePath: eng/common/scripts/Verify-RequiredDocsJsonMembers.ps1
+          arguments: >-
+            -DocRepoLocation $(DocRepoLocation)
+        displayName: Verify Required Docs Json Members
 
       - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
         parameters:
@@ -93,7 +115,15 @@ jobs:
           Write-Host "##vso[task.setvariable variable=PackageSourceOverride]$publicFeedUrl"
         displayName: Set package source variable
         workingDirectory: $(DocRepoLocation)
-        
+
+      - task: Powershell@2
+        inputs:
+          pwsh: true
+          filePath: eng/common/scripts/Update-DocsMsPackageMonikers.ps1
+          arguments: -DocRepoLocation $(DocRepoLocation)
+        displayName: Move deprecated packages to legacy moniker
+        condition: and(succeeded(), or(eq(variables['Build.Reason'], 'Schedule'), eq(variables['Force.MainUpdate'], 'true')))
+
       - task: Powershell@2
         inputs:
           pwsh: true
@@ -110,9 +140,6 @@ jobs:
           filePath: eng/common/scripts/Service-Level-Readme-Automation.ps1
           arguments: >-
             -DocRepoLocation $(DocRepoLocation)
-            -TenantId '$(opensource-aad-tenant-id)'
-            -ClientId '$(opensource-aad-app-id)'
-            -ClientSecret '$(opensource-aad-secret)'
             -ReadmeFolderRoot 'api/overview/azure'
         displayName: Generate Service Level Readme for Daily docs
       - task: Powershell@2
@@ -125,6 +152,14 @@ jobs:
             -ReadmeFolderRoot "api/overview/azure"
             -PackageSourceOverride $(PackageSourceOverride)
         displayName: Generate ToC for Daily docs
+
+      - task: Powershell@2
+        inputs:
+          pwsh: true
+          filePath: eng/common/scripts/Verify-RequiredDocsJsonMembers.ps1
+          arguments: >-
+            -DocRepoLocation $(DocRepoLocation)
+        displayName: Verify Required Docs Json Members
 
       - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
         parameters:
@@ -146,5 +181,5 @@ jobs:
             -Organization "apidrop"
             -Project "Content%20CI"
             -DefinitionId 397
-            -Base64EncodedAuthToken "$(azuresdk-apidrop-devops-queue-build-pat)"
+            -AuthToken "$(azuresdk-apidrop-devops-queue-build-pat)"
             -BuildParametersJson (@{ params = (Get-Content ./eng/dailydocsconfig.json -Raw) -replace '%%DailyDocsBranchName%%', "$(DailyDocsBranchName)" } | ConvertTo-Json)

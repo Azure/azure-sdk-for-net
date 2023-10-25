@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.Identity.Models
 {
@@ -14,6 +13,10 @@ namespace Azure.Communication.Identity.Models
     {
         internal static CommunicationIdentity DeserializeCommunicationIdentity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string id = default;
             foreach (var property in element.EnumerateObject())
             {

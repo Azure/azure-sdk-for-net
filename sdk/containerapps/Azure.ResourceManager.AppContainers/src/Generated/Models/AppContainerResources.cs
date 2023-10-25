@@ -17,8 +17,8 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Initializes a new instance of AppContainerResources. </summary>
         /// <param name="cpu"> Required CPU in cores, e.g. 0.5. </param>
-        /// <param name="memory"> Required memory, e.g. &quot;250Mb&quot;. </param>
-        /// <param name="ephemeralStorage"> Ephemeral Storage, e.g. &quot;1Gi&quot;. </param>
+        /// <param name="memory"> Required memory, e.g. "250Mb". </param>
+        /// <param name="ephemeralStorage"> Ephemeral Storage, e.g. "1Gi". </param>
         internal AppContainerResources(double? cpu, string memory, string ephemeralStorage)
         {
             Cpu = cpu;
@@ -28,9 +28,9 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Required CPU in cores, e.g. 0.5. </summary>
         public double? Cpu { get; set; }
-        /// <summary> Required memory, e.g. &quot;250Mb&quot;. </summary>
+        /// <summary> Required memory, e.g. "250Mb". </summary>
         public string Memory { get; set; }
-        /// <summary> Ephemeral Storage, e.g. &quot;1Gi&quot;. </summary>
+        /// <summary> Ephemeral Storage, e.g. "1Gi". </summary>
         public string EphemeralStorage { get; }
     }
 }

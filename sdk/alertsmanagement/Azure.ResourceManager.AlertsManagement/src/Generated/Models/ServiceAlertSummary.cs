@@ -10,7 +10,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    /// <summary> Summary of alerts based on the input filters and &apos;groupby&apos; parameters. </summary>
+    /// <summary> Summary of alerts based on the input filters and 'groupby' parameters. </summary>
     public partial class ServiceAlertSummary : ResourceData
     {
         /// <summary> Initializes a new instance of ServiceAlertSummary. </summary>

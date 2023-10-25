@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HealthcareApis
 {
-    /// <summary> A class representing the FhirService data model. </summary>
+    /// <summary>
+    /// A class representing the FhirService data model.
+    /// The description of Fhir Service
+    /// </summary>
     public partial class FhirServiceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of FhirServiceData. </summary>

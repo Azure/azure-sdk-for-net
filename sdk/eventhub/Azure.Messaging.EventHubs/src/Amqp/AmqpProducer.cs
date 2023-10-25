@@ -287,7 +287,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                     {
                         if (!SendLink.TryGetOpenedObject(out _))
                         {
-                            await SendLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout), cancellationToken).ConfigureAwait(false);
+                            await SendLink.GetOrCreateAsync(tryTimeout, cancellationToken).ConfigureAwait(false);
                         }
 
                         break;
@@ -366,7 +366,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                 {
                     if (!SendLink.TryGetOpenedObject(out _))
                     {
-                        await SendLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout), cancellationToken).ConfigureAwait(false);
+                        await SendLink.GetOrCreateAsync(tryTimeout, cancellationToken).ConfigureAwait(false);
                     }
 
                     break;
@@ -484,7 +484,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                         if (!SendLink.TryGetOpenedObject(out link))
                         {
-                            link = await SendLink.GetOrCreateAsync(UseMinimum(ConnectionScope.SessionTimeout, tryTimeout), cancellationToken).ConfigureAwait(false);
+                            link = await SendLink.GetOrCreateAsync(tryTimeout, cancellationToken).ConfigureAwait(false);
                         }
 
                         // Validate that the batch of messages is not too large to send.  This is done after the link is created to ensure
@@ -627,17 +627,5 @@ namespace Azure.Messaging.EventHubs.Amqp
 
             return link;
         }
-
-        /// <summary>
-        ///   Uses the minimum value of the two specified <see cref="TimeSpan" /> instances.
-        /// </summary>
-        ///
-        /// <param name="firstOption">The first option to consider.</param>
-        /// <param name="secondOption">The second option to consider.</param>
-        ///
-        /// <returns>The smaller of the two specified intervals.</returns>
-        ///
-        private static TimeSpan UseMinimum(TimeSpan firstOption,
-                                           TimeSpan secondOption) => (firstOption < secondOption) ? firstOption : secondOption;
     }
 }

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ResourceMover.Models
     {
         internal static MoverResourceList DeserializeMoverResourceList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<MoverResourceData>> value = default;
             Optional<string> nextLink = default;
             Optional<MoverSummaryList> summaryCollection = default;
@@ -26,7 +30,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MoverResourceData> array = new List<MoverResourceData>();
@@ -56,7 +59,6 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     totalCount = property.Value.GetInt64();

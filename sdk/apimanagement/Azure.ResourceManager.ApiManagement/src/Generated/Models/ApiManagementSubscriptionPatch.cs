@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public string SecondaryKey { get; set; }
         /// <summary> Subscription state. Possible states are * active – the subscription is active, * suspended – the subscription is blocked, and the subscriber cannot call any APIs of the product, * submitted – the subscription request has been made by the developer, but has not yet been approved or rejected, * rejected – the subscription request has been denied by an administrator, * cancelled – the subscription has been cancelled by the developer or administrator, * expired – the subscription reached its expiration date and was deactivated. </summary>
         public SubscriptionState? State { get; set; }
-        /// <summary> Comments describing subscription state change by the administrator when the state is changed to the &apos;rejected&apos;. </summary>
+        /// <summary> Comments describing subscription state change by the administrator when the state is changed to the 'rejected'. </summary>
         public string StateComment { get; set; }
         /// <summary> Determines whether tracing can be enabled. </summary>
         public bool? AllowTracing { get; set; }

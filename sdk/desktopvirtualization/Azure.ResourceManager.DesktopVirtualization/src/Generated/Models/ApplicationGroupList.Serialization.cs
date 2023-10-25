@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     {
         internal static ApplicationGroupList DeserializeApplicationGroupList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<VirtualApplicationGroupData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<VirtualApplicationGroupData> array = new List<VirtualApplicationGroupData>();

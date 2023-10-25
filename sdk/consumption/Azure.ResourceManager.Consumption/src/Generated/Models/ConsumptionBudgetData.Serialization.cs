@@ -68,6 +68,10 @@ namespace Azure.ResourceManager.Consumption
 
         internal static ConsumptionBudgetData DeserializeConsumptionBudgetData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> eTag = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -87,7 +91,6 @@ namespace Azure.ResourceManager.Consumption
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     eTag = new ETag(property.Value.GetString());
@@ -112,7 +115,6 @@ namespace Azure.ResourceManager.Consumption
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -131,7 +133,6 @@ namespace Azure.ResourceManager.Consumption
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             category = new BudgetCategory(property0.Value.GetString());
@@ -141,7 +142,6 @@ namespace Azure.ResourceManager.Consumption
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             amount = property0.Value.GetDecimal();
@@ -151,7 +151,6 @@ namespace Azure.ResourceManager.Consumption
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             timeGrain = new BudgetTimeGrainType(property0.Value.GetString());
@@ -161,7 +160,6 @@ namespace Azure.ResourceManager.Consumption
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             timePeriod = BudgetTimePeriod.DeserializeBudgetTimePeriod(property0.Value);
@@ -171,7 +169,6 @@ namespace Azure.ResourceManager.Consumption
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             filter = ConsumptionBudgetFilter.DeserializeConsumptionBudgetFilter(property0.Value);
@@ -181,7 +178,6 @@ namespace Azure.ResourceManager.Consumption
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             currentSpend = BudgetCurrentSpend.DeserializeBudgetCurrentSpend(property0.Value);
@@ -191,7 +187,6 @@ namespace Azure.ResourceManager.Consumption
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, BudgetAssociatedNotification> dictionary = new Dictionary<string, BudgetAssociatedNotification>();
@@ -206,7 +201,6 @@ namespace Azure.ResourceManager.Consumption
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             forecastSpend = BudgetForecastSpend.DeserializeBudgetForecastSpend(property0.Value);

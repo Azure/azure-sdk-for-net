@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         internal static DevTestLabCostDetails DeserializeDevTestLabCostDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> date = default;
             Optional<double> cost = default;
             Optional<DevTestLabCostType> costType = default;
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     date = property.Value.GetDateTimeOffset("O");
@@ -34,7 +37,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cost = property.Value.GetDouble();
@@ -44,7 +46,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     costType = new DevTestLabCostType(property.Value.GetString());

@@ -32,6 +32,11 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("textSource"u8);
                 writer.WriteObjectValue(TextSource);
             }
+            if (Optional.IsDefined(SsmlSource))
+            {
+                writer.WritePropertyName("ssmlSource"u8);
+                writer.WriteObjectValue(SsmlSource);
+            }
             writer.WriteEndObject();
         }
     }

@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(UpgradeAvailable))
+            if (Optional.IsDefined(IsUpgradeAvailable))
             {
                 writer.WritePropertyName("upgradeAvailable"u8);
-                writer.WriteBooleanValue(UpgradeAvailable.Value);
+                writer.WriteBooleanValue(IsUpgradeAvailable.Value);
             }
             if (Optional.IsDefined(ProtectionStatus))
             {
@@ -93,11 +93,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static DpmContainer DeserializeDpmContainer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("containerType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureBackupServerContainer": return AzureBackupServerContainer.DeserializeAzureBackupServerContainer(element);
+                    case "AzureBackupServerContainer": return BackupServerContainer.DeserializeBackupServerContainer(element);
                 }
             }
             Optional<bool> canReRegister = default;
@@ -120,7 +124,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     canReRegister = property.Value.GetBoolean();
@@ -135,7 +138,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     protectedItemCount = property.Value.GetInt64();
@@ -150,7 +152,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -165,7 +166,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     upgradeAvailable = property.Value.GetBoolean();
@@ -180,7 +180,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     extendedInfo = DpmContainerExtendedInfo.DeserializeDpmContainerExtendedInfo(property.Value);
@@ -195,7 +194,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     backupManagementType = new BackupManagementType(property.Value.GetString());

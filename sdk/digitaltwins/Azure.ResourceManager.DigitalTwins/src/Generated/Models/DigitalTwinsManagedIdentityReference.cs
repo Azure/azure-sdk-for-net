@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
 
         /// <summary> Initializes a new instance of DigitalTwinsManagedIdentityReference. </summary>
         /// <param name="identityType"> The type of managed identity used. </param>
-        /// <param name="userAssignedIdentity"> The user identity ARM resource id if the managed identity type is &apos;UserAssigned&apos;. </param>
+        /// <param name="userAssignedIdentity"> The user identity ARM resource id if the managed identity type is 'UserAssigned'. </param>
         internal DigitalTwinsManagedIdentityReference(DigitalTwinsManagedIdentityType? identityType, string userAssignedIdentity)
         {
             IdentityType = identityType;
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
 
         /// <summary> The type of managed identity used. </summary>
         public DigitalTwinsManagedIdentityType? IdentityType { get; set; }
-        /// <summary> The user identity ARM resource id if the managed identity type is &apos;UserAssigned&apos;. </summary>
+        /// <summary> The user identity ARM resource id if the managed identity type is 'UserAssigned'. </summary>
         public string UserAssignedIdentity { get; set; }
     }
 }

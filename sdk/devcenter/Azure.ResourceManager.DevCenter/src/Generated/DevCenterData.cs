@@ -5,13 +5,18 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DevCenter.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    /// <summary> A class representing the DevCenter data model. </summary>
+    /// <summary>
+    /// A class representing the DevCenter data model.
+    /// Represents a devcenter resource.
+    /// </summary>
     public partial class DevCenterData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DevCenterData. </summary>
@@ -29,15 +34,19 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="location"> The location. </param>
         /// <param name="identity"> Managed identity properties. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal DevCenterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="devCenterUri"> The URI of the Dev Center. </param>
+        internal DevCenterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, DevCenterProvisioningState? provisioningState, Uri devCenterUri) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ProvisioningState = provisioningState;
+            DevCenterUri = devCenterUri;
         }
 
         /// <summary> Managed identity properties. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The provisioning state of the resource. </summary>
-        public string ProvisioningState { get; }
+        public DevCenterProvisioningState? ProvisioningState { get; }
+        /// <summary> The URI of the Dev Center. </summary>
+        public Uri DevCenterUri { get; }
     }
 }

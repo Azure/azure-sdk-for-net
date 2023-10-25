@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Subscription
         /// <returns> Returns a <see cref="TenantPolicyResource" /> object. </returns>
         public virtual TenantPolicyResource GetTenantPolicy()
         {
-            return new TenantPolicyResource(Client, new ResourceIdentifier(Id.ToString() + "/providers/Microsoft.Subscription/policies/default"));
+            return new TenantPolicyResource(Client, Id.AppendProviderResource("Microsoft.Subscription", "policies", "default"));
         }
 
         /// <summary> Gets a collection of BillingAccountPolicyResources in the TenantResource. </summary>

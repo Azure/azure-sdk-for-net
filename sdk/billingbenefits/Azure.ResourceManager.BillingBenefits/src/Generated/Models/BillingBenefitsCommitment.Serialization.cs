@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         internal static BillingBenefitsCommitment DeserializeBillingBenefitsCommitment(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BillingBenefitsCommitmentGrain> grain = default;
             Optional<string> currencyCode = default;
             Optional<double> amount = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     grain = new BillingBenefitsCommitmentGrain(property.Value.GetString());
@@ -59,7 +62,6 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     amount = property.Value.GetDouble();

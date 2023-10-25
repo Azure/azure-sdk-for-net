@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static UnauthenticatedClientActionV2 ToUnauthenticatedClientActionV2(this string value)
         {
-            if (string.Equals(value, "RedirectToLoginPage", StringComparison.InvariantCultureIgnoreCase)) return UnauthenticatedClientActionV2.RedirectToLoginPage;
-            if (string.Equals(value, "AllowAnonymous", StringComparison.InvariantCultureIgnoreCase)) return UnauthenticatedClientActionV2.AllowAnonymous;
-            if (string.Equals(value, "Return401", StringComparison.InvariantCultureIgnoreCase)) return UnauthenticatedClientActionV2.Return401;
-            if (string.Equals(value, "Return403", StringComparison.InvariantCultureIgnoreCase)) return UnauthenticatedClientActionV2.Return403;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "RedirectToLoginPage")) return UnauthenticatedClientActionV2.RedirectToLoginPage;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AllowAnonymous")) return UnauthenticatedClientActionV2.AllowAnonymous;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Return401")) return UnauthenticatedClientActionV2.Return401;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Return403")) return UnauthenticatedClientActionV2.Return403;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown UnauthenticatedClientActionV2 value.");
         }
     }

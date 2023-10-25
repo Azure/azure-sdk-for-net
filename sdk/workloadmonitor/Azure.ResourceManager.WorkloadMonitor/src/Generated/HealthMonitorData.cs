@@ -12,7 +12,10 @@ using Azure.ResourceManager.WorkloadMonitor.Models;
 
 namespace Azure.ResourceManager.WorkloadMonitor
 {
-    /// <summary> A class representing the HealthMonitor data model. </summary>
+    /// <summary>
+    /// A class representing the HealthMonitor data model.
+    /// Information about the monitor’s current health status.
+    /// </summary>
     public partial class HealthMonitorData : ResourceData
     {
         /// <summary> Initializes a new instance of HealthMonitorData. </summary>
@@ -31,11 +34,11 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <param name="parentMonitorName"> Name of the parent monitor. </param>
         /// <param name="previousMonitorState"> Previous health state of the monitor. </param>
         /// <param name="currentMonitorState"> Current health state of the monitor. </param>
-        /// <param name="evaluationTimestamp"> Timestamp of the monitor&apos;s last health evaluation. </param>
-        /// <param name="currentStateFirstObservedTimestamp"> Timestamp of the monitor&apos;s last health state change. </param>
-        /// <param name="lastReportedTimestamp"> Timestamp of the monitor&apos;s last reported health state. </param>
-        /// <param name="evidence"> Evidence validating the monitor&apos;s current health state. </param>
-        /// <param name="monitorConfiguration"> The configuration settings at the time of the monitor&apos;s health evaluation. </param>
+        /// <param name="evaluationTimestamp"> Timestamp of the monitor's last health evaluation. </param>
+        /// <param name="currentStateFirstObservedTimestamp"> Timestamp of the monitor's last health state change. </param>
+        /// <param name="lastReportedTimestamp"> Timestamp of the monitor's last reported health state. </param>
+        /// <param name="evidence"> Evidence validating the monitor's current health state. </param>
+        /// <param name="monitorConfiguration"> The configuration settings at the time of the monitor's health evaluation. </param>
         internal HealthMonitorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string monitorName, string monitorType, string monitoredObject, string parentMonitorName, HealthState? previousMonitorState, HealthState? currentMonitorState, string evaluationTimestamp, string currentStateFirstObservedTimestamp, string lastReportedTimestamp, BinaryData evidence, BinaryData monitorConfiguration) : base(id, name, resourceType, systemData)
         {
             MonitorName = monitorName;
@@ -63,14 +66,14 @@ namespace Azure.ResourceManager.WorkloadMonitor
         public HealthState? PreviousMonitorState { get; }
         /// <summary> Current health state of the monitor. </summary>
         public HealthState? CurrentMonitorState { get; }
-        /// <summary> Timestamp of the monitor&apos;s last health evaluation. </summary>
+        /// <summary> Timestamp of the monitor's last health evaluation. </summary>
         public string EvaluationTimestamp { get; }
-        /// <summary> Timestamp of the monitor&apos;s last health state change. </summary>
+        /// <summary> Timestamp of the monitor's last health state change. </summary>
         public string CurrentStateFirstObservedTimestamp { get; }
-        /// <summary> Timestamp of the monitor&apos;s last reported health state. </summary>
+        /// <summary> Timestamp of the monitor's last reported health state. </summary>
         public string LastReportedTimestamp { get; }
         /// <summary>
-        /// Evidence validating the monitor&apos;s current health state.
+        /// Evidence validating the monitor's current health state.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -101,7 +104,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// </summary>
         public BinaryData Evidence { get; }
         /// <summary>
-        /// The configuration settings at the time of the monitor&apos;s health evaluation.
+        /// The configuration settings at the time of the monitor's health evaluation.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

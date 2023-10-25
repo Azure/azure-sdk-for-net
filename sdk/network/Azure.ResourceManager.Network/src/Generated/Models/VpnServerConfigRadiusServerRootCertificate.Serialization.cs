@@ -27,7 +27,10 @@ namespace Azure.ResourceManager.Network.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(PublicCertData);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(PublicCertData.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(PublicCertData))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
@@ -35,6 +38,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static VpnServerConfigRadiusServerRootCertificate DeserializeVpnServerConfigRadiusServerRootCertificate(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<BinaryData> publicCertData = default;
             foreach (var property in element.EnumerateObject())
@@ -48,7 +55,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     publicCertData = BinaryData.FromString(property.Value.GetRawText());

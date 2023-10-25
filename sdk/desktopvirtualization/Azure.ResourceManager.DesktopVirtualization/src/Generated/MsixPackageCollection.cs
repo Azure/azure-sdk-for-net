@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -221,13 +222,16 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="pageSize"> Number of items per page. </param>
+        /// <param name="isDescending"> Indicates whether the collection is descending. </param>
+        /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MsixPackageResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MsixPackageResource> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MsixPackageResource> GetAllAsync(int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _msixPackageMSIXPackagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _msixPackageMSIXPackagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MsixPackageResource(Client, MsixPackageData.DeserializeMsixPackageData(e)), _msixPackageMSIXPackagesClientDiagnostics, Pipeline, "MsixPackageCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _msixPackageMSIXPackagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _msixPackageMSIXPackagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MsixPackageResource(Client, MsixPackageData.DeserializeMsixPackageData(e)), _msixPackageMSIXPackagesClientDiagnostics, Pipeline, "MsixPackageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -243,13 +247,16 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="pageSize"> Number of items per page. </param>
+        /// <param name="isDescending"> Indicates whether the collection is descending. </param>
+        /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MsixPackageResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MsixPackageResource> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<MsixPackageResource> GetAll(int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _msixPackageMSIXPackagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _msixPackageMSIXPackagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MsixPackageResource(Client, MsixPackageData.DeserializeMsixPackageData(e)), _msixPackageMSIXPackagesClientDiagnostics, Pipeline, "MsixPackageCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _msixPackageMSIXPackagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _msixPackageMSIXPackagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MsixPackageResource(Client, MsixPackageData.DeserializeMsixPackageData(e)), _msixPackageMSIXPackagesClientDiagnostics, Pipeline, "MsixPackageCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -314,6 +321,80 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 var response = _msixPackageMSIXPackagesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, msixPackageFullName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/msixPackages/{msixPackageFullName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MSIXPackages_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="msixPackageFullName"> The version specific package full name of the MSIX package within specified hostpool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="msixPackageFullName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="msixPackageFullName"/> is null. </exception>
+        public virtual async Task<NullableResponse<MsixPackageResource>> GetIfExistsAsync(string msixPackageFullName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(msixPackageFullName, nameof(msixPackageFullName));
+
+            using var scope = _msixPackageMSIXPackagesClientDiagnostics.CreateScope("MsixPackageCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _msixPackageMSIXPackagesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, msixPackageFullName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<MsixPackageResource>(response.GetRawResponse());
+                return Response.FromValue(new MsixPackageResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/msixPackages/{msixPackageFullName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MSIXPackages_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="msixPackageFullName"> The version specific package full name of the MSIX package within specified hostpool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="msixPackageFullName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="msixPackageFullName"/> is null. </exception>
+        public virtual NullableResponse<MsixPackageResource> GetIfExists(string msixPackageFullName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(msixPackageFullName, nameof(msixPackageFullName));
+
+            using var scope = _msixPackageMSIXPackagesClientDiagnostics.CreateScope("MsixPackageCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _msixPackageMSIXPackagesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, msixPackageFullName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<MsixPackageResource>(response.GetRawResponse());
+                return Response.FromValue(new MsixPackageResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

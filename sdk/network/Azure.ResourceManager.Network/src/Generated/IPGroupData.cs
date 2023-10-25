@@ -13,7 +13,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the IPGroup data model. </summary>
+    /// <summary>
+    /// A class representing the IPGroup data model.
+    /// The IpGroups resource information.
+    /// </summary>
     public partial class IPGroupData : NetworkTrackedResourceData
     {
         /// <summary> Initializes a new instance of IPGroupData. </summary>

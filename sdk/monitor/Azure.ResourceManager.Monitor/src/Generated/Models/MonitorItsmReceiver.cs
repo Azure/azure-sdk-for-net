@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="workspaceId"> OMS LA instance identifier. </param>
         /// <param name="connectionId"> Unique identification of ITSM connection among multiple defined in above workspace. </param>
         /// <param name="ticketConfiguration"> JSON blob for the configurations of the ITSM action. CreateMultipleWorkItems option will be part of this blob as well. </param>
-        /// <param name="region"> Region in which workspace resides. Supported values:&apos;centralindia&apos;,&apos;japaneast&apos;,&apos;southeastasia&apos;,&apos;australiasoutheast&apos;,&apos;uksouth&apos;,&apos;westcentralus&apos;,&apos;canadacentral&apos;,&apos;eastus&apos;,&apos;westeurope&apos;. </param>
+        /// <param name="region"> Region in which workspace resides. Supported values:'centralindia','japaneast','southeastasia','australiasoutheast','uksouth','westcentralus','canadacentral','eastus','westeurope'. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="workspaceId"/>, <paramref name="connectionId"/> or <paramref name="ticketConfiguration"/> is null. </exception>
         public MonitorItsmReceiver(string name, string workspaceId, string connectionId, string ticketConfiguration, AzureLocation region)
         {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Monitor.Models
         public string ConnectionId { get; set; }
         /// <summary> JSON blob for the configurations of the ITSM action. CreateMultipleWorkItems option will be part of this blob as well. </summary>
         public string TicketConfiguration { get; set; }
-        /// <summary> Region in which workspace resides. Supported values:&apos;centralindia&apos;,&apos;japaneast&apos;,&apos;southeastasia&apos;,&apos;australiasoutheast&apos;,&apos;uksouth&apos;,&apos;westcentralus&apos;,&apos;canadacentral&apos;,&apos;eastus&apos;,&apos;westeurope&apos;. </summary>
+        /// <summary> Region in which workspace resides. Supported values:'centralindia','japaneast','southeastasia','australiasoutheast','uksouth','westcentralus','canadacentral','eastus','westeurope'. </summary>
         public AzureLocation Region { get; set; }
     }
 }

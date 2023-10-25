@@ -14,8 +14,8 @@ namespace Azure.ResourceManager.Monitor.Models
     public partial class MonitorPrivateLinkAccessModeSettings
     {
         /// <summary> Initializes a new instance of MonitorPrivateLinkAccessModeSettings. </summary>
-        /// <param name="queryAccessMode"> Specifies the default access mode of queries through associated private endpoints in scope. If not specified default value is &apos;Open&apos;. You can override this default setting for a specific private endpoint connection by adding an exclusion in the &apos;exclusions&apos; array. </param>
-        /// <param name="ingestionAccessMode"> Specifies the default access mode of ingestion through associated private endpoints in scope. If not specified default value is &apos;Open&apos;. You can override this default setting for a specific private endpoint connection by adding an exclusion in the &apos;exclusions&apos; array. </param>
+        /// <param name="queryAccessMode"> Specifies the default access mode of queries through associated private endpoints in scope. If not specified default value is 'Open'. You can override this default setting for a specific private endpoint connection by adding an exclusion in the 'exclusions' array. </param>
+        /// <param name="ingestionAccessMode"> Specifies the default access mode of ingestion through associated private endpoints in scope. If not specified default value is 'Open'. You can override this default setting for a specific private endpoint connection by adding an exclusion in the 'exclusions' array. </param>
         public MonitorPrivateLinkAccessModeSettings(MonitorPrivateLinkAccessMode queryAccessMode, MonitorPrivateLinkAccessMode ingestionAccessMode)
         {
             QueryAccessMode = queryAccessMode;
@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> Initializes a new instance of MonitorPrivateLinkAccessModeSettings. </summary>
-        /// <param name="queryAccessMode"> Specifies the default access mode of queries through associated private endpoints in scope. If not specified default value is &apos;Open&apos;. You can override this default setting for a specific private endpoint connection by adding an exclusion in the &apos;exclusions&apos; array. </param>
-        /// <param name="ingestionAccessMode"> Specifies the default access mode of ingestion through associated private endpoints in scope. If not specified default value is &apos;Open&apos;. You can override this default setting for a specific private endpoint connection by adding an exclusion in the &apos;exclusions&apos; array. </param>
+        /// <param name="queryAccessMode"> Specifies the default access mode of queries through associated private endpoints in scope. If not specified default value is 'Open'. You can override this default setting for a specific private endpoint connection by adding an exclusion in the 'exclusions' array. </param>
+        /// <param name="ingestionAccessMode"> Specifies the default access mode of ingestion through associated private endpoints in scope. If not specified default value is 'Open'. You can override this default setting for a specific private endpoint connection by adding an exclusion in the 'exclusions' array. </param>
         /// <param name="exclusions"> List of exclusions that override the default access mode settings for specific private endpoint connections. </param>
         internal MonitorPrivateLinkAccessModeSettings(MonitorPrivateLinkAccessMode queryAccessMode, MonitorPrivateLinkAccessMode ingestionAccessMode, IList<MonitorPrivateLinkAccessModeSettingsExclusion> exclusions)
         {
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.Monitor.Models
             Exclusions = exclusions;
         }
 
-        /// <summary> Specifies the default access mode of queries through associated private endpoints in scope. If not specified default value is &apos;Open&apos;. You can override this default setting for a specific private endpoint connection by adding an exclusion in the &apos;exclusions&apos; array. </summary>
+        /// <summary> Specifies the default access mode of queries through associated private endpoints in scope. If not specified default value is 'Open'. You can override this default setting for a specific private endpoint connection by adding an exclusion in the 'exclusions' array. </summary>
         public MonitorPrivateLinkAccessMode QueryAccessMode { get; set; }
-        /// <summary> Specifies the default access mode of ingestion through associated private endpoints in scope. If not specified default value is &apos;Open&apos;. You can override this default setting for a specific private endpoint connection by adding an exclusion in the &apos;exclusions&apos; array. </summary>
+        /// <summary> Specifies the default access mode of ingestion through associated private endpoints in scope. If not specified default value is 'Open'. You can override this default setting for a specific private endpoint connection by adding an exclusion in the 'exclusions' array. </summary>
         public MonitorPrivateLinkAccessMode IngestionAccessMode { get; set; }
         /// <summary> List of exclusions that override the default access mode settings for specific private endpoint connections. </summary>
         public IList<MonitorPrivateLinkAccessModeSettingsExclusion> Exclusions { get; }

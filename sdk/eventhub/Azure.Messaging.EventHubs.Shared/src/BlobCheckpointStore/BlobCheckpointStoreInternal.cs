@@ -315,7 +315,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                         .GetBlobClient(blobName)
                         .GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
 
-                    var checkpoint = CreateCheckpoint(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, blob.Value.Metadata);
+                    var checkpoint = CreateCheckpoint(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, blob.Value.Metadata, blob.Value.LastModified);
                     return checkpoint;
                 }
                 catch (RequestFailedException e) when (e.ErrorCode == BlobErrorCode.BlobNotFound)
@@ -423,6 +423,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
         /// <param name="partitionId">The partition id the specific checkpoint is associated with.</param>
         /// <param name="metadata">The metadata of the blob that represents the checkpoint.</param>
+        /// <param name="modifiedDate">The date/time that the blob representing the checkpoint was last modified.</param>
         ///
         /// <returns>A <see cref="EventProcessorCheckpoint"/> initialized with checkpoint properties if the checkpoint exists, otherwise <code>null</code>.</returns>
         ///
@@ -430,7 +431,8 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                           string eventHubName,
                                                           string consumerGroup,
                                                           string partitionId,
-                                                          IDictionary<string, string> metadata)
+                                                          IDictionary<string, string> metadata,
+                                                          DateTimeOffset modifiedDate)
         {
             var startingPosition = default(EventPosition?);
             var offset = default(long?);
@@ -464,7 +466,8 @@ namespace Azure.Messaging.EventHubs.Primitives
                 PartitionId = partitionId,
                 StartingPosition = startingPosition.Value,
                 Offset = offset,
-                SequenceNumber = sequenceNumber
+                SequenceNumber = sequenceNumber,
+                LastModified = modifiedDate
             };
         }
 
@@ -526,7 +529,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                 PartitionId = partitionId,
                 StartingPosition = startingPosition.Value,
                 Offset = offset,
-                SequenceNumber = sequenceNumber
+                SequenceNumber = sequenceNumber,
             };
         }
 
@@ -864,6 +867,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         {
             public long? Offset { get; set; }
             public long? SequenceNumber { get; set; }
+            public DateTimeOffset? LastModified { get; set; }
         }
     }
 }

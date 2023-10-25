@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HealthcareApis
 {
-    /// <summary> A class representing the HealthcareApisIotFhirDestination data model. </summary>
+    /// <summary>
+    /// A class representing the HealthcareApisIotFhirDestination data model.
+    /// IoT Connector FHIR destination definition.
+    /// </summary>
     public partial class HealthcareApisIotFhirDestinationData : ResourceData
     {
         /// <summary> Initializes a new instance of HealthcareApisIotFhirDestinationData. </summary>

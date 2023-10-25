@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Logic.Models
     {
         internal static LogicApiResourcePolicies DeserializeLogicApiResourcePolicies(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> content = default;
             Optional<string> contentLink = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     content = BinaryData.FromString(property.Value.GetRawText());

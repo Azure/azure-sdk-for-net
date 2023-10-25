@@ -16,14 +16,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static ReplicationProtectedItemProperties DeserializeReplicationProtectedItemProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> friendlyName = default;
             Optional<string> protectedItemType = default;
-            Optional<string> protectableItemId = default;
+            Optional<ResourceIdentifier> protectableItemId = default;
             Optional<string> recoveryServicesProviderId = default;
             Optional<string> primaryFabricFriendlyName = default;
             Optional<string> primaryFabricProvider = default;
             Optional<string> recoveryFabricFriendlyName = default;
-            Optional<string> recoveryFabricId = default;
+            Optional<ResourceIdentifier> recoveryFabricId = default;
             Optional<string> primaryProtectionContainerFriendlyName = default;
             Optional<string> recoveryProtectionContainerFriendlyName = default;
             Optional<string> protectionState = default;
@@ -36,16 +40,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<IReadOnlyList<string>> allowedOperations = default;
             Optional<string> replicationHealth = default;
             Optional<string> failoverHealth = default;
-            Optional<IReadOnlyList<HealthError>> healthErrors = default;
-            Optional<string> policyId = default;
+            Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrors = default;
+            Optional<ResourceIdentifier> policyId = default;
             Optional<string> policyFriendlyName = default;
             Optional<DateTimeOffset> lastSuccessfulFailoverTime = default;
             Optional<DateTimeOffset> lastSuccessfulTestFailoverTime = default;
             Optional<CurrentScenarioDetails> currentScenario = default;
-            Optional<string> failoverRecoveryPointId = default;
+            Optional<ResourceIdentifier> failoverRecoveryPointId = default;
             Optional<ReplicationProviderSpecificSettings> providerSpecificDetails = default;
-            Optional<string> recoveryContainerId = default;
-            Optional<string> eventCorrelationId = default;
+            Optional<ResourceIdentifier> recoveryContainerId = default;
+            Optional<Guid> eventCorrelationId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("friendlyName"u8))
@@ -60,7 +64,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("protectableItemId"u8))
                 {
-                    protectableItemId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    protectableItemId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("recoveryServicesProviderId"u8))
@@ -85,7 +93,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("recoveryFabricId"u8))
                 {
-                    recoveryFabricId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryFabricId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("primaryProtectionContainerFriendlyName"u8))
@@ -137,7 +149,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -162,20 +173,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<HealthError> array = new List<HealthError>();
+                    List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HealthError.DeserializeHealthError(item));
+                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
                     }
                     healthErrors = array;
                     continue;
                 }
                 if (property.NameEquals("policyId"u8))
                 {
-                    policyId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    policyId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("policyFriendlyName"u8))
@@ -187,7 +201,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastSuccessfulFailoverTime = property.Value.GetDateTimeOffset("O");
@@ -197,7 +210,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastSuccessfulTestFailoverTime = property.Value.GetDateTimeOffset("O");
@@ -207,7 +219,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     currentScenario = CurrentScenarioDetails.DeserializeCurrentScenarioDetails(property.Value);
@@ -215,14 +226,17 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("failoverRecoveryPointId"u8))
                 {
-                    failoverRecoveryPointId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    failoverRecoveryPointId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("providerSpecificDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     providerSpecificDetails = ReplicationProviderSpecificSettings.DeserializeReplicationProviderSpecificSettings(property.Value);
@@ -230,16 +244,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("recoveryContainerId"u8))
                 {
-                    recoveryContainerId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recoveryContainerId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("eventCorrelationId"u8))
                 {
-                    eventCorrelationId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eventCorrelationId = property.Value.GetGuid();
                     continue;
                 }
             }
-            return new ReplicationProtectedItemProperties(friendlyName.Value, protectedItemType.Value, protectableItemId.Value, recoveryServicesProviderId.Value, primaryFabricFriendlyName.Value, primaryFabricProvider.Value, recoveryFabricFriendlyName.Value, recoveryFabricId.Value, primaryProtectionContainerFriendlyName.Value, recoveryProtectionContainerFriendlyName.Value, protectionState.Value, protectionStateDescription.Value, activeLocation.Value, testFailoverState.Value, testFailoverStateDescription.Value, switchProviderState.Value, switchProviderStateDescription.Value, Optional.ToList(allowedOperations), replicationHealth.Value, failoverHealth.Value, Optional.ToList(healthErrors), policyId.Value, policyFriendlyName.Value, Optional.ToNullable(lastSuccessfulFailoverTime), Optional.ToNullable(lastSuccessfulTestFailoverTime), currentScenario.Value, failoverRecoveryPointId.Value, providerSpecificDetails.Value, recoveryContainerId.Value, eventCorrelationId.Value);
+            return new ReplicationProtectedItemProperties(friendlyName.Value, protectedItemType.Value, protectableItemId.Value, recoveryServicesProviderId.Value, primaryFabricFriendlyName.Value, primaryFabricProvider.Value, recoveryFabricFriendlyName.Value, recoveryFabricId.Value, primaryProtectionContainerFriendlyName.Value, recoveryProtectionContainerFriendlyName.Value, protectionState.Value, protectionStateDescription.Value, activeLocation.Value, testFailoverState.Value, testFailoverStateDescription.Value, switchProviderState.Value, switchProviderStateDescription.Value, Optional.ToList(allowedOperations), replicationHealth.Value, failoverHealth.Value, Optional.ToList(healthErrors), policyId.Value, policyFriendlyName.Value, Optional.ToNullable(lastSuccessfulFailoverTime), Optional.ToNullable(lastSuccessfulTestFailoverTime), currentScenario.Value, failoverRecoveryPointId.Value, providerSpecificDetails.Value, recoveryContainerId.Value, Optional.ToNullable(eventCorrelationId));
         }
     }
 }

@@ -83,12 +83,21 @@ namespace Azure.ResourceManager.Media
                     writer.WriteNull("publicNetworkAccess");
                 }
             }
+            if (Optional.IsDefined(MinimumTlsVersion))
+            {
+                writer.WritePropertyName("minimumTlsVersion"u8);
+                writer.WriteStringValue(MinimumTlsVersion.Value.ToString());
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static MediaServicesAccountData DeserializeMediaServicesAccountData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -104,13 +113,13 @@ namespace Azure.ResourceManager.Media
             Optional<MediaServicesPublicNetworkAccess?> publicNetworkAccess = default;
             Optional<MediaServicesProvisioningState> provisioningState = default;
             Optional<IReadOnlyList<MediaServicesPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            Optional<MediaServicesMinimumTlsVersion> minimumTlsVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
@@ -120,7 +129,6 @@ namespace Azure.ResourceManager.Media
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -155,7 +163,6 @@ namespace Azure.ResourceManager.Media
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -174,7 +181,6 @@ namespace Azure.ResourceManager.Media
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             mediaServiceId = property0.Value.GetGuid();
@@ -184,7 +190,6 @@ namespace Azure.ResourceManager.Media
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<MediaServicesStorageAccount> array = new List<MediaServicesStorageAccount>();
@@ -209,7 +214,6 @@ namespace Azure.ResourceManager.Media
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             encryption = AccountEncryption.DeserializeAccountEncryption(property0.Value);
@@ -219,7 +223,6 @@ namespace Azure.ResourceManager.Media
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             keyDelivery = MediaKeyDelivery.DeserializeMediaKeyDelivery(property0.Value);
@@ -239,7 +242,6 @@ namespace Azure.ResourceManager.Media
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new MediaServicesProvisioningState(property0.Value.GetString());
@@ -249,7 +251,6 @@ namespace Azure.ResourceManager.Media
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<MediaServicesPrivateEndpointConnectionData> array = new List<MediaServicesPrivateEndpointConnectionData>();
@@ -260,11 +261,20 @@ namespace Azure.ResourceManager.Media
                             privateEndpointConnections = array;
                             continue;
                         }
+                        if (property0.NameEquals("minimumTlsVersion"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            minimumTlsVersion = new MediaServicesMinimumTlsVersion(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new MediaServicesAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(mediaServiceId), Optional.ToList(storageAccounts), Optional.ToNullable(storageAuthentication), encryption.Value, keyDelivery.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(provisioningState), Optional.ToList(privateEndpointConnections));
+            return new MediaServicesAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(mediaServiceId), Optional.ToList(storageAccounts), Optional.ToNullable(storageAuthentication), encryption.Value, keyDelivery.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(provisioningState), Optional.ToList(privateEndpointConnections), Optional.ToNullable(minimumTlsVersion));
         }
     }
 }

@@ -41,21 +41,24 @@ namespace Azure.ResourceManager.MobileNetwork
 
         internal static PacketCoreDataPlaneData DeserializePacketCoreDataPlaneData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ProvisioningState> provisioningState = default;
-            InterfaceProperties userPlaneAccessInterface = default;
+            Optional<MobileNetworkProvisioningState> provisioningState = default;
+            MobileNetworkInterfaceProperties userPlaneAccessInterface = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -90,7 +93,6 @@ namespace Azure.ResourceManager.MobileNetwork
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -109,15 +111,14 @@ namespace Azure.ResourceManager.MobileNetwork
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new MobileNetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("userPlaneAccessInterface"u8))
                         {
-                            userPlaneAccessInterface = InterfaceProperties.DeserializeInterfaceProperties(property0.Value);
+                            userPlaneAccessInterface = MobileNetworkInterfaceProperties.DeserializeMobileNetworkInterfaceProperties(property0.Value);
                             continue;
                         }
                     }

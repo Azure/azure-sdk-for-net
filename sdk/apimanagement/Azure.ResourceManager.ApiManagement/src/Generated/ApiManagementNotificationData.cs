@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary> A class representing the ApiManagementNotification data model. </summary>
+    /// <summary>
+    /// A class representing the ApiManagementNotification data model.
+    /// Notification details.
+    /// </summary>
     public partial class ApiManagementNotificationData : ResourceData
     {
         /// <summary> Initializes a new instance of ApiManagementNotificationData. </summary>

@@ -40,6 +40,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("jobServiceType");
                 }
             }
+            if (Optional.IsDefined(Nodes))
+            {
+                if (Nodes != null)
+                {
+                    writer.WritePropertyName("nodes"u8);
+                    writer.WriteObjectValue(Nodes);
+                }
+                else
+                {
+                    writer.WriteNull("nodes");
+                }
+            }
             if (Optional.IsDefined(Port))
             {
                 if (Port != null)
@@ -75,9 +87,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningJobService DeserializeMachineLearningJobService(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> endpoint = default;
             Optional<string> errorMessage = default;
             Optional<string> jobServiceType = default;
+            Optional<JobNodes> nodes = default;
             Optional<int?> port = default;
             Optional<IDictionary<string, string>> properties = default;
             Optional<string> status = default;
@@ -113,6 +130,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     jobServiceType = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("nodes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        nodes = null;
+                        continue;
+                    }
+                    nodes = JobNodes.DeserializeJobNodes(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("port"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -133,14 +160,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     properties = dictionary;
                     continue;
@@ -156,7 +176,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningJobService(endpoint.Value, errorMessage.Value, jobServiceType.Value, Optional.ToNullable(port), Optional.ToDictionary(properties), status.Value);
+            return new MachineLearningJobService(endpoint.Value, errorMessage.Value, jobServiceType.Value, nodes.Value, Optional.ToNullable(port), Optional.ToDictionary(properties), status.Value);
         }
     }
 }

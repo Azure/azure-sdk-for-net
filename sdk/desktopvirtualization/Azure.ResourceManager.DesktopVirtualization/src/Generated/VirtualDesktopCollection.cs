@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -139,12 +140,16 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="pageSize"> Number of items per page. </param>
+        /// <param name="isDescending"> Indicates whether the collection is descending. </param>
+        /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="VirtualDesktopResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VirtualDesktopResource> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<VirtualDesktopResource> GetAllAsync(int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualDesktopDesktopsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new VirtualDesktopResource(Client, VirtualDesktopData.DeserializeVirtualDesktopData(e)), _virtualDesktopDesktopsClientDiagnostics, Pipeline, "VirtualDesktopCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualDesktopDesktopsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualDesktopDesktopsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new VirtualDesktopResource(Client, VirtualDesktopData.DeserializeVirtualDesktopData(e)), _virtualDesktopDesktopsClientDiagnostics, Pipeline, "VirtualDesktopCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -160,12 +165,16 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="pageSize"> Number of items per page. </param>
+        /// <param name="isDescending"> Indicates whether the collection is descending. </param>
+        /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VirtualDesktopResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VirtualDesktopResource> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<VirtualDesktopResource> GetAll(int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualDesktopDesktopsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new VirtualDesktopResource(Client, VirtualDesktopData.DeserializeVirtualDesktopData(e)), _virtualDesktopDesktopsClientDiagnostics, Pipeline, "VirtualDesktopCollection.GetAll", "value", null, cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualDesktopDesktopsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _virtualDesktopDesktopsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new VirtualDesktopResource(Client, VirtualDesktopData.DeserializeVirtualDesktopData(e)), _virtualDesktopDesktopsClientDiagnostics, Pipeline, "VirtualDesktopCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -230,6 +239,80 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 var response = _virtualDesktopDesktopsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, desktopName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}/desktops/{desktopName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Desktops_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="desktopName"> The name of the desktop within the specified desktop group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="desktopName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="desktopName"/> is null. </exception>
+        public virtual async Task<NullableResponse<VirtualDesktopResource>> GetIfExistsAsync(string desktopName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(desktopName, nameof(desktopName));
+
+            using var scope = _virtualDesktopDesktopsClientDiagnostics.CreateScope("VirtualDesktopCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _virtualDesktopDesktopsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, desktopName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<VirtualDesktopResource>(response.GetRawResponse());
+                return Response.FromValue(new VirtualDesktopResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}/desktops/{desktopName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Desktops_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="desktopName"> The name of the desktop within the specified desktop group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="desktopName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="desktopName"/> is null. </exception>
+        public virtual NullableResponse<VirtualDesktopResource> GetIfExists(string desktopName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(desktopName, nameof(desktopName));
+
+            using var scope = _virtualDesktopDesktopsClientDiagnostics.CreateScope("VirtualDesktopCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _virtualDesktopDesktopsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, desktopName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<VirtualDesktopResource>(response.GetRawResponse());
+                return Response.FromValue(new VirtualDesktopResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

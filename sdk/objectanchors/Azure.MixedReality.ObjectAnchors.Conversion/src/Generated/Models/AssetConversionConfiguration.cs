@@ -15,14 +15,13 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
     /// <summary> Represents an ingestion configuration. </summary>
     public partial class AssetConversionConfiguration
     {
-
         /// <summary> Initializes a new instance of AssetConversionConfiguration. </summary>
         /// <param name="assetDimensionsWrapper"> Dimensions of the asset. </param>
         /// <param name="boundingBoxCenterWrapper"> BoundingBoxCenter of the asset. </param>
-        /// <param name="gravityWrapper"> Gravity vector with respect to object&apos;s nominal position. </param>
+        /// <param name="gravityWrapper"> Gravity vector with respect to object's nominal position. </param>
         /// <param name="keyFrameIndexes"> Indices of Key Frames. </param>
         /// <param name="groundTruthTrajectoryCameraPoses"> Ground truth trajectory. </param>
-        /// <param name="principalAxisWrapper"> Orientation of model&apos;s bounding box. </param>
+        /// <param name="principalAxisWrapper"> Orientation of model's bounding box. </param>
         /// <param name="scale"> Scale of transformation of asset units into meter space. </param>
         /// <param name="disableDetectScaleUnits"> Whether or not disable the scale units in the model metadata. </param>
         /// <param name="supportingPlaneWrapper"> Definition of supporting plane. </param>

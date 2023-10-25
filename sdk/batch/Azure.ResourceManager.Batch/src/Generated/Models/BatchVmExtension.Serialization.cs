@@ -33,13 +33,21 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("autoUpgradeMinorVersion"u8);
                 writer.WriteBooleanValue(AutoUpgradeMinorVersion.Value);
             }
+            if (Optional.IsDefined(EnableAutomaticUpgrade))
+            {
+                writer.WritePropertyName("enableAutomaticUpgrade"u8);
+                writer.WriteBooleanValue(EnableAutomaticUpgrade.Value);
+            }
             if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Settings);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Settings.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(Settings))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsDefined(ProtectedSettings))
@@ -48,7 +56,10 @@ namespace Azure.ResourceManager.Batch.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ProtectedSettings);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ProtectedSettings.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(ProtectedSettings))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsCollectionDefined(ProvisionAfterExtensions))
@@ -66,11 +77,16 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchVmExtension DeserializeBatchVmExtension(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             string publisher = default;
             string type = default;
             Optional<string> typeHandlerVersion = default;
             Optional<bool> autoUpgradeMinorVersion = default;
+            Optional<bool> enableAutomaticUpgrade = default;
             Optional<BinaryData> settings = default;
             Optional<BinaryData> protectedSettings = default;
             Optional<IList<string>> provisionAfterExtensions = default;
@@ -100,17 +116,24 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     autoUpgradeMinorVersion = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("enableAutomaticUpgrade"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enableAutomaticUpgrade = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("settings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     settings = BinaryData.FromString(property.Value.GetRawText());
@@ -120,7 +143,6 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     protectedSettings = BinaryData.FromString(property.Value.GetRawText());
@@ -130,7 +152,6 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -142,7 +163,7 @@ namespace Azure.ResourceManager.Batch.Models
                     continue;
                 }
             }
-            return new BatchVmExtension(name, publisher, type, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), settings.Value, protectedSettings.Value, Optional.ToList(provisionAfterExtensions));
+            return new BatchVmExtension(name, publisher, type, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), Optional.ToNullable(enableAutomaticUpgrade), settings.Value, protectedSettings.Value, Optional.ToList(provisionAfterExtensions));
         }
     }
 }

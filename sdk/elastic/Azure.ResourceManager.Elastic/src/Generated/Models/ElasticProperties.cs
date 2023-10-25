@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Elastic.Models
         }
 
         /// <summary> Initializes a new instance of ElasticProperties. </summary>
-        /// <param name="elasticCloudUser"> Details of the user&apos;s elastic account. </param>
+        /// <param name="elasticCloudUser"> Details of the user's elastic account. </param>
         /// <param name="elasticCloudDeployment"> Details of the elastic cloud deployment. </param>
         internal ElasticProperties(ElasticCloudUser elasticCloudUser, ElasticCloudDeployment elasticCloudDeployment)
         {
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Elastic.Models
             ElasticCloudDeployment = elasticCloudDeployment;
         }
 
-        /// <summary> Details of the user&apos;s elastic account. </summary>
+        /// <summary> Details of the user's elastic account. </summary>
         public ElasticCloudUser ElasticCloudUser { get; set; }
         /// <summary> Details of the elastic cloud deployment. </summary>
         public ElasticCloudDeployment ElasticCloudDeployment { get; set; }

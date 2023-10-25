@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static EdifactSchemaReference DeserializeEdifactSchemaReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string messageId = default;
             string messageVersion = default;
             string messageRelease = default;

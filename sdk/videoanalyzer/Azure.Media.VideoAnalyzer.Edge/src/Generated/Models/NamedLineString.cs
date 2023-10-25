@@ -15,7 +15,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     {
         /// <summary> Initializes a new instance of NamedLineString. </summary>
         /// <param name="name"> Line name. Must be unique within the node. </param>
-        /// <param name="line"> Point coordinates for the line start and end, respectively. Example: &apos;[[0.3, 0.2],[0.9, 0.8]]&apos;. Each point is expressed as [LEFT, TOP] coordinate ratios ranging from 0.0 to 1.0, where [0,0] is the upper-left frame corner and [1, 1] is the bottom-right frame corner. </param>
+        /// <param name="line"> Point coordinates for the line start and end, respectively. Example: '[[0.3, 0.2],[0.9, 0.8]]'. Each point is expressed as [LEFT, TOP] coordinate ratios ranging from 0.0 to 1.0, where [0,0] is the upper-left frame corner and [1, 1] is the bottom-right frame corner. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="line"/> is null. </exception>
         public NamedLineString(string name, string line) : base(name)
         {
@@ -29,14 +29,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <summary> Initializes a new instance of NamedLineString. </summary>
         /// <param name="type"> The Type discriminator for the derived types. </param>
         /// <param name="name"> Line name. Must be unique within the node. </param>
-        /// <param name="line"> Point coordinates for the line start and end, respectively. Example: &apos;[[0.3, 0.2],[0.9, 0.8]]&apos;. Each point is expressed as [LEFT, TOP] coordinate ratios ranging from 0.0 to 1.0, where [0,0] is the upper-left frame corner and [1, 1] is the bottom-right frame corner. </param>
+        /// <param name="line"> Point coordinates for the line start and end, respectively. Example: '[[0.3, 0.2],[0.9, 0.8]]'. Each point is expressed as [LEFT, TOP] coordinate ratios ranging from 0.0 to 1.0, where [0,0] is the upper-left frame corner and [1, 1] is the bottom-right frame corner. </param>
         internal NamedLineString(string type, string name, string line) : base(type, name)
         {
             Line = line;
             Type = type ?? "#Microsoft.VideoAnalyzer.NamedLineString";
         }
 
-        /// <summary> Point coordinates for the line start and end, respectively. Example: &apos;[[0.3, 0.2],[0.9, 0.8]]&apos;. Each point is expressed as [LEFT, TOP] coordinate ratios ranging from 0.0 to 1.0, where [0,0] is the upper-left frame corner and [1, 1] is the bottom-right frame corner. </summary>
+        /// <summary> Point coordinates for the line start and end, respectively. Example: '[[0.3, 0.2],[0.9, 0.8]]'. Each point is expressed as [LEFT, TOP] coordinate ratios ranging from 0.0 to 1.0, where [0,0] is the upper-left frame corner and [1, 1] is the bottom-right frame corner. </summary>
         public string Line { get; set; }
     }
 }

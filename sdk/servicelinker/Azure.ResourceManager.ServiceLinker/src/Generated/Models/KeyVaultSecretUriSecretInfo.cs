@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    /// <summary> The secret info when type is keyVaultSecretUri. It&apos;s for scenario that user provides a secret stored in user&apos;s keyvault and source is Web App, Spring Cloud or Container App. </summary>
+    /// <summary> The secret info when type is keyVaultSecretUri. It's for scenario that user provides a secret stored in user's keyvault and source is Web App, Spring Cloud or Container App. </summary>
     public partial class KeyVaultSecretUriSecretInfo : SecretBaseInfo
     {
         /// <summary> Initializes a new instance of KeyVaultSecretUriSecretInfo. </summary>

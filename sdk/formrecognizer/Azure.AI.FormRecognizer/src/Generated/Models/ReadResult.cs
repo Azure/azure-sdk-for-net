@@ -18,7 +18,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="angle"> The general orientation of the text in clockwise direction, measured in degrees between (-180, 180]. </param>
         /// <param name="width"> The width of the image/PDF in pixels/inches, respectively. </param>
         /// <param name="height"> The height of the image/PDF in pixels/inches, respectively. </param>
-        /// <param name="unit"> The unit used by the width, height and boundingBox properties. For images, the unit is &quot;pixel&quot;. For PDF, the unit is &quot;inch&quot;. </param>
+        /// <param name="unit"> The unit used by the width, height and boundingBox properties. For images, the unit is "pixel". For PDF, the unit is "inch". </param>
         internal ReadResult(int page, float angle, float width, float height, LengthUnit unit)
         {
             Page = page;
@@ -35,7 +35,7 @@ namespace Azure.AI.FormRecognizer.Models
         /// <param name="angle"> The general orientation of the text in clockwise direction, measured in degrees between (-180, 180]. </param>
         /// <param name="width"> The width of the image/PDF in pixels/inches, respectively. </param>
         /// <param name="height"> The height of the image/PDF in pixels/inches, respectively. </param>
-        /// <param name="unit"> The unit used by the width, height and boundingBox properties. For images, the unit is &quot;pixel&quot;. For PDF, the unit is &quot;inch&quot;. </param>
+        /// <param name="unit"> The unit used by the width, height and boundingBox properties. For images, the unit is "pixel". For PDF, the unit is "inch". </param>
         /// <param name="lines"> When includeTextDetails is set to true, a list of recognized text lines. The maximum number of lines returned is 300 per page. The lines are sorted top to bottom, left to right, although in certain cases proximity is treated with higher priority. As the sorting order depends on the detected text, it may change across images and OCR version updates. Thus, business logic should be built upon the actual line location instead of order. </param>
         /// <param name="selectionMarks"> List of selection marks extracted from the page. </param>
         internal ReadResult(int page, float angle, float width, float height, LengthUnit unit, IReadOnlyList<TextLine> lines, IReadOnlyList<SelectionMark> selectionMarks)
@@ -57,7 +57,7 @@ namespace Azure.AI.FormRecognizer.Models
         public float Width { get; }
         /// <summary> The height of the image/PDF in pixels/inches, respectively. </summary>
         public float Height { get; }
-        /// <summary> The unit used by the width, height and boundingBox properties. For images, the unit is &quot;pixel&quot;. For PDF, the unit is &quot;inch&quot;. </summary>
+        /// <summary> The unit used by the width, height and boundingBox properties. For images, the unit is "pixel". For PDF, the unit is "inch". </summary>
         public LengthUnit Unit { get; }
         /// <summary> When includeTextDetails is set to true, a list of recognized text lines. The maximum number of lines returned is 300 per page. The lines are sorted top to bottom, left to right, although in certain cases proximity is treated with higher priority. As the sorting order depends on the detected text, it may change across images and OCR version updates. Thus, business logic should be built upon the actual line location instead of order. </summary>
         public IReadOnlyList<TextLine> Lines { get; }

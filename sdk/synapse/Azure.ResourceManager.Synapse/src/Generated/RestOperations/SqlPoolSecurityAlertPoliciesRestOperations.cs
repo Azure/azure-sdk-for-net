@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Synapse
             return message;
         }
 
-        /// <summary> Get a list of Sql pool&apos;s security alert policies. </summary>
+        /// <summary> Get a list of Sql pool's security alert policies. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Synapse
             }
         }
 
-        /// <summary> Get a list of Sql pool&apos;s security alert policies. </summary>
+        /// <summary> Get a list of Sql pool's security alert policies. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Synapse
             return message;
         }
 
-        /// <summary> Get a Sql pool&apos;s security alert policy. </summary>
+        /// <summary> Get a Sql pool's security alert policy. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Synapse
             }
         }
 
-        /// <summary> Get a Sql pool&apos;s security alert policy. </summary>
+        /// <summary> Get a Sql pool's security alert policy. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Synapse
             return message;
         }
 
-        /// <summary> Create or update a Sql pool&apos;s security alert policy. </summary>
+        /// <summary> Create or update a Sql pool's security alert policy. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Synapse
             }
         }
 
-        /// <summary> Create or update a Sql pool&apos;s security alert policy. </summary>
+        /// <summary> Create or update a Sql pool's security alert policy. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Synapse
             return message;
         }
 
-        /// <summary> Get a list of Sql pool&apos;s security alert policies. </summary>
+        /// <summary> Get a list of Sql pool's security alert policies. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Synapse
             }
         }
 
-        /// <summary> Get a list of Sql pool&apos;s security alert policies. </summary>
+        /// <summary> Get a list of Sql pool's security alert policies. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>

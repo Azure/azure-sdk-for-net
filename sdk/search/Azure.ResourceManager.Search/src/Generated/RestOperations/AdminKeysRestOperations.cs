@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Search
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2020-08-01";
+            _apiVersion = apiVersion ?? "2022-09-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Search
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the current subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="searchServiceName"> The name of the Azure Cognitive Search service associated with the specified resource group. </param>
-        /// <param name="keyKind"> Specifies which key to regenerate. Valid values include &apos;primary&apos; and &apos;secondary&apos;. </param>
+        /// <param name="keyKind"> Specifies which key to regenerate. Valid values include 'primary' and 'secondary'. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="searchServiceName"/> is null. </exception>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Search
         /// <param name="subscriptionId"> The unique identifier for a Microsoft Azure subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="resourceGroupName"> The name of the resource group within the current subscription. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="searchServiceName"> The name of the Azure Cognitive Search service associated with the specified resource group. </param>
-        /// <param name="keyKind"> Specifies which key to regenerate. Valid values include &apos;primary&apos; and &apos;secondary&apos;. </param>
+        /// <param name="keyKind"> Specifies which key to regenerate. Valid values include 'primary' and 'secondary'. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="searchServiceName"/> is null. </exception>

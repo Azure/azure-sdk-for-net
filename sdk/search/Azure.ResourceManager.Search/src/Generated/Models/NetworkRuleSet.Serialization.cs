@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Search.Models
 
         internal static NetworkRuleSet DeserializeNetworkRuleSet(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<SearchServiceIPRule>> ipRules = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.Search.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SearchServiceIPRule> array = new List<SearchServiceIPRule>();

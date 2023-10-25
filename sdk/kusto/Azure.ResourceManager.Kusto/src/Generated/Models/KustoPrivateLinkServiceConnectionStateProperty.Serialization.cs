@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Kusto.Models
 
         internal static KustoPrivateLinkServiceConnectionStateProperty DeserializeKustoPrivateLinkServiceConnectionStateProperty(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> status = default;
             Optional<string> description = default;
             Optional<string> actionsRequired = default;

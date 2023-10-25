@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.DataBox.Models
 
         public static DataBoxShippingAddressType ToDataBoxShippingAddressType(this string value)
         {
-            if (string.Equals(value, "None", StringComparison.InvariantCultureIgnoreCase)) return DataBoxShippingAddressType.None;
-            if (string.Equals(value, "Residential", StringComparison.InvariantCultureIgnoreCase)) return DataBoxShippingAddressType.Residential;
-            if (string.Equals(value, "Commercial", StringComparison.InvariantCultureIgnoreCase)) return DataBoxShippingAddressType.Commercial;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "None")) return DataBoxShippingAddressType.None;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Residential")) return DataBoxShippingAddressType.Residential;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Commercial")) return DataBoxShippingAddressType.Commercial;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown DataBoxShippingAddressType value.");
         }
     }

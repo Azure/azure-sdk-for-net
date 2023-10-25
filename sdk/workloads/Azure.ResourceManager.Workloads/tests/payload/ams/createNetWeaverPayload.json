@@ -1,0 +1,19 @@
+{
+    "properties": {
+        "providerSettings": {
+            "sslPreference": "Disabled",
+            "providerType": "SapNetWeaver",
+            "sapHostname": "10.0.82.4",
+            "sapSid": "L13",
+            "sapPortNumber": "8000",
+            "sapUsername": "AMSUSER",
+            "sapPassword": "Sanitized",
+            "sapInstanceNr": "00",
+            "sapClientId": "000",
+            "sapHostFileEntries": [
+                "10.0.82.4 l13appvm0.ams.azure.com l13appvm0",
+                "10.0.82.5 l13ascsvm.ams.azure.com l13ascsvm"
+            ]
+        }
+    }
+}

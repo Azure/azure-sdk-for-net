@@ -53,6 +53,10 @@ namespace Azure.Search.Documents.Models
 
         internal static UnknownSearchIndexerSkill DeserializeUnknownSearchIndexerSkill(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string odataType = "Unknown";
             Optional<string> name = default;
             Optional<string> description = default;

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.IotHub
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-07-02";
+            _apiVersion = apiVersion ?? "2023-06-30";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.IotHub
             return message;
         }
 
-        /// <summary> Verifies the certificate&apos;s private key possession by providing the leaf cert issued by the verifying pre uploaded certificate. </summary>
+        /// <summary> Verifies the certificate's private key possession by providing the leaf cert issued by the verifying pre uploaded certificate. </summary>
         /// <param name="subscriptionId"> The subscription identifier. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the IoT hub. </param>
         /// <param name="resourceName"> The name of the IoT hub. </param>
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.IotHub
             }
         }
 
-        /// <summary> Verifies the certificate&apos;s private key possession by providing the leaf cert issued by the verifying pre uploaded certificate. </summary>
+        /// <summary> Verifies the certificate's private key possession by providing the leaf cert issued by the verifying pre uploaded certificate. </summary>
         /// <param name="subscriptionId"> The subscription identifier. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the IoT hub. </param>
         /// <param name="resourceName"> The name of the IoT hub. </param>

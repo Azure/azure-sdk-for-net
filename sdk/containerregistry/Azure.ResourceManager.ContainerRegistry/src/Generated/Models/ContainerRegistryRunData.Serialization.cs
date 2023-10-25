@@ -137,6 +137,10 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         internal static ContainerRegistryRunData DeserializeContainerRegistryRunData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -184,7 +188,6 @@ namespace Azure.ResourceManager.ContainerRegistry
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -208,7 +211,6 @@ namespace Azure.ResourceManager.ContainerRegistry
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             status = new ContainerRegistryRunStatus(property0.Value.GetString());
@@ -218,7 +220,6 @@ namespace Azure.ResourceManager.ContainerRegistry
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastUpdatedTime = property0.Value.GetDateTimeOffset("O");
@@ -228,7 +229,6 @@ namespace Azure.ResourceManager.ContainerRegistry
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             runType = new ContainerRegistryRunType(property0.Value.GetString());
@@ -243,7 +243,6 @@ namespace Azure.ResourceManager.ContainerRegistry
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createTime = property0.Value.GetDateTimeOffset("O");
@@ -253,7 +252,6 @@ namespace Azure.ResourceManager.ContainerRegistry
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             startTime = property0.Value.GetDateTimeOffset("O");
@@ -263,7 +261,6 @@ namespace Azure.ResourceManager.ContainerRegistry
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             finishTime = property0.Value.GetDateTimeOffset("O");
@@ -273,7 +270,6 @@ namespace Azure.ResourceManager.ContainerRegistry
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ContainerRegistryImageDescriptor> array = new List<ContainerRegistryImageDescriptor>();
@@ -293,7 +289,6 @@ namespace Azure.ResourceManager.ContainerRegistry
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             imageUpdateTrigger = ContainerRegistryImageUpdateTrigger.DeserializeContainerRegistryImageUpdateTrigger(property0.Value);
@@ -303,7 +298,6 @@ namespace Azure.ResourceManager.ContainerRegistry
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sourceTrigger = ContainerRegistrySourceTriggerDescriptor.DeserializeContainerRegistrySourceTriggerDescriptor(property0.Value);
@@ -313,7 +307,6 @@ namespace Azure.ResourceManager.ContainerRegistry
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             timerTrigger = ContainerRegistryTimerTriggerDescriptor.DeserializeContainerRegistryTimerTriggerDescriptor(property0.Value);
@@ -323,7 +316,6 @@ namespace Azure.ResourceManager.ContainerRegistry
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             platform = ContainerRegistryPlatformProperties.DeserializeContainerRegistryPlatformProperties(property0.Value);
@@ -333,7 +325,6 @@ namespace Azure.ResourceManager.ContainerRegistry
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             agentConfiguration = ContainerRegistryAgentProperties.DeserializeContainerRegistryAgentProperties(property0.Value);
@@ -348,7 +339,6 @@ namespace Azure.ResourceManager.ContainerRegistry
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -373,7 +363,6 @@ namespace Azure.ResourceManager.ContainerRegistry
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             logArtifact = ContainerRegistryImageDescriptor.DeserializeContainerRegistryImageDescriptor(property0.Value);
@@ -383,7 +372,6 @@ namespace Azure.ResourceManager.ContainerRegistry
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ContainerRegistryProvisioningState(property0.Value.GetString());
@@ -393,7 +381,6 @@ namespace Azure.ResourceManager.ContainerRegistry
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isArchiveEnabled = property0.Value.GetBoolean();

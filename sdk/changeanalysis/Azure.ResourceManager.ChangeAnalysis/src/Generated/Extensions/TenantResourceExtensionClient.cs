@@ -7,6 +7,7 @@
 
 using System;
 using System.Threading;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
         }
 
         /// <summary>
-        /// List the changes of a resource within the specified time range. Customer data will be masked if the user doesn&apos;t have access.
+        /// List the changes of a resource within the specified time range. Customer data will be masked if the user doesn't have access.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -65,11 +66,11 @@ namespace Azure.ResourceManager.ChangeAnalysis
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceChangesRestClient.CreateListRequest(resourceId, startTime, endTime, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceChangesRestClient.CreateListNextPageRequest(nextLink, resourceId, startTime, endTime, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DetectedChangeData.DeserializeDetectedChangeData, ResourceChangesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetResourceChanges", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DetectedChangeData.DeserializeDetectedChangeData, ResourceChangesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetResourceChanges", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// List the changes of a resource within the specified time range. Customer data will be masked if the user doesn&apos;t have access.
+        /// List the changes of a resource within the specified time range. Customer data will be masked if the user doesn't have access.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.ChangeAnalysis
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceChangesRestClient.CreateListRequest(resourceId, startTime, endTime, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceChangesRestClient.CreateListNextPageRequest(nextLink, resourceId, startTime, endTime, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DetectedChangeData.DeserializeDetectedChangeData, ResourceChangesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetResourceChanges", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DetectedChangeData.DeserializeDetectedChangeData, ResourceChangesClientDiagnostics, Pipeline, "TenantResourceExtensionClient.GetResourceChanges", "value", "nextLink", cancellationToken);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="credentials">
         /// [Required] Account credentials.
         /// Please note <see cref="MachineLearningDatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningAccountKeyDatastoreCredentials"/>, <see cref="MachineLearningCertificateDatastoreCredentials"/>, <see cref="MachineLearningNoneDatastoreCredentials"/>, <see cref="MachineLearningSasDatastoreCredentials"/> and <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>.
+        /// The available derived classes include <see cref="MachineLearningAccountKeyDatastoreCredentials"/>, <see cref="MachineLearningCertificateDatastoreCredentials"/>, <see cref="KerberosKeytabCredentials"/>, <see cref="KerberosPasswordCredentials"/>, <see cref="MachineLearningNoneDatastoreCredentials"/>, <see cref="MachineLearningSasDatastoreCredentials"/> and <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>.
         /// </param>
         /// <param name="accountName"> [Required] Storage account name. </param>
         /// <param name="fileShareName"> [Required] The name of the Azure file share that the datastore points to. </param>
@@ -41,22 +41,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="credentials">
         /// [Required] Account credentials.
         /// Please note <see cref="MachineLearningDatastoreCredentials"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningAccountKeyDatastoreCredentials"/>, <see cref="MachineLearningCertificateDatastoreCredentials"/>, <see cref="MachineLearningNoneDatastoreCredentials"/>, <see cref="MachineLearningSasDatastoreCredentials"/> and <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>.
+        /// The available derived classes include <see cref="MachineLearningAccountKeyDatastoreCredentials"/>, <see cref="MachineLearningCertificateDatastoreCredentials"/>, <see cref="KerberosKeytabCredentials"/>, <see cref="KerberosPasswordCredentials"/>, <see cref="MachineLearningNoneDatastoreCredentials"/>, <see cref="MachineLearningSasDatastoreCredentials"/> and <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>.
         /// </param>
         /// <param name="datastoreType"> [Required] Storage type backing the datastore. </param>
+        /// <param name="intellectualProperty"> Intellectual Property details. </param>
         /// <param name="isDefault"> Readonly property to indicate if datastore is the workspace default datastore. </param>
         /// <param name="accountName"> [Required] Storage account name. </param>
         /// <param name="endpoint"> Azure cloud endpoint for the storage account. </param>
         /// <param name="fileShareName"> [Required] The name of the Azure file share that the datastore points to. </param>
         /// <param name="protocol"> Protocol used to communicate with the storage account. </param>
-        /// <param name="serviceDataAccessAuthIdentity"> Indicates which identity to use to authenticate service data access to customer&apos;s storage. </param>
-        internal MachineLearningAzureFileDatastore(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, MachineLearningDatastoreCredentials credentials, DatastoreType datastoreType, bool? isDefault, string accountName, string endpoint, string fileShareName, string protocol, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity) : base(description, properties, tags, credentials, datastoreType, isDefault)
+        /// <param name="serviceDataAccessAuthIdentity"> Indicates which identity to use to authenticate service data access to customer's storage. </param>
+        /// <param name="resourceGroup"> Azure Resource Group name. </param>
+        /// <param name="subscriptionId"> Azure Subscription Id. </param>
+        internal MachineLearningAzureFileDatastore(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, MachineLearningDatastoreCredentials credentials, DatastoreType datastoreType, IntellectualProperty intellectualProperty, bool? isDefault, string accountName, string endpoint, string fileShareName, string protocol, MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity, string resourceGroup, string subscriptionId) : base(description, properties, tags, credentials, datastoreType, intellectualProperty, isDefault)
         {
             AccountName = accountName;
             Endpoint = endpoint;
             FileShareName = fileShareName;
             Protocol = protocol;
             ServiceDataAccessAuthIdentity = serviceDataAccessAuthIdentity;
+            ResourceGroup = resourceGroup;
+            SubscriptionId = subscriptionId;
             DatastoreType = datastoreType;
         }
 
@@ -68,7 +73,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public string FileShareName { get; set; }
         /// <summary> Protocol used to communicate with the storage account. </summary>
         public string Protocol { get; set; }
-        /// <summary> Indicates which identity to use to authenticate service data access to customer&apos;s storage. </summary>
+        /// <summary> Indicates which identity to use to authenticate service data access to customer's storage. </summary>
         public MachineLearningServiceDataAccessAuthIdentity? ServiceDataAccessAuthIdentity { get; set; }
+        /// <summary> Azure Resource Group name. </summary>
+        public string ResourceGroup { get; set; }
+        /// <summary> Azure Subscription Id. </summary>
+        public string SubscriptionId { get; set; }
     }
 }

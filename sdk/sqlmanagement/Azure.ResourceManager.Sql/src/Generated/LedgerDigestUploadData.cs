@@ -11,7 +11,10 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the LedgerDigestUpload data model. </summary>
+    /// <summary>
+    /// A class representing the LedgerDigestUpload data model.
+    /// Azure SQL Database ledger digest upload settings.
+    /// </summary>
     public partial class LedgerDigestUploadData : ResourceData
     {
         /// <summary> Initializes a new instance of LedgerDigestUploadData. </summary>

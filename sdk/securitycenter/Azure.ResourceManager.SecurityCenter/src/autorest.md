@@ -5,16 +5,29 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
-generate-model-factory: false
 csharp: true
 library-name: SecurityCenter
 namespace: Azure.ResourceManager.SecurityCenter
-require: https://github.com/Azure/azure-rest-api-specs/blob/f7386016ed8edfdc59d00003c1298afa6966842c/specification/security/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/def187e2e78d7173d8fdd7f77740dd9719e1dfbf/specification/security/resource-manager/readme.md
+#tag: package-composite-v3
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
+  skipped-operations:
+  - InformationProtectionPolicies_CreateOrUpdate
+  - InformationProtectionPolicies_List
+  - SubAssessments_ListAll
+  - Assessments_List
+tag: package-dotnet-sdk
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+deserialize-null-collection-as-null-value: true
+
+#mgmt-debug:
+#  show-serialized-names: true
 
 keep-orphaned-models:
   - ExternalSecuritySolutionKind
@@ -63,6 +76,7 @@ rename-mapping:
   IoTSecuritySolutionModel: IotSecuritySolution
   MdeOnboardingData: MdeOnboarding
   Pricing.properties.deprecated: IsDeprecated
+  Pricing.properties.enablementTime: EnabledOn
   SecuritySubAssessment.properties.id: VulnerabilityId
   SecuritySubAssessment.properties.timeGenerated: GeneratedOn
   SecurityTask.properties.creationTimeUtc: CreatedOn
@@ -226,6 +240,13 @@ rename-mapping:
   LogAnalyticsIdentifier.workspaceId: -|uuid
   OnPremiseResourceDetails.workspaceId: -|arm-id
   OnPremiseSqlResourceDetails.workspaceId: -|arm-id
+  InformationType: SecurityInformationTypeInfo
+  InformationType.enabled: IsEnabled
+  Rank: SensitivityLabelRank
+  Extension: PlanExtension
+  Code: ExtensionOperationStatusCode
+  OperationStatus: ExtensionOperationStatus
+  IsEnabled: IsExtensionEnabled
 
 prepend-rp-prefix:
   - CloudName
@@ -246,7 +267,7 @@ format-by-name-rules:
   '*ResourceId': 'arm-id'
   'policyDefinitionId': 'arm-id'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -379,6 +400,7 @@ directive:
     where: $.paths..parameters[?(@.name == 'workspaceId')]
     transform: >
         $.format = 'uuid';
+  - remove-operation: GovernanceRules_OperationResults
   # TODO: temporary remove these operations to mitigate the exception from BuildParameterMapping in Autorest.CSharp
   - remove-operation: InformationProtectionPolicies_Get
   - remove-operation: Tasks_UpdateSubscriptionLevelTaskState
@@ -424,4 +446,17 @@ directive:
             "$ref": "../../../common/v1/types.json#/definitions/Location"
           }
         ]
+  - from: governanceRules.json
+    where: $.definitions
+    transform: >
+        $.OperationResult.properties.status['x-ms-enum']['name'] = 'OperationResultStatus';
+  # The parameter for /{scope} must be defined as x-ms-skip-url-encoding = true
+  - from: governanceRules.json
+    where: $.parameters
+    transform: >
+        $.Scope['x-ms-skip-url-encoding'] = true;
+  - from: governanceAssignments.json
+    where: $.parameters
+    transform: >
+        $.Scope['x-ms-skip-url-encoding'] = true;
 ```

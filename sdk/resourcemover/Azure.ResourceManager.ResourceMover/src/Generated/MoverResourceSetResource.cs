@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -279,7 +280,7 @@ namespace Azure.ResourceManager.ResourceMover
         }
 
         /// <summary>
-        /// Initiates prepare for the set of resources included in the request body. The prepare operation is on the moveResources that are in the moveState &apos;PreparePending&apos; or &apos;PrepareFailed&apos;, on a successful completion the moveResource moveState do a transition to MovePending. To aid the user to prerequisite the operation the client can call operation with validateOnly property set to true.
+        /// Initiates prepare for the set of resources included in the request body. The prepare operation is on the moveResources that are in the moveState 'PreparePending' or 'PrepareFailed', on a successful completion the moveResource moveState do a transition to MovePending. To aid the user to prerequisite the operation the client can call operation with validateOnly property set to true.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -314,7 +315,7 @@ namespace Azure.ResourceManager.ResourceMover
         }
 
         /// <summary>
-        /// Initiates prepare for the set of resources included in the request body. The prepare operation is on the moveResources that are in the moveState &apos;PreparePending&apos; or &apos;PrepareFailed&apos;, on a successful completion the moveResource moveState do a transition to MovePending. To aid the user to prerequisite the operation the client can call operation with validateOnly property set to true.
+        /// Initiates prepare for the set of resources included in the request body. The prepare operation is on the moveResources that are in the moveState 'PreparePending' or 'PrepareFailed', on a successful completion the moveResource moveState do a transition to MovePending. To aid the user to prerequisite the operation the client can call operation with validateOnly property set to true.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -349,7 +350,7 @@ namespace Azure.ResourceManager.ResourceMover
         }
 
         /// <summary>
-        /// Moves the set of resources included in the request body. The move operation is triggered after the moveResources are in the moveState &apos;MovePending&apos; or &apos;MoveFailed&apos;, on a successful completion the moveResource moveState do a transition to CommitPending. To aid the user to prerequisite the operation the client can call operation with validateOnly property set to true.
+        /// Moves the set of resources included in the request body. The move operation is triggered after the moveResources are in the moveState 'MovePending' or 'MoveFailed', on a successful completion the moveResource moveState do a transition to CommitPending. To aid the user to prerequisite the operation the client can call operation with validateOnly property set to true.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -384,7 +385,7 @@ namespace Azure.ResourceManager.ResourceMover
         }
 
         /// <summary>
-        /// Moves the set of resources included in the request body. The move operation is triggered after the moveResources are in the moveState &apos;MovePending&apos; or &apos;MoveFailed&apos;, on a successful completion the moveResource moveState do a transition to CommitPending. To aid the user to prerequisite the operation the client can call operation with validateOnly property set to true.
+        /// Moves the set of resources included in the request body. The move operation is triggered after the moveResources are in the moveState 'MovePending' or 'MoveFailed', on a successful completion the moveResource moveState do a transition to CommitPending. To aid the user to prerequisite the operation the client can call operation with validateOnly property set to true.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -419,7 +420,7 @@ namespace Azure.ResourceManager.ResourceMover
         }
 
         /// <summary>
-        /// Commits the set of resources included in the request body. The commit operation is triggered on the moveResources in the moveState &apos;CommitPending&apos; or &apos;CommitFailed&apos;, on a successful completion the moveResource moveState do a transition to Committed. To aid the user to prerequisite the operation the client can call operation with validateOnly property set to true.
+        /// Commits the set of resources included in the request body. The commit operation is triggered on the moveResources in the moveState 'CommitPending' or 'CommitFailed', on a successful completion the moveResource moveState do a transition to Committed. To aid the user to prerequisite the operation the client can call operation with validateOnly property set to true.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -454,7 +455,7 @@ namespace Azure.ResourceManager.ResourceMover
         }
 
         /// <summary>
-        /// Commits the set of resources included in the request body. The commit operation is triggered on the moveResources in the moveState &apos;CommitPending&apos; or &apos;CommitFailed&apos;, on a successful completion the moveResource moveState do a transition to Committed. To aid the user to prerequisite the operation the client can call operation with validateOnly property set to true.
+        /// Commits the set of resources included in the request body. The commit operation is triggered on the moveResources in the moveState 'CommitPending' or 'CommitFailed', on a successful completion the moveResource moveState do a transition to Committed. To aid the user to prerequisite the operation the client can call operation with validateOnly property set to true.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -489,7 +490,7 @@ namespace Azure.ResourceManager.ResourceMover
         }
 
         /// <summary>
-        /// Discards the set of resources included in the request body. The discard operation is triggered on the moveResources in the moveState &apos;CommitPending&apos; or &apos;DiscardFailed&apos;, on a successful completion the moveResource moveState do a transition to MovePending. To aid the user to prerequisite the operation the client can call operation with validateOnly property set to true.
+        /// Discards the set of resources included in the request body. The discard operation is triggered on the moveResources in the moveState 'CommitPending' or 'DiscardFailed', on a successful completion the moveResource moveState do a transition to MovePending. To aid the user to prerequisite the operation the client can call operation with validateOnly property set to true.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -524,7 +525,7 @@ namespace Azure.ResourceManager.ResourceMover
         }
 
         /// <summary>
-        /// Discards the set of resources included in the request body. The discard operation is triggered on the moveResources in the moveState &apos;CommitPending&apos; or &apos;DiscardFailed&apos;, on a successful completion the moveResource moveState do a transition to MovePending. To aid the user to prerequisite the operation the client can call operation with validateOnly property set to true.
+        /// Discards the set of resources included in the request body. The discard operation is triggered on the moveResources in the moveState 'CommitPending' or 'DiscardFailed', on a successful completion the moveResource moveState do a transition to MovePending. To aid the user to prerequisite the operation the client can call operation with validateOnly property set to true.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -786,7 +787,7 @@ namespace Azure.ResourceManager.ResourceMover
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _unresolvedDependenciesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dependencyLevel, orderby, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _unresolvedDependenciesRestClient.CreateGetNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dependencyLevel, orderby, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, MoverUnresolvedDependency.DeserializeMoverUnresolvedDependency, _unresolvedDependenciesClientDiagnostics, Pipeline, "MoverResourceSetResource.GetUnresolvedDependencies", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, MoverUnresolvedDependency.DeserializeMoverUnresolvedDependency, _unresolvedDependenciesClientDiagnostics, Pipeline, "MoverResourceSetResource.GetUnresolvedDependencies", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -811,7 +812,7 @@ namespace Azure.ResourceManager.ResourceMover
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _unresolvedDependenciesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dependencyLevel, orderby, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _unresolvedDependenciesRestClient.CreateGetNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dependencyLevel, orderby, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, MoverUnresolvedDependency.DeserializeMoverUnresolvedDependency, _unresolvedDependenciesClientDiagnostics, Pipeline, "MoverResourceSetResource.GetUnresolvedDependencies", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, MoverUnresolvedDependency.DeserializeMoverUnresolvedDependency, _unresolvedDependenciesClientDiagnostics, Pipeline, "MoverResourceSetResource.GetUnresolvedDependencies", "value", "nextLink", cancellationToken);
         }
     }
 }

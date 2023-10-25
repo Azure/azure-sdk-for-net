@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="data"> Base-64 encoded pfx certificate. Only applicable in PUT Request. </param>
         /// <param name="password"> Password for the pfx file specified in data. Only applicable in PUT request. </param>
         /// <param name="publicCertData"> Base-64 encoded Public cert data corresponding to pfx specified in data. Only applicable in GET request. </param>
-        /// <param name="keyVaultSecretId"> Secret Id of (base-64 encoded unencrypted pfx) &apos;Secret&apos; or &apos;Certificate&apos; object stored in KeyVault. </param>
+        /// <param name="keyVaultSecretId"> Secret Id of (base-64 encoded unencrypted pfx) 'Secret' or 'Certificate' object stored in KeyVault. </param>
         /// <param name="provisioningState"> The provisioning state of the SSL certificate resource. </param>
         internal ApplicationGatewaySslCertificate(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, BinaryData data, string password, BinaryData publicCertData, string keyVaultSecretId, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Network.Models
         /// </para>
         /// </summary>
         public BinaryData PublicCertData { get; }
-        /// <summary> Secret Id of (base-64 encoded unencrypted pfx) &apos;Secret&apos; or &apos;Certificate&apos; object stored in KeyVault. </summary>
+        /// <summary> Secret Id of (base-64 encoded unencrypted pfx) 'Secret' or 'Certificate' object stored in KeyVault. </summary>
         public string KeyVaultSecretId { get; set; }
         /// <summary> The provisioning state of the SSL certificate resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }

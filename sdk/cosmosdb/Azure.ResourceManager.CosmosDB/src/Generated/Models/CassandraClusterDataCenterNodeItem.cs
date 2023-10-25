@@ -21,9 +21,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Initializes a new instance of CassandraClusterDataCenterNodeItem. </summary>
-        /// <param name="address"> The node&apos;s IP address. </param>
+        /// <param name="address"> The node's IP address. </param>
         /// <param name="state"> The state of the node in Cassandra ring. </param>
         /// <param name="status"></param>
+        /// <param name="cassandraProcessStatus"> Cassandra service status on this node. </param>
         /// <param name="load"> The amount of file system data in the data directory (e.g., 47.66 kB), excluding all content in the snapshots subdirectories. Because all SSTable data files are included, any data that is not cleaned up (such as TTL-expired cells or tombstones) is counted. </param>
         /// <param name="tokens"> List of tokens this node covers. </param>
         /// <param name="size"></param>
@@ -37,11 +38,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="memoryFreeKB"> Unused memory (MemFree and SwapFree in /proc/meminfo), in kB. </param>
         /// <param name="memoryTotalKB"> Total installed memory (MemTotal and SwapTotal in /proc/meminfo), in kB. </param>
         /// <param name="cpuUsage"> A float representing the current system-wide CPU utilization as a percentage. </param>
-        internal CassandraClusterDataCenterNodeItem(string address, CassandraNodeState? state, string status, string load, IReadOnlyList<string> tokens, int? size, Guid? hostId, string rack, string timestamp, long? diskUsedKB, long? diskFreeKB, long? memoryUsedKB, long? memoryBuffersAndCachedKB, long? memoryFreeKB, long? memoryTotalKB, double? cpuUsage)
+        internal CassandraClusterDataCenterNodeItem(string address, CassandraNodeState? state, string status, string cassandraProcessStatus, string load, IReadOnlyList<string> tokens, int? size, Guid? hostId, string rack, string timestamp, long? diskUsedKB, long? diskFreeKB, long? memoryUsedKB, long? memoryBuffersAndCachedKB, long? memoryFreeKB, long? memoryTotalKB, double? cpuUsage)
         {
             Address = address;
             State = state;
             Status = status;
+            CassandraProcessStatus = cassandraProcessStatus;
             Load = load;
             Tokens = tokens;
             Size = size;
@@ -57,12 +59,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
             CpuUsage = cpuUsage;
         }
 
-        /// <summary> The node&apos;s IP address. </summary>
+        /// <summary> The node's IP address. </summary>
         public string Address { get; }
         /// <summary> The state of the node in Cassandra ring. </summary>
         public CassandraNodeState? State { get; }
         /// <summary> Gets the status. </summary>
         public string Status { get; }
+        /// <summary> Cassandra service status on this node. </summary>
+        public string CassandraProcessStatus { get; }
         /// <summary> The amount of file system data in the data directory (e.g., 47.66 kB), excluding all content in the snapshots subdirectories. Because all SSTable data files are included, any data that is not cleaned up (such as TTL-expired cells or tombstones) is counted. </summary>
         public string Load { get; }
         /// <summary> List of tokens this node covers. </summary>

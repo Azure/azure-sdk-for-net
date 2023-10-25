@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="computeMode"> Shared/dedicated workers. </param>
         /// <param name="workerSize"> Size of the machines. </param>
         /// <param name="workerSizeId">
-        /// Size ID of machines: 
+        /// Size ID of machines:
         /// 0 - Small
         /// 1 - Medium
         /// 2 - Large
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Size of the machines. </summary>
         public WorkerSizeOption? WorkerSize { get; }
         /// <summary>
-        /// Size ID of machines: 
+        /// Size ID of machines:
         /// 0 - Small
         /// 1 - Medium
         /// 2 - Large

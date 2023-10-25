@@ -21,6 +21,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 
         internal static MachineExtensionInstanceViewStatus DeserializeMachineExtensionInstanceViewStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> code = default;
             Optional<MachineExtensionStatusLevelType> level = default;
             Optional<string> displayStatus = default;
@@ -37,7 +41,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     level = new MachineExtensionStatusLevelType(property.Value.GetString());
@@ -57,7 +60,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     time = property.Value.GetDateTimeOffset("O");

@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="subscriptionId"> The subscription ID. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="deviceName"> The device name. </param>
-        /// <param name="filter"> Specify $filter=&apos;CustomContextTag eq &lt;tag&gt;&apos; to filter on custom context tag property. </param>
+        /// <param name="filter"> Specify $filter='CustomContextTag eq &lt;tag&gt;' to filter on custom context tag property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="subscriptionId"> The subscription ID. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="deviceName"> The device name. </param>
-        /// <param name="filter"> Specify $filter=&apos;CustomContextTag eq &lt;tag&gt;&apos; to filter on custom context tag property. </param>
+        /// <param name="filter"> Specify $filter='CustomContextTag eq &lt;tag&gt;' to filter on custom context tag property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="subscriptionId"> The subscription ID. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="deviceName"> The device name. </param>
-        /// <param name="filter"> Specify $filter=&apos;CustomContextTag eq &lt;tag&gt;&apos; to filter on custom context tag property. </param>
+        /// <param name="filter"> Specify $filter='CustomContextTag eq &lt;tag&gt;' to filter on custom context tag property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="subscriptionId"> The subscription ID. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="deviceName"> The device name. </param>
-        /// <param name="filter"> Specify $filter=&apos;CustomContextTag eq &lt;tag&gt;&apos; to filter on custom context tag property. </param>
+        /// <param name="filter"> Specify $filter='CustomContextTag eq &lt;tag&gt;' to filter on custom context tag property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="deviceName"/> is an empty string, and was expected to be non-empty. </exception>

@@ -32,6 +32,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static SearchSuggester DeserializeSearchSuggester(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             string searchMode = default;
             IList<string> sourceFields = default;

@@ -11,7 +11,10 @@ using Azure.ResourceManager.MySql.Models;
 
 namespace Azure.ResourceManager.MySql
 {
-    /// <summary> A class representing the MySqlPrivateLinkResource data model. </summary>
+    /// <summary>
+    /// A class representing the MySqlPrivateLinkResource data model.
+    /// A private link resource
+    /// </summary>
     public partial class MySqlPrivateLinkResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of MySqlPrivateLinkResourceData. </summary>

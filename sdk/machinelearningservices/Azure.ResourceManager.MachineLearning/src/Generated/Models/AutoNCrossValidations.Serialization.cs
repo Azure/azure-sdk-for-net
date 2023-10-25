@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static AutoNCrossValidations DeserializeAutoNCrossValidations(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             NCrossValidationsMode mode = default;
             foreach (var property in element.EnumerateObject())
             {

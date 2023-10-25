@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    /// <summary> Kind of the expansion of hierarchy nodes. When it is set to &apos;UntilChildren&apos;, the hierarchy nodes are expanded recursively until there is more than one child. When it is set to &apos;OneLevel&apos;, the hierarchies are expanded only at the single level matching path search instances parameter. Optional, default is &apos;UntilChildren&apos;. </summary>
+    /// <summary> Kind of the expansion of hierarchy nodes. When it is set to 'UntilChildren', the hierarchy nodes are expanded recursively until there is more than one child. When it is set to 'OneLevel', the hierarchies are expanded only at the single level matching path search instances parameter. Optional, default is 'UntilChildren'. </summary>
     internal readonly partial struct HierarchiesExpandKind : IEquatable<HierarchiesExpandKind>
     {
         private readonly string _value;

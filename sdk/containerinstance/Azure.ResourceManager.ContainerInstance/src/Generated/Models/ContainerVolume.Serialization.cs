@@ -30,7 +30,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(EmptyDir);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(EmptyDir.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(EmptyDir))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsCollectionDefined(Secret))
@@ -54,6 +57,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         internal static ContainerVolume DeserializeContainerVolume(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<ContainerInstanceAzureFileVolume> azureFile = default;
             Optional<BinaryData> emptyDir = default;
@@ -70,7 +77,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     azureFile = ContainerInstanceAzureFileVolume.DeserializeContainerInstanceAzureFileVolume(property.Value);
@@ -80,7 +86,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     emptyDir = BinaryData.FromString(property.Value.GetRawText());
@@ -90,7 +95,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -105,7 +109,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     gitRepo = ContainerInstanceGitRepoVolume.DeserializeContainerInstanceGitRepoVolume(property.Value);

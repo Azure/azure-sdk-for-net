@@ -23,6 +23,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static EdgeKubernetesClusterInfo DeserializeEdgeKubernetesClusterInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DataBoxEdgeEtcdInfo> etcdInfo = default;
             Optional<IReadOnlyList<EdgeKubernetesNodeInfo>> nodes = default;
             string version = default;
@@ -32,7 +36,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etcdInfo = DataBoxEdgeEtcdInfo.DeserializeDataBoxEdgeEtcdInfo(property.Value);
@@ -42,7 +45,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<EdgeKubernetesNodeInfo> array = new List<EdgeKubernetesNodeInfo>();

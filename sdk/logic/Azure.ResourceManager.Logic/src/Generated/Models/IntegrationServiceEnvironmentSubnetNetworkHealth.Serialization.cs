@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Logic.Models
     {
         internal static IntegrationServiceEnvironmentSubnetNetworkHealth DeserializeIntegrationServiceEnvironmentSubnetNetworkHealth(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<IntegrationServiceEnvironmentNetworkDependency>> outboundNetworkDependencies = default;
             Optional<IntegrationServiceEnvironmentNetworkDependencyHealth> outboundNetworkHealth = default;
             IntegrationServiceEnvironmentNetworkEndPointAccessibilityState networkDependencyHealthState = default;
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<IntegrationServiceEnvironmentNetworkDependency> array = new List<IntegrationServiceEnvironmentNetworkDependency>();
@@ -39,7 +42,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     outboundNetworkHealth = IntegrationServiceEnvironmentNetworkDependencyHealth.DeserializeIntegrationServiceEnvironmentNetworkDependencyHealth(property.Value);

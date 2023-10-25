@@ -20,9 +20,9 @@ namespace Azure.IoT.Hub.Service.Models
             Reported = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> The collection of desired property key-value pairs. The keys are UTF-8 encoded, case-sensitive and up-to 1KB in length. Allowed characters exclude UNICODE control characters (segments C0 and C1), &apos;.&apos;, &apos;$&apos; and space. The desired porperty values are JSON objects, up-to 4KB in length. </summary>
+        /// <summary> The collection of desired property key-value pairs. The keys are UTF-8 encoded, case-sensitive and up-to 1KB in length. Allowed characters exclude UNICODE control characters (segments C0 and C1), '.', '$' and space. The desired porperty values are JSON objects, up-to 4KB in length. </summary>
         public IDictionary<string, object> Desired { get; }
-        /// <summary> The collection of reported property key-value pairs. The keys are UTF-8 encoded, case-sensitive and up-to 1KB in length. Allowed characters exclude UNICODE control characters (segments C0 and C1), &apos;.&apos;, &apos;$&apos; and space. The reported property values are JSON objects, up-to 4KB in length. </summary>
+        /// <summary> The collection of reported property key-value pairs. The keys are UTF-8 encoded, case-sensitive and up-to 1KB in length. Allowed characters exclude UNICODE control characters (segments C0 and C1), '.', '$' and space. The reported property values are JSON objects, up-to 4KB in length. </summary>
         public IDictionary<string, object> Reported { get; }
     }
 }

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -27,23 +28,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Structure))
             {
                 writer.WritePropertyName("structure"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Structure);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Structure.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Structure);
             }
             if (Optional.IsDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Schema);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Schema.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Schema);
             }
             writer.WritePropertyName("linkedServiceName"u8);
-            writer.WriteObjectValue(LinkedServiceName);
+            JsonSerializer.Serialize(writer, LinkedServiceName);
             if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
@@ -61,10 +54,18 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Annotations)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
                 writer.WriteEndArray();
@@ -77,28 +78,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("openHubDestinationName"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(OpenHubDestinationName);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(OpenHubDestinationName.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, OpenHubDestinationName);
             if (Optional.IsDefined(ExcludeLastRequest))
             {
                 writer.WritePropertyName("excludeLastRequest"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ExcludeLastRequest);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ExcludeLastRequest.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, ExcludeLastRequest);
             }
             if (Optional.IsDefined(BaseRequestId))
             {
                 writer.WritePropertyName("baseRequestId"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(BaseRequestId);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(BaseRequestId.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, BaseRequestId);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -107,7 +96,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
@@ -115,17 +107,21 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static SapOpenHubTableDataset DeserializeSapOpenHubTableDataset(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             Optional<string> description = default;
-            Optional<BinaryData> structure = default;
-            Optional<BinaryData> schema = default;
-            FactoryLinkedServiceReference linkedServiceName = default;
+            Optional<DataFactoryElement<IList<DatasetDataElement>>> structure = default;
+            Optional<DataFactoryElement<IList<DatasetSchemaDataElement>>> schema = default;
+            DataFactoryLinkedServiceReference linkedServiceName = default;
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
             Optional<DatasetFolder> folder = default;
-            BinaryData openHubDestinationName = default;
-            Optional<BinaryData> excludeLastRequest = default;
-            Optional<BinaryData> baseRequestId = default;
+            DataFactoryElement<string> openHubDestinationName = default;
+            Optional<DataFactoryElement<bool>> excludeLastRequest = default;
+            Optional<DataFactoryElement<int>> baseRequestId = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,32 +140,29 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    structure = BinaryData.FromString(property.Value.GetRawText());
+                    structure = JsonSerializer.Deserialize<DataFactoryElement<IList<DatasetDataElement>>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("schema"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    schema = BinaryData.FromString(property.Value.GetRawText());
+                    schema = JsonSerializer.Deserialize<DataFactoryElement<IList<DatasetSchemaDataElement>>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("linkedServiceName"u8))
                 {
-                    linkedServiceName = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
+                    linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("parameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, EntityParameterSpecification> dictionary = new Dictionary<string, EntityParameterSpecification>();
@@ -184,13 +177,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<BinaryData> array = new List<BinaryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BinaryData.FromString(item.GetRawText()));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(BinaryData.FromString(item.GetRawText()));
+                        }
                     }
                     annotations = array;
                     continue;
@@ -199,7 +198,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     folder = DatasetFolder.DeserializeDatasetFolder(property.Value);
@@ -216,27 +214,25 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("openHubDestinationName"u8))
                         {
-                            openHubDestinationName = BinaryData.FromString(property0.Value.GetRawText());
+                            openHubDestinationName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("excludeLastRequest"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            excludeLastRequest = BinaryData.FromString(property0.Value.GetRawText());
+                            excludeLastRequest = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("baseRequestId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            baseRequestId = BinaryData.FromString(property0.Value.GetRawText());
+                            baseRequestId = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
                             continue;
                         }
                     }

@@ -19,19 +19,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Initializes a new instance of MabFileFolderProtectedItemExtendedInfo. </summary>
         /// <param name="lastRefreshedOn"> Last time when the agent data synced to service. </param>
-        /// <param name="oldestRecoveryPoint"> The oldest backup copy available. </param>
+        /// <param name="oldestRecoverOn"> The oldest backup copy available. </param>
         /// <param name="recoveryPointCount"> Number of backup copies associated with the backup item. </param>
-        internal MabFileFolderProtectedItemExtendedInfo(DateTimeOffset? lastRefreshedOn, DateTimeOffset? oldestRecoveryPoint, int? recoveryPointCount)
+        internal MabFileFolderProtectedItemExtendedInfo(DateTimeOffset? lastRefreshedOn, DateTimeOffset? oldestRecoverOn, int? recoveryPointCount)
         {
             LastRefreshedOn = lastRefreshedOn;
-            OldestRecoveryPoint = oldestRecoveryPoint;
+            OldestRecoverOn = oldestRecoverOn;
             RecoveryPointCount = recoveryPointCount;
         }
 
         /// <summary> Last time when the agent data synced to service. </summary>
         public DateTimeOffset? LastRefreshedOn { get; set; }
         /// <summary> The oldest backup copy available. </summary>
-        public DateTimeOffset? OldestRecoveryPoint { get; set; }
+        public DateTimeOffset? OldestRecoverOn { get; set; }
         /// <summary> Number of backup copies associated with the backup item. </summary>
         public int? RecoveryPointCount { get; set; }
     }

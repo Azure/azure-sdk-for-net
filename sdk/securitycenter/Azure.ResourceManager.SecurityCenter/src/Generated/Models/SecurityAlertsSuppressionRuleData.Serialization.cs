@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.SecurityCenter
 
         internal static SecurityAlertsSuppressionRuleData DeserializeSecurityAlertsSuppressionRuleData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -88,7 +92,6 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -112,7 +115,6 @@ namespace Azure.ResourceManager.SecurityCenter
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastModifiedUtc = property0.Value.GetDateTimeOffset("O");
@@ -122,7 +124,6 @@ namespace Azure.ResourceManager.SecurityCenter
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             expirationDateUtc = property0.Value.GetDateTimeOffset("O");
@@ -137,7 +138,6 @@ namespace Azure.ResourceManager.SecurityCenter
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             state = property0.Value.GetString().ToSecurityAlertsSuppressionRuleState();
@@ -152,7 +152,6 @@ namespace Azure.ResourceManager.SecurityCenter
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             suppressionAlertsScope = SuppressionAlertsScope.DeserializeSuppressionAlertsScope(property0.Value);

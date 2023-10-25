@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    /// <summary> A class representing the WorkloadNetworkDnsService data model. </summary>
+    /// <summary>
+    /// A class representing the WorkloadNetworkDnsService data model.
+    /// NSX DNS Service
+    /// </summary>
     public partial class WorkloadNetworkDnsServiceData : ResourceData
     {
         /// <summary> Initializes a new instance of WorkloadNetworkDnsServiceData. </summary>

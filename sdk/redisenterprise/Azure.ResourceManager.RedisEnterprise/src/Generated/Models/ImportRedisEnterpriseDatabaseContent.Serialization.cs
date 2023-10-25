@@ -19,6 +19,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             writer.WriteStartArray();
             foreach (var item in SasUris)
             {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
                 writer.WriteStringValue(item.AbsoluteUri);
             }
             writer.WriteEndArray();

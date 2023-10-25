@@ -208,12 +208,101 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WritePropertyName("enableOverProvisioning"u8);
                 writer.WriteBooleanValue(IsOverProvisioningEnabled.Value);
             }
+            if (Optional.IsCollectionDefined(Zones))
+            {
+                writer.WritePropertyName("zones"u8);
+                writer.WriteStartArray();
+                foreach (var item in Zones)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(IsSpotVm))
+            {
+                writer.WritePropertyName("isSpotVM"u8);
+                writer.WriteBooleanValue(IsSpotVm.Value);
+            }
+            if (Optional.IsDefined(HostGroupId))
+            {
+                writer.WritePropertyName("hostGroupId"u8);
+                writer.WriteStringValue(HostGroupId);
+            }
+            if (Optional.IsDefined(UseEphemeralOSDisk))
+            {
+                writer.WritePropertyName("useEphemeralOSDisk"u8);
+                writer.WriteBooleanValue(UseEphemeralOSDisk.Value);
+            }
+            if (Optional.IsDefined(SpotRestoreTimeout))
+            {
+                writer.WritePropertyName("spotRestoreTimeout"u8);
+                writer.WriteStringValue(SpotRestoreTimeout);
+            }
+            if (Optional.IsDefined(EvictionPolicy))
+            {
+                writer.WritePropertyName("evictionPolicy"u8);
+                writer.WriteStringValue(EvictionPolicy.Value.ToString());
+            }
+            if (Optional.IsDefined(VmImageResourceId))
+            {
+                writer.WritePropertyName("vmImageResourceId"u8);
+                writer.WriteStringValue(VmImageResourceId);
+            }
+            if (Optional.IsDefined(SubnetId))
+            {
+                writer.WritePropertyName("subnetId"u8);
+                writer.WriteStringValue(SubnetId);
+            }
+            if (Optional.IsCollectionDefined(VmSetupActions))
+            {
+                writer.WritePropertyName("vmSetupActions"u8);
+                writer.WriteStartArray();
+                foreach (var item in VmSetupActions)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(SecurityType))
+            {
+                writer.WritePropertyName("securityType"u8);
+                writer.WriteStringValue(SecurityType.Value.ToString());
+            }
+            if (Optional.IsDefined(IsSecureBootEnabled))
+            {
+                writer.WritePropertyName("secureBootEnabled"u8);
+                writer.WriteBooleanValue(IsSecureBootEnabled.Value);
+            }
+            if (Optional.IsDefined(IsNodePublicIPEnabled))
+            {
+                writer.WritePropertyName("enableNodePublicIP"u8);
+                writer.WriteBooleanValue(IsNodePublicIPEnabled.Value);
+            }
+            if (Optional.IsDefined(VmSharedGalleryImageId))
+            {
+                writer.WritePropertyName("vmSharedGalleryImageId"u8);
+                writer.WriteStringValue(VmSharedGalleryImageId);
+            }
+            if (Optional.IsDefined(NatGatewayId))
+            {
+                writer.WritePropertyName("natGatewayId"u8);
+                writer.WriteStringValue(NatGatewayId);
+            }
+            if (Optional.IsDefined(VmImagePlan))
+            {
+                writer.WritePropertyName("vmImagePlan"u8);
+                writer.WriteObjectValue(VmImagePlan);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static ServiceFabricManagedNodeTypeData DeserializeServiceFabricManagedNodeTypeData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<NodeTypeSku> sku = default;
             Optional<IDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
@@ -248,13 +337,27 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             Optional<bool> useDefaultPublicLoadBalancer = default;
             Optional<bool> useTempDataDisk = default;
             Optional<bool> enableOverProvisioning = default;
+            Optional<IList<string>> zones = default;
+            Optional<bool> isSpotVm = default;
+            Optional<string> hostGroupId = default;
+            Optional<bool> useEphemeralOSDisk = default;
+            Optional<string> spotRestoreTimeout = default;
+            Optional<SpotNodeVmEvictionPolicyType> evictionPolicy = default;
+            Optional<ResourceIdentifier> vmImageResourceId = default;
+            Optional<ResourceIdentifier> subnetId = default;
+            Optional<IList<VmSetupAction>> vmSetupActions = default;
+            Optional<ServiceFabricManagedClusterSecurityType> securityType = default;
+            Optional<bool> secureBootEnabled = default;
+            Optional<bool> enableNodePublicIP = default;
+            Optional<ResourceIdentifier> vmSharedGalleryImageId = default;
+            Optional<ResourceIdentifier> natGatewayId = default;
+            Optional<VmImagePlan> vmImagePlan = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sku = NodeTypeSku.DeserializeNodeTypeSku(property.Value);
@@ -264,7 +367,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -294,7 +396,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -313,7 +414,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isPrimary = property0.Value.GetBoolean();
@@ -323,7 +423,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             vmInstanceCount = property0.Value.GetInt32();
@@ -333,7 +432,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             dataDiskSizeGB = property0.Value.GetInt32();
@@ -343,7 +441,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             dataDiskType = new ServiceFabricManagedDataDiskType(property0.Value.GetString());
@@ -358,7 +455,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -373,7 +469,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -388,7 +483,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             applicationPorts = EndpointRangeDescription.DeserializeEndpointRangeDescription(property0.Value);
@@ -398,7 +492,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             ephemeralPorts = EndpointRangeDescription.DeserializeEndpointRangeDescription(property0.Value);
@@ -433,7 +526,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<NodeTypeVaultSecretGroup> array = new List<NodeTypeVaultSecretGroup>();
@@ -448,7 +540,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<NodeTypeVmssExtension> array = new List<NodeTypeVmssExtension>();
@@ -463,7 +554,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             vmManagedIdentity = VmManagedIdentity.DeserializeVmManagedIdentity(property0.Value);
@@ -473,7 +563,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isStateless = property0.Value.GetBoolean();
@@ -483,7 +572,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             multiplePlacementGroups = property0.Value.GetBoolean();
@@ -493,7 +581,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<NodeTypeFrontendConfiguration> array = new List<NodeTypeFrontendConfiguration>();
@@ -508,7 +595,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ServiceFabricManagedNetworkSecurityRule> array = new List<ServiceFabricManagedNetworkSecurityRule>();
@@ -523,7 +609,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<NodeTypeVmssDataDisk> array = new List<NodeTypeVmssDataDisk>();
@@ -538,7 +623,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableEncryptionAtHost = property0.Value.GetBoolean();
@@ -548,7 +632,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ServiceFabricManagedResourceProvisioningState(property0.Value.GetString());
@@ -558,7 +641,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableAcceleratedNetworking = property0.Value.GetBoolean();
@@ -568,7 +650,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             useDefaultPublicLoadBalancer = property0.Value.GetBoolean();
@@ -578,7 +659,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             useTempDataDisk = property0.Value.GetBoolean();
@@ -588,17 +668,153 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableOverProvisioning = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("zones"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            zones = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("isSpotVM"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isSpotVm = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("hostGroupId"u8))
+                        {
+                            hostGroupId = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("useEphemeralOSDisk"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            useEphemeralOSDisk = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("spotRestoreTimeout"u8))
+                        {
+                            spotRestoreTimeout = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("evictionPolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            evictionPolicy = new SpotNodeVmEvictionPolicyType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("vmImageResourceId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
+                            {
+                                continue;
+                            }
+                            vmImageResourceId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("subnetId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
+                            {
+                                continue;
+                            }
+                            subnetId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("vmSetupActions"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<VmSetupAction> array = new List<VmSetupAction>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(new VmSetupAction(item.GetString()));
+                            }
+                            vmSetupActions = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("securityType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            securityType = new ServiceFabricManagedClusterSecurityType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("secureBootEnabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            secureBootEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("enableNodePublicIP"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enableNodePublicIP = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("vmSharedGalleryImageId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
+                            {
+                                continue;
+                            }
+                            vmSharedGalleryImageId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("natGatewayId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null || property0.Value.ValueKind == JsonValueKind.String && property0.Value.GetString().Length == 0)
+                            {
+                                continue;
+                            }
+                            natGatewayId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("vmImagePlan"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            vmImagePlan = VmImagePlan.DeserializeVmImagePlan(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ServiceFabricManagedNodeTypeData(id, name, type, systemData.Value, sku.Value, Optional.ToNullable(isPrimary), Optional.ToNullable(vmInstanceCount), Optional.ToNullable(dataDiskSizeGB), Optional.ToNullable(dataDiskType), dataDiskLetter.Value, Optional.ToDictionary(placementProperties), Optional.ToDictionary(capacities), applicationPorts.Value, ephemeralPorts.Value, vmSize.Value, vmImagePublisher.Value, vmImageOffer.Value, vmImageSku.Value, vmImageVersion.Value, Optional.ToList(vmSecrets), Optional.ToList(vmExtensions), vmManagedIdentity.Value, Optional.ToNullable(isStateless), Optional.ToNullable(multiplePlacementGroups), Optional.ToList(frontendConfigurations), Optional.ToList(networkSecurityRules), Optional.ToList(additionalDataDisks), Optional.ToNullable(enableEncryptionAtHost), Optional.ToNullable(provisioningState), Optional.ToNullable(enableAcceleratedNetworking), Optional.ToNullable(useDefaultPublicLoadBalancer), Optional.ToNullable(useTempDataDisk), Optional.ToNullable(enableOverProvisioning), Optional.ToDictionary(tags));
+            return new ServiceFabricManagedNodeTypeData(id, name, type, systemData.Value, sku.Value, Optional.ToNullable(isPrimary), Optional.ToNullable(vmInstanceCount), Optional.ToNullable(dataDiskSizeGB), Optional.ToNullable(dataDiskType), dataDiskLetter.Value, Optional.ToDictionary(placementProperties), Optional.ToDictionary(capacities), applicationPorts.Value, ephemeralPorts.Value, vmSize.Value, vmImagePublisher.Value, vmImageOffer.Value, vmImageSku.Value, vmImageVersion.Value, Optional.ToList(vmSecrets), Optional.ToList(vmExtensions), vmManagedIdentity.Value, Optional.ToNullable(isStateless), Optional.ToNullable(multiplePlacementGroups), Optional.ToList(frontendConfigurations), Optional.ToList(networkSecurityRules), Optional.ToList(additionalDataDisks), Optional.ToNullable(enableEncryptionAtHost), Optional.ToNullable(provisioningState), Optional.ToNullable(enableAcceleratedNetworking), Optional.ToNullable(useDefaultPublicLoadBalancer), Optional.ToNullable(useTempDataDisk), Optional.ToNullable(enableOverProvisioning), Optional.ToList(zones), Optional.ToNullable(isSpotVm), hostGroupId.Value, Optional.ToNullable(useEphemeralOSDisk), spotRestoreTimeout.Value, Optional.ToNullable(evictionPolicy), vmImageResourceId.Value, subnetId.Value, Optional.ToList(vmSetupActions), Optional.ToNullable(securityType), Optional.ToNullable(secureBootEnabled), Optional.ToNullable(enableNodePublicIP), vmSharedGalleryImageId.Value, natGatewayId.Value, vmImagePlan.Value, Optional.ToDictionary(tags));
         }
     }
 }

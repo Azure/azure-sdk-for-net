@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.NetApp.Models
 
         public static NetAppProvisioningState ToNetAppProvisioningState(this string value)
         {
-            if (string.Equals(value, "Accepted", StringComparison.InvariantCultureIgnoreCase)) return NetAppProvisioningState.Accepted;
-            if (string.Equals(value, "Creating", StringComparison.InvariantCultureIgnoreCase)) return NetAppProvisioningState.Creating;
-            if (string.Equals(value, "Patching", StringComparison.InvariantCultureIgnoreCase)) return NetAppProvisioningState.Patching;
-            if (string.Equals(value, "Deleting", StringComparison.InvariantCultureIgnoreCase)) return NetAppProvisioningState.Deleting;
-            if (string.Equals(value, "Moving", StringComparison.InvariantCultureIgnoreCase)) return NetAppProvisioningState.Moving;
-            if (string.Equals(value, "Failed", StringComparison.InvariantCultureIgnoreCase)) return NetAppProvisioningState.Failed;
-            if (string.Equals(value, "Succeeded", StringComparison.InvariantCultureIgnoreCase)) return NetAppProvisioningState.Succeeded;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Accepted")) return NetAppProvisioningState.Accepted;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Creating")) return NetAppProvisioningState.Creating;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Patching")) return NetAppProvisioningState.Patching;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Deleting")) return NetAppProvisioningState.Deleting;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Moving")) return NetAppProvisioningState.Moving;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed")) return NetAppProvisioningState.Failed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Succeeded")) return NetAppProvisioningState.Succeeded;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown NetAppProvisioningState value.");
         }
     }

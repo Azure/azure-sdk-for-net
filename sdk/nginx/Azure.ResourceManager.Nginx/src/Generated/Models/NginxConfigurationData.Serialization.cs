@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.Nginx
 
         internal static NginxConfigurationData DeserializeNginxConfigurationData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<NginxConfigurationProperties> properties = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -54,7 +58,6 @@ namespace Azure.ResourceManager.Nginx
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = NginxConfigurationProperties.DeserializeNginxConfigurationProperties(property.Value);
@@ -64,7 +67,6 @@ namespace Azure.ResourceManager.Nginx
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -99,7 +101,6 @@ namespace Azure.ResourceManager.Nginx
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

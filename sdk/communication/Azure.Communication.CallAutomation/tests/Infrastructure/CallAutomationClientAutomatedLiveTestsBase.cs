@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using Azure.Communication.CallAutomation.Tests.EventCatcher;
 using Azure.Communication.Identity;
+using Azure.Communication.PhoneNumbers;
 using Azure.Communication.Pipeline;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -43,9 +44,13 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         {
             SanitizedHeaders.Add("x-ms-content-sha256");
             SanitizedHeaders.Add("X-FORWARDED-HOST");
+            SanitizedHeaders.Add("Repeatability-Request-ID");
+            SanitizedHeaders.Add("Repeatability-First-Sent");
             JsonPathSanitizers.Add("$..id");
             JsonPathSanitizers.Add("$..rawId");
             JsonPathSanitizers.Add("$..value");
+            JsonPathSanitizers.Add("$..botAppId");
+            JsonPathSanitizers.Add("$..ivrContext");
             BodyKeySanitizers.Add(new BodyKeySanitizer(@"https://sanitized.skype.com/api/servicebuscallback/events?q=SanitizedSanitized") { JsonPath = "..callbackUri" });
             BodyRegexSanitizers.Add(new BodyRegexSanitizer(TestDispatcherRegEx, "https://sanitized.skype.com"));
             UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainRegEx, "https://sanitized.skype.com"));
@@ -74,11 +79,15 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         [TearDown]
         public async Task CleanUp()
         {
-            await DeRegisterCallBackWithDispatcher();
-            await _recordedEventListener.DisposeAsync();
-            _eventstore.Clear();
-            _incomingcontextstore.Clear();
-            await Task.CompletedTask;
+            try
+            {
+                await _recordedEventListener.DisposeAsync();
+                _eventstore.Clear();
+                _incomingcontextstore.Clear();
+                await Task.CompletedTask;
+            }
+            catch
+            { }
         }
 
         public bool SkipCallingServerInteractionLiveTests
@@ -88,20 +97,19 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         /// Creates a <see cref="CallAutomationClient" />
         /// </summary>
         /// <returns>The instrumented <see cref="CallAutomationClient" />.</returns>
-        protected CallAutomationClient CreateInstrumentedCallAutomationClientWithConnectionString()
+        protected CallAutomationClient CreateInstrumentedCallAutomationClientWithConnectionString(CommunicationUserIdentifier? source = null)
         {
             var connectionString = TestEnvironment.LiveTestStaticConnectionString;
 
             CallAutomationClient callAutomationClient;
             if (TestEnvironment.PMAEndpoint == null || TestEnvironment.PMAEndpoint.Length == 0)
             {
-                callAutomationClient = new CallAutomationClient(connectionString, CreateServerCallingClientOptionsWithCorrelationVectorLogs());
+                callAutomationClient = new CallAutomationClient(connectionString, CreateServerCallingClientOptionsWithCorrelationVectorLogs(source));
             }
             else
             {
-                callAutomationClient = new CallAutomationClient(new Uri(TestEnvironment.PMAEndpoint), connectionString, CreateServerCallingClientOptionsWithCorrelationVectorLogs());
+                callAutomationClient = new CallAutomationClient(new Uri(TestEnvironment.PMAEndpoint), connectionString, CreateServerCallingClientOptionsWithCorrelationVectorLogs(source));
             }
-            //callAutomationClient = new CallAutomationClient(new Uri("https://pma-dev-fmorales.plat-dev.skype.net"), connectionString, CreateServerCallingClientOptionsWithCorrelationVectorLogs());
 
             return InstrumentClient(callAutomationClient);
         }
@@ -194,9 +202,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
                     {
                         using (Recording.DisableRecording())
                         {
-                            var hangUpOptions = new HangUpOptions(true);
-                            hangUpOptions.RepeatabilityHeaders = null;
-                            await client.GetCallConnection(callConnectionId).HangUpAsync(hangUpOptions).ConfigureAwait(false);
+                            await client.GetCallConnection(callConnectionId).HangUpAsync(true).ConfigureAwait(false);
                         }
                     }
                 }
@@ -210,9 +216,9 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         /// Creates a <see cref="CallAutomationClientOptions" />
         /// </summary>
         /// <returns>The instrumented <see cref="CallAutomationClientOptions" />.</returns>
-        private CallAutomationClientOptions CreateServerCallingClientOptionsWithCorrelationVectorLogs()
+        private CallAutomationClientOptions CreateServerCallingClientOptionsWithCorrelationVectorLogs(CommunicationUserIdentifier? source = null)
         {
-            CallAutomationClientOptions callClientOptions = new CallAutomationClientOptions();
+            CallAutomationClientOptions callClientOptions = new CallAutomationClientOptions() { Source = source };
             callClientOptions.Diagnostics.LoggedHeaderNames.Add("MS-CV");
             return InstrumentClientOptions(callClientOptions);
         }
@@ -276,7 +282,17 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
                 case CommunicationUserIdentifier:
                     return RemoveAllNonChar(((CommunicationUserIdentifier)inputIdentifier).RawId);
                 case PhoneNumberIdentifier:
-                    return RemoveAllNonChar(((PhoneNumberIdentifier)inputIdentifier).RawId);
+                    if (Mode == RecordedTestMode.Playback)
+                    {
+                        return "Sanitized";
+                    }
+                    else
+                    {
+                        /* Change the plus + sign to it's unicode without the special characters i.e. u002B.
+                         * It's required because the dispacther app receives the incoming call context for pstn call
+                         * with the + as unicode in it and builds the topic id with it to send the event.*/
+                        return RemoveAllNonChar(((PhoneNumberIdentifier)inputIdentifier).RawId).Insert(1, "u002B");
+                    }
                 case MicrosoftTeamsUserIdentifier:
                     return RemoveAllNonChar(((MicrosoftTeamsUserIdentifier)inputIdentifier).RawId);
                 default:

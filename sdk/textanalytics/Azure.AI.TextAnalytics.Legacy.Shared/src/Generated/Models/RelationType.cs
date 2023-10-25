@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.TextAnalytics.Legacy.Models
 {
-    /// <summary> Type of relation. Examples include: `DosageOfMedication` or &apos;FrequencyOfMedication&apos;, etc. </summary>
+    /// <summary> Type of relation. Examples include: `DosageOfMedication` or 'FrequencyOfMedication', etc. </summary>
     internal readonly partial struct RelationType : IEquatable<RelationType>
     {
         private readonly string _value;

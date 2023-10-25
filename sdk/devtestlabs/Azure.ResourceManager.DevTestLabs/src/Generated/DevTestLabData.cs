@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    /// <summary> A class representing the DevTestLab data model. </summary>
+    /// <summary>
+    /// A class representing the DevTestLab data model.
+    /// A lab.
+    /// </summary>
     public partial class DevTestLabData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DevTestLabData. </summary>
@@ -32,25 +35,25 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="defaultStorageAccount"> The lab&apos;s default storage account. </param>
-        /// <param name="defaultPremiumStorageAccount"> The lab&apos;s default premium storage account. </param>
-        /// <param name="artifactsStorageAccount"> The lab&apos;s artifact storage account. </param>
-        /// <param name="premiumDataDiskStorageAccount"> The lab&apos;s premium data disk storage account. </param>
-        /// <param name="vaultName"> The lab&apos;s Key vault. </param>
+        /// <param name="defaultStorageAccount"> The lab's default storage account. </param>
+        /// <param name="defaultPremiumStorageAccount"> The lab's default premium storage account. </param>
+        /// <param name="artifactsStorageAccount"> The lab's artifact storage account. </param>
+        /// <param name="premiumDataDiskStorageAccount"> The lab's premium data disk storage account. </param>
+        /// <param name="vaultName"> The lab's Key vault. </param>
         /// <param name="labStorageType"> Type of storage used by the lab. It can be either Premium or Standard. Default is Premium. </param>
         /// <param name="mandatoryArtifactsResourceIdsLinux"> The ordered list of artifact resource IDs that should be applied on all Linux VM creations by default, prior to the artifacts specified by the user. </param>
         /// <param name="mandatoryArtifactsResourceIdsWindows"> The ordered list of artifact resource IDs that should be applied on all Windows VM creations by default, prior to the artifacts specified by the user. </param>
         /// <param name="createdOn"> The creation date of the lab. </param>
         /// <param name="premiumDataDisks">
         /// The setting to enable usage of premium data disks.
-        /// When its value is &apos;Enabled&apos;, creation of standard or premium data disks is allowed.
-        /// When its value is &apos;Disabled&apos;, only creation of standard data disks is allowed.
+        /// When its value is 'Enabled', creation of standard or premium data disks is allowed.
+        /// When its value is 'Disabled', only creation of standard data disks is allowed.
         /// </param>
         /// <param name="environmentPermission"> The access rights to be granted to the user when provisioning an environment. </param>
         /// <param name="announcement"> The properties of any lab announcement associated with this lab. </param>
         /// <param name="support"> The properties of any lab support message associated with this lab. </param>
         /// <param name="vmCreationResourceGroup"> The resource group in which all new lab virtual machines will be created. To let DevTest Labs manage resource group creation, set this value to null. </param>
-        /// <param name="publicIPId"> The public IP address for the lab&apos;s load balancer. </param>
+        /// <param name="publicIPId"> The public IP address for the lab's load balancer. </param>
         /// <param name="loadBalancerId"> The load balancer used to for lab VMs that use shared IP address. </param>
         /// <param name="networkSecurityGroupId"> The Network Security Group attached to the lab VMs Network interfaces to restrict open ports. </param>
         /// <param name="extendedProperties"> Extended properties of the lab used for experimental features. </param>
@@ -80,15 +83,15 @@ namespace Azure.ResourceManager.DevTestLabs
             UniqueIdentifier = uniqueIdentifier;
         }
 
-        /// <summary> The lab&apos;s default storage account. </summary>
+        /// <summary> The lab's default storage account. </summary>
         public string DefaultStorageAccount { get; }
-        /// <summary> The lab&apos;s default premium storage account. </summary>
+        /// <summary> The lab's default premium storage account. </summary>
         public string DefaultPremiumStorageAccount { get; }
-        /// <summary> The lab&apos;s artifact storage account. </summary>
+        /// <summary> The lab's artifact storage account. </summary>
         public string ArtifactsStorageAccount { get; }
-        /// <summary> The lab&apos;s premium data disk storage account. </summary>
+        /// <summary> The lab's premium data disk storage account. </summary>
         public string PremiumDataDiskStorageAccount { get; }
-        /// <summary> The lab&apos;s Key vault. </summary>
+        /// <summary> The lab's Key vault. </summary>
         public string VaultName { get; }
         /// <summary> Type of storage used by the lab. It can be either Premium or Standard. Default is Premium. </summary>
         public DevTestLabStorageType? LabStorageType { get; set; }
@@ -100,8 +103,8 @@ namespace Azure.ResourceManager.DevTestLabs
         public DateTimeOffset? CreatedOn { get; }
         /// <summary>
         /// The setting to enable usage of premium data disks.
-        /// When its value is &apos;Enabled&apos;, creation of standard or premium data disks is allowed.
-        /// When its value is &apos;Disabled&apos;, only creation of standard data disks is allowed.
+        /// When its value is 'Enabled', creation of standard or premium data disks is allowed.
+        /// When its value is 'Disabled', only creation of standard data disks is allowed.
         /// </summary>
         public DevTestLabPremiumDataDisk? PremiumDataDisks { get; set; }
         /// <summary> The access rights to be granted to the user when provisioning an environment. </summary>
@@ -112,7 +115,7 @@ namespace Azure.ResourceManager.DevTestLabs
         public DevTestLabSupport Support { get; set; }
         /// <summary> The resource group in which all new lab virtual machines will be created. To let DevTest Labs manage resource group creation, set this value to null. </summary>
         public string VmCreationResourceGroup { get; }
-        /// <summary> The public IP address for the lab&apos;s load balancer. </summary>
+        /// <summary> The public IP address for the lab's load balancer. </summary>
         public string PublicIPId { get; }
         /// <summary> The load balancer used to for lab VMs that use shared IP address. </summary>
         public string LoadBalancerId { get; }

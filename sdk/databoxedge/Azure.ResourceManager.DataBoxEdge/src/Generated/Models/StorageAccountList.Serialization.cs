@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         internal static StorageAccountList DeserializeStorageAccountList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DataBoxEdgeStorageAccountData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DataBoxEdgeStorageAccountData> array = new List<DataBoxEdgeStorageAccountData>();

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -70,7 +71,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
         /// <param name="data"> Parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="ifMatch"> The etag of the DNS zone. Omit this value to always overwrite the current zone. Specify the last-seen etag value to prevent accidentally overwriting any concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new DNS zone to be created, but to prevent updating an existing zone. Other values will be ignored. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new DNS zone to be created, but to prevent updating an existing zone. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="zoneName"/> or <paramref name="data"/> is null. </exception>
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
         /// <param name="data"> Parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="ifMatch"> The etag of the DNS zone. Omit this value to always overwrite the current zone. Specify the last-seen etag value to prevent accidentally overwriting any concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new DNS zone to be created, but to prevent updating an existing zone. Other values will be ignored. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new DNS zone to be created, but to prevent updating an existing zone. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="zoneName"/> or <paramref name="data"/> is null. </exception>
@@ -233,7 +234,7 @@ namespace Azure.ResourceManager.Dns
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsZoneZonesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dnsZoneZonesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DnsZoneResource(Client, DnsZoneData.DeserializeDnsZoneData(e)), _dnsZoneZonesClientDiagnostics, Pipeline, "DnsZoneCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DnsZoneResource(Client, DnsZoneData.DeserializeDnsZoneData(e)), _dnsZoneZonesClientDiagnostics, Pipeline, "DnsZoneCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -256,7 +257,7 @@ namespace Azure.ResourceManager.Dns
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsZoneZonesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dnsZoneZonesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DnsZoneResource(Client, DnsZoneData.DeserializeDnsZoneData(e)), _dnsZoneZonesClientDiagnostics, Pipeline, "DnsZoneCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DnsZoneResource(Client, DnsZoneData.DeserializeDnsZoneData(e)), _dnsZoneZonesClientDiagnostics, Pipeline, "DnsZoneCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -321,6 +322,80 @@ namespace Azure.ResourceManager.Dns
             {
                 var response = _dnsZoneZonesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, zoneName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Zones_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="zoneName"/> is null. </exception>
+        public virtual async Task<NullableResponse<DnsZoneResource>> GetIfExistsAsync(string zoneName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
+
+            using var scope = _dnsZoneZonesClientDiagnostics.CreateScope("DnsZoneCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _dnsZoneZonesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, zoneName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DnsZoneResource>(response.GetRawResponse());
+                return Response.FromValue(new DnsZoneResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Zones_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="zoneName"/> is null. </exception>
+        public virtual NullableResponse<DnsZoneResource> GetIfExists(string zoneName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(zoneName, nameof(zoneName));
+
+            using var scope = _dnsZoneZonesClientDiagnostics.CreateScope("DnsZoneCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _dnsZoneZonesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, zoneName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DnsZoneResource>(response.GetRawResponse());
+                return Response.FromValue(new DnsZoneResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

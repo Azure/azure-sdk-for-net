@@ -18,7 +18,8 @@ namespace Azure.ResourceManager.DnsResolver.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("subnet"u8);
-            JsonSerializer.Serialize(writer, Subnet); if (Optional.IsDefined(PrivateIPAddress))
+            JsonSerializer.Serialize(writer, Subnet);
+            if (Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIpAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress.ToString());
@@ -33,6 +34,10 @@ namespace Azure.ResourceManager.DnsResolver.Models
 
         internal static InboundEndpointIPConfiguration DeserializeInboundEndpointIPConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             WritableSubResource subnet = default;
             Optional<IPAddress> privateIPAddress = default;
             Optional<InboundEndpointIPAllocationMethod> privateIPAllocationMethod = default;
@@ -47,7 +52,6 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     privateIPAddress = IPAddress.Parse(property.Value.GetString());
@@ -57,7 +61,6 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     privateIPAllocationMethod = new InboundEndpointIPAllocationMethod(property.Value.GetString());

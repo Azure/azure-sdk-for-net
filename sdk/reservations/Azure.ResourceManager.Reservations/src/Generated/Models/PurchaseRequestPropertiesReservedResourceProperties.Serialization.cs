@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Reservations.Models
 
         internal static PurchaseRequestPropertiesReservedResourceProperties DeserializePurchaseRequestPropertiesReservedResourceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<InstanceFlexibility> instanceFlexibility = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -32,7 +36,6 @@ namespace Azure.ResourceManager.Reservations.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     instanceFlexibility = new InstanceFlexibility(property.Value.GetString());

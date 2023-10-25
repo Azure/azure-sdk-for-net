@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -70,9 +71,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="sid"> Subscription entity Identifier. The entity represents the association between a user and a product in API Management. </param>
         /// <param name="content"> Create parameters. </param>
         /// <param name="notify">
-        /// Notify change in Subscription State. 
-        ///  - If false, do not send any email notification for change of state of subscription 
-        ///  - If true, send email notification of change of state of subscription 
+        /// Notify change in Subscription State.
+        ///  - If false, do not send any email notification for change of state of subscription
+        ///  - If true, send email notification of change of state of subscription
         /// </param>
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="appType"> Determines the type of application which send the create user request. Default is legacy publisher portal. </param>
@@ -118,9 +119,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="sid"> Subscription entity Identifier. The entity represents the association between a user and a product in API Management. </param>
         /// <param name="content"> Create parameters. </param>
         /// <param name="notify">
-        /// Notify change in Subscription State. 
-        ///  - If false, do not send any email notification for change of state of subscription 
-        ///  - If true, send email notification of change of state of subscription 
+        /// Notify change in Subscription State.
+        ///  - If false, do not send any email notification for change of state of subscription
+        ///  - If true, send email notification of change of state of subscription
         /// </param>
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="appType"> Determines the type of application which send the create user request. Default is legacy publisher portal. </param>
@@ -245,7 +246,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementSubscriptionSubscriptionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementSubscriptionSubscriptionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementSubscriptionResource(Client, SubscriptionContractData.DeserializeSubscriptionContractData(e)), _apiManagementSubscriptionSubscriptionClientDiagnostics, Pipeline, "ApiManagementSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiManagementSubscriptionResource(Client, SubscriptionContractData.DeserializeSubscriptionContractData(e)), _apiManagementSubscriptionSubscriptionClientDiagnostics, Pipeline, "ApiManagementSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -270,7 +271,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementSubscriptionSubscriptionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _apiManagementSubscriptionSubscriptionRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementSubscriptionResource(Client, SubscriptionContractData.DeserializeSubscriptionContractData(e)), _apiManagementSubscriptionSubscriptionClientDiagnostics, Pipeline, "ApiManagementSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiManagementSubscriptionResource(Client, SubscriptionContractData.DeserializeSubscriptionContractData(e)), _apiManagementSubscriptionSubscriptionClientDiagnostics, Pipeline, "ApiManagementSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -335,6 +336,80 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 var response = _apiManagementSubscriptionSubscriptionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sid, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/subscriptions/{sid}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscription_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sid"> Subscription entity Identifier. The entity represents the association between a user and a product in API Management. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sid"/> is null. </exception>
+        public virtual async Task<NullableResponse<ApiManagementSubscriptionResource>> GetIfExistsAsync(string sid, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sid, nameof(sid));
+
+            using var scope = _apiManagementSubscriptionSubscriptionClientDiagnostics.CreateScope("ApiManagementSubscriptionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _apiManagementSubscriptionSubscriptionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sid, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ApiManagementSubscriptionResource>(response.GetRawResponse());
+                return Response.FromValue(new ApiManagementSubscriptionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/subscriptions/{sid}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Subscription_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sid"> Subscription entity Identifier. The entity represents the association between a user and a product in API Management. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sid"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sid"/> is null. </exception>
+        public virtual NullableResponse<ApiManagementSubscriptionResource> GetIfExists(string sid, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sid, nameof(sid));
+
+            using var scope = _apiManagementSubscriptionSubscriptionClientDiagnostics.CreateScope("ApiManagementSubscriptionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _apiManagementSubscriptionSubscriptionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sid, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ApiManagementSubscriptionResource>(response.GetRawResponse());
+                return Response.FromValue(new ApiManagementSubscriptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

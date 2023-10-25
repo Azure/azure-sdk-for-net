@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static PackageCarrierInfo DeserializePackageCarrierInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> carrierName = default;
             Optional<string> trackingId = default;
             foreach (var property in element.EnumerateObject())

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static SharedGalleryList DeserializeSharedGalleryList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<SharedGalleryData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

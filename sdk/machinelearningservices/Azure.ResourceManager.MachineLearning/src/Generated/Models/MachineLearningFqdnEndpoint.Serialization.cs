@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static MachineLearningFqdnEndpoint DeserializeMachineLearningFqdnEndpoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> domainName = default;
             Optional<IReadOnlyList<MachineLearningFqdnEndpointDetail>> endpointDetails = default;
             foreach (var property in element.EnumerateObject())
@@ -28,7 +32,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MachineLearningFqdnEndpointDetail> array = new List<MachineLearningFqdnEndpointDetail>();

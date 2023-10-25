@@ -46,6 +46,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SqlScriptContent DeserializeSqlScriptContent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string query = default;
             Optional<SqlConnection> currentConnection = default;
             Optional<int> resultLimit = default;
@@ -63,7 +67,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     currentConnection = SqlConnection.DeserializeSqlConnection(property.Value);
@@ -73,7 +76,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resultLimit = property.Value.GetInt32();
@@ -83,7 +85,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     metadata = SqlScriptMetadata.DeserializeSqlScriptMetadata(property.Value);

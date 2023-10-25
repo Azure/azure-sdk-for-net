@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     {
         internal static StreamAnalyticsTestDatasourceResult DeserializeStreamAnalyticsTestDatasourceResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StreamAnalyticsTestDatasourceResultStatus> status = default;
             Optional<string> code = default;
             Optional<string> message = default;
@@ -26,7 +30,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new StreamAnalyticsTestDatasourceResultStatus(property.Value.GetString());
@@ -60,7 +63,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<StreamAnalyticsErrorDetails> array = new List<StreamAnalyticsErrorDetails>();

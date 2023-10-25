@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    /// <summary> A class representing the VirtualWorkspace data model. </summary>
+    /// <summary>
+    /// A class representing the VirtualWorkspace data model.
+    /// Represents a Workspace definition.
+    /// </summary>
     public partial class VirtualWorkspaceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of VirtualWorkspaceData. </summary>

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <param name="publicIPAddressResourceId"> Resource id of the public IP. </param>
         /// <param name="loadBalancerResourceId"> Resource id of the load balancer. </param>
         /// <param name="probePort"> Probe port. </param>
-        /// <param name="sqlVmInstances"> List of the SQL virtual machine instance resource id&apos;s that are enrolled into the availability group listener. </param>
+        /// <param name="sqlVmInstances"> List of the SQL virtual machine instance resource id's that are enrolled into the availability group listener. </param>
         internal AvailabilityGroupListenerLoadBalancerConfiguration(AvailabilityGroupListenerPrivateIPAddress privateIPAddress, ResourceIdentifier publicIPAddressResourceId, ResourceIdentifier loadBalancerResourceId, int? probePort, IList<ResourceIdentifier> sqlVmInstances)
         {
             PrivateIPAddress = privateIPAddress;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public ResourceIdentifier LoadBalancerResourceId { get; set; }
         /// <summary> Probe port. </summary>
         public int? ProbePort { get; set; }
-        /// <summary> List of the SQL virtual machine instance resource id&apos;s that are enrolled into the availability group listener. </summary>
+        /// <summary> List of the SQL virtual machine instance resource id's that are enrolled into the availability group listener. </summary>
         public IList<ResourceIdentifier> SqlVmInstances { get; }
     }
 }

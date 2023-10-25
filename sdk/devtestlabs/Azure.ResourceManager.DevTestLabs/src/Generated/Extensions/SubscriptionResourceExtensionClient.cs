@@ -5,8 +5,8 @@
 
 #nullable disable
 
-using System;
 using System.Threading;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -58,17 +58,17 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=defaultStorageAccount)&apos;. </param>
-        /// <param name="filter"> The filter to apply to the operation. Example: &apos;$filter=contains(name,&apos;myName&apos;). </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
-        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: &apos;$orderby=name desc&apos;. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=defaultStorageAccount)'. </param>
+        /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DevTestLabResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DevTestLabResource> GetDevTestLabsAsync(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DevTestLabLabsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, expand, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DevTestLabLabsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, expand, filter, top, orderby);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevTestLabResource(Client, DevTestLabData.DeserializeDevTestLabData(e)), DevTestLabLabsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDevTestLabs", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevTestLabResource(Client, DevTestLabData.DeserializeDevTestLabData(e)), DevTestLabLabsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDevTestLabs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -84,17 +84,17 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=defaultStorageAccount)&apos;. </param>
-        /// <param name="filter"> The filter to apply to the operation. Example: &apos;$filter=contains(name,&apos;myName&apos;). </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
-        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: &apos;$orderby=name desc&apos;. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=defaultStorageAccount)'. </param>
+        /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DevTestLabResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DevTestLabResource> GetDevTestLabs(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DevTestLabLabsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, expand, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DevTestLabLabsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, expand, filter, top, orderby);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevTestLabResource(Client, DevTestLabData.DeserializeDevTestLabData(e)), DevTestLabLabsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDevTestLabs", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevTestLabResource(Client, DevTestLabData.DeserializeDevTestLabData(e)), DevTestLabLabsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDevTestLabs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -110,17 +110,17 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=status)&apos;. </param>
-        /// <param name="filter"> The filter to apply to the operation. Example: &apos;$filter=contains(name,&apos;myName&apos;). </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
-        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: &apos;$orderby=name desc&apos;. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
+        /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DevTestLabGlobalScheduleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DevTestLabGlobalScheduleResource> GetDevTestLabGlobalSchedulesAsync(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DevTestLabGlobalScheduleGlobalSchedulesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, expand, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DevTestLabGlobalScheduleGlobalSchedulesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, expand, filter, top, orderby);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevTestLabGlobalScheduleResource(Client, DevTestLabScheduleData.DeserializeDevTestLabScheduleData(e)), DevTestLabGlobalScheduleGlobalSchedulesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDevTestLabGlobalSchedules", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DevTestLabGlobalScheduleResource(Client, DevTestLabScheduleData.DeserializeDevTestLabScheduleData(e)), DevTestLabGlobalScheduleGlobalSchedulesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDevTestLabGlobalSchedules", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -136,17 +136,17 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=status)&apos;. </param>
-        /// <param name="filter"> The filter to apply to the operation. Example: &apos;$filter=contains(name,&apos;myName&apos;). </param>
-        /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
-        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: &apos;$orderby=name desc&apos;. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
+        /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DevTestLabGlobalScheduleResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DevTestLabGlobalScheduleResource> GetDevTestLabGlobalSchedules(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DevTestLabGlobalScheduleGlobalSchedulesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, expand, filter, top, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DevTestLabGlobalScheduleGlobalSchedulesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, expand, filter, top, orderby);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevTestLabGlobalScheduleResource(Client, DevTestLabScheduleData.DeserializeDevTestLabScheduleData(e)), DevTestLabGlobalScheduleGlobalSchedulesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDevTestLabGlobalSchedules", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DevTestLabGlobalScheduleResource(Client, DevTestLabScheduleData.DeserializeDevTestLabScheduleData(e)), DevTestLabGlobalScheduleGlobalSchedulesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDevTestLabGlobalSchedules", "value", "nextLink", cancellationToken);
         }
     }
 }

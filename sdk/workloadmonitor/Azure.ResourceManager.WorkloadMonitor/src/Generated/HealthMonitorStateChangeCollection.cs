@@ -12,6 +12,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         }
 
         /// <summary>
-        /// Get the health state change of a monitor of a virtual machine at the provided timestamp. Optional parameter: $expand (retrieve the monitor&apos;s evidence and configuration).
+        /// Get the health state change of a monitor of a virtual machine at the provided timestamp. Optional parameter: $expand (retrieve the monitor's evidence and configuration).
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         }
 
         /// <summary>
-        /// Get the health state change of a monitor of a virtual machine at the provided timestamp. Optional parameter: $expand (retrieve the monitor&apos;s evidence and configuration).
+        /// Get the health state change of a monitor of a virtual machine at the provided timestamp. Optional parameter: $expand (retrieve the monitor's evidence and configuration).
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         }
 
         /// <summary>
-        /// Get the health state changes of a monitor of a virtual machine within the provided time window (default is the last 24 hours). Optional parameters: $expand (retrieve the monitor&apos;s evidence and configuration) and $filter (filter by heartbeat condition).
+        /// Get the health state changes of a monitor of a virtual machine within the provided time window (default is the last 24 hours). Optional parameters: $expand (retrieve the monitor's evidence and configuration) and $filter (filter by heartbeat condition).
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -152,11 +153,11 @@ namespace Azure.ResourceManager.WorkloadMonitor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _healthMonitorStateChangeHealthMonitorsRestClient.CreateListStateChangesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, filter, expand, startTimestampUtc, endTimestampUtc);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _healthMonitorStateChangeHealthMonitorsRestClient.CreateListStateChangesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, filter, expand, startTimestampUtc, endTimestampUtc);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HealthMonitorStateChangeResource(Client, HealthMonitorStateChangeData.DeserializeHealthMonitorStateChangeData(e)), _healthMonitorStateChangeHealthMonitorsClientDiagnostics, Pipeline, "HealthMonitorStateChangeCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new HealthMonitorStateChangeResource(Client, HealthMonitorStateChangeData.DeserializeHealthMonitorStateChangeData(e)), _healthMonitorStateChangeHealthMonitorsClientDiagnostics, Pipeline, "HealthMonitorStateChangeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Get the health state changes of a monitor of a virtual machine within the provided time window (default is the last 24 hours). Optional parameters: $expand (retrieve the monitor&apos;s evidence and configuration) and $filter (filter by heartbeat condition).
+        /// Get the health state changes of a monitor of a virtual machine within the provided time window (default is the last 24 hours). Optional parameters: $expand (retrieve the monitor's evidence and configuration) and $filter (filter by heartbeat condition).
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -178,7 +179,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _healthMonitorStateChangeHealthMonitorsRestClient.CreateListStateChangesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, filter, expand, startTimestampUtc, endTimestampUtc);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _healthMonitorStateChangeHealthMonitorsRestClient.CreateListStateChangesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, filter, expand, startTimestampUtc, endTimestampUtc);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HealthMonitorStateChangeResource(Client, HealthMonitorStateChangeData.DeserializeHealthMonitorStateChangeData(e)), _healthMonitorStateChangeHealthMonitorsClientDiagnostics, Pipeline, "HealthMonitorStateChangeCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new HealthMonitorStateChangeResource(Client, HealthMonitorStateChangeData.DeserializeHealthMonitorStateChangeData(e)), _healthMonitorStateChangeHealthMonitorsClientDiagnostics, Pipeline, "HealthMonitorStateChangeCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -245,6 +246,82 @@ namespace Azure.ResourceManager.WorkloadMonitor
             {
                 var response = _healthMonitorStateChangeHealthMonitorsRestClient.GetStateChange(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, timestampUnix, expand, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors/{monitorId}/history/{timestampUnix}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HealthMonitors_GetStateChange</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="timestampUnix"> The timestamp of the state change (unix format). </param>
+        /// <param name="expand"> Optionally expand the monitor’s evidence and/or configuration. Example: $expand=evidence,configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="timestampUnix"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="timestampUnix"/> is null. </exception>
+        public virtual async Task<NullableResponse<HealthMonitorStateChangeResource>> GetIfExistsAsync(string timestampUnix, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(timestampUnix, nameof(timestampUnix));
+
+            using var scope = _healthMonitorStateChangeHealthMonitorsClientDiagnostics.CreateScope("HealthMonitorStateChangeCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _healthMonitorStateChangeHealthMonitorsRestClient.GetStateChangeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, timestampUnix, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<HealthMonitorStateChangeResource>(response.GetRawResponse());
+                return Response.FromValue(new HealthMonitorStateChangeResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors/{monitorId}/history/{timestampUnix}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HealthMonitors_GetStateChange</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="timestampUnix"> The timestamp of the state change (unix format). </param>
+        /// <param name="expand"> Optionally expand the monitor’s evidence and/or configuration. Example: $expand=evidence,configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="timestampUnix"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="timestampUnix"/> is null. </exception>
+        public virtual NullableResponse<HealthMonitorStateChangeResource> GetIfExists(string timestampUnix, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(timestampUnix, nameof(timestampUnix));
+
+            using var scope = _healthMonitorStateChangeHealthMonitorsClientDiagnostics.CreateScope("HealthMonitorStateChangeCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _healthMonitorStateChangeHealthMonitorsRestClient.GetStateChange(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, timestampUnix, expand, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<HealthMonitorStateChangeResource>(response.GetRawResponse());
+                return Response.FromValue(new HealthMonitorStateChangeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

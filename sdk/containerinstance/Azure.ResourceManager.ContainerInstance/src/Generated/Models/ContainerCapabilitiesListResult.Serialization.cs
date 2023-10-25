@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     {
         internal static ContainerCapabilitiesListResult DeserializeContainerCapabilitiesListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ContainerCapabilities>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ContainerCapabilities> array = new List<ContainerCapabilities>();

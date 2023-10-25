@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// This is an advanced setting typically only needed by Windows Store application backends.
         /// Note that URLs within the current domain are always implicitly allowed.
         /// </param>
-        /// <param name="cookieExpiration"> The configuration settings of the session cookie&apos;s expiration. </param>
+        /// <param name="cookieExpiration"> The configuration settings of the session cookie's expiration. </param>
         /// <param name="nonce"> The configuration settings of the nonce used in the login flow. </param>
         internal WebAppLoginInfo(LoginRoutes routes, AppServiceTokenStore tokenStore, bool? preserveUrlFragmentsForLogins, IList<string> allowedExternalRedirectUrls, WebAppCookieExpiration cookieExpiration, LoginFlowNonceSettings nonce)
         {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// Note that URLs within the current domain are always implicitly allowed.
         /// </summary>
         public IList<string> AllowedExternalRedirectUrls { get; }
-        /// <summary> The configuration settings of the session cookie&apos;s expiration. </summary>
+        /// <summary> The configuration settings of the session cookie's expiration. </summary>
         public WebAppCookieExpiration CookieExpiration { get; set; }
         /// <summary> The configuration settings of the nonce used in the login flow. </summary>
         public LoginFlowNonceSettings Nonce { get; set; }

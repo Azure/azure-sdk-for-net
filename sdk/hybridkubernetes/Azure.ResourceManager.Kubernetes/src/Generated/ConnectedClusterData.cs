@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kubernetes
 {
-    /// <summary> A class representing the ConnectedCluster data model. </summary>
+    /// <summary>
+    /// A class representing the ConnectedCluster data model.
+    /// Represents a connected cluster.
+    /// </summary>
     public partial class ConnectedClusterData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ConnectedClusterData. </summary>

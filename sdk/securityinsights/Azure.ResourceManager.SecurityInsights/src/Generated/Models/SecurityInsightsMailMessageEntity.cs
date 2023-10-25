@@ -35,17 +35,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="kind"> The kind of the entity. </param>
         /// <param name="additionalData"> A bag of custom fields that should be part of the entity and will be presented to the user. </param>
         /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
-        /// <param name="fileEntityIds"> The File entity ids of this mail message&apos;s attachments. </param>
+        /// <param name="fileEntityIds"> The File entity ids of this mail message's attachments. </param>
         /// <param name="recipient"> The recipient of this mail message. Note that in case of multiple recipients the mail message is forked and each copy has one recipient. </param>
         /// <param name="uris"> The Urls contained in this mail message. </param>
         /// <param name="threats"> The threats of this mail message. </param>
-        /// <param name="p1Sender"> The p1 sender&apos;s email address. </param>
-        /// <param name="p1SenderDisplayName"> The p1 sender&apos;s display name. </param>
-        /// <param name="p1SenderDomain"> The p1 sender&apos;s domain. </param>
-        /// <param name="senderIP"> The sender&apos;s IP address. </param>
-        /// <param name="p2Sender"> The p2 sender&apos;s email address. </param>
-        /// <param name="p2SenderDisplayName"> The p2 sender&apos;s display name. </param>
-        /// <param name="p2SenderDomain"> The p2 sender&apos;s domain. </param>
+        /// <param name="p1Sender"> The p1 sender's email address. </param>
+        /// <param name="p1SenderDisplayName"> The p1 sender's display name. </param>
+        /// <param name="p1SenderDomain"> The p1 sender's domain. </param>
+        /// <param name="senderIP"> The sender's IP address. </param>
+        /// <param name="p2Sender"> The p2 sender's email address. </param>
+        /// <param name="p2SenderDisplayName"> The p2 sender's display name. </param>
+        /// <param name="p2SenderDomain"> The p2 sender's domain. </param>
         /// <param name="receiveOn"> The receive date of this message. </param>
         /// <param name="networkMessageId"> The network message id of this mail message. </param>
         /// <param name="internetMessageId"> The internet message id of this mail message. </param>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public IReadOnlyDictionary<string, BinaryData> AdditionalData { get; }
         /// <summary> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </summary>
         public string FriendlyName { get; }
-        /// <summary> The File entity ids of this mail message&apos;s attachments. </summary>
+        /// <summary> The File entity ids of this mail message's attachments. </summary>
         public IReadOnlyList<string> FileEntityIds { get; }
         /// <summary> The recipient of this mail message. Note that in case of multiple recipients the mail message is forked and each copy has one recipient. </summary>
         public string Recipient { get; }
@@ -133,19 +133,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public IReadOnlyList<Uri> Uris { get; }
         /// <summary> The threats of this mail message. </summary>
         public IReadOnlyList<string> Threats { get; }
-        /// <summary> The p1 sender&apos;s email address. </summary>
+        /// <summary> The p1 sender's email address. </summary>
         public string P1Sender { get; }
-        /// <summary> The p1 sender&apos;s display name. </summary>
+        /// <summary> The p1 sender's display name. </summary>
         public string P1SenderDisplayName { get; }
-        /// <summary> The p1 sender&apos;s domain. </summary>
+        /// <summary> The p1 sender's domain. </summary>
         public string P1SenderDomain { get; }
-        /// <summary> The sender&apos;s IP address. </summary>
+        /// <summary> The sender's IP address. </summary>
         public IPAddress SenderIP { get; }
-        /// <summary> The p2 sender&apos;s email address. </summary>
+        /// <summary> The p2 sender's email address. </summary>
         public string P2Sender { get; }
-        /// <summary> The p2 sender&apos;s display name. </summary>
+        /// <summary> The p2 sender's display name. </summary>
         public string P2SenderDisplayName { get; }
-        /// <summary> The p2 sender&apos;s domain. </summary>
+        /// <summary> The p2 sender's domain. </summary>
         public string P2SenderDomain { get; }
         /// <summary> The receive date of this message. </summary>
         public DateTimeOffset? ReceiveOn { get; }

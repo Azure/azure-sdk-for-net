@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Initializes a new instance of StorageSshPublicKey. </summary>
         /// <param name="description"> Optional. It is used to store the function/usage of the key. </param>
-        /// <param name="key"> Ssh public key base64 encoded. The format should be: &apos;&lt;keyType&gt; &lt;keyData&gt;&apos;, e.g. ssh-rsa AAAABBBB. </param>
+        /// <param name="key"> Ssh public key base64 encoded. The format should be: '&lt;keyType&gt; &lt;keyData&gt;', e.g. ssh-rsa AAAABBBB. </param>
         internal StorageSshPublicKey(string description, string key)
         {
             Description = description;
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Optional. It is used to store the function/usage of the key. </summary>
         public string Description { get; set; }
-        /// <summary> Ssh public key base64 encoded. The format should be: &apos;&lt;keyType&gt; &lt;keyData&gt;&apos;, e.g. ssh-rsa AAAABBBB. </summary>
+        /// <summary> Ssh public key base64 encoded. The format should be: '&lt;keyType&gt; &lt;keyData&gt;', e.g. ssh-rsa AAAABBBB. </summary>
         public string Key { get; set; }
     }
 }

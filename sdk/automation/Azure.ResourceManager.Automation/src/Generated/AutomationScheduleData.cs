@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Automation
 {
-    /// <summary> A class representing the AutomationSchedule data model. </summary>
+    /// <summary>
+    /// A class representing the AutomationSchedule data model.
+    /// Definition of the schedule.
+    /// </summary>
     public partial class AutomationScheduleData : ResourceData
     {
         /// <summary> Initializes a new instance of AutomationScheduleData. </summary>
@@ -26,12 +29,12 @@ namespace Azure.ResourceManager.Automation
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="startOn"> Gets or sets the start time of the schedule. </param>
-        /// <param name="startInMinutes"> Gets the start time&apos;s offset in minutes. </param>
+        /// <param name="startInMinutes"> Gets the start time's offset in minutes. </param>
         /// <param name="expireOn"> Gets or sets the end time of the schedule. </param>
-        /// <param name="expireInMinutes"> Gets or sets the expiry time&apos;s offset in minutes. </param>
+        /// <param name="expireInMinutes"> Gets or sets the expiry time's offset in minutes. </param>
         /// <param name="isEnabled"> Gets or sets a value indicating whether this schedule is enabled. </param>
         /// <param name="nextRunOn"> Gets or sets the next run time of the schedule. </param>
-        /// <param name="nextRunInMinutes"> Gets or sets the next run time&apos;s offset in minutes. </param>
+        /// <param name="nextRunInMinutes"> Gets or sets the next run time's offset in minutes. </param>
         /// <param name="interval"> Gets or sets the interval of the schedule. </param>
         /// <param name="frequency"> Gets or sets the frequency of the schedule. </param>
         /// <param name="timeZone"> Gets or sets the time zone of the schedule. </param>
@@ -59,17 +62,17 @@ namespace Azure.ResourceManager.Automation
 
         /// <summary> Gets or sets the start time of the schedule. </summary>
         public DateTimeOffset? StartOn { get; set; }
-        /// <summary> Gets the start time&apos;s offset in minutes. </summary>
+        /// <summary> Gets the start time's offset in minutes. </summary>
         public double? StartInMinutes { get; }
         /// <summary> Gets or sets the end time of the schedule. </summary>
         public DateTimeOffset? ExpireOn { get; set; }
-        /// <summary> Gets or sets the expiry time&apos;s offset in minutes. </summary>
+        /// <summary> Gets or sets the expiry time's offset in minutes. </summary>
         public double? ExpireInMinutes { get; set; }
         /// <summary> Gets or sets a value indicating whether this schedule is enabled. </summary>
         public bool? IsEnabled { get; set; }
         /// <summary> Gets or sets the next run time of the schedule. </summary>
         public DateTimeOffset? NextRunOn { get; set; }
-        /// <summary> Gets or sets the next run time&apos;s offset in minutes. </summary>
+        /// <summary> Gets or sets the next run time's offset in minutes. </summary>
         public double? NextRunInMinutes { get; set; }
         /// <summary>
         /// Gets or sets the interval of the schedule.

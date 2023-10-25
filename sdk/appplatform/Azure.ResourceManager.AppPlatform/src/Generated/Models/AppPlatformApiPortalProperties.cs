@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <summary> Initializes a new instance of AppPlatformApiPortalProperties. </summary>
         /// <param name="provisioningState"> State of the API portal. </param>
         /// <param name="isPublic"> Indicates whether the API portal exposes endpoint. </param>
-        /// <param name="uri"> URL of the API portal, exposed when &apos;public&apos; is true. </param>
+        /// <param name="uri"> URL of the API portal, exposed when 'public' is true. </param>
         /// <param name="isHttpsOnly"> Indicate if only https is allowed. </param>
         /// <param name="gatewayIds"> The array of resource Ids of gateway to integrate with API portal. </param>
         /// <param name="sourceUris"> Collection of OpenAPI source URL locations. </param>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public AppPlatformApiPortalProvisioningState? ProvisioningState { get; }
         /// <summary> Indicates whether the API portal exposes endpoint. </summary>
         public bool? IsPublic { get; set; }
-        /// <summary> URL of the API portal, exposed when &apos;public&apos; is true. </summary>
+        /// <summary> URL of the API portal, exposed when 'public' is true. </summary>
         public Uri Uri { get; }
         /// <summary> Indicate if only https is allowed. </summary>
         public bool? IsHttpsOnly { get; set; }

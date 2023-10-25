@@ -113,6 +113,10 @@ namespace Azure.ResourceManager.TrafficManager
 
         internal static TrafficManagerProfileData DeserializeTrafficManagerProfileData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             Optional<AzureLocation> location = default;
             Optional<ResourceIdentifier> id = default;
@@ -132,7 +136,6 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -147,7 +150,6 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
@@ -157,7 +159,6 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -172,7 +173,6 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new ResourceType(property.Value.GetString());
@@ -191,7 +191,6 @@ namespace Azure.ResourceManager.TrafficManager
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             profileStatus = new TrafficManagerProfileStatus(property0.Value.GetString());
@@ -201,7 +200,6 @@ namespace Azure.ResourceManager.TrafficManager
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             trafficRoutingMethod = new TrafficRoutingMethod(property0.Value.GetString());
@@ -211,7 +209,6 @@ namespace Azure.ResourceManager.TrafficManager
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             dnsConfig = TrafficManagerDnsConfig.DeserializeTrafficManagerDnsConfig(property0.Value);
@@ -221,7 +218,6 @@ namespace Azure.ResourceManager.TrafficManager
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             monitorConfig = TrafficManagerMonitorConfig.DeserializeTrafficManagerMonitorConfig(property0.Value);
@@ -231,7 +227,6 @@ namespace Azure.ResourceManager.TrafficManager
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<TrafficManagerEndpointData> array = new List<TrafficManagerEndpointData>();
@@ -246,7 +241,6 @@ namespace Azure.ResourceManager.TrafficManager
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             trafficViewEnrollmentStatus = new TrafficViewEnrollmentStatus(property0.Value.GetString());
@@ -256,7 +250,6 @@ namespace Azure.ResourceManager.TrafficManager
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<AllowedEndpointRecordType> array = new List<AllowedEndpointRecordType>();

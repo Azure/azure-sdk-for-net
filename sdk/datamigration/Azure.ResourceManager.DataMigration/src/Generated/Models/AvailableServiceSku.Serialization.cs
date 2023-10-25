@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataMigration.Models
     {
         internal static AvailableServiceSku DeserializeAvailableServiceSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> resourceType = default;
             Optional<AvailableServiceSkuSku> sku = default;
             Optional<AvailableServiceSkuCapacity> capacity = default;
@@ -28,7 +32,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sku = AvailableServiceSkuSku.DeserializeAvailableServiceSkuSku(property.Value);
@@ -38,7 +41,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     capacity = AvailableServiceSkuCapacity.DeserializeAvailableServiceSkuCapacity(property.Value);

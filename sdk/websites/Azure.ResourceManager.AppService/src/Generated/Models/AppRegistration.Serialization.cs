@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppRegistration DeserializeAppRegistration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> appId = default;
             Optional<string> appSecretSettingName = default;
             foreach (var property in element.EnumerateObject())

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <param name="value"> List of the reports. </param>
         /// <param name="nextLink">
         /// The URL the client should use to fetch the next page (per server side paging).
-        /// It&apos;s null for now, added for future use.
+        /// It's null for now, added for future use.
         /// </param>
         internal ReportResourceList(IReadOnlyList<ReportResourceData> value, string nextLink)
         {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public IReadOnlyList<ReportResourceData> Value { get; }
         /// <summary>
         /// The URL the client should use to fetch the next page (per server side paging).
-        /// It&apos;s null for now, added for future use.
+        /// It's null for now, added for future use.
         /// </summary>
         public string NextLink { get; }
     }

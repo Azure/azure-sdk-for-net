@@ -5,7 +5,6 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
-generate-model-factory: false
 csharp: true
 library-name: AppPlatform
 namespace: Azure.ResourceManager.AppPlatform
@@ -16,13 +15,16 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+# mgmt-debug:
+#   show-serialized-names: true
+
 format-by-name-rules:
   'etag': 'etag'
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -131,7 +133,7 @@ rename-mapping:
   CustomDomainResourceProvisioningState: AppPlatformCustomDomainProvisioningState
   ServiceResource: AppPlatformService
   ClusterResourceProperties: AppPlatformServiceProperties
-  ClusterResourceProperties.serviceId: -|uuid
+  ClusterResourceProperties.serviceId: ServiceInstanceId
   ClusterResourceProperties.zoneRedundant: IsZoneRedundant
   NetworkProfile: AppPlatformServiceNetworkProfile
   PowerState: AppPlatformServicePowerState
@@ -282,6 +284,7 @@ rename-mapping:
   NetworkProfile.appSubnetId: -|arm-id
   ResourceSku.locations: -|azure-location
   ResourceSkuRestrictionInfo.locations: -|azure-location
+  AppResourceProperties.url: UriString|string
 
 parameter-rename-mapping:
   ConfigServers_Validate:

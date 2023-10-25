@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -20,11 +21,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(SkipLineCount))
             {
                 writer.WritePropertyName("skipLineCount"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SkipLineCount);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(SkipLineCount.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, SkipLineCount);
             }
             if (Optional.IsDefined(CompressionProperties))
             {
@@ -39,7 +36,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
@@ -47,7 +47,11 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DelimitedTextReadSettings DeserializeDelimitedTextReadSettings(JsonElement element)
         {
-            Optional<BinaryData> skipLineCount = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<DataFactoryElement<int>> skipLineCount = default;
             Optional<CompressionReadSettings> compressionProperties = default;
             string type = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -58,17 +62,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    skipLineCount = BinaryData.FromString(property.Value.GetRawText());
+                    skipLineCount = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("compressionProperties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     compressionProperties = CompressionReadSettings.DeserializeCompressionReadSettings(property.Value);

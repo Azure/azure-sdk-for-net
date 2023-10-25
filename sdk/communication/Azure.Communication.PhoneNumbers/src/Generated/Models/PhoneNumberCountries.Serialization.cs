@@ -13,34 +13,5 @@ namespace Azure.Communication.PhoneNumbers
 {
     internal partial class PhoneNumberCountries
     {
-        internal static PhoneNumberCountries DeserializePhoneNumberCountries(JsonElement element)
-        {
-            Optional<IReadOnlyList<PhoneNumberCountry>> countries = default;
-            Optional<string> nextLink = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("countries"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    List<PhoneNumberCountry> array = new List<PhoneNumberCountry>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(PhoneNumberCountry.DeserializePhoneNumberCountry(item));
-                    }
-                    countries = array;
-                    continue;
-                }
-                if (property.NameEquals("nextLink"u8))
-                {
-                    nextLink = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new PhoneNumberCountries(Optional.ToList(countries), nextLink.Value);
-        }
     }
 }

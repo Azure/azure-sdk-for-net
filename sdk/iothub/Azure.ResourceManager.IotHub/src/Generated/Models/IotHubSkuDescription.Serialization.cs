@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.IotHub.Models
     {
         internal static IotHubSkuDescription DeserializeIotHubSkuDescription(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceType> resourceType = default;
             IotHubSkuInfo sku = default;
             IotHubCapacity capacity = default;
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.IotHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resourceType = new ResourceType(property.Value.GetString());

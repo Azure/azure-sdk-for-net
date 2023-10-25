@@ -14,28 +14,30 @@ namespace Azure.ResourceManager.DevCenter.Models
     {
         internal static RecommendedMachineConfiguration DeserializeRecommendedMachineConfiguration(JsonElement element)
         {
-            Optional<ResourceRange> memory = default;
-            Optional<ResourceRange> vCpus = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<DevCenterResourceRange> memory = default;
+            Optional<DevCenterResourceRange> vCpus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("memory"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    memory = ResourceRange.DeserializeResourceRange(property.Value);
+                    memory = DevCenterResourceRange.DeserializeDevCenterResourceRange(property.Value);
                     continue;
                 }
                 if (property.NameEquals("vCPUs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    vCpus = ResourceRange.DeserializeResourceRange(property.Value);
+                    vCpus = DevCenterResourceRange.DeserializeDevCenterResourceRange(property.Value);
                     continue;
                 }
             }

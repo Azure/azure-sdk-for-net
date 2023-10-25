@@ -18,7 +18,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
     {
         internal static Dictionary<string, Type> _actionMapping = new Dictionary<string, Type>()
         {
-            {"microsoft.graph.provideclaimsfortoken", typeof(ProvideClaimsForToken) }
+            {"microsoft.graph.tokenissuancestart.provideclaimsfortoken", typeof(ProvideClaimsForToken) }
         };
 
         internal static EventDefinition GetEventDefintionFromPayload(string payload)

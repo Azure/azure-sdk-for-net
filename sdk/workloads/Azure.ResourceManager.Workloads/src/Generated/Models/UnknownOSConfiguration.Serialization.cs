@@ -22,12 +22,16 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static UnknownOSConfiguration DeserializeUnknownOSConfiguration(JsonElement element)
         {
-            OSType osType = "Unknown";
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            SapOSType osType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("osType"u8))
                 {
-                    osType = new OSType(property.Value.GetString());
+                    osType = new SapOSType(property.Value.GetString());
                     continue;
                 }
             }

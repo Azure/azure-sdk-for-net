@@ -17,6 +17,10 @@ namespace Azure.ResourceManager.Compute
     {
         internal static CloudServiceOSFamilyData DeserializeCloudServiceOSFamilyData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
@@ -37,7 +41,6 @@ namespace Azure.ResourceManager.Compute
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
@@ -62,7 +65,6 @@ namespace Azure.ResourceManager.Compute
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -91,7 +93,6 @@ namespace Azure.ResourceManager.Compute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<OSVersionPropertiesBase> array = new List<OSVersionPropertiesBase>();

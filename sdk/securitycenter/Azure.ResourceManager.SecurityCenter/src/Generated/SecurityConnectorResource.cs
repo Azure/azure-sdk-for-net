@@ -88,59 +88,6 @@ namespace Azure.ResourceManager.SecurityCenter
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of SecurityConnectorGovernanceRuleResources in the SecurityConnector. </summary>
-        /// <returns> An object representing collection of SecurityConnectorGovernanceRuleResources and their operations over a SecurityConnectorGovernanceRuleResource. </returns>
-        public virtual SecurityConnectorGovernanceRuleCollection GetSecurityConnectorGovernanceRules()
-        {
-            return GetCachedClient(Client => new SecurityConnectorGovernanceRuleCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Get a specific governanceRule for the requested scope by ruleId
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/governanceRules/{ruleId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityConnectorGovernanceRules_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="ruleId"> The security GovernanceRule key - unique key for the standard GovernanceRule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<SecurityConnectorGovernanceRuleResource>> GetSecurityConnectorGovernanceRuleAsync(string ruleId, CancellationToken cancellationToken = default)
-        {
-            return await GetSecurityConnectorGovernanceRules().GetAsync(ruleId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a specific governanceRule for the requested scope by ruleId
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/governanceRules/{ruleId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SecurityConnectorGovernanceRules_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="ruleId"> The security GovernanceRule key - unique key for the standard GovernanceRule. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<SecurityConnectorGovernanceRuleResource> GetSecurityConnectorGovernanceRule(string ruleId, CancellationToken cancellationToken = default)
-        {
-            return GetSecurityConnectorGovernanceRules().Get(ruleId, cancellationToken);
-        }
-
         /// <summary> Gets a collection of SecurityConnectorApplicationResources in the SecurityConnector. </summary>
         /// <returns> An object representing collection of SecurityConnectorApplicationResources and their operations over a SecurityConnectorApplicationResource. </returns>
         public virtual SecurityConnectorApplicationCollection GetSecurityConnectorApplications()

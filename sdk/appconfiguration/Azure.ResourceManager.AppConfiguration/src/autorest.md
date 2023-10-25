@@ -4,16 +4,19 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
-generate-model-factory: false
 csharp: true
 library-name: AppConfiguration
 namespace: Azure.ResourceManager.AppConfiguration
 require: https://github.com/Azure/azure-rest-api-specs/blob/d7b7399fb1e1a328b49cd6a998714c6efb877bf2/specification/appconfiguration/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+deserialize-null-collection-as-null-value: true
 
 no-property-type-replacement: RegenerateKeyContent
 
@@ -55,7 +58,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

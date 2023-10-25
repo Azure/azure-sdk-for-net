@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningLiteralJobInput DeserializeMachineLearningLiteralJobInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string value = default;
             Optional<string> description = default;
             JobInputType jobInputType = default;

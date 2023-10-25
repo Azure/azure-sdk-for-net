@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the SqlServerJobVersion data model. </summary>
+    /// <summary>
+    /// A class representing the SqlServerJobVersion data model.
+    /// A job version.
+    /// </summary>
     public partial class SqlServerJobVersionData : ResourceData
     {
         /// <summary> Initializes a new instance of SqlServerJobVersionData. </summary>

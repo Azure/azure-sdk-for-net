@@ -35,6 +35,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static ElisionTokenFilter DeserializeElisionTokenFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<string>> articles = default;
             string odataType = default;
             string name = default;
@@ -44,7 +48,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

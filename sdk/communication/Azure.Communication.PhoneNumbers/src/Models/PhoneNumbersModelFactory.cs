@@ -4,12 +4,20 @@
 using System;
 using System.ComponentModel;
 using System.Collections.Generic;
+using Azure.Core;
+using System.Text.Json;
 
 namespace Azure.Communication.PhoneNumbers
 {
     /// <summary>
     /// Model factory that enables mocking for the Azure.Communication.PhoneNumbers library.
     /// </summary>
+    [CodeGenModel("CommunicationPhoneNumbersModelFactory")]
+    [CodeGenSuppress("PhoneNumberAreaCodes", typeof(IEnumerable<PhoneNumberAreaCode>), typeof(string))]
+    [CodeGenSuppress("PhoneNumberCountries", typeof(IEnumerable<PhoneNumberCountry>), typeof(string))]
+    [CodeGenSuppress("PhoneNumberLocalities", typeof(IEnumerable<PhoneNumberLocality>), typeof(string))]
+    [CodeGenSuppress("OfferingsResponse", typeof(IEnumerable<PhoneNumberOffering>), typeof(string))]
+    [CodeGenSuppress("PurchasedPhoneNumbers", typeof(IEnumerable<PurchasedPhoneNumber>), typeof(string))]
     public static partial class PhoneNumbersModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="PurchasedPhoneNumber"/>. </summary>

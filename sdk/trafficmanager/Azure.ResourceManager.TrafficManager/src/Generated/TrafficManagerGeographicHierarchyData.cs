@@ -10,7 +10,10 @@ using Azure.ResourceManager.TrafficManager.Models;
 
 namespace Azure.ResourceManager.TrafficManager
 {
-    /// <summary> A class representing the TrafficManagerGeographicHierarchy data model. </summary>
+    /// <summary>
+    /// A class representing the TrafficManagerGeographicHierarchy data model.
+    /// Class representing the Geographic hierarchy used with the Geographic traffic routing method.
+    /// </summary>
     public partial class TrafficManagerGeographicHierarchyData : TrafficManagerProxyResourceData
     {
         /// <summary> Initializes a new instance of TrafficManagerGeographicHierarchyData. </summary>

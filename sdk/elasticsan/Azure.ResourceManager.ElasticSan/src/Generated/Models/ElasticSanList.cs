@@ -5,9 +5,7 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.ElasticSan;
 
@@ -17,13 +15,9 @@ namespace Azure.ResourceManager.ElasticSan.Models
     internal partial class ElasticSanList
     {
         /// <summary> Initializes a new instance of ElasticSanList. </summary>
-        /// <param name="value"> An array of Elastic San objects. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ElasticSanList(IEnumerable<ElasticSanData> value)
+        internal ElasticSanList()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
+            Value = new ChangeTrackingList<ElasticSanData>();
         }
 
         /// <summary> Initializes a new instance of ElasticSanList. </summary>

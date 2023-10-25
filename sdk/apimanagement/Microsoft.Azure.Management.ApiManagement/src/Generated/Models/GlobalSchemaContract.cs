@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     /// Global Schema Contract details.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class GlobalSchemaContract : Resource
+    public partial class GlobalSchemaContract : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the GlobalSchemaContract class.

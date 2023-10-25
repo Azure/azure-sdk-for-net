@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Initializes a new instance of NetAppEncryptionIdentity. </summary>
         /// <param name="principalId"> The principal ID (object ID) of the identity used to authenticate with key vault. Read-only. </param>
-        /// <param name="userAssignedIdentity"> The ARM resource identifier of the user assigned identity used to authenticate with key vault. Applicable if identity.type has &apos;UserAssigned&apos;. It should match key of identity.userAssignedIdentities. </param>
+        /// <param name="userAssignedIdentity"> The ARM resource identifier of the user assigned identity used to authenticate with key vault. Applicable if identity.type has 'UserAssigned'. It should match key of identity.userAssignedIdentities. </param>
         internal NetAppEncryptionIdentity(string principalId, string userAssignedIdentity)
         {
             PrincipalId = principalId;
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> The principal ID (object ID) of the identity used to authenticate with key vault. Read-only. </summary>
         public string PrincipalId { get; }
-        /// <summary> The ARM resource identifier of the user assigned identity used to authenticate with key vault. Applicable if identity.type has &apos;UserAssigned&apos;. It should match key of identity.userAssignedIdentities. </summary>
+        /// <summary> The ARM resource identifier of the user assigned identity used to authenticate with key vault. Applicable if identity.type has 'UserAssigned'. It should match key of identity.userAssignedIdentities. </summary>
         public string UserAssignedIdentity { get; set; }
     }
 }

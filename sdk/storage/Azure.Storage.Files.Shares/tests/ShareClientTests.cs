@@ -154,6 +154,107 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        public async Task Ctor_DefaultAudience()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+
+            // Act - Create new blob client with the OAuth Credential and Audience
+            ShareClientOptions options = GetOptionsWithAudience(ShareAudience.DefaultAudience);
+
+            ShareUriBuilder uriBuilder = new ShareUriBuilder(new Uri(Tenants.TestConfigOAuth.FileServiceEndpoint))
+            {
+                ShareName = test.Container.Name,
+            };
+
+            ShareClient aadShare = InstrumentClient(new ShareClient(
+                uriBuilder.ToUri(),
+                Tenants.GetOAuthCredential(),
+                options));
+
+            // Assert
+            var permission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)S:NO_ACCESS_CONTROL";
+            PermissionInfo infoPermission = await aadShare.CreatePermissionAsync(permission);
+            Assert.IsNotNull(infoPermission);
+        }
+
+        [RecordedTest]
+        public async Task Ctor_CustomAudience()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+
+            // Act - Create new blob client with the OAuth Credential and Audience
+            ShareClientOptions options = GetOptionsWithAudience(new ShareAudience($"https://{test.Share.AccountName}.file.core.windows.net/"));
+
+            ShareUriBuilder uriBuilder = new ShareUriBuilder(new Uri(Tenants.TestConfigOAuth.FileServiceEndpoint))
+            {
+                ShareName = test.Share.Name,
+            };
+
+            ShareClient aadShare = InstrumentClient(new ShareClient(
+                uriBuilder.ToUri(),
+                Tenants.GetOAuthCredential(),
+                options));
+
+            // Assert
+            var permission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)S:NO_ACCESS_CONTROL";
+            PermissionInfo infoPermission = await aadShare.CreatePermissionAsync(permission);
+            Assert.IsNotNull(infoPermission);
+        }
+
+        [RecordedTest]
+        public async Task Ctor_StorageAccountAudience()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+
+            // Act - Create new blob client with the OAuth Credential and Audience
+            ShareClientOptions options = GetOptionsWithAudience(ShareAudience.CreateShareServiceAccountAudience(test.Share.AccountName));
+
+            ShareUriBuilder uriBuilder = new ShareUriBuilder(new Uri(Tenants.TestConfigOAuth.FileServiceEndpoint))
+            {
+                ShareName = test.Share.Name,
+            };
+
+            ShareClient aadShare = InstrumentClient(new ShareClient(
+                uriBuilder.ToUri(),
+                Tenants.GetOAuthCredential(),
+                options));
+
+            // Assert
+            var permission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)S:NO_ACCESS_CONTROL";
+            PermissionInfo infoPermission = await aadShare.CreatePermissionAsync(permission);
+            Assert.IsNotNull(infoPermission);
+        }
+
+        [RecordedTest]
+        public async Task Ctor_AudienceError()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+
+            // Act - Create new blob client with the OAuth Credential and Audience
+            ShareClientOptions options = GetOptionsWithAudience(new ShareAudience("https://badaudience.blob.core.windows.net"));
+
+            ShareUriBuilder uriBuilder = new ShareUriBuilder(new Uri(Tenants.TestConfigOAuth.FileServiceEndpoint))
+            {
+                ShareName = test.Share.Name,
+            };
+
+            ShareClient aadShare = InstrumentClient(new ShareClient(
+                uriBuilder.ToUri(),
+                new MockCredential(),
+                options));
+
+            // Assert
+            var permission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)S:NO_ACCESS_CONTROL";
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                aadShare.CreatePermissionAsync(permission),
+                e => Assert.AreEqual("InvalidAuthenticationInfo", e.ErrorCode));
+        }
+
+        [RecordedTest]
         public void WithSnapshot()
         {
             var shareName = GetNewShareName();
@@ -320,6 +421,27 @@ namespace Azure.Storage.Files.Shares.Tests
         {
             await using DisposingShare test = await GetTestShareAsync();
             ShareClient share = test.Share;
+
+            // Arrange
+            var permission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)S:NO_ACCESS_CONTROL";
+
+            // Act
+            Response<PermissionInfo> createResponse = await share.CreatePermissionAsync(permission);
+            Response<string> getResponse = await share.GetPermissionAsync(createResponse.Value.FilePermissionKey);
+
+            // Assert
+            Assert.AreEqual(permission, getResponse.Value);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        public async Task CreateAndGetPermissionAsync_OAuth()
+        {
+            string shareName = GetNewShareName();
+            ShareServiceClient sharedKeyServiceClient = SharesClientBuilder.GetServiceClient_OAuthAccount_SharedKey();
+            await using DisposingShare sharedKeyShare = await GetTestShareAsync(sharedKeyServiceClient, shareName);
+            ShareServiceClient oauthServiceClient = SharesClientBuilder.GetServiceClient_OAuth();
+            ShareClient share = oauthServiceClient.GetShareClient(shareName);
 
             // Arrange
             var permission = "O:S-1-5-21-2127521184-1604012920-1887927527-21560751G:S-1-5-21-2127521184-1604012920-1887927527-513D:AI(A;;FA;;;SY)(A;;FA;;;BA)(A;;0x1200a9;;;S-1-5-21-397955417-626881126-188441444-3053964)S:NO_ACCESS_CONTROL";
@@ -766,7 +888,7 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareClient share = test.Share;
 
             // Arrange
-            System.Collections.Generic.IDictionary<string, string> metadata = BuildMetadata();
+            IDictionary<string, string> metadata = BuildMetadata();
 
             // Act
             Response<ShareInfo> response = await share.SetMetadataAsync(metadata);

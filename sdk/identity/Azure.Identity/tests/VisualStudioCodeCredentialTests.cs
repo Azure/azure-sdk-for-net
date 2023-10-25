@@ -71,15 +71,6 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public void RespectsIsPIILoggingEnabled([Values(true, false)] bool isLoggingPIIEnabled)
-        {
-            var credential = new VisualStudioCodeCredential(new VisualStudioCodeCredentialOptions { IsLoggingPIIEnabled = isLoggingPIIEnabled });
-
-            Assert.NotNull(credential.Client);
-            Assert.AreEqual(isLoggingPIIEnabled, credential.Client.IsPiiLoggingEnabled);
-        }
-
-        [Test]
         public void AdfsTenantThrowsCredentialUnavailable()
         {
             var options = new VisualStudioCodeCredentialOptions { TenantId = "adfs", Transport = new MockTransport() };

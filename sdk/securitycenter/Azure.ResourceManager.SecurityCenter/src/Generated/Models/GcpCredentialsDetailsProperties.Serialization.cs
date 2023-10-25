@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static GcpCredentialsDetailsProperties DeserializeGcpCredentialsDetailsProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string organizationId = default;
             string type = default;
             string projectId = default;
@@ -121,7 +125,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     authenticationProvisioningState = new AuthenticationProvisioningState(property.Value.GetString());
@@ -131,7 +134,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SecurityCenterCloudPermission> array = new List<SecurityCenterCloudPermission>();

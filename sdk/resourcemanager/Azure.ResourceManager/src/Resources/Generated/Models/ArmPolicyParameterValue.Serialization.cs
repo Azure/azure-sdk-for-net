@@ -22,7 +22,10 @@ namespace Azure.ResourceManager.Resources.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
@@ -30,6 +33,10 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ArmPolicyParameterValue DeserializeArmPolicyParameterValue(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> value = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -37,7 +44,6 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     value = BinaryData.FromString(property.Value.GetRawText());

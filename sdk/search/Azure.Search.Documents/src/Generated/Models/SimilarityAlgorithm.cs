@@ -14,7 +14,6 @@ namespace Azure.Search.Documents.Indexes.Models
     /// </summary>
     public partial class SimilarityAlgorithm
     {
-
         /// <summary> Initializes a new instance of SimilarityAlgorithm. </summary>
         /// <param name="oDataType"></param>
         internal SimilarityAlgorithm(string oDataType)

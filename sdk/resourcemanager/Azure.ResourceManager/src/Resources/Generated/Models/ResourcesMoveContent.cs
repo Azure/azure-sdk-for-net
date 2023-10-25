@@ -22,6 +22,6 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The IDs of the resources. </summary>
         public IList<string> Resources { get; }
         /// <summary> The target resource group. </summary>
-        public string TargetResourceGroup { get; set; }
+        public ResourceIdentifier TargetResourceGroupId { get; set; }
     }
 }

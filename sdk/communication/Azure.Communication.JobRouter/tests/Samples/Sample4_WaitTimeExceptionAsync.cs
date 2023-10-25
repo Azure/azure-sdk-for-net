@@ -4,9 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Azure.Communication.JobRouter.Models;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -18,8 +16,8 @@ namespace Azure.Communication.JobRouter.Tests.Samples
         [Test]
         public async Task WaitTimeTriggerException_SampleScenario()
         {
-            RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
-            RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
+            JobRouterClient routerClient = new JobRouterClient("<< CONNECTION STRING >>");
+            JobRouterAdministrationClient routerAdministrationClient = new JobRouterAdministrationClient("<< CONNECTION STRING >>");
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Exception_WaitTimeTrigger
             // In this scenario, we are going to address how to escalate jobs when it had waited in queue for a threshold period of time
@@ -37,12 +35,12 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             string distributionPolicyId = "distribution-policy-id-9";
 
             Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(new CreateDistributionPolicyOptions(distributionPolicyId: distributionPolicyId,
-                offerTtl: TimeSpan.FromSeconds(5),
+                offerExpiresAfter: TimeSpan.FromSeconds(5),
                 mode: new RoundRobinMode()));
 
             // Create fallback queue
             string fallbackQueueId = "fallback-q-id";
-            Response<JobQueue> fallbackQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
+            Response<RouterQueue> fallbackQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
                 queueId: fallbackQueueId,
                 distributionPolicyId: distributionPolicyId));
 
@@ -51,13 +49,12 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             WaitTimeExceptionTrigger trigger = new WaitTimeExceptionTrigger(TimeSpan.FromSeconds(30)); // triggered after 5 minutes
 
             // define exception action
-            ManualReclassifyExceptionAction action = new ManualReclassifyExceptionAction(
-                queueId: fallbackQueueId,
-                priority: 100,
-                workerSelectors: new List<WorkerSelector>()
-                {
-                    new WorkerSelector("HandleEscalation", LabelOperator.Equal, new LabelValue(true))
-                });
+            ManualReclassifyExceptionAction action = new ManualReclassifyExceptionAction
+            {
+                QueueId = fallbackQueueId,
+                Priority = 100,
+                WorkerSelectors = { new RouterWorkerSelector("HandleEscalation", LabelOperator.Equal, new LabelValue(true)) }
+            };
 
             string exceptionPolicyId = "execption-policy-id";
             Response<ExceptionPolicy> exceptionPolicy = await routerAdministrationClient.CreateExceptionPolicyAsync(new CreateExceptionPolicyOptions(
@@ -74,7 +71,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             // Create initial queue
             string jobQueueId = "job-queue-id";
-            Response<JobQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(
+            Response<RouterQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(
                 options: new CreateQueueOptions(
                     queueId: jobQueueId,
                     distributionPolicyId: distributionPolicyId)
@@ -106,7 +103,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             while (!condition && DateTimeOffset.UtcNow.Subtract(startTime) <= maxWaitTime)
             {
                 Response<RouterJob> jobDto = await routerClient.GetJobAsync(job.Value.Id);
-                condition = jobDto.Value.JobStatus == RouterJobStatus.Queued && jobDto.Value.QueueId == fallbackQueueId;
+                condition = jobDto.Value.Status == RouterJobStatus.Queued && jobDto.Value.QueueId == fallbackQueueId;
                 await Task.Delay(TimeSpan.FromSeconds(1));
             }
 #endif

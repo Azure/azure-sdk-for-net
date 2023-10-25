@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineImageFeature DeserializeVirtualMachineImageFeature(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> value = default;
             foreach (var property in element.EnumerateObject())

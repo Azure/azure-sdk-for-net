@@ -20,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Initializes a new instance of LinkConnectionQueryTableStatus. </summary>
-        /// <param name="value"> Link tables&apos; status. </param>
+        /// <param name="value"> Link tables' status. </param>
         /// <param name="continuationToken"> Continuation token to query table status. </param>
         internal LinkConnectionQueryTableStatus(IReadOnlyList<LinkTableStatus> value, object continuationToken)
         {
@@ -28,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             ContinuationToken = continuationToken;
         }
 
-        /// <summary> Link tables&apos; status. </summary>
+        /// <summary> Link tables' status. </summary>
         public IReadOnlyList<LinkTableStatus> Value { get; }
         /// <summary> Continuation token to query table status. </summary>
         public object ContinuationToken { get; }

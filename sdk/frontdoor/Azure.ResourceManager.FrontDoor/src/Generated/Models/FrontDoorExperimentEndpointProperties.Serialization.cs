@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static FrontDoorExperimentEndpointProperties DeserializeFrontDoorExperimentEndpointProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> endpoint = default;
             foreach (var property in element.EnumerateObject())

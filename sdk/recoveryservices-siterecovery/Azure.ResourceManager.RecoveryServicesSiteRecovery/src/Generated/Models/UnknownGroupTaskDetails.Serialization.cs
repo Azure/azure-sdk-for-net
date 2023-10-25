@@ -15,8 +15,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static UnknownGroupTaskDetails DeserializeUnknownGroupTaskDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string instanceType = "Unknown";
-            Optional<IReadOnlyList<ASRTask>> childTasks = default;
+            Optional<IReadOnlyList<AsrTask>> childTasks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("instanceType"u8))
@@ -28,13 +32,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ASRTask> array = new List<ASRTask>();
+                    List<AsrTask> array = new List<AsrTask>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ASRTask.DeserializeASRTask(item));
+                        array.Add(AsrTask.DeserializeAsrTask(item));
                     }
                     childTasks = array;
                     continue;

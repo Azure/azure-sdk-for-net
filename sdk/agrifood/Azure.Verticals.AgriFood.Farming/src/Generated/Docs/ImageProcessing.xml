@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetRasterizeJobAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetRasterizeJobAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ImageProcessing client = new FarmBeatsClient(credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
+
+Response response = await client.GetRasterizeJobAsync("<jobId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("shapefileAttachmentId").ToString());
+Console.WriteLine(result.GetProperty("shapefileColumnNames")[0].ToString());
+]]></code>
+This sample shows how to call GetRasterizeJobAsync with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ImageProcessing client = new FarmBeatsClient(credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
+
+Response response = await client.GetRasterizeJobAsync("<jobId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("shapefileAttachmentId").ToString());
+Console.WriteLine(result.GetProperty("shapefileColumnNames")[0].ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+Console.WriteLine(result.GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="GetRasterizeJob(string,RequestContext)">
+      <example>
+This sample shows how to call GetRasterizeJob and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ImageProcessing client = new FarmBeatsClient(credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
+
+Response response = client.GetRasterizeJob("<jobId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("shapefileAttachmentId").ToString());
+Console.WriteLine(result.GetProperty("shapefileColumnNames")[0].ToString());
+]]></code>
+This sample shows how to call GetRasterizeJob with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ImageProcessing client = new FarmBeatsClient(credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
+
+Response response = client.GetRasterizeJob("<jobId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("shapefileAttachmentId").ToString());
+Console.WriteLine(result.GetProperty("shapefileColumnNames")[0].ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+Console.WriteLine(result.GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateRasterizeJobAsync(WaitUntil,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateRasterizeJobAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ImageProcessing client = new FarmBeatsClient(credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    partyId = "<partyId>",
+    shapefileAttachmentId = "<shapefileAttachmentId>",
+    shapefileColumnNames = new object[]
+    {
+        "<shapefileColumnNames>"
+    },
+});
+Operation<BinaryData> operation = await client.CreateRasterizeJobAsync(WaitUntil.Completed, "<jobId>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("shapefileAttachmentId").ToString());
+Console.WriteLine(result.GetProperty("shapefileColumnNames")[0].ToString());
+]]></code>
+This sample shows how to call CreateRasterizeJobAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ImageProcessing client = new FarmBeatsClient(credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    partyId = "<partyId>",
+    shapefileAttachmentId = "<shapefileAttachmentId>",
+    shapefileColumnNames = new object[]
+    {
+        "<shapefileColumnNames>"
+    },
+    name = "<name>",
+    description = "<description>",
+    properties = new
+    {
+        key = new object(),
+    },
+});
+Operation<BinaryData> operation = await client.CreateRasterizeJobAsync(WaitUntil.Completed, "<jobId>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("shapefileAttachmentId").ToString());
+Console.WriteLine(result.GetProperty("shapefileColumnNames")[0].ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+Console.WriteLine(result.GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateRasterizeJob(WaitUntil,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateRasterizeJob and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ImageProcessing client = new FarmBeatsClient(credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    partyId = "<partyId>",
+    shapefileAttachmentId = "<shapefileAttachmentId>",
+    shapefileColumnNames = new object[]
+    {
+        "<shapefileColumnNames>"
+    },
+});
+Operation<BinaryData> operation = client.CreateRasterizeJob(WaitUntil.Completed, "<jobId>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("shapefileAttachmentId").ToString());
+Console.WriteLine(result.GetProperty("shapefileColumnNames")[0].ToString());
+]]></code>
+This sample shows how to call CreateRasterizeJob with all parameters and request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+ImageProcessing client = new FarmBeatsClient(credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    partyId = "<partyId>",
+    shapefileAttachmentId = "<shapefileAttachmentId>",
+    shapefileColumnNames = new object[]
+    {
+        "<shapefileColumnNames>"
+    },
+    name = "<name>",
+    description = "<description>",
+    properties = new
+    {
+        key = new object(),
+    },
+});
+Operation<BinaryData> operation = client.CreateRasterizeJob(WaitUntil.Completed, "<jobId>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("shapefileAttachmentId").ToString());
+Console.WriteLine(result.GetProperty("shapefileColumnNames")[0].ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+Console.WriteLine(result.GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+  </members>
+</doc>

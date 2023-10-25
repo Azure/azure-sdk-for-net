@@ -18,7 +18,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs
     {
         public EventHubOptions()
         {
-            MaxEventBatchSize = 10;
+            MaxEventBatchSize = 100;
+            MinEventBatchSize = 1;
+            MaxWaitTime = TimeSpan.FromSeconds(60);
             ConnectionOptions = new EventHubConnectionOptions()
             {
                 TransportType = EventHubsTransportType.AmqpTcp
@@ -116,7 +118,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
 
         /// <summary>
         /// Gets or sets the maximum number of events delivered in a batch. This setting applies only to functions that
-        /// receive multiple events. Default 10.
+        /// receive multiple events. Default 100.
         /// </summary>
         public int MaxEventBatchSize
         {
@@ -129,6 +131,63 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                     throw new ArgumentException("Batch size must be larger than 0.");
                 }
                 _maxEventBatchSize = value;
+            }
+        }
+
+        private int _minEventBatchSize;
+
+        /// <summary>
+        /// Gets or sets the minimum number of events desired for a batch. This setting applies only to functions that
+        /// receive multiple events. This value must be less than <see cref="MaxEventBatchSize"/> and is used in
+        /// conjunction with <see cref="MaxWaitTime"/>. Default 1.
+        /// </summary>
+        /// <remarks>
+        /// The minimum size is not a strict guarantee, as a partial batch will be dispatched if a full batch cannot be
+        /// prepared before the <see cref="MaxWaitTime"/> has elapsed.  Partial batches are also likely for the first invocation
+        /// of the function after scaling takes place.
+        /// </remarks>
+        public int MinEventBatchSize
+        {
+            get => _minEventBatchSize;
+
+            set
+            {
+                if (value < 1)
+                {
+                    throw new ArgumentException("Batch size must be larger than or equal to 1.");
+                }
+                _minEventBatchSize = value;
+            }
+        }
+
+        private TimeSpan _maxWaitTime;
+
+        /// <summary>
+        /// Gets or sets the maximum time that the trigger should wait to fill a batch before invoking the function.
+        /// This is only considered when <see cref="MinEventBatchSize"/> is set to larger than 1 and is otherwise unused.
+        /// If less than <see cref="MinEventBatchSize" /> events were available before the wait time elapses, the function
+        /// will be invoked with a partial batch.  Default is 60 seconds.  The longest allowed wait time is 10 minutes.
+        /// </summary>
+        /// <remarks>
+        /// This interval is not a strict guarantee for the exact timing on which the function will be invoked. There is a small
+        /// margin of error due to timer precision. When scaling takes place, the first invocation with a partial
+        /// batch may take place more quickly or may take up to twice the configured <see cref="MaxWaitTime"/>.
+        /// </remarks>
+        public TimeSpan MaxWaitTime
+        {
+            get => _maxWaitTime;
+
+            set
+            {
+                if (value < TimeSpan.Zero)
+                {
+                    throw new ArgumentException("Max Wait Time must be larger than or equal to 0.");
+                }
+                if (value > TimeSpan.FromMinutes(10))
+                {
+                    throw new ArgumentException("Max Wait Time must be less than or equal to 10 minutes.");
+                }
+                _maxWaitTime = value;
             }
         }
 
@@ -211,6 +270,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 {
                     { nameof(TargetUnprocessedEventThreshold), TargetUnprocessedEventThreshold },
                     { nameof(MaxEventBatchSize), MaxEventBatchSize },
+                    { nameof(MinEventBatchSize), MinEventBatchSize },
+                    { nameof(MaxWaitTime), MaxWaitTime },
                     { nameof(BatchCheckpointFrequency), BatchCheckpointFrequency },
                     { nameof(TransportType),  TransportType.ToString()},
                     { nameof(WebProxy),  WebProxy is WebProxy proxy ? proxy.Address.AbsoluteUri : string.Empty },

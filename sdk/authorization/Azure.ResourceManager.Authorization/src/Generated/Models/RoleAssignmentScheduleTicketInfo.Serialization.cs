@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Authorization.Models
 
         internal static RoleAssignmentScheduleTicketInfo DeserializeRoleAssignmentScheduleTicketInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> ticketNumber = default;
             Optional<string> ticketSystem = default;
             foreach (var property in element.EnumerateObject())

@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformBuildResultProperties DeserializeAppPlatformBuildResultProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<AppPlatformBuildResultProvisioningState> provisioningState = default;
             Optional<string> buildPodName = default;
@@ -46,7 +50,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new AppPlatformBuildResultProvisioningState(property.Value.GetString());
@@ -61,7 +64,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AppPlatformBuildStageProperties> array = new List<AppPlatformBuildStageProperties>();

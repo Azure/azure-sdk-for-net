@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningEarlyTerminationPolicy DeserializeMachineLearningEarlyTerminationPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("policyType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

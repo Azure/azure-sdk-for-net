@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <PackageReference Include="System.Memory.Data" />
-    <PackageReference Include="Azure.Storage.Blobs" />
     <PackageReference Include="Microsoft.ApplicationInsights" />
     <PackageReference Include="CommandLineParser" />
   </ItemGroup>

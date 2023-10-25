@@ -33,6 +33,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static DatasetDataElement DeserializeDatasetDataElement(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> name = default;
             Optional<object> type = default;
             foreach (var property in element.EnumerateObject())
@@ -41,7 +45,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     name = property.Value.GetObject();
@@ -51,7 +54,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = property.Value.GetObject();

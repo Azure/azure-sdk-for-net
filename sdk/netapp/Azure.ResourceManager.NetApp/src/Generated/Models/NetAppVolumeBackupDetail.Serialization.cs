@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         internal static NetAppVolumeBackupDetail DeserializeNetAppVolumeBackupDetail(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> volumeName = default;
             Optional<int> backupsCount = default;
             Optional<bool> policyEnabled = default;
@@ -28,7 +32,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     backupsCount = property.Value.GetInt32();
@@ -38,7 +41,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     policyEnabled = property.Value.GetBoolean();

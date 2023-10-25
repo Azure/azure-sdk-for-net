@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.3.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -10,9 +10,39 @@
 
 ### Other Changes
 
+## 1.2.0 (2023-09-19)
+
+### Bugs Fixed
+
+- Fixed the [issue 38759](https://github.com/Azure/azure-sdk-for-net/issues/38759).
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.28.0 to 1.35.0
+- Upgraded Azure.ResourceManager from 1.4.0 to 1.7.0
+
+## 1.2.0-beta.1 (2023-05-31)
+
+### Features Added
+
+- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.32.0.
+- Upgraded dependent Azure.ResourceManager to 1.6.0.
+
+## 1.1.1 (2023-02-16)
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.28.0`.
+- Upgraded dependent `Azure.ResourceManager` to `1.4.0`.
+
 ## 1.1.0 (2022-12-13)
 
 ### Features Added
+
 Added new APIs from 2022-10-01 API:
 - RoutingPreferenceUnbilledPrefix
 

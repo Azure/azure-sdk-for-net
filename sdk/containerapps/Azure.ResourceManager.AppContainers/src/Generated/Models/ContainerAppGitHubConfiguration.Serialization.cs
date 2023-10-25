@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppGitHubConfiguration DeserializeContainerAppGitHubConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enabled = default;
             Optional<ContainerAppClientRegistration> registration = default;
             Optional<LoginScopes> login = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enabled = property.Value.GetBoolean();
@@ -54,7 +57,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     registration = ContainerAppClientRegistration.DeserializeContainerAppClientRegistration(property.Value);
@@ -64,7 +66,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     login = Models.LoginScopes.DeserializeLoginScopes(property.Value);

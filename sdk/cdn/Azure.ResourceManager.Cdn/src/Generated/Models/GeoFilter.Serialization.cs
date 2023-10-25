@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static GeoFilter DeserializeGeoFilter(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string relativePath = default;
             GeoFilterAction action = default;
             IList<string> countryCodes = default;

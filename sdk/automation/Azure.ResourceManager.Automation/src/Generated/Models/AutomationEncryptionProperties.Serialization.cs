@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static AutomationEncryptionProperties DeserializeAutomationEncryptionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AutomationKeyVaultProperties> keyVaultProperties = default;
             Optional<EncryptionKeySourceType> keySource = default;
             Optional<EncryptionPropertiesIdentity> identity = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.Automation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     keyVaultProperties = AutomationKeyVaultProperties.DeserializeAutomationKeyVaultProperties(property.Value);
@@ -54,7 +57,6 @@ namespace Azure.ResourceManager.Automation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     keySource = property.Value.GetString().ToEncryptionKeySourceType();
@@ -64,7 +66,6 @@ namespace Azure.ResourceManager.Automation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = EncryptionPropertiesIdentity.DeserializeEncryptionPropertiesIdentity(property.Value);

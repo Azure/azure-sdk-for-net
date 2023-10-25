@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.FormRecognizer.Models;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Training
 {
@@ -16,6 +15,10 @@ namespace Azure.AI.FormRecognizer.Training
     {
         internal static TrainingDocumentInfo DeserializeTrainingDocumentInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string documentName = default;
             int pages = default;
             IReadOnlyList<FormRecognizerError> errors = default;

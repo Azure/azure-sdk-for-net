@@ -5,12 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.AI.TextAnalytics.Tests.Infrastructure;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.TextAnalytics.Tests
 {
-    [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_10_01_Preview)]
+    [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2023_04_01)]
     public class ExtractiveSummarizeTests : TextAnalyticsClientLiveTestBase
     {
         public ExtractiveSummarizeTests(bool isAsync, TextAnalyticsClientOptions.ServiceVersion serviceVersion)
@@ -55,13 +56,13 @@ namespace Azure.AI.TextAnalytics.Tests
             + " “The impact that I believe we are finding, and the impact that we’re going to find going forward, is being able to access specialists from outside the territory and organizations outside the territory to come in and help us with our projects, being able to get people on staff with us to help us deliver the day-to-day expertise that we need to run the government,” he said."
             + " “Being able to improve healthcare, being able to improve education, economic development is going to improve the quality of life in the communities.”";
 
-        private static readonly List<string> s_extractiveSummarizeBatchConvenienceDocuments = new List<string>
+        private static readonly List<string> s_batchConvenienceDocuments = new()
         {
             ExtractiveSummarizeDocument1,
             ExtractiveSummarizeDocument2
         };
 
-        private static List<TextDocumentInput> s_extractiveSummarizeBatchDocuments = new List<TextDocumentInput>
+        private static List<TextDocumentInput> s_batchDocuments = new()
         {
             new TextDocumentInput("1", ExtractiveSummarizeDocument1)
             {
@@ -78,12 +79,12 @@ namespace Azure.AI.TextAnalytics.Tests
         private const int ExtractiveSummarizeMaxSentenceCount = 5;
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task ExtractiveSummarizeWithAADTest()
         {
             TextAnalyticsClient client = GetClient(useTokenCredential: true);
 
-            ExtractiveSummarizeOperation operation = await client.StartExtractiveSummarizeAsync(s_extractiveSummarizeBatchDocuments);
-            await operation.WaitForCompletionAsync();
+            ExtractiveSummarizeOperation operation = await client.ExtractiveSummarizeAsync(WaitUntil.Completed, s_batchDocuments);
             ValidateOperationProperties(operation);
 
             List<ExtractiveSummarizeResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
@@ -91,10 +92,68 @@ namespace Azure.AI.TextAnalytics.Tests
 
             // Take the first page.
             ExtractiveSummarizeResultCollection resultCollection = resultInPages.FirstOrDefault();
-            ValidateSummaryBatchResult(resultCollection, ExtractiveSummarySentencesOrder.Offset);
+            ValidateBatchResult(resultCollection, ExtractiveSummarySentencesOrder.Offset);
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
+        public async Task ExtractiveSummarizeBatchTest()
+        {
+            TextAnalyticsClient client = GetClient();
+
+            ExtractiveSummarizeOperation operation = await client.ExtractiveSummarizeAsync(WaitUntil.Completed, s_batchDocuments);
+            ValidateOperationProperties(operation);
+
+            List<ExtractiveSummarizeResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
+            Assert.AreEqual(1, resultInPages.Count);
+
+            // Take the first page.
+            ExtractiveSummarizeResultCollection resultCollection = resultInPages.FirstOrDefault();
+            ValidateBatchResult(resultCollection, ExtractiveSummarySentencesOrder.Offset);
+        }
+
+        [RecordedTest]
+        [RetryOnInternalServerError]
+        public async Task ExtractiveSummarizeBatchWaitUntilStartedTest()
+        {
+            TextAnalyticsClient client = GetClient();
+
+            ExtractiveSummarizeOperation operation = await client.ExtractiveSummarizeAsync(WaitUntil.Started, s_batchDocuments);
+            Assert.IsFalse(operation.HasCompleted);
+            Assert.IsFalse(operation.HasValue);
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.Value));
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.GetValuesAsync()));
+            await operation.WaitForCompletionAsync();
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.IsTrue(operation.HasValue);
+            ValidateOperationProperties(operation);
+        }
+
+        [RecordedTest]
+        [RetryOnInternalServerError]
+        public async Task ExtractiveSummarizeBatchWithStatisticsTest()
+        {
+            TextAnalyticsClient client = GetClient();
+
+            ExtractiveSummarizeOptions options = new ExtractiveSummarizeOptions()
+            {
+                MaxSentenceCount = ExtractiveSummarizeMaxSentenceCount,
+                IncludeStatistics = true,
+            };
+
+            ExtractiveSummarizeOperation operation = await client.ExtractiveSummarizeAsync(WaitUntil.Completed, s_batchDocuments, options);
+            ValidateOperationProperties(operation);
+
+            List<ExtractiveSummarizeResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
+            Assert.AreEqual(1, resultInPages.Count);
+
+            // Take the first page.
+            ExtractiveSummarizeResultCollection resultCollection = resultInPages.FirstOrDefault();
+            ValidateBatchResult(resultCollection, ExtractiveSummarySentencesOrder.Offset, ExtractiveSummarizeMaxSentenceCount, true);
+        }
+
+        [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task ExtractiveSummarizeBatchWithRankOrderTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -105,8 +164,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 OrderBy = ExtractiveSummarySentencesOrder.Rank
             };
 
-            ExtractiveSummarizeOperation operation = await client.StartExtractiveSummarizeAsync(s_extractiveSummarizeBatchDocuments, options);
-            await operation.WaitForCompletionAsync();
+            ExtractiveSummarizeOperation operation = await client.ExtractiveSummarizeAsync(WaitUntil.Completed, s_batchDocuments, options);
             ValidateOperationProperties(operation);
 
             List<ExtractiveSummarizeResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
@@ -114,10 +172,11 @@ namespace Azure.AI.TextAnalytics.Tests
 
             // Take the first page.
             ExtractiveSummarizeResultCollection resultCollection = resultInPages.FirstOrDefault();
-            ValidateSummaryBatchResult(resultCollection, ExtractiveSummarySentencesOrder.Rank, ExtractiveSummarizeMaxSentenceCount);
+            ValidateBatchResult(resultCollection, ExtractiveSummarySentencesOrder.Rank, ExtractiveSummarizeMaxSentenceCount);
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task ExtractiveSummarizeBatchWithErrorTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -128,8 +187,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 "",
             };
 
-            ExtractiveSummarizeOperation operation = await client.StartExtractiveSummarizeAsync(documents, "en");
-            await operation.WaitForCompletionAsync();
+            ExtractiveSummarizeOperation operation = await client.ExtractiveSummarizeAsync(WaitUntil.Completed, documents, "en");
             ValidateOperationProperties(operation);
 
             List<ExtractiveSummarizeResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
@@ -143,12 +201,12 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task ExtractiveSummarizeBatchConvenienceTest()
         {
             TextAnalyticsClient client = GetClient();
 
-            ExtractiveSummarizeOperation operation = await client.StartExtractiveSummarizeAsync(s_extractiveSummarizeBatchConvenienceDocuments);
-            await operation.WaitForCompletionAsync();
+            ExtractiveSummarizeOperation operation = await client.ExtractiveSummarizeAsync(WaitUntil.Completed, s_batchConvenienceDocuments);
             ValidateOperationProperties(operation);
 
             List<ExtractiveSummarizeResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
@@ -156,10 +214,28 @@ namespace Azure.AI.TextAnalytics.Tests
 
             // Take the first page.
             ExtractiveSummarizeResultCollection resultCollection = resultInPages.FirstOrDefault();
-            ValidateSummaryBatchResult(resultCollection, ExtractiveSummarySentencesOrder.Offset);
+            ValidateBatchResult(resultCollection, ExtractiveSummarySentencesOrder.Offset);
         }
 
         [RecordedTest]
+        [RetryOnInternalServerError]
+        public async Task ExtractiveSummarizeBatchConvenienceWaitUntilStartedTest()
+        {
+            TextAnalyticsClient client = GetClient();
+
+            ExtractiveSummarizeOperation operation = await client.ExtractiveSummarizeAsync(WaitUntil.Started, s_batchConvenienceDocuments);
+            Assert.IsFalse(operation.HasCompleted);
+            Assert.IsFalse(operation.HasValue);
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.Value));
+            Assert.ThrowsAsync<InvalidOperationException>(async () => await Task.Run(() => operation.GetValuesAsync()));
+            await operation.WaitForCompletionAsync();
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.IsTrue(operation.HasValue);
+            ValidateOperationProperties(operation);
+        }
+
+        [RecordedTest]
+        [RetryOnInternalServerError]
         public async Task ExtractiveSummarizeBatchConvenienceWithStatisticsTest()
         {
             TextAnalyticsClient client = GetClient();
@@ -170,8 +246,7 @@ namespace Azure.AI.TextAnalytics.Tests
                 IncludeStatistics = true,
             };
 
-            ExtractiveSummarizeOperation operation = await client.StartExtractiveSummarizeAsync(s_extractiveSummarizeBatchConvenienceDocuments, "en", options);
-            await operation.WaitForCompletionAsync();
+            ExtractiveSummarizeOperation operation = await client.ExtractiveSummarizeAsync(WaitUntil.Completed, s_batchConvenienceDocuments, "en", options);
             ValidateOperationProperties(operation);
 
             List<ExtractiveSummarizeResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
@@ -179,94 +254,34 @@ namespace Azure.AI.TextAnalytics.Tests
 
             // Take the first page.
             ExtractiveSummarizeResultCollection resultCollection = resultInPages.FirstOrDefault();
-            ValidateSummaryBatchResult(resultCollection, ExtractiveSummarySentencesOrder.Offset, ExtractiveSummarizeMaxSentenceCount, true);
+            ValidateBatchResult(resultCollection, ExtractiveSummarySentencesOrder.Offset, ExtractiveSummarizeMaxSentenceCount, true);
         }
 
         [RecordedTest]
-        public async Task ExtractiveSummarizeBatchTest()
+        [RetryOnInternalServerError]
+        public async Task AnalyzeOperationExtractiveSummarize()
         {
             TextAnalyticsClient client = GetClient();
-
-            ExtractiveSummarizeOperation operation = await client.StartExtractiveSummarizeAsync(s_extractiveSummarizeBatchDocuments);
-            await operation.WaitForCompletionAsync();
-            ValidateOperationProperties(operation);
-
-            List<ExtractiveSummarizeResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
-            Assert.AreEqual(1, resultInPages.Count);
-
-            // Take the first page.
-            ExtractiveSummarizeResultCollection resultCollection = resultInPages.FirstOrDefault();
-            ValidateSummaryBatchResult(resultCollection, ExtractiveSummarySentencesOrder.Offset);
-        }
-
-        [RecordedTest]
-        public async Task ExtractiveSummarizeBatchWithStatisticsTest()
-        {
-            TextAnalyticsClient client = GetClient();
-
-            ExtractiveSummarizeOptions options = new ExtractiveSummarizeOptions()
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
             {
-                MaxSentenceCount = ExtractiveSummarizeMaxSentenceCount,
-                IncludeStatistics = true,
+                ExtractiveSummarizeActions = new List<ExtractiveSummarizeAction>() { new ExtractiveSummarizeAction() { MaxSentenceCount = 2 } },
+                DisplayName = "AnalyzeOperationExtractiveSummarize",
             };
 
-            ExtractiveSummarizeOperation operation = await client.StartExtractiveSummarizeAsync(s_extractiveSummarizeBatchDocuments, options);
-            await operation.WaitForCompletionAsync();
-            ValidateOperationProperties(operation);
+            AnalyzeActionsOperation operation = await client.AnalyzeActionsAsync(WaitUntil.Completed, s_batchConvenienceDocuments, batchActions);
+            Assert.IsTrue(operation.HasCompleted);
 
-            List<ExtractiveSummarizeResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
-            Assert.AreEqual(1, resultInPages.Count);
+            AnalyzeActionsResult actionsResult = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+            IReadOnlyCollection<ExtractiveSummarizeActionResult> extractiveSummarizeActionResults = actionsResult.ExtractiveSummarizeResults;
+            Assert.IsNotNull(extractiveSummarizeActionResults);
 
-            // Take the first page.
-            ExtractiveSummarizeResultCollection resultCollection = resultInPages.FirstOrDefault();
-            ValidateSummaryBatchResult(resultCollection, ExtractiveSummarySentencesOrder.Offset, ExtractiveSummarizeMaxSentenceCount, true);
-        }
-
-        [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32759")]
-        public async Task ExtractiveSummarizeBatchConvenienceWithAutoDetectedLanguageTest()
-        {
-            TextAnalyticsClient client = GetClient();
-            ExtractiveSummarizeOptions options = new() { AutoDetectionDefaultLanguage = "en" };
-
-            ExtractiveSummarizeOperation operation = await client.StartExtractiveSummarizeAsync(s_extractiveSummarizeBatchConvenienceDocuments, "auto", options);
-            await operation.WaitForCompletionAsync();
-            ValidateOperationProperties(operation);
-
-            List<ExtractiveSummarizeResultCollection> resultInPages = operation.Value.ToEnumerableAsync().Result;
-            Assert.AreEqual(1, resultInPages.Count);
-
-            // Take the first page.
-            ExtractiveSummarizeResultCollection resultCollection = resultInPages.FirstOrDefault();
-            ValidateSummaryBatchResult(resultCollection, ExtractiveSummarySentencesOrder.Offset, isLanguageAutoDetected: true);
-        }
-
-        [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/32759")]
-        public async Task AnalyzeOperationExtractiveSummarizeWithAutoDetectedLanguageTest()
-        {
-            TextAnalyticsClient client = GetClient();
-            List<string> documents = s_extractiveSummarizeBatchConvenienceDocuments;
-            TextAnalyticsActions actions = new()
-            {
-                ExtractiveSummarizeActions = new List<ExtractiveSummarizeAction>() { new ExtractiveSummarizeAction() },
-                DisplayName = "ExtractiveSummarizeWithAutoDetectedLanguage",
-            };
-
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, actions, "auto");
-            await operation.WaitForCompletionAsync();
-
-            // Take the first page.
-            AnalyzeActionsResult resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
-            IReadOnlyCollection<ExtractiveSummarizeActionResult> actionResults = resultCollection.ExtractiveSummarizeResults;
-            Assert.IsNotNull(actionResults);
-
-            ExtractiveSummarizeResultCollection results = actionResults.FirstOrDefault().DocumentsResults;
-            ValidateSummaryBatchResult(results, ExtractiveSummarySentencesOrder.Offset, isLanguageAutoDetected: true);
+            ExtractiveSummarizeResultCollection resultCollection = extractiveSummarizeActionResults.FirstOrDefault().DocumentsResults;
+            ValidateBatchResult(resultCollection, ExtractiveSummarySentencesOrder.Offset);
         }
 
         private void ValidateOperationProperties(ExtractiveSummarizeOperation operation)
         {
+            Assert.IsTrue(operation.HasCompleted);
             Assert.AreNotEqual(new DateTimeOffset(), operation.CreatedOn);
             // TODO: Re-enable this check (https://github.com/Azure/azure-sdk-for-net/issues/31855).
             // Assert.AreNotEqual(new DateTimeOffset(), operation.LastModified);
@@ -277,7 +292,7 @@ namespace Azure.AI.TextAnalytics.Tests
             }
         }
 
-        private void ValidateSummaryDocumentResult(
+        private void ValidateDocumentResult(
             IReadOnlyCollection<ExtractiveSummarySentence> sentences,
             int maxSentenceCount,
             ExtractiveSummarySentencesOrder expectedOrder)
@@ -287,7 +302,7 @@ namespace Azure.AI.TextAnalytics.Tests
             for (int i = 0; i < sentences.Count; i++)
             {
                 ExtractiveSummarySentence sentence = sentences.ElementAt(i);
-                string originalDocument = s_extractiveSummarizeBatchConvenienceDocuments.Where(document => document.Contains(sentence.Text)).FirstOrDefault();
+                string originalDocument = s_batchConvenienceDocuments.Where(document => document.Contains(sentence.Text)).FirstOrDefault();
 
                 Assert.False(string.IsNullOrEmpty(originalDocument));
                 Assert.GreaterOrEqual(sentence.Offset, 0);
@@ -312,12 +327,11 @@ namespace Azure.AI.TextAnalytics.Tests
             }
         }
 
-        private void ValidateSummaryBatchResult(
+        private void ValidateBatchResult(
             ExtractiveSummarizeResultCollection results,
             ExtractiveSummarySentencesOrder expectedOrder,
             int maxSentenceCount = DefaultSummaryMaxSentenceCount,
-            bool includeStatistics = default,
-            bool isLanguageAutoDetected = default)
+            bool includeStatistics = default)
         {
             Assert.That(results.ModelVersion, Is.Not.Null.And.Not.Empty);
 
@@ -351,22 +365,7 @@ namespace Azure.AI.TextAnalytics.Tests
                     Assert.AreEqual(0, result.Statistics.TransactionCount);
                 }
 
-                if (isLanguageAutoDetected)
-                {
-                    Assert.IsNotNull(result.DetectedLanguage);
-                    Assert.That(result.DetectedLanguage.Value.Name, Is.Not.Null.And.Not.Empty);
-                    Assert.That(result.DetectedLanguage.Value.Iso6391Name, Is.Not.Null.And.Not.Empty);
-                    Assert.GreaterOrEqual(result.DetectedLanguage.Value.ConfidenceScore, 0.0);
-                    Assert.LessOrEqual(result.DetectedLanguage.Value.ConfidenceScore, 1.0);
-                    Assert.IsNotNull(result.DetectedLanguage.Value.Warnings);
-                    Assert.IsEmpty(result.DetectedLanguage.Value.Warnings);
-                }
-                else
-                {
-                    Assert.IsNull(result.DetectedLanguage);
-                }
-
-                ValidateSummaryDocumentResult(result.Sentences, maxSentenceCount, expectedOrder);
+                ValidateDocumentResult(result.Sentences, maxSentenceCount, expectedOrder);
             }
         }
     }

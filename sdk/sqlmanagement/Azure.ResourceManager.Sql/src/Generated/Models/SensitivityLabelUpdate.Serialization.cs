@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static SensitivityLabelUpdate DeserializeSensitivityLabelUpdate(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -80,7 +84,6 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -99,7 +102,6 @@ namespace Azure.ResourceManager.Sql.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             op = property0.Value.GetString().ToSensitivityLabelUpdateKind();
@@ -124,7 +126,6 @@ namespace Azure.ResourceManager.Sql.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sensitivityLabel = SensitivityLabelData.DeserializeSensitivityLabelData(property0.Value);

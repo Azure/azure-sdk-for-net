@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static NetworkConfigurationDiagnosticResult DeserializeNetworkConfigurationDiagnosticResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<NetworkConfigurationDiagnosticProfile> profile = default;
             Optional<NetworkSecurityGroupResult> networkSecurityGroupResult = default;
             foreach (var property in element.EnumerateObject())
@@ -22,7 +26,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     profile = NetworkConfigurationDiagnosticProfile.DeserializeNetworkConfigurationDiagnosticProfile(property.Value);
@@ -32,7 +35,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     networkSecurityGroupResult = NetworkSecurityGroupResult.DeserializeNetworkSecurityGroupResult(property.Value);

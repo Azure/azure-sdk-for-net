@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    /// <summary> The platform of this runtime version (possible values: &quot;Java&quot; or &quot;.NET&quot;). </summary>
+    /// <summary> The platform of this runtime version (possible values: "Java" or ".NET"). </summary>
     public readonly partial struct AppPlatformSupportedRuntimePlatform : IEquatable<AppPlatformSupportedRuntimePlatform>
     {
         private readonly string _value;

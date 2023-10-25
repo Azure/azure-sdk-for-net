@@ -9,9 +9,11 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
+using Azure.Core;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Classifiers;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using BlobRequestConditions = Azure.Storage.Blobs.Models.BlobRequestConditions;
 
@@ -122,26 +124,26 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
         public async Task<string> TryAcquireLeaseAsync(BlockBlobClient blob, CancellationToken cancellationToken)
         {
+            var context = new RequestContext()
+            {
+                CancellationToken = cancellationToken
+            };
+            context.AddClassifier(LeaseAlreadyPresentResponseClassificationHandler.GetClassifier(classifyAsError: false));
+
             try
             {
-                BlobLease lease = await blob.GetBlobLeaseClient().AcquireAsync(LeasePeriod, cancellationToken: cancellationToken).ConfigureAwait(false);
-                return lease.LeaseId;
+                Response response = await blob.GetBlobLeaseClient().AcquireAsync(
+                    LeasePeriod,
+                    conditions: null,
+                    context)
+                    .ConfigureAwait(false);
+
+                return response.Headers.TryGetValue("x-ms-lease-id", out string leaseId) ? leaseId : null;
             }
-            catch (RequestFailedException exception)
+            catch (RequestFailedException exception) when (exception.IsNotFoundBlobOrContainerNotFound())
             {
-                if (exception.IsConflictLeaseAlreadyPresent())
-                {
-                    return null;
-                }
-                else if (exception.IsNotFoundBlobOrContainerNotFound())
-                {
-                    // If someone deleted the receipt, there's no lease to acquire.
-                    return null;
-                }
-                else
-                {
-                    throw;
-                }
+                // If someone deleted the receipt, there's no lease to acquire.
+                return null;
             }
         }
 

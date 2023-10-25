@@ -43,6 +43,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static SynonymMap DeserializeSynonymMap(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             string format = default;
             string synonyms = default;

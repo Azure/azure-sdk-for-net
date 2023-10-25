@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of TestMigrateCleanupContent. </summary>
         /// <param name="properties"> Test migrate cleanup input properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public TestMigrateCleanupContent(TestMigrateCleanupInputProperties properties)
+        public TestMigrateCleanupContent(TestMigrateCleanupProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
@@ -24,9 +24,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Test migrate cleanup input properties. </summary>
-        internal TestMigrateCleanupInputProperties Properties { get; }
+        internal TestMigrateCleanupProperties Properties { get; }
         /// <summary> Test migrate cleanup comments. </summary>
-        public string TestMigrateCleanupInputComments
+        public string TestMigrateCleanupComments
         {
             get => Properties?.Comments;
         }

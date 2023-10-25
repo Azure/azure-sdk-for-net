@@ -14,7 +14,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> A class representing the RestorePoint data model. </summary>
+    /// <summary>
+    /// A class representing the RestorePoint data model.
+    /// Restore Point details.
+    /// </summary>
     public partial class RestorePointData : ResourceData
     {
         /// <summary> Initializes a new instance of RestorePointData. </summary>
@@ -49,7 +52,7 @@ namespace Azure.ResourceManager.Compute
         /// <summary> List of disk resource ids that the customer wishes to exclude from the restore point. If no disks are specified, all disks will be included. </summary>
         public IList<WritableSubResource> ExcludeDisks { get; }
         /// <summary> Gets the details of the VM captured at the time of the restore point creation. </summary>
-        public RestorePointSourceMetadata SourceMetadata { get; }
+        public RestorePointSourceMetadata SourceMetadata { get; set; }
         /// <summary> Gets the provisioning state of the restore point. </summary>
         public string ProvisioningState { get; }
         /// <summary> ConsistencyMode of the RestorePoint. Can be specified in the input while creating a restore point. For now, only CrashConsistent is accepted as a valid input. Please refer to https://aka.ms/RestorePoints for more details. </summary>

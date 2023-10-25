@@ -21,12 +21,12 @@ namespace Azure.Communication.Chat
             Participants = chatMessageContentInternal.Participants.Select(x => new ChatParticipant(x)).ToList().AsReadOnly();
         }
 
-        internal ChatMessageContent(string message, string topic, CommunicationUserIdentifier communicationUserIdentifier, IReadOnlyList<ChatParticipant> participants)
+        internal ChatMessageContent(string message, string topic, CommunicationUserIdentifier communicationUserIdentifier, IEnumerable<ChatParticipant> participants)
         {
             Initiator = communicationUserIdentifier;
             Message = message;
             Topic =topic;
-            Participants = participants;
+            Participants = participants?.ToList();
         }
 
         /// <summary> Chat message content for type 'text' or 'html' messages. </summary>

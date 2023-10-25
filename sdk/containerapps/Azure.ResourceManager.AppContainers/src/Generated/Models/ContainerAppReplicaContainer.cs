@@ -21,15 +21,19 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="isReady"> The container ready status. </param>
         /// <param name="isStarted"> The container start status. </param>
         /// <param name="restartCount"> The container restart count. </param>
+        /// <param name="runningState"> Current running state of the container. </param>
+        /// <param name="runningStateDetails"> The details of container current running state. </param>
         /// <param name="logStreamEndpoint"> Log Stream endpoint. </param>
         /// <param name="execEndpoint"> Container exec endpoint. </param>
-        internal ContainerAppReplicaContainer(string name, string containerId, bool? isReady, bool? isStarted, int? restartCount, string logStreamEndpoint, string execEndpoint)
+        internal ContainerAppReplicaContainer(string name, string containerId, bool? isReady, bool? isStarted, int? restartCount, ContainerAppContainerRunningState? runningState, string runningStateDetails, string logStreamEndpoint, string execEndpoint)
         {
             Name = name;
             ContainerId = containerId;
             IsReady = isReady;
             IsStarted = isStarted;
             RestartCount = restartCount;
+            RunningState = runningState;
+            RunningStateDetails = runningStateDetails;
             LogStreamEndpoint = logStreamEndpoint;
             ExecEndpoint = execEndpoint;
         }
@@ -44,6 +48,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         public bool? IsStarted { get; set; }
         /// <summary> The container restart count. </summary>
         public int? RestartCount { get; set; }
+        /// <summary> Current running state of the container. </summary>
+        public ContainerAppContainerRunningState? RunningState { get; }
+        /// <summary> The details of container current running state. </summary>
+        public string RunningStateDetails { get; }
         /// <summary> Log Stream endpoint. </summary>
         public string LogStreamEndpoint { get; }
         /// <summary> Container exec endpoint. </summary>

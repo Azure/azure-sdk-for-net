@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static IntegrationAccountBatchReleaseCriteria DeserializeIntegrationAccountBatchReleaseCriteria(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> messageCount = default;
             Optional<int> batchSize = default;
             Optional<LogicWorkflowTriggerRecurrence> recurrence = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     messageCount = property.Value.GetInt32();
@@ -54,7 +57,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     batchSize = property.Value.GetInt32();
@@ -64,7 +66,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     recurrence = LogicWorkflowTriggerRecurrence.DeserializeLogicWorkflowTriggerRecurrence(property.Value);

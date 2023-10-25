@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -36,11 +37,16 @@ namespace Azure.ResourceManager.Sql
 
         internal static SqlPrivateEndpointConnectionData DeserializeSqlPrivateEndpointConnectionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<WritableSubResource> privateEndpoint = default;
+            Optional<IReadOnlyList<string>> groupIds = default;
             Optional<SqlPrivateLinkServiceConnectionStateProperty> privateLinkServiceConnectionState = default;
             Optional<SqlPrivateEndpointProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
@@ -64,7 +70,6 @@ namespace Azure.ResourceManager.Sql
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -83,17 +88,29 @@ namespace Azure.ResourceManager.Sql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             privateEndpoint = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("groupIds"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            groupIds = array;
                             continue;
                         }
                         if (property0.NameEquals("privateLinkServiceConnectionState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             privateLinkServiceConnectionState = SqlPrivateLinkServiceConnectionStateProperty.DeserializeSqlPrivateLinkServiceConnectionStateProperty(property0.Value);
@@ -103,7 +120,6 @@ namespace Azure.ResourceManager.Sql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new SqlPrivateEndpointProvisioningState(property0.Value.GetString());
@@ -113,7 +129,7 @@ namespace Azure.ResourceManager.Sql
                     continue;
                 }
             }
-            return new SqlPrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
+            return new SqlPrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint, Optional.ToList(groupIds), privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

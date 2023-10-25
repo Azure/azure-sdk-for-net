@@ -63,8 +63,9 @@ namespace Azure.Identity.Tests
             var options = new DeviceCodeCredentialOptions
             {
                 Transport = config.Transport,
-                AdditionallyAllowedTenantsCore = config.AdditionallyAllowedTenants,
-                DisableInstanceDiscovery = config.DisableMetadataDiscovery ?? false
+                AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
+                DisableInstanceDiscovery = config.DisableInstanceDiscovery,
+                IsUnsafeSupportLoggingEnabled = config.IsUnsafeSupportLoggingEnabled,
             };
             var pipeline = CredentialPipeline.GetInstance(options);
             return InstrumentClient(new DeviceCodeCredential((code, _) =>
@@ -95,15 +96,6 @@ namespace Azure.Identity.Tests
             token = await cred.GetTokenAsync(context);
 
             Assert.AreEqual(token.Token, expectedToken);
-        }
-
-        [Test]
-        public void RespectsIsPIILoggingEnabled([Values(true, false)] bool isLoggingPIIEnabled)
-        {
-            var credential = new DeviceCodeCredential(new DeviceCodeCredentialOptions { IsLoggingPIIEnabled = isLoggingPIIEnabled });
-
-            Assert.NotNull(credential.Client);
-            Assert.AreEqual(isLoggingPIIEnabled, credential.Client.IsPiiLoggingEnabled);
         }
 
         [Test]

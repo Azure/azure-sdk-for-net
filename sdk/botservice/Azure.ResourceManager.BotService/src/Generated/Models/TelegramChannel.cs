@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.BotService.Models
 {
     /// <summary> Telegram channel definition. </summary>
-    public partial class TelegramChannel : Channel
+    public partial class TelegramChannel : BotChannelProperties
     {
         /// <summary> Initializes a new instance of TelegramChannel. </summary>
         public TelegramChannel()

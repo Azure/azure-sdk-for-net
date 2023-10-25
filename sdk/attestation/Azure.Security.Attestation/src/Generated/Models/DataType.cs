@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Security.Attestation
 {
-    /// <summary> Specifies the type of the data encoded contained within the &quot;data&quot; field of a &quot;RuntimeData&quot; or &quot;InitTimeData&quot; object. </summary>
+    /// <summary> Specifies the type of the data encoded contained within the "data" field of a "RuntimeData" or "InitTimeData" object. </summary>
     internal readonly partial struct DataType : IEquatable<DataType>
     {
         private readonly string _value;

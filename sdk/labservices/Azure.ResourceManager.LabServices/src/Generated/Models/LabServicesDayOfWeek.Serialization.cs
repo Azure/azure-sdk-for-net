@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.LabServices.Models
 
         public static LabServicesDayOfWeek ToLabServicesDayOfWeek(this string value)
         {
-            if (string.Equals(value, "Sunday", StringComparison.InvariantCultureIgnoreCase)) return LabServicesDayOfWeek.Sunday;
-            if (string.Equals(value, "Monday", StringComparison.InvariantCultureIgnoreCase)) return LabServicesDayOfWeek.Monday;
-            if (string.Equals(value, "Tuesday", StringComparison.InvariantCultureIgnoreCase)) return LabServicesDayOfWeek.Tuesday;
-            if (string.Equals(value, "Wednesday", StringComparison.InvariantCultureIgnoreCase)) return LabServicesDayOfWeek.Wednesday;
-            if (string.Equals(value, "Thursday", StringComparison.InvariantCultureIgnoreCase)) return LabServicesDayOfWeek.Thursday;
-            if (string.Equals(value, "Friday", StringComparison.InvariantCultureIgnoreCase)) return LabServicesDayOfWeek.Friday;
-            if (string.Equals(value, "Saturday", StringComparison.InvariantCultureIgnoreCase)) return LabServicesDayOfWeek.Saturday;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Sunday")) return LabServicesDayOfWeek.Sunday;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Monday")) return LabServicesDayOfWeek.Monday;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Tuesday")) return LabServicesDayOfWeek.Tuesday;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Wednesday")) return LabServicesDayOfWeek.Wednesday;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Thursday")) return LabServicesDayOfWeek.Thursday;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Friday")) return LabServicesDayOfWeek.Friday;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Saturday")) return LabServicesDayOfWeek.Saturday;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown LabServicesDayOfWeek value.");
         }
     }

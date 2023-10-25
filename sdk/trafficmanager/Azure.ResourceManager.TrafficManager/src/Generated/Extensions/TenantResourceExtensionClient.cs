@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <returns> Returns a <see cref="TrafficManagerGeographicHierarchyResource" /> object. </returns>
         public virtual TrafficManagerGeographicHierarchyResource GetTrafficManagerGeographicHierarchy()
         {
-            return new TrafficManagerGeographicHierarchyResource(Client, new ResourceIdentifier(Id.ToString() + "/providers/Microsoft.Network/trafficManagerGeographicHierarchies/default"));
+            return new TrafficManagerGeographicHierarchyResource(Client, Id.AppendProviderResource("Microsoft.Network", "trafficManagerGeographicHierarchies", "default"));
         }
 
         /// <summary>

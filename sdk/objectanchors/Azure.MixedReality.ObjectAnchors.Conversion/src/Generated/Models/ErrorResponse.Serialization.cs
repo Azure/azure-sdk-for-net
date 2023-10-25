@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
 {
@@ -14,6 +13,10 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
     {
         internal static ErrorResponse DeserializeErrorResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ErrorDetail error = default;
             foreach (var property in element.EnumerateObject())
             {

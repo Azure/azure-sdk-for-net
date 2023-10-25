@@ -195,7 +195,11 @@ namespace Azure.Storage.Files.Shares
         /// pipeline policies for authentication, retries, etc., that are
         /// applied to every request.
         /// </param>
-        public ShareFileClient(string connectionString, string shareName, string filePath, ShareClientOptions options)
+        public ShareFileClient(
+            string connectionString,
+            string shareName,
+            string filePath,
+            ShareClientOptions options)
         {
             options ??= new ShareClientOptions();
             var conn = StorageConnectionString.Parse(connectionString);
@@ -227,8 +231,16 @@ namespace Azure.Storage.Files.Shares
         /// pipeline policies for authentication, retries, etc., that are
         /// applied to every request.
         /// </param>
-        public ShareFileClient(Uri fileUri, ShareClientOptions options = default)
-            : this(fileUri, (HttpPipelinePolicy)null, options, storageSharedKeyCredential:null)
+        public ShareFileClient(
+            Uri fileUri,
+            ShareClientOptions options = default)
+            : this(
+                  fileUri: fileUri,
+                  authentication: (HttpPipelinePolicy)null,
+                  options: options,
+                  storageSharedKeyCredential: null,
+                  sasCredential: null,
+                  tokenCredential: null)
         {
         }
 
@@ -248,8 +260,17 @@ namespace Azure.Storage.Files.Shares
         /// pipeline policies for authentication, retries, etc., that are
         /// applied to every request.
         /// </param>
-        public ShareFileClient(Uri fileUri, StorageSharedKeyCredential credential, ShareClientOptions options = default)
-            : this(fileUri, credential.AsPolicy(), options, credential)
+        public ShareFileClient(
+            Uri fileUri,
+            StorageSharedKeyCredential credential,
+            ShareClientOptions options = default)
+            : this(
+                  fileUri: fileUri,
+                  authentication: credential.AsPolicy(),
+                  options: options,
+                  storageSharedKeyCredential: credential,
+                  sasCredential: null,
+                  tokenCredential: null)
         {
         }
 
@@ -273,93 +294,59 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
         /// </remarks>
-        public ShareFileClient(Uri fileUri, AzureSasCredential credential, ShareClientOptions options = default)
-            : this(fileUri, credential.AsPolicy<ShareUriBuilder>(fileUri), options, credential)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ShareFileClient"/>
-        /// class.
-        /// </summary>
-        /// <param name="fileUri">
-        /// A <see cref="Uri"/> referencing the file that includes the
-        /// name of the account, the name of the share, and the path of the
-        /// file.
-        /// </param>
-        /// <param name="authentication">
-        /// An optional authentication policy used to sign requests.
-        /// </param>
-        /// <param name="options">
-        /// Optional client options that define the transport pipeline
-        /// policies for authentication, retries, etc., that are applied to
-        /// every request.
-        /// </param>
-        /// <param name="storageSharedKeyCredential">
-        /// The shared key credential used to sign requests.
-        /// </param>
-        internal ShareFileClient(
+        public ShareFileClient(
             Uri fileUri,
-            HttpPipelinePolicy authentication,
-            ShareClientOptions options,
-            StorageSharedKeyCredential storageSharedKeyCredential)
+            AzureSasCredential credential,
+            ShareClientOptions options = default)
+            : this(
+                  fileUri,
+                  credential.AsPolicy<ShareUriBuilder>(fileUri),
+                  options,
+                  storageSharedKeyCredential: null,
+                  sasCredential: credential,
+                  tokenCredential: null)
         {
-            Argument.AssertNotNull(fileUri, nameof(fileUri));
-            options ??= new ShareClientOptions();
-            _uri = fileUri;
-            _clientConfiguration = new ShareClientConfiguration(
-                pipeline: options.Build(authentication),
-                sharedKeyCredential: storageSharedKeyCredential,
-                clientDiagnostics: new ClientDiagnostics(options),
-                clientOptions: options);
-            _fileRestClient = BuildFileRestClient(fileUri);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ShareFileClient"/>
-        /// class.
-        /// </summary>
-        /// <param name="fileUri">
-        /// A <see cref="Uri"/> referencing the file that includes the
-        /// name of the account, the name of the share, and the path of the
-        /// file.
-        /// </param>
-        /// <param name="authentication">
-        /// An optional authentication policy used to sign requests.
-        /// </param>
-        /// <param name="options">
-        /// Optional client options that define the transport pipeline
-        /// policies for authentication, retries, etc., that are applied to
-        /// every request.
-        /// </param>
-        /// <param name="sasCredential">
-        /// The shared access signature used to sign requests.
-        /// </param>
-        internal ShareFileClient(
-            Uri fileUri,
-            HttpPipelinePolicy authentication,
-            ShareClientOptions options,
-            AzureSasCredential sasCredential)
-        {
-            Argument.AssertNotNull(fileUri, nameof(fileUri));
-            options ??= new ShareClientOptions();
-            _uri = fileUri;
-            _clientConfiguration = new ShareClientConfiguration(
-                pipeline: options.Build(authentication),
-                sasCredential: sasCredential,
-                clientDiagnostics: new ClientDiagnostics(options),
-                clientOptions: options);
-            _fileRestClient = BuildFileRestClient(fileUri);
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ShareFileClient"/>
         /// class.
         ///
-        /// This will create an instance that uses the same diagnostics as another
-        /// client. This client will be used within another API call of the parent
-        /// client (namely Rename). This is in the case that the new child client
-        /// has different credentials than the parent client.
+        /// Note that <see cref="ShareClientOptions.ShareTokenIntent"/> is currently required for token authentication.
+        /// </summary>
+        /// <param name="fileUri">
+        /// A <see cref="Uri"/> referencing the file that includes the
+        /// name of the account, the name of the share, and the path of the
+        /// file.
+        /// </param>
+        /// <param name="credential">
+        /// The token credential used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        public ShareFileClient(
+            Uri fileUri,
+            TokenCredential credential,
+            ShareClientOptions options = default)
+            : this(
+                  fileUri: fileUri,
+                  authentication: credential.AsPolicy(
+                    string.IsNullOrEmpty(options?.Audience?.ToString()) ? ShareAudience.DefaultAudience.CreateDefaultScope() : options.Audience.Value.CreateDefaultScope(),
+                    options),
+                  options: options ?? new ShareClientOptions(),
+                  storageSharedKeyCredential: null,
+                  sasCredential: null,
+                  tokenCredential: credential)
+        {
+            Errors.VerifyHttpsTokenAuth(fileUri);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ShareFileClient"/>
+        /// class.
         /// </summary>
         /// <param name="fileUri">
         /// A <see cref="Uri"/> referencing the file that includes the
@@ -382,11 +369,63 @@ namespace Azure.Storage.Files.Shares
             Argument.AssertNotNull(fileUri, nameof(fileUri));
             options ??= new ShareClientOptions();
             _uri = fileUri;
+
             _clientConfiguration = new ShareClientConfiguration(
                 pipeline: options.Build(),
                 sharedKeyCredential: default,
                 clientDiagnostics: diagnostics,
                 clientOptions: options);
+
+            _fileRestClient = BuildFileRestClient(fileUri);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ShareFileClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="fileUri">
+        /// A <see cref="Uri"/> referencing the file that includes the
+        /// name of the account, the name of the share, and the path of the
+        /// file.
+        /// </param>
+        /// <param name="authentication">
+        /// An optional authentication policy used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        /// <param name="storageSharedKeyCredential">
+        /// The shared key credential used to sign requests.
+        /// </param>
+        /// <param name="sasCredential">
+        /// The SAS credential used to sign requests.
+        /// </param>
+        /// <param name="tokenCredential">
+        /// The token credential used to sign requests.
+        /// </param>
+        internal ShareFileClient(
+            Uri fileUri,
+            HttpPipelinePolicy authentication,
+            ShareClientOptions options,
+            StorageSharedKeyCredential storageSharedKeyCredential,
+            AzureSasCredential sasCredential,
+            TokenCredential tokenCredential)
+        {
+            Argument.AssertNotNull(fileUri, nameof(fileUri));
+            options ??= new ShareClientOptions();
+            _uri = fileUri;
+            _clientConfiguration = new ShareClientConfiguration(
+                pipeline: options.Build(authentication),
+                sharedKeyCredential: storageSharedKeyCredential,
+                sasCredential: sasCredential,
+                tokenCredential: tokenCredential,
+                clientDiagnostics: new ClientDiagnostics(options),
+                clientOptions: options)
+            {
+                Audience = options.Audience ?? ShareAudience.DefaultAudience,
+            };
             _fileRestClient = BuildFileRestClient(fileUri);
         }
 
@@ -412,10 +451,14 @@ namespace Azure.Storage.Files.Shares
         private FileRestClient BuildFileRestClient(Uri uri)
         {
             return new FileRestClient(
-                _clientConfiguration.ClientDiagnostics,
-                _clientConfiguration.Pipeline,
-                uri.AbsoluteUri,
-                _clientConfiguration.ClientOptions.Version.ToVersionString());
+                clientDiagnostics: _clientConfiguration.ClientDiagnostics,
+                pipeline: _clientConfiguration.Pipeline,
+                url: uri.AbsoluteUri,
+                version: _clientConfiguration.ClientOptions.Version.ToVersionString(),
+                fileRequestIntent: _clientConfiguration.ClientOptions.ShareTokenIntent,
+                allowTrailingDot: _clientConfiguration.ClientOptions.AllowTrailingDot,
+                fileRangeWriteFromUrl: "update",
+                allowSourceTrailingDot: _clientConfiguration.ClientOptions.AllowSourceTrailingDot);
         }
         #endregion ctors
 
@@ -457,6 +500,38 @@ namespace Azure.Storage.Files.Shares
                 _path = builder.DirectoryOrFilePath;
             }
         }
+
+        #region internal static accessors for Azure.Storage.DataMovement.Blobs
+        /// <summary>
+        /// Get a <see cref="ShareFileClient"/>'s <see cref="HttpAuthorization"/>
+        /// for passing the authorization when performing service to service copy
+        /// where OAuth is necessary to authenticate the source.
+        /// </summary>
+        /// <param name="client">
+        /// The storage client which to generate the
+        /// authorization header off of.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
+        /// <returns>The BlobServiceClient's HttpPipeline.</returns>
+        protected static async Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(
+            ShareFileClient client,
+            CancellationToken cancellationToken = default)
+        {
+            if (client.ClientConfiguration.TokenCredential != default)
+            {
+                AccessToken accessToken = await client.ClientConfiguration.TokenCredential.GetTokenAsync(
+                    new TokenRequestContext(new string[] { client.ClientConfiguration.Audience.ToString() }),
+                    cancellationToken).ConfigureAwait(false);
+                return new HttpAuthorization(
+                    Constants.CopyHttpAuthorization.BearerScheme,
+                    accessToken.Token);
+            }
+            return default;
+        }
+        #endregion internal static accessors for Azure.Storage.DataMovement.Blobs
 
         #region Create
         /// <summary>
@@ -2257,7 +2332,12 @@ namespace Azure.Storage.Files.Shares
                         }
                         readDestStream.Position = 0;
 
-                        ContentHasher.AssertResponseHashMatch(readDestStream, validationOptions.ChecksumAlgorithm, initialResponse.GetRawResponse());
+                        await ContentHasher.AssertResponseHashMatchInternal(
+                            readDestStream,
+                            validationOptions.ChecksumAlgorithm,
+                            initialResponse.GetRawResponse(),
+                            async,
+                            cancellationToken).ConfigureAwait(false);
 
                         // we've consumed the network stream to hash it; return buffered stream to the user
                         initialResponse.Value.Content = readDestStream;
@@ -4334,7 +4414,11 @@ namespace Azure.Storage.Files.Shares
                     Errors.VerifyStreamPosition(content, nameof(content));
 
                     // compute hash BEFORE attaching progress handler
-                    ContentHasher.GetHashResult hashResult = ContentHasher.GetHashOrDefault(content, validationOptions);
+                    ContentHasher.GetHashResult hashResult = await ContentHasher.GetHashOrDefaultInternal(
+                        content,
+                        validationOptions,
+                        async,
+                        cancellationToken).ConfigureAwait(false);
 
                     content = content.WithNoDispose().WithProgress(progressHandler);
 
@@ -5155,7 +5239,7 @@ namespace Azure.Storage.Files.Shares
         internal static PartitionedUploader<ShareFileUploadData, ShareFileUploadInfo>.Behaviors GetPartitionedUploaderBehaviors(ShareFileClient client)
             => new PartitionedUploader<ShareFileUploadData, ShareFileUploadInfo>.Behaviors
             {
-                SingleUpload = async (stream, data, progressHandler, validationOptions, operationName, async, cancellationToken) =>
+                SingleUploadStreaming = async (stream, data, progressHandler, validationOptions, operationName, async, cancellationToken) =>
                 {
                     return await client.UploadRangeInternal(
                         new HttpRange(offset: 0, length: stream.Length),
@@ -5168,11 +5252,37 @@ namespace Azure.Storage.Files.Shares
                         cancellationToken)
                         .ConfigureAwait(false);
                 },
-                UploadPartition = async (stream, offset, data, progressHandler, validationOptions, async, cancellationToken) =>
+                SingleUploadBinaryData = async (content, data, progressHandler, validationOptions, operationName, async, cancellationToken) =>
+                {
+                    return await client.UploadRangeInternal(
+                        new HttpRange(offset: 0, length: content.ToMemory().Length),
+                        content.ToStream(),
+                        validationOptions,
+                        progressHandler,
+                        data.Conditions,
+                        fileLastWrittenMode: null,
+                        async,
+                        cancellationToken)
+                        .ConfigureAwait(false);
+                },
+                UploadPartitionStreaming = async (stream, offset, data, progressHandler, validationOptions, async, cancellationToken) =>
                 {
                     data.LastUploadRangeResponse = await client.UploadRangeInternal(
                         new HttpRange(offset: offset, length: stream.Length),
                         stream,
+                        validationOptions,
+                        progressHandler,
+                        data.Conditions,
+                        fileLastWrittenMode: null,
+                        async,
+                        cancellationToken)
+                        .ConfigureAwait(false);
+                },
+                UploadPartitionBinaryData = async (content, offset, data, progressHandler, validationOptions, async, cancellationToken) =>
+                {
+                    data.LastUploadRangeResponse = await client.UploadRangeInternal(
+                        new HttpRange(offset: offset, length: content.ToMemory().Length),
+                        content.ToStream(),
                         validationOptions,
                         progressHandler,
                         data.Conditions,
@@ -6468,7 +6578,7 @@ namespace Azure.Storage.Files.Shares
                     position: position,
                     conditions: options?.OpenConditions,
                     progressHandler: options?.ProgressHandler,
-                    options?.TransferValidation
+                    options?.TransferValidation ?? ClientConfiguration.TransferValidation.Upload
                     );
             }
             catch (Exception ex)
@@ -6512,6 +6622,7 @@ namespace Azure.Storage.Files.Shares
         /// <remarks>
         /// A <see cref="Exception"/> will be thrown if a failure occurs.
         /// </remarks>
+        [CallerShouldAudit(Reason = "https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
         public virtual Uri GenerateSasUri(ShareFileSasPermissions permissions, DateTimeOffset expiresOn) =>
             GenerateSasUri(new ShareSasBuilder(permissions, expiresOn)
             {
@@ -6543,11 +6654,12 @@ namespace Azure.Storage.Files.Shares
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [CallerShouldAudit(Reason = "https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
         public virtual Uri GenerateSasUri(ShareSasBuilder builder)
         {
             builder = builder ?? throw Errors.ArgumentNull(nameof(builder));
 
-            // Deep copy of builder so we don't modify the user's original DataLakeSasBuilder.
+            // Deep copy of builder so we don't modify the user's original ShareSasBuilder.
             builder = ShareSasBuilder.DeepCopy(builder);
 
             // Assign builder's ShareName and Path, if they are null.

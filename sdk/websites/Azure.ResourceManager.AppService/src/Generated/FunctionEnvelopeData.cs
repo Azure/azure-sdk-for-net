@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the FunctionEnvelope data model. </summary>
+    /// <summary>
+    /// A class representing the FunctionEnvelope data model.
+    /// Function information.
+    /// </summary>
     public partial class FunctionEnvelopeData : ResourceData
     {
         /// <summary> Initializes a new instance of FunctionEnvelopeData. </summary>

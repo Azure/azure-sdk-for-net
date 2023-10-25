@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
 
         internal static DeviceUpdatePrivateLinkServiceConnectionState DeserializeDeviceUpdatePrivateLinkServiceConnectionState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DeviceUpdatePrivateEndpointServiceConnectionStatus> status = default;
             Optional<string> description = default;
             Optional<string> actionsRequired = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new DeviceUpdatePrivateEndpointServiceConnectionStatus(property.Value.GetString());

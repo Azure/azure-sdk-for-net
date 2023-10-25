@@ -190,6 +190,10 @@ namespace Azure.ResourceManager.AppService
 
         internal static WebSiteData DeserializeWebSiteData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<ExtendedLocation> extendedLocation = default;
             Optional<string> kind = default;
@@ -246,7 +250,6 @@ namespace Azure.ResourceManager.AppService
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
@@ -256,7 +259,6 @@ namespace Azure.ResourceManager.AppService
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.GetRawText());
@@ -271,7 +273,6 @@ namespace Azure.ResourceManager.AppService
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -306,7 +307,6 @@ namespace Azure.ResourceManager.AppService
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -330,7 +330,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -350,7 +349,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             usageState = property0.Value.GetString().ToAppServiceUsageState();
@@ -360,7 +358,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enabled = property0.Value.GetBoolean();
@@ -370,7 +367,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -385,7 +381,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             availabilityState = property0.Value.GetString().ToWebSiteAvailabilityState();
@@ -395,7 +390,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<HostNameSslState> array = new List<HostNameSslState>();
@@ -410,7 +404,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             serverFarmId = new ResourceIdentifier(property0.Value.GetString());
@@ -420,7 +413,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             reserved = property0.Value.GetBoolean();
@@ -430,7 +422,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isXenon = property0.Value.GetBoolean();
@@ -440,7 +431,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             hyperV = property0.Value.GetBoolean();
@@ -450,7 +440,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastModifiedTimeUtc = property0.Value.GetDateTimeOffset("O");
@@ -460,7 +449,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             siteConfig = SiteConfigProperties.DeserializeSiteConfigProperties(property0.Value);
@@ -485,7 +473,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             scmSiteAlsoStopped = property0.Value.GetBoolean();
@@ -510,7 +497,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             clientAffinityEnabled = property0.Value.GetBoolean();
@@ -520,7 +506,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             clientCertEnabled = property0.Value.GetBoolean();
@@ -530,7 +515,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             clientCertMode = property0.Value.GetString().ToClientCertMode();
@@ -545,7 +529,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             hostNamesDisabled = property0.Value.GetBoolean();
@@ -570,7 +553,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             containerSize = property0.Value.GetInt32();
@@ -580,7 +562,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             dailyMemoryTimeQuota = property0.Value.GetInt32();
@@ -625,7 +606,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isDefaultContainer = property0.Value.GetBoolean();
@@ -650,7 +630,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             httpsOnly = property0.Value.GetBoolean();
@@ -660,7 +639,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             redundancyMode = property0.Value.GetString().ToRedundancyMode();
@@ -680,7 +658,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             storageAccountRequired = property0.Value.GetBoolean();
@@ -695,7 +672,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             virtualNetworkSubnetId = new ResourceIdentifier(property0.Value.GetString());

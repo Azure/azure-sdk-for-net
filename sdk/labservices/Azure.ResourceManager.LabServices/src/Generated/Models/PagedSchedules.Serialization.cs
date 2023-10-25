@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.LabServices.Models
     {
         internal static PagedSchedules DeserializePagedSchedules(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<LabServicesScheduleData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.LabServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<LabServicesScheduleData> array = new List<LabServicesScheduleData>();

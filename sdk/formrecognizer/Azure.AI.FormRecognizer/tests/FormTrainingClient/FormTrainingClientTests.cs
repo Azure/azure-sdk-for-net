@@ -118,17 +118,13 @@ namespace Azure.AI.FormRecognizer.Tests
             // V2.0
             var clientV2 = CreateClient(new FormRecognizerClientOptions(FormRecognizerClientOptions.ServiceVersion.V2_0));
 
-            Assert.ThrowsAsync<UriFormatException>(() => clientV2.StartTrainingAsync(new Uri(string.Empty), useTrainingLabels: false));
             Assert.ThrowsAsync<ArgumentNullException>(() => clientV2.StartTrainingAsync((Uri)null, useTrainingLabels: false));
-            Assert.Throws<UriFormatException>(() => clientV2.StartTraining(new Uri(string.Empty), useTrainingLabels: false));
             Assert.Throws<ArgumentNullException>(() => clientV2.StartTraining((Uri)null, useTrainingLabels: false));
 
             // V2.1
             var clientV21 = CreateClient(new FormRecognizerClientOptions(FormRecognizerClientOptions.ServiceVersion.V2_1));
 
-            Assert.ThrowsAsync<UriFormatException>(() => clientV21.StartTrainingAsync(new Uri(string.Empty), useTrainingLabels: false, new TrainingOptions()));
             Assert.ThrowsAsync<ArgumentNullException>(() => clientV21.StartTrainingAsync((Uri)null, useTrainingLabels: false, new TrainingOptions()));
-            Assert.Throws<UriFormatException>(() => clientV21.StartTraining(new Uri(string.Empty), useTrainingLabels: false, new TrainingOptions()));
             Assert.Throws<ArgumentNullException>(() => clientV21.StartTraining((Uri)null, useTrainingLabels: false, new TrainingOptions()));
         }
 

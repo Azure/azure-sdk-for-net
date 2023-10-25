@@ -11,6 +11,8 @@ namespace Azure.ResourceManager.Redis
         public virtual Azure.Pageable<Azure.ResourceManager.Redis.RedisResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Redis.RedisResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Redis.RedisResource>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Redis.RedisResource> GetIfExists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Redis.RedisResource>> GetIfExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Redis.RedisResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Redis.RedisResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Redis.RedisResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Redis.RedisResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -69,6 +71,8 @@ namespace Azure.ResourceManager.Redis
         public virtual Azure.Pageable<Azure.ResourceManager.Redis.RedisFirewallRuleResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Redis.RedisFirewallRuleResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Redis.RedisFirewallRuleResource>> GetAsync(string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Redis.RedisFirewallRuleResource> GetIfExists(string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Redis.RedisFirewallRuleResource>> GetIfExistsAsync(string ruleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Redis.RedisFirewallRuleResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Redis.RedisFirewallRuleResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Redis.RedisFirewallRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Redis.RedisFirewallRuleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -104,6 +108,8 @@ namespace Azure.ResourceManager.Redis
         public virtual Azure.Pageable<Azure.ResourceManager.Redis.RedisLinkedServerWithPropertyResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Redis.RedisLinkedServerWithPropertyResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Redis.RedisLinkedServerWithPropertyResource>> GetAsync(string linkedServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Redis.RedisLinkedServerWithPropertyResource> GetIfExists(string linkedServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Redis.RedisLinkedServerWithPropertyResource>> GetIfExistsAsync(string linkedServerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Redis.RedisLinkedServerWithPropertyResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Redis.RedisLinkedServerWithPropertyResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Redis.RedisLinkedServerWithPropertyResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Redis.RedisLinkedServerWithPropertyResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -143,6 +149,8 @@ namespace Azure.ResourceManager.Redis
         public virtual Azure.Pageable<Azure.ResourceManager.Redis.RedisPatchScheduleResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Redis.RedisPatchScheduleResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Redis.RedisPatchScheduleResource>> GetAsync(Azure.ResourceManager.Redis.Models.RedisPatchScheduleDefaultName defaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Redis.RedisPatchScheduleResource> GetIfExists(Azure.ResourceManager.Redis.Models.RedisPatchScheduleDefaultName defaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Redis.RedisPatchScheduleResource>> GetIfExistsAsync(Azure.ResourceManager.Redis.Models.RedisPatchScheduleDefaultName defaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Redis.RedisPatchScheduleResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Redis.RedisPatchScheduleResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Redis.RedisPatchScheduleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Redis.RedisPatchScheduleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -178,6 +186,8 @@ namespace Azure.ResourceManager.Redis
         public virtual Azure.Pageable<Azure.ResourceManager.Redis.RedisPrivateEndpointConnectionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Redis.RedisPrivateEndpointConnectionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Redis.RedisPrivateEndpointConnectionResource>> GetAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Redis.RedisPrivateEndpointConnectionResource> GetIfExists(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Redis.RedisPrivateEndpointConnectionResource>> GetIfExistsAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Redis.RedisPrivateEndpointConnectionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Redis.RedisPrivateEndpointConnectionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Redis.RedisPrivateEndpointConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Redis.RedisPrivateEndpointConnectionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -258,6 +268,21 @@ namespace Azure.ResourceManager.Redis
 }
 namespace Azure.ResourceManager.Redis.Models
 {
+    public static partial class ArmRedisModelFactory
+    {
+        public static Azure.ResourceManager.Redis.Models.RedisAccessKeys RedisAccessKeys(string primaryKey = null, string secondaryKey = null) { throw null; }
+        public static Azure.ResourceManager.Redis.Models.RedisCommonConfiguration RedisCommonConfiguration(bool? isRdbBackupEnabled = default(bool?), string rdbBackupFrequency = null, int? rdbBackupMaxSnapshotCount = default(int?), string rdbStorageConnectionString = null, bool? isAofBackupEnabled = default(bool?), string aofStorageConnectionString0 = null, string aofStorageConnectionString1 = null, string maxFragmentationMemoryReserved = null, string maxMemoryPolicy = null, string maxMemoryReserved = null, string maxMemoryDelta = null, string maxClients = null, string preferredDataArchiveAuthMethod = null, string preferredDataPersistenceAuthMethod = null, string zonalConfiguration = null, string authNotRequired = null, string storageSubscriptionId = null, System.Collections.Generic.IDictionary<string, System.BinaryData> additionalProperties = null) { throw null; }
+        public static Azure.ResourceManager.Redis.RedisData RedisData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IEnumerable<string> zones = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Redis.Models.RedisCommonConfiguration redisConfiguration = null, string redisVersion = null, bool? enableNonSslPort = default(bool?), int? replicasPerMaster = default(int?), int? replicasPerPrimary = default(int?), System.Collections.Generic.IDictionary<string, string> tenantSettings = null, int? shardCount = default(int?), Azure.ResourceManager.Redis.Models.RedisTlsVersion? minimumTlsVersion = default(Azure.ResourceManager.Redis.Models.RedisTlsVersion?), Azure.ResourceManager.Redis.Models.RedisPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.Redis.Models.RedisPublicNetworkAccess?), Azure.ResourceManager.Redis.Models.RedisSku sku = null, Azure.Core.ResourceIdentifier subnetId = null, System.Net.IPAddress staticIP = null, Azure.ResourceManager.Redis.Models.RedisProvisioningState? provisioningState = default(Azure.ResourceManager.Redis.Models.RedisProvisioningState?), string hostName = null, int? port = default(int?), int? sslPort = default(int?), Azure.ResourceManager.Redis.Models.RedisAccessKeys accessKeys = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> linkedServers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Redis.Models.RedisInstanceDetails> instances = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Redis.RedisPrivateEndpointConnectionData> privateEndpointConnections = null) { throw null; }
+        public static Azure.ResourceManager.Redis.RedisFirewallRuleData RedisFirewallRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Net.IPAddress startIP = null, System.Net.IPAddress endIP = null) { throw null; }
+        public static Azure.ResourceManager.Redis.Models.RedisForceRebootResult RedisForceRebootResult(string message = null) { throw null; }
+        public static Azure.ResourceManager.Redis.Models.RedisInstanceDetails RedisInstanceDetails(int? sslPort = default(int?), int? nonSslPort = default(int?), string zone = null, int? shardId = default(int?), bool? isMaster = default(bool?), bool? isPrimary = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.Redis.RedisLinkedServerWithPropertyData RedisLinkedServerWithPropertyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier linkedRedisCacheId = null, Azure.Core.AzureLocation? linkedRedisCacheLocation = default(Azure.Core.AzureLocation?), Azure.ResourceManager.Redis.Models.RedisLinkedServerRole? serverRole = default(Azure.ResourceManager.Redis.Models.RedisLinkedServerRole?), string geoReplicatedPrimaryHostName = null, string primaryHostName = null, string provisioningState = null) { throw null; }
+        public static Azure.ResourceManager.Redis.Models.RedisOperationStatus RedisOperationStatus(Azure.Core.ResourceIdentifier id = null, string name = null, string status = null, float? percentComplete = default(float?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Models.OperationStatusResult> operations = null, Azure.ResponseError error = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> properties = null) { throw null; }
+        public static Azure.ResourceManager.Redis.RedisPatchScheduleData RedisPatchScheduleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Redis.Models.RedisPatchScheduleSetting> scheduleEntries = null) { throw null; }
+        public static Azure.ResourceManager.Redis.RedisPrivateEndpointConnectionData RedisPrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.Redis.Models.RedisPrivateLinkServiceConnectionState redisPrivateLinkServiceConnectionState = null, Azure.ResourceManager.Redis.Models.RedisPrivateEndpointConnectionProvisioningState? redisProvisioningState = default(Azure.ResourceManager.Redis.Models.RedisPrivateEndpointConnectionProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.Redis.Models.RedisPrivateLinkResource RedisPrivateLinkResource(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string groupId = null, System.Collections.Generic.IEnumerable<string> requiredMembers = null, System.Collections.Generic.IEnumerable<string> requiredZoneNames = null) { throw null; }
+        public static Azure.ResourceManager.Redis.Models.RedisUpgradeNotification RedisUpgradeNotification(string name = null, System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), System.Collections.Generic.IReadOnlyDictionary<string, string> upsellNotification = null) { throw null; }
+    }
     public partial class ExportRdbContent
     {
         public ExportRdbContent(string prefix, string container) { }
@@ -265,6 +290,7 @@ namespace Azure.ResourceManager.Redis.Models
         public string Format { get { throw null; } set { } }
         public string PreferredDataArchiveAuthMethod { get { throw null; } set { } }
         public string Prefix { get { throw null; } }
+        public string StorageSubscriptionId { get { throw null; } set { } }
     }
     public partial class ImportRdbContent
     {
@@ -272,6 +298,7 @@ namespace Azure.ResourceManager.Redis.Models
         public System.Collections.Generic.IList<string> Files { get { throw null; } }
         public string Format { get { throw null; } set { } }
         public string PreferredDataArchiveAuthMethod { get { throw null; } set { } }
+        public string StorageSubscriptionId { get { throw null; } set { } }
     }
     public partial class RedisAccessKeys
     {
@@ -294,10 +321,11 @@ namespace Azure.ResourceManager.Redis.Models
         public string MaxMemoryPolicy { get { throw null; } set { } }
         public string MaxMemoryReserved { get { throw null; } set { } }
         public string PreferredDataArchiveAuthMethod { get { throw null; } }
-        public string PreferredDataPersistenceAuthMethod { get { throw null; } }
+        public string PreferredDataPersistenceAuthMethod { get { throw null; } set { } }
         public string RdbBackupFrequency { get { throw null; } set { } }
         public int? RdbBackupMaxSnapshotCount { get { throw null; } set { } }
         public string RdbStorageConnectionString { get { throw null; } set { } }
+        public string StorageSubscriptionId { get { throw null; } set { } }
         public string ZonalConfiguration { get { throw null; } }
     }
     public partial class RedisCreateOrUpdateContent

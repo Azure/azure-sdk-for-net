@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.AI.TextAnalytics.Legacy.Models;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
@@ -15,6 +14,10 @@ namespace Azure.AI.TextAnalytics.Legacy
     {
         internal static SentenceAssessment DeserializeSentenceAssessment(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             TokenSentimentValue sentiment = default;
             TargetConfidenceScoreLabel confidenceScores = default;
             int offset = default;

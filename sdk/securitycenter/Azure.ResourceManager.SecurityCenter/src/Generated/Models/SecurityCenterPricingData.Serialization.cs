@@ -31,12 +31,26 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("subPlan"u8);
                 writer.WriteStringValue(SubPlan);
             }
+            if (Optional.IsCollectionDefined(Extensions))
+            {
+                writer.WritePropertyName("extensions"u8);
+                writer.WriteStartArray();
+                foreach (var item in Extensions)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static SecurityCenterPricingData DeserializeSecurityCenterPricingData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -44,8 +58,10 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<SecurityCenterPricingTier> pricingTier = default;
             Optional<string> subPlan = default;
             Optional<TimeSpan> freeTrialRemainingTime = default;
+            Optional<DateTimeOffset> enablementTime = default;
             Optional<bool> deprecated = default;
             Optional<IReadOnlyList<string>> replacedBy = default;
+            Optional<IList<PlanExtension>> extensions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -67,7 +83,6 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -86,7 +101,6 @@ namespace Azure.ResourceManager.SecurityCenter
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             pricingTier = new SecurityCenterPricingTier(property0.Value.GetString());
@@ -101,17 +115,24 @@ namespace Azure.ResourceManager.SecurityCenter
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             freeTrialRemainingTime = property0.Value.GetTimeSpan("P");
+                            continue;
+                        }
+                        if (property0.NameEquals("enablementTime"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enablementTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("deprecated"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             deprecated = property0.Value.GetBoolean();
@@ -121,7 +142,6 @@ namespace Azure.ResourceManager.SecurityCenter
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -132,11 +152,25 @@ namespace Azure.ResourceManager.SecurityCenter
                             replacedBy = array;
                             continue;
                         }
+                        if (property0.NameEquals("extensions"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<PlanExtension> array = new List<PlanExtension>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(PlanExtension.DeserializePlanExtension(item));
+                            }
+                            extensions = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new SecurityCenterPricingData(id, name, type, systemData.Value, Optional.ToNullable(pricingTier), subPlan.Value, Optional.ToNullable(freeTrialRemainingTime), Optional.ToNullable(deprecated), Optional.ToList(replacedBy));
+            return new SecurityCenterPricingData(id, name, type, systemData.Value, Optional.ToNullable(pricingTier), subPlan.Value, Optional.ToNullable(freeTrialRemainingTime), Optional.ToNullable(enablementTime), Optional.ToNullable(deprecated), Optional.ToList(replacedBy), Optional.ToList(extensions));
         }
     }
 }

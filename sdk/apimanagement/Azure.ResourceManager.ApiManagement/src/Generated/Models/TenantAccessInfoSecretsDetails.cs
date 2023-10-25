@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of TenantAccessInfoSecretsDetails. </summary>
-        /// <param name="accessInfoType"> Access Information type (&apos;access&apos; or &apos;gitAccess&apos;). </param>
+        /// <param name="accessInfoType"> Access Information type ('access' or 'gitAccess'). </param>
         /// <param name="principalId"> Principal (User) Identifier. </param>
-        /// <param name="primaryKey"> Primary access key. This property will not be filled on &apos;GET&apos; operations! Use &apos;/listSecrets&apos; POST request to get the value. </param>
-        /// <param name="secondaryKey"> Secondary access key. This property will not be filled on &apos;GET&apos; operations! Use &apos;/listSecrets&apos; POST request to get the value. </param>
+        /// <param name="primaryKey"> Primary access key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
+        /// <param name="secondaryKey"> Secondary access key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </param>
         /// <param name="isDirectAccessEnabled"> Determines whether direct access is enabled. </param>
         internal TenantAccessInfoSecretsDetails(string accessInfoType, string principalId, string primaryKey, string secondaryKey, bool? isDirectAccessEnabled)
         {
@@ -30,13 +30,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
             IsDirectAccessEnabled = isDirectAccessEnabled;
         }
 
-        /// <summary> Access Information type (&apos;access&apos; or &apos;gitAccess&apos;). </summary>
+        /// <summary> Access Information type ('access' or 'gitAccess'). </summary>
         public string AccessInfoType { get; }
         /// <summary> Principal (User) Identifier. </summary>
         public string PrincipalId { get; }
-        /// <summary> Primary access key. This property will not be filled on &apos;GET&apos; operations! Use &apos;/listSecrets&apos; POST request to get the value. </summary>
+        /// <summary> Primary access key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </summary>
         public string PrimaryKey { get; }
-        /// <summary> Secondary access key. This property will not be filled on &apos;GET&apos; operations! Use &apos;/listSecrets&apos; POST request to get the value. </summary>
+        /// <summary> Secondary access key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </summary>
         public string SecondaryKey { get; }
         /// <summary> Determines whether direct access is enabled. </summary>
         public bool? IsDirectAccessEnabled { get; }

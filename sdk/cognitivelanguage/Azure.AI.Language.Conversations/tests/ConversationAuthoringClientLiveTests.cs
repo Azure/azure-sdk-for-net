@@ -4,6 +4,7 @@
 using System;
 using System.Threading.Tasks;
 using Azure.AI.Language.Conversations.Authoring;
+using Azure.Core.Serialization;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -57,8 +58,10 @@ namespace Azure.AI.Language.Conversations.Tests
                 InstrumentClientOptions(
                     new ConversationsClientOptions(ServiceVersion)));
 
-            AsyncPageable<BinaryData> response = client.GetProjectsAsync();
-            Assert.That(await response.ToEnumerableAsync(), Has.Count.AtLeast(1));
+            Response response = await client.GetProjectAsync(TestEnvironment.ProjectName);
+
+            dynamic project = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
+            Assert.That((string)project.ProjectKind, Is.EqualTo("Conversation"));
         }
     }
 }

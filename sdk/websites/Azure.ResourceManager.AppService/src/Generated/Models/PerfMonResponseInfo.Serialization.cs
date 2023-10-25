@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static PerfMonResponseInfo DeserializePerfMonResponseInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> code = default;
             Optional<string> message = default;
             Optional<PerfMonSet> data = default;
@@ -33,7 +37,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     data = PerfMonSet.DeserializePerfMonSet(property.Value);

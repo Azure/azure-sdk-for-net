@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
     {
         internal static ApiPortalResourceList DeserializeApiPortalResourceList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<AppPlatformApiPortalData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AppPlatformApiPortalData> array = new List<AppPlatformApiPortalData>();

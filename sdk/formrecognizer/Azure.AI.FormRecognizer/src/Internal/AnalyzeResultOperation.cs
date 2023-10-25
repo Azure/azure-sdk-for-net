@@ -6,7 +6,6 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    [CodeGenModel("AnalyzeResultOperation")]
     internal partial class AnalyzeResultOperation
     {
         /// <summary> Encountered error during document analysis. </summary>

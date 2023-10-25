@@ -30,6 +30,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static LinkedServiceDebugResource DeserializeLinkedServiceDebugResource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             LinkedService properties = default;
             Optional<string> name = default;
             foreach (var property in element.EnumerateObject())

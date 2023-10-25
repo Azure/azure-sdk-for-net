@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="metricNamespace"> Namespace of the metric. </param>
         /// <param name="timeAggregation"> the criteria time aggregation types. </param>
         /// <param name="dimensions"> List of dimension conditions. </param>
-        /// <param name="skipMetricValidation"> Allows creating an alert rule on a custom metric that isn&apos;t yet emitted, by causing the metric validation to be skipped. </param>
+        /// <param name="skipMetricValidation"> Allows creating an alert rule on a custom metric that isn't yet emitted, by causing the metric validation to be skipped. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="operator"> the criteria operator. </param>
         /// <param name="threshold"> the criteria threshold value that activates the alert. </param>

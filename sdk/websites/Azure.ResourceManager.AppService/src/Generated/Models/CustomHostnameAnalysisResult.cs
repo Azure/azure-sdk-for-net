@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="customDomainVerificationFailureInfo"> Raw failure information if DNS verification fails. </param>
         /// <param name="hasConflictOnScaleUnit"> &lt;code&gt;true&lt;/code&gt; if there is a conflict on a scale unit; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="hasConflictAcrossSubscription"> &lt;code&gt;true&lt;/code&gt; if there is a conflict across subscriptions; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="conflictingAppResourceId"> Name of the conflicting app on scale unit if it&apos;s within the same subscription. </param>
+        /// <param name="conflictingAppResourceId"> Name of the conflicting app on scale unit if it's within the same subscription. </param>
         /// <param name="cNameRecords"> CName records controller can see for this hostname. </param>
         /// <param name="txtRecords"> TXT records controller can see for this hostname. </param>
         /// <param name="aRecords"> A records controller can see for this hostname. </param>
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppService.Models
         public bool? HasConflictOnScaleUnit { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if there is a conflict across subscriptions; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? HasConflictAcrossSubscription { get; }
-        /// <summary> Name of the conflicting app on scale unit if it&apos;s within the same subscription. </summary>
+        /// <summary> Name of the conflicting app on scale unit if it's within the same subscription. </summary>
         public string ConflictingAppResourceId { get; }
         /// <summary> CName records controller can see for this hostname. </summary>
         public IList<string> CNameRecords { get; }

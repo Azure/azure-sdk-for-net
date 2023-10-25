@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningDataPathAssetReference DeserializeMachineLearningDataPathAssetReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> datastoreId = default;
             Optional<string> path = default;
             ReferenceType referenceType = default;

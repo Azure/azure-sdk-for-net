@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -20,20 +21,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(DateFormat))
             {
                 writer.WritePropertyName("dateFormat"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(DateFormat);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(DateFormat.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, DateFormat);
             }
             if (Optional.IsDefined(TimestampFormat))
             {
                 writer.WritePropertyName("timestampFormat"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(TimestampFormat);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(TimestampFormat.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, TimestampFormat);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ImportSettingsType);
@@ -43,7 +36,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
@@ -51,8 +47,12 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static AzureDatabricksDeltaLakeImportCommand DeserializeAzureDatabricksDeltaLakeImportCommand(JsonElement element)
         {
-            Optional<BinaryData> dateFormat = default;
-            Optional<BinaryData> timestampFormat = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<DataFactoryElement<string>> dateFormat = default;
+            Optional<DataFactoryElement<string>> timestampFormat = default;
             string type = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -62,20 +62,18 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    dateFormat = BinaryData.FromString(property.Value.GetRawText());
+                    dateFormat = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("timestampFormat"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    timestampFormat = BinaryData.FromString(property.Value.GetRawText());
+                    timestampFormat = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"u8))

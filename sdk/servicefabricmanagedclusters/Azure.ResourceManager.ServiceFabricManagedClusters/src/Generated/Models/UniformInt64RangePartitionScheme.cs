@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="lowKey">
         /// The lower bound of the partition key range that
         /// should be split between the partition ‘Count’
-        /// 
+        ///
         /// </param>
         /// <param name="highKey">
         /// The upper bound of the partition key range that
         /// should be split between the partition ‘Count’
-        /// 
+        ///
         /// </param>
         public UniformInt64RangePartitionScheme(int count, long lowKey, long highKey)
         {
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="lowKey">
         /// The lower bound of the partition key range that
         /// should be split between the partition ‘Count’
-        /// 
+        ///
         /// </param>
         /// <param name="highKey">
         /// The upper bound of the partition key range that
         /// should be split between the partition ‘Count’
-        /// 
+        ///
         /// </param>
         internal UniformInt64RangePartitionScheme(PartitionScheme partitionScheme, int count, long lowKey, long highKey) : base(partitionScheme)
         {
@@ -56,13 +56,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <summary>
         /// The lower bound of the partition key range that
         /// should be split between the partition ‘Count’
-        /// 
+        ///
         /// </summary>
         public long LowKey { get; set; }
         /// <summary>
         /// The upper bound of the partition key range that
         /// should be split between the partition ‘Count’
-        /// 
+        ///
         /// </summary>
         public long HighKey { get; set; }
     }

@@ -48,6 +48,11 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in MetaData)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStartArray();
                     foreach (var item0 in item)
                     {
@@ -77,6 +82,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static DetectorAbnormalTimePeriod DeserializeDetectorAbnormalTimePeriod(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
             Optional<string> message = default;
@@ -91,7 +100,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startTime = property.Value.GetDateTimeOffset("O");
@@ -101,7 +109,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     endTime = property.Value.GetDateTimeOffset("O");
@@ -121,7 +128,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     priority = property.Value.GetDouble();
@@ -131,18 +137,24 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<IList<AppServiceNameValuePair>> array = new List<IList<AppServiceNameValuePair>>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        List<AppServiceNameValuePair> array0 = new List<AppServiceNameValuePair>();
-                        foreach (var item0 in item.EnumerateArray())
+                        if (item.ValueKind == JsonValueKind.Null)
                         {
-                            array0.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item0));
+                            array.Add(null);
                         }
-                        array.Add(array0);
+                        else
+                        {
+                            List<AppServiceNameValuePair> array0 = new List<AppServiceNameValuePair>();
+                            foreach (var item0 in item.EnumerateArray())
+                            {
+                                array0.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item0));
+                            }
+                            array.Add(array0);
+                        }
                     }
                     metaData = array;
                     continue;
@@ -151,7 +163,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = property.Value.GetString().ToDetectorIssueType();
@@ -161,7 +172,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DiagnosticSolution> array = new List<DiagnosticSolution>();

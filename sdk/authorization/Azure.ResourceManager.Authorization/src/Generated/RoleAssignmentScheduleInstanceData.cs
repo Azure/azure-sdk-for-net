@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Authorization
 {
-    /// <summary> A class representing the RoleAssignmentScheduleInstance data model. </summary>
+    /// <summary>
+    /// A class representing the RoleAssignmentScheduleInstance data model.
+    /// Information about current or upcoming role assignment schedule instance
+    /// </summary>
     public partial class RoleAssignmentScheduleInstanceData : ResourceData
     {
         /// <summary> Initializes a new instance of RoleAssignmentScheduleInstanceData. </summary>
@@ -38,8 +41,8 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="linkedRoleEligibilityScheduleInstanceId"> roleEligibilityScheduleInstanceId linked to this roleAssignmentScheduleInstance. </param>
         /// <param name="assignmentType"> Assignment type of the role assignment schedule. </param>
         /// <param name="memberType"> Membership type of the role assignment schedule. </param>
-        /// <param name="condition"> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase &apos;foo_storage_container&apos;. </param>
-        /// <param name="conditionVersion"> Version of the condition. Currently accepted value is &apos;2.0&apos;. </param>
+        /// <param name="condition"> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase 'foo_storage_container'. </param>
+        /// <param name="conditionVersion"> Version of the condition. Currently accepted value is '2.0'. </param>
         /// <param name="createdOn"> DateTime when role assignment schedule was created. </param>
         /// <param name="expandedProperties"> Additional properties of principal, scope and role definition. </param>
         internal RoleAssignmentScheduleInstanceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, ResourceIdentifier roleDefinitionId, Guid? principalId, RoleManagementPrincipalType? principalType, ResourceIdentifier roleAssignmentScheduleId, ResourceIdentifier originRoleAssignmentId, RoleManagementScheduleStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, ResourceIdentifier linkedRoleEligibilityScheduleId, ResourceIdentifier linkedRoleEligibilityScheduleInstanceId, RoleAssignmentScheduleAssignmentType? assignmentType, RoleManagementScheduleMemberType? memberType, string condition, string conditionVersion, DateTimeOffset? createdOn, RoleManagementExpandedProperties expandedProperties) : base(id, name, resourceType, systemData)
@@ -89,9 +92,9 @@ namespace Azure.ResourceManager.Authorization
         public RoleAssignmentScheduleAssignmentType? AssignmentType { get; }
         /// <summary> Membership type of the role assignment schedule. </summary>
         public RoleManagementScheduleMemberType? MemberType { get; }
-        /// <summary> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase &apos;foo_storage_container&apos;. </summary>
+        /// <summary> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase 'foo_storage_container'. </summary>
         public string Condition { get; }
-        /// <summary> Version of the condition. Currently accepted value is &apos;2.0&apos;. </summary>
+        /// <summary> Version of the condition. Currently accepted value is '2.0'. </summary>
         public string ConditionVersion { get; }
         /// <summary> DateTime when role assignment schedule was created. </summary>
         public DateTimeOffset? CreatedOn { get; }

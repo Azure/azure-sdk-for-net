@@ -59,12 +59,26 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(Tiers))
+            {
+                writer.WritePropertyName("tiers"u8);
+                writer.WriteStartArray();
+                foreach (var item in Tiers)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static ApplicationGatewayFirewallRuleSet DeserializeApplicationGatewayFirewallRuleSet(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
             Optional<ResourceType> type = default;
@@ -74,13 +88,13 @@ namespace Azure.ResourceManager.Network.Models
             Optional<string> ruleSetType = default;
             Optional<string> ruleSetVersion = default;
             Optional<IList<ApplicationGatewayFirewallRuleGroup>> ruleGroups = default;
+            Optional<IList<ApplicationGatewayTierType>> tiers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -95,7 +109,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     type = new ResourceType(property.Value.GetString());
@@ -105,7 +118,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
@@ -115,7 +127,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -139,7 +150,6 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new NetworkProvisioningState(property0.Value.GetString());
@@ -159,7 +169,6 @@ namespace Azure.ResourceManager.Network.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ApplicationGatewayFirewallRuleGroup> array = new List<ApplicationGatewayFirewallRuleGroup>();
@@ -170,11 +179,25 @@ namespace Azure.ResourceManager.Network.Models
                             ruleGroups = array;
                             continue;
                         }
+                        if (property0.NameEquals("tiers"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ApplicationGatewayTierType> array = new List<ApplicationGatewayTierType>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(new ApplicationGatewayTierType(item.GetString()));
+                            }
+                            tiers = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ApplicationGatewayFirewallRuleSet(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(provisioningState), ruleSetType.Value, ruleSetVersion.Value, Optional.ToList(ruleGroups));
+            return new ApplicationGatewayFirewallRuleSet(id.Value, name.Value, Optional.ToNullable(type), Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(provisioningState), ruleSetType.Value, ruleSetVersion.Value, Optional.ToList(ruleGroups), Optional.ToList(tiers));
         }
     }
 }

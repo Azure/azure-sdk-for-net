@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     {
         internal static MySqlFlexibleServerPrivateDnsZoneSuffixResponse DeserializeMySqlFlexibleServerPrivateDnsZoneSuffixResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> privateDnsZoneSuffix = default;
             foreach (var property in element.EnumerateObject())
             {

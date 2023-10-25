@@ -14,6 +14,10 @@ namespace Azure.Maps.Routing.Models
     {
         internal static RouteSection DeserializeRouteSection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> startPointIndex = default;
             Optional<int> endPointIndex = default;
             Optional<ResponseSectionType> sectionType = default;
@@ -29,7 +33,6 @@ namespace Azure.Maps.Routing.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startPointIndex = property.Value.GetInt32();
@@ -39,7 +42,6 @@ namespace Azure.Maps.Routing.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     endPointIndex = property.Value.GetInt32();
@@ -49,7 +51,6 @@ namespace Azure.Maps.Routing.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sectionType = new ResponseSectionType(property.Value.GetString());
@@ -59,7 +60,6 @@ namespace Azure.Maps.Routing.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     travelMode = new ResponseTravelMode(property.Value.GetString());
@@ -69,7 +69,6 @@ namespace Azure.Maps.Routing.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     simpleCategory = new TrafficIncidentCategory(property.Value.GetString());
@@ -79,7 +78,6 @@ namespace Azure.Maps.Routing.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     effectiveSpeedInKmh = property.Value.GetInt32();
@@ -89,7 +87,6 @@ namespace Azure.Maps.Routing.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     delayInSeconds = property.Value.GetInt32();
@@ -99,7 +96,6 @@ namespace Azure.Maps.Routing.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     magnitudeOfDelay = new DelayMagnitude(property.Value.GetString());
@@ -109,7 +105,6 @@ namespace Azure.Maps.Routing.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tec = RouteSectionTec.DeserializeRouteSectionTec(property.Value);

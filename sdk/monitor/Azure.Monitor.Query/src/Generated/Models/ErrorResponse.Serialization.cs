@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -14,6 +13,10 @@ namespace Azure.Monitor.Query.Models
     {
         internal static ErrorResponse DeserializeErrorResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ErrorInfo error = default;
             foreach (var property in element.EnumerateObject())
             {

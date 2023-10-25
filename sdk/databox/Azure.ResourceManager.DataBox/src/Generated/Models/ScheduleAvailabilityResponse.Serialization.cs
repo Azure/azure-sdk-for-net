@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         internal static ScheduleAvailabilityResponse DeserializeScheduleAvailabilityResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DateTimeOffset>> availableDates = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.DataBox.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DateTimeOffset> array = new List<DateTimeOffset>();

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Marketplace.Models
     {
         internal static StopSellNotifications DeserializeStopSellNotifications(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> offerId = default;
             Optional<string> displayName = default;
             Optional<bool> isEntire = default;
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.Marketplace.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isEntire = property.Value.GetBoolean();
@@ -48,7 +51,6 @@ namespace Azure.ResourceManager.Marketplace.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     messageCode = property.Value.GetInt64();
@@ -58,7 +60,6 @@ namespace Azure.ResourceManager.Marketplace.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        icon = null;
                         continue;
                     }
                     icon = new Uri(property.Value.GetString());
@@ -68,7 +69,6 @@ namespace Azure.ResourceManager.Marketplace.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PlanNotificationDetails> array = new List<PlanNotificationDetails>();

@@ -42,7 +42,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         internal static CustomRolloutStatus DeserializeCustomRolloutStatus(JsonElement element)
         {
-            Optional<IList<string>> completedRegions = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IList<AzureLocation>> completedRegions = default;
             Optional<IDictionary<string, ExtendedErrorInfo>> failedOrSkippedRegions = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -50,13 +54,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<AzureLocation> array = new List<AzureLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new AzureLocation(item.GetString()));
                     }
                     completedRegions = array;
                     continue;
@@ -65,7 +68,6 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, ExtendedErrorInfo> dictionary = new Dictionary<string, ExtendedErrorInfo>();

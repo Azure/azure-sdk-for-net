@@ -177,6 +177,106 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         }
 
         [Test]
+        public async Task CanRenewWithSeparateReceiver()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                ServiceBusSender sender = client.CreateSender(scope.QueueName);
+                await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage());
+                var receiver1 = client.CreateReceiver(scope.QueueName);
+                var message1 = await receiver1.ReceiveMessageAsync();
+                await receiver1.RenewMessageLockAsync(message1);
+
+                var receiver2 = client.CreateReceiver(scope.QueueName);
+                await receiver2.RenewMessageLockAsync(message1);
+                await receiver2.CompleteMessageAsync(message1);
+            }
+        }
+
+        [Test]
+        public async Task CanCompleteAfterLinkReconnect()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                var sender = client.CreateSender(scope.QueueName);
+                var receiver = client.CreateReceiver(scope.QueueName);
+                await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage());
+
+                var message = await receiver.ReceiveMessageAsync();
+
+                SimulateNetworkFailure(client);
+
+                await receiver.CompleteMessageAsync(message);
+            }
+        }
+
+        [Test]
+        public async Task CanAbandonAfterLinkReconnect()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                var sender = client.CreateSender(scope.QueueName);
+                var receiver = client.CreateReceiver(scope.QueueName);
+                await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage());
+
+                var message = await receiver.ReceiveMessageAsync();
+
+                SimulateNetworkFailure(client);
+
+                await receiver.AbandonMessageAsync(message, new Dictionary<string, object>{{ "test key", "test value" }});
+                message = await receiver.ReceiveMessageAsync();
+                Assert.AreEqual("test value", message.ApplicationProperties["test key"]);
+            }
+        }
+
+        [Test]
+        public async Task CanDeferAfterLinkReconnect()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                var sender = client.CreateSender(scope.QueueName);
+                var receiver = client.CreateReceiver(scope.QueueName);
+                await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage());
+
+                var message = await receiver.ReceiveMessageAsync();
+
+                SimulateNetworkFailure(client);
+
+                await receiver.DeferMessageAsync(message, new Dictionary<string, object>{{ "test key", "test value" }});
+                message = await receiver.ReceiveDeferredMessageAsync(message.SequenceNumber);
+                Assert.AreEqual("test value", message.ApplicationProperties["test key"]);
+            }
+        }
+
+        [Test]
+        public async Task CanDeadLetterAfterLinkReconnect()
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                var sender = client.CreateSender(scope.QueueName);
+                var receiver = client.CreateReceiver(scope.QueueName);
+                await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage());
+
+                var message = await receiver.ReceiveMessageAsync();
+
+                SimulateNetworkFailure(client);
+
+                await receiver.DeadLetterMessageAsync(message, new Dictionary<string, object>{{ "test key", "test value" }}, "test reason", "test description");
+
+                var dlqReceiver = client.CreateReceiver(scope.QueueName, new ServiceBusReceiverOptions { SubQueue = SubQueue.DeadLetter });
+                var dlqMessage = await dlqReceiver.ReceiveMessageAsync();
+                Assert.AreEqual("test reason", dlqMessage.DeadLetterReason);
+                Assert.AreEqual("test description", dlqMessage.DeadLetterErrorDescription);
+                Assert.AreEqual("test value", dlqMessage.ApplicationProperties["test key"]);
+            }
+        }
+
+        [Test]
         public async Task PeekMessagesWithACustomIdentifier()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))
@@ -395,7 +495,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         }
 
         [Test]
-        [Ignore("Waiting for service fix for https://github.com/Azure/azure-sdk-for-net/issues/25275")]
         public async Task ServerBusyRespected()
         {
             await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: false))

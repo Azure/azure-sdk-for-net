@@ -11,7 +11,10 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the Route data model. </summary>
+    /// <summary>
+    /// A class representing the Route data model.
+    /// Route resource.
+    /// </summary>
     public partial class RouteData : NetworkWritableResourceData
     {
         /// <summary> Initializes a new instance of RouteData. </summary>

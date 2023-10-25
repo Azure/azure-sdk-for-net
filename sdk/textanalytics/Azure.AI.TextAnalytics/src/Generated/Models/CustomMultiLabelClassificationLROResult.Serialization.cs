@@ -35,6 +35,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static CustomMultiLabelClassificationLROResult DeserializeCustomMultiLabelClassificationLROResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             CustomLabelClassificationResult results = default;
             AnalyzeTextLROResultsKind kind = default;
             Optional<string> taskName = default;

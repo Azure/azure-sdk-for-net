@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="resyncProcessedBytes"> The resync processed bytes. </param>
         /// <param name="resyncTotalTransferredBytes"> The resync total transferred bytes. </param>
         /// <param name="resyncLast15MinutesTransferredBytes"> The resync last 15 minutes transferred bytes. </param>
-        /// <param name="resyncLastDataTransferTimeUTC"> The last data transfer time in UTC. </param>
+        /// <param name="resyncLastDataTransferOn"> The last data transfer time in UTC. </param>
         /// <param name="resyncStartOn"> The resync start time. </param>
         /// <param name="progressHealth"> The Progress Health. </param>
         /// <param name="progressStatus"> The Progress Status. </param>
         /// <param name="secondsToTakeSwitchProvider"> The seconds to take for switch provider. </param>
-        internal InMageAzureV2ProtectedDiskDetails(string diskId, string diskName, string protectionStage, string healthErrorCode, long? rpoInSeconds, string resyncRequired, int? resyncProgressPercentage, long? resyncDurationInSeconds, long? diskCapacityInBytes, long? fileSystemCapacityInBytes, double? sourceDataInMegaBytes, double? psDataInMegaBytes, double? targetDataInMegaBytes, string diskResized, DateTimeOffset? lastRpoCalculatedOn, long? resyncProcessedBytes, long? resyncTotalTransferredBytes, long? resyncLast15MinutesTransferredBytes, DateTimeOffset? resyncLastDataTransferTimeUTC, DateTimeOffset? resyncStartOn, string progressHealth, string progressStatus, long? secondsToTakeSwitchProvider)
+        internal InMageAzureV2ProtectedDiskDetails(string diskId, string diskName, string protectionStage, string healthErrorCode, long? rpoInSeconds, string resyncRequired, int? resyncProgressPercentage, long? resyncDurationInSeconds, long? diskCapacityInBytes, long? fileSystemCapacityInBytes, double? sourceDataInMegaBytes, double? psDataInMegaBytes, double? targetDataInMegaBytes, string diskResized, DateTimeOffset? lastRpoCalculatedOn, long? resyncProcessedBytes, long? resyncTotalTransferredBytes, long? resyncLast15MinutesTransferredBytes, DateTimeOffset? resyncLastDataTransferOn, DateTimeOffset? resyncStartOn, string progressHealth, string progressStatus, long? secondsToTakeSwitchProvider)
         {
             DiskId = diskId;
             DiskName = diskName;
@@ -54,14 +54,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             DiskCapacityInBytes = diskCapacityInBytes;
             FileSystemCapacityInBytes = fileSystemCapacityInBytes;
             SourceDataInMegaBytes = sourceDataInMegaBytes;
-            PsDataInMegaBytes = psDataInMegaBytes;
+            PSDataInMegaBytes = psDataInMegaBytes;
             TargetDataInMegaBytes = targetDataInMegaBytes;
             DiskResized = diskResized;
             LastRpoCalculatedOn = lastRpoCalculatedOn;
             ResyncProcessedBytes = resyncProcessedBytes;
             ResyncTotalTransferredBytes = resyncTotalTransferredBytes;
             ResyncLast15MinutesTransferredBytes = resyncLast15MinutesTransferredBytes;
-            ResyncLastDataTransferTimeUTC = resyncLastDataTransferTimeUTC;
+            ResyncLastDataTransferOn = resyncLastDataTransferOn;
             ResyncStartOn = resyncStartOn;
             ProgressHealth = progressHealth;
             ProgressStatus = progressStatus;
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The source data transit in MB. </summary>
         public double? SourceDataInMegaBytes { get; }
         /// <summary> The PS data transit in MB. </summary>
-        public double? PsDataInMegaBytes { get; }
+        public double? PSDataInMegaBytes { get; }
         /// <summary> The target data transit in MB. </summary>
         public double? TargetDataInMegaBytes { get; }
         /// <summary> A value indicating whether disk is resized. </summary>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The resync last 15 minutes transferred bytes. </summary>
         public long? ResyncLast15MinutesTransferredBytes { get; }
         /// <summary> The last data transfer time in UTC. </summary>
-        public DateTimeOffset? ResyncLastDataTransferTimeUTC { get; }
+        public DateTimeOffset? ResyncLastDataTransferOn { get; }
         /// <summary> The resync start time. </summary>
         public DateTimeOffset? ResyncStartOn { get; }
         /// <summary> The Progress Health. </summary>

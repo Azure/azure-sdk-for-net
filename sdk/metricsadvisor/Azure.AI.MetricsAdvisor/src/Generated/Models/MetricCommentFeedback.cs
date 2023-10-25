@@ -14,7 +14,6 @@ namespace Azure.AI.MetricsAdvisor
     /// <summary> The CommentFeedback. </summary>
     public partial class MetricCommentFeedback : MetricFeedback
     {
-
         /// <summary> Initializes a new instance of MetricCommentFeedback. </summary>
         /// <param name="feedbackKind"> feedback type. </param>
         /// <param name="id"> feedback unique id. </param>

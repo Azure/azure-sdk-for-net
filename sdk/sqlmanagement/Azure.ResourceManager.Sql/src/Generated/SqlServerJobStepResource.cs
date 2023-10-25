@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a job step in a job&apos;s current version.
+        /// Gets a job step in a job's current version.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a job step in a job&apos;s current version.
+        /// Gets a job step in a job's current version.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

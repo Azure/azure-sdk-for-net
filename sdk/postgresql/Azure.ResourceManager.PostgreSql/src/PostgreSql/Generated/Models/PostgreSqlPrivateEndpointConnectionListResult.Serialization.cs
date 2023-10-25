@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.PostgreSql.Models
     {
         internal static PostgreSqlPrivateEndpointConnectionListResult DeserializePostgreSqlPrivateEndpointConnectionListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<PostgreSqlPrivateEndpointConnectionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PostgreSqlPrivateEndpointConnectionData> array = new List<PostgreSqlPrivateEndpointConnectionData>();

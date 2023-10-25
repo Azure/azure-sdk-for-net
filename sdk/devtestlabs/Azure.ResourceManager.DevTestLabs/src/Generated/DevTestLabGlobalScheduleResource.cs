@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=status)&apos;. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DevTestLabGlobalScheduleResource>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
         {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=status)&apos;. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=status)'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DevTestLabGlobalScheduleResource> Get(string expand = null, CancellationToken cancellationToken = default)
         {
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary>
-        /// Updates a schedule&apos;s target resource Id. This operation can take a while to complete.
+        /// Updates a schedule's target resource Id. This operation can take a while to complete.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary>
-        /// Updates a schedule&apos;s target resource Id. This operation can take a while to complete.
+        /// Updates a schedule's target resource Id. This operation can take a while to complete.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

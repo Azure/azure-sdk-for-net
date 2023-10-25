@@ -54,6 +54,10 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         internal static NfsAccessRule DeserializeNfsAccessRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             NfsAccessRuleScope scope = default;
             Optional<string> filter = default;
             NfsAccessRuleAccess access = default;
@@ -83,7 +87,6 @@ namespace Azure.ResourceManager.StorageCache.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     suid = property.Value.GetBoolean();
@@ -93,7 +96,6 @@ namespace Azure.ResourceManager.StorageCache.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     submountAccess = property.Value.GetBoolean();
@@ -103,7 +105,6 @@ namespace Azure.ResourceManager.StorageCache.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rootSquash = property.Value.GetBoolean();

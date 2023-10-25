@@ -85,6 +85,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// with visibility of 'remoteUser', a 'certs' directory is created in
         /// the user's home directory (e.g., /home/{user-name}/certs) and
         /// Certificates are placed in that directory.
+        ///
+        /// Warning: This property is deprecated and will be removed after
+        /// February, 2024. Please use the [Azure KeyVault
+        /// Extension](https://learn.microsoft.com/azure/batch/batch-certificate-migration-guide)
+        /// instead.
         /// </remarks>
         [JsonProperty(PropertyName = "certificateReferences")]
         public IList<CertificateReference> CertificateReferences { get; set; }

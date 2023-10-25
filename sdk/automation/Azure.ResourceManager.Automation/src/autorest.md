@@ -5,16 +5,21 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
-generate-model-factory: false
 csharp: true
 library-name: Automation
 namespace: Azure.ResourceManager.Automation
 require: https://github.com/Azure/azure-rest-api-specs/blob/d1b0569d8adbd342a1111d6a69764d099f5f717c/specification/automation/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+
+# mgmt-debug: 
+#   show-serialized-names: true
 
 rename-mapping:
   AutomationAccount.properties.publicNetworkAccess: IsPublicNetworkAccessAllowed
@@ -130,6 +135,8 @@ rename-mapping:
   WindowsUpdateClasses: WindowsUpdateClassification
   WindowsProperties.excludedKbNumbers: ExcludedKBNumbers
   WindowsProperties.includedKbNumbers: IncludedKBNumbers
+  Certificate.properties.thumbprint: ThumbprintString
+  CertificateCreateOrUpdateParameters.properties.thumbprint: ThumbprintString
 
 prepend-rp-prefix:
   - Certificate
@@ -192,9 +199,8 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
-  'thumbprint': 'any'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -219,6 +225,9 @@ rename-rules:
 
 no-property-type-replacement:
   - JobNavigation
+
+models-to-treat-empty-string-as-null:
+  - AutomationWebhookData
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/objectDataTypes/{typeName}/fields: AutomationAccountResource

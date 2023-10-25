@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 using Azure.MixedReality.RemoteRendering;
 
 namespace Azure.MixedReality.RemoteRendering.Models
@@ -15,6 +14,10 @@ namespace Azure.MixedReality.RemoteRendering.Models
     {
         internal static ErrorResponse DeserializeErrorResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             RemoteRenderingServiceError error = default;
             foreach (var property in element.EnumerateObject())
             {

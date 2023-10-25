@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -14,6 +13,10 @@ namespace Azure.ResourceManager.Synapse.Models
     {
         internal static SynapseDataSourceCapacity DeserializeSynapseDataSourceCapacity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SynapseDataSourceScaleType scaleType = default;
             int minimum = default;
             int maximum = default;

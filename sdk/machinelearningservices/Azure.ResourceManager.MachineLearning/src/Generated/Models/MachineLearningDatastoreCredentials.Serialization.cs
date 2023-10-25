@@ -22,12 +22,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningDatastoreCredentials DeserializeMachineLearningDatastoreCredentials(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("credentialsType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
                     case "AccountKey": return MachineLearningAccountKeyDatastoreCredentials.DeserializeMachineLearningAccountKeyDatastoreCredentials(element);
                     case "Certificate": return MachineLearningCertificateDatastoreCredentials.DeserializeMachineLearningCertificateDatastoreCredentials(element);
+                    case "KerberosKeytab": return KerberosKeytabCredentials.DeserializeKerberosKeytabCredentials(element);
+                    case "KerberosPassword": return KerberosPasswordCredentials.DeserializeKerberosPasswordCredentials(element);
                     case "None": return MachineLearningNoneDatastoreCredentials.DeserializeMachineLearningNoneDatastoreCredentials(element);
                     case "Sas": return MachineLearningSasDatastoreCredentials.DeserializeMachineLearningSasDatastoreCredentials(element);
                     case "ServicePrincipal": return MachineLearningServicePrincipalDatastoreCredentials.DeserializeMachineLearningServicePrincipalDatastoreCredentials(element);

@@ -4,13 +4,15 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
-generate-model-factory: false
 library-name: ContainerInstance
 namespace: Azure.ResourceManager.ContainerInstance
-require: https://github.com/Azure/azure-rest-api-specs/blob/f5a5c4331869641fb5fa86f2e1e78ecd8e456483/specification/containerinstance/resource-manager/readme.md
-tag: package-preview-2022-10
+require: https://github.com/Azure/azure-rest-api-specs/blob/7990bc19fe4941681605891960006538d3528f78/specification/containerinstance/resource-manager/readme.md
+tag: package-2023-05
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -22,7 +24,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -100,4 +102,7 @@ rename-mapping:
   GpuSku: ContainerGpuSku
   LogAnalytics: ContainerGroupLogAnalytics
   LogAnalyticsLogType: ContainerGroupLogAnalyticsLogType
+  SecurityContextDefinition: ContainerSecurityContextDefinition
+  SecurityContextCapabilitiesDefinition: ContainerSecurityContextCapabilitiesDefinition
+  SecurityContextDefinition.privileged: IsPrivileged
 ```

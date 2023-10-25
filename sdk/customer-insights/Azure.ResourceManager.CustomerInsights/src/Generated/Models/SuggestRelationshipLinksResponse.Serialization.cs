@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     {
         internal static SuggestRelationshipLinksResponse DeserializeSuggestRelationshipLinksResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> interactionName = default;
             Optional<IReadOnlyList<RelationshipsLookup>> suggestedRelationships = default;
             foreach (var property in element.EnumerateObject())
@@ -28,7 +32,6 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RelationshipsLookup> array = new List<RelationshipsLookup>();

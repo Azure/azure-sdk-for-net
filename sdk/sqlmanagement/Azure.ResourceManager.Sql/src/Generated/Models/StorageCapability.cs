@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of StorageCapability. </summary>
-        /// <param name="storageAccountType"> The storage account type for the database&apos;s backups. </param>
+        /// <param name="storageAccountType"> The storage account type for the database's backups. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
         internal StorageCapability(StorageCapabilityStorageAccountType? storageAccountType, SqlCapabilityStatus? status, string reason)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Sql.Models
             Reason = reason;
         }
 
-        /// <summary> The storage account type for the database&apos;s backups. </summary>
+        /// <summary> The storage account type for the database's backups. </summary>
         public StorageCapabilityStorageAccountType? StorageAccountType { get; }
         /// <summary> The status of the capability. </summary>
         public SqlCapabilityStatus? Status { get; }

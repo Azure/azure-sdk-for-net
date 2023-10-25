@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static ProvisionedClustersResponseExtendedLocation DeserializeProvisionedClustersResponseExtendedLocation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> type = default;
             Optional<string> name = default;
             foreach (var property in element.EnumerateObject())

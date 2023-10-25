@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="outboundEndpointName"> The name of the outbound endpoint for the DNS resolver. </param>
         /// <param name="data"> Parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new resource to be created, but to prevent updating an existing resource. Other values will be ignored. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new resource to be created, but to prevent updating an existing resource. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="outboundEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="outboundEndpointName"/> or <paramref name="data"/> is null. </exception>
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="outboundEndpointName"> The name of the outbound endpoint for the DNS resolver. </param>
         /// <param name="data"> Parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new resource to be created, but to prevent updating an existing resource. Other values will be ignored. </param>
+        /// <param name="ifNoneMatch"> Set to '*' to allow a new resource to be created, but to prevent updating an existing resource. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="outboundEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="outboundEndpointName"/> or <paramref name="data"/> is null. </exception>
@@ -232,7 +233,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsResolverOutboundEndpointOutboundEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dnsResolverOutboundEndpointOutboundEndpointsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DnsResolverOutboundEndpointResource(Client, DnsResolverOutboundEndpointData.DeserializeDnsResolverOutboundEndpointData(e)), _dnsResolverOutboundEndpointOutboundEndpointsClientDiagnostics, Pipeline, "DnsResolverOutboundEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DnsResolverOutboundEndpointResource(Client, DnsResolverOutboundEndpointData.DeserializeDnsResolverOutboundEndpointData(e)), _dnsResolverOutboundEndpointOutboundEndpointsClientDiagnostics, Pipeline, "DnsResolverOutboundEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -255,7 +256,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsResolverOutboundEndpointOutboundEndpointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dnsResolverOutboundEndpointOutboundEndpointsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DnsResolverOutboundEndpointResource(Client, DnsResolverOutboundEndpointData.DeserializeDnsResolverOutboundEndpointData(e)), _dnsResolverOutboundEndpointOutboundEndpointsClientDiagnostics, Pipeline, "DnsResolverOutboundEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DnsResolverOutboundEndpointResource(Client, DnsResolverOutboundEndpointData.DeserializeDnsResolverOutboundEndpointData(e)), _dnsResolverOutboundEndpointOutboundEndpointsClientDiagnostics, Pipeline, "DnsResolverOutboundEndpointCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -320,6 +321,80 @@ namespace Azure.ResourceManager.DnsResolver
             {
                 var response = _dnsResolverOutboundEndpointOutboundEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outboundEndpointName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/outboundEndpoints/{outboundEndpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OutboundEndpoints_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="outboundEndpointName"> The name of the outbound endpoint for the DNS resolver. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="outboundEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="outboundEndpointName"/> is null. </exception>
+        public virtual async Task<NullableResponse<DnsResolverOutboundEndpointResource>> GetIfExistsAsync(string outboundEndpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(outboundEndpointName, nameof(outboundEndpointName));
+
+            using var scope = _dnsResolverOutboundEndpointOutboundEndpointsClientDiagnostics.CreateScope("DnsResolverOutboundEndpointCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _dnsResolverOutboundEndpointOutboundEndpointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outboundEndpointName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DnsResolverOutboundEndpointResource>(response.GetRawResponse());
+                return Response.FromValue(new DnsResolverOutboundEndpointResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/outboundEndpoints/{outboundEndpointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>OutboundEndpoints_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="outboundEndpointName"> The name of the outbound endpoint for the DNS resolver. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="outboundEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="outboundEndpointName"/> is null. </exception>
+        public virtual NullableResponse<DnsResolverOutboundEndpointResource> GetIfExists(string outboundEndpointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(outboundEndpointName, nameof(outboundEndpointName));
+
+            using var scope = _dnsResolverOutboundEndpointOutboundEndpointsClientDiagnostics.CreateScope("DnsResolverOutboundEndpointCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _dnsResolverOutboundEndpointOutboundEndpointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, outboundEndpointName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DnsResolverOutboundEndpointResource>(response.GetRawResponse());
+                return Response.FromValue(new DnsResolverOutboundEndpointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -20,6 +20,10 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static EnqueueServerProperties DeserializeEnqueueServerProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> hostname = default;
             Optional<string> ipAddress = default;
             Optional<long?> port = default;
@@ -50,7 +54,6 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     health = new SapHealthState(property.Value.GetString());

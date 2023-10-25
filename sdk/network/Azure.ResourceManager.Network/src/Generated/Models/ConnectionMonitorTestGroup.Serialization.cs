@@ -49,6 +49,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ConnectionMonitorTestGroup DeserializeConnectionMonitorTestGroup(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<bool> disable = default;
             IList<string> testConfigurations = default;
@@ -65,7 +69,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     disable = property.Value.GetBoolean();

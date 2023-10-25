@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         internal static RelationshipLinkFieldMapping DeserializeRelationshipLinkFieldMapping(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string interactionFieldName = default;
             Optional<LinkType> linkType = default;
             string relationshipFieldName = default;
@@ -43,7 +47,6 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     linkType = property.Value.GetString().ToLinkType();

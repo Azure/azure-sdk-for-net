@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -14,6 +13,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static UnknownAlertResourceIdentifier DeserializeUnknownAlertResourceIdentifier(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifierType type = "Unknown";
             foreach (var property in element.EnumerateObject())
             {

@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     {
         internal static ExpressionEvaluationDetails DeserializeExpressionEvaluationDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> result = default;
             Optional<string> expression = default;
             Optional<string> expressionKind = default;
@@ -48,7 +52,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     expressionValue = BinaryData.FromString(property.Value.GetRawText());
@@ -58,7 +61,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     targetValue = BinaryData.FromString(property.Value.GetRawText());

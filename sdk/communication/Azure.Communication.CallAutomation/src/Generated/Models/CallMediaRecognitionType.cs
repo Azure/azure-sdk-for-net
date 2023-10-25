@@ -26,10 +26,13 @@ namespace Azure.Communication.CallAutomation
         }
 
         private const string DtmfValue = "dtmf";
+        private const string SpeechValue = "speech";
         private const string ChoicesValue = "choices";
 
         /// <summary> dtmf. </summary>
         public static CallMediaRecognitionType Dtmf { get; } = new CallMediaRecognitionType(DtmfValue);
+        /// <summary> speech. </summary>
+        public static CallMediaRecognitionType Speech { get; } = new CallMediaRecognitionType(SpeechValue);
         /// <summary> choices. </summary>
         public static CallMediaRecognitionType Choices { get; } = new CallMediaRecognitionType(ChoicesValue);
         /// <summary> Determines if two <see cref="CallMediaRecognitionType"/> values are the same. </summary>

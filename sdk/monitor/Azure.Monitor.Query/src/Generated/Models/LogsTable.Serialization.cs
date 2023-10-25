@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -15,6 +14,10 @@ namespace Azure.Monitor.Query.Models
     {
         internal static LogsTable DeserializeLogsTable(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             IReadOnlyList<LogsTableColumn> columns = default;
             JsonElement rows = default;

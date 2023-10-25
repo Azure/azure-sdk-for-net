@@ -84,7 +84,10 @@ namespace ApiManagement.Tests.ManagementApiTests
                     var getSecrets3 = testBase.client.TenantAccess.ListSecrets(testBase.rgName, testBase.serviceName, "access");
 
                     Assert.NotNull(getSecrets3);
-                    Assert.NotEqual(getSecrets.SecondaryKey, getSecrets3.SecondaryKey);
+                    if (HttpMockServer.Mode != HttpRecorderMode.Playback)
+                    {
+                        Assert.NotEqual(getSecrets.SecondaryKey, getSecrets3.SecondaryKey);
+                    }
                 }
                 finally
                 {

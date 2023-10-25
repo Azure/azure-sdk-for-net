@@ -15,37 +15,34 @@ namespace Azure.ResourceManager.AppService.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Name))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(Value))
-            {
-                writer.WritePropertyName("value"u8);
-                writer.WriteStringValue(Value);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties);
             }
             writer.WriteEndObject();
         }
 
         internal static WebAppKeyInfo DeserializeWebAppKeyInfo(JsonElement element)
         {
-            Optional<string> name = default;
-            Optional<string> value = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<WebAppKeyInfoProperties> properties = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"u8))
+                if (property.NameEquals("properties"u8))
                 {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("value"u8))
-                {
-                    value = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = WebAppKeyInfoProperties.DeserializeWebAppKeyInfoProperties(property.Value);
                     continue;
                 }
             }
-            return new WebAppKeyInfo(name.Value, value.Value);
+            return new WebAppKeyInfo(properties.Value);
         }
     }
 }

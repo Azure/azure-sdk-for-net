@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
 
         internal static GroupConnectivityInformation DeserializeGroupConnectivityInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> groupId = default;
             Optional<string> memberName = default;
             Optional<IList<string>> customerVisibleFqdns = default;
@@ -63,7 +67,6 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

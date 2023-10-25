@@ -19,7 +19,7 @@ namespace Azure.IoT.Hub.Service.Models
 
         /// <summary> Initializes a new instance of ModuleIdentity. </summary>
         /// <param name="moduleId"> The unique identifier of the module. </param>
-        /// <param name="managedBy"> Identifies who manages this module. For instance, this value is \&quot;IotEdge\&quot; if the edge runtime owns this module. </param>
+        /// <param name="managedBy"> Identifies who manages this module. For instance, this value is \"IotEdge\" if the edge runtime owns this module. </param>
         /// <param name="deviceId"> The unique identifier of the device. </param>
         /// <param name="generationId"> The IoT Hub generated, case-sensitive string up to 128 characters long. This value is used to distinguish modules with the same moduleId, when they have been deleted and re-created. </param>
         /// <param name="etag"> The string representing a weak ETag for the module identity, as per RFC7232. </param>
@@ -44,7 +44,7 @@ namespace Azure.IoT.Hub.Service.Models
 
         /// <summary> The unique identifier of the module. </summary>
         public string ModuleId { get; set; }
-        /// <summary> Identifies who manages this module. For instance, this value is \&quot;IotEdge\&quot; if the edge runtime owns this module. </summary>
+        /// <summary> Identifies who manages this module. For instance, this value is \"IotEdge\" if the edge runtime owns this module. </summary>
         public string ManagedBy { get; set; }
         /// <summary> The unique identifier of the device. </summary>
         public string DeviceId { get; set; }

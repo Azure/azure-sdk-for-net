@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    /// <summary> Metadata for a Link&apos;s property mapping. </summary>
+    /// <summary> Metadata for a Link's property mapping. </summary>
     public partial class TypePropertiesMapping
     {
         /// <summary> Initializes a new instance of TypePropertiesMapping. </summary>

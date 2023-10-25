@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.Logic
 
         internal static IntegrationServiceEnvironmentManagedApiData DeserializeIntegrationServiceEnvironmentManagedApiData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -76,7 +80,6 @@ namespace Azure.ResourceManager.Logic
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -111,7 +114,6 @@ namespace Azure.ResourceManager.Logic
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -135,13 +137,19 @@ namespace Azure.ResourceManager.Logic
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
+                                }
                             }
                             connectionParameters = dictionary;
                             continue;
@@ -150,7 +158,6 @@ namespace Azure.ResourceManager.Logic
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             metadata = LogicApiResourceMetadata.DeserializeLogicApiResourceMetadata(property0.Value);
@@ -160,13 +167,19 @@ namespace Azure.ResourceManager.Logic
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<Uri> array = new List<Uri>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new Uri(item.GetString()));
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    array.Add(new Uri(item.GetString()));
+                                }
                             }
                             runtimeUrls = array;
                             continue;
@@ -175,7 +188,6 @@ namespace Azure.ResourceManager.Logic
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             generalInformation = LogicApiResourceGeneralInformation.DeserializeLogicApiResourceGeneralInformation(property0.Value);
@@ -185,7 +197,6 @@ namespace Azure.ResourceManager.Logic
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -200,7 +211,6 @@ namespace Azure.ResourceManager.Logic
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             backendService = LogicApiResourceBackendService.DeserializeLogicApiResourceBackendService(property0.Value);
@@ -210,7 +220,6 @@ namespace Azure.ResourceManager.Logic
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             policies = LogicApiResourcePolicies.DeserializeLogicApiResourcePolicies(property0.Value);
@@ -220,7 +229,6 @@ namespace Azure.ResourceManager.Logic
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                apiDefinitionUrl = null;
                                 continue;
                             }
                             apiDefinitionUrl = new Uri(property0.Value.GetString());
@@ -230,7 +238,6 @@ namespace Azure.ResourceManager.Logic
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             apiDefinitions = LogicApiResourceDefinitions.DeserializeLogicApiResourceDefinitions(property0.Value);
@@ -240,7 +247,6 @@ namespace Azure.ResourceManager.Logic
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             integrationServiceEnvironment = LogicResourceReference.DeserializeLogicResourceReference(property0.Value);
@@ -250,7 +256,6 @@ namespace Azure.ResourceManager.Logic
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new LogicWorkflowProvisioningState(property0.Value.GetString());
@@ -260,7 +265,6 @@ namespace Azure.ResourceManager.Logic
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             category = new LogicApiTier(property0.Value.GetString());
@@ -270,7 +274,6 @@ namespace Azure.ResourceManager.Logic
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             deploymentParameters = IntegrationServiceEnvironmentManagedApiDeploymentParameters.DeserializeIntegrationServiceEnvironmentManagedApiDeploymentParameters(property0.Value);

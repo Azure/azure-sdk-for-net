@@ -7,6 +7,7 @@
 
 using System;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -16,13 +17,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of CmdkeySetup. </summary>
         /// <param name="targetName"> The server name of data source access. </param>
         /// <param name="userName"> The user name of data source access. </param>
-        /// <param name="password">
-        /// The password of data source access.
-        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </param>
+        /// <param name="password"> The password of data source access. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetName"/>, <paramref name="userName"/> or <paramref name="password"/> is null. </exception>
-        public CmdkeySetup(BinaryData targetName, BinaryData userName, FactorySecretBaseDefinition password)
+        public CmdkeySetup(BinaryData targetName, BinaryData userName, DataFactorySecretBaseDefinition password)
         {
             Argument.AssertNotNull(targetName, nameof(targetName));
             Argument.AssertNotNull(userName, nameof(userName));
@@ -38,12 +35,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="customSetupBaseType"> The type of custom setup. </param>
         /// <param name="targetName"> The server name of data source access. </param>
         /// <param name="userName"> The user name of data source access. </param>
-        /// <param name="password">
-        /// The password of data source access.
-        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </param>
-        internal CmdkeySetup(string customSetupBaseType, BinaryData targetName, BinaryData userName, FactorySecretBaseDefinition password) : base(customSetupBaseType)
+        /// <param name="password"> The password of data source access. </param>
+        internal CmdkeySetup(string customSetupBaseType, BinaryData targetName, BinaryData userName, DataFactorySecretBaseDefinition password) : base(customSetupBaseType)
         {
             TargetName = targetName;
             UserName = userName;
@@ -113,11 +106,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </para>
         /// </summary>
         public BinaryData UserName { get; set; }
-        /// <summary>
-        /// The password of data source access.
-        /// Please note <see cref="FactorySecretBaseDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="FactorySecretString"/> and <see cref="AzureKeyVaultSecretReference"/>.
-        /// </summary>
-        public FactorySecretBaseDefinition Password { get; set; }
+        /// <summary> The password of data source access. </summary>
+        public DataFactorySecretBaseDefinition Password { get; set; }
     }
 }

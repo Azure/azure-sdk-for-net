@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> Describes a virtual machines network configuration&apos;s DNS settings. </summary>
+    /// <summary> Describes a virtual machines network configuration's DNS settings. </summary>
     internal partial class VirtualMachineNetworkInterfaceDnsSettingsConfiguration
     {
         /// <summary> Initializes a new instance of VirtualMachineNetworkInterfaceDnsSettingsConfiguration. </summary>

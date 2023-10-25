@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
-    /// <summary> Details of the user&apos;s elastic deployment associated with the monitor resource. </summary>
+    /// <summary> Details of the user's elastic deployment associated with the monitor resource. </summary>
     public partial class ElasticCloudDeployment
     {
         /// <summary> Initializes a new instance of ElasticCloudDeployment. </summary>

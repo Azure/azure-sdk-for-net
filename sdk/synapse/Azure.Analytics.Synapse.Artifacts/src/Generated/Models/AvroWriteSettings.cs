@@ -23,7 +23,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="recordName"> Top level record name in write result, which is required in AVRO spec. </param>
         /// <param name="recordNamespace"> Record namespace in the write result. </param>
-        /// <param name="maxRowsPerFile"> Limit the written file&apos;s row count to be smaller than or equal to the specified count. Type: integer (or Expression with resultType integer). </param>
+        /// <param name="maxRowsPerFile"> Limit the written file's row count to be smaller than or equal to the specified count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="fileNamePrefix"> Specifies the file name pattern &lt;fileNamePrefix&gt;_&lt;fileIndex&gt;.&lt;fileExtension&gt; when copy from non-file based store without partitionOptions. Type: string (or Expression with resultType string). </param>
         internal AvroWriteSettings(string type, IDictionary<string, object> additionalProperties, string recordName, string recordNamespace, object maxRowsPerFile, object fileNamePrefix) : base(type, additionalProperties)
         {
@@ -38,7 +38,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public string RecordName { get; set; }
         /// <summary> Record namespace in the write result. </summary>
         public string RecordNamespace { get; set; }
-        /// <summary> Limit the written file&apos;s row count to be smaller than or equal to the specified count. Type: integer (or Expression with resultType integer). </summary>
+        /// <summary> Limit the written file's row count to be smaller than or equal to the specified count. Type: integer (or Expression with resultType integer). </summary>
         public object MaxRowsPerFile { get; set; }
         /// <summary> Specifies the file name pattern &lt;fileNamePrefix&gt;_&lt;fileIndex&gt;.&lt;fileExtension&gt; when copy from non-file based store without partitionOptions. Type: string (or Expression with resultType string). </summary>
         public object FileNamePrefix { get; set; }

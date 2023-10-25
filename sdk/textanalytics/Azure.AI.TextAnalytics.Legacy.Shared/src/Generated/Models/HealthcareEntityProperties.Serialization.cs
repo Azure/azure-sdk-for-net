@@ -15,6 +15,10 @@ namespace Azure.AI.TextAnalytics.Legacy
     {
         internal static HealthcareEntityProperties DeserializeHealthcareEntityProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string text = default;
             HealthcareEntityCategory category = default;
             Optional<string> subcategory = default;

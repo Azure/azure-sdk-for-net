@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -230,7 +231,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _galleryApplicationVersionRestClient.CreateListByGalleryApplicationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _galleryApplicationVersionRestClient.CreateListByGalleryApplicationNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GalleryApplicationVersionResource(Client, GalleryApplicationVersionData.DeserializeGalleryApplicationVersionData(e)), _galleryApplicationVersionClientDiagnostics, Pipeline, "GalleryApplicationVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new GalleryApplicationVersionResource(Client, GalleryApplicationVersionData.DeserializeGalleryApplicationVersionData(e)), _galleryApplicationVersionClientDiagnostics, Pipeline, "GalleryApplicationVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +253,7 @@ namespace Azure.ResourceManager.Compute
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _galleryApplicationVersionRestClient.CreateListByGalleryApplicationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _galleryApplicationVersionRestClient.CreateListByGalleryApplicationNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GalleryApplicationVersionResource(Client, GalleryApplicationVersionData.DeserializeGalleryApplicationVersionData(e)), _galleryApplicationVersionClientDiagnostics, Pipeline, "GalleryApplicationVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new GalleryApplicationVersionResource(Client, GalleryApplicationVersionData.DeserializeGalleryApplicationVersionData(e)), _galleryApplicationVersionClientDiagnostics, Pipeline, "GalleryApplicationVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -319,6 +320,82 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = _galleryApplicationVersionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryApplicationVersionName, expand, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/applications/{galleryApplicationName}/versions/{galleryApplicationVersionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GalleryApplicationVersions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="galleryApplicationVersionName"> The name of the gallery Application Version to be retrieved. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="galleryApplicationVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationVersionName"/> is null. </exception>
+        public virtual async Task<NullableResponse<GalleryApplicationVersionResource>> GetIfExistsAsync(string galleryApplicationVersionName, ReplicationStatusType? expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(galleryApplicationVersionName, nameof(galleryApplicationVersionName));
+
+            using var scope = _galleryApplicationVersionClientDiagnostics.CreateScope("GalleryApplicationVersionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _galleryApplicationVersionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryApplicationVersionName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<GalleryApplicationVersionResource>(response.GetRawResponse());
+                return Response.FromValue(new GalleryApplicationVersionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/applications/{galleryApplicationName}/versions/{galleryApplicationVersionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GalleryApplicationVersions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="galleryApplicationVersionName"> The name of the gallery Application Version to be retrieved. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="galleryApplicationVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryApplicationVersionName"/> is null. </exception>
+        public virtual NullableResponse<GalleryApplicationVersionResource> GetIfExists(string galleryApplicationVersionName, ReplicationStatusType? expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(galleryApplicationVersionName, nameof(galleryApplicationVersionName));
+
+            using var scope = _galleryApplicationVersionClientDiagnostics.CreateScope("GalleryApplicationVersionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _galleryApplicationVersionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, galleryApplicationVersionName, expand, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<GalleryApplicationVersionResource>(response.GetRawResponse());
+                return Response.FromValue(new GalleryApplicationVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

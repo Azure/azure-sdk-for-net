@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    /// <summary> The SplitContent. </summary>
+    /// <summary> The request for reservation split. </summary>
     public partial class SplitContent
     {
         /// <summary> Initializes a new instance of SplitContent. </summary>

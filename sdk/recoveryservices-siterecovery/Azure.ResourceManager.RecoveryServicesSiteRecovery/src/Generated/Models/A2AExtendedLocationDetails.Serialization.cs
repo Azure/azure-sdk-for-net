@@ -14,28 +14,30 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         internal static A2AExtendedLocationDetails DeserializeA2AExtendedLocationDetails(JsonElement element)
         {
-            Optional<ExtendedLocation> primaryExtendedLocation = default;
-            Optional<ExtendedLocation> recoveryExtendedLocation = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<SiteRecoveryExtendedLocation> primaryExtendedLocation = default;
+            Optional<SiteRecoveryExtendedLocation> recoveryExtendedLocation = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryExtendedLocation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    primaryExtendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    primaryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value);
                     continue;
                 }
                 if (property.NameEquals("recoveryExtendedLocation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    recoveryExtendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value);
+                    recoveryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value);
                     continue;
                 }
             }

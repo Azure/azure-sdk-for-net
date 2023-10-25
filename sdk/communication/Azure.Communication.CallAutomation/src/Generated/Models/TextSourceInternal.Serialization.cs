@@ -32,6 +32,11 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("voiceName"u8);
                 writer.WriteStringValue(VoiceName);
             }
+            if (Optional.IsDefined(CustomVoiceEndpointId))
+            {
+                writer.WritePropertyName("customVoiceEndpointId"u8);
+                writer.WriteStringValue(CustomVoiceEndpointId);
+            }
             writer.WriteEndObject();
         }
     }

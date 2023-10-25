@@ -56,6 +56,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningContainerResourceSettings DeserializeMachineLearningContainerResourceSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> cpu = default;
             Optional<string> gpu = default;
             Optional<string> memory = default;

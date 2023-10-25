@@ -13,14 +13,13 @@ namespace Azure.IoT.Hub.Service.Models
         /// <summary> Initializes a new instance of DeviceRegistryOperationWarning. </summary>
         internal DeviceRegistryOperationWarning()
         {
-            WarningCode = "DeviceRegisteredWithoutTwin";
         }
 
         /// <summary> Initializes a new instance of DeviceRegistryOperationWarning. </summary>
         /// <param name="deviceId"> The unique identifier of the device. </param>
         /// <param name="warningCode"> The warning code. </param>
         /// <param name="warningStatus"> The details of the warning. </param>
-        internal DeviceRegistryOperationWarning(string deviceId, string warningCode, string warningStatus)
+        internal DeviceRegistryOperationWarning(string deviceId, DeviceRegistryOperationWarningCode? warningCode, string warningStatus)
         {
             DeviceId = deviceId;
             WarningCode = warningCode;
@@ -30,7 +29,7 @@ namespace Azure.IoT.Hub.Service.Models
         /// <summary> The unique identifier of the device. </summary>
         public string DeviceId { get; }
         /// <summary> The warning code. </summary>
-        public string WarningCode { get; }
+        public DeviceRegistryOperationWarningCode? WarningCode { get; }
         /// <summary> The details of the warning. </summary>
         public string WarningStatus { get; }
     }

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -14,6 +13,10 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static RunCommandDocumentBase DeserializeRunCommandDocumentBase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string schema = default;
             string id = default;
             SupportedOperatingSystemType osType = default;

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Synapse.Models
 
         public static SynapseSensitivityLabelUpdateKind ToSynapseSensitivityLabelUpdateKind(this string value)
         {
-            if (string.Equals(value, "set", StringComparison.InvariantCultureIgnoreCase)) return SynapseSensitivityLabelUpdateKind.Set;
-            if (string.Equals(value, "remove", StringComparison.InvariantCultureIgnoreCase)) return SynapseSensitivityLabelUpdateKind.Remove;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "set")) return SynapseSensitivityLabelUpdateKind.Set;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "remove")) return SynapseSensitivityLabelUpdateKind.Remove;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SynapseSensitivityLabelUpdateKind value.");
         }
     }

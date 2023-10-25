@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPersistentDisk DeserializeAppPersistentDisk(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> sizeInGB = default;
             Optional<int> usedInGB = default;
             Optional<string> mountPath = default;
@@ -39,7 +43,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sizeInGB = property.Value.GetInt32();
@@ -49,7 +52,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     usedInGB = property.Value.GetInt32();

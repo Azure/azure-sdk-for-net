@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Datadog.Models
     {
         internal static DatadogHostMetadata DeserializeDatadogHostMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> agentVersion = default;
             Optional<DatadogInstallMethod> installMethod = default;
             Optional<DatadogLogsAgent> logsAgent = default;
@@ -28,7 +32,6 @@ namespace Azure.ResourceManager.Datadog.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     installMethod = DatadogInstallMethod.DeserializeDatadogInstallMethod(property.Value);
@@ -38,7 +41,6 @@ namespace Azure.ResourceManager.Datadog.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     logsAgent = DatadogLogsAgent.DeserializeDatadogLogsAgent(property.Value);

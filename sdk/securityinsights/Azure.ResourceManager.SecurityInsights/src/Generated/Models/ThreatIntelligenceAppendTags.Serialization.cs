@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ThreatIntelligenceTags))
             {
-                writer.WritePropertyName("threatIntelligenceTags");
+                writer.WritePropertyName("threatIntelligenceTags"u8);
                 writer.WriteStartArray();
                 foreach (var item in ThreatIntelligenceTags)
                 {

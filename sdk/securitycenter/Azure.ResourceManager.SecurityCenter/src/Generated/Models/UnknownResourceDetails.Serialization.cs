@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static UnknownResourceDetails DeserializeUnknownResourceDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Source source = "Unknown";
             foreach (var property in element.EnumerateObject())
             {

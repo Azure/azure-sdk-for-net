@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Automation.Models
     {
         internal static AutomationLinkedWorkspace DeserializeAutomationLinkedWorkspace(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             foreach (var property in element.EnumerateObject())
             {

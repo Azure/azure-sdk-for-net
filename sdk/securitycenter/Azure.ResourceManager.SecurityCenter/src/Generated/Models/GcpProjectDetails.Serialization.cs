@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static GcpProjectDetails DeserializeGcpProjectDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> projectNumber = default;
             Optional<string> projectId = default;
             Optional<string> workloadIdentityPoolId = default;

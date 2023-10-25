@@ -28,7 +28,7 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <param name="source"> Source of QnA result. </param>
         /// <param name="metadata"> Metadata associated with the answer, useful to categorize or filter question answers. </param>
         /// <param name="dialog"> Dialog associated with Answer. </param>
-        /// <param name="shortAnswer"> Answer span object of QnA with respect to user&apos;s question. </param>
+        /// <param name="shortAnswer"> Answer span object of QnA with respect to user's question. </param>
         internal KnowledgeBaseAnswer(IReadOnlyList<string> questions, string answer, double? confidence, int? qnaId, string source, IReadOnlyDictionary<string, string> metadata, KnowledgeBaseAnswerDialog dialog, AnswerSpan shortAnswer)
         {
             Questions = questions;
@@ -55,7 +55,7 @@ namespace Azure.AI.Language.QuestionAnswering
         public IReadOnlyDictionary<string, string> Metadata { get; }
         /// <summary> Dialog associated with Answer. </summary>
         public KnowledgeBaseAnswerDialog Dialog { get; }
-        /// <summary> Answer span object of QnA with respect to user&apos;s question. </summary>
+        /// <summary> Answer span object of QnA with respect to user's question. </summary>
         public AnswerSpan ShortAnswer { get; }
     }
 }

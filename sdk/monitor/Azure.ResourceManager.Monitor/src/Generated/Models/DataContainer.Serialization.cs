@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -14,6 +13,10 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         internal static DataContainer DeserializeDataContainer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DataContainerWorkspace workspace = default;
             foreach (var property in element.EnumerateObject())
             {

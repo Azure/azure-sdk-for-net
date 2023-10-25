@@ -15,6 +15,10 @@ namespace Azure.Security.KeyVault.Storage.Models
     {
         internal static DeletedStorageListResult DeserializeDeletedStorageListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DeletedStorageAccountItem>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +27,6 @@ namespace Azure.Security.KeyVault.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DeletedStorageAccountItem> array = new List<DeletedStorageAccountItem>();

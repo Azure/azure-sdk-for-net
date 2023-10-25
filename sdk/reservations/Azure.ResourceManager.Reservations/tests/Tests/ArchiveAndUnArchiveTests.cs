@@ -41,21 +41,21 @@ namespace Azure.ResourceManager.Reservations.Tests
             AsyncPageable<ReservationDetailResource> reservationResponse = Tenant.GetReservationDetailsAsync();
             List<ReservationDetailResource> reservationResources = await reservationResponse.ToEnumerableAsync();
 
-            // Archving a `Cancelled` RI
-            var cancelledReservation = reservationResources.Find(item => item.Data.Properties.ProvisioningState.Equals(ReservationProvisioningState.Cancelled));
+            // Archiving a 'Expired' RI
+            var cancelledReservation = reservationResources.Find(item => item.Data.Properties.ProvisioningState.Equals(ReservationProvisioningState.Expired));
             var response1 = await cancelledReservation.ArchiveAsync();
             Assert.AreEqual(200, response1.Status);
 
-            // Unarchving
+            // Unarchiving
             var response2 = await cancelledReservation.UnarchiveAsync();
             Assert.AreEqual(200, response2.Status);
 
-            // Archving a `Failed` RI
-            var failedReservation = reservationResources.Find(item => item.Data.Properties.ProvisioningState.Equals(ReservationProvisioningState.Failed));
+            // Archiving a 'Expired' RI
+            var failedReservation = reservationResources.Find(item => item.Data.Properties.ProvisioningState.Equals(ReservationProvisioningState.Expired));
             var response3 = await failedReservation.ArchiveAsync();
             Assert.AreEqual(200, response3.Status);
 
-            // Unarchving
+            // Unarchiving
             var response4 = await failedReservation.UnarchiveAsync();
             Assert.AreEqual(200, response4.Status);
         }

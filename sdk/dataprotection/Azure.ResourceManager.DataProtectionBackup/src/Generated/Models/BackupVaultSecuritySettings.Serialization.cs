@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static BackupVaultSecuritySettings DeserializeBackupVaultSecuritySettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BackupVaultSoftDeleteSettings> softDeleteSettings = default;
             Optional<ImmutabilitySettings> immutabilitySettings = default;
             foreach (var property in element.EnumerateObject())
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     softDeleteSettings = BackupVaultSoftDeleteSettings.DeserializeBackupVaultSoftDeleteSettings(property.Value);
@@ -48,7 +51,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     immutabilitySettings = ImmutabilitySettings.DeserializeImmutabilitySettings(property.Value);

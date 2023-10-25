@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
 
         internal static HealthcareApisIotConnectorEventHubIngestionConfiguration DeserializeHealthcareApisIotConnectorEventHubIngestionConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> eventHubName = default;
             Optional<string> consumerGroup = default;
             Optional<string> fullyQualifiedEventHubNamespace = default;

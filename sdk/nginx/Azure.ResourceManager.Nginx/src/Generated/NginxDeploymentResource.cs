@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="configurationName"> The name of configuration, only &apos;default&apos; is supported value due to the singleton of Nginx conf. </param>
+        /// <param name="configurationName"> The name of configuration, only 'default' is supported value due to the singleton of Nginx conf. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="configurationName"> The name of configuration, only &apos;default&apos; is supported value due to the singleton of Nginx conf. </param>
+        /// <param name="configurationName"> The name of configuration, only 'default' is supported value due to the singleton of Nginx conf. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>

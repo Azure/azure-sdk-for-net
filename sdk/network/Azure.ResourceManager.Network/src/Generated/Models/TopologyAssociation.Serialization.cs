@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Network.Models
     {
         internal static TopologyAssociation DeserializeTopologyAssociation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<ResourceIdentifier> resourceId = default;
             Optional<AssociationType> associationType = default;
@@ -28,7 +32,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     resourceId = new ResourceIdentifier(property.Value.GetString());
@@ -38,7 +41,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     associationType = new AssociationType(property.Value.GetString());

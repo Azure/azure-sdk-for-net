@@ -18,6 +18,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     {
         internal static SqlPoolInfoListResult DeserializeSqlPoolInfoListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nextLink = default;
             Optional<IReadOnlyList<SqlPool>> value = default;
             foreach (var property in element.EnumerateObject())
@@ -31,7 +35,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SqlPool> array = new List<SqlPool>();

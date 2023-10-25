@@ -67,6 +67,10 @@ namespace Azure.ResourceManager.Kusto.Models
 
         internal static KustoCosmosDBDataConnection DeserializeKustoCosmosDBDataConnection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             DataConnectionKind kind = default;
             ResourceIdentifier id = default;
@@ -88,7 +92,6 @@ namespace Azure.ResourceManager.Kusto.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
@@ -118,7 +121,6 @@ namespace Azure.ResourceManager.Kusto.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -147,7 +149,6 @@ namespace Azure.ResourceManager.Kusto.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             managedIdentityResourceId = new ResourceIdentifier(property0.Value.GetString());
@@ -157,7 +158,6 @@ namespace Azure.ResourceManager.Kusto.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             managedIdentityObjectId = property0.Value.GetGuid();
@@ -167,7 +167,6 @@ namespace Azure.ResourceManager.Kusto.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             cosmosDBAccountResourceId = new ResourceIdentifier(property0.Value.GetString());
@@ -187,7 +186,6 @@ namespace Azure.ResourceManager.Kusto.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             retrievalStartDate = property0.Value.GetDateTimeOffset("O");
@@ -197,7 +195,6 @@ namespace Azure.ResourceManager.Kusto.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new KustoProvisioningState(property0.Value.GetString());

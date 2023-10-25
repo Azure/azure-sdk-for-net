@@ -12,7 +12,10 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    /// <summary> A class representing the SynapseAttachedDatabaseConfiguration data model. </summary>
+    /// <summary>
+    /// A class representing the SynapseAttachedDatabaseConfiguration data model.
+    /// Class representing an attached database configuration.
+    /// </summary>
     public partial class SynapseAttachedDatabaseConfigurationData : ResourceData
     {
         /// <summary> Initializes a new instance of SynapseAttachedDatabaseConfigurationData. </summary>

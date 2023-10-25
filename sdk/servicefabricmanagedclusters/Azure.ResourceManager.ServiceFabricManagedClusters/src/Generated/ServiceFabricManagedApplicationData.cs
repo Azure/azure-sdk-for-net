@@ -12,7 +12,10 @@ using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters
 {
-    /// <summary> A class representing the ServiceFabricManagedApplication data model. </summary>
+    /// <summary>
+    /// A class representing the ServiceFabricManagedApplication data model.
+    /// The application resource.
+    /// </summary>
     public partial class ServiceFabricManagedApplicationData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ServiceFabricManagedApplicationData. </summary>
@@ -35,7 +38,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="version">
         /// The version of the application type as defined in the application manifest.
         /// This name must be the full Arm Resource ID for the referenced application type version.
-        /// 
+        ///
         /// </param>
         /// <param name="parameters"> List of application parameters with overridden values from their default values specified in the application manifest. </param>
         /// <param name="upgradePolicy"> Describes the policy for a monitored application upgrade. </param>
@@ -57,7 +60,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <summary>
         /// The version of the application type as defined in the application manifest.
         /// This name must be the full Arm Resource ID for the referenced application type version.
-        /// 
+        ///
         /// </summary>
         public string Version { get; set; }
         /// <summary> List of application parameters with overridden values from their default values specified in the application manifest. </summary>

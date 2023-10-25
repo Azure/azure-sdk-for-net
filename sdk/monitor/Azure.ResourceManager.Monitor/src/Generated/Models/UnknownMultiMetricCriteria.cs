@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="metricNamespace"> Namespace of the metric. </param>
         /// <param name="timeAggregation"> the criteria time aggregation types. </param>
         /// <param name="dimensions"> List of dimension conditions. </param>
-        /// <param name="skipMetricValidation"> Allows creating an alert rule on a custom metric that isn&apos;t yet emitted, by causing the metric validation to be skipped. </param>
+        /// <param name="skipMetricValidation"> Allows creating an alert rule on a custom metric that isn't yet emitted, by causing the metric validation to be skipped. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal UnknownMultiMetricCriteria(CriterionType criterionType, string name, string metricName, string metricNamespace, MetricCriteriaTimeAggregationType timeAggregation, IList<MetricDimension> dimensions, bool? skipMetricValidation, IDictionary<string, BinaryData> additionalProperties) : base(criterionType, name, metricName, metricNamespace, timeAggregation, dimensions, skipMetricValidation, additionalProperties)
         {

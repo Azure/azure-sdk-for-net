@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    /// <summary> Tells what traffic can bypass network rules. This can be &apos;AzureServices&apos; or &apos;None&apos;.  If not specified the default is &apos;AzureServices&apos;. </summary>
+    /// <summary> Tells what traffic can bypass network rules. This can be 'AzureServices' or 'None'.  If not specified the default is 'AzureServices'. </summary>
     public readonly partial struct KeyVaultNetworkRuleBypassOption : IEquatable<KeyVaultNetworkRuleBypassOption>
     {
         private readonly string _value;

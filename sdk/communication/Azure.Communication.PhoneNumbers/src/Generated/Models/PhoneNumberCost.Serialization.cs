@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.PhoneNumbers
 {
@@ -14,6 +13,10 @@ namespace Azure.Communication.PhoneNumbers
     {
         internal static PhoneNumberCost DeserializePhoneNumberCost(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             double amount = default;
             string currencyCode = default;
             BillingFrequency billingFrequency = default;

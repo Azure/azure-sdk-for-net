@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ElasticSan.Models
@@ -16,12 +15,22 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <summary> Initializes a new instance of ElasticSanVolumePatch. </summary>
         public ElasticSanVolumePatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
         /// <summary> Volume size. </summary>
         public long? SizeGiB { get; set; }
+        /// <summary> Parent resource information. </summary>
+        internal ManagedByInfo ManagedBy { get; set; }
+        /// <summary> Resource ID of the resource managing the volume, this is a restricted field and can only be set for internal use. </summary>
+        public ResourceIdentifier ManagedByResourceId
+        {
+            get => ManagedBy is null ? default : ManagedBy.ResourceId;
+            set
+            {
+                if (ManagedBy is null)
+                    ManagedBy = new ManagedByInfo();
+                ManagedBy.ResourceId = value;
+            }
+        }
     }
 }

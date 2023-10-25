@@ -10,6 +10,8 @@
 		<None Remove="Payloads\TokenIssuanceStart\InvalidActionResponse.json" />
 		<None Remove="Payloads\TokenIssuanceStart\NoActionResponse.json" />
 		<None Remove="Payloads\TokenIssuanceStart\QueryParameters.json" />
+		<None Remove="Payloads\TokenIssuanceStart\RequestMissingSource.json" />
+		<None Remove="Payloads\TokenIssuanceStart\ValidRequest.json" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -19,6 +21,9 @@
 		<EmbeddedResource Include="Payloads\TokenIssuanceStart\ConversionPayload.json" />
 		<EmbeddedResource Include="Payloads\TokenIssuanceStart\InvalidActionResponse.json" />
 		<EmbeddedResource Include="Payloads\TokenIssuanceStart\NoActionResponse.json" />
+		<EmbeddedResource Include="Payloads\TokenIssuanceStart\RequestMissingSource.json" />
+		<EmbeddedResource Include="Payloads\TokenIssuanceStart\ValidRequest.json" />
+		<EmbeddedResource Include="Payloads\TokenIssuanceStart\NullResponse.json" />
 		<EmbeddedResource Include="Payloads\TokenIssuanceStart\ExpectedPayload.json" />
 		<EmbeddedResource Include="Payloads\TokenIssuanceStart\QueryParameters.json" />
 	</ItemGroup>
@@ -27,17 +32,9 @@
 
 		<PackageReference Include="Microsoft.NET.Test.Sdk" />
 		
-		<PackageReference Include="xunit" />
+		<PackageReference Include="nunit" />
 		<PackageReference Include="Moq" />
-		
-		<PackageReference Include="xunit.runner.visualstudio">
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-			<PrivateAssets>all</PrivateAssets>
-		</PackageReference>
-		<PackageReference Include="coverlet.collector">
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-			<PrivateAssets>all</PrivateAssets>
-		</PackageReference>
+		<PackageReference Include="NUnit3TestAdapter" />
 
 		<ProjectReference Include="$(AzureCoreTestFramework)" />
 

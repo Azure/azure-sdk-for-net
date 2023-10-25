@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.Chaos.Models
 
         internal static Action DeserializeAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

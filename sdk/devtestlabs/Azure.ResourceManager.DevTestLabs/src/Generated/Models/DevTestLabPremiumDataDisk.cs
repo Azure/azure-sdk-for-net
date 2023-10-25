@@ -12,8 +12,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary>
     /// The setting to enable usage of premium data disks.
-    /// When its value is &apos;Enabled&apos;, creation of standard or premium data disks is allowed.
-    /// When its value is &apos;Disabled&apos;, only creation of standard data disks is allowed.
+    /// When its value is 'Enabled', creation of standard or premium data disks is allowed.
+    /// When its value is 'Disabled', only creation of standard data disks is allowed.
     /// </summary>
     public readonly partial struct DevTestLabPremiumDataDisk : IEquatable<DevTestLabPremiumDataDisk>
     {

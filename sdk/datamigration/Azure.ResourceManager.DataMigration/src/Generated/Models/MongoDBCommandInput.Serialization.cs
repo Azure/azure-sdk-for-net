@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MongoDBCommandInput DeserializeMongoDBCommandInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> objectName = default;
             foreach (var property in element.EnumerateObject())
             {

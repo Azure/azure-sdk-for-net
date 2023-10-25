@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         public static KeyVaultPatchMode ToKeyVaultPatchMode(this string value)
         {
-            if (string.Equals(value, "default", StringComparison.InvariantCultureIgnoreCase)) return KeyVaultPatchMode.Default;
-            if (string.Equals(value, "recover", StringComparison.InvariantCultureIgnoreCase)) return KeyVaultPatchMode.Recover;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "default")) return KeyVaultPatchMode.Default;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "recover")) return KeyVaultPatchMode.Recover;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown KeyVaultPatchMode value.");
         }
     }

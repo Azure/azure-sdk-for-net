@@ -14,6 +14,10 @@ namespace Azure.IoT.Hub.Service.Models
     {
         internal static CloudToDeviceMethodResponse DeserializeCloudToDeviceMethodResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> status = default;
             Optional<object> payload = default;
             foreach (var property in element.EnumerateObject())
@@ -22,7 +26,6 @@ namespace Azure.IoT.Hub.Service.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = property.Value.GetInt32();
@@ -32,7 +35,6 @@ namespace Azure.IoT.Hub.Service.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     payload = property.Value.GetObject();

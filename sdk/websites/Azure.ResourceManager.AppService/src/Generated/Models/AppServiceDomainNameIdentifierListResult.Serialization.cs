@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static AppServiceDomainNameIdentifierListResult DeserializeAppServiceDomainNameIdentifierListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<AppServiceDomainNameIdentifier> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppLoginNonce DeserializeContainerAppLoginNonce(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> validateNonce = default;
             Optional<string> nonceExpirationInterval = default;
             foreach (var property in element.EnumerateObject())
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     validateNonce = property.Value.GetBoolean();

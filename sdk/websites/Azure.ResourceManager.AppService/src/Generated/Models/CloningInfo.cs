@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.AppService.Models
     {
         /// <summary> Initializes a new instance of CloningInfo. </summary>
         /// <param name="sourceWebAppId">
-        /// ARM resource ID of the source app. App resource ID is of the form 
-        /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName} for production slots and 
+        /// ARM resource ID of the source app. App resource ID is of the form
+        /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName} for production slots and
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slotName} for other slots.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceWebAppId"/> is null. </exception>
@@ -38,19 +38,19 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="cloneCustomHostNames"> &lt;code&gt;true&lt;/code&gt; to clone custom hostnames from source app; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="cloneSourceControl"> &lt;code&gt;true&lt;/code&gt; to clone source control from source app; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="sourceWebAppId">
-        /// ARM resource ID of the source app. App resource ID is of the form 
-        /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName} for production slots and 
+        /// ARM resource ID of the source app. App resource ID is of the form
+        /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName} for production slots and
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slotName} for other slots.
         /// </param>
         /// <param name="sourceWebAppLocation"> Location of source app ex: West US or North Europe. </param>
         /// <param name="hostingEnvironment"> App Service Environment. </param>
         /// <param name="appSettingsOverrides">
-        /// Application setting overrides for cloned app. If specified, these settings override the settings cloned 
+        /// Application setting overrides for cloned app. If specified, these settings override the settings cloned
         /// from source app. Otherwise, application settings from source app are retained.
         /// </param>
         /// <param name="configureLoadBalancing"> &lt;code&gt;true&lt;/code&gt; to configure load balancing for source and destination app. </param>
         /// <param name="trafficManagerProfileId">
-        /// ARM resource ID of the Traffic Manager profile to use, if it exists. Traffic Manager resource ID is of the form 
+        /// ARM resource ID of the Traffic Manager profile to use, if it exists. Traffic Manager resource ID is of the form
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{profileName}.
         /// </param>
         /// <param name="trafficManagerProfileName"> Name of Traffic Manager profile to create. This is only needed if Traffic Manager profile does not already exist. </param>
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> &lt;code&gt;true&lt;/code&gt; to clone source control from source app; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? CloneSourceControl { get; set; }
         /// <summary>
-        /// ARM resource ID of the source app. App resource ID is of the form 
-        /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName} for production slots and 
+        /// ARM resource ID of the source app. App resource ID is of the form
+        /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName} for production slots and
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slotName} for other slots.
         /// </summary>
         public ResourceIdentifier SourceWebAppId { get; set; }
@@ -91,14 +91,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> App Service Environment. </summary>
         public string HostingEnvironment { get; set; }
         /// <summary>
-        /// Application setting overrides for cloned app. If specified, these settings override the settings cloned 
+        /// Application setting overrides for cloned app. If specified, these settings override the settings cloned
         /// from source app. Otherwise, application settings from source app are retained.
         /// </summary>
         public IDictionary<string, string> AppSettingsOverrides { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; to configure load balancing for source and destination app. </summary>
         public bool? ConfigureLoadBalancing { get; set; }
         /// <summary>
-        /// ARM resource ID of the Traffic Manager profile to use, if it exists. Traffic Manager resource ID is of the form 
+        /// ARM resource ID of the Traffic Manager profile to use, if it exists. Traffic Manager resource ID is of the form
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{profileName}.
         /// </summary>
         public ResourceIdentifier TrafficManagerProfileId { get; set; }

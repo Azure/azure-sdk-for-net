@@ -9,6 +9,7 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -296,6 +297,48 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary>
+        /// Get all delivery attributes for an event subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}/getDeliveryAttributes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EventSubscriptions_GetDeliveryAttributes</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="DeliveryAttributeMapping" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DeliveryAttributeMapping> GetDeliveryAttributesAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _eventSubscriptionRestClient.CreateGetDeliveryAttributesRequest(Id.Parent, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, DeliveryAttributeMapping.DeserializeDeliveryAttributeMapping, _eventSubscriptionClientDiagnostics, Pipeline, "EventSubscriptionResource.GetDeliveryAttributes", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get all delivery attributes for an event subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}/getDeliveryAttributes</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EventSubscriptions_GetDeliveryAttributes</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DeliveryAttributeMapping" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DeliveryAttributeMapping> GetDeliveryAttributes(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _eventSubscriptionRestClient.CreateGetDeliveryAttributesRequest(Id.Parent, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, DeliveryAttributeMapping.DeserializeDeliveryAttributeMapping, _eventSubscriptionClientDiagnostics, Pipeline, "EventSubscriptionResource.GetDeliveryAttributes", "value", null, cancellationToken);
+        }
+
+        /// <summary>
         /// Get the full endpoint URL for an event subscription.
         /// <list type="bullet">
         /// <item>
@@ -353,48 +396,6 @@ namespace Azure.ResourceManager.EventGrid
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Get all delivery attributes for an event subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}/getDeliveryAttributes</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EventSubscriptions_GetDeliveryAttributes</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DeliveryAttributeMapping" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DeliveryAttributeMapping> GetDeliveryAttributesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _eventSubscriptionRestClient.CreateGetDeliveryAttributesRequest(Id.Parent, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, DeliveryAttributeMapping.DeserializeDeliveryAttributeMapping, _eventSubscriptionClientDiagnostics, Pipeline, "EventSubscriptionResource.GetDeliveryAttributes", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get all delivery attributes for an event subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}/getDeliveryAttributes</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EventSubscriptions_GetDeliveryAttributes</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeliveryAttributeMapping" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DeliveryAttributeMapping> GetDeliveryAttributes(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _eventSubscriptionRestClient.CreateGetDeliveryAttributesRequest(Id.Parent, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, DeliveryAttributeMapping.DeserializeDeliveryAttributeMapping, _eventSubscriptionClientDiagnostics, Pipeline, "EventSubscriptionResource.GetDeliveryAttributes", "value", null, cancellationToken);
         }
     }
 }

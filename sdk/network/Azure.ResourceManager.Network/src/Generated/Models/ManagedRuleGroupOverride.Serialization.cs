@@ -33,6 +33,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ManagedRuleGroupOverride DeserializeManagedRuleGroupOverride(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string ruleGroupName = default;
             Optional<IList<ManagedRuleOverride>> rules = default;
             foreach (var property in element.EnumerateObject())
@@ -46,7 +50,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ManagedRuleOverride> array = new List<ManagedRuleOverride>();

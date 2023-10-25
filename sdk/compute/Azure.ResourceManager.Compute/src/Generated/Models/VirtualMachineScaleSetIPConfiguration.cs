@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> Describes a virtual machine scale set network profile&apos;s IP configuration. </summary>
+    /// <summary> Describes a virtual machine scale set network profile's IP configuration. </summary>
     public partial class VirtualMachineScaleSetIPConfiguration : ComputeWriteableSubResourceData
     {
         /// <summary> Initializes a new instance of VirtualMachineScaleSetIPConfiguration. </summary>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="subnet"> Specifies the identifier of the subnet. </param>
         /// <param name="primary"> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </param>
         /// <param name="publicIPAddressConfiguration"> The publicIPAddressConfiguration. </param>
-        /// <param name="privateIPAddressVersion"> Available from Api-Version 2017-03-30 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4.  Possible values are: &apos;IPv4&apos; and &apos;IPv6&apos;. </param>
+        /// <param name="privateIPAddressVersion"> Available from Api-Version 2017-03-30 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4.  Possible values are: 'IPv4' and 'IPv6'. </param>
         /// <param name="applicationGatewayBackendAddressPools"> Specifies an array of references to backend address pools of application gateways. A scale set can reference backend address pools of multiple application gateways. Multiple scale sets cannot use the same application gateway. </param>
         /// <param name="applicationSecurityGroups"> Specifies an array of references to application security group. </param>
         /// <param name="loadBalancerBackendAddressPools"> Specifies an array of references to backend address pools of load balancers. A scale set can reference backend address pools of one public and one internal load balancer. Multiple scale sets cannot use the same basic sku load balancer. </param>
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? Primary { get; set; }
         /// <summary> The publicIPAddressConfiguration. </summary>
         public VirtualMachineScaleSetPublicIPAddressConfiguration PublicIPAddressConfiguration { get; set; }
-        /// <summary> Available from Api-Version 2017-03-30 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4.  Possible values are: &apos;IPv4&apos; and &apos;IPv6&apos;. </summary>
+        /// <summary> Available from Api-Version 2017-03-30 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4.  Possible values are: 'IPv4' and 'IPv6'. </summary>
         public IPVersion? PrivateIPAddressVersion { get; set; }
         /// <summary> Specifies an array of references to backend address pools of application gateways. A scale set can reference backend address pools of multiple application gateways. Multiple scale sets cannot use the same application gateway. </summary>
         public IList<WritableSubResource> ApplicationGatewayBackendAddressPools { get; }

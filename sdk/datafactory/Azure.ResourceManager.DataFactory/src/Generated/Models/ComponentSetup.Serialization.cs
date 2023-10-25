@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(LicenseKey))
             {
                 writer.WritePropertyName("licenseKey"u8);
-                writer.WriteObjectValue(LicenseKey);
+                JsonSerializer.Serialize(writer, LicenseKey);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -32,9 +33,13 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static ComponentSetup DeserializeComponentSetup(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             string componentName = default;
-            Optional<FactorySecretBaseDefinition> licenseKey = default;
+            Optional<DataFactorySecretBaseDefinition> licenseKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -60,17 +65,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            licenseKey = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property0.Value);
+                            licenseKey = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ComponentSetup(type, componentName, licenseKey.Value);
+            return new ComponentSetup(type, componentName, licenseKey);
         }
     }
 }

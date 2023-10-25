@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static SupportedBuildpackResourceProperties DeserializeSupportedBuildpackResourceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> buildpackId = default;
             foreach (var property in element.EnumerateObject())
             {

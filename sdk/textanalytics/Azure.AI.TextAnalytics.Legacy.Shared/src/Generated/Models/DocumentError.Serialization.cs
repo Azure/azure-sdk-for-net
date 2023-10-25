@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
@@ -14,6 +13,10 @@ namespace Azure.AI.TextAnalytics.Legacy
     {
         internal static DocumentError DeserializeDocumentError(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string id = default;
             TextAnalyticsError error = default;
             foreach (var property in element.EnumerateObject())

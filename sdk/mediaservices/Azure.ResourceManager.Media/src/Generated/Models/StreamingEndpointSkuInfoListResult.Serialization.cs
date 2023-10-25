@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Media.Models
     {
         internal static StreamingEndpointSkuInfoListResult DeserializeStreamingEndpointSkuInfoListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<StreamingEndpointSkuInfo>> value = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -22,7 +26,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<StreamingEndpointSkuInfo> array = new List<StreamingEndpointSkuInfo>();

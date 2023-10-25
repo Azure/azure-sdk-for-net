@@ -66,6 +66,10 @@ namespace Azure.ResourceManager.DataShare.Models
 
         internal static ShareSynchronization DeserializeShareSynchronization(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> consumerEmail = default;
             Optional<string> consumerName = default;
             Optional<string> consumerTenantName = default;
@@ -97,7 +101,6 @@ namespace Azure.ResourceManager.DataShare.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     durationMs = property.Value.GetInt32();
@@ -107,7 +110,6 @@ namespace Azure.ResourceManager.DataShare.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     endTime = property.Value.GetDateTimeOffset("O");
@@ -122,7 +124,6 @@ namespace Azure.ResourceManager.DataShare.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startTime = property.Value.GetDateTimeOffset("O");
@@ -137,7 +138,6 @@ namespace Azure.ResourceManager.DataShare.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     synchronizationId = property.Value.GetGuid();
@@ -147,7 +147,6 @@ namespace Azure.ResourceManager.DataShare.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     synchronizationMode = new SynchronizationMode(property.Value.GetString());

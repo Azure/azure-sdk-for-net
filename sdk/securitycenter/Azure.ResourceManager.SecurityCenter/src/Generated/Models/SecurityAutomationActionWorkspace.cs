@@ -9,7 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The Log Analytics Workspace to which event data will be exported. Security alerts data will reside in the &apos;SecurityAlert&apos; table and the assessments data will reside in the &apos;SecurityRecommendation&apos; table (under the &apos;Security&apos;/&apos;SecurityCenterFree&apos; solutions). Note that in order to view the data in the workspace, the Security Center Log Analytics free/standard solution needs to be enabled on that workspace. To learn more about Microsoft Defender for Cloud continuous export capabilities, visit https://aka.ms/ASCExportLearnMore. </summary>
+    /// <summary> The Log Analytics Workspace to which event data will be exported. Security alerts data will reside in the 'SecurityAlert' table and the assessments data will reside in the 'SecurityRecommendation' table (under the 'Security'/'SecurityCenterFree' solutions). Note that in order to view the data in the workspace, the Security Center Log Analytics free/standard solution needs to be enabled on that workspace. To learn more about Microsoft Defender for Cloud continuous export capabilities, visit https://aka.ms/ASCExportLearnMore. </summary>
     public partial class SecurityAutomationActionWorkspace : SecurityAutomationAction
     {
         /// <summary> Initializes a new instance of SecurityAutomationActionWorkspace. </summary>

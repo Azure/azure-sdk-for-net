@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MonitorItsmReceiver DeserializeMonitorItsmReceiver(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             string workspaceId = default;
             string connectionId = default;

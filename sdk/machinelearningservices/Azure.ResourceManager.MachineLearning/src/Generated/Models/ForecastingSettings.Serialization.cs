@@ -45,6 +45,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("featureLags"u8);
                 writer.WriteStringValue(FeatureLags.Value.ToString());
             }
+            if (Optional.IsCollectionDefined(FeaturesUnknownAtForecastTime))
+            {
+                if (FeaturesUnknownAtForecastTime != null)
+                {
+                    writer.WritePropertyName("featuresUnknownAtForecastTime"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in FeaturesUnknownAtForecastTime)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+                else
+                {
+                    writer.WriteNull("featuresUnknownAtForecastTime");
+                }
+            }
             if (Optional.IsDefined(ForecastHorizon))
             {
                 writer.WritePropertyName("forecastHorizon"u8);
@@ -140,9 +157,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static ForecastingSettings DeserializeForecastingSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> countryOrRegionForHolidays = default;
             Optional<int?> cvStepSize = default;
             Optional<MachineLearningFeatureLag> featureLags = default;
+            Optional<IList<string>> featuresUnknownAtForecastTime = default;
             Optional<ForecastHorizon> forecastHorizon = default;
             Optional<string> frequency = default;
             Optional<ForecastingSeasonality> seasonality = default;
@@ -179,17 +201,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     featureLags = new MachineLearningFeatureLag(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("featuresUnknownAtForecastTime"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        featuresUnknownAtForecastTime = null;
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    featuresUnknownAtForecastTime = array;
                     continue;
                 }
                 if (property.NameEquals("forecastHorizon"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     forecastHorizon = ForecastHorizon.DeserializeForecastHorizon(property.Value);
@@ -209,7 +244,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     seasonality = ForecastingSeasonality.DeserializeForecastingSeasonality(property.Value);
@@ -219,7 +253,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     shortSeriesHandlingConfig = new MachineLearningShortSeriesHandlingConfiguration(property.Value.GetString());
@@ -229,7 +262,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     targetAggregateFunction = new TargetAggregationFunction(property.Value.GetString());
@@ -284,14 +316,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     useStl = new MachineLearningUseStl(property.Value.GetString());
                     continue;
                 }
             }
-            return new ForecastingSettings(countryOrRegionForHolidays.Value, Optional.ToNullable(cvStepSize), Optional.ToNullable(featureLags), forecastHorizon.Value, frequency.Value, seasonality.Value, Optional.ToNullable(shortSeriesHandlingConfig), Optional.ToNullable(targetAggregateFunction), targetLags.Value, targetRollingWindowSize.Value, timeColumnName.Value, Optional.ToList(timeSeriesIdColumnNames), Optional.ToNullable(useStl));
+            return new ForecastingSettings(countryOrRegionForHolidays.Value, Optional.ToNullable(cvStepSize), Optional.ToNullable(featureLags), Optional.ToList(featuresUnknownAtForecastTime), forecastHorizon.Value, frequency.Value, seasonality.Value, Optional.ToNullable(shortSeriesHandlingConfig), Optional.ToNullable(targetAggregateFunction), targetLags.Value, targetRollingWindowSize.Value, timeColumnName.Value, Optional.ToList(timeSeriesIdColumnNames), Optional.ToNullable(useStl));
         }
     }
 }

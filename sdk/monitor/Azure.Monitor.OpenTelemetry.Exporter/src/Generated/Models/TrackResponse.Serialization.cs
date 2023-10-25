@@ -15,6 +15,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     {
         internal static TrackResponse DeserializeTrackResponse(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> itemsReceived = default;
             Optional<int> itemsAccepted = default;
             Optional<IReadOnlyList<TelemetryErrorDetails>> errors = default;
@@ -24,7 +28,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     itemsReceived = property.Value.GetInt32();
@@ -34,7 +37,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     itemsAccepted = property.Value.GetInt32();
@@ -44,7 +46,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<TelemetryErrorDetails> array = new List<TelemetryErrorDetails>();

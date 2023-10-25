@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppInstanceTcpSocketAction DeserializeAppInstanceTcpSocketAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ProbeActionType type = default;
             foreach (var property in element.EnumerateObject())
             {

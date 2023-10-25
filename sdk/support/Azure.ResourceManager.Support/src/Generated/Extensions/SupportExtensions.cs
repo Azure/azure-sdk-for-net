@@ -19,13 +19,423 @@ namespace Azure.ResourceManager.Support
     /// <summary> A class to add extension methods to Azure.ResourceManager.Support. </summary>
     public static partial class SupportExtensions
     {
-        private static TenantResourceExtensionClient GetExtensionClient(TenantResource tenantResource)
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
         {
-            return tenantResource.GetCachedClient((client) =>
+            return resource.GetCachedClient(client =>
             {
-                return new TenantResourceExtensionClient(client, tenantResource.Id);
+                return new SubscriptionResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new SubscriptionResourceExtensionClient(client, scope);
+            });
+        }
+
+        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        {
+            return resource.GetCachedClient(client =>
+            {
+                return new TenantResourceExtensionClient(client, resource.Id);
+            });
+        }
+
+        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new TenantResourceExtensionClient(client, scope);
+            });
+        }
+        #region SupportAzureServiceResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SupportAzureServiceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SupportAzureServiceResource.CreateResourceIdentifier" /> to create a <see cref="SupportAzureServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SupportAzureServiceResource" /> object. </returns>
+        public static SupportAzureServiceResource GetSupportAzureServiceResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                SupportAzureServiceResource.ValidateResourceId(id);
+                return new SupportAzureServiceResource(client, id);
             }
             );
+        }
+        #endregion
+
+        #region ProblemClassificationResource
+        /// <summary>
+        /// Gets an object representing a <see cref="ProblemClassificationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ProblemClassificationResource.CreateResourceIdentifier" /> to create a <see cref="ProblemClassificationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ProblemClassificationResource" /> object. </returns>
+        public static ProblemClassificationResource GetProblemClassificationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                ProblemClassificationResource.ValidateResourceId(id);
+                return new ProblemClassificationResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region SubscriptionSupportTicketResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SubscriptionSupportTicketResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SubscriptionSupportTicketResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionSupportTicketResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SubscriptionSupportTicketResource" /> object. </returns>
+        public static SubscriptionSupportTicketResource GetSubscriptionSupportTicketResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                SubscriptionSupportTicketResource.ValidateResourceId(id);
+                return new SubscriptionSupportTicketResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region TenantSupportTicketResource
+        /// <summary>
+        /// Gets an object representing a <see cref="TenantSupportTicketResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TenantSupportTicketResource.CreateResourceIdentifier" /> to create a <see cref="TenantSupportTicketResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="TenantSupportTicketResource" /> object. </returns>
+        public static TenantSupportTicketResource GetTenantSupportTicketResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                TenantSupportTicketResource.ValidateResourceId(id);
+                return new TenantSupportTicketResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region SupportTicketCommunicationResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SupportTicketCommunicationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SupportTicketCommunicationResource.CreateResourceIdentifier" /> to create a <see cref="SupportTicketCommunicationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SupportTicketCommunicationResource" /> object. </returns>
+        public static SupportTicketCommunicationResource GetSupportTicketCommunicationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                SupportTicketCommunicationResource.ValidateResourceId(id);
+                return new SupportTicketCommunicationResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region SupportTicketNoSubCommunicationResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SupportTicketNoSubCommunicationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SupportTicketNoSubCommunicationResource.CreateResourceIdentifier" /> to create a <see cref="SupportTicketNoSubCommunicationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SupportTicketNoSubCommunicationResource" /> object. </returns>
+        public static SupportTicketNoSubCommunicationResource GetSupportTicketNoSubCommunicationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                SupportTicketNoSubCommunicationResource.ValidateResourceId(id);
+                return new SupportTicketNoSubCommunicationResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region SupportTicketChatTranscriptResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SupportTicketChatTranscriptResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SupportTicketChatTranscriptResource.CreateResourceIdentifier" /> to create a <see cref="SupportTicketChatTranscriptResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SupportTicketChatTranscriptResource" /> object. </returns>
+        public static SupportTicketChatTranscriptResource GetSupportTicketChatTranscriptResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                SupportTicketChatTranscriptResource.ValidateResourceId(id);
+                return new SupportTicketChatTranscriptResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region SupportTicketNoSubChatTranscriptResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SupportTicketNoSubChatTranscriptResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SupportTicketNoSubChatTranscriptResource.CreateResourceIdentifier" /> to create a <see cref="SupportTicketNoSubChatTranscriptResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SupportTicketNoSubChatTranscriptResource" /> object. </returns>
+        public static SupportTicketNoSubChatTranscriptResource GetSupportTicketNoSubChatTranscriptResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                SupportTicketNoSubChatTranscriptResource.ValidateResourceId(id);
+                return new SupportTicketNoSubChatTranscriptResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region SubscriptionFileWorkspaceResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SubscriptionFileWorkspaceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SubscriptionFileWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionFileWorkspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SubscriptionFileWorkspaceResource" /> object. </returns>
+        public static SubscriptionFileWorkspaceResource GetSubscriptionFileWorkspaceResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                SubscriptionFileWorkspaceResource.ValidateResourceId(id);
+                return new SubscriptionFileWorkspaceResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region TenantFileWorkspaceResource
+        /// <summary>
+        /// Gets an object representing a <see cref="TenantFileWorkspaceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TenantFileWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="TenantFileWorkspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="TenantFileWorkspaceResource" /> object. </returns>
+        public static TenantFileWorkspaceResource GetTenantFileWorkspaceResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                TenantFileWorkspaceResource.ValidateResourceId(id);
+                return new TenantFileWorkspaceResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region SupportTicketFileResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SupportTicketFileResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SupportTicketFileResource.CreateResourceIdentifier" /> to create a <see cref="SupportTicketFileResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SupportTicketFileResource" /> object. </returns>
+        public static SupportTicketFileResource GetSupportTicketFileResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                SupportTicketFileResource.ValidateResourceId(id);
+                return new SupportTicketFileResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region SupportTicketNoSubFileResource
+        /// <summary>
+        /// Gets an object representing a <see cref="SupportTicketNoSubFileResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SupportTicketNoSubFileResource.CreateResourceIdentifier" /> to create a <see cref="SupportTicketNoSubFileResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SupportTicketNoSubFileResource" /> object. </returns>
+        public static SupportTicketNoSubFileResource GetSupportTicketNoSubFileResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                SupportTicketNoSubFileResource.ValidateResourceId(id);
+                return new SupportTicketNoSubFileResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        /// <summary> Gets a collection of SubscriptionSupportTicketResources in the SubscriptionResource. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of SubscriptionSupportTicketResources and their operations over a SubscriptionSupportTicketResource. </returns>
+        public static SubscriptionSupportTicketCollection GetSubscriptionSupportTickets(this SubscriptionResource subscriptionResource)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSubscriptionSupportTickets();
+        }
+
+        /// <summary>
+        /// Get ticket details for an Azure subscription. Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SupportTickets_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="supportTicketName"> Support ticket name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="supportTicketName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SubscriptionSupportTicketResource>> GetSubscriptionSupportTicketAsync(this SubscriptionResource subscriptionResource, string supportTicketName, CancellationToken cancellationToken = default)
+        {
+            return await subscriptionResource.GetSubscriptionSupportTickets().GetAsync(supportTicketName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get ticket details for an Azure subscription. Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SupportTickets_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="supportTicketName"> Support ticket name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="supportTicketName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<SubscriptionSupportTicketResource> GetSubscriptionSupportTicket(this SubscriptionResource subscriptionResource, string supportTicketName, CancellationToken cancellationToken = default)
+        {
+            return subscriptionResource.GetSubscriptionSupportTickets().Get(supportTicketName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SubscriptionFileWorkspaceResources in the SubscriptionResource. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of SubscriptionFileWorkspaceResources and their operations over a SubscriptionFileWorkspaceResource. </returns>
+        public static SubscriptionFileWorkspaceCollection GetSubscriptionFileWorkspaces(this SubscriptionResource subscriptionResource)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSubscriptionFileWorkspaces();
+        }
+
+        /// <summary>
+        /// Gets details for a specific file workspace in an Azure subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FileWorkspaces_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="fileWorkspaceName"> File Workspace Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="fileWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileWorkspaceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SubscriptionFileWorkspaceResource>> GetSubscriptionFileWorkspaceAsync(this SubscriptionResource subscriptionResource, string fileWorkspaceName, CancellationToken cancellationToken = default)
+        {
+            return await subscriptionResource.GetSubscriptionFileWorkspaces().GetAsync(fileWorkspaceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets details for a specific file workspace in an Azure subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FileWorkspaces_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="fileWorkspaceName"> File Workspace Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="fileWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileWorkspaceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<SubscriptionFileWorkspaceResource> GetSubscriptionFileWorkspace(this SubscriptionResource subscriptionResource, string fileWorkspaceName, CancellationToken cancellationToken = default)
+        {
+            return subscriptionResource.GetSubscriptionFileWorkspaces().Get(fileWorkspaceName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Check the availability of a resource name. This API should be used to check the uniqueness of the name for support ticket creation for the selected subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SupportTickets_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="content"> Input to check. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static async Task<Response<SupportNameAvailabilityResult>> CheckSupportTicketNameAvailabilityAsync(this SubscriptionResource subscriptionResource, SupportNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckSupportTicketNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Check the availability of a resource name. This API should be used to check the uniqueness of the name for support ticket creation for the selected subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SupportTickets_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="content"> Input to check. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public static Response<SupportNameAvailabilityResult> CheckSupportTicketNameAvailability(this SubscriptionResource subscriptionResource, SupportNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckSupportTicketNameAvailability(content, cancellationToken);
         }
 
         /// <summary> Gets a collection of SupportAzureServiceResources in the TenantResource. </summary>
@@ -33,7 +443,7 @@ namespace Azure.ResourceManager.Support
         /// <returns> An object representing collection of SupportAzureServiceResources and their operations over a SupportAzureServiceResource. </returns>
         public static SupportAzureServiceCollection GetSupportAzureServices(this TenantResource tenantResource)
         {
-            return GetExtensionClient(tenantResource).GetSupportAzureServices();
+            return GetTenantResourceExtensionClient(tenantResource).GetSupportAzureServices();
         }
 
         /// <summary>
@@ -84,69 +494,116 @@ namespace Azure.ResourceManager.Support
             return tenantResource.GetSupportAzureServices().Get(serviceName, cancellationToken);
         }
 
-        private static SubscriptionResourceExtensionClient GetExtensionClient(SubscriptionResource subscriptionResource)
+        /// <summary> Gets a collection of TenantSupportTicketResources in the TenantResource. </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of TenantSupportTicketResources and their operations over a TenantSupportTicketResource. </returns>
+        public static TenantSupportTicketCollection GetTenantSupportTickets(this TenantResource tenantResource)
         {
-            return subscriptionResource.GetCachedClient((client) =>
-            {
-                return new SubscriptionResourceExtensionClient(client, subscriptionResource.Id);
-            }
-            );
-        }
-
-        /// <summary> Gets a collection of SupportTicketResources in the SubscriptionResource. </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of SupportTicketResources and their operations over a SupportTicketResource. </returns>
-        public static SupportTicketCollection GetSupportTickets(this SubscriptionResource subscriptionResource)
-        {
-            return GetExtensionClient(subscriptionResource).GetSupportTickets();
+            return GetTenantResourceExtensionClient(tenantResource).GetTenantSupportTickets();
         }
 
         /// <summary>
-        /// Get ticket details for an Azure subscription. Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error.
+        /// Gets details for a specific support ticket. Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}</description>
+        /// <description>/providers/Microsoft.Support/supportTickets/{supportTicketName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SupportTickets_Get</description>
+        /// <description>SupportTicketsNoSubscription_Get</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="supportTicketName"> Support ticket name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="supportTicketName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<SupportTicketResource>> GetSupportTicketAsync(this SubscriptionResource subscriptionResource, string supportTicketName, CancellationToken cancellationToken = default)
+        public static async Task<Response<TenantSupportTicketResource>> GetTenantSupportTicketAsync(this TenantResource tenantResource, string supportTicketName, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetSupportTickets().GetAsync(supportTicketName, cancellationToken).ConfigureAwait(false);
+            return await tenantResource.GetTenantSupportTickets().GetAsync(supportTicketName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Get ticket details for an Azure subscription. Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error.
+        /// Gets details for a specific support ticket. Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}</description>
+        /// <description>/providers/Microsoft.Support/supportTickets/{supportTicketName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SupportTickets_Get</description>
+        /// <description>SupportTicketsNoSubscription_Get</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="supportTicketName"> Support ticket name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="supportTicketName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<SupportTicketResource> GetSupportTicket(this SubscriptionResource subscriptionResource, string supportTicketName, CancellationToken cancellationToken = default)
+        public static Response<TenantSupportTicketResource> GetTenantSupportTicket(this TenantResource tenantResource, string supportTicketName, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetSupportTickets().Get(supportTicketName, cancellationToken);
+            return tenantResource.GetTenantSupportTickets().Get(supportTicketName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of TenantFileWorkspaceResources in the TenantResource. </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <returns> An object representing collection of TenantFileWorkspaceResources and their operations over a TenantFileWorkspaceResource. </returns>
+        public static TenantFileWorkspaceCollection GetTenantFileWorkspaces(this TenantResource tenantResource)
+        {
+            return GetTenantResourceExtensionClient(tenantResource).GetTenantFileWorkspaces();
+        }
+
+        /// <summary>
+        /// Gets details for a specific file workspace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FileWorkspacesNoSubscription_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="fileWorkspaceName"> File Workspace Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="fileWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileWorkspaceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<TenantFileWorkspaceResource>> GetTenantFileWorkspaceAsync(this TenantResource tenantResource, string fileWorkspaceName, CancellationToken cancellationToken = default)
+        {
+            return await tenantResource.GetTenantFileWorkspaces().GetAsync(fileWorkspaceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets details for a specific file workspace.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FileWorkspacesNoSubscription_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
+        /// <param name="fileWorkspaceName"> File Workspace Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="fileWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileWorkspaceName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<TenantFileWorkspaceResource> GetTenantFileWorkspace(this TenantResource tenantResource, string fileWorkspaceName, CancellationToken cancellationToken = default)
+        {
+            return tenantResource.GetTenantFileWorkspaces().Get(fileWorkspaceName, cancellationToken);
         }
 
         /// <summary>
@@ -154,23 +611,23 @@ namespace Azure.ResourceManager.Support
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/checkNameAvailability</description>
+        /// <description>/providers/Microsoft.Support/checkNameAvailability</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SupportTickets_CheckNameAvailability</description>
+        /// <description>SupportTicketsNoSubscription_CheckNameAvailability</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static async Task<Response<SupportNameAvailabilityResult>> CheckSupportTicketNameAvailabilityAsync(this SubscriptionResource subscriptionResource, SupportNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<SupportNameAvailabilityResult>> CheckNameAvailabilitySupportTicketsNoSubscriptionAsync(this TenantResource tenantResource, SupportNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(subscriptionResource).CheckSupportTicketNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetTenantResourceExtensionClient(tenantResource).CheckNameAvailabilitySupportTicketsNoSubscriptionAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -178,99 +635,23 @@ namespace Azure.ResourceManager.Support
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/checkNameAvailability</description>
+        /// <description>/providers/Microsoft.Support/checkNameAvailability</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SupportTickets_CheckNameAvailability</description>
+        /// <description>SupportTicketsNoSubscription_CheckNameAvailability</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public static Response<SupportNameAvailabilityResult> CheckSupportTicketNameAvailability(this SubscriptionResource subscriptionResource, SupportNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static Response<SupportNameAvailabilityResult> CheckNameAvailabilitySupportTicketsNoSubscription(this TenantResource tenantResource, SupportNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).CheckSupportTicketNameAvailability(content, cancellationToken);
+            return GetTenantResourceExtensionClient(tenantResource).CheckNameAvailabilitySupportTicketsNoSubscription(content, cancellationToken);
         }
-
-        #region SupportAzureServiceResource
-        /// <summary>
-        /// Gets an object representing a <see cref="SupportAzureServiceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SupportAzureServiceResource.CreateResourceIdentifier" /> to create a <see cref="SupportAzureServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SupportAzureServiceResource" /> object. </returns>
-        public static SupportAzureServiceResource GetSupportAzureServiceResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                SupportAzureServiceResource.ValidateResourceId(id);
-                return new SupportAzureServiceResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region ProblemClassificationResource
-        /// <summary>
-        /// Gets an object representing a <see cref="ProblemClassificationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ProblemClassificationResource.CreateResourceIdentifier" /> to create a <see cref="ProblemClassificationResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProblemClassificationResource" /> object. </returns>
-        public static ProblemClassificationResource GetProblemClassificationResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                ProblemClassificationResource.ValidateResourceId(id);
-                return new ProblemClassificationResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region SupportTicketResource
-        /// <summary>
-        /// Gets an object representing a <see cref="SupportTicketResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SupportTicketResource.CreateResourceIdentifier" /> to create a <see cref="SupportTicketResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SupportTicketResource" /> object. </returns>
-        public static SupportTicketResource GetSupportTicketResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                SupportTicketResource.ValidateResourceId(id);
-                return new SupportTicketResource(client, id);
-            }
-            );
-        }
-        #endregion
-
-        #region SupportTicketCommunicationResource
-        /// <summary>
-        /// Gets an object representing a <see cref="SupportTicketCommunicationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SupportTicketCommunicationResource.CreateResourceIdentifier" /> to create a <see cref="SupportTicketCommunicationResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SupportTicketCommunicationResource" /> object. </returns>
-        public static SupportTicketCommunicationResource GetSupportTicketCommunicationResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                SupportTicketCommunicationResource.ValidateResourceId(id);
-                return new SupportTicketCommunicationResource(client, id);
-            }
-            );
-        }
-        #endregion
     }
 }

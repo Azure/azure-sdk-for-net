@@ -31,6 +31,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
+            if (Optional.IsDefined(Kind))
+            {
+                writer.WritePropertyName("kind"u8);
+                writer.WriteStringValue(Kind);
+            }
             if (Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
@@ -41,9 +46,14 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppCredentials DeserializeContainerAppCredentials(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> clientId = default;
             Optional<string> clientSecret = default;
             Optional<Guid> tenantId = default;
+            Optional<string> kind = default;
             Optional<string> subscriptionId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -61,10 +71,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tenantId = property.Value.GetGuid();
+                    continue;
+                }
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("subscriptionId"u8))
@@ -73,7 +87,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppCredentials(clientId.Value, clientSecret.Value, Optional.ToNullable(tenantId), subscriptionId.Value);
+            return new ContainerAppCredentials(clientId.Value, clientSecret.Value, Optional.ToNullable(tenantId), kind.Value, subscriptionId.Value);
         }
     }
 }

@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static PoolEndpointConfiguration DeserializePoolEndpointConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<BatchInboundNatPool> inboundNatPools = default;
             foreach (var property in element.EnumerateObject())
             {

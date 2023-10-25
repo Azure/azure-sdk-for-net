@@ -32,7 +32,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
             {
                 try
                 {
-                    await Client.DeleteProjectAsync(WaitUntil.Completed, projectName).ConfigureAwait(false);
+                    await Client.DeleteProjectAsync(WaitUntil.Started, projectName).ConfigureAwait(false);
                 }
                 catch (RequestFailedException ex) when (ex.Status == 404)
                 {

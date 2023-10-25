@@ -30,11 +30,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("lastCommitId"u8);
                 writer.WriteStringValue(LastCommitId);
             }
+            if (Optional.IsDefined(DisablePublish))
+            {
+                writer.WritePropertyName("disablePublish"u8);
+                writer.WriteBooleanValue(DisablePublish.Value);
+            }
             writer.WriteEndObject();
         }
 
         internal static FactoryRepoConfiguration DeserializeFactoryRepoConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

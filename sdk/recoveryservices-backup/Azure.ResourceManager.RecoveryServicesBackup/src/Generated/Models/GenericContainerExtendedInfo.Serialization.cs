@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static GenericContainerExtendedInfo DeserializeGenericContainerExtendedInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> rawCertData = default;
             Optional<ContainerIdentityInfo> containerIdentityInfo = default;
             Optional<IDictionary<string, string>> serviceEndpoints = default;
@@ -56,7 +60,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     containerIdentityInfo = ContainerIdentityInfo.DeserializeContainerIdentityInfo(property.Value);
@@ -66,7 +69,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();

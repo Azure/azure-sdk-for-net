@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Redis.Models
     {
         /// <summary> Initializes a new instance of RedisNameAvailabilityContent. </summary>
         /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. The only legal value of this property for checking redis cache name availability is &apos;Microsoft.Cache/redis&apos;. </param>
+        /// <param name="resourceType"> Resource type. The only legal value of this property for checking redis cache name availability is 'Microsoft.Cache/redis'. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public RedisNameAvailabilityContent(string name, ResourceType resourceType)
         {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Redis.Models
 
         /// <summary> Resource name. </summary>
         public string Name { get; }
-        /// <summary> Resource type. The only legal value of this property for checking redis cache name availability is &apos;Microsoft.Cache/redis&apos;. </summary>
+        /// <summary> Resource type. The only legal value of this property for checking redis cache name availability is 'Microsoft.Cache/redis'. </summary>
         public ResourceType ResourceType { get; }
     }
 }

@@ -13,7 +13,10 @@ using Azure.ResourceManager.OperationalInsights.Models;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
-    /// <summary> A class representing the StorageInsight data model. </summary>
+    /// <summary>
+    /// A class representing the StorageInsight data model.
+    /// The top level storage insight resource container.
+    /// </summary>
     public partial class StorageInsightData : ResourceData
     {
         /// <summary> Initializes a new instance of StorageInsightData. </summary>

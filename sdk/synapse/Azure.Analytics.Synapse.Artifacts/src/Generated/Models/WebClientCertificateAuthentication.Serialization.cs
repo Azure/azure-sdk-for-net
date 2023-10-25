@@ -31,6 +31,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static WebClientCertificateAuthentication DeserializeWebClientCertificateAuthentication(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SecretBase pfx = default;
             SecretBase password = default;
             object url = default;

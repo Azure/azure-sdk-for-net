@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
@@ -15,6 +14,10 @@ namespace Azure.Search.Documents.Models
     {
         internal static IndexDocumentsResult DeserializeIndexDocumentsResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<IndexingResult> value = default;
             foreach (var property in element.EnumerateObject())
             {

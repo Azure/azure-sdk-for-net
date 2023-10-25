@@ -8,6 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -70,7 +71,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceFabricManagedClusterManagedClustersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ServiceFabricManagedClusterManagedClustersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceFabricManagedClusterResource(Client, ServiceFabricManagedClusterData.DeserializeServiceFabricManagedClusterData(e)), ServiceFabricManagedClusterManagedClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetServiceFabricManagedClusters", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceFabricManagedClusterResource(Client, ServiceFabricManagedClusterData.DeserializeServiceFabricManagedClusterData(e)), ServiceFabricManagedClusterManagedClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetServiceFabricManagedClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceFabricManagedClusterManagedClustersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ServiceFabricManagedClusterManagedClustersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceFabricManagedClusterResource(Client, ServiceFabricManagedClusterData.DeserializeServiceFabricManagedClusterData(e)), ServiceFabricManagedClusterManagedClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetServiceFabricManagedClusters", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceFabricManagedClusterResource(Client, ServiceFabricManagedClusterData.DeserializeServiceFabricManagedClusterData(e)), ServiceFabricManagedClusterManagedClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetServiceFabricManagedClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -244,7 +245,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         public virtual AsyncPageable<ServiceFabricManagedClusterVersion> GetManagedClusterVersionsAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedClusterVersionRestClient.CreateListRequest(Id.SubscriptionId, location);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ServiceFabricManagedClusterVersion.DeserializeServiceFabricManagedClusterVersion, ManagedClusterVersionClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetManagedClusterVersions", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ServiceFabricManagedClusterVersion.DeserializeServiceFabricManagedClusterVersion, ManagedClusterVersionClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetManagedClusterVersions", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -266,7 +267,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         public virtual Pageable<ServiceFabricManagedClusterVersion> GetManagedClusterVersions(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedClusterVersionRestClient.CreateListRequest(Id.SubscriptionId, location);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, ServiceFabricManagedClusterVersion.DeserializeServiceFabricManagedClusterVersion, ManagedClusterVersionClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetManagedClusterVersions", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ServiceFabricManagedClusterVersion.DeserializeServiceFabricManagedClusterVersion, ManagedClusterVersionClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetManagedClusterVersions", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -289,7 +290,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         public virtual AsyncPageable<ServiceFabricManagedClusterVersion> GetManagedClusterVersionsByEnvironmentAsync(AzureLocation location, ManagedClusterVersionEnvironment environment, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedClusterVersionRestClient.CreateListByEnvironmentRequest(Id.SubscriptionId, location, environment);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ServiceFabricManagedClusterVersion.DeserializeServiceFabricManagedClusterVersion, ManagedClusterVersionClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetManagedClusterVersionsByEnvironment", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ServiceFabricManagedClusterVersion.DeserializeServiceFabricManagedClusterVersion, ManagedClusterVersionClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetManagedClusterVersionsByEnvironment", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -312,7 +313,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         public virtual Pageable<ServiceFabricManagedClusterVersion> GetManagedClusterVersionsByEnvironment(AzureLocation location, ManagedClusterVersionEnvironment environment, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ManagedClusterVersionRestClient.CreateListByEnvironmentRequest(Id.SubscriptionId, location, environment);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, ServiceFabricManagedClusterVersion.DeserializeServiceFabricManagedClusterVersion, ManagedClusterVersionClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetManagedClusterVersionsByEnvironment", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ServiceFabricManagedClusterVersion.DeserializeServiceFabricManagedClusterVersion, ManagedClusterVersionClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetManagedClusterVersionsByEnvironment", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -335,7 +336,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => managedUnsupportedVMSizesRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => managedUnsupportedVMSizesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ServiceFabricManagedUnsupportedVmSize.DeserializeServiceFabricManagedUnsupportedVmSize, managedUnsupportedVMSizesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetManagedUnsupportedVmSizes", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ServiceFabricManagedUnsupportedVmSize.DeserializeServiceFabricManagedUnsupportedVmSize, managedUnsupportedVMSizesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetManagedUnsupportedVmSizes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -358,7 +359,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => managedUnsupportedVMSizesRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => managedUnsupportedVMSizesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ServiceFabricManagedUnsupportedVmSize.DeserializeServiceFabricManagedUnsupportedVmSize, managedUnsupportedVMSizesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetManagedUnsupportedVmSizes", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ServiceFabricManagedUnsupportedVmSize.DeserializeServiceFabricManagedUnsupportedVmSize, managedUnsupportedVMSizesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetManagedUnsupportedVmSizes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

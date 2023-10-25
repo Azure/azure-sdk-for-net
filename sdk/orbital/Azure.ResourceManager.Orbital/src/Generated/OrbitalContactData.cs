@@ -14,7 +14,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Orbital
 {
-    /// <summary> A class representing the OrbitalContact data model. </summary>
+    /// <summary>
+    /// A class representing the OrbitalContact data model.
+    /// Customer creates a contact resource for a spacecraft resource.
+    /// </summary>
     public partial class OrbitalContactData : ResourceData
     {
         /// <summary> Initializes a new instance of OrbitalContactData. </summary>
@@ -28,7 +31,7 @@ namespace Azure.ResourceManager.Orbital
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="provisioningState"> The current state of the resource&apos;s creation, deletion, or modification. </param>
+        /// <param name="provisioningState"> The current state of the resource's creation, deletion, or modification. </param>
         /// <param name="status"> Status of a contact. </param>
         /// <param name="reservationStartOn"> Reservation start time of a contact (ISO 8601 UTC standard). </param>
         /// <param name="reservationEndOn"> Reservation end time of a contact (ISO 8601 UTC standard). </param>
@@ -69,7 +72,7 @@ namespace Azure.ResourceManager.Orbital
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public ETag? ETag { get; }
-        /// <summary> The current state of the resource&apos;s creation, deletion, or modification. </summary>
+        /// <summary> The current state of the resource's creation, deletion, or modification. </summary>
         public OrbitalProvisioningState? ProvisioningState { get; set; }
         /// <summary> Status of a contact. </summary>
         public OrbitalContactStatus? Status { get; }

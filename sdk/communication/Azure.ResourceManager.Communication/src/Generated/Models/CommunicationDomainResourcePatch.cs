@@ -5,9 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
-using Azure.Core;
-
 namespace Azure.ResourceManager.Communication.Models
 {
     /// <summary> A class that describes the PATCH request parameters of a Domains resource. </summary>
@@ -16,11 +13,8 @@ namespace Azure.ResourceManager.Communication.Models
         /// <summary> Initializes a new instance of CommunicationDomainResourcePatch. </summary>
         public CommunicationDomainResourcePatch()
         {
-            ValidSenderUsernames = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Collection of valid sender usernames. This is a key-value pair where key=username and value=display name. </summary>
-        public IDictionary<string, string> ValidSenderUsernames { get; }
         /// <summary> Describes whether user engagement tracking is enabled or disabled. </summary>
         public UserEngagementTracking? UserEngagementTracking { get; set; }
     }

@@ -12,7 +12,10 @@ using Azure.ResourceManager.StorageMover.Models;
 
 namespace Azure.ResourceManager.StorageMover
 {
-    /// <summary> A class representing the StorageMoverAgent data model. </summary>
+    /// <summary>
+    /// A class representing the StorageMoverAgent data model.
+    /// The Agent resource.
+    /// </summary>
     public partial class StorageMoverAgentData : ResourceData
     {
         /// <summary> Initializes a new instance of StorageMoverAgentData. </summary>

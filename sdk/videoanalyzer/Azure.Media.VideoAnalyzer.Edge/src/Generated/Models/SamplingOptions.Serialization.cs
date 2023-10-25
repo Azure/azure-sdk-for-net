@@ -30,6 +30,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static SamplingOptions DeserializeSamplingOptions(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> skipSamplesWithoutAnnotation = default;
             Optional<string> maximumSamplesPerSecond = default;
             foreach (var property in element.EnumerateObject())

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="affectedResourceType"> The type of affected ARM resource. </param>
         /// <param name="affectedResourceSubtype"> The sub type of any subcomponent within the ARM resource that this might be applicable. Value remains null if not applicable. </param>
         /// <param name="affectedResourceCorrelationIds"> The list of affected resource correlation Ids. This can be used to uniquely identify the count of items affected by a specific category and severity as well as count of item affected by an specific issue. </param>
-        internal HealthErrorSummary(string summaryCode, HealthErrorCategory? category, Severity? severity, string summaryMessage, string affectedResourceType, string affectedResourceSubtype, IReadOnlyList<string> affectedResourceCorrelationIds)
+        internal HealthErrorSummary(string summaryCode, HealthErrorCategory? category, SiteRecoveryErrorSeverity? severity, string summaryMessage, string affectedResourceType, string affectedResourceSubtype, IReadOnlyList<string> affectedResourceCorrelationIds)
         {
             SummaryCode = summaryCode;
             Category = category;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The category of the health error. </summary>
         public HealthErrorCategory? Category { get; }
         /// <summary> Severity of error. </summary>
-        public Severity? Severity { get; }
+        public SiteRecoveryErrorSeverity? Severity { get; }
         /// <summary> The summary message of the health error. </summary>
         public string SummaryMessage { get; }
         /// <summary> The type of affected ARM resource. </summary>

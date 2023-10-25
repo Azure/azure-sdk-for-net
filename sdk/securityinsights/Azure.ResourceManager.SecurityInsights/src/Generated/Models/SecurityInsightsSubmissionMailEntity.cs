@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="messageReceivedOn"> The Time stamp when the message is received (Mail). </param>
         /// <param name="recipient"> The recipient of the mail. </param>
         /// <param name="sender"> The sender of the mail. </param>
-        /// <param name="senderIP"> The sender&apos;s IP. </param>
+        /// <param name="senderIP"> The sender's IP. </param>
         /// <param name="subject"> The subject of submission mail. </param>
         /// <param name="reportType"> The submission type for the given instance. This maps to Junk, Phish, Malware or NotJunk. </param>
         internal SecurityInsightsSubmissionMailEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, Guid? networkMessageId, Guid? submissionId, string submitter, DateTimeOffset? submitOn, DateTimeOffset? messageReceivedOn, string recipient, string sender, IPAddress senderIP, string subject, string reportType) : base(id, name, resourceType, systemData, kind)
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public string Recipient { get; }
         /// <summary> The sender of the mail. </summary>
         public string Sender { get; }
-        /// <summary> The sender&apos;s IP. </summary>
+        /// <summary> The sender's IP. </summary>
         public IPAddress SenderIP { get; }
         /// <summary> The subject of submission mail. </summary>
         public string Subject { get; }

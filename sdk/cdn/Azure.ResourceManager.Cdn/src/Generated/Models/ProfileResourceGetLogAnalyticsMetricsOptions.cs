@@ -53,12 +53,10 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <summary> The ArrayOfGet12ItemsItem to use. </summary>
         public IList<string> Protocols { get; }
         /// <summary> The ArrayOfLogMetricsGroupBy to use. </summary>
-        public IList<LogMetricsGroupBy> GroupBy { get; } = null;
-
+        public IList<LogMetricsGroupBy> GroupBy { get; }
         /// <summary> The ArrayOfGet9ItemsItem to use. </summary>
-        public IList<string> Continents { get; } = null;
-
+        public IList<string> Continents { get; }
         /// <summary> The ArrayOfGet10ItemsItem to use. </summary>
-        public IList<string> CountryOrRegions { get; } = null;
+        public IList<string> CountryOrRegions { get; }
     }
 }

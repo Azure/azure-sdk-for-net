@@ -25,6 +25,7 @@ namespace Microsoft.Azure.Batch
         private class PropertyContainer : PropertyCollection
         {
             public readonly PropertyAccessor<bool?> AutoUpgradeMinorVersionProperty;
+            public readonly PropertyAccessor<bool?> EnableAutomaticUpgradeProperty;
             public readonly PropertyAccessor<string> NameProperty;
             public readonly PropertyAccessor<object> ProtectedSettingsProperty;
             public readonly PropertyAccessor<IList<string>> ProvisionAfterExtensionsProperty;
@@ -36,6 +37,7 @@ namespace Microsoft.Azure.Batch
             public PropertyContainer() : base(BindingState.Unbound)
             {
                 this.AutoUpgradeMinorVersionProperty = this.CreatePropertyAccessor<bool?>(nameof(AutoUpgradeMinorVersion), BindingAccess.Read | BindingAccess.Write);
+                this.EnableAutomaticUpgradeProperty = this.CreatePropertyAccessor<bool?>(nameof(EnableAutomaticUpgrade), BindingAccess.Read | BindingAccess.Write);
                 this.NameProperty = this.CreatePropertyAccessor<string>(nameof(Name), BindingAccess.Read | BindingAccess.Write);
                 this.ProtectedSettingsProperty = this.CreatePropertyAccessor<object>(nameof(ProtectedSettings), BindingAccess.Read | BindingAccess.Write);
                 this.ProvisionAfterExtensionsProperty = this.CreatePropertyAccessor<IList<string>>(nameof(ProvisionAfterExtensions), BindingAccess.Read | BindingAccess.Write);
@@ -51,6 +53,10 @@ namespace Microsoft.Azure.Batch
                     protocolObject.AutoUpgradeMinorVersion,
                     nameof(AutoUpgradeMinorVersion),
                     BindingAccess.Read | BindingAccess.Write);
+                this.EnableAutomaticUpgradeProperty = this.CreatePropertyAccessor(
+                    protocolObject.EnableAutomaticUpgrade,
+                    nameof(EnableAutomaticUpgrade),
+                    BindingAccess.Read);
                 this.NameProperty = this.CreatePropertyAccessor(
                     protocolObject.Name,
                     nameof(Name),
@@ -129,6 +135,16 @@ namespace Microsoft.Azure.Batch
         {
             get { return this.propertyContainer.AutoUpgradeMinorVersionProperty.Value; }
             set { this.propertyContainer.AutoUpgradeMinorVersionProperty.Value = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets indicates whether the extension should be automatically upgraded by the platform if there is a newer 
+        /// version of the extension available.
+        /// </summary>
+        public bool? EnableAutomaticUpgrade
+        {
+            get { return this.propertyContainer.EnableAutomaticUpgradeProperty.Value; }
+            set { this.propertyContainer.EnableAutomaticUpgradeProperty.Value = value; }
         }
 
         /// <summary>
@@ -228,6 +244,7 @@ namespace Microsoft.Azure.Batch
             Models.VMExtension result = new Models.VMExtension()
             {
                 AutoUpgradeMinorVersion = this.AutoUpgradeMinorVersion,
+                EnableAutomaticUpgrade = this.EnableAutomaticUpgrade,
                 Name = this.Name,
                 ProtectedSettings = this.ProtectedSettings,
                 ProvisionAfterExtensions = this.ProvisionAfterExtensions,

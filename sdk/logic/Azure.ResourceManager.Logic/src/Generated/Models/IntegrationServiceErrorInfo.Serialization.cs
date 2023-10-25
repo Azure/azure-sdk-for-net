@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Logic.Models
     {
         internal static IntegrationServiceErrorInfo DeserializeIntegrationServiceErrorInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IntegrationServiceErrorCode code = default;
             string message = default;
             Optional<IReadOnlyList<IntegrationServiceErrorInfo>> details = default;
@@ -36,7 +40,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<IntegrationServiceErrorInfo> array = new List<IntegrationServiceErrorInfo>();
@@ -51,7 +54,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     innerError = BinaryData.FromString(property.Value.GetRawText());

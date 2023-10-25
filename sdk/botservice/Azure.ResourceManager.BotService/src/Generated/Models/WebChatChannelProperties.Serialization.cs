@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static WebChatChannelProperties DeserializeWebChatChannelProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> webChatEmbedCode = default;
             Optional<IList<WebChatSite>> sites = default;
             foreach (var property in element.EnumerateObject())
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.BotService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<WebChatSite> array = new List<WebChatSite>();

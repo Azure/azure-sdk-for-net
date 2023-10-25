@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningCodeConfiguration
     {
         /// <summary> Initializes a new instance of MachineLearningCodeConfiguration. </summary>
-        /// <param name="scoringScript"> [Required] The script to execute on startup. eg. &quot;score.py&quot;. </param>
+        /// <param name="scoringScript"> [Required] The script to execute on startup. eg. "score.py". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scoringScript"/> is null. </exception>
         public MachineLearningCodeConfiguration(string scoringScript)
         {
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of MachineLearningCodeConfiguration. </summary>
         /// <param name="codeId"> ARM resource ID of the code asset. </param>
-        /// <param name="scoringScript"> [Required] The script to execute on startup. eg. &quot;score.py&quot;. </param>
+        /// <param name="scoringScript"> [Required] The script to execute on startup. eg. "score.py". </param>
         internal MachineLearningCodeConfiguration(ResourceIdentifier codeId, string scoringScript)
         {
             CodeId = codeId;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> ARM resource ID of the code asset. </summary>
         public ResourceIdentifier CodeId { get; set; }
-        /// <summary> [Required] The script to execute on startup. eg. &quot;score.py&quot;. </summary>
+        /// <summary> [Required] The script to execute on startup. eg. "score.py". </summary>
         public string ScoringScript { get; set; }
     }
 }

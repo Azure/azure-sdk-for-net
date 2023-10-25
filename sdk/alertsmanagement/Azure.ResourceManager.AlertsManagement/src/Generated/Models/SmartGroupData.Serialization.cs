@@ -107,6 +107,10 @@ namespace Azure.ResourceManager.AlertsManagement
 
         internal static SmartGroupData DeserializeSmartGroupData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -146,7 +150,6 @@ namespace Azure.ResourceManager.AlertsManagement
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -165,7 +168,6 @@ namespace Azure.ResourceManager.AlertsManagement
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             alertsCount = property0.Value.GetInt64();
@@ -175,7 +177,6 @@ namespace Azure.ResourceManager.AlertsManagement
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             smartGroupState = new SmartGroupState(property0.Value.GetString());
@@ -185,7 +186,6 @@ namespace Azure.ResourceManager.AlertsManagement
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             severity = new ServiceAlertSeverity(property0.Value.GetString());
@@ -195,7 +195,6 @@ namespace Azure.ResourceManager.AlertsManagement
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             startDateTime = property0.Value.GetDateTimeOffset("O");
@@ -205,7 +204,6 @@ namespace Azure.ResourceManager.AlertsManagement
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             lastModifiedDateTime = property0.Value.GetDateTimeOffset("O");
@@ -220,7 +218,6 @@ namespace Azure.ResourceManager.AlertsManagement
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<SmartGroupAggregatedProperty> array = new List<SmartGroupAggregatedProperty>();
@@ -235,7 +232,6 @@ namespace Azure.ResourceManager.AlertsManagement
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<SmartGroupAggregatedProperty> array = new List<SmartGroupAggregatedProperty>();
@@ -250,7 +246,6 @@ namespace Azure.ResourceManager.AlertsManagement
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<SmartGroupAggregatedProperty> array = new List<SmartGroupAggregatedProperty>();
@@ -265,7 +260,6 @@ namespace Azure.ResourceManager.AlertsManagement
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<SmartGroupAggregatedProperty> array = new List<SmartGroupAggregatedProperty>();
@@ -280,7 +274,6 @@ namespace Azure.ResourceManager.AlertsManagement
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<SmartGroupAggregatedProperty> array = new List<SmartGroupAggregatedProperty>();
@@ -295,7 +288,6 @@ namespace Azure.ResourceManager.AlertsManagement
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<SmartGroupAggregatedProperty> array = new List<SmartGroupAggregatedProperty>();
@@ -310,7 +302,6 @@ namespace Azure.ResourceManager.AlertsManagement
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<SmartGroupAggregatedProperty> array = new List<SmartGroupAggregatedProperty>();

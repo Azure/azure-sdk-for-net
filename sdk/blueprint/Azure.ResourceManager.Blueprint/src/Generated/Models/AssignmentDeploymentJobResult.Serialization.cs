@@ -36,15 +36,18 @@ namespace Azure.ResourceManager.Blueprint.Models
 
         internal static AssignmentDeploymentJobResult DeserializeAssignmentDeploymentJobResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureResourceManagerError> error = default;
-            Optional<IList<AssignmentJobCreatedResource>> resources = default;
+            Optional<IList<AssignmentJobCreatedResult>> resources = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     error = AzureResourceManagerError.DeserializeAzureResourceManagerError(property.Value);
@@ -54,13 +57,12 @@ namespace Azure.ResourceManager.Blueprint.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AssignmentJobCreatedResource> array = new List<AssignmentJobCreatedResource>();
+                    List<AssignmentJobCreatedResult> array = new List<AssignmentJobCreatedResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AssignmentJobCreatedResource.DeserializeAssignmentJobCreatedResource(item));
+                        array.Add(AssignmentJobCreatedResult.DeserializeAssignmentJobCreatedResult(item));
                     }
                     resources = array;
                     continue;

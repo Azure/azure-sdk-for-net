@@ -38,6 +38,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
+            if (Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.Value.ToString());
+            }
+            if (Optional.IsDefined(OnInactiveMarkAs))
+            {
+                writer.WritePropertyName("onInactiveMarkAs"u8);
+                writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
+            }
             if (Optional.IsCollectionDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn"u8);
@@ -96,7 +106,33 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(NumExecutors))
             {
                 writer.WritePropertyName("numExecutors"u8);
-                writer.WriteNumberValue(NumExecutors.Value);
+                writer.WriteObjectValue(NumExecutors);
+            }
+            if (Optional.IsDefined(ConfigurationType))
+            {
+                writer.WritePropertyName("configurationType"u8);
+                writer.WriteStringValue(ConfigurationType.Value.ToString());
+            }
+            if (Optional.IsDefined(TargetSparkConfiguration))
+            {
+                writer.WritePropertyName("targetSparkConfiguration"u8);
+                writer.WriteObjectValue(TargetSparkConfiguration);
+            }
+            if (Optional.IsCollectionDefined(SparkConfig))
+            {
+                writer.WritePropertyName("sparkConfig"u8);
+                writer.WriteStartObject();
+                foreach (var item in SparkConfig)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteObjectValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -109,11 +145,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SynapseNotebookActivity DeserializeSynapseNotebookActivity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LinkedServiceReference> linkedServiceName = default;
             Optional<ActivityPolicy> policy = default;
             string name = default;
             string type = default;
             Optional<string> description = default;
+            Optional<ActivityState> state = default;
+            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
             Optional<IList<ActivityDependency>> dependsOn = default;
             Optional<IList<UserProperty>> userProperties = default;
             SynapseNotebookReference notebook = default;
@@ -122,7 +164,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> executorSize = default;
             Optional<object> conf = default;
             Optional<object> driverSize = default;
-            Optional<int> numExecutors = default;
+            Optional<object> numExecutors = default;
+            Optional<ConfigurationType> configurationType = default;
+            Optional<SparkConfigurationParametrizationReference> targetSparkConfiguration = default;
+            Optional<IDictionary<string, object>> sparkConfig = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -131,7 +176,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     linkedServiceName = LinkedServiceReference.DeserializeLinkedServiceReference(property.Value);
@@ -141,7 +185,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     policy = ActivityPolicy.DeserializeActivityPolicy(property.Value);
@@ -162,11 +205,28 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     description = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("state"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    state = new ActivityState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("onInactiveMarkAs"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    onInactiveMarkAs = new ActivityOnInactiveMarkAs(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("dependsOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ActivityDependency> array = new List<ActivityDependency>();
@@ -181,7 +241,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<UserProperty> array = new List<UserProperty>();
@@ -210,7 +269,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sparkPool = BigDataPoolParametrizationReference.DeserializeBigDataPoolParametrizationReference(property0.Value);
@@ -220,7 +278,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, NotebookParameter> dictionary = new Dictionary<string, NotebookParameter>();
@@ -235,7 +292,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             executorSize = property0.Value.GetObject();
@@ -245,7 +301,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             conf = property0.Value.GetObject();
@@ -255,7 +310,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             driverSize = property0.Value.GetObject();
@@ -265,10 +319,48 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            numExecutors = property0.Value.GetInt32();
+                            numExecutors = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("configurationType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            configurationType = new ConfigurationType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("targetSparkConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            targetSparkConfiguration = SparkConfigurationParametrizationReference.DeserializeSparkConfigurationParametrizationReference(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("sparkConfig"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, property1.Value.GetObject());
+                                }
+                            }
+                            sparkConfig = dictionary;
                             continue;
                         }
                     }
@@ -277,7 +369,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SynapseNotebookActivity(name, type, description.Value, Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, notebook, sparkPool.Value, Optional.ToDictionary(parameters), executorSize.Value, conf.Value, driverSize.Value, Optional.ToNullable(numExecutors));
+            return new SynapseNotebookActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, notebook, sparkPool.Value, Optional.ToDictionary(parameters), executorSize.Value, conf.Value, driverSize.Value, numExecutors.Value, Optional.ToNullable(configurationType), targetSparkConfiguration.Value, Optional.ToDictionary(sparkConfig));
         }
 
         internal partial class SynapseNotebookActivityConverter : JsonConverter<SynapseNotebookActivity>

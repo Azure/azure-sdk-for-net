@@ -10,21 +10,21 @@ using Azure.AI.TextAnalytics;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    /// <summary> Returns the current state of the task. </summary>
+    /// <summary> The TaskState. </summary>
     internal partial class TaskState
     {
         /// <summary> Initializes a new instance of TaskState. </summary>
-        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
-        /// <param name="status"> The status of the task at the mentioned last update time. </param>
+        /// <param name="lastUpdateDateTime"></param>
+        /// <param name="status"></param>
         public TaskState(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status)
         {
             LastUpdateDateTime = lastUpdateDateTime;
             Status = status;
         }
 
-        /// <summary> The last updated time in UTC for the task. </summary>
+        /// <summary> Gets or sets the last update date time. </summary>
         public DateTimeOffset LastUpdateDateTime { get; set; }
-        /// <summary> The status of the task at the mentioned last update time. </summary>
+        /// <summary> Gets or sets the status. </summary>
         public TextAnalyticsOperationStatus Status { get; set; }
     }
 }

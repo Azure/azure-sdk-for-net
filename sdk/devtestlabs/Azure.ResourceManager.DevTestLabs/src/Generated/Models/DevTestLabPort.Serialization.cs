@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static DevTestLabPort DeserializeDevTestLabPort(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DevTestLabTransportProtocol> transportProtocol = default;
             Optional<int> backendPort = default;
             foreach (var property in element.EnumerateObject())
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     transportProtocol = new DevTestLabTransportProtocol(property.Value.GetString());
@@ -48,7 +51,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     backendPort = property.Value.GetInt32();

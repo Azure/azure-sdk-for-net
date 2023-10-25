@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Initializes a new instance of DiagnosticMetricSet. </summary>
         /// <param name="name"> Name of the metric. </param>
-        /// <param name="unit"> Metric&apos;s unit. </param>
+        /// <param name="unit"> Metric's unit. </param>
         /// <param name="startOn"> Start time of the period. </param>
         /// <param name="endOn"> End time of the period. </param>
         /// <param name="timeGrain"> Presented time grain. Supported grains at the moment are PT1M, PT1H, P1D. </param>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Name of the metric. </summary>
         public string Name { get; set; }
-        /// <summary> Metric&apos;s unit. </summary>
+        /// <summary> Metric's unit. </summary>
         public string Unit { get; set; }
         /// <summary> Start time of the period. </summary>
         public DateTimeOffset? StartOn { get; set; }

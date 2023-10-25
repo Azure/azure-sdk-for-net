@@ -13,7 +13,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing the ArmApplicationDefinition data model. </summary>
+    /// <summary>
+    /// A class representing the ArmApplicationDefinition data model.
+    /// Information about managed application definition.
+    /// </summary>
     public partial class ArmApplicationDefinitionData : ArmApplicationResourceData
     {
         /// <summary> Initializes a new instance of ArmApplicationDefinitionData. </summary>
@@ -48,7 +51,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="notificationPolicy"> The managed application notification policy. </param>
         /// <param name="lockingPolicy"> The managed application locking policy. </param>
         /// <param name="deploymentPolicy"> The managed application deployment policy. </param>
-        /// <param name="managementPolicy"> The managed application management policy that determines publisher&apos;s access to the managed resource group. </param>
+        /// <param name="managementPolicy"> The managed application management policy that determines publisher's access to the managed resource group. </param>
         /// <param name="policies"> The managed application provider policies. </param>
         internal ArmApplicationDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, ArmApplicationSku sku, ArmApplicationLockLevel lockLevel, string displayName, bool? isEnabled, IList<ArmApplicationAuthorization> authorizations, IList<ArmApplicationDefinitionArtifact> artifacts, string description, Uri packageFileUri, BinaryData mainTemplate, BinaryData createUiDefinition, ArmApplicationNotificationPolicy notificationPolicy, ArmApplicationPackageLockingPolicy lockingPolicy, ArmApplicationDeploymentPolicy deploymentPolicy, ArmApplicationManagementPolicy managementPolicy, IList<ArmApplicationPolicy> policies) : base(id, name, resourceType, systemData, tags, location, managedBy, sku)
         {
@@ -158,7 +161,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> The managed application deployment policy. </summary>
         internal ArmApplicationDeploymentPolicy DeploymentPolicy { get; set; }
 
-        /// <summary> The managed application management policy that determines publisher&apos;s access to the managed resource group. </summary>
+        /// <summary> The managed application management policy that determines publisher's access to the managed resource group. </summary>
         internal ArmApplicationManagementPolicy ManagementPolicy { get; set; }
         /// <summary> The managed application management mode. </summary>
         public ArmApplicationManagementMode? ManagementMode

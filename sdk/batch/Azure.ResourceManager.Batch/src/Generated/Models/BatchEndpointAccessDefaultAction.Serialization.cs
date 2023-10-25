@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Batch.Models
 
         public static BatchEndpointAccessDefaultAction ToBatchEndpointAccessDefaultAction(this string value)
         {
-            if (string.Equals(value, "Allow", StringComparison.InvariantCultureIgnoreCase)) return BatchEndpointAccessDefaultAction.Allow;
-            if (string.Equals(value, "Deny", StringComparison.InvariantCultureIgnoreCase)) return BatchEndpointAccessDefaultAction.Deny;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Allow")) return BatchEndpointAccessDefaultAction.Allow;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Deny")) return BatchEndpointAccessDefaultAction.Deny;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchEndpointAccessDefaultAction value.");
         }
     }

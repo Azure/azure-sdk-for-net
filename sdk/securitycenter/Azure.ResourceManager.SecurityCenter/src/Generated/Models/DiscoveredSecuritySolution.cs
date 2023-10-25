@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         /// <summary> Initializes a new instance of DiscoveredSecuritySolution. </summary>
         /// <param name="securityFamily"> The security family of the discovered solution. </param>
-        /// <param name="offer"> The security solutions&apos; image offer. </param>
-        /// <param name="publisher"> The security solutions&apos; image publisher. </param>
-        /// <param name="sku"> The security solutions&apos; image sku. </param>
+        /// <param name="offer"> The security solutions' image offer. </param>
+        /// <param name="publisher"> The security solutions' image publisher. </param>
+        /// <param name="sku"> The security solutions' image sku. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="offer"/>, <paramref name="publisher"/> or <paramref name="sku"/> is null. </exception>
         public DiscoveredSecuritySolution(SecurityFamily securityFamily, string offer, string publisher, string sku)
         {
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="securityFamily"> The security family of the discovered solution. </param>
-        /// <param name="offer"> The security solutions&apos; image offer. </param>
-        /// <param name="publisher"> The security solutions&apos; image publisher. </param>
-        /// <param name="sku"> The security solutions&apos; image sku. </param>
+        /// <param name="offer"> The security solutions' image offer. </param>
+        /// <param name="publisher"> The security solutions' image publisher. </param>
+        /// <param name="sku"> The security solutions' image sku. </param>
         /// <param name="location"> Location where the resource is stored. </param>
         internal DiscoveredSecuritySolution(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityFamily securityFamily, string offer, string publisher, string sku, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
@@ -53,11 +53,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         /// <summary> The security family of the discovered solution. </summary>
         public SecurityFamily SecurityFamily { get; set; }
-        /// <summary> The security solutions&apos; image offer. </summary>
+        /// <summary> The security solutions' image offer. </summary>
         public string Offer { get; set; }
-        /// <summary> The security solutions&apos; image publisher. </summary>
+        /// <summary> The security solutions' image publisher. </summary>
         public string Publisher { get; set; }
-        /// <summary> The security solutions&apos; image sku. </summary>
+        /// <summary> The security solutions' image sku. </summary>
         public string Sku { get; set; }
         /// <summary> Location where the resource is stored. </summary>
         public AzureLocation? Location { get; }

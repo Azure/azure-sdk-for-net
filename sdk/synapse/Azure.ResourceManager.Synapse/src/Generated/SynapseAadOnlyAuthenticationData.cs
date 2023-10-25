@@ -12,7 +12,10 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    /// <summary> A class representing the SynapseAadOnlyAuthentication data model. </summary>
+    /// <summary>
+    /// A class representing the SynapseAadOnlyAuthentication data model.
+    /// Azure Active Directory Only Authentication Info
+    /// </summary>
     public partial class SynapseAadOnlyAuthenticationData : ResourceData
     {
         /// <summary> Initializes a new instance of SynapseAadOnlyAuthenticationData. </summary>

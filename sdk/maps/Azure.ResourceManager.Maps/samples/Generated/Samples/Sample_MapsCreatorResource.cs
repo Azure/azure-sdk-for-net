@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Maps.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_UpdateCreatorResource()
         {
-            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/stable/2021-02-01/examples/UpdateMapsCreator.json
+            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/preview/2021-12-01-preview/examples/UpdateMapsCreator.json
             // this example is just showing the usage of "Creators_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Maps.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteCreatorResource()
         {
-            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/stable/2021-02-01/examples/DeleteMapsCreator.json
+            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/preview/2021-12-01-preview/examples/DeleteMapsCreator.json
             // this example is just showing the usage of "Creators_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Maps.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetCreatorResource()
         {
-            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/stable/2021-02-01/examples/GetMapsCreator.json
+            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/preview/2021-12-01-preview/examples/GetMapsCreator.json
             // this example is just showing the usage of "Creators_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

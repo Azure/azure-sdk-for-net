@@ -18,7 +18,7 @@ namespace Azure.Storage.Blobs
         {
             _response = response;
         }
-        /// <summary> Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob&apos;s metadata or properties, changes the last-modified time of the blob. </summary>
+        /// <summary> Returns the date and time the container was last modified. Any operation that modifies the blob, including an update of the blob's metadata or properties, changes the last-modified time of the blob. </summary>
         public DateTimeOffset? LastModified => _response.Headers.TryGetValue("Last-Modified", out DateTimeOffset? value) ? value : null;
         /// <summary> The current sequence number for a page blob. This header is not returned for block blobs or append blobs. </summary>
         public long? BlobSequenceNumber => _response.Headers.TryGetValue("x-ms-blob-sequence-number", out long? value) ? value : null;

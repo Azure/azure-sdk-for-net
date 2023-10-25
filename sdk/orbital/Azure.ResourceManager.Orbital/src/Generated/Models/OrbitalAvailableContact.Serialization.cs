@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Orbital.Models
     {
         internal static OrbitalAvailableContact DeserializeOrbitalAvailableContact(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<WritableSubResource> spacecraft = default;
             Optional<string> groundStationName = default;
             Optional<float> maximumElevationDegrees = default;
@@ -33,7 +37,6 @@ namespace Azure.ResourceManager.Orbital.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     spacecraft = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
@@ -57,7 +60,6 @@ namespace Azure.ResourceManager.Orbital.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             maximumElevationDegrees = property0.Value.GetSingle();
@@ -67,7 +69,6 @@ namespace Azure.ResourceManager.Orbital.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             txStartTime = property0.Value.GetDateTimeOffset("O");
@@ -77,7 +78,6 @@ namespace Azure.ResourceManager.Orbital.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             txEndTime = property0.Value.GetDateTimeOffset("O");
@@ -87,7 +87,6 @@ namespace Azure.ResourceManager.Orbital.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             rxStartTime = property0.Value.GetDateTimeOffset("O");
@@ -97,7 +96,6 @@ namespace Azure.ResourceManager.Orbital.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             rxEndTime = property0.Value.GetDateTimeOffset("O");
@@ -107,7 +105,6 @@ namespace Azure.ResourceManager.Orbital.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             startAzimuthDegrees = property0.Value.GetSingle();
@@ -117,7 +114,6 @@ namespace Azure.ResourceManager.Orbital.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             endAzimuthDegrees = property0.Value.GetSingle();
@@ -127,7 +123,6 @@ namespace Azure.ResourceManager.Orbital.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             startElevationDegrees = property0.Value.GetSingle();
@@ -137,7 +132,6 @@ namespace Azure.ResourceManager.Orbital.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             endElevationDegrees = property0.Value.GetSingle();

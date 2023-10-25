@@ -90,12 +90,21 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("restrictOutboundNetworkAccess"u8);
                 writer.WriteStringValue(RestrictOutboundNetworkAccess.Value.ToString());
             }
+            if (Optional.IsDefined(IsIPv6Enabled))
+            {
+                writer.WritePropertyName("isIPv6Enabled"u8);
+                writer.WriteStringValue(IsIPv6Enabled.Value.ToString());
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static SqlServerData DeserializeSqlServerData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<string> kind = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -118,13 +127,14 @@ namespace Azure.ResourceManager.Sql
             Optional<Uri> keyId = default;
             Optional<ServerExternalAdministrator> administrators = default;
             Optional<ServerNetworkAccessFlag> restrictOutboundNetworkAccess = default;
+            Optional<ServerNetworkAccessFlag> isIPv6Enabled = default;
+            Optional<ExternalGovernanceStatus> externalGovernanceStatus = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
@@ -140,7 +150,6 @@ namespace Azure.ResourceManager.Sql
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -175,7 +184,6 @@ namespace Azure.ResourceManager.Sql
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -219,7 +227,6 @@ namespace Azure.ResourceManager.Sql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<SqlServerPrivateEndpointConnection> array = new List<SqlServerPrivateEndpointConnection>();
@@ -239,7 +246,6 @@ namespace Azure.ResourceManager.Sql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             publicNetworkAccess = new ServerNetworkAccessFlag(property0.Value.GetString());
@@ -249,7 +255,6 @@ namespace Azure.ResourceManager.Sql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             workspaceFeature = new ServerWorkspaceFeature(property0.Value.GetString());
@@ -259,7 +264,6 @@ namespace Azure.ResourceManager.Sql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             primaryUserAssignedIdentityId = new ResourceIdentifier(property0.Value.GetString());
@@ -269,7 +273,6 @@ namespace Azure.ResourceManager.Sql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             federatedClientId = property0.Value.GetGuid();
@@ -279,7 +282,6 @@ namespace Azure.ResourceManager.Sql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                keyId = null;
                                 continue;
                             }
                             keyId = new Uri(property0.Value.GetString());
@@ -289,7 +291,6 @@ namespace Azure.ResourceManager.Sql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             administrators = ServerExternalAdministrator.DeserializeServerExternalAdministrator(property0.Value);
@@ -299,17 +300,34 @@ namespace Azure.ResourceManager.Sql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             restrictOutboundNetworkAccess = new ServerNetworkAccessFlag(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("isIPv6Enabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isIPv6Enabled = new ServerNetworkAccessFlag(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("externalGovernanceStatus"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            externalGovernanceStatus = new ExternalGovernanceStatus(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new SqlServerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, kind.Value, administratorLogin.Value, administratorLoginPassword.Value, version.Value, state.Value, fullyQualifiedDomainName.Value, Optional.ToList(privateEndpointConnections), minimalTlsVersion.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(workspaceFeature), primaryUserAssignedIdentityId.Value, Optional.ToNullable(federatedClientId), keyId.Value, administrators.Value, Optional.ToNullable(restrictOutboundNetworkAccess));
+            return new SqlServerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, kind.Value, administratorLogin.Value, administratorLoginPassword.Value, version.Value, state.Value, fullyQualifiedDomainName.Value, Optional.ToList(privateEndpointConnections), minimalTlsVersion.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(workspaceFeature), primaryUserAssignedIdentityId.Value, Optional.ToNullable(federatedClientId), keyId.Value, administrators.Value, Optional.ToNullable(restrictOutboundNetworkAccess), Optional.ToNullable(isIPv6Enabled), Optional.ToNullable(externalGovernanceStatus));
         }
     }
 }

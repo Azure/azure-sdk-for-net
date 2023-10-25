@@ -23,6 +23,12 @@ function GetBaseAndResourceGroupNames(
     [string]$serviceDirectoryName,
     [bool]$CI
 ) {
+    if ($baseNameDefault) {
+        $base = $baseNameDefault.ToLowerInvariant()
+        $group = $resourceGroupNameDefault ? $resourceGroupNameDefault : ("rg-$baseNameDefault".ToLowerInvariant())
+        return $base, $group
+    }
+
     if ($CI) {
         $base = 't' + (New-Guid).ToString('n').Substring(0, 16)
         # Format the resource group name based on resource group naming recommendations and limitations.
@@ -34,12 +40,6 @@ function GetBaseAndResourceGroupNames(
 
         Log "Generated resource base name '$base' and resource group name '$group' for CI build"
 
-        return $base, $group
-    }
-
-    if ($baseNameDefault) {
-        $base = $baseNameDefault.ToLowerInvariant()
-        $group = $resourceGroupNameDefault ? $resourceGroupNameDefault : ("rg-$baseNameDefault".ToLowerInvariant())
         return $base, $group
     }
 
@@ -109,11 +109,17 @@ function SetSubscriptionConfiguration([object]$subscriptionConfiguration)
                 # Mark values as secret so we don't print json blobs containing secrets in the logs.
                 # Prepend underscore to the variable name, so we can still access the variable names via environment
                 # variables if they get set subsequently.
+                if ([Environment]::GetEnvironmentVariable($nestedPair.Name)) {
+                    throw "Environment variable '$($nestedPair.Name)' is already set. Check the tests.yml/ci.yml EnvVars parameter does not conflict with the subscription config json"
+                }
                 if (ShouldMarkValueAsSecret "AZURE_" $nestedPair.Name $nestedPair.Value) {
                     Write-Host "##vso[task.setvariable variable=_$($nestedPair.Name);issecret=true;]$($nestedPair.Value)"
                 }
             }
         } else {
+            if ([Environment]::GetEnvironmentVariable($pair.Name)) {
+                throw "Environment variable '$($pair.Name)' is already set. Check the tests.yml/ci.yml EnvVars parameter does not conflict with the subscription config json"
+            }
             if (ShouldMarkValueAsSecret "AZURE_" $pair.Name $pair.Value) {
                 Write-Host "##vso[task.setvariable variable=_$($pair.Name);issecret=true;]$($pair.Value)"
             }

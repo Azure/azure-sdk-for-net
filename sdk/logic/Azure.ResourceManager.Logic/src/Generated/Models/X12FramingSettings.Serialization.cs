@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static X12FramingSettings DeserializeX12FramingSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int dataElementSeparator = default;
             int componentSeparator = default;
             bool replaceSeparatorsInPayload = default;

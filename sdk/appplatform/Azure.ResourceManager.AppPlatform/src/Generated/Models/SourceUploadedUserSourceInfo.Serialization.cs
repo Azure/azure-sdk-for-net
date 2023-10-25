@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static SourceUploadedUserSourceInfo DeserializeSourceUploadedUserSourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> artifactSelector = default;
             Optional<string> runtimeVersion = default;
             Optional<string> relativePath = default;

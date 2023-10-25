@@ -3,7 +3,7 @@
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
-    internal class StandardMetricConstants
+    internal static class StandardMetricConstants
     {
         internal const string StandardMetricMeterName = "StandardMetricMeter";
         internal const string RequestDurationInstrumentName = "RequestDurationStandardMetric";

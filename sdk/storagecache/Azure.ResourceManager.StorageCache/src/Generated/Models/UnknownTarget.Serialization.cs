@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         internal static UnknownTarget DeserializeUnknownTarget(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> attributes = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -39,7 +43,6 @@ namespace Azure.ResourceManager.StorageCache.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();

@@ -11,7 +11,10 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    /// <summary> A class representing the SynapseManagedIdentitySqlControlSetting data model. </summary>
+    /// <summary>
+    /// A class representing the SynapseManagedIdentitySqlControlSetting data model.
+    /// Sql Control Settings for workspace managed identity
+    /// </summary>
     public partial class SynapseManagedIdentitySqlControlSettingData : ResourceData
     {
         /// <summary> Initializes a new instance of SynapseManagedIdentitySqlControlSettingData. </summary>

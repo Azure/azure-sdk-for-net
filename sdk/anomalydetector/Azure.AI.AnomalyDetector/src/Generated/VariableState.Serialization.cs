@@ -24,62 +24,38 @@ namespace Azure.AI.AnomalyDetector
             }
             if (Optional.IsDefined(FilledNARatio))
             {
-                if (FilledNARatio != null)
-                {
-                    writer.WritePropertyName("filledNARatio"u8);
-                    writer.WriteNumberValue(FilledNARatio.Value);
-                }
-                else
-                {
-                    writer.WriteNull("filledNARatio");
-                }
+                writer.WritePropertyName("filledNARatio"u8);
+                writer.WriteNumberValue(FilledNARatio.Value);
             }
             if (Optional.IsDefined(EffectiveCount))
             {
-                if (EffectiveCount != null)
-                {
-                    writer.WritePropertyName("effectiveCount"u8);
-                    writer.WriteNumberValue(EffectiveCount.Value);
-                }
-                else
-                {
-                    writer.WriteNull("effectiveCount");
-                }
+                writer.WritePropertyName("effectiveCount"u8);
+                writer.WriteNumberValue(EffectiveCount.Value);
             }
             if (Optional.IsDefined(FirstTimestamp))
             {
-                if (FirstTimestamp != null)
-                {
-                    writer.WritePropertyName("firstTimestamp"u8);
-                    writer.WriteStringValue(FirstTimestamp.Value, "O");
-                }
-                else
-                {
-                    writer.WriteNull("firstTimestamp");
-                }
+                writer.WritePropertyName("firstTimestamp"u8);
+                writer.WriteStringValue(FirstTimestamp.Value, "O");
             }
             if (Optional.IsDefined(LastTimestamp))
             {
-                if (LastTimestamp != null)
-                {
-                    writer.WritePropertyName("lastTimestamp"u8);
-                    writer.WriteStringValue(LastTimestamp.Value, "O");
-                }
-                else
-                {
-                    writer.WriteNull("lastTimestamp");
-                }
+                writer.WritePropertyName("lastTimestamp"u8);
+                writer.WriteStringValue(LastTimestamp.Value, "O");
             }
             writer.WriteEndObject();
         }
 
         internal static VariableState DeserializeVariableState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> variable = default;
-            Optional<float?> filledNARatio = default;
-            Optional<int?> effectiveCount = default;
-            Optional<DateTimeOffset?> firstTimestamp = default;
-            Optional<DateTimeOffset?> lastTimestamp = default;
+            Optional<float> filledNARatio = default;
+            Optional<int> effectiveCount = default;
+            Optional<DateTimeOffset> firstTimestamp = default;
+            Optional<DateTimeOffset> lastTimestamp = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("variable"u8))
@@ -91,7 +67,6 @@ namespace Azure.AI.AnomalyDetector
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        filledNARatio = null;
                         continue;
                     }
                     filledNARatio = property.Value.GetSingle();
@@ -101,7 +76,6 @@ namespace Azure.AI.AnomalyDetector
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        effectiveCount = null;
                         continue;
                     }
                     effectiveCount = property.Value.GetInt32();
@@ -111,7 +85,6 @@ namespace Azure.AI.AnomalyDetector
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        firstTimestamp = null;
                         continue;
                     }
                     firstTimestamp = property.Value.GetDateTimeOffset("O");
@@ -121,14 +94,13 @@ namespace Azure.AI.AnomalyDetector
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        lastTimestamp = null;
                         continue;
                     }
                     lastTimestamp = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }
-            return new VariableState(variable, Optional.ToNullable(filledNARatio), Optional.ToNullable(effectiveCount), Optional.ToNullable(firstTimestamp), Optional.ToNullable(lastTimestamp));
+            return new VariableState(variable.Value, Optional.ToNullable(filledNARatio), Optional.ToNullable(effectiveCount), Optional.ToNullable(firstTimestamp), Optional.ToNullable(lastTimestamp));
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

@@ -7,6 +7,7 @@
 
 using System;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -28,12 +29,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="linkedService"> Linked service reference. </param>
         /// <param name="flowlet"> Flowlet Reference. </param>
         /// <param name="schemaLinkedService"> Schema linked service reference. </param>
-        internal DataFlowSource(string name, string description, DatasetReference dataset, FactoryLinkedServiceReference linkedService, DataFlowReference flowlet, FactoryLinkedServiceReference schemaLinkedService) : base(name, description, dataset, linkedService, flowlet)
+        internal DataFlowSource(string name, string description, DatasetReference dataset, DataFactoryLinkedServiceReference linkedService, DataFlowReference flowlet, DataFactoryLinkedServiceReference schemaLinkedService) : base(name, description, dataset, linkedService, flowlet)
         {
             SchemaLinkedService = schemaLinkedService;
         }
 
         /// <summary> Schema linked service reference. </summary>
-        public FactoryLinkedServiceReference SchemaLinkedService { get; set; }
+        public DataFactoryLinkedServiceReference SchemaLinkedService { get; set; }
     }
 }

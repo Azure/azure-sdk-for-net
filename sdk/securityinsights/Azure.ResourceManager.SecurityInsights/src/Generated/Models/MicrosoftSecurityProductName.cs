@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> The alerts&apos; productName on which the cases will be generated. </summary>
+    /// <summary> The alerts' productName on which the cases will be generated. </summary>
     public readonly partial struct MicrosoftSecurityProductName : IEquatable<MicrosoftSecurityProductName>
     {
         private readonly string _value;

@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static HealthProbeSettings DeserializeHealthProbeSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> probePath = default;
             Optional<HealthProbeRequestType> probeRequestType = default;
             Optional<HealthProbeProtocol> probeProtocol = default;
@@ -55,7 +59,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     probeRequestType = property.Value.GetString().ToHealthProbeRequestType();
@@ -65,7 +68,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     probeProtocol = property.Value.GetString().ToHealthProbeProtocol();
@@ -75,7 +77,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     probeIntervalInSeconds = property.Value.GetInt32();

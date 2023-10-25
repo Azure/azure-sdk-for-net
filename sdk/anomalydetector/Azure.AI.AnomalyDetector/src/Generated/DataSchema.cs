@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.AnomalyDetector
 {
-    /// <summary> Data schema of input data source: OneTable or MultiTable. The default DataSchema is OneTable. </summary>
+    /// <summary> Data schema of the input data source. The default is OneTable. </summary>
     public readonly partial struct DataSchema : IEquatable<DataSchema>
     {
         private readonly string _value;
@@ -25,9 +25,9 @@ namespace Azure.AI.AnomalyDetector
         private const string OneTableValue = "OneTable";
         private const string MultiTableValue = "MultiTable";
 
-        /// <summary> OneTable means that your input data are all in one CSV file, which contains one &apos;timestamp&apos; column and several variable columns. The default DataSchema is OneTable. </summary>
+        /// <summary> OneTable means that your input data is in one CSV file, which contains one time stamp column and several variable columns. The default DataSchema value is OneTable. </summary>
         public static DataSchema OneTable { get; } = new DataSchema(OneTableValue);
-        /// <summary> MultiTable means that your input data are separated in multiple CSV files, in each file containing one &apos;timestamp&apos; column and one &apos;variable&apos; column, and the CSV file name should indicate the name of the variable. The default DataSchema is OneTable. </summary>
+        /// <summary> MultiTable means that your input data is separated in multiple CSV files. Each file contains one time stamp column and one variable column, and the CSV file name should indicate the name of the variable. The default DataSchema value is OneTable. </summary>
         public static DataSchema MultiTable { get; } = new DataSchema(MultiTableValue);
         /// <summary> Determines if two <see cref="DataSchema"/> values are the same. </summary>
         public static bool operator ==(DataSchema left, DataSchema right) => left.Equals(right);

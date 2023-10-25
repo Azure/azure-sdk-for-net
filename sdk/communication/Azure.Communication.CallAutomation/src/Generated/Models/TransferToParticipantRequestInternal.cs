@@ -26,11 +26,13 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> The identity of the target where call should be transferred to. </summary>
         public CommunicationIdentifierModel TargetParticipant { get; }
-        /// <summary> The caller ID of the transferee when transferring to PSTN. </summary>
-        public PhoneNumberIdentifierModel TransfereeCallerId { get; set; }
-        /// <summary> The user to user information. </summary>
-        public string UserToUserInformation { get; set; }
+        /// <summary> Used by customer to send custom context to targets. </summary>
+        public CustomContextInternal CustomContext { get; set; }
         /// <summary> Used by customers when calling mid-call actions to correlate the request to the response event. </summary>
         public string OperationContext { get; set; }
+        /// <summary> Transferee is the participant who is transferring the call. </summary>
+        public CommunicationIdentifierModel Transferee { get; set; }
+        /// <summary> The callback URI to override the main callback URI. </summary>
+        public string CallbackUri { get; set; }
     }
 }

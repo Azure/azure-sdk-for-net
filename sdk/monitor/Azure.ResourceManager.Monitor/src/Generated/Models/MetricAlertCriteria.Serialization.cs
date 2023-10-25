@@ -23,7 +23,10 @@ namespace Azure.ResourceManager.Monitor.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
@@ -31,6 +34,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static MetricAlertCriteria DeserializeMetricAlertCriteria(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("odata.type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

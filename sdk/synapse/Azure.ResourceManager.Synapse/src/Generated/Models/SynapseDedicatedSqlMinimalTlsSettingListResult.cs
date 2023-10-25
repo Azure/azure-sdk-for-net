@@ -11,7 +11,7 @@ using Azure.ResourceManager.Synapse;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> A list of the server&apos;s dedicated sql minimal tls settings. </summary>
+    /// <summary> A list of the server's dedicated sql minimal tls settings. </summary>
     internal partial class SynapseDedicatedSqlMinimalTlsSettingListResult
     {
         /// <summary> Initializes a new instance of SynapseDedicatedSqlMinimalTlsSettingListResult. </summary>

@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         internal static StorageSpacesPropertiesHciStorageProfile DeserializeStorageSpacesPropertiesHciStorageProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> mocGroup = default;
             Optional<string> mocLocation = default;
             Optional<string> mocStorageContainer = default;

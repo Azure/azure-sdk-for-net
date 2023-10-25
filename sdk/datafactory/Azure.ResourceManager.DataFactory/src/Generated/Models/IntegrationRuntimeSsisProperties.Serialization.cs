@@ -73,7 +73,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
@@ -81,14 +84,18 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static IntegrationRuntimeSsisProperties DeserializeIntegrationRuntimeSsisProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IntegrationRuntimeSsisCatalogInfo> catalogInfo = default;
             Optional<IntegrationRuntimeLicenseType> licenseType = default;
             Optional<IntegrationRuntimeCustomSetupScriptProperties> customSetupScriptProperties = default;
             Optional<IntegrationRuntimeDataProxyProperties> dataProxyProperties = default;
             Optional<IntegrationRuntimeEdition> edition = default;
             Optional<IList<CustomSetupBase>> expressCustomSetupProperties = default;
-            Optional<IList<IntegrationRuntimeSsisPackageStore>> packageStores = default;
-            Optional<FactoryCredentialReference> credential = default;
+            Optional<IList<DataFactoryPackageStore>> packageStores = default;
+            Optional<DataFactoryCredentialReference> credential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +104,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     catalogInfo = IntegrationRuntimeSsisCatalogInfo.DeserializeIntegrationRuntimeSsisCatalogInfo(property.Value);
@@ -107,7 +113,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     licenseType = new IntegrationRuntimeLicenseType(property.Value.GetString());
@@ -117,7 +122,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     customSetupScriptProperties = IntegrationRuntimeCustomSetupScriptProperties.DeserializeIntegrationRuntimeCustomSetupScriptProperties(property.Value);
@@ -127,7 +131,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dataProxyProperties = IntegrationRuntimeDataProxyProperties.DeserializeIntegrationRuntimeDataProxyProperties(property.Value);
@@ -137,7 +140,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     edition = new IntegrationRuntimeEdition(property.Value.GetString());
@@ -147,7 +149,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CustomSetupBase> array = new List<CustomSetupBase>();
@@ -162,13 +163,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<IntegrationRuntimeSsisPackageStore> array = new List<IntegrationRuntimeSsisPackageStore>();
+                    List<DataFactoryPackageStore> array = new List<DataFactoryPackageStore>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IntegrationRuntimeSsisPackageStore.DeserializeIntegrationRuntimeSsisPackageStore(item));
+                        array.Add(DataFactoryPackageStore.DeserializeDataFactoryPackageStore(item));
                     }
                     packageStores = array;
                     continue;
@@ -177,10 +177,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    credential = FactoryCredentialReference.DeserializeFactoryCredentialReference(property.Value);
+                    credential = DataFactoryCredentialReference.DeserializeDataFactoryCredentialReference(property.Value);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

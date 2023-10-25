@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         internal static DataBoxEdgeDataCenterAccessCode DeserializeDataBoxEdgeDataCenterAccessCode(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> authCode = default;
             foreach (var property in element.EnumerateObject())
             {

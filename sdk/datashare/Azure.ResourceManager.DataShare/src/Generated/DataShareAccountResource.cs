@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DataShare
         }
 
         /// <summary>
-        /// Get a share 
+        /// Get a share
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataShare
         }
 
         /// <summary>
-        /// Get a share 
+        /// Get a share
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

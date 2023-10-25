@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    /// <summary> The RenewProperties. </summary>
+    /// <summary> The renew properties for a reservation. </summary>
     public partial class RenewProperties
     {
         /// <summary> Initializes a new instance of RenewProperties. </summary>
@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Reservations.Models
         }
 
         /// <summary> Initializes a new instance of RenewProperties. </summary>
-        /// <param name="purchaseProperties"></param>
+        /// <param name="purchaseProperties"> The request for reservation purchase. </param>
         /// <param name="pricingCurrencyTotal"> Amount that Microsoft uses for record. Used during refund for calculating refund limit. Tax is not included. This is locked price 30 days before expiry. </param>
-        /// <param name="billingCurrencyTotal"> Currency and amount that customer will be charged in customer&apos;s local currency for renewal purchase. Tax is not included. </param>
+        /// <param name="billingCurrencyTotal"> Currency and amount that customer will be charged in customer's local currency for renewal purchase. Tax is not included. </param>
         internal RenewProperties(ReservationPurchaseContent purchaseProperties, RenewPropertiesPricingCurrencyTotal pricingCurrencyTotal, RenewPropertiesBillingCurrencyTotal billingCurrencyTotal)
         {
             PurchaseProperties = purchaseProperties;
@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.Reservations.Models
             BillingCurrencyTotal = billingCurrencyTotal;
         }
 
-        /// <summary> Gets the purchase properties. </summary>
+        /// <summary> The request for reservation purchase. </summary>
         public ReservationPurchaseContent PurchaseProperties { get; }
         /// <summary> Amount that Microsoft uses for record. Used during refund for calculating refund limit. Tax is not included. This is locked price 30 days before expiry. </summary>
         public RenewPropertiesPricingCurrencyTotal PricingCurrencyTotal { get; }
-        /// <summary> Currency and amount that customer will be charged in customer&apos;s local currency for renewal purchase. Tax is not included. </summary>
+        /// <summary> Currency and amount that customer will be charged in customer's local currency for renewal purchase. Tax is not included. </summary>
         public RenewPropertiesBillingCurrencyTotal BillingCurrencyTotal { get; }
     }
 }

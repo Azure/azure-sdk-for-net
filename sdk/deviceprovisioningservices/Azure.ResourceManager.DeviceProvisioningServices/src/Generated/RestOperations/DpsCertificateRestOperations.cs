@@ -635,7 +635,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             return message;
         }
 
-        /// <summary> Verifies the certificate&apos;s private key possession by providing the leaf cert issued by the verifying pre uploaded certificate. </summary>
+        /// <summary> Verifies the certificate's private key possession by providing the leaf cert issued by the verifying pre uploaded certificate. </summary>
         /// <param name="subscriptionId"> The subscription identifier. </param>
         /// <param name="resourceGroupName"> Resource group name. </param>
         /// <param name="provisioningServiceName"> Provisioning service name. </param>
@@ -678,7 +678,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             }
         }
 
-        /// <summary> Verifies the certificate&apos;s private key possession by providing the leaf cert issued by the verifying pre uploaded certificate. </summary>
+        /// <summary> Verifies the certificate's private key possession by providing the leaf cert issued by the verifying pre uploaded certificate. </summary>
         /// <param name="subscriptionId"> The subscription identifier. </param>
         /// <param name="resourceGroupName"> Resource group name. </param>
         /// <param name="provisioningServiceName"> Provisioning service name. </param>

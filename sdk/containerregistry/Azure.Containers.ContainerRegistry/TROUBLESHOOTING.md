@@ -15,7 +15,7 @@ This troubleshooting guide contains instructions to diagnose frequently encounte
 
 All container registry service operations will throw a [RequestFailedException](https://docs.microsoft.com/dotnet/api/azure.requestfailedexception?view=azure-dotnet) on failure.
 
-When you interact with the library, errors returned by the service correspond to the same HTTP status codes returned for [REST API](https://docs.microsoft.com/rest/api/containerregistry/) requests. 
+When you interact with the library, errors returned by the service correspond to the same HTTP status codes returned for [REST API](https://docs.microsoft.com/rest/api/containerregistry/) requests.
 
 Here's an example of how to catch an exception using synchronous method
 
@@ -24,11 +24,7 @@ Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
 // Create a ContainerRepository class for an invalid repository
 string fakeRepositoryName = "doesnotexist";
-ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential(),
-    new ContainerRegistryClientOptions()
-    {
-        Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
-    });
+ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
 ContainerRepository repository = client.GetRepository(fakeRepositoryName);
 
 try
@@ -38,6 +34,7 @@ try
 catch (RequestFailedException ex) when (ex.Status == 404)
 {
     Console.WriteLine("Repository wasn't found.");
+    Console.WriteLine($"Service error: {ex.Message}.");
 }
 ```
 
@@ -48,11 +45,7 @@ Uri endpoint = new Uri(Environment.GetEnvironmentVariable("REGISTRY_ENDPOINT"));
 
 // Create a ContainerRepository class for an invalid repository
 string fakeRepositoryName = "doesnotexist";
-ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential(),
-    new ContainerRegistryClientOptions()
-    {
-        Audience = ContainerRegistryAudience.AzureResourceManagerPublicCloud
-    });
+ContainerRegistryClient client = new ContainerRegistryClient(endpoint, new DefaultAzureCredential());
 ContainerRepository repository = client.GetRepository(fakeRepositoryName);
 
 try
@@ -62,6 +55,7 @@ try
 catch (RequestFailedException ex) when (ex.Status == 404)
 {
     Console.WriteLine("Repository wasn't found.");
+    Console.WriteLine($"Service error: {ex.Message}.");
 }
 ```
 
@@ -82,7 +76,7 @@ using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsole
 
 #### Enable content logging
 
-By default only URI and headers are logged. To enable content logging, set the `Diagnostics.IsLoggingContentEnabled` client option. 
+By default only URI and headers are logged. To enable content logging, set the `Diagnostics.IsLoggingContentEnabled` client option.
 
 ``` c#
 ContainerRegistryClientOptions options = new ContainerRegistryClientOptions()
@@ -93,6 +87,7 @@ ContainerRegistryClientOptions options = new ContainerRegistryClientOptions()
     }
 };
 ```
+
 #### Logging redacted headers and query parameters
 
 Some sensitive headers and query parameters are not logged by default and are displayed as "REDACTED", to include them in logs use the `Diagnostics.LoggedHeaderNames` and `Diagnostics.LoggedQueryParameters` client options.
@@ -131,7 +126,7 @@ Here are the authentication exceptions and ways to handle it:
 
 ### AuthenticationFailedException
 
-Exceptions arising from authentication errors can be raised on any service client method that makes a request to the service. This is because the token is requested from the credential on the first call to the service and on any subsequent requests to the service that need to refresh the token. 
+Exceptions arising from authentication errors can be raised on any service client method that makes a request to the service. This is because the token is requested from the credential on the first call to the service and on any subsequent requests to the service that need to refresh the token.
 
 To distinguish these failures from failures in the service client, Azure Identity classes raise the `AuthenticationFailedException` with details describing the source of the error in the exception message and possibly the error message. Depending on the application, these errors may or may not be recoverable.
 
@@ -169,3 +164,28 @@ The `CredentialUnavailableExcpetion` is a special exception type derived from `A
 Calls to service clients resulting in `RequestFailedException` with a `StatusCode` of 401 or 403 often indicate the caller doesn't have sufficient permissions for the specified API. Check the service documentation to determine which RBAC roles are needed for the specific request, and ensure the authenticated user or service principal have been granted the appropriate roles on the resource.
 
 For more help with troubleshooting authentication errors, see the Azure Identity client library [troubleshooting guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/TROUBLESHOOTING.md).
+
+## Service errors
+
+When working with `ContainerRegistryContentClient`, you may get an `RequestFailedException` exception with
+message containing additional information and [Docker error code](https://docs.docker.com/registry/spec/api/#errors-2).
+
+### Getting BLOB_UPLOAD_INVALID
+
+In rare cases, a transient error (such as connection reset) can happen during blob upload which may lead to a `RequestFailedException` with a 404 status code being thrown with message similar to
+`{"errors":[{"code":"BLOB_UPLOAD_INVALID","message":"blob upload invalid"}]}`, and resulting in a failed upload.  In this case, upload should to be restarted from the beginning.
+
+The following code sample illustrates how you can catch this exception.
+
+```C# Snippet:ContainerRegistry_Samples_CanCatchUploadFailure
+try
+{
+    BinaryData blob = BinaryData.FromString("Sample blob.");
+    UploadRegistryBlobResult uploadResult = await client.UploadBlobAsync(blob);
+}
+catch (RequestFailedException ex) when (ex.Status == 404 && ex.ErrorCode == "BLOB_UPLOAD_INVALID")
+{
+    Console.WriteLine("Blob upload failed. Please retry.");
+    Console.WriteLine($"Service error: {ex.Message}");
+}
+```

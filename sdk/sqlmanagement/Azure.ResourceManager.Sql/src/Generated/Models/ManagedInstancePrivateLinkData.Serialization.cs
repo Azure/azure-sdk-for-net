@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.Sql
 
         internal static ManagedInstancePrivateLinkData DeserializeManagedInstancePrivateLinkData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedInstancePrivateLinkProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -33,7 +37,6 @@ namespace Azure.ResourceManager.Sql
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = ManagedInstancePrivateLinkProperties.DeserializeManagedInstancePrivateLinkProperties(property.Value);
@@ -58,7 +61,6 @@ namespace Azure.ResourceManager.Sql
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

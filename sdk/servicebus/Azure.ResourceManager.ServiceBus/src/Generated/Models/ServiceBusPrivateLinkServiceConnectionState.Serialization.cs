@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         internal static ServiceBusPrivateLinkServiceConnectionState DeserializeServiceBusPrivateLinkServiceConnectionState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ServiceBusPrivateLinkConnectionStatus> status = default;
             Optional<string> description = default;
             foreach (var property in element.EnumerateObject())
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new ServiceBusPrivateLinkConnectionStatus(property.Value.GetString());

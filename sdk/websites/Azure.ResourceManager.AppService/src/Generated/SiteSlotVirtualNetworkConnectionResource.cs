@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets an app&apos;s Virtual Network gateway.
+        /// Description for Gets an app's Virtual Network gateway.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
+        /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is "primary". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Gets an app&apos;s Virtual Network gateway.
+        /// Description for Gets an app's Virtual Network gateway.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
+        /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is "primary". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>

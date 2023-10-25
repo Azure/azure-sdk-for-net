@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
     {
         internal static ApiManagementServiceListResult DeserializeApiManagementServiceListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<ApiManagementServiceData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

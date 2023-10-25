@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get a workload classifier of Sql pool&apos;s workload group.
+        /// Get a workload classifier of Sql pool's workload group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get a workload classifier of Sql pool&apos;s workload group.
+        /// Get a workload classifier of Sql pool's workload group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Remove workload classifier of a Sql pool&apos;s workload group.
+        /// Remove workload classifier of a Sql pool's workload group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Remove workload classifier of a Sql pool&apos;s workload group.
+        /// Remove workload classifier of a Sql pool's workload group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Create Or Update workload classifier for a Sql pool&apos;s workload group.
+        /// Create Or Update workload classifier for a Sql pool's workload group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Create Or Update workload classifier for a Sql pool&apos;s workload group.
+        /// Create Or Update workload classifier for a Sql pool's workload group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

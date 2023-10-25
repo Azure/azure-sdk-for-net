@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    /// <summary> A class representing the EventGridPrivateLinkResource data model. </summary>
+    /// <summary>
+    /// A class representing the EventGridPrivateLinkResource data model.
+    /// Information of the private link resource.
+    /// </summary>
     public partial class EventGridPrivateLinkResourceData : ResourceData
     {
         /// <summary> Initializes a new instance of EventGridPrivateLinkResourceData. </summary>

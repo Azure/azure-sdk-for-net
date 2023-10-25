@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
@@ -14,6 +13,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     {
         internal static KpiParticipantProfilesMetadata DeserializeKpiParticipantProfilesMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string typeName = default;
             foreach (var property in element.EnumerateObject())
             {

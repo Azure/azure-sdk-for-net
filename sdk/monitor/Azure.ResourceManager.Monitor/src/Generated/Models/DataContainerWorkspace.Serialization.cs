@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         internal static DataContainerWorkspace DeserializeDataContainerWorkspace(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             AzureLocation location = default;
             string customerId = default;

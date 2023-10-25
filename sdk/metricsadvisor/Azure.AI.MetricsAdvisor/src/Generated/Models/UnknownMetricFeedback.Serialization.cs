@@ -28,6 +28,10 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static UnknownMetricFeedback DeserializeUnknownMetricFeedback(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             MetricFeedbackKind feedbackType = "Unknown";
             Optional<string> feedbackId = default;
             Optional<DateTimeOffset> createdTime = default;
@@ -50,7 +54,6 @@ namespace Azure.AI.MetricsAdvisor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     createdTime = property.Value.GetDateTimeOffset("O");

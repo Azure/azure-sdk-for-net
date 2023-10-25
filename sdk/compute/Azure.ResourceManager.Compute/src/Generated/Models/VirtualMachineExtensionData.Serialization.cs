@@ -70,7 +70,10 @@ namespace Azure.ResourceManager.Compute
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Settings);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Settings.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(Settings))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsDefined(ProtectedSettings))
@@ -79,7 +82,10 @@ namespace Azure.ResourceManager.Compute
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ProtectedSettings);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ProtectedSettings.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(ProtectedSettings))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsDefined(InstanceView))
@@ -97,12 +103,26 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("protectedSettingsFromKeyVault"u8);
                 writer.WriteObjectValue(KeyVaultProtectedSettings);
             }
+            if (Optional.IsCollectionDefined(ProvisionAfterExtensions))
+            {
+                writer.WritePropertyName("provisionAfterExtensions"u8);
+                writer.WriteStartArray();
+                foreach (var item in ProvisionAfterExtensions)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static VirtualMachineExtensionData DeserializeVirtualMachineExtensionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -121,13 +141,13 @@ namespace Azure.ResourceManager.Compute
             Optional<VirtualMachineExtensionInstanceView> instanceView = default;
             Optional<bool> suppressFailures = default;
             Optional<KeyVaultSecretReference> protectedSettingsFromKeyVault = default;
+            Optional<IList<string>> provisionAfterExtensions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -162,7 +182,6 @@ namespace Azure.ResourceManager.Compute
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -201,7 +220,6 @@ namespace Azure.ResourceManager.Compute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             autoUpgradeMinorVersion = property0.Value.GetBoolean();
@@ -211,7 +229,6 @@ namespace Azure.ResourceManager.Compute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enableAutomaticUpgrade = property0.Value.GetBoolean();
@@ -221,7 +238,6 @@ namespace Azure.ResourceManager.Compute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             settings = BinaryData.FromString(property0.Value.GetRawText());
@@ -231,7 +247,6 @@ namespace Azure.ResourceManager.Compute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             protectedSettings = BinaryData.FromString(property0.Value.GetRawText());
@@ -246,7 +261,6 @@ namespace Azure.ResourceManager.Compute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             instanceView = VirtualMachineExtensionInstanceView.DeserializeVirtualMachineExtensionInstanceView(property0.Value);
@@ -256,7 +270,6 @@ namespace Azure.ResourceManager.Compute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             suppressFailures = property0.Value.GetBoolean();
@@ -266,17 +279,30 @@ namespace Azure.ResourceManager.Compute
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             protectedSettingsFromKeyVault = KeyVaultSecretReference.DeserializeKeyVaultSecretReference(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("provisionAfterExtensions"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            provisionAfterExtensions = array;
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new VirtualMachineExtensionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, forceUpdateTag.Value, publisher.Value, type0.Value, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), Optional.ToNullable(enableAutomaticUpgrade), settings.Value, protectedSettings.Value, provisioningState.Value, instanceView.Value, Optional.ToNullable(suppressFailures), protectedSettingsFromKeyVault.Value);
+            return new VirtualMachineExtensionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, forceUpdateTag.Value, publisher.Value, type0.Value, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), Optional.ToNullable(enableAutomaticUpgrade), settings.Value, protectedSettings.Value, provisioningState.Value, instanceView.Value, Optional.ToNullable(suppressFailures), protectedSettingsFromKeyVault.Value, Optional.ToList(provisionAfterExtensions));
         }
     }
 }

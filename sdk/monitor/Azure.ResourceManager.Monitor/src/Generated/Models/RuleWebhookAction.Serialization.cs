@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static RuleWebhookAction DeserializeRuleWebhookAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> serviceUri = default;
             Optional<IDictionary<string, string>> properties = default;
             string odataType = default;
@@ -49,7 +53,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        serviceUri = null;
                         continue;
                     }
                     serviceUri = new Uri(property.Value.GetString());
@@ -59,7 +62,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();

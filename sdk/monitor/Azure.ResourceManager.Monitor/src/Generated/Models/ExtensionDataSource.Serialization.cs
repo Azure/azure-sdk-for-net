@@ -35,7 +35,10 @@ namespace Azure.ResourceManager.Monitor.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ExtensionSettings);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ExtensionSettings.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(ExtensionSettings))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsCollectionDefined(InputDataSources))
@@ -58,6 +61,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static ExtensionDataSource DeserializeExtensionDataSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<ExtensionDataSourceStream>> streams = default;
             string extensionName = default;
             Optional<BinaryData> extensionSettings = default;
@@ -69,7 +76,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ExtensionDataSourceStream> array = new List<ExtensionDataSourceStream>();
@@ -89,7 +95,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     extensionSettings = BinaryData.FromString(property.Value.GetRawText());
@@ -99,7 +104,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

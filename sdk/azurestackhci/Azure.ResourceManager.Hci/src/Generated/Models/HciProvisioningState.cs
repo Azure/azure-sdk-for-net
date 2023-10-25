@@ -22,22 +22,61 @@ namespace Azure.ResourceManager.Hci.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
+        private const string NotSpecifiedValue = "NotSpecified";
+        private const string ErrorValue = "Error";
         private const string SucceededValue = "Succeeded";
         private const string FailedValue = "Failed";
         private const string CanceledValue = "Canceled";
+        private const string ConnectedValue = "Connected";
+        private const string DisconnectedValue = "Disconnected";
+        private const string DeletedValue = "Deleted";
+        private const string CreatingValue = "Creating";
+        private const string UpdatingValue = "Updating";
+        private const string DeletingValue = "Deleting";
+        private const string MovingValue = "Moving";
+        private const string PartiallySucceededValue = "PartiallySucceeded";
+        private const string PartiallyConnectedValue = "PartiallyConnected";
+        private const string InProgressValue = "InProgress";
         private const string AcceptedValue = "Accepted";
         private const string ProvisioningValue = "Provisioning";
+        private const string DisableInProgressValue = "DisableInProgress";
 
+        /// <summary> NotSpecified. </summary>
+        public static HciProvisioningState NotSpecified { get; } = new HciProvisioningState(NotSpecifiedValue);
+        /// <summary> Error. </summary>
+        public static HciProvisioningState Error { get; } = new HciProvisioningState(ErrorValue);
         /// <summary> Succeeded. </summary>
         public static HciProvisioningState Succeeded { get; } = new HciProvisioningState(SucceededValue);
         /// <summary> Failed. </summary>
         public static HciProvisioningState Failed { get; } = new HciProvisioningState(FailedValue);
         /// <summary> Canceled. </summary>
         public static HciProvisioningState Canceled { get; } = new HciProvisioningState(CanceledValue);
+        /// <summary> Connected. </summary>
+        public static HciProvisioningState Connected { get; } = new HciProvisioningState(ConnectedValue);
+        /// <summary> Disconnected. </summary>
+        public static HciProvisioningState Disconnected { get; } = new HciProvisioningState(DisconnectedValue);
+        /// <summary> Deleted. </summary>
+        public static HciProvisioningState Deleted { get; } = new HciProvisioningState(DeletedValue);
+        /// <summary> Creating. </summary>
+        public static HciProvisioningState Creating { get; } = new HciProvisioningState(CreatingValue);
+        /// <summary> Updating. </summary>
+        public static HciProvisioningState Updating { get; } = new HciProvisioningState(UpdatingValue);
+        /// <summary> Deleting. </summary>
+        public static HciProvisioningState Deleting { get; } = new HciProvisioningState(DeletingValue);
+        /// <summary> Moving. </summary>
+        public static HciProvisioningState Moving { get; } = new HciProvisioningState(MovingValue);
+        /// <summary> PartiallySucceeded. </summary>
+        public static HciProvisioningState PartiallySucceeded { get; } = new HciProvisioningState(PartiallySucceededValue);
+        /// <summary> PartiallyConnected. </summary>
+        public static HciProvisioningState PartiallyConnected { get; } = new HciProvisioningState(PartiallyConnectedValue);
+        /// <summary> InProgress. </summary>
+        public static HciProvisioningState InProgress { get; } = new HciProvisioningState(InProgressValue);
         /// <summary> Accepted. </summary>
         public static HciProvisioningState Accepted { get; } = new HciProvisioningState(AcceptedValue);
         /// <summary> Provisioning. </summary>
         public static HciProvisioningState Provisioning { get; } = new HciProvisioningState(ProvisioningValue);
+        /// <summary> DisableInProgress. </summary>
+        public static HciProvisioningState DisableInProgress { get; } = new HciProvisioningState(DisableInProgressValue);
         /// <summary> Determines if two <see cref="HciProvisioningState"/> values are the same. </summary>
         public static bool operator ==(HciProvisioningState left, HciProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HciProvisioningState"/> values are not the same. </summary>

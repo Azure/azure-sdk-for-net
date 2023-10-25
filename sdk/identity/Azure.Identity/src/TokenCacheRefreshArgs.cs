@@ -26,9 +26,16 @@ namespace Azure.Identity
         /// </summary>
         public string SuggestedCacheKey { get; }
 
-        internal TokenCacheRefreshArgs(TokenCacheNotificationArgs args)
+        /// <summary>
+        /// Whether or not the cache is enabled for CAE. Note that this value should be used as an indicator for how the cache will be partitioned.
+        /// Token cache refresh events with this value set to `true` will originate from a different cache instance than those with this value set to `false`.
+        /// </summary>
+        public bool IsCaeEnabled { get; }
+
+        internal TokenCacheRefreshArgs(TokenCacheNotificationArgs args, bool enableCae)
         {
             SuggestedCacheKey = args.SuggestedCacheKey;
+            IsCaeEnabled = enableCae;
         }
     }
 }

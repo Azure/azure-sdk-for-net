@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.HDInsight.Models
     {
         internal static HDInsightNameAvailabilityResult DeserializeHDInsightNameAvailabilityResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> nameAvailable = default;
             Optional<string> reason = default;
             Optional<string> message = default;
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     nameAvailable = property.Value.GetBoolean();

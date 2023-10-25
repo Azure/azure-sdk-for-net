@@ -27,6 +27,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static RemoteDeviceAdapterDeleteRequest DeserializeRemoteDeviceAdapterDeleteRequest(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             string methodName = default;
             Optional<string> apiVersion = default;

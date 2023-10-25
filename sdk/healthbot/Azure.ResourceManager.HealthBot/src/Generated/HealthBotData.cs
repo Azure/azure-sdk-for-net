@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HealthBot
 {
-    /// <summary> A class representing the HealthBot data model. </summary>
+    /// <summary>
+    /// A class representing the HealthBot data model.
+    /// Azure Health Bot resource definition
+    /// </summary>
     public partial class HealthBotData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of HealthBotData. </summary>

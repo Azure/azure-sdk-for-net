@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchDeploymentConfiguration DeserializeBatchDeploymentConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BatchCloudServiceConfiguration> cloudServiceConfiguration = default;
             Optional<BatchVmConfiguration> virtualMachineConfiguration = default;
             foreach (var property in element.EnumerateObject())
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     cloudServiceConfiguration = BatchCloudServiceConfiguration.DeserializeBatchCloudServiceConfiguration(property.Value);
@@ -48,7 +51,6 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     virtualMachineConfiguration = BatchVmConfiguration.DeserializeBatchVmConfiguration(property.Value);

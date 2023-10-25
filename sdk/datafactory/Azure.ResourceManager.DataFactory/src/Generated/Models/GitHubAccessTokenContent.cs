@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> GitHub application client ID. </summary>
         public string GitHubClientId { get; set; }
         /// <summary> GitHub bring your own app client secret information. </summary>
-        public GitHubClientSecret GitHubClientSecret { get; set; }
+        public FactoryGitHubClientSecret GitHubClientSecret { get; set; }
         /// <summary> GitHub access token base URL. </summary>
         public Uri GitHubAccessTokenBaseUri { get; }
     }

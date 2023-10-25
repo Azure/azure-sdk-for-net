@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static ConnectToSourcePostgreSqlSyncTaskInput DeserializeConnectToSourcePostgreSqlSyncTaskInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             PostgreSqlConnectionInfo sourceConnectionInfo = default;
             foreach (var property in element.EnumerateObject())
             {

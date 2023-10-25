@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static DateAfterCreation DeserializeDateAfterCreation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             float daysAfterCreationGreaterThan = default;
             Optional<float> daysAfterLastTierChangeGreaterThan = default;
             foreach (var property in element.EnumerateObject())
@@ -40,7 +44,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     daysAfterLastTierChangeGreaterThan = property.Value.GetSingle();

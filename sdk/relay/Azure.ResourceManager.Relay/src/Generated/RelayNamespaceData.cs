@@ -13,7 +13,10 @@ using Azure.ResourceManager.Relay.Models;
 
 namespace Azure.ResourceManager.Relay
 {
-    /// <summary> A class representing the RelayNamespace data model. </summary>
+    /// <summary>
+    /// A class representing the RelayNamespace data model.
+    /// Description of a namespace resource.
+    /// </summary>
     public partial class RelayNamespaceData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of RelayNamespaceData. </summary>

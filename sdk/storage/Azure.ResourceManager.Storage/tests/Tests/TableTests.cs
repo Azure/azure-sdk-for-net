@@ -5,14 +5,13 @@ using NUnit.Framework;
 using Azure.ResourceManager.Resources;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Storage.Models;
-using Azure.ResourceManager.Storage.Tests.Helpers;
 using System;
 using System.Threading;
 using System.Globalization;
 
 namespace Azure.ResourceManager.Storage.Tests
 {
-    public class TableTests : StorageTestBase
+    public class TableTests : StorageManagementTestBase
     {
         private ResourceGroupResource _resourceGroup;
         private StorageAccountResource _storageAccount;

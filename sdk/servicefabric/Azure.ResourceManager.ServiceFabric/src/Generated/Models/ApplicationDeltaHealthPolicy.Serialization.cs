@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static ApplicationDeltaHealthPolicy DeserializeApplicationDeltaHealthPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ServiceTypeDeltaHealthPolicy> defaultServiceTypeDeltaHealthPolicy = default;
             Optional<IDictionary<string, ServiceTypeDeltaHealthPolicy>> serviceTypeDeltaHealthPolicies = default;
             foreach (var property in element.EnumerateObject())
@@ -45,7 +49,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     defaultServiceTypeDeltaHealthPolicy = ServiceTypeDeltaHealthPolicy.DeserializeServiceTypeDeltaHealthPolicy(property.Value);
@@ -55,7 +58,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, ServiceTypeDeltaHealthPolicy> dictionary = new Dictionary<string, ServiceTypeDeltaHealthPolicy>();

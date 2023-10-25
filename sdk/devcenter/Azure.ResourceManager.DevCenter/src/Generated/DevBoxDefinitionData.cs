@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter
 {
-    /// <summary> A class representing the DevBoxDefinition data model. </summary>
+    /// <summary>
+    /// A class representing the DevBoxDefinition data model.
+    /// Represents a definition for a Developer Machine.
+    /// </summary>
     public partial class DevBoxDefinitionData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DevBoxDefinitionData. </summary>
@@ -31,15 +34,17 @@ namespace Azure.ResourceManager.DevCenter
         /// <param name="imageReference"> Image reference information. </param>
         /// <param name="sku"> The SKU for Dev Boxes created using this definition. </param>
         /// <param name="osStorageType"> The storage type used for the Operating System disk of Dev Boxes created using this definition. </param>
+        /// <param name="hibernateSupport"> Indicates whether Dev Boxes created with this definition are capable of hibernation. Not all images are capable of supporting hibernation. To find out more see https://aka.ms/devbox/hibernate. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="imageValidationStatus"> Validation status of the configured image. </param>
         /// <param name="imageValidationErrorDetails"> Details for image validator error. Populated when the image validation is not successful. </param>
         /// <param name="activeImageReference"> Image reference information for the currently active image (only populated during updates). </param>
-        internal DevBoxDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ImageReference imageReference, DevCenterSku sku, string osStorageType, string provisioningState, ImageValidationStatus? imageValidationStatus, ImageValidationErrorDetails imageValidationErrorDetails, ImageReference activeImageReference) : base(id, name, resourceType, systemData, tags, location)
+        internal DevBoxDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevCenterImageReference imageReference, DevCenterSku sku, string osStorageType, DevCenterHibernateSupport? hibernateSupport, DevCenterProvisioningState? provisioningState, ImageValidationStatus? imageValidationStatus, ImageValidationErrorDetails imageValidationErrorDetails, DevCenterImageReference activeImageReference) : base(id, name, resourceType, systemData, tags, location)
         {
             ImageReference = imageReference;
             Sku = sku;
             OSStorageType = osStorageType;
+            HibernateSupport = hibernateSupport;
             ProvisioningState = provisioningState;
             ImageValidationStatus = imageValidationStatus;
             ImageValidationErrorDetails = imageValidationErrorDetails;
@@ -47,18 +52,20 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Image reference information. </summary>
-        public ImageReference ImageReference { get; set; }
+        public DevCenterImageReference ImageReference { get; set; }
         /// <summary> The SKU for Dev Boxes created using this definition. </summary>
         public DevCenterSku Sku { get; set; }
         /// <summary> The storage type used for the Operating System disk of Dev Boxes created using this definition. </summary>
         public string OSStorageType { get; set; }
+        /// <summary> Indicates whether Dev Boxes created with this definition are capable of hibernation. Not all images are capable of supporting hibernation. To find out more see https://aka.ms/devbox/hibernate. </summary>
+        public DevCenterHibernateSupport? HibernateSupport { get; set; }
         /// <summary> The provisioning state of the resource. </summary>
-        public string ProvisioningState { get; }
+        public DevCenterProvisioningState? ProvisioningState { get; }
         /// <summary> Validation status of the configured image. </summary>
         public ImageValidationStatus? ImageValidationStatus { get; }
         /// <summary> Details for image validator error. Populated when the image validation is not successful. </summary>
         public ImageValidationErrorDetails ImageValidationErrorDetails { get; }
         /// <summary> Image reference information for the currently active image (only populated during updates). </summary>
-        public ImageReference ActiveImageReference { get; }
+        public DevCenterImageReference ActiveImageReference { get; }
     }
 }

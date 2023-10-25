@@ -28,8 +28,9 @@ namespace Azure.Identity.Tests
             var options = new ClientSecretCredentialOptions
             {
                 Transport = config.Transport,
-                DisableInstanceDiscovery = config.DisableMetadataDiscovery ?? false,
-                AdditionallyAllowedTenantsCore = config.AdditionallyAllowedTenants
+                DisableInstanceDiscovery = config.DisableInstanceDiscovery,
+                AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
+                IsUnsafeSupportLoggingEnabled = config.IsUnsafeSupportLoggingEnabled,
             };
             var pipeline = CredentialPipeline.GetInstance(options);
             return InstrumentClient(new ClientSecretCredential(config.TenantId, ClientId, "secret", options, pipeline, null));

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -14,6 +13,10 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static ComputeUsage DeserializeComputeUsage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ComputeUsageUnit unit = default;
             int currentValue = default;
             long limit = default;

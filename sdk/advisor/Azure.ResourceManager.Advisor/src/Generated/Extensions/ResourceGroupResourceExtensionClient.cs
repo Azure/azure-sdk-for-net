@@ -8,6 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.Advisor
         public virtual AsyncPageable<ConfigData> GetConfigurationsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ConfigData.DeserializeConfigData, ConfigurationsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetConfigurations", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ConfigData.DeserializeConfigData, ConfigurationsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetConfigurations", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -82,7 +83,7 @@ namespace Azure.ResourceManager.Advisor
         public virtual Pageable<ConfigData> GetConfigurations(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, ConfigData.DeserializeConfigData, ConfigurationsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetConfigurations", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ConfigData.DeserializeConfigData, ConfigurationsClientDiagnostics, Pipeline, "ResourceGroupResourceExtensionClient.GetConfigurations", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -98,7 +99,7 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="configurationName"> Advisor configuration name. Value must be &apos;default&apos;. </param>
+        /// <param name="configurationName"> Advisor configuration name. Value must be 'default'. </param>
         /// <param name="data"> The Azure Advisor configuration data structure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ConfigData>> CreateConfigurationAsync(ConfigurationName configurationName, ConfigData data, CancellationToken cancellationToken = default)
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.Advisor
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="configurationName"> Advisor configuration name. Value must be &apos;default&apos;. </param>
+        /// <param name="configurationName"> Advisor configuration name. Value must be 'default'. </param>
         /// <param name="data"> The Azure Advisor configuration data structure. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ConfigData> CreateConfiguration(ConfigurationName configurationName, ConfigData data, CancellationToken cancellationToken = default)

@@ -1,10 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Identity.Tests.Mock;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests
@@ -31,12 +28,15 @@ namespace Azure.Identity.Tests
             var options = new ClientAssertionCredentialOptions
             {
                 Transport = config.Transport,
-                DisableInstanceDiscovery = config.DisableMetadataDiscovery ?? false,
-                AdditionallyAllowedTenantsCore = config.AdditionallyAllowedTenants
+                DisableInstanceDiscovery = config.DisableInstanceDiscovery,
+                AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
+                IsUnsafeSupportLoggingEnabled = config.IsUnsafeSupportLoggingEnabled,
             };
             var pipeline = CredentialPipeline.GetInstance(options);
             options.Pipeline = pipeline;
-            return InstrumentClient(new ClientAssertionCredential(config.TenantId, ClientId, () => "assertion", options));
+            var cred = new ClientAssertionCredential(config.TenantId, ClientId, () => "assertion", options);
+            var instrumented = InstrumentClient(cred);
+            return instrumented;
         }
     }
 }

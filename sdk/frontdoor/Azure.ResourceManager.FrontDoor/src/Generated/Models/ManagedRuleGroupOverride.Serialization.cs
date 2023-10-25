@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         internal static ManagedRuleGroupOverride DeserializeManagedRuleGroupOverride(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string ruleGroupName = default;
             Optional<IList<ManagedRuleExclusion>> exclusions = default;
             Optional<IList<ManagedRuleOverride>> rules = default;
@@ -57,7 +61,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ManagedRuleExclusion> array = new List<ManagedRuleExclusion>();
@@ -72,7 +75,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ManagedRuleOverride> array = new List<ManagedRuleOverride>();

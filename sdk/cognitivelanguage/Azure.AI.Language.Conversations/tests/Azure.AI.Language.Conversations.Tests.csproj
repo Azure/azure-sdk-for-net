@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <IncludeGeneratorSharedCode>true</IncludeGeneratorSharedCode>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
     <UseDefaultNamespaceAndOutputFolder>false</UseDefaultNamespaceAndOutputFolder>
   </PropertyGroup>
@@ -15,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
+    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
     <ProjectReference Include="..\src\Azure.AI.Language.Conversations.csproj" />
   </ItemGroup>
 

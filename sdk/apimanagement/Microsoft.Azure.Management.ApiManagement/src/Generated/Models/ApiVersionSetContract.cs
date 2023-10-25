@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     /// API Version Set Contract details.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class ApiVersionSetContract : Resource
+    public partial class ApiVersionSetContract : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the ApiVersionSetContract class.

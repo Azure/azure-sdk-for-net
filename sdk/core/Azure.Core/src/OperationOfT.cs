@@ -100,6 +100,42 @@ namespace Azure
             return await poller.WaitForCompletionAsync(this, pollingInterval, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary>
+        /// Periodically calls the server till the long-running operation completes.
+        /// </summary>
+        /// <param name="delayStrategy">
+        /// The strategy to use to determine the delay between status requests to the server. If the server returns retry-after header,
+        /// the delay used will be the maximum specified by the strategy and the header value.
+        /// </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the periodical service calls.</param>
+        /// <returns>The last HTTP response received from the server.</returns>
+        /// <remarks>
+        /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
+        /// </remarks>
+        public virtual Response<T> WaitForCompletion(DelayStrategy delayStrategy, CancellationToken cancellationToken)
+        {
+            OperationPoller poller = new OperationPoller(delayStrategy);
+            return poller.WaitForCompletion(this, default, cancellationToken);
+        }
+
+        /// <summary>
+        /// Periodically calls the server till the long-running operation completes.
+        /// </summary>
+        /// <param name="delayStrategy">
+        /// The strategy to use to determine the delay between status requests to the server. If the server returns retry-after header,
+        /// the delay used will be the maximum specified by the strategy and the header value.
+        /// </param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> used for the periodical service calls.</param>
+        /// <returns>The last HTTP response received from the server.</returns>
+        /// <remarks>
+        /// This method will periodically call UpdateStatusAsync till HasCompleted is true, then return the final result of the operation.
+        /// </remarks>
+        public virtual async ValueTask<Response<T>> WaitForCompletionAsync(DelayStrategy delayStrategy, CancellationToken cancellationToken)
+        {
+            OperationPoller poller = new OperationPoller(delayStrategy);
+            return await poller.WaitForCompletionAsync(this, default, cancellationToken).ConfigureAwait(false);
+        }
+
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override async ValueTask<Response> WaitForCompletionResponseAsync(CancellationToken cancellationToken = default)

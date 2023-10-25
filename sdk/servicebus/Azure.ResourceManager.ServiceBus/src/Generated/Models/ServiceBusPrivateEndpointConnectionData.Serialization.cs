@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.ServiceBus
 
         internal static ServiceBusPrivateEndpointConnectionData DeserializeServiceBusPrivateEndpointConnectionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> location = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -55,7 +59,6 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
@@ -80,7 +83,6 @@ namespace Azure.ResourceManager.ServiceBus
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -99,7 +101,6 @@ namespace Azure.ResourceManager.ServiceBus
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             privateEndpoint = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
@@ -109,7 +110,6 @@ namespace Azure.ResourceManager.ServiceBus
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             privateLinkServiceConnectionState = ServiceBusPrivateLinkServiceConnectionState.DeserializeServiceBusPrivateLinkServiceConnectionState(property0.Value);
@@ -119,7 +119,6 @@ namespace Azure.ResourceManager.ServiceBus
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ServiceBusPrivateEndpointConnectionProvisioningState(property0.Value.GetString());

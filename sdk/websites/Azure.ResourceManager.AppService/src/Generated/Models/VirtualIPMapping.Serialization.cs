@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static VirtualIPMapping DeserializeVirtualIPMapping(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> virtualIP = default;
             Optional<int> internalHttpPort = default;
             Optional<int> internalHttpsPort = default;
@@ -61,7 +65,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     internalHttpPort = property.Value.GetInt32();
@@ -71,7 +74,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     internalHttpsPort = property.Value.GetInt32();
@@ -81,7 +83,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     inUse = property.Value.GetBoolean();

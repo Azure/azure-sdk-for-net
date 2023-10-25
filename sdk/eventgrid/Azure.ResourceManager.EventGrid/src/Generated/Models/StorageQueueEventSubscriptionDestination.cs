@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="endpointType"> Type of the endpoint for the event subscription destination. </param>
         /// <param name="resourceId"> The Azure Resource ID of the storage account that contains the queue that is the destination of an event subscription. </param>
         /// <param name="queueName"> The name of the Storage queue under a storage account that is the destination of an event subscription. </param>
-        /// <param name="queueMessageTimeToLiveInSeconds"> Storage queue message time to live in seconds. </param>
+        /// <param name="queueMessageTimeToLiveInSeconds"> Storage queue message time to live in seconds. This value cannot be zero or negative with the exception of using -1 to indicate that the Time To Live of the message is Infinite. </param>
         internal StorageQueueEventSubscriptionDestination(EndpointType endpointType, ResourceIdentifier resourceId, string queueName, long? queueMessageTimeToLiveInSeconds) : base(endpointType)
         {
             ResourceId = resourceId;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         public ResourceIdentifier ResourceId { get; set; }
         /// <summary> The name of the Storage queue under a storage account that is the destination of an event subscription. </summary>
         public string QueueName { get; set; }
-        /// <summary> Storage queue message time to live in seconds. </summary>
+        /// <summary> Storage queue message time to live in seconds. This value cannot be zero or negative with the exception of using -1 to indicate that the Time To Live of the message is Infinite. </summary>
         public long? QueueMessageTimeToLiveInSeconds { get; set; }
     }
 }

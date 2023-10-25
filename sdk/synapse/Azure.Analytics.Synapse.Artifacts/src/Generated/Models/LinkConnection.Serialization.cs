@@ -43,6 +43,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static LinkConnection DeserializeLinkConnection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LinkConnectionSourceDatabase> sourceDatabase = default;
             Optional<LinkConnectionTargetDatabase> targetDatabase = default;
             Optional<LinkConnectionLandingZone> landingZone = default;
@@ -53,7 +57,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sourceDatabase = LinkConnectionSourceDatabase.DeserializeLinkConnectionSourceDatabase(property.Value);
@@ -63,7 +66,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     targetDatabase = LinkConnectionTargetDatabase.DeserializeLinkConnectionTargetDatabase(property.Value);
@@ -73,7 +75,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     landingZone = LinkConnectionLandingZone.DeserializeLinkConnectionLandingZone(property.Value);
@@ -83,7 +84,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     compute = LinkConnectionCompute.DeserializeLinkConnectionCompute(property.Value);

@@ -6,9 +6,11 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -88,7 +90,7 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Gets compute definition by its name. Any secrets (storage keys, service credentials, etc) are not returned - use &apos;keys&apos; nested resource to get them.
+        /// Gets compute definition by its name. Any secrets (storage keys, service credentials, etc) are not returned - use 'keys' nested resource to get them.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -120,7 +122,7 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
-        /// Gets compute definition by its name. Any secrets (storage keys, service credentials, etc) are not returned - use &apos;keys&apos; nested resource to get them.
+        /// Gets compute definition by its name. Any secrets (storage keys, service credentials, etc) are not returned - use 'keys' nested resource to get them.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -165,7 +167,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="underlyingResourceAction"> Delete the underlying compute if &apos;Delete&apos;, or detach the underlying compute from workspace if &apos;Detach&apos;. </param>
+        /// <param name="underlyingResourceAction"> Delete the underlying compute if 'Delete', or detach the underlying compute from workspace if 'Detach'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, MachineLearningUnderlyingResourceAction underlyingResourceAction, CancellationToken cancellationToken = default)
         {
@@ -200,7 +202,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="underlyingResourceAction"> Delete the underlying compute if &apos;Delete&apos;, or detach the underlying compute from workspace if &apos;Detach&apos;. </param>
+        /// <param name="underlyingResourceAction"> Delete the underlying compute if 'Delete', or detach the underlying compute from workspace if 'Detach'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, MachineLearningUnderlyingResourceAction underlyingResourceAction, CancellationToken cancellationToken = default)
         {
@@ -298,6 +300,74 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
+        /// Updates the custom services list. The list of custom services provided shall be overwritten
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/computes/{computeName}/customServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Compute_UpdateCustomServices</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="customServices"> New list of Custom Services. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="customServices"/> is null. </exception>
+        public virtual async Task<Response> UpdateCustomServicesAsync(IEnumerable<CustomService> customServices, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(customServices, nameof(customServices));
+
+            using var scope = _machineLearningComputeComputeClientDiagnostics.CreateScope("MachineLearningComputeResource.UpdateCustomServices");
+            scope.Start();
+            try
+            {
+                var response = await _machineLearningComputeComputeRestClient.UpdateCustomServicesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customServices, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates the custom services list. The list of custom services provided shall be overwritten
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/computes/{computeName}/customServices</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Compute_UpdateCustomServices</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="customServices"> New list of Custom Services. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="customServices"/> is null. </exception>
+        public virtual Response UpdateCustomServices(IEnumerable<CustomService> customServices, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(customServices, nameof(customServices));
+
+            using var scope = _machineLearningComputeComputeClientDiagnostics.CreateScope("MachineLearningComputeResource.UpdateCustomServices");
+            scope.Start();
+            try
+            {
+                var response = _machineLearningComputeComputeRestClient.UpdateCustomServices(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, customServices, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Get the details (e.g IP address, port etc) of all the compute nodes in the compute.
         /// <list type="bullet">
         /// <item>
@@ -316,7 +386,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningComputeComputeRestClient.CreateListNodesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningComputeComputeRestClient.CreateListNodesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AmlComputeNodeInformation.DeserializeAmlComputeNodeInformation, _machineLearningComputeComputeClientDiagnostics, Pipeline, "MachineLearningComputeResource.GetNodes", "nodes", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AmlComputeNodeInformation.DeserializeAmlComputeNodeInformation, _machineLearningComputeComputeClientDiagnostics, Pipeline, "MachineLearningComputeResource.GetNodes", "nodes", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -338,7 +408,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningComputeComputeRestClient.CreateListNodesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningComputeComputeRestClient.CreateListNodesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AmlComputeNodeInformation.DeserializeAmlComputeNodeInformation, _machineLearningComputeComputeClientDiagnostics, Pipeline, "MachineLearningComputeResource.GetNodes", "nodes", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AmlComputeNodeInformation.DeserializeAmlComputeNodeInformation, _machineLearningComputeComputeClientDiagnostics, Pipeline, "MachineLearningComputeResource.GetNodes", "nodes", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -597,6 +667,74 @@ namespace Azure.ResourceManager.MachineLearning
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates the idle shutdown setting of a compute instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/computes/{computeName}/updateIdleShutdownSetting</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Compute_UpdateIdleShutdownSetting</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="idleShutdownSetting"> The object for updating idle shutdown setting of specified ComputeInstance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="idleShutdownSetting"/> is null. </exception>
+        public virtual async Task<Response> UpdateIdleShutdownSettingAsync(IdleShutdownSetting idleShutdownSetting, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(idleShutdownSetting, nameof(idleShutdownSetting));
+
+            using var scope = _machineLearningComputeComputeClientDiagnostics.CreateScope("MachineLearningComputeResource.UpdateIdleShutdownSetting");
+            scope.Start();
+            try
+            {
+                var response = await _machineLearningComputeComputeRestClient.UpdateIdleShutdownSettingAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, idleShutdownSetting, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates the idle shutdown setting of a compute instance.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/computes/{computeName}/updateIdleShutdownSetting</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Compute_UpdateIdleShutdownSetting</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="idleShutdownSetting"> The object for updating idle shutdown setting of specified ComputeInstance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="idleShutdownSetting"/> is null. </exception>
+        public virtual Response UpdateIdleShutdownSetting(IdleShutdownSetting idleShutdownSetting, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(idleShutdownSetting, nameof(idleShutdownSetting));
+
+            using var scope = _machineLearningComputeComputeClientDiagnostics.CreateScope("MachineLearningComputeResource.UpdateIdleShutdownSetting");
+            scope.Start();
+            try
+            {
+                var response = _machineLearningComputeComputeRestClient.UpdateIdleShutdownSetting(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, idleShutdownSetting, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {

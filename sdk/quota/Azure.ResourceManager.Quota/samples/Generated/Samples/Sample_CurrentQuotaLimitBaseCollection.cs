@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Quota.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_QuotasGetRequestForCompute()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2021-03-15-preview/examples/getComputeOneSkuQuotaLimit.json
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/stable/2023-02-01/examples/getComputeOneSkuQuotaLimit.json
             // this example is just showing the usage of "Quota_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Quota.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_QuotasGetRequestForCompute()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2021-03-15-preview/examples/getComputeOneSkuQuotaLimit.json
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/stable/2023-02-01/examples/getComputeOneSkuQuotaLimit.json
             // this example is just showing the usage of "Quota_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -78,12 +78,52 @@ namespace Azure.ResourceManager.Quota.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
+        // Quotas_Get_Request_ForCompute
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_QuotasGetRequestForCompute()
+        {
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/stable/2023-02-01/examples/getComputeOneSkuQuotaLimit.json
+            // this example is just showing the usage of "Quota_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ArmResource created on azure
+            // for more information of creating ArmResource, please refer to the document of ArmResource
+
+            // get the collection of this CurrentQuotaLimitBaseResource
+            string scope = "subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Compute/locations/eastus";
+            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
+            CurrentQuotaLimitBaseCollection collection = client.GetCurrentQuotaLimitBases(scopeId);
+
+            // invoke the operation
+            string resourceName = "standardNDSFamily";
+            NullableResponse<CurrentQuotaLimitBaseResource> response = await collection.GetIfExistsAsync(resourceName);
+            CurrentQuotaLimitBaseResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                CurrentQuotaLimitBaseData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
         // Quotas_UsagesRequest_ForNetwork
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_QuotasUsagesRequestForNetwork()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2021-03-15-preview/examples/getNetworkOneSkuQuotaLimit.json
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/stable/2023-02-01/examples/getNetworkOneSkuQuotaLimit.json
             // this example is just showing the usage of "Quota_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -115,7 +155,7 @@ namespace Azure.ResourceManager.Quota.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_QuotasUsagesRequestForNetwork()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2021-03-15-preview/examples/getNetworkOneSkuQuotaLimit.json
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/stable/2023-02-01/examples/getNetworkOneSkuQuotaLimit.json
             // this example is just showing the usage of "Quota_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -138,12 +178,52 @@ namespace Azure.ResourceManager.Quota.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
+        // Quotas_UsagesRequest_ForNetwork
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_QuotasUsagesRequestForNetwork()
+        {
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/stable/2023-02-01/examples/getNetworkOneSkuQuotaLimit.json
+            // this example is just showing the usage of "Quota_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ArmResource created on azure
+            // for more information of creating ArmResource, please refer to the document of ArmResource
+
+            // get the collection of this CurrentQuotaLimitBaseResource
+            string scope = "subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.Network/locations/eastus";
+            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
+            CurrentQuotaLimitBaseCollection collection = client.GetCurrentQuotaLimitBases(scopeId);
+
+            // invoke the operation
+            string resourceName = "MinPublicIpInterNetworkPrefixLength";
+            NullableResponse<CurrentQuotaLimitBaseResource> response = await collection.GetIfExistsAsync(resourceName);
+            CurrentQuotaLimitBaseResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                CurrentQuotaLimitBaseData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
         // Quotas_PutRequest_ForNetwork
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_QuotasPutRequestForNetwork()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2021-03-15-preview/examples/putNetworkOneSkuQuotaRequest.json
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/stable/2023-02-01/examples/putNetworkOneSkuQuotaRequest.json
             // this example is just showing the usage of "Quota_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -165,12 +245,12 @@ namespace Azure.ResourceManager.Quota.Samples
             {
                 Properties = new QuotaProperties()
                 {
-                    Limit = new LimitObject(10),
-                    Name = new ResourceName()
+                    Limit = new QuotaLimitObject(10),
+                    Name = new QuotaRequestResourceName()
                     {
                         Value = "MinPublicIpInterNetworkPrefixLength",
                     },
-                    ResourceType = "MinPublicIpInterNetworkPrefixLength",
+                    ResourceTypeName = "MinPublicIpInterNetworkPrefixLength",
                 },
             };
             ArmOperation<CurrentQuotaLimitBaseResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, data);
@@ -188,7 +268,7 @@ namespace Azure.ResourceManager.Quota.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_QuotasPutRequestForNetworkStandardSkuPublicIpAddressesResource()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2021-03-15-preview/examples/putNetworkOneSkuQuotaRequestStandardSkuPublicIpAddresses.json
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/stable/2023-02-01/examples/putNetworkOneSkuQuotaRequestStandardSkuPublicIpAddresses.json
             // this example is just showing the usage of "Quota_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -210,12 +290,12 @@ namespace Azure.ResourceManager.Quota.Samples
             {
                 Properties = new QuotaProperties()
                 {
-                    Limit = new LimitObject(10),
-                    Name = new ResourceName()
+                    Limit = new QuotaLimitObject(10),
+                    Name = new QuotaRequestResourceName()
                     {
                         Value = "StandardSkuPublicIpAddresses",
                     },
-                    ResourceType = "PublicIpAddresses",
+                    ResourceTypeName = "PublicIpAddresses",
                 },
             };
             ArmOperation<CurrentQuotaLimitBaseResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, data);
@@ -233,7 +313,7 @@ namespace Azure.ResourceManager.Quota.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_QuotasPutRequestForCompute()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2021-03-15-preview/examples/putComputeOneSkuQuotaRequest.json
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/stable/2023-02-01/examples/putComputeOneSkuQuotaRequest.json
             // this example is just showing the usage of "Quota_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -255,8 +335,8 @@ namespace Azure.ResourceManager.Quota.Samples
             {
                 Properties = new QuotaProperties()
                 {
-                    Limit = new LimitObject(10),
-                    Name = new ResourceName()
+                    Limit = new QuotaLimitObject(10),
+                    Name = new QuotaRequestResourceName()
                     {
                         Value = "standardFSv2Family",
                     },
@@ -277,7 +357,7 @@ namespace Azure.ResourceManager.Quota.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_QuotasRequestForMachineLearningServicesLowPriorityResource()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2021-03-15-preview/examples/putMachineLearningServicesQuotaRequestLowPriority.json
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/stable/2023-02-01/examples/putMachineLearningServicesQuotaRequestLowPriority.json
             // this example is just showing the usage of "Quota_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -299,12 +379,12 @@ namespace Azure.ResourceManager.Quota.Samples
             {
                 Properties = new QuotaProperties()
                 {
-                    Limit = new LimitObject(10),
-                    Name = new ResourceName()
+                    Limit = new QuotaLimitObject(10),
+                    Name = new QuotaRequestResourceName()
                     {
                         Value = "TotalLowPriorityCores",
                     },
-                    ResourceType = "lowPriority",
+                    ResourceTypeName = "lowPriority",
                 },
             };
             ArmOperation<CurrentQuotaLimitBaseResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, data);
@@ -322,7 +402,7 @@ namespace Azure.ResourceManager.Quota.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_QuotasListQuotaLimitsForCompute()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2021-03-15-preview/examples/getComputeQuotaLimits.json
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/stable/2023-02-01/examples/getComputeQuotaLimits.json
             // this example is just showing the usage of "Quota_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -356,7 +436,7 @@ namespace Azure.ResourceManager.Quota.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_QuotasListQuotaLimitsForNetwork()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2021-03-15-preview/examples/getNetworkQuotaLimits.json
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/stable/2023-02-01/examples/getNetworkQuotaLimits.json
             // this example is just showing the usage of "Quota_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -390,7 +470,7 @@ namespace Azure.ResourceManager.Quota.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_QuotasListQuotaLimitsMachineLearningServices()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2021-03-15-preview/examples/getMachineLearningServicesQuotaLimits.json
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/stable/2023-02-01/examples/getMachineLearningServicesQuotaLimits.json
             // this example is just showing the usage of "Quota_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

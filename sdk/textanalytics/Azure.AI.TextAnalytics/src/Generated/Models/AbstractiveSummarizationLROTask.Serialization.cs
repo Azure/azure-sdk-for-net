@@ -29,6 +29,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static AbstractiveSummarizationLROTask DeserializeAbstractiveSummarizationLROTask(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AbstractiveSummarizationTaskParameters parameters = default;
             AnalyzeTextLROTaskKind kind = default;
             Optional<string> taskName = default;

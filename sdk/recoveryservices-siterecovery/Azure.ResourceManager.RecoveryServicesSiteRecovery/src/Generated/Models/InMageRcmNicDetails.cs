@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System.Net;
+using Azure.Core;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> InMageRcm NIC details. </summary>
@@ -29,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="testSubnetName"> Test subnet name. </param>
         /// <param name="testIPAddress"> The test IP address. </param>
         /// <param name="testIPAddressType"> The test IP address type. </param>
-        internal InMageRcmNicDetails(string nicId, string isPrimaryNic, string isSelectedForFailover, string sourceIPAddress, EthernetAddressType? sourceIPAddressType, string sourceNetworkId, string sourceSubnetName, string targetIPAddress, EthernetAddressType? targetIPAddressType, string targetSubnetName, string testSubnetName, string testIPAddress, EthernetAddressType? testIPAddressType)
+        internal InMageRcmNicDetails(string nicId, string isPrimaryNic, string isSelectedForFailover, IPAddress sourceIPAddress, SiteRecoveryEthernetAddressType? sourceIPAddressType, ResourceIdentifier sourceNetworkId, string sourceSubnetName, IPAddress targetIPAddress, SiteRecoveryEthernetAddressType? targetIPAddressType, string targetSubnetName, string testSubnetName, IPAddress testIPAddress, SiteRecoveryEthernetAddressType? testIPAddressType)
         {
             NicId = nicId;
             IsPrimaryNic = isPrimaryNic;
@@ -53,24 +56,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> A value indicating whether this NIC is selected for failover. </summary>
         public string IsSelectedForFailover { get; }
         /// <summary> The source IP address. </summary>
-        public string SourceIPAddress { get; }
+        public IPAddress SourceIPAddress { get; }
         /// <summary> The source IP address type. </summary>
-        public EthernetAddressType? SourceIPAddressType { get; }
+        public SiteRecoveryEthernetAddressType? SourceIPAddressType { get; }
         /// <summary> Source network Id. </summary>
-        public string SourceNetworkId { get; }
+        public ResourceIdentifier SourceNetworkId { get; }
         /// <summary> Source subnet name. </summary>
         public string SourceSubnetName { get; }
         /// <summary> The target IP address. </summary>
-        public string TargetIPAddress { get; }
+        public IPAddress TargetIPAddress { get; }
         /// <summary> The target IP address type. </summary>
-        public EthernetAddressType? TargetIPAddressType { get; }
+        public SiteRecoveryEthernetAddressType? TargetIPAddressType { get; }
         /// <summary> Target subnet name. </summary>
         public string TargetSubnetName { get; }
         /// <summary> Test subnet name. </summary>
         public string TestSubnetName { get; }
         /// <summary> The test IP address. </summary>
-        public string TestIPAddress { get; }
+        public IPAddress TestIPAddress { get; }
         /// <summary> The test IP address type. </summary>
-        public EthernetAddressType? TestIPAddressType { get; }
+        public SiteRecoveryEthernetAddressType? TestIPAddressType { get; }
     }
 }

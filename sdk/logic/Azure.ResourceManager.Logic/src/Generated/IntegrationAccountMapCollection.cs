@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.Logic
         }
 
         /// <summary>
-        /// Creates or updates an integration account map. If the map is larger than 4 MB, you need to store the map in an Azure blob and use the blob&apos;s Shared Access Signature (SAS) URL as the &apos;contentLink&apos; property value.
+        /// Creates or updates an integration account map. If the map is larger than 4 MB, you need to store the map in an Azure blob and use the blob's Shared Access Signature (SAS) URL as the 'contentLink' property value.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -94,7 +95,7 @@ namespace Azure.ResourceManager.Logic
         }
 
         /// <summary>
-        /// Creates or updates an integration account map. If the map is larger than 4 MB, you need to store the map in an Azure blob and use the blob&apos;s Shared Access Signature (SAS) URL as the &apos;contentLink&apos; property value.
+        /// Creates or updates an integration account map. If the map is larger than 4 MB, you need to store the map in an Azure blob and use the blob's Shared Access Signature (SAS) URL as the 'contentLink' property value.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -229,7 +230,7 @@ namespace Azure.ResourceManager.Logic
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationAccountMapRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _integrationAccountMapRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, filter);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IntegrationAccountMapResource(Client, IntegrationAccountMapData.DeserializeIntegrationAccountMapData(e)), _integrationAccountMapClientDiagnostics, Pipeline, "IntegrationAccountMapCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IntegrationAccountMapResource(Client, IntegrationAccountMapData.DeserializeIntegrationAccountMapData(e)), _integrationAccountMapClientDiagnostics, Pipeline, "IntegrationAccountMapCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +254,7 @@ namespace Azure.ResourceManager.Logic
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationAccountMapRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _integrationAccountMapRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, filter);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IntegrationAccountMapResource(Client, IntegrationAccountMapData.DeserializeIntegrationAccountMapData(e)), _integrationAccountMapClientDiagnostics, Pipeline, "IntegrationAccountMapCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IntegrationAccountMapResource(Client, IntegrationAccountMapData.DeserializeIntegrationAccountMapData(e)), _integrationAccountMapClientDiagnostics, Pipeline, "IntegrationAccountMapCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -318,6 +319,80 @@ namespace Azure.ResourceManager.Logic
             {
                 var response = _integrationAccountMapRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, mapName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/integrationAccounts/{integrationAccountName}/maps/{mapName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IntegrationAccountMaps_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="mapName"> The integration account map name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="mapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="mapName"/> is null. </exception>
+        public virtual async Task<NullableResponse<IntegrationAccountMapResource>> GetIfExistsAsync(string mapName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(mapName, nameof(mapName));
+
+            using var scope = _integrationAccountMapClientDiagnostics.CreateScope("IntegrationAccountMapCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _integrationAccountMapRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, mapName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<IntegrationAccountMapResource>(response.GetRawResponse());
+                return Response.FromValue(new IntegrationAccountMapResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/integrationAccounts/{integrationAccountName}/maps/{mapName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IntegrationAccountMaps_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="mapName"> The integration account map name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="mapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="mapName"/> is null. </exception>
+        public virtual NullableResponse<IntegrationAccountMapResource> GetIfExists(string mapName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(mapName, nameof(mapName));
+
+            using var scope = _integrationAccountMapClientDiagnostics.CreateScope("IntegrationAccountMapCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _integrationAccountMapRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, mapName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<IntegrationAccountMapResource>(response.GetRawResponse());
+                return Response.FromValue(new IntegrationAccountMapResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

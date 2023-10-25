@@ -22,7 +22,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ColumnName);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ColumnName.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(ColumnName))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsDefined(DefaultValue))
@@ -31,7 +34,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(DefaultValue);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(DefaultValue.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(DefaultValue))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
@@ -39,6 +45,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static DWCopyCommandDefaultValue DeserializeDWCopyCommandDefaultValue(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> columnName = default;
             Optional<BinaryData> defaultValue = default;
             foreach (var property in element.EnumerateObject())
@@ -47,7 +57,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     columnName = BinaryData.FromString(property.Value.GetRawText());
@@ -57,7 +66,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     defaultValue = BinaryData.FromString(property.Value.GetRawText());

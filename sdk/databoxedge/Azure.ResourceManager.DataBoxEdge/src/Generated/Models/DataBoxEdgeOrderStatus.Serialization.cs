@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         internal static DataBoxEdgeOrderStatus DeserializeDataBoxEdgeOrderStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DataBoxEdgeOrderState status = default;
             Optional<DateTimeOffset> updateDateTime = default;
             Optional<string> comments = default;
@@ -32,7 +36,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     updateDateTime = property.Value.GetDateTimeOffset("O");
@@ -47,7 +50,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     trackingInformation = DataBoxEdgeTrackingInfo.DeserializeDataBoxEdgeTrackingInfo(property.Value);
@@ -57,7 +59,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();

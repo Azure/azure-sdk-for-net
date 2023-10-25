@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static UnknownServicePlacementPolicyDescription DeserializeUnknownServicePlacementPolicyDescription(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ServicePlacementPolicyType type = "Unknown";
             foreach (var property in element.EnumerateObject())
             {

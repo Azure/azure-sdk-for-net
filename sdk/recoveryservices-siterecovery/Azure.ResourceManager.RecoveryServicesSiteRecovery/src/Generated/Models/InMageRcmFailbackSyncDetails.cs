@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> InMageRcmFailback disk level sync details. </summary>
@@ -19,37 +21,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="progressHealth"> The progress health. </param>
         /// <param name="transferredBytes"> The transferred bytes from source VM to azure for the disk. </param>
         /// <param name="last15MinutesTransferredBytes"> The bytes transferred in last 15 minutes from source VM to target. </param>
-        /// <param name="lastDataTransferTimeUtc"> The time of the last data transfer from source VM to target. </param>
+        /// <param name="lastDataTransferOn"> The time of the last data transfer from source VM to target. </param>
         /// <param name="processedBytes"> The total processed bytes. This includes bytes that are transferred from source VM to target and matched bytes. </param>
-        /// <param name="startTime"> The start time. </param>
-        /// <param name="lastRefreshTime"> The last refresh time. </param>
+        /// <param name="startOn"> The start time. </param>
+        /// <param name="lastRefreshedOn"> The last refresh time. </param>
         /// <param name="progressPercentage"> Progress in percentage. Progress percentage is calculated based on processed bytes. </param>
-        internal InMageRcmFailbackSyncDetails(DiskReplicationProgressHealth? progressHealth, long? transferredBytes, long? last15MinutesTransferredBytes, string lastDataTransferTimeUtc, long? processedBytes, string startTime, string lastRefreshTime, int? progressPercentage)
+        internal InMageRcmFailbackSyncDetails(SiteRecoveryDiskReplicationProgressHealth? progressHealth, long? transferredBytes, long? last15MinutesTransferredBytes, DateTimeOffset? lastDataTransferOn, long? processedBytes, DateTimeOffset? startOn, DateTimeOffset? lastRefreshedOn, int? progressPercentage)
         {
             ProgressHealth = progressHealth;
             TransferredBytes = transferredBytes;
             Last15MinutesTransferredBytes = last15MinutesTransferredBytes;
-            LastDataTransferTimeUtc = lastDataTransferTimeUtc;
+            LastDataTransferOn = lastDataTransferOn;
             ProcessedBytes = processedBytes;
-            StartTime = startTime;
-            LastRefreshTime = lastRefreshTime;
+            StartOn = startOn;
+            LastRefreshedOn = lastRefreshedOn;
             ProgressPercentage = progressPercentage;
         }
 
         /// <summary> The progress health. </summary>
-        public DiskReplicationProgressHealth? ProgressHealth { get; }
+        public SiteRecoveryDiskReplicationProgressHealth? ProgressHealth { get; }
         /// <summary> The transferred bytes from source VM to azure for the disk. </summary>
         public long? TransferredBytes { get; }
         /// <summary> The bytes transferred in last 15 minutes from source VM to target. </summary>
         public long? Last15MinutesTransferredBytes { get; }
         /// <summary> The time of the last data transfer from source VM to target. </summary>
-        public string LastDataTransferTimeUtc { get; }
+        public DateTimeOffset? LastDataTransferOn { get; }
         /// <summary> The total processed bytes. This includes bytes that are transferred from source VM to target and matched bytes. </summary>
         public long? ProcessedBytes { get; }
         /// <summary> The start time. </summary>
-        public string StartTime { get; }
+        public DateTimeOffset? StartOn { get; }
         /// <summary> The last refresh time. </summary>
-        public string LastRefreshTime { get; }
+        public DateTimeOffset? LastRefreshedOn { get; }
         /// <summary> Progress in percentage. Progress percentage is calculated based on processed bytes. </summary>
         public int? ProgressPercentage { get; }
     }

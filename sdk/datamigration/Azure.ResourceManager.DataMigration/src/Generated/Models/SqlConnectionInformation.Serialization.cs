@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static SqlConnectionInformation DeserializeSqlConnectionInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> dataSource = default;
             Optional<string> authentication = default;
             Optional<string> userName = default;
@@ -82,7 +86,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     encryptConnection = property.Value.GetBoolean();
@@ -92,7 +95,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     trustServerCertificate = property.Value.GetBoolean();

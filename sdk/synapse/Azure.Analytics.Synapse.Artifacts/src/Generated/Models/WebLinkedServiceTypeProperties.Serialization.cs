@@ -27,6 +27,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static WebLinkedServiceTypeProperties DeserializeWebLinkedServiceTypeProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("authenticationType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

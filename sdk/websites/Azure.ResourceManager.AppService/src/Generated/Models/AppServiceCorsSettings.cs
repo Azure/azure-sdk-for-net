@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of AppServiceCorsSettings. </summary>
         /// <param name="allowedOrigins">
         /// Gets or sets the list of origins that should be allowed to make cross-origin
-        /// calls (for example: http://example.com:12345). Use &quot;*&quot; to allow all.
+        /// calls (for example: http://example.com:12345). Use "*" to allow all.
         /// </param>
         /// <param name="isCredentialsSupported">
-        /// Gets or sets whether CORS requests with credentials are allowed. See 
+        /// Gets or sets whether CORS requests with credentials are allowed. See
         /// https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#Requests_with_credentials
         /// for more details.
         /// </param>
@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary>
         /// Gets or sets the list of origins that should be allowed to make cross-origin
-        /// calls (for example: http://example.com:12345). Use &quot;*&quot; to allow all.
+        /// calls (for example: http://example.com:12345). Use "*" to allow all.
         /// </summary>
         public IList<string> AllowedOrigins { get; }
         /// <summary>
-        /// Gets or sets whether CORS requests with credentials are allowed. See 
+        /// Gets or sets whether CORS requests with credentials are allowed. See
         /// https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#Requests_with_credentials
         /// for more details.
         /// </summary>

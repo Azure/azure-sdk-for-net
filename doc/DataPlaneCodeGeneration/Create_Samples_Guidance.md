@@ -1,5 +1,5 @@
 # Guidance to write samples for data plane
-Samples are where developers could start to learn a library. You should generate samples scaffold by running the quick start [tool](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/DataPlaneCodeGeneration/AzureSDKCodeGeneration_DataPlane_Quickstart.md#create-starter-package). Different scenarios should be separated by different files. The samples should match the structure containing the following key features:
+Samples are where developers could start to learn a library. You should generate samples scaffold by running the quick start [Autorest Tool](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/DataPlaneCodeGeneration/Autorest_DataPlane_Quickstart.md#create-starter-package) when you generate SDK form Open API specification (swagger), or [TypeSepc Tool](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/DataPlaneCodeGeneration/AzureSDKPackage_Setup.md) when you generate SDK from TypeSpec. Different scenarios should be separated by different files. The samples should match the structure containing the following key features:
 ```
 ├── ...
 ├── samples

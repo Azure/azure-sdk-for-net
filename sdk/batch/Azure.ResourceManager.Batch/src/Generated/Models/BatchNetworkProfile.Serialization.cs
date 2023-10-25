@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchNetworkProfile DeserializeBatchNetworkProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BatchEndpointAccessProfile> accountAccess = default;
             Optional<BatchEndpointAccessProfile> nodeManagementAccess = default;
             foreach (var property in element.EnumerateObject())
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     accountAccess = BatchEndpointAccessProfile.DeserializeBatchEndpointAccessProfile(property.Value);
@@ -48,7 +51,6 @@ namespace Azure.ResourceManager.Batch.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     nodeManagementAccess = BatchEndpointAccessProfile.DeserializeBatchEndpointAccessProfile(property.Value);

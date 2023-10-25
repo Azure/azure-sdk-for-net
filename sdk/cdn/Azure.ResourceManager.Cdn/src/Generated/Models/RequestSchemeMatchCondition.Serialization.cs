@@ -50,6 +50,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static RequestSchemeMatchCondition DeserializeRequestSchemeMatchCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             RequestSchemeMatchConditionType typeName = default;
             RequestSchemeOperator @operator = default;
             Optional<bool> negateCondition = default;
@@ -71,7 +75,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     negateCondition = property.Value.GetBoolean();
@@ -81,7 +84,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PreTransformCategory> array = new List<PreTransformCategory>();
@@ -96,7 +98,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RequestSchemeMatchConditionMatchValue> array = new List<RequestSchemeMatchConditionMatchValue>();

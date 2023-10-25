@@ -63,11 +63,20 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("performancePlus"u8);
                 writer.WriteBooleanValue(IsPerformancePlusEnabled.Value);
             }
+            if (Optional.IsDefined(ElasticSanResourceId))
+            {
+                writer.WritePropertyName("elasticSanResourceId"u8);
+                writer.WriteStringValue(ElasticSanResourceId);
+            }
             writer.WriteEndObject();
         }
 
         internal static DiskCreationData DeserializeDiskCreationData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DiskCreateOption createOption = default;
             Optional<ResourceIdentifier> storageAccountId = default;
             Optional<ImageDiskReference> imageReference = default;
@@ -79,6 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<int> logicalSectorSize = default;
             Optional<Uri> securityDataUri = default;
             Optional<bool> performancePlus = default;
+            Optional<ResourceIdentifier> elasticSanResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("createOption"u8))
@@ -90,7 +100,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     storageAccountId = new ResourceIdentifier(property.Value.GetString());
@@ -100,7 +109,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     imageReference = ImageDiskReference.DeserializeImageDiskReference(property.Value);
@@ -110,7 +118,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     galleryImageReference = ImageDiskReference.DeserializeImageDiskReference(property.Value);
@@ -120,7 +127,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        sourceUri = null;
                         continue;
                     }
                     sourceUri = new Uri(property.Value.GetString());
@@ -130,7 +136,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sourceResourceId = new ResourceIdentifier(property.Value.GetString());
@@ -145,7 +150,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     uploadSizeBytes = property.Value.GetInt64();
@@ -155,7 +159,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     logicalSectorSize = property.Value.GetInt32();
@@ -165,7 +168,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        securityDataUri = null;
                         continue;
                     }
                     securityDataUri = new Uri(property.Value.GetString());
@@ -175,14 +177,22 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     performancePlus = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("elasticSanResourceId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    elasticSanResourceId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
             }
-            return new DiskCreationData(createOption, storageAccountId.Value, imageReference.Value, galleryImageReference.Value, sourceUri.Value, sourceResourceId.Value, sourceUniqueId.Value, Optional.ToNullable(uploadSizeBytes), Optional.ToNullable(logicalSectorSize), securityDataUri.Value, Optional.ToNullable(performancePlus));
+            return new DiskCreationData(createOption, storageAccountId.Value, imageReference.Value, galleryImageReference.Value, sourceUri.Value, sourceResourceId.Value, sourceUniqueId.Value, Optional.ToNullable(uploadSizeBytes), Optional.ToNullable(logicalSectorSize), securityDataUri.Value, Optional.ToNullable(performancePlus), elasticSanResourceId.Value);
         }
     }
 }

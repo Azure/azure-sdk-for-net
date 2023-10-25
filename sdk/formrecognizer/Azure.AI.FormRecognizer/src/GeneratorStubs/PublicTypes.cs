@@ -15,6 +15,15 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
+    [CodeGenModel("DocumentAnalysisFeature")]
+    public partial struct DocumentAnalysisFeature { }
+
+    [CodeGenModel("FontStyle")]
+    public partial struct DocumentFontStyle { }
+
+    [CodeGenModel("FontWeight")]
+    public partial struct DocumentFontWeight { }
+
     [CodeGenModel("OperationKind")]
     public partial struct DocumentOperationKind { }
 }

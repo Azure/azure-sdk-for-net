@@ -4,7 +4,6 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -35,9 +34,11 @@ namespace Azure.Communication.JobRouter
         public string Name { get; set; } = default!;
 
         /// <summary> (Optional) A dictionary collection of exception rules on the exception policy. Key is the Id of each exception rule. </summary>
-#pragma warning disable CA2227 // Collection properties should be read only
-        public IDictionary<string, ExceptionRule?> ExceptionRules { get; set; } =
-            new Dictionary<string, ExceptionRule?>();
-#pragma warning restore CA2227 // Collection properties should be read only
+        public IDictionary<string, ExceptionRule?> ExceptionRules { get; } = new Dictionary<string, ExceptionRule?>();
+
+        /// <summary>
+        /// The content to send as the request conditions of the request.
+        /// </summary>
+        public RequestConditions RequestConditions { get; set; } = new();
     }
 }

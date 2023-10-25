@@ -20,18 +20,18 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of AppServiceCertificateDetails. </summary>
         /// <param name="version"> Certificate Version. </param>
         /// <param name="serialNumber"> Certificate Serial Number. </param>
-        /// <param name="thumbprint"> Certificate Thumbprint. </param>
+        /// <param name="thumbprintString"> Certificate Thumbprint. </param>
         /// <param name="subject"> Certificate Subject. </param>
         /// <param name="notBefore"> Date Certificate is valid from. </param>
         /// <param name="notAfter"> Date Certificate is valid to. </param>
         /// <param name="signatureAlgorithm"> Certificate Signature algorithm. </param>
         /// <param name="issuer"> Certificate Issuer. </param>
         /// <param name="rawData"> Raw certificate data. </param>
-        internal AppServiceCertificateDetails(int? version, string serialNumber, BinaryData thumbprint, string subject, DateTimeOffset? notBefore, DateTimeOffset? notAfter, string signatureAlgorithm, string issuer, string rawData)
+        internal AppServiceCertificateDetails(int? version, string serialNumber, string thumbprintString, string subject, DateTimeOffset? notBefore, DateTimeOffset? notAfter, string signatureAlgorithm, string issuer, string rawData)
         {
             Version = version;
             SerialNumber = serialNumber;
-            Thumbprint = thumbprint;
+            ThumbprintString = thumbprintString;
             Subject = subject;
             NotBefore = notBefore;
             NotAfter = notAfter;
@@ -44,37 +44,8 @@ namespace Azure.ResourceManager.AppService.Models
         public int? Version { get; }
         /// <summary> Certificate Serial Number. </summary>
         public string SerialNumber { get; }
-        /// <summary>
-        /// Certificate Thumbprint.
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Thumbprint { get; }
+        /// <summary> Certificate Thumbprint. </summary>
+        public string ThumbprintString { get; }
         /// <summary> Certificate Subject. </summary>
         public string Subject { get; }
         /// <summary> Date Certificate is valid from. </summary>

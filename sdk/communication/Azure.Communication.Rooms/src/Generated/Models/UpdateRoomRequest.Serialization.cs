@@ -25,20 +25,10 @@ namespace Azure.Communication.Rooms
                 writer.WritePropertyName("validUntil"u8);
                 writer.WriteStringValue(ValidUntil.Value, "O");
             }
-            if (Optional.IsDefined(RoomJoinPolicy))
+            if (Optional.IsDefined(PstnDialOutEnabled))
             {
-                writer.WritePropertyName("roomJoinPolicy"u8);
-                writer.WriteStringValue(RoomJoinPolicy.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(Participants))
-            {
-                writer.WritePropertyName("participants"u8);
-                writer.WriteStartArray();
-                foreach (var item in Participants)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("pstnDialOutEnabled"u8);
+                writer.WriteBooleanValue(PstnDialOutEnabled.Value);
             }
             writer.WriteEndObject();
         }

@@ -27,7 +27,7 @@ namespace Azure.Maps.Search.Models
 
         /// <summary> Initializes a new instance of PolygonObject. </summary>
         /// <param name="providerId"> ID of the returned entity. </param>
-        /// <param name="geometryData"> Geometry data in GeoJSON format. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946) for details. Present only if &quot;error&quot; is not present. </param>
+        /// <param name="geometryData"> Geometry data in GeoJSON format. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946) for details. Present only if "error" is not present. </param>
         /// <returns> A new <see cref="Models.PolygonObject"/> instance for mocking. </returns>
         public static PolygonObject PolygonObject(string providerId = null, GeoObject geometryData = null)
         {
@@ -71,7 +71,7 @@ namespace Azure.Maps.Search.Models
         }
 
         /// <summary> Initializes a new instance of OperatingHours. </summary>
-        /// <param name="mode"> Value used in the request: none or &quot;nextSevenDays&quot;. </param>
+        /// <param name="mode"> Value used in the request: none or "nextSevenDays". </param>
         /// <param name="timeRanges"> List of time ranges for the next 7 days. </param>
         /// <returns> A new <see cref="Models.OperatingHours"/> instance for mocking. </returns>
         public static OperatingHours OperatingHours(string mode = null, IEnumerable<OperatingHoursTimeRange> timeRanges = null)
@@ -123,11 +123,11 @@ namespace Azure.Maps.Search.Models
 
         /// <summary> Initializes a new instance of ReverseSearchAddressItem. </summary>
         /// <param name="address"> The address of the result. </param>
-        /// <param name="position"> Position property in the form of &quot;{latitude},{longitude}&quot;. </param>
+        /// <param name="position"> Position property in the form of "{latitude},{longitude}". </param>
         /// <param name="roadUse"></param>
         /// <param name="matchType">
         /// Information on the type of match.
-        /// 
+        ///
         /// One of:
         ///   * AddressPoint
         ///   * HouseNumberRange
@@ -143,7 +143,7 @@ namespace Azure.Maps.Search.Models
 
         /// <summary> Initializes a new instance of ReverseSearchCrossStreetAddressResultItem. </summary>
         /// <param name="address"> The address of the result. </param>
-        /// <param name="position"> Position property in the form of &quot;{latitude},{longitude}&quot;. </param>
+        /// <param name="position"> Position property in the form of "{latitude},{longitude}". </param>
         /// <returns> A new <see cref="Models.ReverseSearchCrossStreetAddressResultItem"/> instance for mocking. </returns>
         public static ReverseSearchCrossStreetAddressResultItem ReverseSearchCrossStreetAddressResultItem(MapsAddress address = null, string position = null)
         {

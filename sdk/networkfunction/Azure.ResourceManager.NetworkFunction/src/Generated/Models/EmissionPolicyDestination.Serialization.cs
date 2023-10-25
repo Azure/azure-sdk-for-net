@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.NetworkFunction.Models
 
         internal static EmissionPolicyDestination DeserializeEmissionPolicyDestination(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<EmissionDestinationType> destinationType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -32,7 +36,6 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     destinationType = new EmissionDestinationType(property.Value.GetString());

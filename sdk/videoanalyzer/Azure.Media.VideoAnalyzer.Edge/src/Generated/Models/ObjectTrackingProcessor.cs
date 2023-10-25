@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> Object tracker processor allows for continuous tracking of one of more objects over a finite sequence of video frames. It must be used downstream of an object detector extension node, thus allowing for the extension to be configured to to perform inferences on sparse frames through the use of the &apos;maximumSamplesPerSecond&apos; sampling property. The object tracker node will then track the detected objects over the frames in which the detector is not invoked resulting on a smother tracking of detected objects across the continuum of video frames. The tracker will stop tracking objects which are not subsequently detected by the upstream detector on the subsequent detections. </summary>
+    /// <summary> Object tracker processor allows for continuous tracking of one of more objects over a finite sequence of video frames. It must be used downstream of an object detector extension node, thus allowing for the extension to be configured to to perform inferences on sparse frames through the use of the 'maximumSamplesPerSecond' sampling property. The object tracker node will then track the detected objects over the frames in which the detector is not invoked resulting on a smother tracking of detected objects across the continuum of video frames. The tracker will stop tracking objects which are not subsequently detected by the upstream detector on the subsequent detections. </summary>
     public partial class ObjectTrackingProcessor : ProcessorNodeBase
     {
         /// <summary> Initializes a new instance of ObjectTrackingProcessor. </summary>

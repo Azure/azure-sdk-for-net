@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         internal static DataBoxEdgeRefreshDetails DeserializeDataBoxEdgeRefreshDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> inProgressRefreshJobId = default;
             Optional<DateTimeOffset> lastCompletedRefreshJobTimeInUtc = default;
             Optional<string> errorManifestFile = default;
@@ -51,7 +55,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     inProgressRefreshJobId = new ResourceIdentifier(property.Value.GetString());
@@ -61,7 +64,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastCompletedRefreshJobTimeInUtc = property.Value.GetDateTimeOffset("O");

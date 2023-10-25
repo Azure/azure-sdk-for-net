@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a managed database&apos;s short term retention policy.
+        /// Gets a managed database's short term retention policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Gets a managed database&apos;s short term retention policy.
+        /// Gets a managed database's short term retention policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Updates a managed database&apos;s short term retention policy.
+        /// Updates a managed database's short term retention policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// Updates a managed database&apos;s short term retention policy.
+        /// Updates a managed database's short term retention policy.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

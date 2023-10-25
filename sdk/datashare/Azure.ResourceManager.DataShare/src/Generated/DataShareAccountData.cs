@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare
 {
-    /// <summary> A class representing the DataShareAccount data model. </summary>
+    /// <summary>
+    /// A class representing the DataShareAccount data model.
+    /// An account data transfer object.
+    /// </summary>
     public partial class DataShareAccountData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of DataShareAccountData. </summary>

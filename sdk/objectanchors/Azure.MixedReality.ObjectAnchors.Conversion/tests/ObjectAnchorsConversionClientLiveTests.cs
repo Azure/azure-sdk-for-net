@@ -35,7 +35,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Tests
         public ObjectAnchorsConversionClientLiveTests(bool isAsync)
             : base(isAsync)
         {
-#if NET461
+#if NET462
             CompareBodies = true;
 #else
             CompareBodies = false;

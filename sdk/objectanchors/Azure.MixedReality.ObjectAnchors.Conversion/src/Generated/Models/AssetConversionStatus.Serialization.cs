@@ -23,11 +23,11 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
 
         public static AssetConversionStatus ToAssetConversionStatus(this string value)
         {
-            if (string.Equals(value, "NotStarted", StringComparison.InvariantCultureIgnoreCase)) return AssetConversionStatus.NotStarted;
-            if (string.Equals(value, "Running", StringComparison.InvariantCultureIgnoreCase)) return AssetConversionStatus.Running;
-            if (string.Equals(value, "Succeeded", StringComparison.InvariantCultureIgnoreCase)) return AssetConversionStatus.Succeeded;
-            if (string.Equals(value, "Failed", StringComparison.InvariantCultureIgnoreCase)) return AssetConversionStatus.Failed;
-            if (string.Equals(value, "Cancelled", StringComparison.InvariantCultureIgnoreCase)) return AssetConversionStatus.Cancelled;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotStarted")) return AssetConversionStatus.NotStarted;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Running")) return AssetConversionStatus.Running;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Succeeded")) return AssetConversionStatus.Succeeded;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed")) return AssetConversionStatus.Failed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Cancelled")) return AssetConversionStatus.Cancelled;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AssetConversionStatus value.");
         }
     }

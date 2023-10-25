@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
@@ -14,6 +13,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     {
         internal static CustomDocumentModelsDetails DeserializeCustomDocumentModelsDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int count = default;
             int limit = default;
             foreach (var property in element.EnumerateObject())

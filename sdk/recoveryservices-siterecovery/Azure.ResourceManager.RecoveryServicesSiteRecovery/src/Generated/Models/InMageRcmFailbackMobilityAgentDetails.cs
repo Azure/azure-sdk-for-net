@@ -25,20 +25,20 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="latestVersion"> The latest agent version available. </param>
         /// <param name="driverVersion"> The driver version. </param>
         /// <param name="latestUpgradableVersionWithoutReboot"> The latest upgradeable version available without reboot. </param>
-        /// <param name="agentVersionExpiryOn"> The agent version expiry date. </param>
-        /// <param name="driverVersionExpiryOn"> The driver version expiry date. </param>
-        /// <param name="lastHeartbeatUtc"> The time of the last heartbeat received from the agent. </param>
+        /// <param name="agentVersionExpireOn"> The agent version expiry date. </param>
+        /// <param name="driverVersionExpireOn"> The driver version expiry date. </param>
+        /// <param name="lastHeartbeatReceivedOn"> The time of the last heartbeat received from the agent. </param>
         /// <param name="reasonsBlockingUpgrade"> The whether update is possible or not. </param>
         /// <param name="isUpgradeable"> A value indicating whether agent is upgradeable or not. </param>
-        internal InMageRcmFailbackMobilityAgentDetails(string version, string latestVersion, string driverVersion, string latestUpgradableVersionWithoutReboot, DateTimeOffset? agentVersionExpiryOn, DateTimeOffset? driverVersionExpiryOn, DateTimeOffset? lastHeartbeatUtc, IReadOnlyList<AgentUpgradeBlockedReason> reasonsBlockingUpgrade, string isUpgradeable)
+        internal InMageRcmFailbackMobilityAgentDetails(string version, string latestVersion, string driverVersion, string latestUpgradableVersionWithoutReboot, DateTimeOffset? agentVersionExpireOn, DateTimeOffset? driverVersionExpireOn, DateTimeOffset? lastHeartbeatReceivedOn, IReadOnlyList<AgentUpgradeBlockedReason> reasonsBlockingUpgrade, string isUpgradeable)
         {
             Version = version;
             LatestVersion = latestVersion;
             DriverVersion = driverVersion;
             LatestUpgradableVersionWithoutReboot = latestUpgradableVersionWithoutReboot;
-            AgentVersionExpiryOn = agentVersionExpiryOn;
-            DriverVersionExpiryOn = driverVersionExpiryOn;
-            LastHeartbeatUtc = lastHeartbeatUtc;
+            AgentVersionExpireOn = agentVersionExpireOn;
+            DriverVersionExpireOn = driverVersionExpireOn;
+            LastHeartbeatReceivedOn = lastHeartbeatReceivedOn;
             ReasonsBlockingUpgrade = reasonsBlockingUpgrade;
             IsUpgradeable = isUpgradeable;
         }
@@ -52,11 +52,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The latest upgradeable version available without reboot. </summary>
         public string LatestUpgradableVersionWithoutReboot { get; }
         /// <summary> The agent version expiry date. </summary>
-        public DateTimeOffset? AgentVersionExpiryOn { get; }
+        public DateTimeOffset? AgentVersionExpireOn { get; }
         /// <summary> The driver version expiry date. </summary>
-        public DateTimeOffset? DriverVersionExpiryOn { get; }
+        public DateTimeOffset? DriverVersionExpireOn { get; }
         /// <summary> The time of the last heartbeat received from the agent. </summary>
-        public DateTimeOffset? LastHeartbeatUtc { get; }
+        public DateTimeOffset? LastHeartbeatReceivedOn { get; }
         /// <summary> The whether update is possible or not. </summary>
         public IReadOnlyList<AgentUpgradeBlockedReason> ReasonsBlockingUpgrade { get; }
         /// <summary> A value indicating whether agent is upgradeable or not. </summary>

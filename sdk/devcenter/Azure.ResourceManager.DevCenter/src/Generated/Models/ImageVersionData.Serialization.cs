@@ -8,6 +8,7 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevCenter.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter
@@ -25,6 +26,10 @@ namespace Azure.ResourceManager.DevCenter
 
         internal static ImageVersionData DeserializeImageVersionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -33,7 +38,7 @@ namespace Azure.ResourceManager.DevCenter
             Optional<DateTimeOffset> publishedDate = default;
             Optional<bool> excludeFromLatest = default;
             Optional<int> osDiskImageSizeInGb = default;
-            Optional<string> provisioningState = default;
+            Optional<DevCenterProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -55,7 +60,6 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -79,7 +83,6 @@ namespace Azure.ResourceManager.DevCenter
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             publishedDate = property0.Value.GetDateTimeOffset("O");
@@ -89,7 +92,6 @@ namespace Azure.ResourceManager.DevCenter
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             excludeFromLatest = property0.Value.GetBoolean();
@@ -99,7 +101,6 @@ namespace Azure.ResourceManager.DevCenter
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             osDiskImageSizeInGb = property0.Value.GetInt32();
@@ -107,14 +108,18 @@ namespace Azure.ResourceManager.DevCenter
                         }
                         if (property0.NameEquals("provisioningState"u8))
                         {
-                            provisioningState = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new DevCenterProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ImageVersionData(id, name, type, systemData.Value, name0.Value, Optional.ToNullable(publishedDate), Optional.ToNullable(excludeFromLatest), Optional.ToNullable(osDiskImageSizeInGb), provisioningState.Value);
+            return new ImageVersionData(id, name, type, systemData.Value, name0.Value, Optional.ToNullable(publishedDate), Optional.ToNullable(excludeFromLatest), Optional.ToNullable(osDiskImageSizeInGb), Optional.ToNullable(provisioningState));
         }
     }
 }

@@ -14,7 +14,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    /// <summary> A class representing the BandwidthSchedule data model. </summary>
+    /// <summary>
+    /// A class representing the BandwidthSchedule data model.
+    /// The bandwidth schedule details.
+    /// </summary>
     public partial class BandwidthScheduleData : ResourceData
     {
         /// <summary> Initializes a new instance of BandwidthScheduleData. </summary>

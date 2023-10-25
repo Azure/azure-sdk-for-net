@@ -10,7 +10,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    /// <summary> The AppliedReservationData. </summary>
+    /// <summary> The response for applied reservations api. </summary>
     public partial class AppliedReservationData : ResourceData
     {
         /// <summary> Initializes a new instance of AppliedReservationData. </summary>
@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="reservationOrderIds"></param>
+        /// <param name="reservationOrderIds"> Paginated list of applied reservations. </param>
         internal AppliedReservationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppliedReservationList reservationOrderIds) : base(id, name, resourceType, systemData)
         {
             ReservationOrderIds = reservationOrderIds;
         }
 
-        /// <summary> Gets the reservation order ids. </summary>
+        /// <summary> Paginated list of applied reservations. </summary>
         public AppliedReservationList ReservationOrderIds { get; }
     }
 }

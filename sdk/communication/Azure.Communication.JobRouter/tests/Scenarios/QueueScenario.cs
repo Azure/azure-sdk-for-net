@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.Communication.JobRouter.Models;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
 using NUnit.Framework;
 
@@ -22,25 +21,20 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
         [Test]
         public async Task SimpleQueueingScenario()
         {
-            RouterClient client = CreateRouterClientWithConnectionString();
-            RouterAdministrationClient administrationClient = CreateRouterAdministrationClientWithConnectionString();
+            JobRouterClient client = CreateRouterClientWithConnectionString();
+            JobRouterAdministrationClient administrationClient = CreateRouterAdministrationClientWithConnectionString();
 
-            var channelResponse = GenerateUniqueId($"Channel-SQ-{IdPrefix}-{nameof(QueueScenario)}");
+            var channelResponse = GenerateUniqueId($"Channel-SQ-{IdPrefix}-{ScenarioPrefix}");
             var distributionPolicyResponse = await administrationClient.CreateDistributionPolicyAsync(
-                new CreateDistributionPolicyOptions(GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}"),
-                    TimeSpan.FromMinutes(10),
-                    new LongestIdleMode(1,
-                        1))
-                {
-                    Name = "Simple-Queue-Distribution"
-                });
+                new CreateDistributionPolicyOptions(GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}"), TimeSpan.FromMinutes(10),
+                    new LongestIdleMode()) { Name = "Simple-Queue-Distribution" });
             var queueResponse = await administrationClient.CreateQueueAsync(
                 new CreateQueueOptions(GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}"),
                     distributionPolicyResponse.Value.Id)
                 {
                     Name = "test",
                 });
-            var jobId = GenerateUniqueId($"JobId-SQ-{nameof(QueueScenario)}");
+            var jobId = GenerateUniqueId($"JobId-SQ-{ScenarioPrefix}");
             var createJob = await client.CreateJobAsync(
                 new CreateJobOptions(jobId, channelResponse, queueResponse.Value.Id)
                 {
@@ -48,25 +42,21 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
                 });
 
             var job = await Poll(async () => await client.GetJobAsync(createJob.Value.Id),
-                x => x.Value.JobStatus == RouterJobStatus.Queued,
+                x => x.Value.Status == RouterJobStatus.Queued,
                 TimeSpan.FromSeconds(10));
-            Assert.AreEqual(RouterJobStatus.Queued, job.Value.JobStatus);
+            Assert.AreEqual(RouterJobStatus.Queued, job.Value.Status);
         }
 
         [Test]
         public async Task QueueingWithClassificationPolicyWithStaticLabelSelector()
         {
-            RouterClient client = CreateRouterClientWithConnectionString();
-            RouterAdministrationClient administrationClient = CreateRouterAdministrationClientWithConnectionString();
+            JobRouterClient client = CreateRouterClientWithConnectionString();
+            JobRouterAdministrationClient administrationClient = CreateRouterAdministrationClientWithConnectionString();
 
-            var channelResponse = GenerateUniqueId($"Channel-StaticLabel-{IdPrefix}-{nameof(QueueScenario)}");
+            var channelResponse = GenerateUniqueId($"Channel-StaticLabel-{IdPrefix}-{ScenarioPrefix}");
             var distributionPolicyResponse = await administrationClient.CreateDistributionPolicyAsync(
-                new CreateDistributionPolicyOptions(GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}"),
-                    TimeSpan.FromMinutes(10),
-                    new LongestIdleMode(1, 1))
-                {
-                    Name = "Simple-Queue-Distribution"
-                });
+                new CreateDistributionPolicyOptions(GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}"), TimeSpan.FromMinutes(10),
+                    new LongestIdleMode()) { Name = "Simple-Queue-Distribution" });
             var queueResponse = await administrationClient.CreateQueueAsync(
                 new CreateQueueOptions(GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}"),
                     distributionPolicyResponse.Value.Id)
@@ -74,41 +64,35 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
                     Name = "test",
                 });
 
-            var queueSelector = new List<QueueSelectorAttachment>()
-            {
-                new StaticQueueSelectorAttachment(new QueueSelector(key: "Id", LabelOperator.Equal, new LabelValue(queueResponse.Value.Id)))
-            };
-
             var classificationPolicyResponse = await administrationClient.CreateClassificationPolicyAsync(
                 new CreateClassificationPolicyOptions(GenerateUniqueId($"Cp-StaticLabels-{IdPrefix}"))
                 {
-                    QueueSelectors = queueSelector
+                    QueueSelectors = {
+                        new StaticQueueSelectorAttachment(new RouterQueueSelector(key: "Id", LabelOperator.Equal, new LabelValue(queueResponse.Value.Id)))
+                    }
                 });
 
-            var jobId = GenerateUniqueId($"JobId-StaticLabel-{nameof(QueueScenario)}");
-            var createJob = await client.CreateJobAsync( new CreateJobWithClassificationPolicyOptions(jobId, channelResponse, classificationPolicyResponse.Value.Id));
+            var jobId = GenerateUniqueId($"JobId-StaticLabel-{ScenarioPrefix}");
+            var createJob = await client.CreateJobWithClassificationPolicyAsync(
+                new CreateJobWithClassificationPolicyOptions(jobId, channelResponse, classificationPolicyResponse.Value.Id));
 
             var job = await Poll(async () => await client.GetJobAsync(createJob.Value.Id),
-                x => x.Value.JobStatus == RouterJobStatus.Queued,
+                x => x.Value.Status == RouterJobStatus.Queued,
                 TimeSpan.FromSeconds(10));
-            Assert.AreEqual(RouterJobStatus.Queued, job.Value.JobStatus);
+            Assert.AreEqual(RouterJobStatus.Queued, job.Value.Status);
             Assert.AreEqual(job.Value.QueueId, queueResponse.Value.Id);
         }
 
         [Test]
         public async Task QueueingWithClassificationPolicyWithFallbackQueue()
         {
-            RouterClient client = CreateRouterClientWithConnectionString();
-            RouterAdministrationClient administrationClient = CreateRouterAdministrationClientWithConnectionString();
+            JobRouterClient client = CreateRouterClientWithConnectionString();
+            JobRouterAdministrationClient administrationClient = CreateRouterAdministrationClientWithConnectionString();
 
-            var channelResponse = GenerateUniqueId($"Channel-FQ-{IdPrefix}-{nameof(QueueScenario)}");
+            var channelResponse = GenerateUniqueId($"Channel-FQ-{IdPrefix}-{ScenarioPrefix}");
             var distributionPolicyResponse = await administrationClient.CreateDistributionPolicyAsync(
-                new CreateDistributionPolicyOptions(GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}"),
-                    TimeSpan.FromMinutes(10),
-                    new LongestIdleMode(1, 1))
-                {
-                    Name = "Simple-Queue-Distribution",
-                });
+                new CreateDistributionPolicyOptions(GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}"), TimeSpan.FromMinutes(10),
+                    new LongestIdleMode()) { Name = "Simple-Queue-Distribution", });
             var fallbackQueueResponse = await administrationClient.CreateQueueAsync(
                 new CreateQueueOptions(GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}-default_Q"),
                     distributionPolicyResponse.Value.Id)
@@ -116,42 +100,35 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
                     Name = "test",
                 });
 
-            var queueSelector = new List<QueueSelectorAttachment>()
-            {
-                new StaticQueueSelectorAttachment(new QueueSelector(key: "Id", LabelOperator.Equal, new LabelValue("QueueIdDoesNotExist")))
-            };
-
             var classificationPolicyResponse = await administrationClient.CreateClassificationPolicyAsync(
                 new CreateClassificationPolicyOptions(GenerateUniqueId($"Cp-default_Q-{IdPrefix}"))
                 {
-                    QueueSelectors = queueSelector,
+                    QueueSelectors = {
+                        new StaticQueueSelectorAttachment(new RouterQueueSelector(key: "Id", LabelOperator.Equal, new LabelValue("QueueIdDoesNotExist")))
+                    },
                     FallbackQueueId = fallbackQueueResponse.Value.Id,
                 });
 
-            var jobId = GenerateUniqueId($"JobId-default_Q-{nameof(QueueScenario)}");
-            var createJob = await client.CreateJobAsync( new CreateJobWithClassificationPolicyOptions(jobId, channelResponse, classificationPolicyResponse.Value.Id));
+            var jobId = GenerateUniqueId($"JobId-default_Q-{ScenarioPrefix}");
+            var createJob = await client.CreateJobWithClassificationPolicyAsync(new CreateJobWithClassificationPolicyOptions(jobId, channelResponse, classificationPolicyResponse.Value.Id));
 
             var job = await Poll(async () => await client.GetJobAsync(createJob.Value.Id),
-                x => x.Value.JobStatus == RouterJobStatus.Queued,
+                x => x.Value.Status == RouterJobStatus.Queued,
                 TimeSpan.FromSeconds(10));
-            Assert.AreEqual(RouterJobStatus.Queued, job.Value.JobStatus);
+            Assert.AreEqual(RouterJobStatus.Queued, job.Value.Status);
             Assert.AreEqual(job.Value.QueueId, fallbackQueueResponse.Value.Id);
         }
 
         [Test]
         public async Task QueueingWithClassificationPolicyWithConditionalLabelSelector()
         {
-            RouterClient client = CreateRouterClientWithConnectionString();
-            RouterAdministrationClient administrationClient = CreateRouterAdministrationClientWithConnectionString();
+            JobRouterClient client = CreateRouterClientWithConnectionString();
+            JobRouterAdministrationClient administrationClient = CreateRouterAdministrationClientWithConnectionString();
 
-            var channelResponse = GenerateUniqueId($"Channel-CPWithConditionalLabels-{IdPrefix}-{nameof(QueueScenario)}");
+            var channelResponse = GenerateUniqueId($"Channel-CPWithConditionalLabels-{IdPrefix}-{ScenarioPrefix}");
             var distributionPolicyResponse = await administrationClient.CreateDistributionPolicyAsync(
-                new CreateDistributionPolicyOptions(GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}"),
-                    TimeSpan.FromMinutes(10),
-                    new LongestIdleMode(1, 1))
-                {
-                    Name = "Simple-Queue-Distribution"
-                });
+                new CreateDistributionPolicyOptions(GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}"), TimeSpan.FromMinutes(10),
+                    new LongestIdleMode()) { Name = "Simple-Queue-Distribution" });
             var queueResponse = await administrationClient.CreateQueueAsync(
                 new CreateQueueOptions(GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}"),
                     distributionPolicyResponse.Value.Id)
@@ -165,64 +142,56 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
                     Name = "test"
                 });
 
-            var queueSelector = new List<QueueSelectorAttachment>()
-            {
-                new ConditionalQueueSelectorAttachment(
-                    condition: new ExpressionRule("If(job.Product = \"O365\", true, false)"),
-                    labelSelectors: new List<QueueSelector>()
-                    {
-                        new QueueSelector("Id", LabelOperator.Equal, new LabelValue(queueResponse.Value.Id))
-                    })
-            };
-
             var classificationPolicyResponse = await administrationClient.CreateClassificationPolicyAsync(
                 new CreateClassificationPolicyOptions(GenerateUniqueId($"{IdPrefix}-cp-conditional"))
                 {
-                    QueueSelectors = queueSelector,
+                    QueueSelectors = {
+                        new ConditionalQueueSelectorAttachment(
+                            condition: new ExpressionRouterRule("If(job.Product = \"O365\", true, false)"),
+                            queueSelectors: new List<RouterQueueSelector>()
+                            {
+                                new RouterQueueSelector("Id", LabelOperator.Equal, new LabelValue(queueResponse.Value.Id))
+                            })
+                    },
                     FallbackQueueId = fallbackQueueResponse.Value.Id,
                 });
 
-            var jobLabels = new Dictionary<string, LabelValue>() {["Product"] = new LabelValue("O365") };
-            var createJob = await client.CreateJobAsync(
+            var createJob = await client.CreateJobWithClassificationPolicyAsync(
                 new CreateJobWithClassificationPolicyOptions(GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}"), channelResponse, classificationPolicyResponse.Value.Id)
                 {
-                    Labels = jobLabels,
+                    Labels = { ["Product"] = new LabelValue("O365") },
                 });
 
             var job = await Poll(async () => await client.GetJobAsync(createJob.Value.Id),
-                x => x.Value.JobStatus == RouterJobStatus.Queued,
+                x => x.Value.Status == RouterJobStatus.Queued,
                 TimeSpan.FromSeconds(10));
-            Assert.AreEqual(RouterJobStatus.Queued, job.Value.JobStatus);
+            Assert.AreEqual(RouterJobStatus.Queued, job.Value.Status);
             Assert.AreEqual(job.Value.QueueId, queueResponse.Value.Id);
         }
 
         [Test]
         public async Task QueueingWithClassificationPolicyWithPassThroughLabelSelector()
         {
-            RouterClient client = CreateRouterClientWithConnectionString();
-            RouterAdministrationClient administrationClient = CreateRouterAdministrationClientWithConnectionString();
+            JobRouterClient client = CreateRouterClientWithConnectionString();
+            JobRouterAdministrationClient administrationClient = CreateRouterAdministrationClientWithConnectionString();
 
             var channelResponse = GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}-{nameof(QueueingWithClassificationPolicyWithPassThroughLabelSelector)}");
             var distributionPolicyResponse = await administrationClient.CreateDistributionPolicyAsync(
                 new CreateDistributionPolicyOptions(GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}"),
                     TimeSpan.FromMinutes(10),
-                    new LongestIdleMode(1, 1))
-                {
-                    Name = "Simple-Queue-Distribution",
-                });
+                    new LongestIdleMode()) { Name = "Simple-Queue-Distribution", });
 
-            var queueLabels = new Dictionary<string, LabelValue>()
-            {
-                ["Region"] = new LabelValue("NA"),
-                ["Language"] = new LabelValue("EN"),
-                ["Product"] = new LabelValue("O365"),
-                ["UniqueIdentifier"] = new LabelValue(IdPrefix)
-            };
+            var uniquePrefix = GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}-3");
+
             var queueResponse = await administrationClient.CreateQueueAsync(
-                new CreateQueueOptions(GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}-1"), distributionPolicyResponse.Value.Id)
+                new CreateQueueOptions(uniquePrefix, distributionPolicyResponse.Value.Id)
                 {
                     Name = "test",
-                    Labels = queueLabels
+                    Labels = {
+                        ["Region"] = new LabelValue($"{uniquePrefix}NA"),
+                        ["Language"] = new LabelValue($"{uniquePrefix}EN"),
+                        ["Product"] = new LabelValue($"{uniquePrefix}O365")
+                    }
                 });
             var fallbackQueueResponse = await administrationClient.CreateQueueAsync(
                 new CreateQueueOptions(GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}-default_Q"),
@@ -231,84 +200,74 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
                     Name = "test",
                 });
 
-            var queueSelector = new List<QueueSelectorAttachment>()
-            {
-                new PassThroughQueueSelectorAttachment("Region", LabelOperator.Equal),
-                new PassThroughQueueSelectorAttachment("Language", LabelOperator.Equal),
-                new PassThroughQueueSelectorAttachment("Product", LabelOperator.Equal),
-                new StaticQueueSelectorAttachment( new QueueSelector("UniqueIdentifier", LabelOperator.Equal, new LabelValue(IdPrefix)))
-            };
-
             var classificationPolicyResponse = await administrationClient.CreateClassificationPolicyAsync(
                 new CreateClassificationPolicyOptions(GenerateUniqueId($"{IdPrefix}-cp-pass-through-selector"))
                 {
-                    QueueSelectors = queueSelector,
+                    QueueSelectors = {
+                        new PassThroughQueueSelectorAttachment("Region", LabelOperator.Equal),
+                        new PassThroughQueueSelectorAttachment("Language", LabelOperator.Equal),
+                        new PassThroughQueueSelectorAttachment("Product", LabelOperator.Equal),
+                        new StaticQueueSelectorAttachment(new RouterQueueSelector("Id", LabelOperator.Equal, new LabelValue(uniquePrefix))),
+                    },
                     FallbackQueueId = fallbackQueueResponse.Value.Id,
                 });
 
-            var jobLabels = new Dictionary<string, LabelValue>()
-            {
-                ["Product"] = new LabelValue("O365"),
-                ["Region"] = new LabelValue("NA"),
-                ["Language"] = new LabelValue("EN")
-            };
-            var createJob = await client.CreateJobAsync(
+            var createJob = await client.CreateJobWithClassificationPolicyAsync(
                 new CreateJobWithClassificationPolicyOptions(
                     GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}-{nameof(QueueingWithClassificationPolicyWithPassThroughLabelSelector)}"),
                     channelResponse,
                     classificationPolicyResponse.Value.Id)
                 {
-                    Labels = jobLabels,
+                    Labels = {
+                        ["Product"] = new LabelValue($"{uniquePrefix}O365"),
+                        ["Region"] = new LabelValue($"{uniquePrefix}NA"),
+                        ["Language"] = new LabelValue($"{uniquePrefix}EN")
+                    },
                 });
 
             var job = await Poll(async () => await client.GetJobAsync(createJob.Value.Id),
-                x => x.Value.JobStatus == RouterJobStatus.Queued,
+                x => x.Value.Status == RouterJobStatus.Queued,
                 TimeSpan.FromSeconds(10));
-            Assert.AreEqual(RouterJobStatus.Queued, job.Value.JobStatus);
+            Assert.AreEqual(RouterJobStatus.Queued, job.Value.Status);
             Assert.AreEqual(job.Value.QueueId, queueResponse.Value.Id);
         }
 
         [Test]
         public async Task QueueingWithClassificationPolicyWithCombiningLabelSelectors()
         {
-            RouterClient client = CreateRouterClientWithConnectionString();
-            RouterAdministrationClient administrationClient = CreateRouterAdministrationClientWithConnectionString();
+            JobRouterClient client = CreateRouterClientWithConnectionString();
+            JobRouterAdministrationClient administrationClient = CreateRouterAdministrationClientWithConnectionString();
 
             var channelResponse = GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}-{nameof(QueueingWithClassificationPolicyWithCombiningLabelSelectors)}");
             var distributionPolicyResponse = await administrationClient.CreateDistributionPolicyAsync(
                 new CreateDistributionPolicyOptions(GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}"),
                     TimeSpan.FromMinutes(10),
-                    new LongestIdleMode(1, 1))
-                {
-                    Name = "Simple-Queue-Distribution"
-                });
+                    new LongestIdleMode()) { Name = "Simple-Queue-Distribution" });
 
-            var queue1Labels = new Dictionary<string, LabelValue>()
-            {
-                ["Region"] = new LabelValue("NA"),
-                ["Language"] = new LabelValue("en"),
-                ["Product"] = new LabelValue("O365"),
-                ["UniqueIdentifier"] = new LabelValue(IdPrefix)
-            };
+            var uniquePrefix = GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}");
+
             var queue1Response = await administrationClient.CreateQueueAsync(
-                new CreateQueueOptions(GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}-1"), distributionPolicyResponse.Value.Id)
+                new CreateQueueOptions($"{uniquePrefix}1", distributionPolicyResponse.Value.Id)
                 {
                     Name = "test",
-                    Labels = queue1Labels,
+                    Labels = {
+                        ["Region"] = new LabelValue($"{uniquePrefix}NA"),
+                        ["Language"] = new LabelValue($"{uniquePrefix}en"),
+                        ["Product"] = new LabelValue($"{uniquePrefix}O365"),
+                        ["UniquePrefix"] = new LabelValue(uniquePrefix),
+                    },
                 });
 
-            var queue2Labels = new Dictionary<string, LabelValue>()
-            {
-                ["Region"] = new LabelValue("NA"),
-                ["Language"] = new LabelValue("fr"),
-                ["Product"] = new LabelValue("O365"),
-                ["UniqueIdentifier"] = new LabelValue(IdPrefix)
-            };
             var queue2Response = await administrationClient.CreateQueueAsync(
-                new CreateQueueOptions(GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}-2"), distributionPolicyResponse.Value.Id)
+                new CreateQueueOptions($"{uniquePrefix}2", distributionPolicyResponse.Value.Id)
                 {
                     Name = "test",
-                    Labels = queue2Labels,
+                    Labels = {
+                        ["Region"] = new LabelValue($"{uniquePrefix}NA"),
+                        ["Language"] = new LabelValue($"{uniquePrefix}fr"),
+                        ["Product"] = new LabelValue($"{uniquePrefix}O365"),
+                        ["UniquePrefix"] = new LabelValue(uniquePrefix),
+                    },
                 });
 
             var fallbackQueueResponse = await administrationClient.CreateQueueAsync(
@@ -317,72 +276,67 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
                     Name = "test",
                 });
 
-            var queueSelector = new List<QueueSelectorAttachment>()
-            {
-                new PassThroughQueueSelectorAttachment("Region", LabelOperator.Equal),
-                new PassThroughQueueSelectorAttachment("Product", LabelOperator.Equal),
-                new ConditionalQueueSelectorAttachment(
-                    condition: new ExpressionRule("If(job.Lang = \"EN\", true, false)"),
-                    labelSelectors: new List<QueueSelector>()
-                    {
-                        new QueueSelector("Language", LabelOperator.Equal, new LabelValue("en"))
-                    }),
-                new ConditionalQueueSelectorAttachment(
-                    condition: new ExpressionRule("If(job.Lang = \"FR\", true, false)"),
-                    labelSelectors: new List<QueueSelector>()
-                    {
-                        new QueueSelector("Language", LabelOperator.Equal, new LabelValue("fr"))
-                    }),
-                new StaticQueueSelectorAttachment( new QueueSelector("UniqueIdentifier", LabelOperator.Equal, new LabelValue(IdPrefix)))
-            };
-
             var classificationPolicyResponse = await administrationClient.CreateClassificationPolicyAsync(
                 new CreateClassificationPolicyOptions(GenerateUniqueId($"{IdPrefix}-combination"))
                 {
-                    QueueSelectors = queueSelector,
+                    QueueSelectors = {
+                        new PassThroughQueueSelectorAttachment("Region", LabelOperator.Equal),
+                        new PassThroughQueueSelectorAttachment("Product", LabelOperator.Equal),
+                        new ConditionalQueueSelectorAttachment(
+                            condition: new ExpressionRouterRule($"If(job.Lang = \"{uniquePrefix}EN\", true, false)"),
+                            queueSelectors: new List<RouterQueueSelector>()
+                            {
+                                new RouterQueueSelector("Language", LabelOperator.Equal, new LabelValue($"{uniquePrefix}en"))
+                            }),
+                        new ConditionalQueueSelectorAttachment(
+                            condition: new ExpressionRouterRule($"If(job.Lang = \"{uniquePrefix}FR\", true, false)"),
+                            queueSelectors: new List<RouterQueueSelector>()
+                            {
+                                new RouterQueueSelector("Language", LabelOperator.Equal, new LabelValue($"{uniquePrefix}fr"))
+                            }),
+                        new StaticQueueSelectorAttachment(new RouterQueueSelector("UniquePrefix", LabelOperator.Equal, new LabelValue(uniquePrefix)))
+                    },
                     FallbackQueueId = fallbackQueueResponse.Value.Id,
                 });
 
-            var job1Labels = new Dictionary<string, LabelValue>()
-            {
-                ["Product"] = new LabelValue("O365"),
-                ["Region"] = new LabelValue("NA"),
-                ["Lang"] = new LabelValue("EN")
-            };
-            var createJob1 = await client.CreateJobAsync(
+            var createJob1 = await client.CreateJobWithClassificationPolicyAsync(
                 new CreateJobWithClassificationPolicyOptions(
                     GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}-{nameof(QueueingWithClassificationPolicyWithCombiningLabelSelectors)}-1"),
                     channelResponse,
                     classificationPolicyResponse.Value.Id)
                 {
-                    Labels = job1Labels
+                    Labels = {
+                        ["Product"] = new LabelValue($"{uniquePrefix}O365"),
+                        ["Region"] = new LabelValue($"{uniquePrefix}NA"),
+                        ["Lang"] = new LabelValue($"{uniquePrefix}EN")
+                    }
                 });
 
             var job1 = await Poll(async () => await client.GetJobAsync(createJob1.Value.Id),
-                x => x.Value.JobStatus == RouterJobStatus.Queued,
+                x => x.Value.Status == RouterJobStatus.Queued,
                 TimeSpan.FromSeconds(10));
 
             var job2Labels = new Dictionary<string, LabelValue>()
-            {
-                ["Product"] = new LabelValue("O365"),
-                ["Region"] = new LabelValue("NA"),
-                ["Lang"] = new LabelValue("FR")
-            };
-            var createJob2 = await client.CreateJobAsync(
+            ;
+            var createJob2 = await client.CreateJobWithClassificationPolicyAsync(
                 new CreateJobWithClassificationPolicyOptions(
                     GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}-{nameof(QueueingWithClassificationPolicyWithCombiningLabelSelectors)}-2"),
                     channelResponse,
                     classificationPolicyResponse.Value.Id)
                 {
-                    Labels = job2Labels
+                    Labels = {
+                        ["Product"] = new LabelValue($"{uniquePrefix}O365"),
+                        ["Region"] = new LabelValue($"{uniquePrefix}NA"),
+                        ["Lang"] = new LabelValue($"{uniquePrefix}FR")
+                    }
                 });
 
             var job2 = await Poll(async () => await client.GetJobAsync(createJob2.Value.Id),
-                x => x.Value.JobStatus == RouterJobStatus.Queued,
+                x => x.Value.Status == RouterJobStatus.Queued,
                 TimeSpan.FromSeconds(10));
 
-            Assert.AreEqual(RouterJobStatus.Queued, job1.Value.JobStatus);
-            Assert.AreEqual(RouterJobStatus.Queued, job2.Value.JobStatus);
+            Assert.AreEqual(RouterJobStatus.Queued, job1.Value.Status);
+            Assert.AreEqual(RouterJobStatus.Queued, job2.Value.Status);
             Assert.AreEqual(job1.Value.QueueId, queue1Response.Value.Id);
             Assert.AreEqual(job2.Value.QueueId, queue2Response.Value.Id);
         }

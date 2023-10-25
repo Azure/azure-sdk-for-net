@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Grafana.Models
 
         internal static GrafanaPrivateLinkServiceConnectionState DeserializeGrafanaPrivateLinkServiceConnectionState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<GrafanaPrivateEndpointServiceConnectionStatus> status = default;
             Optional<string> description = default;
             Optional<string> actionsRequired = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.Grafana.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new GrafanaPrivateEndpointServiceConnectionStatus(property.Value.GetString());

@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("maxSizeBytes"u8);
                 writer.WriteNumberValue(MaxSizeBytes.Value);
             }
+            if (Optional.IsDefined(MinCapacity))
+            {
+                writer.WritePropertyName("minCapacity"u8);
+                writer.WriteNumberValue(MinCapacity.Value);
+            }
             if (Optional.IsDefined(PerDatabaseSettings))
             {
                 writer.WritePropertyName("perDatabaseSettings"u8);
@@ -69,12 +74,26 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("highAvailabilityReplicaCount"u8);
                 writer.WriteNumberValue(HighAvailabilityReplicaCount.Value);
             }
+            if (Optional.IsDefined(PreferredEnclaveType))
+            {
+                writer.WritePropertyName("preferredEnclaveType"u8);
+                writer.WriteStringValue(PreferredEnclaveType.Value.ToString());
+            }
+            if (Optional.IsDefined(AvailabilityZone))
+            {
+                writer.WritePropertyName("availabilityZone"u8);
+                writer.WriteStringValue(AvailabilityZone.Value.ToString());
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static ElasticPoolData DeserializeElasticPoolData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SqlSku> sku = default;
             Optional<string> kind = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -86,18 +105,20 @@ namespace Azure.ResourceManager.Sql
             Optional<ElasticPoolState> state = default;
             Optional<DateTimeOffset> creationDate = default;
             Optional<long> maxSizeBytes = default;
+            Optional<double> minCapacity = default;
             Optional<ElasticPoolPerDatabaseSettings> perDatabaseSettings = default;
             Optional<bool> zoneRedundant = default;
             Optional<ElasticPoolLicenseType> licenseType = default;
             Optional<ResourceIdentifier> maintenanceConfigurationId = default;
             Optional<int> highAvailabilityReplicaCount = default;
+            Optional<SqlAlwaysEncryptedEnclaveType> preferredEnclaveType = default;
+            Optional<SqlAvailabilityZoneType> availabilityZone = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sku = SqlSku.DeserializeSqlSku(property.Value);
@@ -112,7 +133,6 @@ namespace Azure.ResourceManager.Sql
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -147,7 +167,6 @@ namespace Azure.ResourceManager.Sql
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -166,7 +185,6 @@ namespace Azure.ResourceManager.Sql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             state = new ElasticPoolState(property0.Value.GetString());
@@ -176,7 +194,6 @@ namespace Azure.ResourceManager.Sql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             creationDate = property0.Value.GetDateTimeOffset("O");
@@ -186,17 +203,24 @@ namespace Azure.ResourceManager.Sql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             maxSizeBytes = property0.Value.GetInt64();
+                            continue;
+                        }
+                        if (property0.NameEquals("minCapacity"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            minCapacity = property0.Value.GetDouble();
                             continue;
                         }
                         if (property0.NameEquals("perDatabaseSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             perDatabaseSettings = ElasticPoolPerDatabaseSettings.DeserializeElasticPoolPerDatabaseSettings(property0.Value);
@@ -206,7 +230,6 @@ namespace Azure.ResourceManager.Sql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             zoneRedundant = property0.Value.GetBoolean();
@@ -216,7 +239,6 @@ namespace Azure.ResourceManager.Sql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             licenseType = new ElasticPoolLicenseType(property0.Value.GetString());
@@ -226,7 +248,6 @@ namespace Azure.ResourceManager.Sql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             maintenanceConfigurationId = new ResourceIdentifier(property0.Value.GetString());
@@ -236,17 +257,34 @@ namespace Azure.ResourceManager.Sql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             highAvailabilityReplicaCount = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("preferredEnclaveType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            preferredEnclaveType = new SqlAlwaysEncryptedEnclaveType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("availabilityZone"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            availabilityZone = new SqlAvailabilityZoneType(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ElasticPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, kind.Value, Optional.ToNullable(state), Optional.ToNullable(creationDate), Optional.ToNullable(maxSizeBytes), perDatabaseSettings.Value, Optional.ToNullable(zoneRedundant), Optional.ToNullable(licenseType), maintenanceConfigurationId.Value, Optional.ToNullable(highAvailabilityReplicaCount));
+            return new ElasticPoolData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, kind.Value, Optional.ToNullable(state), Optional.ToNullable(creationDate), Optional.ToNullable(maxSizeBytes), Optional.ToNullable(minCapacity), perDatabaseSettings.Value, Optional.ToNullable(zoneRedundant), Optional.ToNullable(licenseType), maintenanceConfigurationId.Value, Optional.ToNullable(highAvailabilityReplicaCount), Optional.ToNullable(preferredEnclaveType), Optional.ToNullable(availabilityZone));
         }
     }
 }

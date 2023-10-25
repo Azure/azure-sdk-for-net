@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Quantum
         }
 
         /// <summary>
-        /// Updates an existing workspace&apos;s tags.
+        /// Updates an existing workspace's tags.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Quantum
         }
 
         /// <summary>
-        /// Updates an existing workspace&apos;s tags.
+        /// Updates an existing workspace's tags.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

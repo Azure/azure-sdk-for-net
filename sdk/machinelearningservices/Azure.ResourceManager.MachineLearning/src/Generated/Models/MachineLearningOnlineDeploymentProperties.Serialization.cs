@@ -21,6 +21,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("appInsightsEnabled"u8);
                 writer.WriteBooleanValue(AppInsightsEnabled.Value);
             }
+            if (Optional.IsDefined(DataCollector))
+            {
+                if (DataCollector != null)
+                {
+                    writer.WritePropertyName("dataCollector"u8);
+                    writer.WriteObjectValue(DataCollector);
+                }
+                else
+                {
+                    writer.WriteNull("dataCollector");
+                }
+            }
             if (Optional.IsDefined(EgressPublicNetworkAccess))
             {
                 writer.WritePropertyName("egressPublicNetworkAccess"u8);
@@ -189,6 +201,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningOnlineDeploymentProperties DeserializeMachineLearningOnlineDeploymentProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("endpointComputeType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
@@ -198,6 +214,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             Optional<bool> appInsightsEnabled = default;
+            Optional<DataCollector> dataCollector = default;
             Optional<MachineLearningEgressPublicNetworkAccessType> egressPublicNetworkAccess = default;
             MachineLearningEndpointComputeType endpointComputeType = default;
             Optional<string> instanceType = default;
@@ -219,17 +236,25 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     appInsightsEnabled = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("dataCollector"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        dataCollector = null;
+                        continue;
+                    }
+                    dataCollector = DataCollector.DeserializeDataCollector(property.Value);
                     continue;
                 }
                 if (property.NameEquals("egressPublicNetworkAccess"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     egressPublicNetworkAccess = new MachineLearningEgressPublicNetworkAccessType(property.Value.GetString());
@@ -284,7 +309,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new MachineLearningDeploymentProvisioningState(property.Value.GetString());
@@ -360,14 +384,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     environmentVariables = dictionary;
                     continue;
@@ -382,20 +399,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, property0.Value.GetString());
-                        }
+                        dictionary.Add(property0.Name, property0.Value.GetString());
                     }
                     properties = dictionary;
                     continue;
                 }
             }
-            return new MachineLearningOnlineDeploymentProperties(codeConfiguration.Value, description.Value, environmentId.Value, Optional.ToDictionary(environmentVariables), Optional.ToDictionary(properties), Optional.ToNullable(appInsightsEnabled), Optional.ToNullable(egressPublicNetworkAccess), endpointComputeType, instanceType.Value, livenessProbe.Value, model.Value, modelMountPath.Value, Optional.ToNullable(provisioningState), readinessProbe.Value, requestSettings.Value, scaleSettings.Value);
+            return new MachineLearningOnlineDeploymentProperties(codeConfiguration.Value, description.Value, environmentId.Value, Optional.ToDictionary(environmentVariables), Optional.ToDictionary(properties), Optional.ToNullable(appInsightsEnabled), dataCollector.Value, Optional.ToNullable(egressPublicNetworkAccess), endpointComputeType, instanceType.Value, livenessProbe.Value, model.Value, modelMountPath.Value, Optional.ToNullable(provisioningState), readinessProbe.Value, requestSettings.Value, scaleSettings.Value);
         }
     }
 }

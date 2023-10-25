@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -81,7 +82,7 @@ namespace Azure.ResourceManager.CognitiveServices
             try
             {
                 var response = await _cognitiveServicesAccountDeploymentDeploymentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deploymentName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CognitiveServicesArmOperation<CognitiveServicesAccountDeploymentResource>(new CognitiveServicesAccountDeploymentOperationSource(Client), _cognitiveServicesAccountDeploymentDeploymentsClientDiagnostics, Pipeline, _cognitiveServicesAccountDeploymentDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deploymentName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new CognitiveServicesArmOperation<CognitiveServicesAccountDeploymentResource>(new CognitiveServicesAccountDeploymentOperationSource(Client), _cognitiveServicesAccountDeploymentDeploymentsClientDiagnostics, Pipeline, _cognitiveServicesAccountDeploymentDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deploymentName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.CognitiveServices
             try
             {
                 var response = _cognitiveServicesAccountDeploymentDeploymentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deploymentName, data, cancellationToken);
-                var operation = new CognitiveServicesArmOperation<CognitiveServicesAccountDeploymentResource>(new CognitiveServicesAccountDeploymentOperationSource(Client), _cognitiveServicesAccountDeploymentDeploymentsClientDiagnostics, Pipeline, _cognitiveServicesAccountDeploymentDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deploymentName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new CognitiveServicesArmOperation<CognitiveServicesAccountDeploymentResource>(new CognitiveServicesAccountDeploymentOperationSource(Client), _cognitiveServicesAccountDeploymentDeploymentsClientDiagnostics, Pipeline, _cognitiveServicesAccountDeploymentDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deploymentName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cognitiveServicesAccountDeploymentDeploymentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cognitiveServicesAccountDeploymentDeploymentsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CognitiveServicesAccountDeploymentResource(Client, CognitiveServicesAccountDeploymentData.DeserializeCognitiveServicesAccountDeploymentData(e)), _cognitiveServicesAccountDeploymentDeploymentsClientDiagnostics, Pipeline, "CognitiveServicesAccountDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CognitiveServicesAccountDeploymentResource(Client, CognitiveServicesAccountDeploymentData.DeserializeCognitiveServicesAccountDeploymentData(e)), _cognitiveServicesAccountDeploymentDeploymentsClientDiagnostics, Pipeline, "CognitiveServicesAccountDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +250,7 @@ namespace Azure.ResourceManager.CognitiveServices
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cognitiveServicesAccountDeploymentDeploymentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cognitiveServicesAccountDeploymentDeploymentsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CognitiveServicesAccountDeploymentResource(Client, CognitiveServicesAccountDeploymentData.DeserializeCognitiveServicesAccountDeploymentData(e)), _cognitiveServicesAccountDeploymentDeploymentsClientDiagnostics, Pipeline, "CognitiveServicesAccountDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CognitiveServicesAccountDeploymentResource(Client, CognitiveServicesAccountDeploymentData.DeserializeCognitiveServicesAccountDeploymentData(e)), _cognitiveServicesAccountDeploymentDeploymentsClientDiagnostics, Pipeline, "CognitiveServicesAccountDeploymentCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -314,6 +315,80 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 var response = _cognitiveServicesAccountDeploymentDeploymentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deploymentName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/deployments/{deploymentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Deployments_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="deploymentName"> The name of the deployment associated with the Cognitive Services Account. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
+        public virtual async Task<NullableResponse<CognitiveServicesAccountDeploymentResource>> GetIfExistsAsync(string deploymentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+
+            using var scope = _cognitiveServicesAccountDeploymentDeploymentsClientDiagnostics.CreateScope("CognitiveServicesAccountDeploymentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _cognitiveServicesAccountDeploymentDeploymentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deploymentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<CognitiveServicesAccountDeploymentResource>(response.GetRawResponse());
+                return Response.FromValue(new CognitiveServicesAccountDeploymentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}/deployments/{deploymentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Deployments_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="deploymentName"> The name of the deployment associated with the Cognitive Services Account. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
+        public virtual NullableResponse<CognitiveServicesAccountDeploymentResource> GetIfExists(string deploymentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+
+            using var scope = _cognitiveServicesAccountDeploymentDeploymentsClientDiagnostics.CreateScope("CognitiveServicesAccountDeploymentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _cognitiveServicesAccountDeploymentDeploymentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, deploymentName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<CognitiveServicesAccountDeploymentResource>(response.GetRawResponse());
+                return Response.FromValue(new CognitiveServicesAccountDeploymentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

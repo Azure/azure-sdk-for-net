@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="queryOn"> The query time. </param>
         /// <param name="mailCount"> The number of mail messages that are part of the mail cluster. </param>
         /// <param name="isVolumeAnomaly"> Is this a volume anomaly mail cluster. </param>
-        /// <param name="source"> The source of the mail cluster (default is &apos;O365 ATP&apos;). </param>
+        /// <param name="source"> The source of the mail cluster (default is 'O365 ATP'). </param>
         /// <param name="clusterSourceIdentifier"> The id of the cluster source. </param>
         /// <param name="clusterSourceType"> The type of the cluster source. </param>
         /// <param name="clusterQueryStartOn"> The cluster query start time. </param>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public int? MailCount { get; }
         /// <summary> Is this a volume anomaly mail cluster. </summary>
         public bool? IsVolumeAnomaly { get; }
-        /// <summary> The source of the mail cluster (default is &apos;O365 ATP&apos;). </summary>
+        /// <summary> The source of the mail cluster (default is 'O365 ATP'). </summary>
         public string Source { get; }
         /// <summary> The id of the cluster source. </summary>
         public string ClusterSourceIdentifier { get; }

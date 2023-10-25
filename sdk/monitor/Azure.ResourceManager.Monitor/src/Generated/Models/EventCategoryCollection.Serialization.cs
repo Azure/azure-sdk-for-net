@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -15,6 +14,10 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         internal static EventCategoryCollection DeserializeEventCategoryCollection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<MonitorLocalizableString> value = default;
             foreach (var property in element.EnumerateObject())
             {

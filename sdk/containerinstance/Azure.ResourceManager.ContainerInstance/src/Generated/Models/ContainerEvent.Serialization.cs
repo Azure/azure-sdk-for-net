@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     {
         internal static ContainerEvent DeserializeContainerEvent(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> count = default;
             Optional<DateTimeOffset> firstTimestamp = default;
             Optional<DateTimeOffset> lastTimestamp = default;
@@ -27,7 +31,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     count = property.Value.GetInt32();
@@ -37,7 +40,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     firstTimestamp = property.Value.GetDateTimeOffset("O");
@@ -47,7 +49,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastTimestamp = property.Value.GetDateTimeOffset("O");

@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ArmApplicationPolicy DeserializeArmApplicationPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> policyDefinitionId = default;
             Optional<string> parameters = default;

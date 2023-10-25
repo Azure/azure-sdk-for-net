@@ -21,25 +21,29 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). </param>
-        /// <param name="isArchived"> Is the asset archived?. </param>
+        /// <param name="autoDeleteSetting"> Specifies the lifecycle setting of managed data asset. </param>
+        /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). For types where Stage is defined, when Stage is provided it will be used to populate IsAnonymous. </param>
+        /// <param name="isArchived"> Is the asset archived? For types where Stage is defined, when Stage is provided it will be used to populate IsArchived. </param>
         /// <param name="autoRebuild"> Defines if image needs to be rebuilt based on base image changes. </param>
         /// <param name="build"> Configuration settings for Docker build context. </param>
         /// <param name="condaFile">
         /// Standard configuration file used by Conda that lets you install any kind of package, including Python, R, and C/C++ packages.
-        /// &lt;see href=&quot;https://repo2docker.readthedocs.io/en/latest/config_files.html#environment-yml-install-a-conda-environment&quot; /&gt;
+        /// &lt;see href="https://repo2docker.readthedocs.io/en/latest/config_files.html#environment-yml-install-a-conda-environment" /&gt;
         /// </param>
         /// <param name="environmentType">
         /// Environment type is either user managed or curated by the Azure ML service
-        /// &lt;see href=&quot;https://docs.microsoft.com/en-us/azure/machine-learning/resource-curated-environments&quot; /&gt;
+        /// &lt;see href="https://docs.microsoft.com/en-us/azure/machine-learning/resource-curated-environments" /&gt;
         /// </param>
         /// <param name="image">
         /// Name of the image that will be used for the environment.
-        /// &lt;seealso href=&quot;https://docs.microsoft.com/en-us/azure/machine-learning/how-to-deploy-custom-docker-image#use-a-custom-base-image&quot; /&gt;
+        /// &lt;seealso href="https://docs.microsoft.com/en-us/azure/machine-learning/how-to-deploy-custom-docker-image#use-a-custom-base-image" /&gt;
         /// </param>
         /// <param name="inferenceConfig"> Defines configuration specific to inference. </param>
+        /// <param name="intellectualProperty"> Intellectual Property details. Used if environment is an Intellectual Property. </param>
         /// <param name="osType"> The OS type of the environment. </param>
-        internal MachineLearningEnvironmentVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isAnonymous, bool? isArchived, AutoRebuildSetting? autoRebuild, MachineLearningBuildContext build, string condaFile, MachineLearningEnvironmentType? environmentType, string image, MachineLearningInferenceContainerProperties inferenceConfig, MachineLearningOperatingSystemType? osType) : base(description, properties, tags, isAnonymous, isArchived)
+        /// <param name="provisioningState"> Provisioning state for the environment version. </param>
+        /// <param name="stage"> Stage in the environment lifecycle assigned to this environment. </param>
+        internal MachineLearningEnvironmentVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, AutoDeleteSetting autoDeleteSetting, bool? isAnonymous, bool? isArchived, AutoRebuildSetting? autoRebuild, MachineLearningBuildContext build, string condaFile, MachineLearningEnvironmentType? environmentType, string image, MachineLearningInferenceContainerProperties inferenceConfig, IntellectualProperty intellectualProperty, MachineLearningOperatingSystemType? osType, RegistryAssetProvisioningState? provisioningState, string stage) : base(description, properties, tags, autoDeleteSetting, isAnonymous, isArchived)
         {
             AutoRebuild = autoRebuild;
             Build = build;
@@ -47,7 +51,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             EnvironmentType = environmentType;
             Image = image;
             InferenceConfig = inferenceConfig;
+            IntellectualProperty = intellectualProperty;
             OSType = osType;
+            ProvisioningState = provisioningState;
+            Stage = stage;
         }
 
         /// <summary> Defines if image needs to be rebuilt based on base image changes. </summary>
@@ -56,22 +63,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public MachineLearningBuildContext Build { get; set; }
         /// <summary>
         /// Standard configuration file used by Conda that lets you install any kind of package, including Python, R, and C/C++ packages.
-        /// &lt;see href=&quot;https://repo2docker.readthedocs.io/en/latest/config_files.html#environment-yml-install-a-conda-environment&quot; /&gt;
+        /// &lt;see href="https://repo2docker.readthedocs.io/en/latest/config_files.html#environment-yml-install-a-conda-environment" /&gt;
         /// </summary>
         public string CondaFile { get; set; }
         /// <summary>
         /// Environment type is either user managed or curated by the Azure ML service
-        /// &lt;see href=&quot;https://docs.microsoft.com/en-us/azure/machine-learning/resource-curated-environments&quot; /&gt;
+        /// &lt;see href="https://docs.microsoft.com/en-us/azure/machine-learning/resource-curated-environments" /&gt;
         /// </summary>
         public MachineLearningEnvironmentType? EnvironmentType { get; }
         /// <summary>
         /// Name of the image that will be used for the environment.
-        /// &lt;seealso href=&quot;https://docs.microsoft.com/en-us/azure/machine-learning/how-to-deploy-custom-docker-image#use-a-custom-base-image&quot; /&gt;
+        /// &lt;seealso href="https://docs.microsoft.com/en-us/azure/machine-learning/how-to-deploy-custom-docker-image#use-a-custom-base-image" /&gt;
         /// </summary>
         public string Image { get; set; }
         /// <summary> Defines configuration specific to inference. </summary>
         public MachineLearningInferenceContainerProperties InferenceConfig { get; set; }
+        /// <summary> Intellectual Property details. Used if environment is an Intellectual Property. </summary>
+        public IntellectualProperty IntellectualProperty { get; set; }
         /// <summary> The OS type of the environment. </summary>
         public MachineLearningOperatingSystemType? OSType { get; set; }
+        /// <summary> Provisioning state for the environment version. </summary>
+        public RegistryAssetProvisioningState? ProvisioningState { get; }
+        /// <summary> Stage in the environment lifecycle assigned to this environment. </summary>
+        public string Stage { get; set; }
     }
 }

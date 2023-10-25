@@ -32,7 +32,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// </param>
         /// <param name="url"> The endpoint URL for Video Analyzer to connect to. </param>
         /// <param name="trustedCertificates">
-        /// List of trusted certificate authorities when authenticating a TLS connection. A null list designates that Azure Video Analyzer&apos;s list of trusted authorities should be used.
+        /// List of trusted certificate authorities when authenticating a TLS connection. A null list designates that Azure Video Analyzer's list of trusted authorities should be used.
         /// Please note <see cref="CertificateSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="PemCertificateList"/>.
         /// </param>
@@ -45,7 +45,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         }
 
         /// <summary>
-        /// List of trusted certificate authorities when authenticating a TLS connection. A null list designates that Azure Video Analyzer&apos;s list of trusted authorities should be used.
+        /// List of trusted certificate authorities when authenticating a TLS connection. A null list designates that Azure Video Analyzer's list of trusted authorities should be used.
         /// Please note <see cref="CertificateSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="PemCertificateList"/>.
         /// </summary>

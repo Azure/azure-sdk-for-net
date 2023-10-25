@@ -49,7 +49,7 @@ internal partial class TableRestClient
             case 204:
                 return ResponseWithHeaders.FromValue(headers, message.Response);
             default:
-                throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                throw new RequestFailedException(message.Response);
         }
     }
 
@@ -68,7 +68,7 @@ internal partial class TableRestClient
             case 204:
                 return ResponseWithHeaders.FromValue(headers, message.Response);
             default:
-                throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                throw new RequestFailedException(message.Response);
         }
     }
     // ...
@@ -110,7 +110,7 @@ internal partial class ServiceRestClient
             case 202:
                 return ResponseWithHeaders.FromValue(headers, message.Response);
             default:
-                throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                throw new RequestFailedException(message.Response);
         }
     }
 
@@ -129,7 +129,7 @@ internal partial class ServiceRestClient
             case 202:
                 return ResponseWithHeaders.FromValue(headers, message.Response);
             default:
-                throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                throw new RequestFailedException(message.Response);
         }
     }
     // ...
@@ -204,7 +204,7 @@ internal partial class TableRestClient
             case 204:
                 return ResponseWithHeaders.FromValue(headers, message.Response);
             default:
-                throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                throw new RequestFailedException(message.Response);
         }
     }
 
@@ -223,7 +223,7 @@ internal partial class TableRestClient
             case 204:
                 return ResponseWithHeaders.FromValue(headers, message.Response);
             default:
-                throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                throw new RequestFailedException(message.Response);
         }
     }
 +
@@ -301,7 +301,7 @@ internal partial class ServiceRestClient
             case 202:
                 return ResponseWithHeaders.FromValue(headers, message.Response);
             default:
-                throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
+                throw new RequestFailedException(message.Response);
         }
     }
 
@@ -320,7 +320,7 @@ internal partial class ServiceRestClient
             case 202:
                 return ResponseWithHeaders.FromValue(headers, message.Response);
             default:
-                throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                throw new RequestFailedException(message.Response);
         }
     }
 +

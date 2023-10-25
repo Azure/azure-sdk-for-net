@@ -20,17 +20,17 @@ namespace Azure.IoT.TimeSeriesInsights
         }
 
         /// <summary> Initializes a new instance of TimeSeriesVariable. </summary>
-        /// <param name="kind"> Allowed &quot;kind&quot; values are - &quot;numeric&quot; or &quot;aggregate&quot;. While &quot;numeric&quot; allows you to specify value of the reconstructed signal and the expression to aggregate them, the &quot;aggregate&quot; kind lets you directly aggregate on the event properties without specifying value. </param>
-        /// <param name="filter"> Filter over the events that restricts the number of events being considered for computation. Example: &quot;$event.Status.String=&apos;Good&apos;&quot;. Optional. </param>
+        /// <param name="kind"> Allowed "kind" values are - "numeric" or "aggregate". While "numeric" allows you to specify value of the reconstructed signal and the expression to aggregate them, the "aggregate" kind lets you directly aggregate on the event properties without specifying value. </param>
+        /// <param name="filter"> Filter over the events that restricts the number of events being considered for computation. Example: "$event.Status.String='Good'". Optional. </param>
         internal TimeSeriesVariable(string kind, TimeSeriesExpression filter)
         {
             Kind = kind;
             Filter = filter;
         }
 
-        /// <summary> Allowed &quot;kind&quot; values are - &quot;numeric&quot; or &quot;aggregate&quot;. While &quot;numeric&quot; allows you to specify value of the reconstructed signal and the expression to aggregate them, the &quot;aggregate&quot; kind lets you directly aggregate on the event properties without specifying value. </summary>
+        /// <summary> Allowed "kind" values are - "numeric" or "aggregate". While "numeric" allows you to specify value of the reconstructed signal and the expression to aggregate them, the "aggregate" kind lets you directly aggregate on the event properties without specifying value. </summary>
         internal string Kind { get; set; }
-        /// <summary> Filter over the events that restricts the number of events being considered for computation. Example: &quot;$event.Status.String=&apos;Good&apos;&quot;. Optional. </summary>
+        /// <summary> Filter over the events that restricts the number of events being considered for computation. Example: "$event.Status.String='Good'". Optional. </summary>
         public TimeSeriesExpression Filter { get; set; }
     }
 }

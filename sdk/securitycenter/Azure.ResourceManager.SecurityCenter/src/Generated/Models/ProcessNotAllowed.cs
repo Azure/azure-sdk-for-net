@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> Execution of a process that isn&apos;t allowed. Allow list consists of process names to allow. </summary>
+    /// <summary> Execution of a process that isn't allowed. Allow list consists of process names to allow. </summary>
     public partial class ProcessNotAllowed : AllowlistCustomAlertRule
     {
         /// <summary> Initializes a new instance of ProcessNotAllowed. </summary>

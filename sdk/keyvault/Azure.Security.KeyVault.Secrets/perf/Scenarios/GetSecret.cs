@@ -35,21 +35,11 @@ namespace Azure.Security.KeyVault.Secrets.Perf.Scenarios
         public override void Run(CancellationToken cancellationToken)
         {
             KeyVaultSecret secret = Client.GetSecret(_secretName);
-            string value = secret.Value;
-
-#if DEBUG
-            Assert.AreEqual(SecretValue, value);
-#endif
         }
 
         public override async Task RunAsync(CancellationToken cancellationToken)
         {
             KeyVaultSecret secret = await Client.GetSecretAsync(_secretName);
-            string value = secret.Value;
-
-#if DEBUG
-            Assert.AreEqual(SecretValue, value);
-#endif
         }
     }
 }

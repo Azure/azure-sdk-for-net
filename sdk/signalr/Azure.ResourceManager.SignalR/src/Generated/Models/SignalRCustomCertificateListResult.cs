@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <param name="value"> List of custom certificates of this resource. </param>
         /// <param name="nextLink">
         /// The URL the client should use to fetch the next page (per server side paging).
-        /// It&apos;s null for now, added for future use.
+        /// It's null for now, added for future use.
         /// </param>
         internal SignalRCustomCertificateListResult(IReadOnlyList<SignalRCustomCertificateData> value, string nextLink)
         {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SignalR.Models
         public IReadOnlyList<SignalRCustomCertificateData> Value { get; }
         /// <summary>
         /// The URL the client should use to fetch the next page (per server side paging).
-        /// It&apos;s null for now, added for future use.
+        /// It's null for now, added for future use.
         /// </summary>
         public string NextLink { get; }
     }

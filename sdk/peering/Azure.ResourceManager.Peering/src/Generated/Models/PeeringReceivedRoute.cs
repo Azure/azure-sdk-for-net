@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="nextHop"> The next hop for the prefix. </param>
         /// <param name="asPath"> The AS path for the prefix. </param>
         /// <param name="originAsValidationState"> The origin AS change information for the prefix. </param>
-        /// <param name="rpkiValidationState"> The RPKI validation state for the prefix and origin AS that&apos;s listed in the AS path. </param>
+        /// <param name="rpkiValidationState"> The RPKI validation state for the prefix and origin AS that's listed in the AS path. </param>
         /// <param name="trustAnchor"> The authority which holds the Route Origin Authorization record for the prefix, if any. </param>
         /// <param name="receivedTimestamp"> The received timestamp associated with the prefix. </param>
         internal PeeringReceivedRoute(string prefix, string nextHop, string asPath, string originAsValidationState, string rpkiValidationState, string trustAnchor, string receivedTimestamp)
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Peering.Models
         public string AsPath { get; }
         /// <summary> The origin AS change information for the prefix. </summary>
         public string OriginAsValidationState { get; }
-        /// <summary> The RPKI validation state for the prefix and origin AS that&apos;s listed in the AS path. </summary>
+        /// <summary> The RPKI validation state for the prefix and origin AS that's listed in the AS path. </summary>
         public string RpkiValidationState { get; }
         /// <summary> The authority which holds the Route Origin Authorization record for the prefix, if any. </summary>
         public string TrustAnchor { get; }

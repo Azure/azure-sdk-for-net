@@ -20,9 +20,9 @@ The Event Processor client library is a companion to the Azure Event Hubs client
 
 - **Event Hubs namespace with an Event Hub:** To interact with Azure Event Hubs, you'll also need to have a namespace and Event Hub available.  If you are not familiar with creating Azure resources, you may wish to follow the step-by-step guide for [creating an Event Hub using the Azure portal](https://docs.microsoft.com/azure/event-hubs/event-hubs-create).  There, you can also find detailed instructions for using the Azure CLI, Azure PowerShell, or Azure Resource Manager (ARM) templates to create an Event Hub.
 
-- **Azure Storage account with blob storage:** To persist checkpoints and govern ownership in Azure Storage, you'll need to have an Azure Storage account with blobs available.  If you are not familiar with Azure Storage accounts, you may wish to follow the step-by-step guide for [creating a storage account using the Azure portal](https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?toc=%2Fazure%2Fstorage%2Fblobs%2Ftoc.json&tabs=azure-portal).  There, you can also find detailed instructions for using the Azure CLI, Azure PowerShell, or Azure Resource Manager (ARM) templates to create storage accounts.
+- **Azure Storage account with blob storage:** To persist checkpoints and govern ownership in Azure Storage, you'll need to have an Azure Storage account with blobs available.  The Azure Storage account used for the processor should have soft delete and blob versioning disabled.  If you are not familiar with Azure Storage accounts, you may wish to follow the step-by-step guide for [creating a storage account using the Azure portal](https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?toc=%2Fazure%2Fstorage%2Fblobs%2Ftoc.json&tabs=azure-portal).  There, you can also find detailed instructions for using the Azure CLI, Azure PowerShell, or Azure Resource Manager (ARM) templates to create storage accounts.
 
-- **Azure Storage blob container:** Checkpoint and ownership data in Azure Storage will be written to blobs in a specific container.  The `EventProcessorClient` requires an existing container and will not implicitly create one to help guard against accidental misconfiguration.  If you are not familiar with Azure Storage containers, you may wish to refer to the documentation on [managing containers](https://docs.microsoft.com/azure/storage/blobs/storage-blob-container-create?tabs=dotnet).  There, you can find detailed instructions for using .NET, the Azure CLI, or Azure PowerShell to create a container.
+- **Azure Storage blob container:** Checkpoint and ownership data in Azure Storage will be written to blobs in a specific container.  The `EventProcessorClient` requires an existing container and will not implicitly create one to help guard against accidental misconfiguration.  It is recommended that you use a unique container for each Event Hub and consumer group combination.  If you are not familiar with Azure Storage containers, you may wish to refer to the documentation on [managing containers](https://docs.microsoft.com/azure/storage/blobs/storage-blob-container-create?tabs=dotnet).  There, you can find detailed instructions for using .NET, the Azure CLI, or Azure PowerShell to create a container.
 
 - **C# 8.0:** The Azure Event Hubs client library makes use of new features that were introduced in C# 8.0.  In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK](https://dotnet.microsoft.com/download) 3.0 or higher with a [language version](https://docs.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`.
 
@@ -30,7 +30,7 @@ The Event Processor client library is a companion to the Azure Event Hubs client
 
   You can still use the library with previous C# language versions, but will need to manage asynchronous enumerable and asynchronous disposable members manually rather than benefiting from the new syntax.  You may still target any framework version supported by your .NET Core SDK, including earlier versions of .NET Core or the .NET framework.  For more information, see: [how to specify target frameworks](https://docs.microsoft.com/dotnet/standard/frameworks#how-to-specify-target-frameworks).  
   
-  **Important Note:** In order to build or run the [examples](#examples) and the [samples](#next-steps) without modification, use of C# 8.0 is mandatory.  You can still run the samples if you decide to tweak them for other language versions.
+  **Important Note:** In order to build or run the [examples](#examples) and the [samples](#next-steps) without modification, use of C# 11.0 is necessary.  You can still run the samples if you decide to tweak them for other language versions.
 
 To quickly create the needed resources in Azure and to receive connection strings for them, you can deploy our sample template by clicking:  
 
@@ -53,6 +53,8 @@ For the Event Hubs client library to interact with an Event Hub, it will need to
 #### Obtain an Azure Storage connection string
 
 For the event processor client to make use of Azure Storage blobs for checkpointing, it will need to understand how to connect to a storage account and authorize with it.  The most straightforward method of doing so is to use a connection string, which is generated at the time that the storage account is created.  If you aren't familiar with storage account connection string authorization in Azure, you may wish to follow the step-by-step guide to [configure Azure Storage connection strings](https://docs.microsoft.com/azure/storage/common/storage-configure-connection-string).
+
+Once you have the connection strings, see [Creating an Event Processor Client](#creating-an-event-processor-client) for an example of how to use them to create the processor.
 
 ## Key concepts
 

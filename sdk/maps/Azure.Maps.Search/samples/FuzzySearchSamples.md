@@ -4,7 +4,7 @@ To use these samples, you'll first need to set up resources. See [getting starte
 
 ## Import the namespaces
 
-```C# Snippet:SearchImportNamespace
+```C# Snippet:SearchImportNamespaces
 using Azure.Core.GeoJson;
 using Azure.Maps.Search;
 using Azure.Maps.Search.Models;

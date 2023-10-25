@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -280,7 +281,7 @@ namespace Azure.ResourceManager.OperationalInsights
         }
 
         /// <summary>
-        /// Updates an existing QueryPack&apos;s tags. To update other fields use the CreateOrUpdate method.
+        /// Updates an existing QueryPack's tags. To update other fields use the CreateOrUpdate method.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -314,7 +315,7 @@ namespace Azure.ResourceManager.OperationalInsights
         }
 
         /// <summary>
-        /// Updates an existing QueryPack&apos;s tags. To update other fields use the CreateOrUpdate method.
+        /// Updates an existing QueryPack's tags. To update other fields use the CreateOrUpdate method.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -373,7 +374,7 @@ namespace Azure.ResourceManager.OperationalInsights
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logAnalyticsQueryQueriesRestClient.CreateSearchRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, querySearchProperties, top, includeBody, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _logAnalyticsQueryQueriesRestClient.CreateSearchNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, querySearchProperties, top, includeBody, skipToken);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LogAnalyticsQueryResource(Client, LogAnalyticsQueryData.DeserializeLogAnalyticsQueryData(e)), _logAnalyticsQueryQueriesClientDiagnostics, Pipeline, "LogAnalyticsQueryPackResource.SearchQueries", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new LogAnalyticsQueryResource(Client, LogAnalyticsQueryData.DeserializeLogAnalyticsQueryData(e)), _logAnalyticsQueryQueriesClientDiagnostics, Pipeline, "LogAnalyticsQueryPackResource.SearchQueries", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -402,7 +403,7 @@ namespace Azure.ResourceManager.OperationalInsights
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logAnalyticsQueryQueriesRestClient.CreateSearchRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, querySearchProperties, top, includeBody, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _logAnalyticsQueryQueriesRestClient.CreateSearchNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, querySearchProperties, top, includeBody, skipToken);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LogAnalyticsQueryResource(Client, LogAnalyticsQueryData.DeserializeLogAnalyticsQueryData(e)), _logAnalyticsQueryQueriesClientDiagnostics, Pipeline, "LogAnalyticsQueryPackResource.SearchQueries", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new LogAnalyticsQueryResource(Client, LogAnalyticsQueryData.DeserializeLogAnalyticsQueryData(e)), _logAnalyticsQueryQueriesClientDiagnostics, Pipeline, "LogAnalyticsQueryPackResource.SearchQueries", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

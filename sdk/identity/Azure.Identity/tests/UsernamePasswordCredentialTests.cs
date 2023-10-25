@@ -33,8 +33,9 @@ namespace Azure.Identity.Tests
             var options = new UsernamePasswordCredentialOptions
             {
                 Transport = config.Transport,
-                DisableInstanceDiscovery = config.DisableMetadataDiscovery ?? false,
-                AdditionallyAllowedTenantsCore = config.AdditionallyAllowedTenants
+                DisableInstanceDiscovery = config.DisableInstanceDiscovery,
+                AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
+                IsUnsafeSupportLoggingEnabled = config.IsUnsafeSupportLoggingEnabled,
             };
             var pipeline = CredentialPipeline.GetInstance(options);
             return InstrumentClient(new UsernamePasswordCredential("user", "password", config.TenantId, ClientId, options, pipeline, null));
@@ -63,27 +64,6 @@ namespace Azure.Identity.Tests
             Assert.AreEqual(expInnerExMessage, ex.InnerException.Message);
 
             await Task.CompletedTask;
-        }
-
-        [Test]
-        public void RespectsIsPIILoggingEnabled([Values(true, false)] bool isLoggingPIIEnabled)
-        {
-            var username = Guid.NewGuid().ToString();
-            var password = Guid.NewGuid().ToString();
-            var clientId = Guid.NewGuid().ToString();
-            var tenantId = Guid.NewGuid().ToString();
-
-            var credential = new UsernamePasswordCredential(
-                username,
-                password,
-                clientId,
-                tenantId,
-                new TokenCredentialOptions { IsLoggingPIIEnabled = isLoggingPIIEnabled },
-                default,
-                null);
-
-            Assert.NotNull(credential.Client);
-            Assert.AreEqual(isLoggingPIIEnabled, credential.Client.IsPiiLoggingEnabled);
         }
 
         [Test]

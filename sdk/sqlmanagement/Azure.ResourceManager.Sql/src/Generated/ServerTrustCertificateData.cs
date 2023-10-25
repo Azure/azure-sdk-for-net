@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the ServerTrustCertificate data model. </summary>
+    /// <summary>
+    /// A class representing the ServerTrustCertificate data model.
+    /// Server trust certificate imported from box to enable connection between box and Sql Managed Instance.
+    /// </summary>
     public partial class ServerTrustCertificateData : ResourceData
     {
         /// <summary> Initializes a new instance of ServerTrustCertificateData. </summary>

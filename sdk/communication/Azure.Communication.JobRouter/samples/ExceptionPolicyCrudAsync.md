@@ -4,7 +4,6 @@
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_UsingStatements
 using Azure.Communication.JobRouter;
-using Azure.Communication.JobRouter.Models;
 ```
 
 ## Create a client
@@ -12,8 +11,8 @@ using Azure.Communication.JobRouter.Models;
 Create a `RouterClient`.
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateClient
-RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
-RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
+JobRouterClient routerClient = new JobRouterClient("<< CONNECTION STRING >>");
+JobRouterAdministrationClient routerAdministrationClient = new JobRouterAdministrationClient("<< CONNECTION STRING >>");
 ```
 
 ## Create an exception policy
@@ -116,7 +115,7 @@ Response<ExceptionPolicy> updateExceptionPolicy = await routerClient.UpdateExcep
     {
         // you can update one or more properties of exception policy - here we are adding one additional exception rule
         Name = "My updated exception policy",
-        ExceptionRules = new Dictionary<string, ExceptionRule?>()
+        ExceptionRules =
         {
             // adding new rule
             ["EscalateJobOnWaitTimeExceededTrigger2Min"] = new ExceptionRule(

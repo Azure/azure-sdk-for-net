@@ -20,11 +20,6 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(DefaultLanguage))
-            {
-                writer.WritePropertyName("defaultLanguage"u8);
-                writer.WriteStringValue(DefaultLanguage);
-            }
             writer.WritePropertyName("analysisInput"u8);
             writer.WriteObjectValue(AnalysisInput);
             writer.WritePropertyName("tasks"u8);

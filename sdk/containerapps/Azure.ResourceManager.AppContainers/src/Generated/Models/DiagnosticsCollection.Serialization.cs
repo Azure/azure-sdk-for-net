@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.AppContainers.Models
     {
         internal static DiagnosticsCollection DeserializeDiagnosticsCollection(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<ContainerAppDiagnosticData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         public static ContainerAppCookieExpirationConvention ToContainerAppCookieExpirationConvention(this string value)
         {
-            if (string.Equals(value, "FixedTime", StringComparison.InvariantCultureIgnoreCase)) return ContainerAppCookieExpirationConvention.FixedTime;
-            if (string.Equals(value, "IdentityProviderDerived", StringComparison.InvariantCultureIgnoreCase)) return ContainerAppCookieExpirationConvention.IdentityProviderDerived;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "FixedTime")) return ContainerAppCookieExpirationConvention.FixedTime;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "IdentityProviderDerived")) return ContainerAppCookieExpirationConvention.IdentityProviderDerived;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ContainerAppCookieExpirationConvention value.");
         }
     }

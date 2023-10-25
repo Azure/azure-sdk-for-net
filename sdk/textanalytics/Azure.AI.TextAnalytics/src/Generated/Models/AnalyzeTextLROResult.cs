@@ -18,15 +18,15 @@ namespace Azure.AI.TextAnalytics.Models
     internal partial class AnalyzeTextLROResult : TaskState
     {
         /// <summary> Initializes a new instance of AnalyzeTextLROResult. </summary>
-        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
-        /// <param name="status"> The status of the task at the mentioned last update time. </param>
+        /// <param name="lastUpdateDateTime"></param>
+        /// <param name="status"></param>
         public AnalyzeTextLROResult(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status) : base(lastUpdateDateTime, status)
         {
         }
 
         /// <summary> Initializes a new instance of AnalyzeTextLROResult. </summary>
-        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
-        /// <param name="status"> The status of the task at the mentioned last update time. </param>
+        /// <param name="lastUpdateDateTime"></param>
+        /// <param name="status"></param>
         /// <param name="kind"> Enumeration of supported Text Analysis long-running operation task results. </param>
         /// <param name="taskName"></param>
         internal AnalyzeTextLROResult(DateTimeOffset lastUpdateDateTime, TextAnalyticsOperationStatus status, AnalyzeTextLROResultsKind kind, string taskName) : base(lastUpdateDateTime, status)

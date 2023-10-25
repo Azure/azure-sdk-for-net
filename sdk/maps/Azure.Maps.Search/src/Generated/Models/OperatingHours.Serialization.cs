@@ -15,6 +15,10 @@ namespace Azure.Maps.Search.Models
     {
         internal static OperatingHours DeserializeOperatingHours(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> mode = default;
             Optional<IReadOnlyList<OperatingHoursTimeRange>> timeRanges = default;
             foreach (var property in element.EnumerateObject())
@@ -28,7 +32,6 @@ namespace Azure.Maps.Search.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<OperatingHoursTimeRange> array = new List<OperatingHoursTimeRange>();

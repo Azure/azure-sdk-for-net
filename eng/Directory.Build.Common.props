@@ -38,7 +38,7 @@
     -->
     <NoWarn>$(NoWarn);CA1812</NoWarn>
     <!--
-      Disable some FxCop rules
+      Disable some NetAnalyzers rules
      -->
     <NoWarn>
       $(NoWarn);
@@ -78,7 +78,7 @@
 
   <PropertyGroup>
     <EnableClientSdkAnalyzers Condition="'$(IsShippingClientLibrary)' == 'true'">true</EnableClientSdkAnalyzers>
-    <EnableFxCopAnalyzers Condition="'$(IsShippingClientLibrary)' == 'true'">true</EnableFxCopAnalyzers>
+    <EnableMicrosoftCodeAnalysisNetAnalyzers Condition="'$(IsShippingClientLibrary)' == 'true'">true</EnableMicrosoftCodeAnalysisNetAnalyzers>
     <EnableStyleCopAnalyzers Condition="'$(EnableStyleCopAnalyzers)' == '' and '$(IsClientLibrary)' == 'true'">true</EnableStyleCopAnalyzers>
     <EnableBannedApiAnalyzers Condition="'$(IsShippingClientLibrary)' == 'true'">true</EnableBannedApiAnalyzers>
     <GenerateAPIListing Condition="'$(IsShippingClientLibrary)' == 'true'">true</GenerateAPIListing>
@@ -125,8 +125,8 @@
     <IsPackable>false</IsPackable>
     <!-- List newest targets first so that recordings are made with latest, running tests from editor runs latest, etc. -->
     <RequiredTargetFrameworks>net7.0;net6.0</RequiredTargetFrameworks>
-    <!-- Also test net461 on Windows. -->
-    <RequiredTargetFrameworks Condition="'$(OS)' == 'Windows_NT'">$(RequiredTargetFrameworks);net461</RequiredTargetFrameworks>
+    <!-- Also test net462 on Windows. net461 is out of support as of 4/2022 and is not supported in version 4.4.x and beyond of NUnit3TestAdapter. -->
+    <RequiredTargetFrameworks Condition="'$(OS)' == 'Windows_NT'">$(RequiredTargetFrameworks);net462</RequiredTargetFrameworks>
     <!-- But only build snippets for the latest. -->
     <RequiredTargetFrameworks Condition="'$(BuildSnippets)' == 'true'">net7.0</RequiredTargetFrameworks>
   </PropertyGroup>

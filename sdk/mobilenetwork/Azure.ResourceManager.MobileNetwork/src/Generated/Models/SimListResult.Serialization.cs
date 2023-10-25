@@ -16,7 +16,11 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     {
         internal static SimListResult DeserializeSimListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<SimData>> value = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IReadOnlyList<MobileNetworkSimData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -24,13 +28,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SimData> array = new List<SimData>();
+                    List<MobileNetworkSimData> array = new List<MobileNetworkSimData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SimData.DeserializeSimData(item));
+                        array.Add(MobileNetworkSimData.DeserializeMobileNetworkSimData(item));
                     }
                     value = array;
                     continue;

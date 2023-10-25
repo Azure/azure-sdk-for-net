@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     {
         internal static NodeTypeListResult DeserializeNodeTypeListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ServiceFabricManagedNodeTypeData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ServiceFabricManagedNodeTypeData> array = new List<ServiceFabricManagedNodeTypeData>();

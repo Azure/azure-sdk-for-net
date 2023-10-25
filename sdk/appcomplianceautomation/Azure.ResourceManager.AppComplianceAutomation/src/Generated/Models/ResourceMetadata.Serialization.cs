@@ -49,6 +49,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 
         internal static ResourceMetadata DeserializeResourceMetadata(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string resourceId = default;
             Optional<string> resourceType = default;
             Optional<string> resourceKind = default;
@@ -80,7 +84,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();

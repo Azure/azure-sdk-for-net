@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static DiskPurchasePlan DeserializeDiskPurchasePlan(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             string publisher = default;
             string product = default;

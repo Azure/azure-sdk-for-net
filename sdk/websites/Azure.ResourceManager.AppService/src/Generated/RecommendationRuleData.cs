@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the RecommendationRule data model. </summary>
+    /// <summary>
+    /// A class representing the RecommendationRule data model.
+    /// Represents a recommendation rule that the recommendation engine can perform.
+    /// </summary>
     public partial class RecommendationRuleData : ResourceData
     {
         /// <summary> Initializes a new instance of RecommendationRuleData. </summary>
@@ -32,7 +35,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="message"> Localized name of the rule (Good for UI). </param>
         /// <param name="recommendationId">
         /// Recommendation ID of an associated recommendation object tied to the rule, if exists.
-        /// If such an object doesn&apos;t exist, it is set to null.
+        /// If such an object doesn't exist, it is set to null.
         /// </param>
         /// <param name="description"> Localized detailed description of the rule. </param>
         /// <param name="actionName"> Name of action that is recommended by this rule in string. </param>
@@ -70,7 +73,7 @@ namespace Azure.ResourceManager.AppService
         public string Message { get; set; }
         /// <summary>
         /// Recommendation ID of an associated recommendation object tied to the rule, if exists.
-        /// If such an object doesn&apos;t exist, it is set to null.
+        /// If such an object doesn't exist, it is set to null.
         /// </summary>
         public Guid? RecommendationId { get; set; }
         /// <summary> Localized detailed description of the rule. </summary>

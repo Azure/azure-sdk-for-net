@@ -33,6 +33,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MongoDBShardKeySetting DeserializeMongoDBShardKeySetting(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<MongoDBShardKeyField> fields = default;
             Optional<bool> isUnique = default;
             foreach (var property in element.EnumerateObject())
@@ -51,7 +55,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isUnique = property.Value.GetBoolean();

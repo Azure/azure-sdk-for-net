@@ -88,6 +88,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static KeyPhraseExtractionSkill DeserializeKeyPhraseExtractionSkill(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<KeyPhraseExtractionSkillLanguage?> defaultLanguageCode = default;
             Optional<int?> maxKeyPhraseCount = default;
             Optional<string> modelVersion = default;

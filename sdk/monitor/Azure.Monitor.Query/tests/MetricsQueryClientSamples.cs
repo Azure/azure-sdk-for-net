@@ -2,8 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Azure.Monitor.Query.Models;
 using NUnit.Framework;
 
@@ -12,7 +14,6 @@ namespace Azure.Monitor.Query.Tests
     public class MetricsQueryClientSamples: SamplesBase<MonitorQueryTestEnvironment>
     {
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21657")]
         public async Task QueryMetrics()
         {
             #region Snippet:QueryMetrics
@@ -28,7 +29,7 @@ namespace Azure.Monitor.Query.Tests
 
             Response<MetricsQueryResult> results = await client.QueryResourceAsync(
                 resourceId,
-                new[] { "SuccessfulCalls", "TotalCalls" }
+                new[] { "AvailabilityRate_Query", "Query Count" }
             );
 
             foreach (MetricResult metric in results.Value.Metrics)
@@ -48,21 +49,22 @@ namespace Azure.Monitor.Query.Tests
         }
 
         [Test]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/21657")]
         public async Task QueryMetricsWithAggregations()
         {
             #region Snippet:QueryMetricsWithAggregations
 #if SNIPPET
             string resourceId =
                 "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/Microsoft.KeyVault/vaults/TestVault";
+            string[] metricNames = new[] { "Availability" };
 #else
             string resourceId = TestEnvironment.MetricsResource;
+            string[] metricNames = new[] { "Heartbeat" };
 #endif
             var client = new MetricsQueryClient(new DefaultAzureCredential());
 
             Response<MetricsQueryResult> result = await client.QueryResourceAsync(
                 resourceId,
-                new[] { "Availability" },
+                metricNames,
                 new MetricsQueryOptions
                 {
                     Aggregations =
@@ -81,6 +83,76 @@ namespace Azure.Monitor.Query.Tests
                     // 6/21/2022 12:29:00 AM +00:00 : 100
                     Console.WriteLine($"{value.TimeStamp} : {value.Average}");
                 }
+            }
+            #endregion
+        }
+
+        [Test]
+        public async Task QueryMetricsWithSplitting()
+        {
+            #region Snippet:QueryMetricsWithSplitting
+#if SNIPPET
+            string resourceId =
+                "/subscriptions/<subscription_id>/resourceGroups/<resource_group_name>/providers/Microsoft.Web/sites/TestWebApp";
+            string[] metricNames = new[] { "Http2xx" };
+            // Use of asterisk in filter value enables splitting on Instance dimension.
+            string filter = "Instance eq '*'";
+#else
+            string resourceId = TestEnvironment.MetricsResource;
+            string[] metricNames = new[] { "Average_% Available Memory" };
+            string filter = "Computer eq '*'";
+#endif
+            var client = new MetricsQueryClient(new DefaultAzureCredential());
+            var options = new MetricsQueryOptions
+            {
+                Aggregations =
+                {
+                    MetricAggregationType.Average,
+                },
+                Filter = filter,
+                TimeRange = TimeSpan.FromDays(2),
+            };
+            Response<MetricsQueryResult> result = await client.QueryResourceAsync(
+                resourceId,
+                metricNames,
+                options);
+
+            foreach (MetricResult metric in result.Value.Metrics)
+            {
+                foreach (MetricTimeSeriesElement element in metric.TimeSeries)
+                {
+                    foreach (MetricValue value in element.Values)
+                    {
+                        // Prints a line that looks like the following:
+                        // Thursday, May 4, 2023 9:42:00 PM, webwk000002, Http2xx, 1
+                        Console.WriteLine(
+                            $"{value.TimeStamp:F}, {element.Metadata["Instance"]}, {metric.Name}, {value.Average}");
+                    }
+                }
+            }
+            #endregion
+        }
+
+        [Test]
+        public async Task QueryBatchMetrics()
+        {
+            #region Snippet:QueryBatchMetrics
+#if SNIPPET
+            string resourceId =
+                "/subscriptions/<id>/resourceGroups/<rg-name>/providers/<source>/storageAccounts/<resource-name-1>";
+#else
+            string resourceId = TestEnvironment.StorageAccountId;
+#endif
+            MetricsBatchQueryClient client = new MetricsBatchQueryClient(new Uri("https://metrics.monitor.azure.com/.default"), new DefaultAzureCredential());
+            Response<MetricResultsResponse> metricsResultsResponse = await client.QueryBatchAsync(
+                resourceIds: new List<string> { resourceId },
+                metricNames: new List<string> { "Ingress" },
+                metricNamespace: "Microsoft.Storage/storageAccounts").ConfigureAwait(false);
+
+            MetricResultsResponse metricsQueryResults = metricsResultsResponse.Value;
+            foreach (var value in metricsQueryResults.Values)
+            {
+                Console.WriteLine(value.Interval);
             }
             #endregion
         }

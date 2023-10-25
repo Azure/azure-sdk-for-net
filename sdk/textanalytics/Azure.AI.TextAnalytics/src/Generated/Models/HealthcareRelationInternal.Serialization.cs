@@ -36,6 +36,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static HealthcareRelationInternal DeserializeHealthcareRelationInternal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             HealthcareEntityRelationType relationType = default;
             Optional<double> confidenceScore = default;
             IList<HealthcareRelationEntity> entities = default;
@@ -50,7 +54,6 @@ namespace Azure.AI.TextAnalytics.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     confidenceScore = property.Value.GetDouble();

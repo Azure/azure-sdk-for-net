@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -15,11 +16,35 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         internal static ManagedHsmPrivateEndpointConnectionItemData DeserializeManagedHsmPrivateEndpointConnectionItemData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ResourceIdentifier> id = default;
+            Optional<ETag> etag = default;
             Optional<SubResource> privateEndpoint = default;
             Optional<ManagedHsmPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             Optional<ManagedHsmPrivateEndpointConnectionProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("id"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("etag"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -33,7 +58,6 @@ namespace Azure.ResourceManager.KeyVault.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             privateEndpoint = JsonSerializer.Deserialize<SubResource>(property0.Value.GetRawText());
@@ -43,7 +67,6 @@ namespace Azure.ResourceManager.KeyVault.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             privateLinkServiceConnectionState = ManagedHsmPrivateLinkServiceConnectionState.DeserializeManagedHsmPrivateLinkServiceConnectionState(property0.Value);
@@ -53,7 +76,6 @@ namespace Azure.ResourceManager.KeyVault.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new ManagedHsmPrivateEndpointConnectionProvisioningState(property0.Value.GetString());
@@ -63,7 +85,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     continue;
                 }
             }
-            return new ManagedHsmPrivateEndpointConnectionItemData(privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
+            return new ManagedHsmPrivateEndpointConnectionItemData(id.Value, Optional.ToNullable(etag), privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

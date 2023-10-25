@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
 
         internal static SqlVmAssessmentSettings DeserializeSqlVmAssessmentSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enable = default;
             Optional<bool> runImmediately = default;
             Optional<SqlVmAssessmentSchedule> schedule = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enable = property.Value.GetBoolean();
@@ -54,7 +57,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     runImmediately = property.Value.GetBoolean();
@@ -64,7 +66,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     schedule = SqlVmAssessmentSchedule.DeserializeSqlVmAssessmentSchedule(property.Value);

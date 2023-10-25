@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static GetTdeCertificatesSqlTaskInput DeserializeGetTdeCertificatesSqlTaskInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             SqlConnectionInfo connectionInfo = default;
             FileShare backupFileShare = default;
             IList<SelectedCertificateInput> selectedCertificates = default;

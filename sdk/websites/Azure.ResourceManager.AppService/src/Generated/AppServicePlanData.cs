@@ -14,7 +14,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the AppServicePlan data model. </summary>
+    /// <summary>
+    /// A class representing the AppServicePlan data model.
+    /// App Service plan.
+    /// </summary>
     public partial class AppServicePlanData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of AppServicePlanData. </summary>

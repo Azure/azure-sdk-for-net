@@ -44,7 +44,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
@@ -52,6 +55,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static AtaSolutionProperties DeserializeAtaSolutionProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> lastEventReceived = default;
             Optional<string> deviceVendor = default;
             Optional<string> deviceType = default;
@@ -79,7 +86,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     workspace = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());

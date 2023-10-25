@@ -20,8 +20,8 @@ namespace Azure.Storage.Files.Shares.Models
 
         public static ShareLeaseStatus ToShareLeaseStatus(this string value)
         {
-            if (string.Equals(value, "locked", StringComparison.InvariantCultureIgnoreCase)) return ShareLeaseStatus.Locked;
-            if (string.Equals(value, "unlocked", StringComparison.InvariantCultureIgnoreCase)) return ShareLeaseStatus.Unlocked;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "locked")) return ShareLeaseStatus.Locked;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "unlocked")) return ShareLeaseStatus.Unlocked;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ShareLeaseStatus value.");
         }
     }

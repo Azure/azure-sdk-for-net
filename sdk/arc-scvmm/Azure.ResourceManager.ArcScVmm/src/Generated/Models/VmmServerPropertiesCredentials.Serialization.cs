@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.ArcScVmm.Models
 
         internal static VmmServerPropertiesCredentials DeserializeVmmServerPropertiesCredentials(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> username = default;
             Optional<string> password = default;
             foreach (var property in element.EnumerateObject())

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -80,14 +79,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("clientSecretSettingName"u8);
                 writer.WriteStringValue(ClientSecretSettingName);
             }
-            if (Optional.IsDefined(ClientSecretCertificateThumbprint))
+            if (Optional.IsDefined(ClientSecretCertificateThumbprintString))
             {
                 writer.WritePropertyName("clientSecretCertificateThumbprint"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ClientSecretCertificateThumbprint);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ClientSecretCertificateThumbprint.ToString()).RootElement);
-#endif
+                writer.WriteStringValue(ClientSecretCertificateThumbprintString);
             }
             if (Optional.IsDefined(Issuer))
             {
@@ -260,6 +255,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static SiteAuthSettings DeserializeSiteAuthSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -275,7 +274,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> clientId = default;
             Optional<string> clientSecret = default;
             Optional<string> clientSecretSettingName = default;
-            Optional<BinaryData> clientSecretCertificateThumbprint = default;
+            Optional<string> clientSecretCertificateThumbprint = default;
             Optional<string> issuer = default;
             Optional<bool> validateIssuer = default;
             Optional<IList<string>> allowedAudiences = default;
@@ -329,7 +328,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -348,7 +346,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             enabled = property0.Value.GetBoolean();
@@ -363,7 +360,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             unauthenticatedClientAction = property0.Value.GetString().ToUnauthenticatedClientAction();
@@ -373,7 +369,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             tokenStoreEnabled = property0.Value.GetBoolean();
@@ -383,7 +378,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -398,7 +392,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             defaultProvider = property0.Value.GetString().ToBuiltInAuthenticationProvider();
@@ -408,7 +401,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             tokenRefreshExtensionHours = property0.Value.GetDouble();
@@ -431,12 +423,7 @@ namespace Azure.ResourceManager.AppService.Models
                         }
                         if (property0.NameEquals("clientSecretCertificateThumbprint"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            clientSecretCertificateThumbprint = BinaryData.FromString(property0.Value.GetRawText());
+                            clientSecretCertificateThumbprint = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("issuer"u8))
@@ -448,7 +435,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             validateIssuer = property0.Value.GetBoolean();
@@ -458,7 +444,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -473,7 +458,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -508,7 +492,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -538,7 +521,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -568,7 +550,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -613,7 +594,6 @@ namespace Azure.ResourceManager.AppService.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();

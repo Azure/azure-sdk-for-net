@@ -48,6 +48,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static EdifactFramingSettings DeserializeEdifactFramingSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> serviceCodeListDirectoryVersion = default;
             Optional<string> characterEncoding = default;
             int protocolVersion = default;

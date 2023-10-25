@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.LabServices
 {
-    /// <summary> A class representing the Lab data model. </summary>
+    /// <summary>
+    /// A class representing the Lab data model.
+    /// The lab resource.
+    /// </summary>
     public partial class LabData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of LabData. </summary>

@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             return message;
         }
 
-        /// <summary> Update an existing provisioning service&apos;s tags. to update other fields use the CreateOrUpdate method. </summary>
+        /// <summary> Update an existing provisioning service's tags. to update other fields use the CreateOrUpdate method. </summary>
         /// <param name="subscriptionId"> The subscription identifier. </param>
         /// <param name="resourceGroupName"> Resource group identifier. </param>
         /// <param name="provisioningServiceName"> Name of provisioning service to create or update. </param>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             }
         }
 
-        /// <summary> Update an existing provisioning service&apos;s tags. to update other fields use the CreateOrUpdate method. </summary>
+        /// <summary> Update an existing provisioning service's tags. to update other fields use the CreateOrUpdate method. </summary>
         /// <param name="subscriptionId"> The subscription identifier. </param>
         /// <param name="resourceGroupName"> Resource group identifier. </param>
         /// <param name="provisioningServiceName"> Name of provisioning service to create or update. </param>

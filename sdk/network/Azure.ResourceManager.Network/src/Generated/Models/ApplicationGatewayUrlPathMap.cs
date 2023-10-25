@@ -30,15 +30,17 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="defaultBackendHttpSettings"> Default backend http settings resource of URL path map. </param>
         /// <param name="defaultRewriteRuleSet"> Default Rewrite rule set resource of URL path map. </param>
         /// <param name="defaultRedirectConfiguration"> Default redirect configuration resource of URL path map. </param>
+        /// <param name="defaultLoadDistributionPolicy"> Default Load Distribution Policy resource of URL path map. </param>
         /// <param name="pathRules"> Path rule of URL path map resource. </param>
         /// <param name="provisioningState"> The provisioning state of the URL path map resource. </param>
-        internal ApplicationGatewayUrlPathMap(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, WritableSubResource defaultBackendAddressPool, WritableSubResource defaultBackendHttpSettings, WritableSubResource defaultRewriteRuleSet, WritableSubResource defaultRedirectConfiguration, IList<ApplicationGatewayPathRule> pathRules, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
+        internal ApplicationGatewayUrlPathMap(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, WritableSubResource defaultBackendAddressPool, WritableSubResource defaultBackendHttpSettings, WritableSubResource defaultRewriteRuleSet, WritableSubResource defaultRedirectConfiguration, WritableSubResource defaultLoadDistributionPolicy, IList<ApplicationGatewayPathRule> pathRules, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
             ETag = etag;
             DefaultBackendAddressPool = defaultBackendAddressPool;
             DefaultBackendHttpSettings = defaultBackendHttpSettings;
             DefaultRewriteRuleSet = defaultRewriteRuleSet;
             DefaultRedirectConfiguration = defaultRedirectConfiguration;
+            DefaultLoadDistributionPolicy = defaultLoadDistributionPolicy;
             PathRules = pathRules;
             ProvisioningState = provisioningState;
         }
@@ -98,6 +100,20 @@ namespace Azure.ResourceManager.Network.Models
                 if (DefaultRedirectConfiguration is null)
                     DefaultRedirectConfiguration = new WritableSubResource();
                 DefaultRedirectConfiguration.Id = value;
+            }
+        }
+
+        /// <summary> Default Load Distribution Policy resource of URL path map. </summary>
+        internal WritableSubResource DefaultLoadDistributionPolicy { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier DefaultLoadDistributionPolicyId
+        {
+            get => DefaultLoadDistributionPolicy is null ? default : DefaultLoadDistributionPolicy.Id;
+            set
+            {
+                if (DefaultLoadDistributionPolicy is null)
+                    DefaultLoadDistributionPolicy = new WritableSubResource();
+                DefaultLoadDistributionPolicy.Id = value;
             }
         }
 

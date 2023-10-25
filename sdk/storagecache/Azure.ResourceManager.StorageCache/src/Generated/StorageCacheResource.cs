@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Returns a Storage Target from a Cache.
+        /// Returns a Storage Target from a cache.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Returns a Storage Target from a Cache.
+        /// Returns a Storage Target from a cache.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Returns a Cache.
+        /// Returns a cache.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Returns a Cache.
+        /// Returns a cache.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Schedules a Cache for deletion.
+        /// Schedules a cache for deletion.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Schedules a Cache for deletion.
+        /// Schedules a cache for deletion.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Update a Cache instance.
+        /// Update a cache instance.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -287,10 +287,11 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="data"> Object containing the user-selectable properties of the Cache. If read-only properties are included, they must match the existing values of those properties. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> Object containing the user-selectable properties of the cache. If read-only properties are included, they must match the existing values of those properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<StorageCacheResource>> UpdateAsync(StorageCacheData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<StorageCacheResource>> UpdateAsync(WaitUntil waitUntil, StorageCacheData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -299,7 +300,10 @@ namespace Azure.ResourceManager.StorageCache
             try
             {
                 var response = await _storageCacheCachesRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new StorageCacheResource(Client, response.Value), response.GetRawResponse());
+                var operation = new StorageCacheArmOperation<StorageCacheResource>(new StorageCacheOperationSource(Client), _storageCacheCachesClientDiagnostics, Pipeline, _storageCacheCachesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -309,7 +313,7 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Update a Cache instance.
+        /// Update a cache instance.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -321,10 +325,11 @@ namespace Azure.ResourceManager.StorageCache
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="data"> Object containing the user-selectable properties of the Cache. If read-only properties are included, they must match the existing values of those properties. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> Object containing the user-selectable properties of the cache. If read-only properties are included, they must match the existing values of those properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<StorageCacheResource> Update(StorageCacheData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<StorageCacheResource> Update(WaitUntil waitUntil, StorageCacheData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -333,7 +338,10 @@ namespace Azure.ResourceManager.StorageCache
             try
             {
                 var response = _storageCacheCachesRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
-                return Response.FromValue(new StorageCacheResource(Client, response.Value), response.GetRawResponse());
+                var operation = new StorageCacheArmOperation<StorageCacheResource>(new StorageCacheOperationSource(Client), _storageCacheCachesClientDiagnostics, Pipeline, _storageCacheCachesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -343,7 +351,7 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Tells a Cache to write generate debug info for support to process.
+        /// Tells a cache to write generate debug info for support to process.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -377,7 +385,7 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Tells a Cache to write generate debug info for support to process.
+        /// Tells a cache to write generate debug info for support to process.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -411,7 +419,7 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Tells a Cache to write all dirty data to the Storage Target(s). During the flush, clients will see errors returned until the flush is complete.
+        /// Tells a cache to write all dirty data to the Storage Target(s). During the flush, clients will see errors returned until the flush is complete.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -445,7 +453,7 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Tells a Cache to write all dirty data to the Storage Target(s). During the flush, clients will see errors returned until the flush is complete.
+        /// Tells a cache to write all dirty data to the Storage Target(s). During the flush, clients will see errors returned until the flush is complete.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -479,7 +487,7 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Tells a Stopped state Cache to transition to Active state.
+        /// Tells a Stopped state cache to transition to Active state.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -513,7 +521,7 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Tells a Stopped state Cache to transition to Active state.
+        /// Tells a Stopped state cache to transition to Active state.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -547,7 +555,7 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Tells an Active Cache to transition to Stopped state.
+        /// Tells an Active cache to transition to Stopped state.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -581,7 +589,7 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Tells an Active Cache to transition to Stopped state.
+        /// Tells an Active cache to transition to Stopped state.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -895,7 +903,7 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Upgrade a Cache&apos;s firmware if a new version is available. Otherwise, this operation has no effect.
+        /// Upgrade a cache's firmware if a new version is available. Otherwise, this operation has no effect.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -929,7 +937,7 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Upgrade a Cache&apos;s firmware if a new version is available. Otherwise, this operation has no effect.
+        /// Upgrade a cache's firmware if a new version is available. Otherwise, this operation has no effect.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1075,8 +1083,8 @@ namespace Azure.ResourceManager.StorageCache
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1129,8 +1137,8 @@ namespace Azure.ResourceManager.StorageCache
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1178,8 +1186,8 @@ namespace Azure.ResourceManager.StorageCache
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     var patch = new StorageCacheData(current.Location);
                     patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1227,8 +1235,8 @@ namespace Azure.ResourceManager.StorageCache
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
                     var patch = new StorageCacheData(current.Location);
                     patch.Tags.ReplaceWith(tags);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1279,8 +1287,8 @@ namespace Azure.ResourceManager.StorageCache
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -1331,8 +1339,8 @@ namespace Azure.ResourceManager.StorageCache
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)

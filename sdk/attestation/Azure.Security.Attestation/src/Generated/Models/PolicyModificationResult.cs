@@ -10,7 +10,6 @@ namespace Azure.Security.Attestation
     /// <summary> The result of a policy certificate modification. </summary>
     public partial class PolicyModificationResult
     {
-
         /// <summary> Initializes a new instance of PolicyModificationResult. </summary>
         /// <param name="policyResolution"> The result of the operation. </param>
         /// <param name="basePolicyTokenHash"> The SHA256 hash of the policy object modified. </param>

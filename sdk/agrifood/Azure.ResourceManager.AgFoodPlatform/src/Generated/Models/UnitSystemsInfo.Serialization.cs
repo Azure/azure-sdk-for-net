@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.AgFoodPlatform.Models
 {
@@ -15,6 +14,10 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
     {
         internal static UnitSystemsInfo DeserializeUnitSystemsInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string key = default;
             IReadOnlyList<string> values = default;
             foreach (var property in element.EnumerateObject())

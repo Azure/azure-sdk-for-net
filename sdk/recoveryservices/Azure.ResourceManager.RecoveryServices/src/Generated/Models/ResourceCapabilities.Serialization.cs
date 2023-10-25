@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         internal static ResourceCapabilities DeserializeResourceCapabilities(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CapabilitiesProperties> properties = default;
             ResourceType type = default;
             foreach (var property in element.EnumerateObject())
@@ -35,7 +39,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = CapabilitiesProperties.DeserializeCapabilitiesProperties(property.Value);

@@ -4,7 +4,6 @@
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_UsingStatements
 using Azure.Communication.JobRouter;
-using Azure.Communication.JobRouter.Models;
 ```
 
 ## Create a client
@@ -12,8 +11,8 @@ using Azure.Communication.JobRouter.Models;
 Create a `RouterClient` and send a request.
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateClient
-RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
-RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
+JobRouterClient routerClient = new JobRouterClient("<< CONNECTION STRING >>");
+JobRouterAdministrationClient routerAdministrationClient = new JobRouterAdministrationClient("<< CONNECTION STRING >>");
 ```
 
 ## Attach static worker selectors using classification policy
@@ -43,7 +42,7 @@ string distributionPolicyId = "distribution-policy-id-2";
 Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
     new CreateDistributionPolicyOptions(
         distributionPolicyId: distributionPolicyId,
-        offerTtl: TimeSpan.FromMinutes(5),
+        offerExpiresAfter: TimeSpan.FromMinutes(5),
         mode: new LongestIdleMode())
     {
         Name = "My LongestIdle Distribution Policy",
@@ -51,7 +50,7 @@ Response<DistributionPolicy> distributionPolicy = await routerAdministrationClie
     );
 
 string queueId = "Queue-1";
-Response<JobQueue> queue1 = await routerAdministrationClient.CreateQueueAsync(
+Response<RouterQueue> queue1 = await routerAdministrationClient.CreateQueueAsync(
     new CreateQueueOptions(queueId: queueId, distributionPolicyId: distributionPolicy.Value.Id)
     {
         Name = "Queue_365",
@@ -63,16 +62,16 @@ Response<ClassificationPolicy> cp1 = await routerAdministrationClient.CreateClas
     new CreateClassificationPolicyOptions(classificationPolicyId: cpId)
     {
         Name = "Classification_Policy_O365",
-        WorkerSelectors = new List<WorkerSelectorAttachment>()
+        WorkerSelectors =
         {
-            new StaticWorkerSelectorAttachment(new WorkerSelector("Location", LabelOperator.Equal, new LabelValue("United States"))),
-            new StaticWorkerSelectorAttachment(new WorkerSelector("Language", LabelOperator.Equal, new LabelValue("en-us"))),
-            new StaticWorkerSelectorAttachment(new WorkerSelector("Geo", LabelOperator.Equal, new LabelValue("NA")))
+            new StaticWorkerSelectorAttachment(new RouterWorkerSelector("Location", LabelOperator.Equal, new LabelValue("United States"))),
+            new StaticWorkerSelectorAttachment(new RouterWorkerSelector("Language", LabelOperator.Equal, new LabelValue("en-us"))),
+            new StaticWorkerSelectorAttachment(new RouterWorkerSelector("Geo", LabelOperator.Equal, new LabelValue("NA")))
         }
     });
 
 // Set up job
-Response<RouterJob> jobO365 = await routerClient.CreateJobAsync(
+Response<RouterJob> jobO365 = await routerClient.CreateJobWithClassificationPolicyAsync(
     new CreateJobWithClassificationPolicyOptions(jobId: "jobO365", channelId: "general", classificationPolicyId: cp1.Value.Id)
     {
         ChannelReference = "12345",
@@ -87,46 +86,31 @@ Console.WriteLine($"O365 job has been enqueued in queue: {queue1.Value.Id}. Stat
 
 // Set up two workers
 string workerId1 = "worker-id-1";
-Dictionary<string, LabelValue> worker1Labels = new Dictionary<string, LabelValue>()
-{
-    ["Location"] = new LabelValue("United States"),
-    ["Language"] = new LabelValue("en-us"),
-    ["Geo"] = new LabelValue("NA"),
-    ["Skill_English_Lvl"] = new LabelValue(7),
-};
+
 Response<RouterWorker> worker1 = await routerClient.CreateWorkerAsync(
     options: new CreateWorkerOptions(workerId: workerId1, totalCapacity: 100)
     {
         AvailableForOffers = true, // registering worker at the time of creation
-        ChannelConfigurations = new Dictionary<string, ChannelConfiguration>()
+        ChannelConfigurations = { ["general"] = new ChannelConfiguration(10), },
+        Labels =
         {
-            ["general"] = new ChannelConfiguration(10),
-        },
-        Labels = worker1Labels, // attaching labels associated with worker
-        QueueIds = new Dictionary<string, QueueAssignment>()
-        {
-            [queueId] = new QueueAssignment(), // assigning queue to worker
-        }
+            ["Location"] = new LabelValue("United States"),
+            ["Language"] = new LabelValue("en-us"),
+            ["Geo"] = new LabelValue("NA"),
+            ["Skill_English_Lvl"] = new LabelValue(7),
+        }, // attaching labels associated with worker
+        QueueAssignments = { [queueId] = new RouterQueueAssignment() }
     });
 
 string workerId2 = "worker-id-2";
-Dictionary<string, LabelValue> worker2Labels = new Dictionary<string, LabelValue>()
-{
-    ["Skill_English_Lvl"] = new LabelValue(7)
-};
+
 Response<RouterWorker> worker2 = await routerClient.CreateWorkerAsync(
     options: new CreateWorkerOptions(workerId: workerId2, totalCapacity: 100)
     {
         AvailableForOffers = true, // registering worker at the time of creation
-        ChannelConfigurations = new Dictionary<string, ChannelConfiguration>()
-        {
-            ["general"] = new ChannelConfiguration(10),
-        },
-        Labels = worker2Labels, // attaching labels associated with worker
-        QueueIds = new Dictionary<string, QueueAssignment>()
-        {
-            [queueId] = new QueueAssignment(), // assigning queue to worker
-        }
+        ChannelConfigurations = { ["general"] = new ChannelConfiguration(10), },
+        Labels = { ["Skill_English_Lvl"] = new LabelValue(7) }, // attaching labels associated with worker
+        QueueAssignments = { [queueId] = new RouterQueueAssignment() }
     });
 
 
@@ -172,7 +156,7 @@ string distributionPolicyId = "distribution-policy-id-3";
 Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
     new CreateDistributionPolicyOptions(
         distributionPolicyId: distributionPolicyId,
-        offerTtl: TimeSpan.FromMinutes(5),
+        offerExpiresAfter: TimeSpan.FromMinutes(5),
         mode: new LongestIdleMode())
     {
         Name = "My LongestIdle Distribution Policy",
@@ -180,7 +164,7 @@ Response<DistributionPolicy> distributionPolicy = await routerAdministrationClie
     );
 
 string queueId = "Queue-1";
-Response<JobQueue> queue1 = await routerAdministrationClient.CreateQueueAsync(
+Response<RouterQueue> queue1 = await routerAdministrationClient.CreateQueueAsync(
     new CreateQueueOptions(queueId: queueId, distributionPolicyId: distributionPolicy.Value.Id)
     {
         Name = "Queue_365",
@@ -192,35 +176,35 @@ Response<ClassificationPolicy> cp1 = await routerAdministrationClient.CreateClas
     new CreateClassificationPolicyOptions(classificationPolicyId: cpId)
     {
         Name = "Classification_Policy_O365",
-        WorkerSelectors = new List<WorkerSelectorAttachment>()
+        WorkerSelectors =
         {
             new ConditionalWorkerSelectorAttachment(
-                condition: new ExpressionRule("If(job.Location = \"United States\", true, false)"),
-                labelSelectors: new List<WorkerSelector>()
+                condition: new ExpressionRouterRule("If(job.Location = \"United States\", true, false)"),
+                workerSelectors: new List<RouterWorkerSelector>()
                 {
-                    new WorkerSelector("Language", LabelOperator.Equal, new LabelValue("en-us")),
-                    new WorkerSelector("Geo", LabelOperator.Equal, new LabelValue("NA")),
-                    new WorkerSelector("Skill_English_Lvl", LabelOperator.GreaterThanEqual, new LabelValue(5))
+                    new RouterWorkerSelector("Language", LabelOperator.Equal, new LabelValue("en-us")),
+                    new RouterWorkerSelector("Geo", LabelOperator.Equal, new LabelValue("NA")),
+                    new RouterWorkerSelector("Skill_English_Lvl", LabelOperator.GreaterThanEqual, new LabelValue(5))
                 }),
             new ConditionalWorkerSelectorAttachment(
-                condition: new ExpressionRule("If(job.Location = \"Canada\", true, false)"),
-                labelSelectors: new List<WorkerSelector>()
+                condition: new ExpressionRouterRule("If(job.Location = \"Canada\", true, false)"),
+                workerSelectors: new List<RouterWorkerSelector>()
                 {
-                    new WorkerSelector("Language", LabelOperator.Equal, new LabelValue("en-ca")),
-                    new WorkerSelector("Geo", LabelOperator.Equal, new LabelValue("NA")),
-                    new WorkerSelector("Skill_English_Lvl", LabelOperator.GreaterThanEqual, new LabelValue(5))
+                    new RouterWorkerSelector("Language", LabelOperator.Equal, new LabelValue("en-ca")),
+                    new RouterWorkerSelector("Geo", LabelOperator.Equal, new LabelValue("NA")),
+                    new RouterWorkerSelector("Skill_English_Lvl", LabelOperator.GreaterThanEqual, new LabelValue(5))
                 }),
         }
     });
 
 // Set up job
-Response<RouterJob> jobO365 = await routerClient.CreateJobAsync(
+Response<RouterJob> jobO365 = await routerClient.CreateJobWithClassificationPolicyAsync(
     new CreateJobWithClassificationPolicyOptions(jobId: "jobO365", channelId: "general", classificationPolicyId: cp1.Value.Id)
     {
         ChannelReference = "12345",
         QueueId = queueId, // We only want to attach WorkerSelectors with classification policy this time, so we will specify queueId
         Priority = 10, // We only want to attach WorkerSelectors with classification policy this time, so we will specify priority
-        Labels = new Dictionary<string, LabelValue>() // we will attach a label to the job which will affects its classification
+        Labels = // we will attach a label to the job which will affects its classification
         {
             ["Location"] = new LabelValue("United States"),
         }
@@ -234,47 +218,33 @@ Console.Write($"O365 job has the following worker selectors attached to it after
 
 // Set up two workers
 string workerId1 = "worker-id-1";
-Dictionary<string, LabelValue> worker1Labels = new Dictionary<string, LabelValue>()
-{
-    ["Language"] = new LabelValue("en-us"),
-    ["Geo"] = new LabelValue("NA"),
-    ["Skill_English_Lvl"] = new LabelValue(7)
-};
 Response<RouterWorker> worker1 = await routerClient.CreateWorkerAsync(
     options: new CreateWorkerOptions(workerId: workerId1, totalCapacity: 100)
     {
         AvailableForOffers = true, // registering worker at the time of creation
-        ChannelConfigurations = new Dictionary<string, ChannelConfiguration>()
+        ChannelConfigurations = { ["general"] = new ChannelConfiguration(10), },
+        Labels =
         {
-            ["general"] = new ChannelConfiguration(10),
-        },
-        Labels = worker1Labels, // attaching labels associated with worker
-        QueueIds = new Dictionary<string, QueueAssignment>()
-        {
-            [queueId] = new QueueAssignment(), // assigning queue to worker
-        }
+            ["Language"] = new LabelValue("en-us"),
+            ["Geo"] = new LabelValue("NA"),
+            ["Skill_English_Lvl"] = new LabelValue(7)
+        }, // attaching labels associated with worker
+        QueueAssignments = { [queueId] = new RouterQueueAssignment() }
     });
 
 string workerId2 = "worker-id-2";
-Dictionary<string, LabelValue> worker2Labels = new Dictionary<string, LabelValue>()
-{
-    ["Language"] = new LabelValue("en-ca"),
-    ["Geo"] = new LabelValue("NA"),
-    ["Skill_English_Lvl"] = new LabelValue(7)
-};
 Response<RouterWorker> worker2 = await routerClient.CreateWorkerAsync(
     options: new CreateWorkerOptions(workerId: workerId2, totalCapacity: 100)
     {
         AvailableForOffers = true, // registering worker at the time of creation
-        ChannelConfigurations = new Dictionary<string, ChannelConfiguration>()
+        ChannelConfigurations = { ["general"] = new ChannelConfiguration(10) },
+        Labels =
         {
-            ["general"] = new ChannelConfiguration(10),
-        },
-        Labels = worker2Labels, // attaching labels associated with worker
-        QueueIds = new Dictionary<string, QueueAssignment>()
-        {
-            [queueId] = new QueueAssignment(), // assigning queue to worker
-        }
+            ["Language"] = new LabelValue("en-ca"),
+            ["Geo"] = new LabelValue("NA"),
+            ["Skill_English_Lvl"] = new LabelValue(7)
+        }, // attaching labels associated with worker
+        QueueAssignments = { [queueId] = new RouterQueueAssignment() }
     });
 
 
@@ -313,7 +283,7 @@ string distributionPolicyId = "distribution-policy-id-4";
 Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
     new CreateDistributionPolicyOptions(
         distributionPolicyId: distributionPolicyId,
-        offerTtl: TimeSpan.FromMinutes(5),
+        offerExpiresAfter: TimeSpan.FromMinutes(5),
         mode: new LongestIdleMode())
     {
         Name = "My LongestIdle Distribution Policy",
@@ -321,7 +291,7 @@ Response<DistributionPolicy> distributionPolicy = await routerAdministrationClie
     );
 
 string queueId = "Queue-1";
-Response<JobQueue> queue1 = await routerAdministrationClient.CreateQueueAsync(
+Response<RouterQueue> queue1 = await routerAdministrationClient.CreateQueueAsync(
     new CreateQueueOptions(
         queueId: queueId,
         distributionPolicyId: distributionPolicy.Value.Id)
@@ -335,24 +305,24 @@ Response<ClassificationPolicy> cp1 = await routerAdministrationClient.CreateClas
     new CreateClassificationPolicyOptions(classificationPolicyId: cpId)
     {
         Name = "Classification_Policy_O365_XBOX",
-        WorkerSelectors = new List<WorkerSelectorAttachment>()
+        WorkerSelectors =
         {
             new PassThroughWorkerSelectorAttachment("Location", LabelOperator.Equal),
             new PassThroughWorkerSelectorAttachment("Geo", LabelOperator.Equal),
             new PassThroughWorkerSelectorAttachment("Language", LabelOperator.Equal),
             new PassThroughWorkerSelectorAttachment("Dept", LabelOperator.Equal),
-            new StaticWorkerSelectorAttachment(new WorkerSelector("Skill_English_Lvl", LabelOperator.GreaterThanEqual, new LabelValue(5))),
+            new StaticWorkerSelectorAttachment(new RouterWorkerSelector("Skill_English_Lvl", LabelOperator.GreaterThanEqual, new LabelValue(5))),
         }
     });
 
 // Set up jobs
-Response<RouterJob> jobO365 = await routerClient.CreateJobAsync(
+Response<RouterJob> jobO365 = await routerClient.CreateJobWithClassificationPolicyAsync(
     new CreateJobWithClassificationPolicyOptions(jobId: "jobO365", channelId: "general", classificationPolicyId: cp1.Value.Id)
     {
         ChannelReference = "12345",
         QueueId = queueId, // We only want to attach WorkerSelectors with classification policy this time, so we will specify queueId
         Priority = 10, // We only want to attach WorkerSelectors with classification policy this time, so we will specify priority
-        Labels = new Dictionary<string, LabelValue>() // we will attach a label to the job which will affects its classification
+        Labels = // we will attach a label to the job which will affects its classification
         {
             ["Location"] = new LabelValue("United States"),
             ["Geo"] = new LabelValue("NA"),
@@ -361,13 +331,13 @@ Response<RouterJob> jobO365 = await routerClient.CreateJobAsync(
         }
     });
 
-Response<RouterJob> jobXbox = await routerClient.CreateJobAsync(
+Response<RouterJob> jobXbox = await routerClient.CreateJobWithClassificationPolicyAsync(
     new CreateJobWithClassificationPolicyOptions(jobId: "jobXbox", channelId: "general", classificationPolicyId: cp1.Value.Id)
     {
         ChannelReference = "12345",
         QueueId = queueId, // We only want to attach WorkerSelectors with classification policy this time, so we will specify queueId
         Priority = 10, // We only want to attach WorkerSelectors with classification policy this time, so we will specify priority
-        Labels = new Dictionary<string, LabelValue>() // we will attach a label to the job which will affects its classification
+        Labels = // we will attach a label to the job which will affects its classification
         {
             ["Location"] = new LabelValue("United States"),
             ["Geo"] = new LabelValue("NA"),
@@ -389,51 +359,38 @@ Console.Write($"O365 job has the following worker selectors attached to it after
 
 // Set up two workers
 string workerId1 = "worker-id-1";
-Dictionary<string, LabelValue> worker1Labels = new Dictionary<string, LabelValue>()
-{
-    ["Location"] = new LabelValue("United States"),
-    ["Geo"] = new LabelValue("NA"),
-    ["Language"] = new LabelValue("en-us"),
-    ["Dept"] = new LabelValue("O365"),
-    ["Skill_English_Lvl"] = new LabelValue(10),
-};
 Response<RouterWorker> worker1 = await routerClient.CreateWorkerAsync(
     options: new CreateWorkerOptions(workerId: workerId1, totalCapacity: 100)
     {
         AvailableForOffers = true, // registering worker at the time of creation
-        ChannelConfigurations = new Dictionary<string, ChannelConfiguration>()
+        ChannelConfigurations = { ["general"] = new ChannelConfiguration(10), },
+        Labels =
         {
-            ["general"] = new ChannelConfiguration(10),
-        },
-        Labels = worker1Labels, // attaching labels associated with worker
-        QueueIds = new Dictionary<string, QueueAssignment>()
-        {
-            [queueId] = new QueueAssignment(), // assigning queue to worker
-        }
+            ["Location"] = new LabelValue("United States"),
+            ["Geo"] = new LabelValue("NA"),
+            ["Language"] = new LabelValue("en-us"),
+            ["Dept"] = new LabelValue("O365"),
+            ["Skill_English_Lvl"] = new LabelValue(10),
+        }, // attaching labels associated with worker
+        QueueAssignments = { [queueId] = new RouterQueueAssignment() }
     });
 
 string workerId2 = "worker-id-2";
-Dictionary<string, LabelValue> worker2Labels = new Dictionary<string, LabelValue>()
-{
-    ["Location"] = new LabelValue("United States"),
-    ["Geo"] = new LabelValue("NA"),
-    ["Language"] = new LabelValue("en-us"),
-    ["Dept"] = new LabelValue("Xbox"),
-    ["Skill_English_Lvl"] = new LabelValue(10),
-};
+
 Response<RouterWorker> worker2 = await routerClient.CreateWorkerAsync(
     options: new CreateWorkerOptions(workerId: workerId2, totalCapacity: 100)
     {
         AvailableForOffers = true, // registering worker at the time of creation
-        ChannelConfigurations = new Dictionary<string, ChannelConfiguration>()
+        ChannelConfigurations = { ["general"] = new ChannelConfiguration(10), },
+        Labels =
         {
-            ["general"] = new ChannelConfiguration(10),
-        },
-        Labels = worker2Labels, // attaching labels associated with worker
-        QueueIds = new Dictionary<string, QueueAssignment>()
-        {
-            [queueId] = new QueueAssignment(), // assigning queue to worker
-        }
+            ["Location"] = new LabelValue("United States"),
+            ["Geo"] = new LabelValue("NA"),
+            ["Language"] = new LabelValue("en-us"),
+            ["Dept"] = new LabelValue("Xbox"),
+            ["Skill_English_Lvl"] = new LabelValue(10),
+        }, // attaching labels associated with worker
+        QueueAssignments = { [queueId] = new RouterQueueAssignment() }
     });
 
 

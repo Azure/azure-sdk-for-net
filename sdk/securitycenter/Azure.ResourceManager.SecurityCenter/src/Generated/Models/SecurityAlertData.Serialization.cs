@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.SecurityCenter
 
         internal static SecurityAlertData DeserializeSecurityAlertData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -95,7 +99,6 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -144,7 +147,6 @@ namespace Azure.ResourceManager.SecurityCenter
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             severity = new SecurityAlertSeverity(property0.Value.GetString());
@@ -154,7 +156,6 @@ namespace Azure.ResourceManager.SecurityCenter
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             intent = new KillChainIntent(property0.Value.GetString());
@@ -164,7 +165,6 @@ namespace Azure.ResourceManager.SecurityCenter
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             startTimeUtc = property0.Value.GetDateTimeOffset("O");
@@ -174,7 +174,6 @@ namespace Azure.ResourceManager.SecurityCenter
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             endTimeUtc = property0.Value.GetDateTimeOffset("O");
@@ -184,7 +183,6 @@ namespace Azure.ResourceManager.SecurityCenter
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<SecurityAlertResourceIdentifier> array = new List<SecurityAlertResourceIdentifier>();
@@ -199,7 +197,6 @@ namespace Azure.ResourceManager.SecurityCenter
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -219,7 +216,6 @@ namespace Azure.ResourceManager.SecurityCenter
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             status = new SecurityAlertStatus(property0.Value.GetString());
@@ -229,18 +225,24 @@ namespace Azure.ResourceManager.SecurityCenter
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<IDictionary<string, string>> array = new List<IDictionary<string, string>>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                                foreach (var property1 in item.EnumerateObject())
+                                if (item.ValueKind == JsonValueKind.Null)
                                 {
-                                    dictionary.Add(property1.Name, property1.Value.GetString());
+                                    array.Add(null);
                                 }
-                                array.Add(dictionary);
+                                else
+                                {
+                                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                                    foreach (var property1 in item.EnumerateObject())
+                                    {
+                                        dictionary.Add(property1.Name, property1.Value.GetString());
+                                    }
+                                    array.Add(dictionary);
+                                }
                             }
                             extendedLinks = array;
                             continue;
@@ -249,7 +251,6 @@ namespace Azure.ResourceManager.SecurityCenter
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                alertUri = null;
                                 continue;
                             }
                             alertUri = new Uri(property0.Value.GetString());
@@ -259,7 +260,6 @@ namespace Azure.ResourceManager.SecurityCenter
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             timeGeneratedUtc = property0.Value.GetDateTimeOffset("O");
@@ -274,7 +274,6 @@ namespace Azure.ResourceManager.SecurityCenter
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             processingEndTimeUtc = property0.Value.GetDateTimeOffset("O");
@@ -284,7 +283,6 @@ namespace Azure.ResourceManager.SecurityCenter
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<SecurityAlertEntity> array = new List<SecurityAlertEntity>();
@@ -299,7 +297,6 @@ namespace Azure.ResourceManager.SecurityCenter
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isIncident = property0.Value.GetBoolean();
@@ -314,7 +311,6 @@ namespace Azure.ResourceManager.SecurityCenter
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -334,7 +330,6 @@ namespace Azure.ResourceManager.SecurityCenter
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -349,7 +344,6 @@ namespace Azure.ResourceManager.SecurityCenter
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -364,7 +358,6 @@ namespace Azure.ResourceManager.SecurityCenter
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             supportingEvidence = SecurityAlertSupportingEvidence.DeserializeSecurityAlertSupportingEvidence(property0.Value);

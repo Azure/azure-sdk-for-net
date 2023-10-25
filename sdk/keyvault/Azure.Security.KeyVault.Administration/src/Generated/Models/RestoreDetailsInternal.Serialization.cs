@@ -15,6 +15,10 @@ namespace Azure.Security.KeyVault.Administration.Models
     {
         internal static RestoreDetailsInternal DeserializeRestoreDetailsInternal(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> status = default;
             Optional<string> statusDetails = default;
             Optional<KeyVaultServiceError> error = default;
@@ -52,10 +56,9 @@ namespace Azure.Security.KeyVault.Administration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    startTime = property.Value.GetDateTimeOffset("U");
+                    startTime = DateTimeOffset.FromUnixTimeSeconds(property.Value.GetInt64());
                     continue;
                 }
                 if (property.NameEquals("endTime"u8))
@@ -65,7 +68,7 @@ namespace Azure.Security.KeyVault.Administration.Models
                         endTime = null;
                         continue;
                     }
-                    endTime = property.Value.GetDateTimeOffset("U");
+                    endTime = DateTimeOffset.FromUnixTimeSeconds(property.Value.GetInt64());
                     continue;
                 }
             }

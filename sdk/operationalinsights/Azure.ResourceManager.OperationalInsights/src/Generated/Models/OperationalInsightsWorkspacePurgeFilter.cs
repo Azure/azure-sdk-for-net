@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> A query operator to evaluate over the provided column and value(s). Supported operators are ==, =~, in, in~, &gt;, &gt;=, &lt;, &lt;=, between, and have the same behavior as they would in a KQL query. </summary>
         public string Operator { get; set; }
         /// <summary>
-        /// the value for the operator to function over. This can be a number (e.g., &gt; 100), a string (timestamp &gt;= &apos;2017-09-01&apos;) or array of values.
+        /// the value for the operator to function over. This can be a number (e.g., &gt; 100), a string (timestamp &gt;= '2017-09-01') or array of values.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

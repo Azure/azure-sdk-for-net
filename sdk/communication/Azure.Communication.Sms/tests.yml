@@ -11,8 +11,11 @@ extends:
           - $(sub-config-azure-cloud-test-resources)
           - $(sub-config-communication-services-cloud-test-resources-common)
           - $(sub-config-communication-services-cloud-test-resources-net)
+          - $(sub-config-communication-services-sms-cloud-test-resources)
       Int:
         SubscriptionConfigurations:
           - $(sub-config-communication-int-test-resources-common)
           - $(sub-config-communication-int-test-resources-net)
     Clouds: Public,Int
+    TestResourceDirectories:
+      - communication/test-resources/

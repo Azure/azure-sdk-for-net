@@ -14,6 +14,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static DeviceConnectionStateEventInfo DeserializeDeviceConnectionStateEventInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> sequenceNumber = default;
             foreach (var property in element.EnumerateObject())
             {

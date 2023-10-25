@@ -47,12 +47,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// </param>
         /// <param name="clusterId"> The id of an existing interactive cluster that will be used for all runs of this job. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal AzureDatabricksDeltaLakeLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object domain, SecretBase accessToken, object clusterId, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="credential"> The credential reference containing authentication information. </param>
+        internal AzureDatabricksDeltaLakeLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object domain, SecretBase accessToken, object clusterId, object encryptedCredential, CredentialReference credential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             Domain = domain;
             AccessToken = accessToken;
             ClusterId = clusterId;
             EncryptedCredential = encryptedCredential;
+            Credential = credential;
             Type = type ?? "AzureDatabricksDeltaLake";
         }
 
@@ -68,5 +70,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object ClusterId { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
         public object EncryptedCredential { get; set; }
+        /// <summary> The credential reference containing authentication information. </summary>
+        public CredentialReference Credential { get; set; }
     }
 }

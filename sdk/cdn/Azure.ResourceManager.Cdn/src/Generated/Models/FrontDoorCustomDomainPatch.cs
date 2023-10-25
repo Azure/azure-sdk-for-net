@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> The name of the profile which holds the domain. </summary>
         public string ProfileName { get; }
-        /// <summary> The configuration specifying how to enable HTTPS for the domain - using AzureFrontDoor managed certificate or user&apos;s own certificate. If not specified, enabling ssl uses AzureFrontDoor managed certificate by default. </summary>
+        /// <summary> The configuration specifying how to enable HTTPS for the domain - using AzureFrontDoor managed certificate or user's own certificate. If not specified, enabling ssl uses AzureFrontDoor managed certificate by default. </summary>
         public FrontDoorCustomDomainHttpsContent TlsSettings { get; set; }
         /// <summary> Resource reference to the Azure DNS zone. </summary>
         internal WritableSubResource DnsZone { get; set; }

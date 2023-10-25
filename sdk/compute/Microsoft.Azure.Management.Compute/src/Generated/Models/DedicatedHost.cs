@@ -48,17 +48,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// host should be replaced automatically in case of a failure. The
         /// value is defaulted to 'true' when not provided.</param>
         /// <param name="hostId">A unique id generated and assigned to the
-        /// dedicated host by the platform. &lt;br&gt;&lt;br&gt; Does not
-        /// change throughout the lifetime of the host.</param>
+        /// dedicated host by the platform. Does not change throughout the
+        /// lifetime of the host.</param>
         /// <param name="virtualMachines">A list of references to all virtual
         /// machines in the Dedicated Host.</param>
         /// <param name="licenseType">Specifies the software license type that
-        /// will be applied to the VMs deployed on the dedicated host.
-        /// &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt;
-        /// **None** &lt;br&gt;&lt;br&gt; **Windows_Server_Hybrid**
-        /// &lt;br&gt;&lt;br&gt; **Windows_Server_Perpetual**
-        /// &lt;br&gt;&lt;br&gt; Default: **None**. Possible values include:
-        /// 'None', 'Windows_Server_Hybrid', 'Windows_Server_Perpetual'</param>
+        /// will be applied to the VMs deployed on the dedicated host. Possible
+        /// values are: **None,** **Windows_Server_Hybrid,**
+        /// **Windows_Server_Perpetual.** The default value is: **None.**.
+        /// Possible values include: 'None', 'Windows_Server_Hybrid',
+        /// 'Windows_Server_Perpetual'</param>
         /// <param name="provisioningTime">The date when the host was first
         /// provisioned.</param>
         /// <param name="provisioningState">The provisioning state, which only
@@ -66,8 +65,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="instanceView">The dedicated host instance
         /// view.</param>
         /// <param name="timeCreated">Specifies the time at which the Dedicated
-        /// Host resource was created.&lt;br&gt;&lt;br&gt;Minimum api-version:
-        /// 2021-11-01.</param>
+        /// Host resource was created. Minimum api-version: 2021-11-01.</param>
         public DedicatedHost(string location, Sku sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), int? platformFaultDomain = default(int?), bool? autoReplaceOnFailure = default(bool?), string hostId = default(string), IList<SubResourceReadOnly> virtualMachines = default(IList<SubResourceReadOnly>), DedicatedHostLicenseTypes? licenseType = default(DedicatedHostLicenseTypes?), System.DateTime? provisioningTime = default(System.DateTime?), string provisioningState = default(string), DedicatedHostInstanceView instanceView = default(DedicatedHostInstanceView), System.DateTime? timeCreated = default(System.DateTime?))
             : base(location, id, name, type, tags)
         {
@@ -106,8 +104,7 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets a unique id generated and assigned to the dedicated host by
-        /// the platform. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Does not change
-        /// throughout the lifetime of the host.
+        /// the platform. Does not change throughout the lifetime of the host.
         /// </summary>
         [JsonProperty(PropertyName = "properties.hostId")]
         public string HostId { get; private set; }
@@ -121,13 +118,10 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets specifies the software license type that will be
-        /// applied to the VMs deployed on the dedicated host.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Possible values are:
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **None**
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **Windows_Server_Hybrid**
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **Windows_Server_Perpetual**
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; Default: **None**. Possible
-        /// values include: 'None', 'Windows_Server_Hybrid',
+        /// applied to the VMs deployed on the dedicated host. Possible values
+        /// are: **None,** **Windows_Server_Hybrid,**
+        /// **Windows_Server_Perpetual.** The default value is: **None.**.
+        /// Possible values include: 'None', 'Windows_Server_Hybrid',
         /// 'Windows_Server_Perpetual'
         /// </summary>
         [JsonProperty(PropertyName = "properties.licenseType")]
@@ -153,8 +147,7 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets specifies the time at which the Dedicated Host resource was
-        /// created.&amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
-        /// 2021-11-01.
+        /// created. Minimum api-version: 2021-11-01.
         /// </summary>
         [JsonProperty(PropertyName = "properties.timeCreated")]
         public System.DateTime? TimeCreated { get; private set; }

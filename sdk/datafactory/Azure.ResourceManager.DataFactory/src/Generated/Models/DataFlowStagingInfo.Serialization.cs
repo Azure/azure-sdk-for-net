@@ -5,9 +5,9 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -19,48 +19,46 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(LinkedService))
             {
                 writer.WritePropertyName("linkedService"u8);
-                writer.WriteObjectValue(LinkedService);
+                JsonSerializer.Serialize(writer, LinkedService);
             }
             if (Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(FolderPath);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(FolderPath.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, FolderPath);
             }
             writer.WriteEndObject();
         }
 
         internal static DataFlowStagingInfo DeserializeDataFlowStagingInfo(JsonElement element)
         {
-            Optional<FactoryLinkedServiceReference> linkedService = default;
-            Optional<BinaryData> folderPath = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<DataFactoryLinkedServiceReference> linkedService = default;
+            Optional<DataFactoryElement<string>> folderPath = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedService"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    linkedService = FactoryLinkedServiceReference.DeserializeFactoryLinkedServiceReference(property.Value);
+                    linkedService = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("folderPath"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    folderPath = BinaryData.FromString(property.Value.GetRawText());
+                    folderPath = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
             }
-            return new DataFlowStagingInfo(linkedService.Value, folderPath.Value);
+            return new DataFlowStagingInfo(linkedService, folderPath.Value);
         }
     }
 }

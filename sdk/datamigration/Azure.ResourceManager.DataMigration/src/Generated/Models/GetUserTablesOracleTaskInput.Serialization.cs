@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static GetUserTablesOracleTaskInput DeserializeGetUserTablesOracleTaskInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             OracleConnectionInfo connectionInfo = default;
             IList<string> selectedSchemas = default;
             foreach (var property in element.EnumerateObject())

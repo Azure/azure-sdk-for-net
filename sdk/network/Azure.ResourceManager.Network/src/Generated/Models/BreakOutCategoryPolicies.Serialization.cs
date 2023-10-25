@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static BreakOutCategoryPolicies DeserializeBreakOutCategoryPolicies(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> allow = default;
             Optional<bool> optimize = default;
             Optional<bool> @default = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     allow = property.Value.GetBoolean();
@@ -54,7 +57,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     optimize = property.Value.GetBoolean();
@@ -64,7 +66,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     @default = property.Value.GetBoolean();

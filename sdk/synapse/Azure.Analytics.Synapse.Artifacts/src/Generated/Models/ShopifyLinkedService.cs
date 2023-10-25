@@ -34,12 +34,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="host"> The endpoint of the Shopify server. (i.e. mystore.myshopify.com). </param>
         /// <param name="accessToken">
-        /// The API access token that can be used to access Shopify’s data. The token won&apos;t expire if it is offline mode.
+        /// The API access token that can be used to access Shopify’s data. The token won't expire if it is offline mode.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
         /// </param>
         /// <param name="useEncryptedEndpoints"> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </param>
-        /// <param name="useHostVerification"> Specifies whether to require the host name in the server&apos;s certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
+        /// <param name="useHostVerification"> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
         internal ShopifyLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object host, SecretBase accessToken, object useEncryptedEndpoints, object useHostVerification, object usePeerVerification, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
@@ -56,14 +56,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> The endpoint of the Shopify server. (i.e. mystore.myshopify.com). </summary>
         public object Host { get; set; }
         /// <summary>
-        /// The API access token that can be used to access Shopify’s data. The token won&apos;t expire if it is offline mode.
+        /// The API access token that can be used to access Shopify’s data. The token won't expire if it is offline mode.
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
         /// </summary>
         public SecretBase AccessToken { get; set; }
         /// <summary> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </summary>
         public object UseEncryptedEndpoints { get; set; }
-        /// <summary> Specifies whether to require the host name in the server&apos;s certificate to match the host name of the server when connecting over SSL. The default value is true. </summary>
+        /// <summary> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. </summary>
         public object UseHostVerification { get; set; }
         /// <summary> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </summary>
         public object UsePeerVerification { get; set; }

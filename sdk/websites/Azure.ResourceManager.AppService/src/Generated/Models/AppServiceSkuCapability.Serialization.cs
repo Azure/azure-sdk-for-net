@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceSkuCapability DeserializeAppServiceSkuCapability(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> value = default;
             Optional<string> reason = default;

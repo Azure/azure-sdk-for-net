@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -20,11 +21,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PreserveCompressionFileNameAsFolder))
             {
                 writer.WritePropertyName("preserveCompressionFileNameAsFolder"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(PreserveCompressionFileNameAsFolder);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(PreserveCompressionFileNameAsFolder.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, PreserveCompressionFileNameAsFolder);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CompressionReadSettingsType);
@@ -34,7 +31,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
@@ -42,7 +42,11 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static TarReadSettings DeserializeTarReadSettings(JsonElement element)
         {
-            Optional<BinaryData> preserveCompressionFileNameAsFolder = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<DataFactoryElement<bool>> preserveCompressionFileNameAsFolder = default;
             string type = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -52,10 +56,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    preserveCompressionFileNameAsFolder = BinaryData.FromString(property.Value.GetRawText());
+                    preserveCompressionFileNameAsFolder = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"u8))

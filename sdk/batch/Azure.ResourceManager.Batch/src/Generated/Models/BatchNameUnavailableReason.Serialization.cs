@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Batch.Models
 
         public static BatchNameUnavailableReason ToBatchNameUnavailableReason(this string value)
         {
-            if (string.Equals(value, "Invalid", StringComparison.InvariantCultureIgnoreCase)) return BatchNameUnavailableReason.Invalid;
-            if (string.Equals(value, "AlreadyExists", StringComparison.InvariantCultureIgnoreCase)) return BatchNameUnavailableReason.AlreadyExists;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Invalid")) return BatchNameUnavailableReason.Invalid;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "AlreadyExists")) return BatchNameUnavailableReason.AlreadyExists;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchNameUnavailableReason value.");
         }
     }

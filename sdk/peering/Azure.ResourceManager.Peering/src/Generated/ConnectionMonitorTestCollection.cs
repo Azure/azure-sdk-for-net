@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.Peering
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _connectionMonitorTestRestClient.CreateListByPeeringServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _connectionMonitorTestRestClient.CreateListByPeeringServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConnectionMonitorTestResource(Client, ConnectionMonitorTestData.DeserializeConnectionMonitorTestData(e)), _connectionMonitorTestClientDiagnostics, Pipeline, "ConnectionMonitorTestCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConnectionMonitorTestResource(Client, ConnectionMonitorTestData.DeserializeConnectionMonitorTestData(e)), _connectionMonitorTestClientDiagnostics, Pipeline, "ConnectionMonitorTestCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +250,7 @@ namespace Azure.ResourceManager.Peering
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _connectionMonitorTestRestClient.CreateListByPeeringServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _connectionMonitorTestRestClient.CreateListByPeeringServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConnectionMonitorTestResource(Client, ConnectionMonitorTestData.DeserializeConnectionMonitorTestData(e)), _connectionMonitorTestClientDiagnostics, Pipeline, "ConnectionMonitorTestCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConnectionMonitorTestResource(Client, ConnectionMonitorTestData.DeserializeConnectionMonitorTestData(e)), _connectionMonitorTestClientDiagnostics, Pipeline, "ConnectionMonitorTestCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -314,6 +315,80 @@ namespace Azure.ResourceManager.Peering
             {
                 var response = _connectionMonitorTestRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorTestName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/connectionMonitorTests/{connectionMonitorTestName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConnectionMonitorTests_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="connectionMonitorTestName"> The name of the connection monitor test. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="connectionMonitorTestName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorTestName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ConnectionMonitorTestResource>> GetIfExistsAsync(string connectionMonitorTestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(connectionMonitorTestName, nameof(connectionMonitorTestName));
+
+            using var scope = _connectionMonitorTestClientDiagnostics.CreateScope("ConnectionMonitorTestCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _connectionMonitorTestRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorTestName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ConnectionMonitorTestResource>(response.GetRawResponse());
+                return Response.FromValue(new ConnectionMonitorTestResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peeringServices/{peeringServiceName}/connectionMonitorTests/{connectionMonitorTestName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConnectionMonitorTests_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="connectionMonitorTestName"> The name of the connection monitor test. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="connectionMonitorTestName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorTestName"/> is null. </exception>
+        public virtual NullableResponse<ConnectionMonitorTestResource> GetIfExists(string connectionMonitorTestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(connectionMonitorTestName, nameof(connectionMonitorTestName));
+
+            using var scope = _connectionMonitorTestClientDiagnostics.CreateScope("ConnectionMonitorTestCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _connectionMonitorTestRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorTestName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ConnectionMonitorTestResource>(response.GetRawResponse());
+                return Response.FromValue(new ConnectionMonitorTestResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

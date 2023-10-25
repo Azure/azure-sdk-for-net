@@ -44,6 +44,10 @@ namespace Azure.ResourceManager.DataShare.Models
 
         internal static BlobDataSetMapping DeserializeBlobDataSetMapping(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DataSetMappingKind kind = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -84,7 +88,6 @@ namespace Azure.ResourceManager.DataShare.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -113,7 +116,6 @@ namespace Azure.ResourceManager.DataShare.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             dataSetMappingStatus = new DataSetMappingStatus(property0.Value.GetString());
@@ -128,7 +130,6 @@ namespace Azure.ResourceManager.DataShare.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             outputType = new DataShareOutputType(property0.Value.GetString());
@@ -138,7 +139,6 @@ namespace Azure.ResourceManager.DataShare.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new DataShareProvisioningState(property0.Value.GetString());

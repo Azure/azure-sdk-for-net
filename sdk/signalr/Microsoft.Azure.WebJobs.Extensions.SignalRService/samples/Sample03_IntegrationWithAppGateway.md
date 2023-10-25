@@ -28,8 +28,8 @@ Related docs:
 ## Option 3: Dependency injection (In-Process Model Runtime Only)
 This is the most flexible way for C# in-process model functions. Configure `SignalROptions.ServiceEndpoints` in your startup class as follows:
 
-```cs
-public class Startup : FunctionsStartup
+```C# Snippet:AppGatewayIntegration
+public class AppGatewayStartup : FunctionsStartup
 {
     public override void Configure(IFunctionsHostBuilder builder)
     {

@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
 
         internal static EdgeOrderAddressContactDetails DeserializeEdgeOrderAddressContactDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string contactName = default;
             string phone = default;
             Optional<string> phoneExtension = default;

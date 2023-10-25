@@ -20,6 +20,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static SubAssessmentStatus DeserializeSubAssessmentStatus(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SubAssessmentStatusCode> code = default;
             Optional<string> cause = default;
             Optional<string> description = default;
@@ -30,7 +34,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     code = new SubAssessmentStatusCode(property.Value.GetString());
@@ -50,7 +53,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     severity = new SecurityAssessmentSeverity(property.Value.GetString());

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-preview.18 (Unreleased)
+## 1.0.0-preview.19 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,17 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-preview.18 (2023-08-08)
+- Added `authenticationType`, `containerUri`, `sasUri` and `sasToken` properties to BlobService 
+- Added `setSystemVariable` proprety to SetVariableActivityTypeProperties
+- Added `mongoDbAtlasDriverVersion` property to MongoDbAtlasLinkedServiceTypeProperties
+- Added `ActionOnExistingTargetTable` property for Synapse Link
+- Added `OutputColumn` Object For Office365Source outputColumns
+- Added `configurationType` ,`targetSparkConfiguration` and `sparkConfig` properties for SynapseNotebookActivityTypeProperties
+- Added `credential` property for LinkedService
+- Added `isolationLevel` property for SQLServerSource
+- Added new apis of Create/Cancel/GetStatus/GetSnapshot for RunNotebook
 
 ## 1.0.0-preview.17 (2023-01-10)
 - Added `workspaceResourceId` to AzureSynapseArtifactsLinkedServiceTypeProperties

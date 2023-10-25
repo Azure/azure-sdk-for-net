@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.Quantum.Models
 
         internal static Provider DeserializeProvider(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> providerId = default;
             Optional<string> providerSku = default;
             Optional<Uri> instanceUri = default;
@@ -73,7 +77,6 @@ namespace Azure.ResourceManager.Quantum.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        instanceUri = null;
                         continue;
                     }
                     instanceUri = new Uri(property.Value.GetString());
@@ -88,7 +91,6 @@ namespace Azure.ResourceManager.Quantum.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new Status(property.Value.GetString());

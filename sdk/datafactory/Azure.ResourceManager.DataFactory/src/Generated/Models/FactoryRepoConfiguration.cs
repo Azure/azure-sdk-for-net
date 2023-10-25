@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary>
-    /// Factory&apos;s git repo information.
+    /// Factory's git repo information.
     /// Please note <see cref="FactoryRepoConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="FactoryGitHubConfiguration"/> and <see cref="FactoryVstsConfiguration"/>.
     /// </summary>
@@ -43,7 +43,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="collaborationBranch"> Collaboration branch. </param>
         /// <param name="rootFolder"> Root folder. </param>
         /// <param name="lastCommitId"> Last commit id. </param>
-        internal FactoryRepoConfiguration(string factoryRepoConfigurationType, string accountName, string repositoryName, string collaborationBranch, string rootFolder, string lastCommitId)
+        /// <param name="disablePublish"> Disable manual publish operation in ADF studio to favor automated publish. </param>
+        internal FactoryRepoConfiguration(string factoryRepoConfigurationType, string accountName, string repositoryName, string collaborationBranch, string rootFolder, string lastCommitId, bool? disablePublish)
         {
             FactoryRepoConfigurationType = factoryRepoConfigurationType;
             AccountName = accountName;
@@ -51,6 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             CollaborationBranch = collaborationBranch;
             RootFolder = rootFolder;
             LastCommitId = lastCommitId;
+            DisablePublish = disablePublish;
         }
 
         /// <summary> Type of repo configuration. </summary>
@@ -65,5 +67,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public string RootFolder { get; set; }
         /// <summary> Last commit id. </summary>
         public string LastCommitId { get; set; }
+        /// <summary> Disable manual publish operation in ADF studio to favor automated publish. </summary>
+        public bool? DisablePublish { get; set; }
     }
 }

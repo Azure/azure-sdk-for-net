@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Json;
 using Azure.Core.Serialization;
 
 namespace Azure
@@ -56,6 +57,46 @@ namespace Azure
         {
             JsonElement element = data.ToObjectFromJson<JsonElement>();
             return element.GetObject();
+        }
+
+        /// <summary>
+        /// Return the content of the BinaryData as a dynamic type.  Please see https://aka.ms/azsdk/net/dynamiccontent for details.
+        /// </summary>
+        public static dynamic ToDynamicFromJson(this BinaryData utf8Json)
+        {
+            DynamicDataOptions options = new DynamicDataOptions();
+            return utf8Json.ToDynamicFromJson(options);
+        }
+
+        /// <summary>
+        /// Return the content of the BinaryData as a dynamic type.  Please see https://aka.ms/azsdk/net/dynamiccontent for details.
+        /// <paramref name="propertyNameFormat">The format of property names in the JSON content.
+        /// This value indicates to the dynamic type that it can convert property names on the returned value to this format in the underlying JSON.
+        /// Please see https://aka.ms/azsdk/net/dynamiccontent#use-c-naming-conventions for details.
+        /// </paramref>
+        /// <paramref name="dateTimeFormat">The standard format specifier to pass when serializing DateTime and DateTimeOffset values in the JSON content.
+        /// To serialize to unix time, pass the value <code>"x"</code> and
+        /// see <see href="https://learn.microsoft.com/dotnet/standard/base-types/standard-date-and-time-format-strings">https://learn.microsoft.com/dotnet/standard/base-types/standard-date-and-time-format-strings#table-of-format-specifiers</see> for other well known values.
+        /// </paramref>
+        /// </summary>
+        public static dynamic ToDynamicFromJson(this BinaryData utf8Json, JsonPropertyNames propertyNameFormat, string dateTimeFormat = DynamicData.RoundTripFormat)
+        {
+            DynamicDataOptions options = new DynamicDataOptions()
+            {
+                PropertyNameFormat = propertyNameFormat,
+                DateTimeFormat = dateTimeFormat
+            };
+
+            return utf8Json.ToDynamicFromJson(options);
+        }
+
+        /// <summary>
+        /// Return the content of the BinaryData as a dynamic type.
+        /// </summary>
+        internal static dynamic ToDynamicFromJson(this BinaryData utf8Json, DynamicDataOptions options)
+        {
+            MutableJsonDocument mdoc = MutableJsonDocument.Parse(utf8Json, DynamicDataOptions.ToSerializerOptions(options));
+            return new DynamicData(mdoc.RootElement, options);
         }
 
         private static object? GetObject(in this JsonElement element)

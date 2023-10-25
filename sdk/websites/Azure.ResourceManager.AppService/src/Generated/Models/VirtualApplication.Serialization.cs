@@ -46,6 +46,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static VirtualApplication DeserializeVirtualApplication(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> virtualPath = default;
             Optional<string> physicalPath = default;
             Optional<bool> preloadEnabled = default;
@@ -66,7 +70,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     preloadEnabled = property.Value.GetBoolean();
@@ -76,7 +79,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<VirtualDirectory> array = new List<VirtualDirectory>();

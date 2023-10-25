@@ -43,16 +43,40 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("conflictResolutionPolicy"u8);
                 writer.WriteObjectValue(ConflictResolutionPolicy);
             }
+            if (Optional.IsDefined(ClientEncryptionPolicy))
+            {
+                writer.WritePropertyName("clientEncryptionPolicy"u8);
+                writer.WriteObjectValue(ClientEncryptionPolicy);
+            }
             if (Optional.IsDefined(AnalyticalStorageTtl))
             {
                 writer.WritePropertyName("analyticalStorageTtl"u8);
                 writer.WriteNumberValue(AnalyticalStorageTtl.Value);
+            }
+            if (Optional.IsDefined(RestoreParameters))
+            {
+                writer.WritePropertyName("restoreParameters"u8);
+                writer.WriteObjectValue(RestoreParameters);
+            }
+            if (Optional.IsDefined(CreateMode))
+            {
+                writer.WritePropertyName("createMode"u8);
+                writer.WriteStringValue(CreateMode.Value.ToString());
+            }
+            if (Optional.IsDefined(MaterializedViewDefinition))
+            {
+                writer.WritePropertyName("materializedViewDefinition"u8);
+                writer.WriteObjectValue(MaterializedViewDefinition);
             }
             writer.WriteEndObject();
         }
 
         internal static RestorableSqlContainerPropertiesResourceContainer DeserializeRestorableSqlContainerPropertiesResourceContainer(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> self = default;
             Optional<string> rid = default;
             Optional<float> ts = default;
@@ -63,7 +87,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<int> defaultTtl = default;
             Optional<CosmosDBUniqueKeyPolicy> uniqueKeyPolicy = default;
             Optional<ConflictResolutionPolicy> conflictResolutionPolicy = default;
+            Optional<CosmosDBClientEncryptionPolicy> clientEncryptionPolicy = default;
             Optional<long> analyticalStorageTtl = default;
+            Optional<ResourceRestoreParameters> restoreParameters = default;
+            Optional<CosmosDBAccountCreateMode> createMode = default;
+            Optional<MaterializedViewDefinition> materializedViewDefinition = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("_self"u8))
@@ -80,7 +108,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ts = property.Value.GetSingle();
@@ -90,7 +117,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -105,7 +131,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     indexingPolicy = CosmosDBIndexingPolicy.DeserializeCosmosDBIndexingPolicy(property.Value);
@@ -115,7 +140,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     partitionKey = CosmosDBContainerPartitionKey.DeserializeCosmosDBContainerPartitionKey(property.Value);
@@ -125,7 +149,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     defaultTtl = property.Value.GetInt32();
@@ -135,7 +158,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     uniqueKeyPolicy = CosmosDBUniqueKeyPolicy.DeserializeCosmosDBUniqueKeyPolicy(property.Value);
@@ -145,24 +167,58 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     conflictResolutionPolicy = ConflictResolutionPolicy.DeserializeConflictResolutionPolicy(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("clientEncryptionPolicy"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    clientEncryptionPolicy = CosmosDBClientEncryptionPolicy.DeserializeCosmosDBClientEncryptionPolicy(property.Value);
                     continue;
                 }
                 if (property.NameEquals("analyticalStorageTtl"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     analyticalStorageTtl = property.Value.GetInt64();
                     continue;
                 }
+                if (property.NameEquals("restoreParameters"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    restoreParameters = ResourceRestoreParameters.DeserializeResourceRestoreParameters(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("createMode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    createMode = new CosmosDBAccountCreateMode(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("materializedViewDefinition"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    materializedViewDefinition = MaterializedViewDefinition.DeserializeMaterializedViewDefinition(property.Value);
+                    continue;
+                }
             }
-            return new RestorableSqlContainerPropertiesResourceContainer(id, indexingPolicy.Value, partitionKey.Value, Optional.ToNullable(defaultTtl), uniqueKeyPolicy.Value, conflictResolutionPolicy.Value, Optional.ToNullable(analyticalStorageTtl), self.Value, rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag));
+            return new RestorableSqlContainerPropertiesResourceContainer(id, indexingPolicy.Value, partitionKey.Value, Optional.ToNullable(defaultTtl), uniqueKeyPolicy.Value, conflictResolutionPolicy.Value, clientEncryptionPolicy.Value, Optional.ToNullable(analyticalStorageTtl), restoreParameters.Value, Optional.ToNullable(createMode), materializedViewDefinition.Value, self.Value, rid.Value, Optional.ToNullable(ts), Optional.ToNullable(etag));
         }
     }
 }

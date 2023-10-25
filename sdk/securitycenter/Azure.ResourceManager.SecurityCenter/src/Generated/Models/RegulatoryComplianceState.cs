@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> Aggregative state based on the standard&apos;s supported controls states. </summary>
+    /// <summary> Aggregative state based on the standard's supported controls states. </summary>
     public readonly partial struct RegulatoryComplianceState : IEquatable<RegulatoryComplianceState>
     {
         private readonly string _value;

@@ -10,7 +10,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary> A class representing the SecurityWorkspaceSetting data model. </summary>
+    /// <summary>
+    /// A class representing the SecurityWorkspaceSetting data model.
+    /// Configures where to store the OMS agent data for workspaces under a scope
+    /// </summary>
     public partial class SecurityWorkspaceSettingData : ResourceData
     {
         /// <summary> Initializes a new instance of SecurityWorkspaceSettingData. </summary>

@@ -8,6 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -64,14 +65,14 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="expand"> The $expand OData query parameter. This is a comma-separated list of additional streaming job properties to include in the response, beyond the default set returned when this parameter is absent. The default set is all streaming job properties other than &apos;inputs&apos;, &apos;transformation&apos;, &apos;outputs&apos;, and &apos;functions&apos;. </param>
+        /// <param name="expand"> The $expand OData query parameter. This is a comma-separated list of additional streaming job properties to include in the response, beyond the default set returned when this parameter is absent. The default set is all streaming job properties other than 'inputs', 'transformation', 'outputs', and 'functions'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="StreamingJobResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StreamingJobResource> GetStreamingJobsAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => StreamingJobRestClient.CreateListRequest(Id.SubscriptionId, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StreamingJobRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, expand);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StreamingJobResource(Client, StreamingJobData.DeserializeStreamingJobData(e)), StreamingJobClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetStreamingJobs", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StreamingJobResource(Client, StreamingJobData.DeserializeStreamingJobData(e)), StreamingJobClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetStreamingJobs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -87,18 +88,18 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="expand"> The $expand OData query parameter. This is a comma-separated list of additional streaming job properties to include in the response, beyond the default set returned when this parameter is absent. The default set is all streaming job properties other than &apos;inputs&apos;, &apos;transformation&apos;, &apos;outputs&apos;, and &apos;functions&apos;. </param>
+        /// <param name="expand"> The $expand OData query parameter. This is a comma-separated list of additional streaming job properties to include in the response, beyond the default set returned when this parameter is absent. The default set is all streaming job properties other than 'inputs', 'transformation', 'outputs', and 'functions'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="StreamingJobResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StreamingJobResource> GetStreamingJobs(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => StreamingJobRestClient.CreateListRequest(Id.SubscriptionId, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StreamingJobRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, expand);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StreamingJobResource(Client, StreamingJobData.DeserializeStreamingJobData(e)), StreamingJobClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetStreamingJobs", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StreamingJobResource(Client, StreamingJobData.DeserializeStreamingJobData(e)), StreamingJobClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetStreamingJobs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Retrieves the subscription&apos;s current quota information in a particular region.
+        /// Retrieves the subscription's current quota information in a particular region.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -116,11 +117,11 @@ namespace Azure.ResourceManager.StreamAnalytics
         public virtual AsyncPageable<StreamAnalyticsSubscriptionQuota> GetQuotasSubscriptionsAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SubscriptionsRestClient.CreateListQuotasRequest(Id.SubscriptionId, location);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, StreamAnalyticsSubscriptionQuota.DeserializeStreamAnalyticsSubscriptionQuota, SubscriptionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetQuotasSubscriptions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, StreamAnalyticsSubscriptionQuota.DeserializeStreamAnalyticsSubscriptionQuota, SubscriptionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetQuotasSubscriptions", "value", null, cancellationToken);
         }
 
         /// <summary>
-        /// Retrieves the subscription&apos;s current quota information in a particular region.
+        /// Retrieves the subscription's current quota information in a particular region.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -138,7 +139,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         public virtual Pageable<StreamAnalyticsSubscriptionQuota> GetQuotasSubscriptions(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SubscriptionsRestClient.CreateListQuotasRequest(Id.SubscriptionId, location);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, StreamAnalyticsSubscriptionQuota.DeserializeStreamAnalyticsSubscriptionQuota, SubscriptionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetQuotasSubscriptions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, StreamAnalyticsSubscriptionQuota.DeserializeStreamAnalyticsSubscriptionQuota, SubscriptionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetQuotasSubscriptions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -512,7 +513,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => StreamAnalyticsClusterClustersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StreamAnalyticsClusterClustersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StreamAnalyticsClusterResource(Client, StreamAnalyticsClusterData.DeserializeStreamAnalyticsClusterData(e)), StreamAnalyticsClusterClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetStreamAnalyticsClusters", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StreamAnalyticsClusterResource(Client, StreamAnalyticsClusterData.DeserializeStreamAnalyticsClusterData(e)), StreamAnalyticsClusterClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetStreamAnalyticsClusters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -534,7 +535,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => StreamAnalyticsClusterClustersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StreamAnalyticsClusterClustersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StreamAnalyticsClusterResource(Client, StreamAnalyticsClusterData.DeserializeStreamAnalyticsClusterData(e)), StreamAnalyticsClusterClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetStreamAnalyticsClusters", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StreamAnalyticsClusterResource(Client, StreamAnalyticsClusterData.DeserializeStreamAnalyticsClusterData(e)), StreamAnalyticsClusterClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetStreamAnalyticsClusters", "value", "nextLink", cancellationToken);
         }
     }
 }

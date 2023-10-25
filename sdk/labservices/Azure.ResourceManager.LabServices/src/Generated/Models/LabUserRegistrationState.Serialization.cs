@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.LabServices.Models
 
         public static LabUserRegistrationState ToLabUserRegistrationState(this string value)
         {
-            if (string.Equals(value, "Registered", StringComparison.InvariantCultureIgnoreCase)) return LabUserRegistrationState.Registered;
-            if (string.Equals(value, "NotRegistered", StringComparison.InvariantCultureIgnoreCase)) return LabUserRegistrationState.NotRegistered;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Registered")) return LabUserRegistrationState.Registered;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NotRegistered")) return LabUserRegistrationState.NotRegistered;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown LabUserRegistrationState value.");
         }
     }

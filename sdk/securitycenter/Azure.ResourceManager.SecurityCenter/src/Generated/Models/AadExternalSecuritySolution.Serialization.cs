@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 
         internal static AadExternalSecuritySolution DeserializeAadExternalSecuritySolution(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AadSolutionProperties> properties = default;
             ExternalSecuritySolutionKind? kind = default;
             Optional<AzureLocation> location = default;
@@ -48,7 +52,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = AadSolutionProperties.DeserializeAadSolutionProperties(property.Value);
@@ -68,7 +71,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
@@ -93,7 +95,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

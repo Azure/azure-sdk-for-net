@@ -1192,50 +1192,6 @@ namespace Microsoft.Azure.Batch
         }
 
         /// <summary>
-        /// Gets lifetime summary statistics for all of the jobs in the current account.
-        /// Statistics are aggregated across all jobs that have ever existed in the account, from account creation to the last update time of the statistics. The statistics may not be immediately available. The
-        /// Batch service performs periodic roll-up of statistics. The typical delay is about 30 minutes.
-        /// </summary>
-        /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
-        /// <returns>The aggregated job statistics.</returns>
-        /// <remarks>The get statistics operation runs asynchronously.</remarks>
-        public async Task<JobStatistics> GetAllLifetimeStatisticsAsync(
-            IEnumerable<BatchClientBehavior> additionalBehaviors = null,
-            CancellationToken cancellationToken = default)
-        {
-            // craft the behavior manager for this call
-            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
-
-            Task<AzureOperationResponse<Models.JobStatistics, Models.JobGetAllLifetimeStatisticsHeaders>> asyncTask =
-                ParentBatchClient.ProtocolLayer.GetAllJobLifetimeStats(
-                    bhMgr,
-                    cancellationToken);
-
-            var response = await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
-
-            JobStatistics statistics = new JobStatistics(response.Body);
-
-            return statistics;
-        }
-
-        /// <summary>
-        /// Gets lifetime summary statistics for all of the jobs in the current account.  
-        /// Statistics are aggregated across all jobs that have ever existed in the account, from account creation to the last update time of the statistics. The statistics may not be immediately available. The
-        /// Batch service performs periodic roll-up of statistics. The typical delay is about 30 minutes.
-        /// </summary>
-        /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
-        /// <returns>The aggregated job statistics.</returns>
-        /// <remarks>This is a blocking operation; for a non-blocking equivalent, see <see cref="GetAllLifetimeStatisticsAsync(IEnumerable{BatchClientBehavior}, CancellationToken)"/>.</remarks>
-        public JobStatistics GetAllLifetimeStatistics(IEnumerable<BatchClientBehavior> additionalBehaviors = null)
-        {
-            Task<JobStatistics> asyncTask = GetAllLifetimeStatisticsAsync(additionalBehaviors);
-            JobStatistics statistics = asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
-
-            return statistics;
-        }
-
-        /// <summary>
         /// Enumerates the status of <see cref="CloudJob.JobPreparationTask"/> and <see cref="CloudJob.JobReleaseTask"/> tasks for the specified job.
         /// </summary>
         /// <param name="jobId">The id of the job.</param>

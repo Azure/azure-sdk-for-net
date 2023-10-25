@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.MySql
 
         internal static MySqlServerKeyData DeserializeMySqlServerKeyData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -70,7 +74,6 @@ namespace Azure.ResourceManager.MySql
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -89,7 +92,6 @@ namespace Azure.ResourceManager.MySql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             serverKeyType = new MySqlServerKeyType(property0.Value.GetString());
@@ -99,7 +101,6 @@ namespace Azure.ResourceManager.MySql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                uri = null;
                                 continue;
                             }
                             uri = new Uri(property0.Value.GetString());
@@ -109,7 +110,6 @@ namespace Azure.ResourceManager.MySql
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             creationDate = property0.Value.GetDateTimeOffset("O");

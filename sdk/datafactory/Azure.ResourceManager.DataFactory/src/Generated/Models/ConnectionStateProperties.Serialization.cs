@@ -20,6 +20,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static ConnectionStateProperties DeserializeConnectionStateProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> actionsRequired = default;
             Optional<string> description = default;
             Optional<string> status = default;

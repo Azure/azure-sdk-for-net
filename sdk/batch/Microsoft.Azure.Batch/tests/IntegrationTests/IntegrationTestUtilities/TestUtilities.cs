@@ -586,8 +586,10 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
             {
                 found = false;
 
+#pragma warning disable CS0618 // Type or member is obsolete
                 foreach (Certificate curCert in certOps.ListCertificates())
                 {
+#pragma warning restore CS0618 // Type or member is obsolete
                     if (thumbAlgo.Equals(curCert.ThumbprintAlgorithm, StringComparison.InvariantCultureIgnoreCase) &&
                         thumb.Equals(curCert.Thumbprint, StringComparison.InvariantCultureIgnoreCase))
                     {

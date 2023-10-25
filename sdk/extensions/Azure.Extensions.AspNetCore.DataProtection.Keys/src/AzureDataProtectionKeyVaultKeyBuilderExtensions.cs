@@ -71,9 +71,11 @@ namespace Microsoft.AspNetCore.DataProtection
 
             builder.Services.AddSingleton<IActivator, DecryptorTypeForwardingActivator>();
 
+            builder.Services.AddSingleton<IKeyEncryptionKeyResolver>(keyResolverFactory);
+
             builder.Services.AddSingleton(sp =>
             {
-                var keyResolver = keyResolverFactory(sp);
+                var keyResolver = sp.GetRequiredService<IKeyEncryptionKeyResolver>();
                 return new AzureKeyVaultXmlEncryptor(keyResolver, keyIdentifier);
             });
 
@@ -97,10 +99,15 @@ namespace Microsoft.AspNetCore.DataProtection
 
             builder.Services.AddSingleton<IActivator, DecryptorTypeForwardingActivator>();
 
-            builder.Services.AddSingleton(sp =>
+            builder.Services.AddSingleton<IKeyEncryptionKeyResolver>(sp =>
             {
                 var tokenCredential = tokenCredentialFactory(sp);
-                var keyResolver = new KeyResolver(tokenCredential);
+                return new KeyResolver(tokenCredential);
+            });
+
+            builder.Services.AddSingleton(sp =>
+            {
+                var keyResolver = sp.GetRequiredService<IKeyEncryptionKeyResolver>();
                 return new AzureKeyVaultXmlEncryptor(keyResolver, keyIdentifier);
             });
 

@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> This class represents the script action task details. </summary>
-    public partial class ScriptActionTaskDetails : TaskTypeDetails
+    public partial class ScriptActionTaskDetails : SiteRecoveryTaskTypeDetails
     {
         /// <summary> Initializes a new instance of ScriptActionTaskDetails. </summary>
         internal ScriptActionTaskDetails()

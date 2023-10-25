@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.Hci.Models
         internal HciClusterReportedProperties()
         {
             Nodes = new ChangeTrackingList<HciClusterNode>();
+            SupportedCapabilities = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of HciClusterReportedProperties. </summary>
@@ -28,7 +29,8 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="lastUpdatedOn"> Last time the cluster reported the data. </param>
         /// <param name="imdsAttestation"> IMDS attestation status of the cluster. </param>
         /// <param name="diagnosticLevel"> Level of diagnostic data emitted by the cluster. </param>
-        internal HciClusterReportedProperties(string clusterName, Guid? clusterId, string clusterVersion, IReadOnlyList<HciClusterNode> nodes, DateTimeOffset? lastUpdatedOn, ImdsAttestationState? imdsAttestation, HciClusterDiagnosticLevel? diagnosticLevel)
+        /// <param name="supportedCapabilities"> Capabilities supported by the cluster. </param>
+        internal HciClusterReportedProperties(string clusterName, Guid? clusterId, string clusterVersion, IReadOnlyList<HciClusterNode> nodes, DateTimeOffset? lastUpdatedOn, ImdsAttestationState? imdsAttestation, HciClusterDiagnosticLevel? diagnosticLevel, IReadOnlyList<string> supportedCapabilities)
         {
             ClusterName = clusterName;
             ClusterId = clusterId;
@@ -37,6 +39,7 @@ namespace Azure.ResourceManager.Hci.Models
             LastUpdatedOn = lastUpdatedOn;
             ImdsAttestation = imdsAttestation;
             DiagnosticLevel = diagnosticLevel;
+            SupportedCapabilities = supportedCapabilities;
         }
 
         /// <summary> Name of the on-prem cluster connected to this resource. </summary>
@@ -53,5 +56,7 @@ namespace Azure.ResourceManager.Hci.Models
         public ImdsAttestationState? ImdsAttestation { get; }
         /// <summary> Level of diagnostic data emitted by the cluster. </summary>
         public HciClusterDiagnosticLevel? DiagnosticLevel { get; }
+        /// <summary> Capabilities supported by the cluster. </summary>
+        public IReadOnlyList<string> SupportedCapabilities { get; }
     }
 }

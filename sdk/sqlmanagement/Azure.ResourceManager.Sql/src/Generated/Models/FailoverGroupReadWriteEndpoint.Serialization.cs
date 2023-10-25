@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static FailoverGroupReadWriteEndpoint DeserializeFailoverGroupReadWriteEndpoint(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ReadWriteEndpointFailoverPolicy failoverPolicy = default;
             Optional<int> failoverWithDataLossGracePeriodMinutes = default;
             foreach (var property in element.EnumerateObject())
@@ -40,7 +44,6 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     failoverWithDataLossGracePeriodMinutes = property.Value.GetInt32();

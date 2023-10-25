@@ -12,7 +12,10 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the ManagedInstanceKey data model. </summary>
+    /// <summary>
+    /// A class representing the ManagedInstanceKey data model.
+    /// A managed instance key.
+    /// </summary>
     public partial class ManagedInstanceKeyData : ResourceData
     {
         /// <summary> Initializes a new instance of ManagedInstanceKeyData. </summary>
@@ -26,7 +29,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of encryption protector. This is metadata used for the Azure portal experience. </param>
-        /// <param name="serverKeyType"> The key type like &apos;ServiceManaged&apos;, &apos;AzureKeyVault&apos;. </param>
+        /// <param name="serverKeyType"> The key type like 'ServiceManaged', 'AzureKeyVault'. </param>
         /// <param name="uri"> The URI of the key. If the ServerKeyType is AzureKeyVault, then the URI is required. </param>
         /// <param name="thumbprint"> Thumbprint of the key. </param>
         /// <param name="createdOn"> The key creation date. </param>
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Kind of encryption protector. This is metadata used for the Azure portal experience. </summary>
         public string Kind { get; }
-        /// <summary> The key type like &apos;ServiceManaged&apos;, &apos;AzureKeyVault&apos;. </summary>
+        /// <summary> The key type like 'ServiceManaged', 'AzureKeyVault'. </summary>
         public SqlServerKeyType? ServerKeyType { get; set; }
         /// <summary> The URI of the key. If the ServerKeyType is AzureKeyVault, then the URI is required. </summary>
         public Uri Uri { get; set; }

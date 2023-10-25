@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    /// <summary> The CalculatePriceResult. </summary>
+    /// <summary> The response of calculate price for reservation. </summary>
     public partial class CalculatePriceResult
     {
         /// <summary> Initializes a new instance of CalculatePriceResult. </summary>
@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.Reservations.Models
         }
 
         /// <summary> Initializes a new instance of CalculatePriceResult. </summary>
-        /// <param name="properties"></param>
+        /// <param name="properties"> Properties for calculate price response. </param>
         internal CalculatePriceResult(CalculatePriceResultProperties properties)
         {
             Properties = properties;
         }
 
-        /// <summary> Gets the properties. </summary>
+        /// <summary> Properties for calculate price response. </summary>
         public CalculatePriceResultProperties Properties { get; }
     }
 }

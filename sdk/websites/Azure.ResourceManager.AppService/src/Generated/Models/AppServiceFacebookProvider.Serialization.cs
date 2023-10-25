@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceFacebookProvider DeserializeAppServiceFacebookProvider(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> enabled = default;
             Optional<AppRegistration> registration = default;
             Optional<string> graphApiVersion = default;
@@ -50,7 +54,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enabled = property.Value.GetBoolean();
@@ -60,7 +63,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     registration = AppRegistration.DeserializeAppRegistration(property.Value);
@@ -75,7 +77,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     login = Models.LoginScopes.DeserializeLoginScopes(property.Value);

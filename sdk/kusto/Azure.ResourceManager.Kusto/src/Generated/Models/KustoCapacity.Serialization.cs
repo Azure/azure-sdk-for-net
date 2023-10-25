@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -14,6 +13,10 @@ namespace Azure.ResourceManager.Kusto.Models
     {
         internal static KustoCapacity DeserializeKustoCapacity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             KustoScaleType scaleType = default;
             int minimum = default;
             int maximum = default;

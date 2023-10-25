@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of PrivateLinkResourcesWrapper. </summary>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal PrivateLinkResourcesWrapper(IEnumerable<FactoryPrivateLinkResource> value)
+        internal PrivateLinkResourcesWrapper(IEnumerable<DataFactoryPrivateLinkResource> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of PrivateLinkResourcesWrapper. </summary>
         /// <param name="value"></param>
-        internal PrivateLinkResourcesWrapper(IReadOnlyList<FactoryPrivateLinkResource> value)
+        internal PrivateLinkResourcesWrapper(IReadOnlyList<DataFactoryPrivateLinkResource> value)
         {
             Value = value;
         }
 
         /// <summary> Gets the value. </summary>
-        public IReadOnlyList<FactoryPrivateLinkResource> Value { get; }
+        public IReadOnlyList<DataFactoryPrivateLinkResource> Value { get; }
     }
 }

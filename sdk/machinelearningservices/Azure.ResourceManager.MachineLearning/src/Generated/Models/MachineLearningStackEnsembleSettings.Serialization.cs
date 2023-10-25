@@ -24,7 +24,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(StackMetaLearnerKWargs);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(StackMetaLearnerKWargs.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(StackMetaLearnerKWargs))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
                 else
@@ -47,6 +50,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningStackEnsembleSettings DeserializeMachineLearningStackEnsembleSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> stackMetaLearnerKWargs = default;
             Optional<double> stackMetaLearnerTrainPercentage = default;
             Optional<MachineLearningStackMetaLearnerType> stackMetaLearnerType = default;
@@ -66,7 +73,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     stackMetaLearnerTrainPercentage = property.Value.GetDouble();
@@ -76,7 +82,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     stackMetaLearnerType = new MachineLearningStackMetaLearnerType(property.Value.GetString());

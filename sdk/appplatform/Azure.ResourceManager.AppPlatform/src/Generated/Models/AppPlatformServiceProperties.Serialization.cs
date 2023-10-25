@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -36,11 +35,15 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformServiceProperties DeserializeAppPlatformServiceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppPlatformServiceProvisioningState> provisioningState = default;
             Optional<AppPlatformServiceNetworkProfile> networkProfile = default;
             Optional<ServiceVnetAddons> vnetAddons = default;
             Optional<int> version = default;
-            Optional<Guid> serviceId = default;
+            Optional<string> serviceId = default;
             Optional<AppPlatformServicePowerState> powerState = default;
             Optional<bool> zoneRedundant = default;
             Optional<string> fqdn = default;
@@ -50,7 +53,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new AppPlatformServiceProvisioningState(property.Value.GetString());
@@ -60,7 +62,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     networkProfile = AppPlatformServiceNetworkProfile.DeserializeAppPlatformServiceNetworkProfile(property.Value);
@@ -70,7 +71,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     vnetAddons = ServiceVnetAddons.DeserializeServiceVnetAddons(property.Value);
@@ -80,7 +80,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     version = property.Value.GetInt32();
@@ -88,19 +87,13 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 if (property.NameEquals("serviceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    serviceId = property.Value.GetGuid();
+                    serviceId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("powerState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     powerState = new AppPlatformServicePowerState(property.Value.GetString());
@@ -110,7 +103,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     zoneRedundant = property.Value.GetBoolean();
@@ -122,7 +114,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     continue;
                 }
             }
-            return new AppPlatformServiceProperties(Optional.ToNullable(provisioningState), networkProfile.Value, vnetAddons.Value, Optional.ToNullable(version), Optional.ToNullable(serviceId), Optional.ToNullable(powerState), Optional.ToNullable(zoneRedundant), fqdn.Value);
+            return new AppPlatformServiceProperties(Optional.ToNullable(provisioningState), networkProfile.Value, vnetAddons.Value, Optional.ToNullable(version), serviceId.Value, Optional.ToNullable(powerState), Optional.ToNullable(zoneRedundant), fqdn.Value);
         }
     }
 }

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    /// <summary> The request&apos;s protocol. Specific protocol configuration can be available based on this selection. The specified destination address must be coherent with this value. </summary>
+    /// <summary> The request's protocol. Specific protocol configuration can be available based on this selection. The specified destination address must be coherent with this value. </summary>
     public readonly partial struct ConnectivityCheckProtocol : IEquatable<ConnectivityCheckProtocol>
     {
         private readonly string _value;

@@ -12,38 +12,48 @@ using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
 {
-    /// <summary> Request of last detection. </summary>
+    /// <summary> Request of the last detection. </summary>
     public partial class MultivariateLastDetectionOptions
     {
         /// <summary> Initializes a new instance of MultivariateLastDetectionOptions. </summary>
         /// <param name="variables">
-        /// This contains the inference data, including the name, timestamps(ISO 8601) and
+        /// Contains the inference data, including the name, time stamps (ISO 8601), and
         /// values of variables.
         /// </param>
-        /// <param name="topContributorCount">
-        /// An optional field, which is used to specify the number of top contributed
-        /// variables for one anomalous timestamp in the response. The default number is
-        /// 10.
-        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="variables"/> is null. </exception>
-        public MultivariateLastDetectionOptions(IEnumerable<VariableValues> variables, int topContributorCount)
+        public MultivariateLastDetectionOptions(IEnumerable<VariableValues> variables)
         {
             Argument.AssertNotNull(variables, nameof(variables));
 
             Variables = variables.ToList();
+        }
+
+        /// <summary> Initializes a new instance of MultivariateLastDetectionOptions. </summary>
+        /// <param name="variables">
+        /// Contains the inference data, including the name, time stamps (ISO 8601), and
+        /// values of variables.
+        /// </param>
+        /// <param name="topContributorCount">
+        /// Number of top contributed
+        /// variables for one anomalous time stamp in the response. The default is
+        /// 10.
+        /// </param>
+        internal MultivariateLastDetectionOptions(IList<VariableValues> variables, int? topContributorCount)
+        {
+            Variables = variables;
             TopContributorCount = topContributorCount;
         }
 
         /// <summary>
-        /// This contains the inference data, including the name, timestamps(ISO 8601) and
+        /// Contains the inference data, including the name, time stamps (ISO 8601), and
         /// values of variables.
         /// </summary>
         public IList<VariableValues> Variables { get; }
         /// <summary>
-        /// An optional field, which is used to specify the number of top contributed
-        /// variables for one anomalous timestamp in the response. The default number is
+        /// Number of top contributed
+        /// variables for one anomalous time stamp in the response. The default is
         /// 10.
         /// </summary>
-        public int TopContributorCount { get; }
+        public int? TopContributorCount { get; set; }
     }
 }

@@ -12,7 +12,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
-    /// <summary> A class representing the ContainerRegistryPrivateEndpointConnection data model. </summary>
+    /// <summary>
+    /// A class representing the ContainerRegistryPrivateEndpointConnection data model.
+    /// An object that represents a private endpoint connection for a container registry.
+    /// </summary>
     public partial class ContainerRegistryPrivateEndpointConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of ContainerRegistryPrivateEndpointConnectionData. </summary>

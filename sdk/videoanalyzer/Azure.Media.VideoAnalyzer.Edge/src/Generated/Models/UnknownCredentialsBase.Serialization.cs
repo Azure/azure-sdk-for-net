@@ -22,6 +22,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static UnknownCredentialsBase DeserializeUnknownCredentialsBase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = "Unknown";
             foreach (var property in element.EnumerateObject())
             {

@@ -27,11 +27,11 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="description"> Details of the diagnostics info. </param>
-        /// <param name="author"> Authors&apos; names of the detector. </param>
+        /// <param name="author"> Authors' names of the detector. </param>
         /// <param name="category"> Category of the detector. </param>
         /// <param name="supportTopicList"> List of support topics. </param>
         /// <param name="analysisTypes"> List of analysis types. </param>
-        /// <param name="score"> Authors&apos; names of the detector. </param>
+        /// <param name="score"> Authors' names of the detector. </param>
         internal ContainerAppDiagnosticsMetadata(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, string author, string category, IList<ContainerAppDiagnosticSupportTopic> supportTopicList, IList<string> analysisTypes, float? score) : base(id, name, resourceType, systemData)
         {
             Description = description;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Details of the diagnostics info. </summary>
         public string Description { get; }
-        /// <summary> Authors&apos; names of the detector. </summary>
+        /// <summary> Authors' names of the detector. </summary>
         public string Author { get; }
         /// <summary> Category of the detector. </summary>
         public string Category { get; }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         public IList<ContainerAppDiagnosticSupportTopic> SupportTopicList { get; }
         /// <summary> List of analysis types. </summary>
         public IList<string> AnalysisTypes { get; }
-        /// <summary> Authors&apos; names of the detector. </summary>
+        /// <summary> Authors' names of the detector. </summary>
         public float? Score { get; }
     }
 }

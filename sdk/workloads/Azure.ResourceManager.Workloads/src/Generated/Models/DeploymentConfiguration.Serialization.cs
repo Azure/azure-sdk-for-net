@@ -37,9 +37,13 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static DeploymentConfiguration DeserializeDeploymentConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AzureLocation> appLocation = default;
             Optional<InfrastructureConfiguration> infrastructureConfiguration = default;
-            Optional<SoftwareConfiguration> softwareConfiguration = default;
+            Optional<SapSoftwareConfiguration> softwareConfiguration = default;
             SapConfigurationType configurationType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -47,7 +51,6 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     appLocation = new AzureLocation(property.Value.GetString());
@@ -57,7 +60,6 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     infrastructureConfiguration = InfrastructureConfiguration.DeserializeInfrastructureConfiguration(property.Value);
@@ -67,10 +69,9 @@ namespace Azure.ResourceManager.Workloads.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    softwareConfiguration = SoftwareConfiguration.DeserializeSoftwareConfiguration(property.Value);
+                    softwareConfiguration = SapSoftwareConfiguration.DeserializeSapSoftwareConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("configurationType"u8))

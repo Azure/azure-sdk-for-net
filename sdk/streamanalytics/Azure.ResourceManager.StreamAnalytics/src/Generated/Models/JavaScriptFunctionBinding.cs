@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         /// <summary> Initializes a new instance of JavaScriptFunctionBinding. </summary>
         /// <param name="functionBindingType"> Indicates the function binding type. </param>
-        /// <param name="script"> The JavaScript code containing a single function definition. For example: &apos;function (x, y) { return x + y; }&apos;. </param>
+        /// <param name="script"> The JavaScript code containing a single function definition. For example: 'function (x, y) { return x + y; }'. </param>
         internal JavaScriptFunctionBinding(string functionBindingType, string script) : base(functionBindingType)
         {
             Script = script;
             FunctionBindingType = functionBindingType ?? "Microsoft.StreamAnalytics/JavascriptUdf";
         }
 
-        /// <summary> The JavaScript code containing a single function definition. For example: &apos;function (x, y) { return x + y; }&apos;. </summary>
+        /// <summary> The JavaScript code containing a single function definition. For example: 'function (x, y) { return x + y; }'. </summary>
         public string Script { get; set; }
     }
 }

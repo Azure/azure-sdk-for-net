@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Purview
         /// </summary>
         /// <param name="scopeTenantId"> The tenant ID. </param>
         /// <param name="scopeType"> The scope for the default account. </param>
-        /// <param name="scope"> The Id of the scope object, for example if the scope is &quot;Subscription&quot; then it is the ID of that subscription. </param>
+        /// <param name="scope"> The Id of the scope object, for example if the scope is "Subscription" then it is the ID of that subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DefaultPurviewAccountPayload>> GetDefaultAccountAsync(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
         {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Purview
         /// </summary>
         /// <param name="scopeTenantId"> The tenant ID. </param>
         /// <param name="scopeType"> The scope for the default account. </param>
-        /// <param name="scope"> The Id of the scope object, for example if the scope is &quot;Subscription&quot; then it is the ID of that subscription. </param>
+        /// <param name="scope"> The Id of the scope object, for example if the scope is "Subscription" then it is the ID of that subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DefaultPurviewAccountPayload> GetDefaultAccount(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
         {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Purview
         /// </summary>
         /// <param name="scopeTenantId"> The tenant ID. </param>
         /// <param name="scopeType"> The scope for the default account. </param>
-        /// <param name="scope"> The Id of the scope object, for example if the scope is &quot;Subscription&quot; then it is the ID of that subscription. </param>
+        /// <param name="scope"> The Id of the scope object, for example if the scope is "Subscription" then it is the ID of that subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> RemoveDefaultAccountAsync(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
         {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Purview
         /// </summary>
         /// <param name="scopeTenantId"> The tenant ID. </param>
         /// <param name="scopeType"> The scope for the default account. </param>
-        /// <param name="scope"> The Id of the scope object, for example if the scope is &quot;Subscription&quot; then it is the ID of that subscription. </param>
+        /// <param name="scope"> The Id of the scope object, for example if the scope is "Subscription" then it is the ID of that subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response RemoveDefaultAccount(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
         {

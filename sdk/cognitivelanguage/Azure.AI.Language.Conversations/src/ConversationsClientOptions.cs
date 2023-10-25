@@ -11,7 +11,7 @@ namespace Azure.AI.Language.Conversations
     /// <summary> Client options for Conversations library clients. </summary>
     public partial class ConversationsClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2022_10_01_Preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2023_04_01;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
@@ -20,11 +20,8 @@ namespace Azure.AI.Language.Conversations
             /// <summary> Service version "2022-05-01". </summary>
             V2022_05_01 = 1,
 
-            /// <summary> Service version "2022-05-15-preview". </summary>
-            V2022_05_15_Preview = 2,
-
-            /// <summary> Service version "2022-10-01-preview. </summary>
-            V2022_10_01_Preview = 3,
+            /// <summary> Service version "2023-04-01. </summary>
+            V2023_04_01 = 2,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -32,7 +29,7 @@ namespace Azure.AI.Language.Conversations
         /// Gets or sets the audience to use for authentication with Azure Active Directory (AAD). The audience is not considered when using a shared key.
         /// </summary>
         /// <value>If <c>null</c>, <see cref="ConversationsAudience.AzurePublicCloud" /> will be assumed.</value>
-        public ConversationsAudience? Audience { get; set; }
+        internal ConversationsAudience? Audience { get; set; }
 
         internal string Version { get; }
 
@@ -42,8 +39,7 @@ namespace Azure.AI.Language.Conversations
             Version = version switch
             {
                 ServiceVersion.V2022_05_01 => "2022-05-01",
-                ServiceVersion.V2022_05_15_Preview => "2022-05-15-preview",
-                ServiceVersion.V2022_10_01_Preview => "2022-10-01-preview",
+                ServiceVersion.V2023_04_01 => "2023-04-01",
                 _ => throw new NotSupportedException()
             };
         }

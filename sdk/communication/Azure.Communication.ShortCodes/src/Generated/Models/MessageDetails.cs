@@ -22,17 +22,17 @@ namespace Azure.Communication.ShortCodes.Models
 
         /// <summary> Initializes a new instance of MessageDetails. </summary>
         /// <param name="supportedProtocols"> Applicable message protocols used in the program e.g. SMS, MMS. </param>
-        /// <param name="recurrence"> Indicates the nature of the messaging associated with the program e.g. &apos;subscription&apos;, &apos;transaction&apos;. </param>
+        /// <param name="recurrence"> Indicates the nature of the messaging associated with the program e.g. 'subscription', 'transaction'. </param>
         /// <param name="helpMessage">
         /// Message text for mobile terminated message associated with HELP keyword
-        /// e.g &apos;This is the HELP message test.&apos;.
+        /// e.g 'This is the HELP message test.'.
         /// </param>
         /// <param name="optOutMessage">
-        /// &quot;Message text for mobile terminated message associated with STOP keyword
-        /// e.g. &apos;This is the STOP message test.&apos;.
+        /// "Message text for mobile terminated message associated with STOP keyword
+        /// e.g. 'This is the STOP message test.'.
         /// </param>
         /// <param name="optInMessage"> OptInMessage. </param>
-        /// <param name="optInReply"> Keyword used to confirm double Opt-In method e.g. &apos;JOIN&apos;. </param>
+        /// <param name="optInReply"> Keyword used to confirm double Opt-In method e.g. 'JOIN'. </param>
         /// <param name="confirmationMessage"> ConfirmationMessage. </param>
         /// <param name="directionality"> Describes directionality e.g. oneWay or twoWay. </param>
         /// <param name="useCases"> Provides message exchange examples from and to end user for each supported message content type. </param>
@@ -51,21 +51,21 @@ namespace Azure.Communication.ShortCodes.Models
 
         /// <summary> Applicable message protocols used in the program e.g. SMS, MMS. </summary>
         public IList<MessageProtocol> SupportedProtocols { get; }
-        /// <summary> Indicates the nature of the messaging associated with the program e.g. &apos;subscription&apos;, &apos;transaction&apos;. </summary>
+        /// <summary> Indicates the nature of the messaging associated with the program e.g. 'subscription', 'transaction'. </summary>
         public MessageRecurrence? Recurrence { get; set; }
         /// <summary>
         /// Message text for mobile terminated message associated with HELP keyword
-        /// e.g &apos;This is the HELP message test.&apos;.
+        /// e.g 'This is the HELP message test.'.
         /// </summary>
         public string HelpMessage { get; set; }
         /// <summary>
-        /// &quot;Message text for mobile terminated message associated with STOP keyword
-        /// e.g. &apos;This is the STOP message test.&apos;.
+        /// "Message text for mobile terminated message associated with STOP keyword
+        /// e.g. 'This is the STOP message test.'.
         /// </summary>
         public string OptOutMessage { get; set; }
         /// <summary> OptInMessage. </summary>
         public string OptInMessage { get; set; }
-        /// <summary> Keyword used to confirm double Opt-In method e.g. &apos;JOIN&apos;. </summary>
+        /// <summary> Keyword used to confirm double Opt-In method e.g. 'JOIN'. </summary>
         public string OptInReply { get; set; }
         /// <summary> ConfirmationMessage. </summary>
         public string ConfirmationMessage { get; set; }

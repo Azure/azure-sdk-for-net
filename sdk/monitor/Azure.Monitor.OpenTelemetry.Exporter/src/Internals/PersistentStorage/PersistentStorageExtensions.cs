@@ -2,15 +2,15 @@
 // Licensed under the MIT License.
 
 using OpenTelemetry;
-using OpenTelemetry.Extensions.PersistentStorage.Abstractions;
+using OpenTelemetry.PersistentStorage.Abstractions;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage
 {
     internal static class PersistentStorageExtensions
     {
-        internal static ExportResult SaveTelemetry(this PersistentBlobProvider storage, byte[] content, int leaseTime)
+        internal static ExportResult SaveTelemetry(this PersistentBlobProvider storage, byte[] content)
         {
-            return storage.TryCreateBlob(content, leaseTime, out _) ? ExportResult.Success : ExportResult.Failure;
+            return storage.TryCreateBlob(content, out _) ? ExportResult.Success : ExportResult.Failure;
         }
     }
 }

@@ -5,8 +5,8 @@
 
 #nullable disable
 
-using System;
 using System.Threading;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ServiceFabric
         public virtual AsyncPageable<ServiceFabricClusterResource> GetServiceFabricClustersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceFabricClusterClustersRestClient.CreateListRequest(Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ServiceFabricClusterResource(Client, ServiceFabricClusterData.DeserializeServiceFabricClusterData(e)), ServiceFabricClusterClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetServiceFabricClusters", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ServiceFabricClusterResource(Client, ServiceFabricClusterData.DeserializeServiceFabricClusterData(e)), ServiceFabricClusterClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetServiceFabricClusters", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ServiceFabric
         public virtual Pageable<ServiceFabricClusterResource> GetServiceFabricClusters(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceFabricClusterClustersRestClient.CreateListRequest(Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ServiceFabricClusterResource(Client, ServiceFabricClusterData.DeserializeServiceFabricClusterData(e)), ServiceFabricClusterClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetServiceFabricClusters", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new ServiceFabricClusterResource(Client, ServiceFabricClusterData.DeserializeServiceFabricClusterData(e)), ServiceFabricClusterClustersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetServiceFabricClusters", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ServiceFabric
         public virtual AsyncPageable<ClusterCodeVersionsResult> GetClusterVersionsAsync(AzureLocation location, string clusterVersion, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ClusterVersionsRestClient.CreateGetRequest(Id.SubscriptionId, location, clusterVersion);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ClusterCodeVersionsResult.DeserializeClusterCodeVersionsResult, ClusterVersionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetClusterVersions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ClusterCodeVersionsResult.DeserializeClusterCodeVersionsResult, ClusterVersionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetClusterVersions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ServiceFabric
         public virtual Pageable<ClusterCodeVersionsResult> GetClusterVersions(AzureLocation location, string clusterVersion, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ClusterVersionsRestClient.CreateGetRequest(Id.SubscriptionId, location, clusterVersion);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, ClusterCodeVersionsResult.DeserializeClusterCodeVersionsResult, ClusterVersionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetClusterVersions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ClusterCodeVersionsResult.DeserializeClusterCodeVersionsResult, ClusterVersionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetClusterVersions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ServiceFabric
         public virtual AsyncPageable<ClusterCodeVersionsResult> GetClusterVersionsByEnvironmentAsync(AzureLocation location, ClusterVersionsEnvironment environment, string clusterVersion, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ClusterVersionsRestClient.CreateGetByEnvironmentRequest(Id.SubscriptionId, location, environment, clusterVersion);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ClusterCodeVersionsResult.DeserializeClusterCodeVersionsResult, ClusterVersionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetClusterVersionsByEnvironment", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ClusterCodeVersionsResult.DeserializeClusterCodeVersionsResult, ClusterVersionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetClusterVersionsByEnvironment", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ServiceFabric
         public virtual Pageable<ClusterCodeVersionsResult> GetClusterVersionsByEnvironment(AzureLocation location, ClusterVersionsEnvironment environment, string clusterVersion, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ClusterVersionsRestClient.CreateGetByEnvironmentRequest(Id.SubscriptionId, location, environment, clusterVersion);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, ClusterCodeVersionsResult.DeserializeClusterCodeVersionsResult, ClusterVersionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetClusterVersionsByEnvironment", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ClusterCodeVersionsResult.DeserializeClusterCodeVersionsResult, ClusterVersionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetClusterVersionsByEnvironment", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.ServiceFabric
         public virtual AsyncPageable<ClusterCodeVersionsResult> GetClusterVersionsAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ClusterVersionsRestClient.CreateListRequest(Id.SubscriptionId, location);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ClusterCodeVersionsResult.DeserializeClusterCodeVersionsResult, ClusterVersionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetClusterVersions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ClusterCodeVersionsResult.DeserializeClusterCodeVersionsResult, ClusterVersionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetClusterVersions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ServiceFabric
         public virtual Pageable<ClusterCodeVersionsResult> GetClusterVersions(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ClusterVersionsRestClient.CreateListRequest(Id.SubscriptionId, location);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, ClusterCodeVersionsResult.DeserializeClusterCodeVersionsResult, ClusterVersionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetClusterVersions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ClusterCodeVersionsResult.DeserializeClusterCodeVersionsResult, ClusterVersionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetClusterVersions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ServiceFabric
         public virtual AsyncPageable<ClusterCodeVersionsResult> GetClusterVersionsByEnvironmentAsync(AzureLocation location, ClusterVersionsEnvironment environment, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ClusterVersionsRestClient.CreateListByEnvironmentRequest(Id.SubscriptionId, location, environment);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ClusterCodeVersionsResult.DeserializeClusterCodeVersionsResult, ClusterVersionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetClusterVersionsByEnvironment", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ClusterCodeVersionsResult.DeserializeClusterCodeVersionsResult, ClusterVersionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetClusterVersionsByEnvironment", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.ServiceFabric
         public virtual Pageable<ClusterCodeVersionsResult> GetClusterVersionsByEnvironment(AzureLocation location, ClusterVersionsEnvironment environment, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ClusterVersionsRestClient.CreateListByEnvironmentRequest(Id.SubscriptionId, location, environment);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, ClusterCodeVersionsResult.DeserializeClusterCodeVersionsResult, ClusterVersionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetClusterVersionsByEnvironment", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ClusterCodeVersionsResult.DeserializeClusterCodeVersionsResult, ClusterVersionsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetClusterVersionsByEnvironment", "value", null, cancellationToken);
         }
     }
 }

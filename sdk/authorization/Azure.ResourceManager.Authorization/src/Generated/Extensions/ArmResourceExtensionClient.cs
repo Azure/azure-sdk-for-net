@@ -5,14 +5,22 @@
 
 #nullable disable
 
+using System.Threading;
+using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Authorization.Models;
 
 namespace Azure.ResourceManager.Authorization
 {
     /// <summary> A class to add extension methods to ArmResource. </summary>
     internal partial class ArmResourceExtensionClient : ArmResource
     {
+        private ClientDiagnostics _eligibleChildResourcesClientDiagnostics;
+        private EligibleChildResourcesRestOperations _eligibleChildResourcesRestClient;
+
         /// <summary> Initializes a new instance of the <see cref="ArmResourceExtensionClient"/> class for mocking. </summary>
         protected ArmResourceExtensionClient()
         {
@@ -24,6 +32,9 @@ namespace Azure.ResourceManager.Authorization
         internal ArmResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics EligibleChildResourcesClientDiagnostics => _eligibleChildResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Authorization", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private EligibleChildResourcesRestOperations EligibleChildResourcesRestClient => _eligibleChildResourcesRestClient ??= new EligibleChildResourcesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -106,6 +117,52 @@ namespace Azure.ResourceManager.Authorization
         public virtual RoleManagementPolicyAssignmentCollection GetRoleManagementPolicyAssignments()
         {
             return GetCachedClient(Client => new RoleManagementPolicyAssignmentCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Get the child resources of a resource on which user has eligible access
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/eligibleChildResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EligibleChildResources_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The filter to apply on the operation. Use $filter=resourceType+eq+'Subscription' to filter on only resource of type = 'Subscription'. Use $filter=resourceType+eq+'subscription'+or+resourceType+eq+'resourcegroup' to filter on resource of type = 'Subscription' or 'ResourceGroup'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="EligibleChildResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EligibleChildResource> GetEligibleChildResourcesAsync(string filter = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EligibleChildResourcesRestClient.CreateGetRequest(Id, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EligibleChildResourcesRestClient.CreateGetNextPageRequest(nextLink, Id, filter);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, EligibleChildResource.DeserializeEligibleChildResource, EligibleChildResourcesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetEligibleChildResources", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the child resources of a resource on which user has eligible access
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/eligibleChildResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EligibleChildResources_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="filter"> The filter to apply on the operation. Use $filter=resourceType+eq+'Subscription' to filter on only resource of type = 'Subscription'. Use $filter=resourceType+eq+'subscription'+or+resourceType+eq+'resourcegroup' to filter on resource of type = 'Subscription' or 'ResourceGroup'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="EligibleChildResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EligibleChildResource> GetEligibleChildResources(string filter = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => EligibleChildResourcesRestClient.CreateGetRequest(Id, filter);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EligibleChildResourcesRestClient.CreateGetNextPageRequest(nextLink, Id, filter);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, EligibleChildResource.DeserializeEligibleChildResource, EligibleChildResourcesClientDiagnostics, Pipeline, "ArmResourceExtensionClient.GetEligibleChildResources", "value", "nextLink", cancellationToken);
         }
     }
 }

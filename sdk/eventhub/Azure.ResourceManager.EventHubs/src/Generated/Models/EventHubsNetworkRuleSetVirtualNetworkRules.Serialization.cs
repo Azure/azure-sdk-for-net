@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal static EventHubsNetworkRuleSetVirtualNetworkRules DeserializeEventHubsNetworkRuleSetVirtualNetworkRules(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<WritableSubResource> subnet = default;
             Optional<bool> ignoreMissingVnetServiceEndpoint = default;
             foreach (var property in element.EnumerateObject())
@@ -39,7 +43,6 @@ namespace Azure.ResourceManager.EventHubs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     subnet = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
@@ -49,7 +52,6 @@ namespace Azure.ResourceManager.EventHubs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ignoreMissingVnetServiceEndpoint = property.Value.GetBoolean();

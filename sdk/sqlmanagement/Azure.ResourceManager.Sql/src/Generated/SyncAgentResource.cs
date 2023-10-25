@@ -9,6 +9,7 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -374,7 +375,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _syncAgentRestClient.CreateListLinkedDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _syncAgentRestClient.CreateListLinkedDatabasesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SyncAgentLinkedDatabase.DeserializeSyncAgentLinkedDatabase, _syncAgentClientDiagnostics, Pipeline, "SyncAgentResource.GetLinkedDatabases", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SyncAgentLinkedDatabase.DeserializeSyncAgentLinkedDatabase, _syncAgentClientDiagnostics, Pipeline, "SyncAgentResource.GetLinkedDatabases", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -396,7 +397,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _syncAgentRestClient.CreateListLinkedDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _syncAgentRestClient.CreateListLinkedDatabasesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SyncAgentLinkedDatabase.DeserializeSyncAgentLinkedDatabase, _syncAgentClientDiagnostics, Pipeline, "SyncAgentResource.GetLinkedDatabases", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SyncAgentLinkedDatabase.DeserializeSyncAgentLinkedDatabase, _syncAgentClientDiagnostics, Pipeline, "SyncAgentResource.GetLinkedDatabases", "value", "nextLink", cancellationToken);
         }
     }
 }

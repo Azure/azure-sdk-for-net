@@ -43,6 +43,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static LastAccessTimeTrackingPolicy DeserializeLastAccessTimeTrackingPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool enable = default;
             Optional<LastAccessTimeTrackingPolicyName> name = default;
             Optional<int> trackingGranularityInDays = default;
@@ -58,7 +62,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     name = new LastAccessTimeTrackingPolicyName(property.Value.GetString());
@@ -68,7 +71,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     trackingGranularityInDays = property.Value.GetInt32();
@@ -78,7 +80,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

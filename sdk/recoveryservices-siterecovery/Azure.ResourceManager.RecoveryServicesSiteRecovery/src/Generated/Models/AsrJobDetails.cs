@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> This class represents job details based on specific job type. </summary>
-    public partial class AsrJobDetails : JobDetails
+    public partial class AsrJobDetails : SiteRecoveryJobDetails
     {
         /// <summary> Initializes a new instance of AsrJobDetails. </summary>
         internal AsrJobDetails()

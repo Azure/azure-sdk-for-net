@@ -39,12 +39,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// on Compute Nodes in the Batch Pool.</param>
         /// <param name="publicIPAddressConfiguration">The Public IPAddress
         /// configuration for Compute Nodes in the Batch Pool.</param>
-        public NetworkConfiguration(string subnetId = default(string), DynamicVNetAssignmentScope? dynamicVNetAssignmentScope = default(DynamicVNetAssignmentScope?), PoolEndpointConfiguration endpointConfiguration = default(PoolEndpointConfiguration), PublicIPAddressConfiguration publicIPAddressConfiguration = default(PublicIPAddressConfiguration))
+        /// <param name="enableAcceleratedNetworking">Whether this pool should
+        /// enable accelerated networking.</param>
+        public NetworkConfiguration(string subnetId = default(string), DynamicVNetAssignmentScope? dynamicVNetAssignmentScope = default(DynamicVNetAssignmentScope?), PoolEndpointConfiguration endpointConfiguration = default(PoolEndpointConfiguration), PublicIPAddressConfiguration publicIPAddressConfiguration = default(PublicIPAddressConfiguration), bool? enableAcceleratedNetworking = default(bool?))
         {
             SubnetId = subnetId;
             DynamicVNetAssignmentScope = dynamicVNetAssignmentScope;
             EndpointConfiguration = endpointConfiguration;
             PublicIPAddressConfiguration = publicIPAddressConfiguration;
+            EnableAcceleratedNetworking = enableAcceleratedNetworking;
             CustomInit();
         }
 
@@ -120,6 +123,19 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </remarks>
         [JsonProperty(PropertyName = "publicIPAddressConfiguration")]
         public PublicIPAddressConfiguration PublicIPAddressConfiguration { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether this pool should enable accelerated
+        /// networking.
+        /// </summary>
+        /// <remarks>
+        /// Accelerated networking enables single root I/O virtualization
+        /// (SR-IOV) to a VM, which may lead to improved networking
+        /// performance. For more details, see:
+        /// https://learn.microsoft.com/azure/virtual-network/accelerated-networking-overview.
+        /// </remarks>
+        [JsonProperty(PropertyName = "enableAcceleratedNetworking")]
+        public bool? EnableAcceleratedNetworking { get; set; }
 
     }
 }

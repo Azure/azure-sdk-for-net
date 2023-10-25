@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Synapse.Models
 
         internal static SynapseMaintenanceWindowTimeRange DeserializeSynapseMaintenanceWindowTimeRange(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SynapseDayOfWeek> dayOfWeek = default;
             Optional<TimeSpan> startTime = default;
             Optional<TimeSpan> duration = default;
@@ -45,7 +49,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     dayOfWeek = new SynapseDayOfWeek(property.Value.GetString());
@@ -55,7 +58,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startTime = property.Value.GetTimeSpan("T");
@@ -65,7 +67,6 @@ namespace Azure.ResourceManager.Synapse.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     duration = property.Value.GetTimeSpan("P");

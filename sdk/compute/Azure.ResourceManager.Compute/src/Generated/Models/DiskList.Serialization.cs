@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Compute.Models
     {
         internal static DiskList DeserializeDiskList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<ManagedDiskData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

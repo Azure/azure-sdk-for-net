@@ -13,7 +13,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the PeerExpressRouteCircuitConnection data model. </summary>
+    /// <summary>
+    /// A class representing the PeerExpressRouteCircuitConnection data model.
+    /// Peer Express Route Circuit Connection in an ExpressRouteCircuitPeering resource.
+    /// </summary>
     public partial class PeerExpressRouteCircuitConnectionData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of PeerExpressRouteCircuitConnectionData. </summary>

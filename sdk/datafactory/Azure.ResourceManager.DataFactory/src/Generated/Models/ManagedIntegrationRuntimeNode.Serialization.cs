@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         internal static ManagedIntegrationRuntimeNode DeserializeManagedIntegrationRuntimeNode(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nodeId = default;
             Optional<ManagedIntegrationRuntimeNodeStatus> status = default;
             Optional<IReadOnlyList<ManagedIntegrationRuntimeError>> errors = default;
@@ -32,7 +36,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new ManagedIntegrationRuntimeNodeStatus(property.Value.GetString());
@@ -42,7 +45,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ManagedIntegrationRuntimeError> array = new List<ManagedIntegrationRuntimeError>();

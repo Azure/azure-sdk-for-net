@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    /// <summary> Double encryption status as entered by the customer. It is compulsory to give this parameter if the &apos;Deny&apos; or &apos;Disabled&apos; policy is configured. </summary>
+    /// <summary> Double encryption status as entered by the customer. It is compulsory to give this parameter if the 'Deny' or 'Disabled' policy is configured. </summary>
     public readonly partial struct DoubleEncryptionStatus : IEquatable<DoubleEncryptionStatus>
     {
         private readonly string _value;

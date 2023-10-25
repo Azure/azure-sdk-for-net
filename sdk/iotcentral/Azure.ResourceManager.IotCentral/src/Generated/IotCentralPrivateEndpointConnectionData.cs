@@ -13,7 +13,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.IotCentral
 {
-    /// <summary> A class representing the IotCentralPrivateEndpointConnection data model. </summary>
+    /// <summary>
+    /// A class representing the IotCentralPrivateEndpointConnection data model.
+    /// The private endpoint connection resource.
+    /// </summary>
     public partial class IotCentralPrivateEndpointConnectionData : ResourceData
     {
         /// <summary> Initializes a new instance of IotCentralPrivateEndpointConnectionData. </summary>

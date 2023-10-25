@@ -1,0 +1,639 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetDataDeleteJobDetailsAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetDataDeleteJobDetailsAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
+
+Response response = await client.GetDataDeleteJobDetailsAsync("<jobId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("extensionId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("boundaryId").ToString());
+]]></code>
+This sample shows how to call GetDataDeleteJobDetailsAsync with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
+
+Response response = await client.GetDataDeleteJobDetailsAsync("<jobId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("extensionId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("boundaryId").ToString());
+Console.WriteLine(result.GetProperty("weatherDataType").ToString());
+Console.WriteLine(result.GetProperty("granularity").ToString());
+Console.WriteLine(result.GetProperty("startDateTime").ToString());
+Console.WriteLine(result.GetProperty("endDateTime").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+Console.WriteLine(result.GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="GetDataDeleteJobDetails(string,RequestContext)">
+      <example>
+This sample shows how to call GetDataDeleteJobDetails and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
+
+Response response = client.GetDataDeleteJobDetails("<jobId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("extensionId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("boundaryId").ToString());
+]]></code>
+This sample shows how to call GetDataDeleteJobDetails with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
+
+Response response = client.GetDataDeleteJobDetails("<jobId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("extensionId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("boundaryId").ToString());
+Console.WriteLine(result.GetProperty("weatherDataType").ToString());
+Console.WriteLine(result.GetProperty("granularity").ToString());
+Console.WriteLine(result.GetProperty("startDateTime").ToString());
+Console.WriteLine(result.GetProperty("endDateTime").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+Console.WriteLine(result.GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="GetDataIngestionJobDetailsAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetDataIngestionJobDetailsAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
+
+Response response = await client.GetDataIngestionJobDetailsAsync("<jobId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("boundaryId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("extensionId").ToString());
+Console.WriteLine(result.GetProperty("extensionApiName").ToString());
+Console.WriteLine(result.GetProperty("extensionApiInput").GetProperty("<key>").ToString());
+]]></code>
+This sample shows how to call GetDataIngestionJobDetailsAsync with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
+
+Response response = await client.GetDataIngestionJobDetailsAsync("<jobId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("boundaryId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("extensionId").ToString());
+Console.WriteLine(result.GetProperty("extensionApiName").ToString());
+Console.WriteLine(result.GetProperty("extensionApiInput").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("extensionDataProviderAppId").ToString());
+Console.WriteLine(result.GetProperty("extensionDataProviderApiKey").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+Console.WriteLine(result.GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="GetDataIngestionJobDetails(string,RequestContext)">
+      <example>
+This sample shows how to call GetDataIngestionJobDetails and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
+
+Response response = client.GetDataIngestionJobDetails("<jobId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("boundaryId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("extensionId").ToString());
+Console.WriteLine(result.GetProperty("extensionApiName").ToString());
+Console.WriteLine(result.GetProperty("extensionApiInput").GetProperty("<key>").ToString());
+]]></code>
+This sample shows how to call GetDataIngestionJobDetails with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
+
+Response response = client.GetDataIngestionJobDetails("<jobId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("boundaryId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("extensionId").ToString());
+Console.WriteLine(result.GetProperty("extensionApiName").ToString());
+Console.WriteLine(result.GetProperty("extensionApiInput").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("extensionDataProviderAppId").ToString());
+Console.WriteLine(result.GetProperty("extensionDataProviderApiKey").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+Console.WriteLine(result.GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="GetWeathersAsync(string,string,string,string,string,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
+      <example>
+This sample shows how to call GetWeathersAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
+
+await foreach (BinaryData item in client.GetWeathersAsync("<partyId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>", null, null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("partyId").ToString());
+    Console.WriteLine(result.GetProperty("boundaryId").ToString());
+    Console.WriteLine(result.GetProperty("extensionId").ToString());
+    Console.WriteLine(result.GetProperty("location").GetProperty("latitude").ToString());
+    Console.WriteLine(result.GetProperty("location").GetProperty("longitude").ToString());
+    Console.WriteLine(result.GetProperty("dateTime").ToString());
+    Console.WriteLine(result.GetProperty("extensionVersion").ToString());
+    Console.WriteLine(result.GetProperty("weatherDataType").ToString());
+    Console.WriteLine(result.GetProperty("granularity").ToString());
+}
+]]></code>
+This sample shows how to call GetWeathersAsync with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
+
+await foreach (BinaryData item in client.GetWeathersAsync("<partyId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>", DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("partyId").ToString());
+    Console.WriteLine(result.GetProperty("boundaryId").ToString());
+    Console.WriteLine(result.GetProperty("extensionId").ToString());
+    Console.WriteLine(result.GetProperty("location").GetProperty("latitude").ToString());
+    Console.WriteLine(result.GetProperty("location").GetProperty("longitude").ToString());
+    Console.WriteLine(result.GetProperty("dateTime").ToString());
+    Console.WriteLine(result.GetProperty("unitSystemCode").ToString());
+    Console.WriteLine(result.GetProperty("extensionVersion").ToString());
+    Console.WriteLine(result.GetProperty("weatherDataType").ToString());
+    Console.WriteLine(result.GetProperty("granularity").ToString());
+    Console.WriteLine(result.GetProperty("cloudCover").GetProperty("unit").ToString());
+    Console.WriteLine(result.GetProperty("cloudCover").GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("dewPoint").GetProperty("unit").ToString());
+    Console.WriteLine(result.GetProperty("dewPoint").GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("growingDegreeDay").GetProperty("unit").ToString());
+    Console.WriteLine(result.GetProperty("growingDegreeDay").GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("precipitation").GetProperty("unit").ToString());
+    Console.WriteLine(result.GetProperty("precipitation").GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("pressure").GetProperty("unit").ToString());
+    Console.WriteLine(result.GetProperty("pressure").GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("relativeHumidity").GetProperty("unit").ToString());
+    Console.WriteLine(result.GetProperty("relativeHumidity").GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("soilMoisture").GetProperty("unit").ToString());
+    Console.WriteLine(result.GetProperty("soilMoisture").GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("soilTemperature").GetProperty("unit").ToString());
+    Console.WriteLine(result.GetProperty("soilTemperature").GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("temperature").GetProperty("unit").ToString());
+    Console.WriteLine(result.GetProperty("temperature").GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("visibility").GetProperty("unit").ToString());
+    Console.WriteLine(result.GetProperty("visibility").GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("wetBulbTemperature").GetProperty("unit").ToString());
+    Console.WriteLine(result.GetProperty("wetBulbTemperature").GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("windChill").GetProperty("unit").ToString());
+    Console.WriteLine(result.GetProperty("windChill").GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("windDirection").GetProperty("unit").ToString());
+    Console.WriteLine(result.GetProperty("windDirection").GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("windGust").GetProperty("unit").ToString());
+    Console.WriteLine(result.GetProperty("windGust").GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("windSpeed").GetProperty("unit").ToString());
+    Console.WriteLine(result.GetProperty("windSpeed").GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("eTag").ToString());
+    Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+    Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetWeathers(string,string,string,string,string,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
+      <example>
+This sample shows how to call GetWeathers and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
+
+foreach (BinaryData item in client.GetWeathers("<partyId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>", null, null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("partyId").ToString());
+    Console.WriteLine(result.GetProperty("boundaryId").ToString());
+    Console.WriteLine(result.GetProperty("extensionId").ToString());
+    Console.WriteLine(result.GetProperty("location").GetProperty("latitude").ToString());
+    Console.WriteLine(result.GetProperty("location").GetProperty("longitude").ToString());
+    Console.WriteLine(result.GetProperty("dateTime").ToString());
+    Console.WriteLine(result.GetProperty("extensionVersion").ToString());
+    Console.WriteLine(result.GetProperty("weatherDataType").ToString());
+    Console.WriteLine(result.GetProperty("granularity").ToString());
+}
+]]></code>
+This sample shows how to call GetWeathers with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
+
+foreach (BinaryData item in client.GetWeathers("<partyId>", "<boundaryId>", "<extensionId>", "<weatherDataType>", "<granularity>", DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("partyId").ToString());
+    Console.WriteLine(result.GetProperty("boundaryId").ToString());
+    Console.WriteLine(result.GetProperty("extensionId").ToString());
+    Console.WriteLine(result.GetProperty("location").GetProperty("latitude").ToString());
+    Console.WriteLine(result.GetProperty("location").GetProperty("longitude").ToString());
+    Console.WriteLine(result.GetProperty("dateTime").ToString());
+    Console.WriteLine(result.GetProperty("unitSystemCode").ToString());
+    Console.WriteLine(result.GetProperty("extensionVersion").ToString());
+    Console.WriteLine(result.GetProperty("weatherDataType").ToString());
+    Console.WriteLine(result.GetProperty("granularity").ToString());
+    Console.WriteLine(result.GetProperty("cloudCover").GetProperty("unit").ToString());
+    Console.WriteLine(result.GetProperty("cloudCover").GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("dewPoint").GetProperty("unit").ToString());
+    Console.WriteLine(result.GetProperty("dewPoint").GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("growingDegreeDay").GetProperty("unit").ToString());
+    Console.WriteLine(result.GetProperty("growingDegreeDay").GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("precipitation").GetProperty("unit").ToString());
+    Console.WriteLine(result.GetProperty("precipitation").GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("pressure").GetProperty("unit").ToString());
+    Console.WriteLine(result.GetProperty("pressure").GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("relativeHumidity").GetProperty("unit").ToString());
+    Console.WriteLine(result.GetProperty("relativeHumidity").GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("soilMoisture").GetProperty("unit").ToString());
+    Console.WriteLine(result.GetProperty("soilMoisture").GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("soilTemperature").GetProperty("unit").ToString());
+    Console.WriteLine(result.GetProperty("soilTemperature").GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("temperature").GetProperty("unit").ToString());
+    Console.WriteLine(result.GetProperty("temperature").GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("visibility").GetProperty("unit").ToString());
+    Console.WriteLine(result.GetProperty("visibility").GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("wetBulbTemperature").GetProperty("unit").ToString());
+    Console.WriteLine(result.GetProperty("wetBulbTemperature").GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("windChill").GetProperty("unit").ToString());
+    Console.WriteLine(result.GetProperty("windChill").GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("windDirection").GetProperty("unit").ToString());
+    Console.WriteLine(result.GetProperty("windDirection").GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("windGust").GetProperty("unit").ToString());
+    Console.WriteLine(result.GetProperty("windGust").GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("windSpeed").GetProperty("unit").ToString());
+    Console.WriteLine(result.GetProperty("windSpeed").GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("id").ToString());
+    Console.WriteLine(result.GetProperty("eTag").ToString());
+    Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+    Console.WriteLine(result.GetProperty("modifiedDateTime").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="CreateDataDeleteJobAsync(WaitUntil,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateDataDeleteJobAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    extensionId = "<extensionId>",
+    partyId = "<partyId>",
+    boundaryId = "<boundaryId>",
+});
+Operation<BinaryData> operation = await client.CreateDataDeleteJobAsync(WaitUntil.Completed, "<jobId>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("extensionId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("boundaryId").ToString());
+]]></code>
+This sample shows how to call CreateDataDeleteJobAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    extensionId = "<extensionId>",
+    partyId = "<partyId>",
+    boundaryId = "<boundaryId>",
+    weatherDataType = "<weatherDataType>",
+    granularity = "<granularity>",
+    startDateTime = "2022-05-10T18:57:31.2311892Z",
+    endDateTime = "2022-05-10T18:57:31.2311892Z",
+    name = "<name>",
+    description = "<description>",
+    properties = new
+    {
+        key = new object(),
+    },
+});
+Operation<BinaryData> operation = await client.CreateDataDeleteJobAsync(WaitUntil.Completed, "<jobId>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("extensionId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("boundaryId").ToString());
+Console.WriteLine(result.GetProperty("weatherDataType").ToString());
+Console.WriteLine(result.GetProperty("granularity").ToString());
+Console.WriteLine(result.GetProperty("startDateTime").ToString());
+Console.WriteLine(result.GetProperty("endDateTime").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+Console.WriteLine(result.GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateDataDeleteJob(WaitUntil,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateDataDeleteJob and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    extensionId = "<extensionId>",
+    partyId = "<partyId>",
+    boundaryId = "<boundaryId>",
+});
+Operation<BinaryData> operation = client.CreateDataDeleteJob(WaitUntil.Completed, "<jobId>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("extensionId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("boundaryId").ToString());
+]]></code>
+This sample shows how to call CreateDataDeleteJob with all parameters and request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    extensionId = "<extensionId>",
+    partyId = "<partyId>",
+    boundaryId = "<boundaryId>",
+    weatherDataType = "<weatherDataType>",
+    granularity = "<granularity>",
+    startDateTime = "2022-05-10T18:57:31.2311892Z",
+    endDateTime = "2022-05-10T18:57:31.2311892Z",
+    name = "<name>",
+    description = "<description>",
+    properties = new
+    {
+        key = new object(),
+    },
+});
+Operation<BinaryData> operation = client.CreateDataDeleteJob(WaitUntil.Completed, "<jobId>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("extensionId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("boundaryId").ToString());
+Console.WriteLine(result.GetProperty("weatherDataType").ToString());
+Console.WriteLine(result.GetProperty("granularity").ToString());
+Console.WriteLine(result.GetProperty("startDateTime").ToString());
+Console.WriteLine(result.GetProperty("endDateTime").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+Console.WriteLine(result.GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateDataIngestionJobAsync(WaitUntil,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateDataIngestionJobAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    boundaryId = "<boundaryId>",
+    partyId = "<partyId>",
+    extensionId = "<extensionId>",
+    extensionApiName = "<extensionApiName>",
+    extensionApiInput = new
+    {
+        key = new object(),
+    },
+});
+Operation<BinaryData> operation = await client.CreateDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("boundaryId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("extensionId").ToString());
+Console.WriteLine(result.GetProperty("extensionApiName").ToString());
+Console.WriteLine(result.GetProperty("extensionApiInput").GetProperty("<key>").ToString());
+]]></code>
+This sample shows how to call CreateDataIngestionJobAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    boundaryId = "<boundaryId>",
+    partyId = "<partyId>",
+    extensionId = "<extensionId>",
+    extensionApiName = "<extensionApiName>",
+    extensionApiInput = new
+    {
+        key = new object(),
+    },
+    extensionDataProviderAppId = "<extensionDataProviderAppId>",
+    extensionDataProviderApiKey = "<extensionDataProviderApiKey>",
+    name = "<name>",
+    description = "<description>",
+    properties = new
+    {
+        key = new object(),
+    },
+});
+Operation<BinaryData> operation = await client.CreateDataIngestionJobAsync(WaitUntil.Completed, "<jobId>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("boundaryId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("extensionId").ToString());
+Console.WriteLine(result.GetProperty("extensionApiName").ToString());
+Console.WriteLine(result.GetProperty("extensionApiInput").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("extensionDataProviderAppId").ToString());
+Console.WriteLine(result.GetProperty("extensionDataProviderApiKey").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+Console.WriteLine(result.GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateDataIngestionJob(WaitUntil,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateDataIngestionJob and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    boundaryId = "<boundaryId>",
+    partyId = "<partyId>",
+    extensionId = "<extensionId>",
+    extensionApiName = "<extensionApiName>",
+    extensionApiInput = new
+    {
+        key = new object(),
+    },
+});
+Operation<BinaryData> operation = client.CreateDataIngestionJob(WaitUntil.Completed, "<jobId>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("boundaryId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("extensionId").ToString());
+Console.WriteLine(result.GetProperty("extensionApiName").ToString());
+Console.WriteLine(result.GetProperty("extensionApiInput").GetProperty("<key>").ToString());
+]]></code>
+This sample shows how to call CreateDataIngestionJob with all parameters and request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+Weather client = new FarmBeatsClient(credential).GetWeatherClient(apiVersion: "2022-11-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    boundaryId = "<boundaryId>",
+    partyId = "<partyId>",
+    extensionId = "<extensionId>",
+    extensionApiName = "<extensionApiName>",
+    extensionApiInput = new
+    {
+        key = new object(),
+    },
+    extensionDataProviderAppId = "<extensionDataProviderAppId>",
+    extensionDataProviderApiKey = "<extensionDataProviderApiKey>",
+    name = "<name>",
+    description = "<description>",
+    properties = new
+    {
+        key = new object(),
+    },
+});
+Operation<BinaryData> operation = client.CreateDataIngestionJob(WaitUntil.Completed, "<jobId>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("boundaryId").ToString());
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("extensionId").ToString());
+Console.WriteLine(result.GetProperty("extensionApiName").ToString());
+Console.WriteLine(result.GetProperty("extensionApiInput").GetProperty("<key>").ToString());
+Console.WriteLine(result.GetProperty("extensionDataProviderAppId").ToString());
+Console.WriteLine(result.GetProperty("extensionDataProviderApiKey").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+Console.WriteLine(result.GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+  </members>
+</doc>

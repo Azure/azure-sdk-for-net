@@ -46,6 +46,10 @@ namespace Azure.Communication.ShortCodes.Models
 
         internal static CompanyInformation DeserializeCompanyInformation(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<Uri> url = default;
             Optional<string> address = default;
@@ -62,7 +66,6 @@ namespace Azure.Communication.ShortCodes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     url = new Uri(property.Value.GetString());
@@ -77,7 +80,6 @@ namespace Azure.Communication.ShortCodes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     contactInformation = ContactInformation.DeserializeContactInformation(property.Value);
@@ -87,7 +89,6 @@ namespace Azure.Communication.ShortCodes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     customerCareInformation = CustomerCareInformation.DeserializeCustomerCareInformation(property.Value);

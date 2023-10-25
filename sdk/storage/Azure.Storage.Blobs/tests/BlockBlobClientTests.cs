@@ -2788,7 +2788,7 @@ namespace Azure.Storage.Blobs.Test
 
         [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
-        public async Task SyncUploadFromUriAsync_OverwiteSourceBlobProperties()
+        public async Task SyncUploadFromUriAsync_OverwriteSourceBlobProperties()
         {
             // Arrange
             var constants = TestConstants.Create(this);
@@ -2814,8 +2814,7 @@ namespace Azure.Storage.Blobs.Test
                     ContentLanguage = constants.ContentLanguage,
                     ContentType = constants.ContentType
                 },
-                // TODO service bug.  https://github.com/Azure/azure-sdk-for-net/issues/15969
-                // Metadata = metadata,
+                Metadata = metadata,
                 Tags = tags,
                 AccessTier = AccessTier.Hot
             };
@@ -2839,8 +2838,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(constants.ContentLanguage, response.Value.ContentLanguage);
             Assert.AreEqual(constants.ContentDisposition, response.Value.ContentDisposition);
             Assert.AreEqual(constants.CacheControl, response.Value.CacheControl);
-            // TODO service bug.  https://github.com/Azure/azure-sdk-for-net/issues/15969
-            //AssertDictionaryEquality(metadata, response.Value.Metadata);
+            AssertDictionaryEquality(metadata, response.Value.Metadata);
             Assert.AreEqual(tags.Count, response.Value.TagCount);
             Assert.AreEqual(AccessTier.Hot.ToString(), response.Value.AccessTier);
         }

@@ -4,7 +4,6 @@
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_UsingStatements
 using Azure.Communication.JobRouter;
-using Azure.Communication.JobRouter.Models;
 ```
 
 ## Create a client
@@ -12,8 +11,8 @@ using Azure.Communication.JobRouter.Models;
 Create a `RouterClient` and send a request.
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateClient
-RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
-RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
+JobRouterClient routerClient = new JobRouterClient("<< CONNECTION STRING >>");
+JobRouterAdministrationClient routerAdministrationClient = new JobRouterAdministrationClient("<< CONNECTION STRING >>");
 ```
 
 ## Enqueue job to a queue using classification policy and queue id
@@ -33,47 +32,45 @@ RouterAdministrationClient routerAdministrationClient = new RouterAdministration
 // 2. Job2 is enqueued in Queue2
 
 Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
-    new CreateDistributionPolicyOptions(distributionPolicyId: "distribution-policy-id-2", offerTtl: TimeSpan.FromSeconds(30), mode: new LongestIdleMode())
+    new CreateDistributionPolicyOptions(distributionPolicyId: "distribution-policy-id-2", offerExpiresAfter: TimeSpan.FromSeconds(30), mode: new LongestIdleMode())
     {
         Name = "My LongestIdle Distribution Policy",
     }
     );
 
-Response<JobQueue> queue1 = await routerAdministrationClient.CreateQueueAsync(
+Response<RouterQueue> queue1 = await routerAdministrationClient.CreateQueueAsync(
     new CreateQueueOptions(queueId: "Queue-1", distributionPolicyId: distributionPolicy.Value.Id)
     {
         Name = "Queue_365",
     });
 
-Response<JobQueue> queue2 = await routerAdministrationClient.CreateQueueAsync(
+Response<RouterQueue> queue2 = await routerAdministrationClient.CreateQueueAsync(
     new CreateQueueOptions(queueId: "Queue-2", distributionPolicyId: distributionPolicy.Value.Id)
     {
         Name = "Queue_XBox",
     });
 
-List<QueueSelectorAttachment> cp1QueueLabelAttachments = new List<QueueSelectorAttachment>()
-{
-    new StaticQueueSelectorAttachment(new QueueSelector("Id", LabelOperator.Equal, new LabelValue(queue1.Value.Id)))
-};
 Response<ClassificationPolicy> cp1 = await routerAdministrationClient.CreateClassificationPolicyAsync(
     new CreateClassificationPolicyOptions(classificationPolicyId: "classification-policy-o365")
     {
         Name = "Classification_Policy_O365",
-        QueueSelectors = cp1QueueLabelAttachments,
+        QueueSelectors =
+        {
+            new StaticQueueSelectorAttachment(new RouterQueueSelector("Id", LabelOperator.Equal, new LabelValue(queue1.Value.Id)))
+        },
     });
 
-List<QueueSelectorAttachment> cp2QueueLabelAttachments = new List<QueueSelectorAttachment>()
-{
-    new StaticQueueSelectorAttachment(new QueueSelector("Id", LabelOperator.Equal, new LabelValue(queue2.Value.Id)))
-};
 Response<ClassificationPolicy> cp2 = await routerAdministrationClient.CreateClassificationPolicyAsync(
     new CreateClassificationPolicyOptions(classificationPolicyId: "classification-policy-xbox")
     {
         Name = "Classification_Policy_XBox",
-        QueueSelectors = cp2QueueLabelAttachments,
+        QueueSelectors =
+        {
+            new StaticQueueSelectorAttachment(new RouterQueueSelector("Id", LabelOperator.Equal, new LabelValue(queue2.Value.Id)))
+        }
     });
 
-Response<RouterJob> jobO365 = await routerClient.CreateJobAsync(
+Response<RouterJob> jobO365 = await routerClient.CreateJobWithClassificationPolicyAsync(
     new CreateJobWithClassificationPolicyOptions(
         jobId: "jobO365",
         channelId: "general",
@@ -82,7 +79,7 @@ Response<RouterJob> jobO365 = await routerClient.CreateJobAsync(
         ChannelReference = "12345",
     });
 
-Response<RouterJob> jobXbox = await routerClient.CreateJobAsync(
+Response<RouterJob> jobXbox = await routerClient.CreateJobWithClassificationPolicyAsync(
     new CreateJobWithClassificationPolicyOptions(
         jobId: "jobXbox",
         channelId: "general",
@@ -124,68 +121,65 @@ Console.WriteLine($"XBox job has been enqueued in queue: {queue2.Value.Id}. Stat
 Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
     new CreateDistributionPolicyOptions(
         distributionPolicyId: "distribution-policy-id-3",
-        offerTtl: TimeSpan.FromSeconds(30),
+        offerExpiresAfter: TimeSpan.FromSeconds(30),
         mode: new LongestIdleMode())
     {
         Name = "My LongestIdle Distribution Policy",
     }
 );
 
-Response<JobQueue> queue1 = await routerAdministrationClient.CreateQueueAsync(
+Response<RouterQueue> queue1 = await routerAdministrationClient.CreateQueueAsync(
     new CreateQueueOptions(
         queueId: "Queue-1",
         distributionPolicyId: distributionPolicy.Value.Id)
     {
         Name = "Queue_365",
-        Labels = new Dictionary<string, LabelValue>()
+        Labels =
         {
             ["ProductDetail"] = new LabelValue("Office_Support")
         }
     });
 
-Response<JobQueue> queue2 = await routerAdministrationClient.CreateQueueAsync(
+Response<RouterQueue> queue2 = await routerAdministrationClient.CreateQueueAsync(
     new CreateQueueOptions(
         queueId: "Queue-2",
         distributionPolicyId: distributionPolicy.Value.Id)
     {
         Name = "Queue_XBox",
-        Labels = new Dictionary<string, LabelValue>()
+        Labels =
         {
             ["ProductDetail"] = new LabelValue("XBox_Support")
         }
     });
 
-List<QueueSelectorAttachment> queueSelectorAttachments = new List<QueueSelectorAttachment>()
-{
-    new ConditionalQueueSelectorAttachment(
-        condition: new ExpressionRule("If(job.Product = \"O365\", true, false)"),
-        labelSelectors: new List<QueueSelector>()
-        {
-            new QueueSelector("ProductDetail", LabelOperator.Equal, new LabelValue("Office_Support"))
-        }),
-    new ConditionalQueueSelectorAttachment(
-        condition: new ExpressionRule("If(job.Product = \"XBx\", true, false)"),
-        labelSelectors: new List<QueueSelector>()
-        {
-            new QueueSelector("ProductDetail", LabelOperator.Equal, new LabelValue("XBox_Support"))
-        })
-};
-
 Response<ClassificationPolicy> classificationPolicy = await routerAdministrationClient.CreateClassificationPolicyAsync(
     new CreateClassificationPolicyOptions(classificationPolicyId: "classification-policy")
     {
         Name = "Classification_Policy_O365_And_XBox",
-        QueueSelectors = queueSelectorAttachments,
+        QueueSelectors = {
+            new ConditionalQueueSelectorAttachment(
+                condition: new ExpressionRouterRule("If(job.Product = \"O365\", true, false)"),
+                queueSelectors: new List<RouterQueueSelector>()
+                {
+                    new RouterQueueSelector("ProductDetail", LabelOperator.Equal, new LabelValue("Office_Support"))
+                }),
+            new ConditionalQueueSelectorAttachment(
+                condition: new ExpressionRouterRule("If(job.Product = \"XBx\", true, false)"),
+                queueSelectors: new List<RouterQueueSelector>()
+                {
+                    new RouterQueueSelector("ProductDetail", LabelOperator.Equal, new LabelValue("XBox_Support"))
+                })
+        }
     });
 
-Response<RouterJob> jobO365 = await routerClient.CreateJobAsync(
+Response<RouterJob> jobO365 = await routerClient.CreateJobWithClassificationPolicyAsync(
     new CreateJobWithClassificationPolicyOptions(
         jobId: "jobO365",
         channelId: "general",
         classificationPolicyId: classificationPolicy.Value.Id)
     {
         ChannelReference = "12345",
-        Labels = new Dictionary<string, LabelValue>()
+        Labels =
         {
             ["Language"] = new LabelValue("en"),
             ["Product"] = new LabelValue("O365"),
@@ -193,14 +187,14 @@ Response<RouterJob> jobO365 = await routerClient.CreateJobAsync(
         },
     });
 
-Response<RouterJob> jobXbox = await routerClient.CreateJobAsync(
+Response<RouterJob> jobXbox = await routerClient.CreateJobWithClassificationPolicyAsync(
     new CreateJobWithClassificationPolicyOptions(
         jobId: "jobXbox",
         channelId: "general",
         classificationPolicyId: classificationPolicy.Value.Id)
     {
         ChannelReference = "12345",
-        Labels = new Dictionary<string, LabelValue>()
+        Labels =
         {
             ["Language"] = new LabelValue("en"),
             ["Product"] = new LabelValue("XBx"),
@@ -244,20 +238,20 @@ Console.WriteLine($"XBox job has been enqueued in queue: {queue2.Value.Id}. Stat
 Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
     new CreateDistributionPolicyOptions(
         distributionPolicyId: "distribution-policy-id-4",
-        offerTtl: TimeSpan.FromSeconds(30),
+        offerExpiresAfter: TimeSpan.FromSeconds(30),
         mode: new LongestIdleMode())
     {
         Name = "My LongestIdle Distribution Policy",
     }
     );
 
-Response<JobQueue> queue1 = await routerAdministrationClient.CreateQueueAsync(
+Response<RouterQueue> queue1 = await routerAdministrationClient.CreateQueueAsync(
     new CreateQueueOptions(
         queueId: "Queue-1",
         distributionPolicyId: distributionPolicy.Value.Id)
     {
         Name = "Queue_365_EN_EMEA",
-        Labels = new Dictionary<string, LabelValue>()
+        Labels =
         {
             ["ProductDetail"] = new LabelValue("Office_Support"),
             ["Language"] = new LabelValue("en"),
@@ -265,13 +259,13 @@ Response<JobQueue> queue1 = await routerAdministrationClient.CreateQueueAsync(
         },
     });
 
-Response<JobQueue> queue2 = await routerAdministrationClient.CreateQueueAsync(
+Response<RouterQueue> queue2 = await routerAdministrationClient.CreateQueueAsync(
     new CreateQueueOptions(
         queueId: "Queue-2",
         distributionPolicyId: distributionPolicy.Value.Id)
     {
         Name = "Queue_365_FR_EMEA",
-        Labels = new Dictionary<string, LabelValue>()
+        Labels =
         {
             ["ProductDetail"] = new LabelValue("Office_Support"),
             ["Language"] = new LabelValue("fr"),
@@ -279,13 +273,13 @@ Response<JobQueue> queue2 = await routerAdministrationClient.CreateQueueAsync(
         },
     });
 
-Response<JobQueue> queue3 = await routerAdministrationClient.CreateQueueAsync(
+Response<RouterQueue> queue3 = await routerAdministrationClient.CreateQueueAsync(
     new CreateQueueOptions(
         queueId: "Queue-3",
         distributionPolicyId: distributionPolicy.Value.Id)
     {
         Name = "Queue_365_EN_NA",
-        Labels = new Dictionary<string, LabelValue>()
+        Labels =
         {
             ["ProductDetail"] = new LabelValue("Office_Support"),
             ["Language"] = new LabelValue("en"),
@@ -293,28 +287,25 @@ Response<JobQueue> queue3 = await routerAdministrationClient.CreateQueueAsync(
         },
     });
 
-List<QueueSelectorAttachment> queueSelectorAttachments = new List<QueueSelectorAttachment>()
-{
-    new PassThroughQueueSelectorAttachment("ProductDetail", LabelOperator.Equal),
-    new PassThroughQueueSelectorAttachment("Language", LabelOperator.Equal),
-    new PassThroughQueueSelectorAttachment("Region", LabelOperator.Equal),
-};
-
 Response<ClassificationPolicy> classificationPolicy = await routerAdministrationClient.CreateClassificationPolicyAsync(
     new CreateClassificationPolicyOptions(classificationPolicyId: "classification-policy")
     {
         Name = "Classification_Policy_O365_EMEA_NA",
-        QueueSelectors = queueSelectorAttachments,
+        QueueSelectors = {
+            new PassThroughQueueSelectorAttachment("ProductDetail", LabelOperator.Equal),
+            new PassThroughQueueSelectorAttachment("Language", LabelOperator.Equal),
+            new PassThroughQueueSelectorAttachment("Region", LabelOperator.Equal),
+        },
     });
 
-Response<RouterJob> jobENEmea = await routerClient.CreateJobAsync(
+Response<RouterJob> jobENEmea = await routerClient.CreateJobWithClassificationPolicyAsync(
     new CreateJobWithClassificationPolicyOptions(
         jobId: "jobENEmea",
         channelId: "general",
         classificationPolicyId: classificationPolicy.Value.Id)
     {
         ChannelReference = "12345",
-        Labels = new Dictionary<string, LabelValue>()
+        Labels =
         {
             ["Language"] = new LabelValue("en"),
             ["Product"] = new LabelValue("O365"),
@@ -324,14 +315,14 @@ Response<RouterJob> jobENEmea = await routerClient.CreateJobAsync(
         },
     });
 
-Response<RouterJob> jobFREmea = await routerClient.CreateJobAsync(
+Response<RouterJob> jobFREmea = await routerClient.CreateJobWithClassificationPolicyAsync(
     new CreateJobWithClassificationPolicyOptions(
         jobId: "jobFREmea",
         channelId: "general",
         classificationPolicyId: classificationPolicy.Value.Id)
     {
         ChannelReference = "12345",
-        Labels = new Dictionary<string, LabelValue>()
+        Labels =
         {
             ["Language"] = new LabelValue("fr"),
             ["Product"] = new LabelValue("O365"),
@@ -341,14 +332,14 @@ Response<RouterJob> jobFREmea = await routerClient.CreateJobAsync(
         },
     });
 
-Response<RouterJob> jobENNa = await routerClient.CreateJobAsync(
+Response<RouterJob> jobENNa = await routerClient.CreateJobWithClassificationPolicyAsync(
     new CreateJobWithClassificationPolicyOptions(
         jobId: "jobENNa",
         channelId: "general",
         classificationPolicyId: classificationPolicy.Value.Id)
     {
         ChannelReference = "12345",
-        Labels = new Dictionary<string, LabelValue>()
+        Labels =
         {
             ["Language"] = new LabelValue("en"),
             ["Product"] = new LabelValue("O365"),

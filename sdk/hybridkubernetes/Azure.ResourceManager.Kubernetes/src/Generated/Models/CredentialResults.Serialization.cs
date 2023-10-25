@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Kubernetes.Models
     {
         internal static CredentialResults DeserializeCredentialResults(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<HybridConnectionConfig> hybridConnectionConfig = default;
             Optional<IReadOnlyList<CredentialResult>> kubeconfigs = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     hybridConnectionConfig = HybridConnectionConfig.DeserializeHybridConnectionConfig(property.Value);
@@ -33,7 +36,6 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<CredentialResult> array = new List<CredentialResult>();

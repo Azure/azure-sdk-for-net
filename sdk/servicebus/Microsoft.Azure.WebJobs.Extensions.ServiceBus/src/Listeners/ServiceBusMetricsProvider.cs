@@ -14,7 +14,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Listeners
 {
     internal class ServiceBusMetricsProvider
     {
-        private const string DeadLetterQueuePath = @"/$DeadLetterQueue";
+        internal const string DeadLetterQueuePath = @"/$DeadLetterQueue";
 
         private readonly ILogger _logger;
         private readonly string _entityPath;
@@ -22,6 +22,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Listeners
         private readonly Lazy<ServiceBusReceiver> _receiver;
         private readonly bool _isListeningOnDeadLetterQueue;
         private readonly Lazy<ServiceBusAdministrationClient> _administrationClient;
+        private readonly string _topicName;
+        private readonly string _subscriptionName;
+        private readonly string _mainSubcriptionName;
+        private readonly string _mainQueueName;
 
         private DateTime _nextWarningTime;
 
@@ -39,6 +43,28 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Listeners
             _administrationClient = administrationClient;
             _logger = loggerFactory.CreateLogger<ServiceBusMetricsProvider>();
             _nextWarningTime = DateTime.UtcNow;
+
+            if (_serviceBusEntityType == ServiceBusEntityType.Topic)
+            {
+                ServiceBusEntityPathHelper.ParseTopicAndSubscription(_entityPath, out _topicName, out _subscriptionName);
+                _mainSubcriptionName = _subscriptionName;
+            }
+            else
+            {
+                _mainQueueName = _entityPath;
+            }
+            if (_isListeningOnDeadLetterQueue)
+            {
+                // remove /$DeadLetterQueue suffix
+                if (_serviceBusEntityType == ServiceBusEntityType.Queue)
+                {
+                    _mainQueueName = _entityPath.Substring(0, _entityPath.Length - DeadLetterQueuePath.Length);
+                }
+                else
+                {
+                    _mainSubcriptionName = _subscriptionName.Substring(0, _subscriptionName.Length - DeadLetterQueuePath.Length);
+                }
+            }
         }
 
         public async Task<long> GetMessageCountAsync()
@@ -50,15 +76,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Listeners
             {
                 if (_serviceBusEntityType == ServiceBusEntityType.Queue)
                 {
-                    QueueRuntimeProperties queueRuntimeProperties = await _administrationClient.Value.GetQueueRuntimePropertiesAsync(_entityPath).ConfigureAwait(false);
+                    QueueRuntimeProperties queueRuntimeProperties = await _administrationClient.Value.GetQueueRuntimePropertiesAsync(_mainQueueName).ConfigureAwait(false);
                     activeMessageCount = queueRuntimeProperties.ActiveMessageCount;
                     deadLetterCount = queueRuntimeProperties.DeadLetterMessageCount;
                 }
                 else
                 {
-                    ServiceBusEntityPathHelper.ParseTopicAndSubscription(_entityPath, out string topicPath, out string subscriptionPath);
-
-                    SubscriptionRuntimeProperties subscriptionProperties = await _administrationClient.Value.GetSubscriptionRuntimePropertiesAsync(topicPath, subscriptionPath).ConfigureAwait(false);
+                    SubscriptionRuntimeProperties subscriptionProperties = await _administrationClient.Value.GetSubscriptionRuntimePropertiesAsync(_topicName, _mainSubcriptionName).ConfigureAwait(false);
                     activeMessageCount = subscriptionProperties.ActiveMessageCount;
                     deadLetterCount = subscriptionProperties.DeadLetterMessageCount;
                 }
@@ -72,13 +96,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Listeners
             {
                 if (TimeToLogWarning())
                 {
-                    _logger.LogWarning($"Connection string does not have 'Manage Claim' for {entityName} '{_entityPath}'. Unable to determine active message count.", ex);
+                    _logger.LogWarning(ex, $"Connection string does not have 'Manage Claim' for {entityName} '{_entityPath}'. Unable to determine active message count.");
                 }
                 throw ex;
             }
             catch (Exception e)
             {
-                _logger.LogWarning($"Error querying for Service Bus {entityName} scale status: {e.Message}");
+                _logger.LogWarning(e, $"Error querying for Service Bus {entityName} scale");
             }
 
             long totalNewMessageCount = 0;
@@ -166,13 +190,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Listeners
             long deadLetterCount = 0;
             int partitionCount = 0;
 
-            queueRuntimeProperties = await _administrationClient.Value.GetQueueRuntimePropertiesAsync(_entityPath).ConfigureAwait(false);
+            queueRuntimeProperties = await _administrationClient.Value.GetQueueRuntimePropertiesAsync(_mainQueueName).ConfigureAwait(false);
             activeMessageCount = queueRuntimeProperties.ActiveMessageCount;
             deadLetterCount = queueRuntimeProperties.DeadLetterMessageCount;
 
             // If partitioning is turned on, then Service Bus automatically partitions queues into 16 partitions
             // See more information here: https://docs.microsoft.com/azure/service-bus-messaging/service-bus-partitioning#standard
-            queueProperties = await _administrationClient.Value.GetQueueAsync(_entityPath).ConfigureAwait(false);
+            queueProperties = await _administrationClient.Value.GetQueueAsync(_mainQueueName).ConfigureAwait(false);
             partitionCount = queueProperties.EnablePartitioning ? 16 : 0;
 
             return CreateTriggerMetrics(message, activeMessageCount, deadLetterCount, partitionCount, _isListeningOnDeadLetterQueue);
@@ -182,20 +206,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Listeners
         {
             TopicProperties topicProperties;
             SubscriptionRuntimeProperties subscriptionProperties;
-            string topicPath, subscriptionPath;
             long activeMessageCount = 0;
             long deadLetterCount = 0;
             int partitionCount = 0;
 
-            ServiceBusEntityPathHelper.ParseTopicAndSubscription(_entityPath, out topicPath, out subscriptionPath);
-
-            subscriptionProperties = await _administrationClient.Value.GetSubscriptionRuntimePropertiesAsync(topicPath, subscriptionPath).ConfigureAwait(false);
+            subscriptionProperties = await _administrationClient.Value.GetSubscriptionRuntimePropertiesAsync(_topicName, _mainSubcriptionName).ConfigureAwait(false);
             activeMessageCount = subscriptionProperties.ActiveMessageCount;
             deadLetterCount = subscriptionProperties.DeadLetterMessageCount;
 
             // If partitioning is turned on, then Service Bus automatically partitions queues into 16 partitions
             // See more information here: https://docs.microsoft.com/azure/service-bus-messaging/service-bus-partitioning#standard
-            topicProperties = await _administrationClient.Value.GetTopicAsync(topicPath).ConfigureAwait(false);
+            topicProperties = await _administrationClient.Value.GetTopicAsync(_topicName).ConfigureAwait(false);
             partitionCount = topicProperties.EnablePartitioning ? 16 : 0;
 
             return CreateTriggerMetrics(message, activeMessageCount, deadLetterCount, partitionCount, _isListeningOnDeadLetterQueue);

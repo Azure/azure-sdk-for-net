@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static AttachNewDataDiskDetails DeserializeAttachNewDataDiskDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> diskSizeGiB = default;
             Optional<string> diskName = default;
             Optional<DevTestLabStorageType> diskType = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     diskSizeGiB = property.Value.GetInt32();
@@ -59,7 +62,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     diskType = new DevTestLabStorageType(property.Value.GetString());

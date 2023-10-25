@@ -49,6 +49,11 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WritePropertyName("preferences"u8);
                 writer.WriteObjectValue(Preferences);
             }
+            if (Optional.IsDefined(ReverseShippingDetails))
+            {
+                writer.WritePropertyName("reverseShippingDetails"u8);
+                writer.WriteObjectValue(ReverseShippingDetails);
+            }
             if (Optional.IsDefined(KeyEncryptionKey))
             {
                 writer.WritePropertyName("keyEncryptionKey"u8);
@@ -64,6 +69,10 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static DataBoxBasicJobDetails DeserializeDataBoxBasicJobDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("jobDetailsType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

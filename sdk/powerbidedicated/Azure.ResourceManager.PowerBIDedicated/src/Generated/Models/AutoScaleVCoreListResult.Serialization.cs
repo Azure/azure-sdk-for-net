@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.PowerBIDedicated;
 
 namespace Azure.ResourceManager.PowerBIDedicated.Models
@@ -16,6 +15,10 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
     {
         internal static AutoScaleVCoreListResult DeserializeAutoScaleVCoreListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<AutoScaleVCoreData> value = default;
             foreach (var property in element.EnumerateObject())
             {

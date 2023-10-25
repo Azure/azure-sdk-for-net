@@ -72,6 +72,10 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AppServiceIdentityProviders DeserializeAppServiceIdentityProviders(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AppServiceAadProvider> azureActiveDirectory = default;
             Optional<AppServiceFacebookProvider> facebook = default;
             Optional<AppServiceGitHubProvider> gitHub = default;
@@ -87,7 +91,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     azureActiveDirectory = AppServiceAadProvider.DeserializeAppServiceAadProvider(property.Value);
@@ -97,7 +100,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     facebook = AppServiceFacebookProvider.DeserializeAppServiceFacebookProvider(property.Value);
@@ -107,7 +109,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     gitHub = AppServiceGitHubProvider.DeserializeAppServiceGitHubProvider(property.Value);
@@ -117,7 +118,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     google = AppServiceGoogleProvider.DeserializeAppServiceGoogleProvider(property.Value);
@@ -127,7 +127,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     legacyMicrosoftAccount = LegacyMicrosoftAccount.DeserializeLegacyMicrosoftAccount(property.Value);
@@ -137,7 +136,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     twitter = AppServiceTwitterProvider.DeserializeAppServiceTwitterProvider(property.Value);
@@ -147,7 +145,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     apple = AppServiceAppleProvider.DeserializeAppServiceAppleProvider(property.Value);
@@ -157,7 +154,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     azureStaticWebApps = AppServiceStaticWebAppsProvider.DeserializeAppServiceStaticWebAppsProvider(property.Value);
@@ -167,7 +163,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, CustomOpenIdConnectProvider> dictionary = new Dictionary<string, CustomOpenIdConnectProvider>();

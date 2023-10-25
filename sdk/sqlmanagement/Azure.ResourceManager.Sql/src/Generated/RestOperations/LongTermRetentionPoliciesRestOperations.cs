@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        /// <summary> Gets a database&apos;s long term retention policy. </summary>
+        /// <summary> Gets a database's long term retention policy. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Gets a database&apos;s long term retention policy. </summary>
+        /// <summary> Gets a database's long term retention policy. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        /// <summary> Sets a database&apos;s long term retention policy. </summary>
+        /// <summary> Sets a database's long term retention policy. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Sets a database&apos;s long term retention policy. </summary>
+        /// <summary> Sets a database's long term retention policy. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        /// <summary> Gets a database&apos;s long term retention policy. </summary>
+        /// <summary> Gets a database's long term retention policy. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Gets a database&apos;s long term retention policy. </summary>
+        /// <summary> Gets a database's long term retention policy. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        /// <summary> Gets a database&apos;s long term retention policy. </summary>
+        /// <summary> Gets a database's long term retention policy. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Gets a database&apos;s long term retention policy. </summary>
+        /// <summary> Gets a database's long term retention policy. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>

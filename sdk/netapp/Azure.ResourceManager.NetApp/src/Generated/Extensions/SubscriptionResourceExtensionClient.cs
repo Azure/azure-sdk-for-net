@@ -8,6 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> Name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<NetAppCheckAvailabilityResult>> CheckNetAppNameAvailabilityAsync(AzureLocation location, NetAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> Name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NetAppCheckAvailabilityResult> CheckNetAppNameAvailability(AzureLocation location, NetAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
@@ -128,7 +129,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> File path availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<NetAppCheckAvailabilityResult>> CheckNetAppFilePathAvailabilityAsync(AzureLocation location, NetAppFilePathAvailabilityContent content, CancellationToken cancellationToken = default)
@@ -160,7 +161,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> File path availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NetAppCheckAvailabilityResult> CheckNetAppFilePathAvailability(AzureLocation location, NetAppFilePathAvailabilityContent content, CancellationToken cancellationToken = default)
@@ -192,7 +193,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> Quota availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<NetAppCheckAvailabilityResult>> CheckNetAppQuotaAvailabilityAsync(AzureLocation location, NetAppQuotaAvailabilityContent content, CancellationToken cancellationToken = default)
@@ -224,7 +225,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="content"> Quota availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NetAppCheckAvailabilityResult> CheckNetAppQuotaAvailability(AzureLocation location, NetAppQuotaAvailabilityContent content, CancellationToken cancellationToken = default)
@@ -256,7 +257,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<NetAppRegionInfo>> QueryRegionInfoNetAppResourceAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
@@ -287,7 +288,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NetAppRegionInfo> QueryRegionInfoNetAppResource(AzureLocation location, CancellationToken cancellationToken = default)
         {
@@ -297,6 +298,142 @@ namespace Azure.ResourceManager.NetApp
             {
                 var response = NetAppResourceRestClient.QueryRegionInfo(Id.SubscriptionId, location, cancellationToken);
                 return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get details of the specified network sibling set.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/queryNetworkSiblingSet</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetAppResource_QueryNetworkSiblingSet</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="content"> Network sibling set to query. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<NetworkSiblingSet>> QueryNetworkSiblingSetNetAppResourceAsync(AzureLocation location, QueryNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
+        {
+            using var scope = NetAppResourceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.QueryNetworkSiblingSetNetAppResource");
+            scope.Start();
+            try
+            {
+                var response = await NetAppResourceRestClient.QueryNetworkSiblingSetAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get details of the specified network sibling set.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/queryNetworkSiblingSet</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetAppResource_QueryNetworkSiblingSet</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="content"> Network sibling set to query. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<NetworkSiblingSet> QueryNetworkSiblingSetNetAppResource(AzureLocation location, QueryNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
+        {
+            using var scope = NetAppResourceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.QueryNetworkSiblingSetNetAppResource");
+            scope.Start();
+            try
+            {
+                var response = NetAppResourceRestClient.QueryNetworkSiblingSet(Id.SubscriptionId, location, content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update the network features of the specified network sibling set.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/updateNetworkSiblingSet</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetAppResource_UpdateNetworkSiblingSet</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="content"> Update for the specified network sibling set. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<NetworkSiblingSet>> UpdateNetworkSiblingSetNetAppResourceAsync(WaitUntil waitUntil, AzureLocation location, UpdateNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
+        {
+            using var scope = NetAppResourceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.UpdateNetworkSiblingSetNetAppResource");
+            scope.Start();
+            try
+            {
+                var response = await NetAppResourceRestClient.UpdateNetworkSiblingSetAsync(Id.SubscriptionId, location, content, cancellationToken).ConfigureAwait(false);
+                var operation = new NetAppArmOperation<NetworkSiblingSet>(new NetworkSiblingSetOperationSource(), NetAppResourceClientDiagnostics, Pipeline, NetAppResourceRestClient.CreateUpdateNetworkSiblingSetRequest(Id.SubscriptionId, location, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update the network features of the specified network sibling set.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/updateNetworkSiblingSet</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetAppResource_UpdateNetworkSiblingSet</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="content"> Update for the specified network sibling set. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation<NetworkSiblingSet> UpdateNetworkSiblingSetNetAppResource(WaitUntil waitUntil, AzureLocation location, UpdateNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
+        {
+            using var scope = NetAppResourceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.UpdateNetworkSiblingSetNetAppResource");
+            scope.Start();
+            try
+            {
+                var response = NetAppResourceRestClient.UpdateNetworkSiblingSet(Id.SubscriptionId, location, content, cancellationToken);
+                var operation = new NetAppArmOperation<NetworkSiblingSet>(new NetworkSiblingSetOperationSource(), NetAppResourceClientDiagnostics, Pipeline, NetAppResourceRestClient.CreateUpdateNetworkSiblingSetRequest(Id.SubscriptionId, location, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
             catch (Exception e)
             {
@@ -318,13 +455,13 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetAppSubscriptionQuotaItem" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetAppSubscriptionQuotaItem> GetNetAppQuotaLimitsAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetAppResourceQuotaLimitsRestClient.CreateListRequest(Id.SubscriptionId, location);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, NetAppSubscriptionQuotaItem.DeserializeNetAppSubscriptionQuotaItem, NetAppResourceQuotaLimitsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetAppQuotaLimits", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, NetAppSubscriptionQuotaItem.DeserializeNetAppSubscriptionQuotaItem, NetAppResourceQuotaLimitsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetAppQuotaLimits", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -340,13 +477,13 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetAppSubscriptionQuotaItem" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetAppSubscriptionQuotaItem> GetNetAppQuotaLimits(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetAppResourceQuotaLimitsRestClient.CreateListRequest(Id.SubscriptionId, location);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, NetAppSubscriptionQuotaItem.DeserializeNetAppSubscriptionQuotaItem, NetAppResourceQuotaLimitsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetAppQuotaLimits", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, NetAppSubscriptionQuotaItem.DeserializeNetAppSubscriptionQuotaItem, NetAppResourceQuotaLimitsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetAppQuotaLimits", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -362,7 +499,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="quotaLimitName"> The name of the Quota Limit. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<NetAppSubscriptionQuotaItem>> GetNetAppQuotaLimitAsync(AzureLocation location, string quotaLimitName, CancellationToken cancellationToken = default)
@@ -394,7 +531,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="quotaLimitName"> The name of the Quota Limit. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NetAppSubscriptionQuotaItem> GetNetAppQuotaLimit(AzureLocation location, string quotaLimitName, CancellationToken cancellationToken = default)
@@ -432,7 +569,7 @@ namespace Azure.ResourceManager.NetApp
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetAppAccountAccountsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetAppAccountAccountsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetAppAccountResource(Client, NetAppAccountData.DeserializeNetAppAccountData(e)), NetAppAccountAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetAppAccounts", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetAppAccountResource(Client, NetAppAccountData.DeserializeNetAppAccountData(e)), NetAppAccountAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetAppAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -454,7 +591,7 @@ namespace Azure.ResourceManager.NetApp
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetAppAccountAccountsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetAppAccountAccountsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetAppAccountResource(Client, NetAppAccountData.DeserializeNetAppAccountData(e)), NetAppAccountAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetAppAccounts", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetAppAccountResource(Client, NetAppAccountData.DeserializeNetAppAccountData(e)), NetAppAccountAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetAppAccounts", "value", "nextLink", cancellationToken);
         }
     }
 }

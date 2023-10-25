@@ -15,15 +15,15 @@ namespace Azure.Communication
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(RawId))
-            {
-                writer.WritePropertyName("rawId"u8);
-                writer.WriteStringValue(RawId);
-            }
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
+            }
+            if (Optional.IsDefined(RawId))
+            {
+                writer.WritePropertyName("rawId"u8);
+                writer.WriteStringValue(RawId);
             }
             if (Optional.IsDefined(CommunicationUser))
             {
@@ -45,33 +45,35 @@ namespace Azure.Communication
 
         internal static CommunicationIdentifierModel DeserializeCommunicationIdentifierModel(JsonElement element)
         {
-            Optional<string> rawId = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CommunicationIdentifierModelKind> kind = default;
+            Optional<string> rawId = default;
             Optional<CommunicationUserIdentifierModel> communicationUser = default;
             Optional<PhoneNumberIdentifierModel> phoneNumber = default;
             Optional<MicrosoftTeamsUserIdentifierModel> microsoftTeamsUser = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("rawId"u8))
-                {
-                    rawId = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("kind"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     kind = new CommunicationIdentifierModelKind(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("rawId"u8))
+                {
+                    rawId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("communicationUser"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     communicationUser = CommunicationUserIdentifierModel.DeserializeCommunicationUserIdentifierModel(property.Value);
@@ -81,7 +83,6 @@ namespace Azure.Communication
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     phoneNumber = PhoneNumberIdentifierModel.DeserializePhoneNumberIdentifierModel(property.Value);
@@ -91,14 +92,13 @@ namespace Azure.Communication
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     microsoftTeamsUser = MicrosoftTeamsUserIdentifierModel.DeserializeMicrosoftTeamsUserIdentifierModel(property.Value);
                     continue;
                 }
             }
-            return new CommunicationIdentifierModel(rawId.Value, Optional.ToNullable(kind), communicationUser.Value, phoneNumber.Value, microsoftTeamsUser.Value);
+            return new CommunicationIdentifierModel(Optional.ToNullable(kind), rawId.Value, communicationUser.Value, phoneNumber.Value, microsoftTeamsUser.Value);
         }
     }
 }

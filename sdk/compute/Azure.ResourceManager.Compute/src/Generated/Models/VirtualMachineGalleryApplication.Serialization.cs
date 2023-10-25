@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static VirtualMachineGalleryApplication DeserializeVirtualMachineGalleryApplication(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> tags = default;
             Optional<int> order = default;
             string packageReferenceId = default;
@@ -64,7 +68,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     order = property.Value.GetInt32();
@@ -84,7 +87,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     treatFailureAsDeploymentFailure = property.Value.GetBoolean();
@@ -94,7 +96,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableAutomaticUpgrade = property.Value.GetBoolean();

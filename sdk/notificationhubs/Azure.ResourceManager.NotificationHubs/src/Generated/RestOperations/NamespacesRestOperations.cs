@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.NotificationHubs
             return message;
         }
 
-        /// <summary> Creates/Updates a service namespace. Once created, this namespace&apos;s resource manifest is immutable. This operation is idempotent. </summary>
+        /// <summary> Creates/Updates a service namespace. Once created, this namespace's resource manifest is immutable. This operation is idempotent. </summary>
         /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="namespaceName"> The namespace name. </param>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.NotificationHubs
             }
         }
 
-        /// <summary> Creates/Updates a service namespace. Once created, this namespace&apos;s resource manifest is immutable. This operation is idempotent. </summary>
+        /// <summary> Creates/Updates a service namespace. Once created, this namespace's resource manifest is immutable. This operation is idempotent. </summary>
         /// <param name="subscriptionId"> Gets subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="namespaceName"> The namespace name. </param>

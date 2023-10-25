@@ -12,7 +12,10 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the SqlServerJobTargetGroup data model. </summary>
+    /// <summary>
+    /// A class representing the SqlServerJobTargetGroup data model.
+    /// A group of job targets.
+    /// </summary>
     public partial class SqlServerJobTargetGroupData : ResourceData
     {
         /// <summary> Initializes a new instance of SqlServerJobTargetGroupData. </summary>

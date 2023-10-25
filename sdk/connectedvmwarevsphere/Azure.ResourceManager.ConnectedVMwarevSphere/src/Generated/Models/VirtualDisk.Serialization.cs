@@ -60,6 +60,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 
         internal static VirtualDisk DeserializeVirtualDisk(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> label = default;
             Optional<string> diskObjectId = default;
@@ -91,7 +95,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     diskSizeGB = property.Value.GetInt32();
@@ -101,7 +104,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     deviceKey = property.Value.GetInt32();
@@ -111,7 +113,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     diskMode = new DiskMode(property.Value.GetString());
@@ -121,7 +122,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     controllerKey = property.Value.GetInt32();
@@ -131,7 +131,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     unitNumber = property.Value.GetInt32();
@@ -146,7 +145,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     diskType = new DiskType(property.Value.GetString());

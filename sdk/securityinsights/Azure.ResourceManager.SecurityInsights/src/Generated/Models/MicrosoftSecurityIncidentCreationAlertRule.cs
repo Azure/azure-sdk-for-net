@@ -33,10 +33,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> The alert rule kind. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
-        /// <param name="displayNamesFilter"> the alerts&apos; displayNames on which the cases will be generated. </param>
-        /// <param name="displayNamesExcludeFilter"> the alerts&apos; displayNames on which the cases will not be generated. </param>
-        /// <param name="productFilter"> The alerts&apos; productName on which the cases will be generated. </param>
-        /// <param name="severitiesFilter"> the alerts&apos; severities on which the cases will be generated. </param>
+        /// <param name="displayNamesFilter"> the alerts' displayNames on which the cases will be generated. </param>
+        /// <param name="displayNamesExcludeFilter"> the alerts' displayNames on which the cases will not be generated. </param>
+        /// <param name="productFilter"> The alerts' productName on which the cases will be generated. </param>
+        /// <param name="severitiesFilter"> the alerts' severities on which the cases will be generated. </param>
         /// <param name="alertRuleTemplateName"> The Name of the alert rule template used to create this rule. </param>
         /// <param name="description"> The description of the alert rule. </param>
         /// <param name="displayName"> The display name for alerts created by this alert rule. </param>
@@ -56,13 +56,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Kind = kind;
         }
 
-        /// <summary> the alerts&apos; displayNames on which the cases will be generated. </summary>
+        /// <summary> the alerts' displayNames on which the cases will be generated. </summary>
         public IList<string> DisplayNamesFilter { get; }
-        /// <summary> the alerts&apos; displayNames on which the cases will not be generated. </summary>
+        /// <summary> the alerts' displayNames on which the cases will not be generated. </summary>
         public IList<string> DisplayNamesExcludeFilter { get; }
-        /// <summary> The alerts&apos; productName on which the cases will be generated. </summary>
+        /// <summary> The alerts' productName on which the cases will be generated. </summary>
         public MicrosoftSecurityProductName? ProductFilter { get; set; }
-        /// <summary> the alerts&apos; severities on which the cases will be generated. </summary>
+        /// <summary> the alerts' severities on which the cases will be generated. </summary>
         public IList<SecurityInsightsAlertSeverity> SeveritiesFilter { get; }
         /// <summary> The Name of the alert rule template used to create this rule. </summary>
         public string AlertRuleTemplateName { get; set; }

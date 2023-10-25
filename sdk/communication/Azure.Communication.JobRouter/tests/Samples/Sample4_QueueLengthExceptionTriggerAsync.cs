@@ -4,9 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Azure.Communication.JobRouter.Models;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -18,8 +16,8 @@ namespace Azure.Communication.JobRouter.Tests.Samples
         [Test]
         public async Task QueueLengthTriggerException_SampleScenario()
         {
-            RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
-            RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
+            JobRouterClient routerClient = new JobRouterClient("<< CONNECTION STRING >>");
+            JobRouterAdministrationClient routerAdministrationClient = new JobRouterAdministrationClient("<< CONNECTION STRING >>");
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Exception_QueueLengthExceptionTrigger
             // In this scenario, we are going to address how to escalate / move jobs when a queue has "too many" jobs already en-queued.
@@ -40,13 +38,13 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(new CreateDistributionPolicyOptions(
                 distributionPolicyId: distributionPolicyId,
-                offerTtl: TimeSpan.FromMinutes(5),
+                offerExpiresAfter: TimeSpan.FromMinutes(5),
                 mode: new LongestIdleMode()));
 
             // create backup queue
             string backupJobQueueId = "job-queue-2";
 
-            Response<JobQueue> backupJobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
+            Response<RouterQueue> backupJobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
                 queueId: backupJobQueueId,
                 distributionPolicyId: distributionPolicyId));
 
@@ -57,13 +55,15 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             QueueLengthExceptionTrigger trigger = new QueueLengthExceptionTrigger(10);
 
             // --- define action
-            ManualReclassifyExceptionAction action = new ManualReclassifyExceptionAction(
-                queueId: backupJobQueueId,
-                priority: 10,
-                workerSelectors: new List<WorkerSelector>()
+            ManualReclassifyExceptionAction action = new ManualReclassifyExceptionAction
+            {
+                QueueId = backupJobQueueId,
+                Priority = 10,
+                WorkerSelectors =
                 {
-                    new WorkerSelector("ExceptionTriggered", LabelOperator.Equal, new LabelValue(true))
-                });
+                    new RouterWorkerSelector("ExceptionTriggered", LabelOperator.Equal, new LabelValue(true))
+                }
+            };
 
             Response<ExceptionPolicy> exceptionPolicy = await routerAdministrationClient.CreateExceptionPolicyAsync(new CreateExceptionPolicyOptions(
                 exceptionPolicyId: exceptionPolicyId,
@@ -81,7 +81,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             string activeJobQueueId = "active-job-queue";
 
-            Response<JobQueue> activeJobQueue = await routerAdministrationClient.CreateQueueAsync(
+            Response<RouterQueue> activeJobQueue = await routerAdministrationClient.CreateQueueAsync(
                 options: new CreateQueueOptions(queueId: activeJobQueueId, distributionPolicyId: distributionPolicyId) { ExceptionPolicyId = exceptionPolicyId });
 
             // create 10 jobs to fill in primary queue
@@ -107,7 +107,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     while (!condition && DateTimeOffset.UtcNow.Subtract(startTime) <= maxWaitTime)
                     {
                         Response<RouterJob> jobDto = await routerClient.GetJobAsync(routerJob.Id);
-                        condition = jobDto.Value.JobStatus == RouterJobStatus.Queued;
+                        condition = jobDto.Value.Status == RouterJobStatus.Queued;
                         await Task.Delay(TimeSpan.FromSeconds(1));
                     }
                 }));
@@ -127,7 +127,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             while (!condition && DateTimeOffset.UtcNow.Subtract(startTime) <= maxWaitTime)
             {
                 Response<RouterJob> jobDto = await routerClient.GetJobAsync(job11.Value.Id);
-                condition = jobDto.Value.JobStatus == RouterJobStatus.Queued && jobDto.Value.QueueId == backupJobQueueId;
+                condition = jobDto.Value.Status == RouterJobStatus.Queued && jobDto.Value.QueueId == backupJobQueueId;
                 await Task.Delay(TimeSpan.FromSeconds(1));
             }
 #endif

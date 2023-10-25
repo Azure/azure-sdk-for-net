@@ -5,8 +5,8 @@
 
 #nullable disable
 
-using System;
 using System.Threading;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableSkusRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableSkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AvailableDataBoxEdgeSku.DeserializeAvailableDataBoxEdgeSku, AvailableSkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvailableSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AvailableDataBoxEdgeSku.DeserializeAvailableDataBoxEdgeSku, AvailableSkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvailableSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableSkusRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableSkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AvailableDataBoxEdgeSku.DeserializeAvailableDataBoxEdgeSku, AvailableSkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvailableSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AvailableDataBoxEdgeSku.DeserializeAvailableDataBoxEdgeSku, AvailableSkusClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAvailableSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataBoxEdgeDeviceDevicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataBoxEdgeDeviceDevicesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, expand);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeDeviceResource(Client, DataBoxEdgeDeviceData.DeserializeDataBoxEdgeDeviceData(e)), DataBoxEdgeDeviceDevicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataBoxEdgeDevices", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeDeviceResource(Client, DataBoxEdgeDeviceData.DeserializeDataBoxEdgeDeviceData(e)), DataBoxEdgeDeviceDevicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataBoxEdgeDevices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataBoxEdgeDeviceDevicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataBoxEdgeDeviceDevicesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, expand);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeDeviceResource(Client, DataBoxEdgeDeviceData.DeserializeDataBoxEdgeDeviceData(e)), DataBoxEdgeDeviceDevicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataBoxEdgeDevices", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataBoxEdgeDeviceResource(Client, DataBoxEdgeDeviceData.DeserializeDataBoxEdgeDeviceData(e)), DataBoxEdgeDeviceDevicesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataBoxEdgeDevices", "value", "nextLink", cancellationToken);
         }
     }
 }

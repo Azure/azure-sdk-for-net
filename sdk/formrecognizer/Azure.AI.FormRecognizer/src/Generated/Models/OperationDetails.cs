@@ -15,7 +15,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary>
     /// Get Operation response object.
     /// Please note <see cref="OperationDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="DocumentModelBuildOperationDetails"/>, <see cref="DocumentModelComposeOperationDetails"/> and <see cref="DocumentModelCopyToOperationDetails"/>.
+    /// The available derived classes include <see cref="DocumentClassifierBuildOperationDetails"/>, <see cref="DocumentModelBuildOperationDetails"/>, <see cref="DocumentModelComposeOperationDetails"/> and <see cref="DocumentModelCopyToOperationDetails"/>.
     /// </summary>
     public partial class OperationDetails
     {
@@ -47,10 +47,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="lastUpdatedOn"> Date and time (UTC) when the status was last updated. </param>
         /// <param name="kind"> Type of operation. </param>
         /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
-        /// <param name="apiVersion"> API version used to create this operation. </param>
+        /// <param name="serviceVersion"> API version used to create this operation. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
         /// <param name="jsonError"> Encountered error. </param>
-        internal OperationDetails(string operationId, DocumentOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DocumentOperationKind kind, Uri resourceLocation, string apiVersion, IReadOnlyDictionary<string, string> tags, JsonElement jsonError)
+        internal OperationDetails(string operationId, DocumentOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DocumentOperationKind kind, Uri resourceLocation, string serviceVersion, IReadOnlyDictionary<string, string> tags, JsonElement jsonError)
         {
             OperationId = operationId;
             Status = status;
@@ -59,7 +59,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             LastUpdatedOn = lastUpdatedOn;
             Kind = kind;
             ResourceLocation = resourceLocation;
-            ApiVersion = apiVersion;
+            ServiceVersion = serviceVersion;
             Tags = tags;
             JsonError = jsonError;
         }

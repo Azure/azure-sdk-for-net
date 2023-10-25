@@ -5,6 +5,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Management.ContainerRegistry" VersionOverride="4.0.0" />
     <PackageReference Include="Microsoft.Azure.Management.ContainerRegistry.Fluent"/>
+    <PackageReference Include="Microsoft.Rest.ClientRuntime" />
   </ItemGroup>
 
   <ItemGroup>

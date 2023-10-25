@@ -11,7 +11,7 @@ using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> A list of the managed database&apos;s Advanced Threat Protection settings. </summary>
+    /// <summary> A list of the managed database's Advanced Threat Protection settings. </summary>
     internal partial class ManagedDatabaseAdvancedThreatProtectionListResult
     {
         /// <summary> Initializes a new instance of ManagedDatabaseAdvancedThreatProtectionListResult. </summary>

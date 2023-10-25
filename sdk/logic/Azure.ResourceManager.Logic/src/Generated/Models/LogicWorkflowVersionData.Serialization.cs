@@ -60,7 +60,10 @@ namespace Azure.ResourceManager.Logic
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Definition);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Definition.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(Definition))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsCollectionDefined(Parameters))
@@ -80,6 +83,10 @@ namespace Azure.ResourceManager.Logic
 
         internal static LogicWorkflowVersionData DeserializeLogicWorkflowVersionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -104,7 +111,6 @@ namespace Azure.ResourceManager.Logic
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -139,7 +145,6 @@ namespace Azure.ResourceManager.Logic
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -158,7 +163,6 @@ namespace Azure.ResourceManager.Logic
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new LogicWorkflowProvisioningState(property0.Value.GetString());
@@ -168,7 +172,6 @@ namespace Azure.ResourceManager.Logic
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createdTime = property0.Value.GetDateTimeOffset("O");
@@ -178,7 +181,6 @@ namespace Azure.ResourceManager.Logic
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             changedTime = property0.Value.GetDateTimeOffset("O");
@@ -188,7 +190,6 @@ namespace Azure.ResourceManager.Logic
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             state = new LogicWorkflowState(property0.Value.GetString());
@@ -208,7 +209,6 @@ namespace Azure.ResourceManager.Logic
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             endpointsConfiguration = FlowEndpointsConfiguration.DeserializeFlowEndpointsConfiguration(property0.Value);
@@ -218,7 +218,6 @@ namespace Azure.ResourceManager.Logic
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             accessControl = FlowAccessControlConfiguration.DeserializeFlowAccessControlConfiguration(property0.Value);
@@ -228,7 +227,6 @@ namespace Azure.ResourceManager.Logic
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             sku = LogicSku.DeserializeLogicSku(property0.Value);
@@ -238,7 +236,6 @@ namespace Azure.ResourceManager.Logic
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             integrationAccount = LogicResourceReference.DeserializeLogicResourceReference(property0.Value);
@@ -248,7 +245,6 @@ namespace Azure.ResourceManager.Logic
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             definition = BinaryData.FromString(property0.Value.GetRawText());
@@ -258,7 +254,6 @@ namespace Azure.ResourceManager.Logic
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, LogicWorkflowParameterInfo> dictionary = new Dictionary<string, LogicWorkflowParameterInfo>();

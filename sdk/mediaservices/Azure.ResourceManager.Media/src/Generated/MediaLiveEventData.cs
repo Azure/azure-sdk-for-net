@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Media
 {
-    /// <summary> A class representing the MediaLiveEvent data model. </summary>
+    /// <summary>
+    /// A class representing the MediaLiveEvent data model.
+    /// The live event.
+    /// </summary>
     public partial class MediaLiveEventData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of MediaLiveEventData. </summary>
@@ -41,7 +44,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="crossSiteAccessPolicies"> Live event cross site access policies. </param>
         /// <param name="useStaticHostname"> Specifies whether a static hostname would be assigned to the live event preview and ingest endpoints. This value can only be updated if the live event is in Standby state. </param>
         /// <param name="hostnamePrefix"> When useStaticHostname is set to true, the hostnamePrefix specifies the first part of the hostname assigned to the live event preview and ingest endpoints. The final hostname would be a combination of this prefix, the media service account name and a short code for the Azure Media Services data center. </param>
-        /// <param name="streamOptions"> The options to use for the LiveEvent. This value is specified at creation time and cannot be updated. The valid values for the array entry values are &apos;Default&apos; and &apos;LowLatency&apos;. </param>
+        /// <param name="streamOptions"> The options to use for the LiveEvent. This value is specified at creation time and cannot be updated. The valid values for the array entry values are 'Default' and 'LowLatency'. </param>
         /// <param name="createdOn"> The creation time for the live event. </param>
         /// <param name="lastModifiedOn"> The last modified time of the live event. </param>
         internal MediaLiveEventData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, LiveEventInput input, LiveEventPreview preview, LiveEventEncoding encoding, IList<LiveEventTranscription> transcriptions, string provisioningState, LiveEventResourceState? resourceState, CrossSiteAccessPolicies crossSiteAccessPolicies, bool? useStaticHostname, string hostnamePrefix, IList<StreamOptionsFlag> streamOptions, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn) : base(id, name, resourceType, systemData, tags, location)
@@ -81,7 +84,7 @@ namespace Azure.ResourceManager.Media
         public bool? UseStaticHostname { get; set; }
         /// <summary> When useStaticHostname is set to true, the hostnamePrefix specifies the first part of the hostname assigned to the live event preview and ingest endpoints. The final hostname would be a combination of this prefix, the media service account name and a short code for the Azure Media Services data center. </summary>
         public string HostnamePrefix { get; set; }
-        /// <summary> The options to use for the LiveEvent. This value is specified at creation time and cannot be updated. The valid values for the array entry values are &apos;Default&apos; and &apos;LowLatency&apos;. </summary>
+        /// <summary> The options to use for the LiveEvent. This value is specified at creation time and cannot be updated. The valid values for the array entry values are 'Default' and 'LowLatency'. </summary>
         public IList<StreamOptionsFlag> StreamOptions { get; }
         /// <summary> The creation time for the live event. </summary>
         public DateTimeOffset? CreatedOn { get; }

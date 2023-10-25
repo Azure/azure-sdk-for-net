@@ -25,6 +25,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Managed service identity of the factory. Current supported identity types: SystemAssigned, UserAssigned, SystemAssigned,UserAssigned. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Whether or not public network access is allowed for the data factory. </summary>
-        public FactoryPublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public DataFactoryPublicNetworkAccess? PublicNetworkAccess { get; set; }
     }
 }

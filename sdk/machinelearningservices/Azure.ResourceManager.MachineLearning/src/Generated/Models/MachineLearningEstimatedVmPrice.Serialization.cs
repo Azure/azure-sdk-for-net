@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,6 +13,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         internal static MachineLearningEstimatedVmPrice DeserializeMachineLearningEstimatedVmPrice(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             double retailPrice = default;
             MachineLearningVmPriceOSType osType = default;
             MachineLearningVmTier vmTier = default;

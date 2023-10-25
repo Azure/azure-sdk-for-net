@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     {
         internal static StreamingJobDiagnosticCondition DeserializeStreamingJobDiagnosticCondition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DateTimeOffset> since = default;
             Optional<string> code = default;
             Optional<string> message = default;
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     since = property.Value.GetDateTimeOffset("O");

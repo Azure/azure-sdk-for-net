@@ -5,9 +5,8 @@
 
 #nullable disable
 
-using System;
 using System.Threading;
-using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -27,6 +26,8 @@ namespace Azure.ResourceManager.Monitor
         private ActionGroupsRestOperations _actionGroupRestClient;
         private ClientDiagnostics _activityLogsClientDiagnostics;
         private ActivityLogsRestOperations _activityLogsRestClient;
+        private ClientDiagnostics _metricsClientDiagnostics;
+        private MetricsRestOperations _metricsRestClient;
         private ClientDiagnostics _metricAlertClientDiagnostics;
         private MetricAlertsRestOperations _metricAlertRestClient;
         private ClientDiagnostics _scheduledQueryRuleClientDiagnostics;
@@ -39,6 +40,8 @@ namespace Azure.ResourceManager.Monitor
         private DataCollectionEndpointsRestOperations _dataCollectionEndpointRestClient;
         private ClientDiagnostics _dataCollectionRuleClientDiagnostics;
         private DataCollectionRulesRestOperations _dataCollectionRuleRestClient;
+        private ClientDiagnostics _monitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics;
+        private AzureMonitorWorkspacesRestOperations _monitorWorkspaceResourceAzureMonitorWorkspacesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -60,6 +63,8 @@ namespace Azure.ResourceManager.Monitor
         private ActionGroupsRestOperations ActionGroupRestClient => _actionGroupRestClient ??= new ActionGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ActionGroupResource.ResourceType));
         private ClientDiagnostics ActivityLogsClientDiagnostics => _activityLogsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private ActivityLogsRestOperations ActivityLogsRestClient => _activityLogsRestClient ??= new ActivityLogsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics MetricsClientDiagnostics => _metricsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private MetricsRestOperations MetricsRestClient => _metricsRestClient ??= new MetricsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics MetricAlertClientDiagnostics => _metricAlertClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", MetricAlertResource.ResourceType.Namespace, Diagnostics);
         private MetricAlertsRestOperations MetricAlertRestClient => _metricAlertRestClient ??= new MetricAlertsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(MetricAlertResource.ResourceType));
         private ClientDiagnostics ScheduledQueryRuleClientDiagnostics => _scheduledQueryRuleClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", ScheduledQueryRuleResource.ResourceType.Namespace, Diagnostics);
@@ -72,6 +77,8 @@ namespace Azure.ResourceManager.Monitor
         private DataCollectionEndpointsRestOperations DataCollectionEndpointRestClient => _dataCollectionEndpointRestClient ??= new DataCollectionEndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DataCollectionEndpointResource.ResourceType));
         private ClientDiagnostics DataCollectionRuleClientDiagnostics => _dataCollectionRuleClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", DataCollectionRuleResource.ResourceType.Namespace, Diagnostics);
         private DataCollectionRulesRestOperations DataCollectionRuleRestClient => _dataCollectionRuleRestClient ??= new DataCollectionRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DataCollectionRuleResource.ResourceType));
+        private ClientDiagnostics MonitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics => _monitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", MonitorWorkspaceResource.ResourceType.Namespace, Diagnostics);
+        private AzureMonitorWorkspacesRestOperations MonitorWorkspaceResourceAzureMonitorWorkspacesRestClient => _monitorWorkspaceResourceAzureMonitorWorkspacesRestClient ??= new AzureMonitorWorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(MonitorWorkspaceResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -105,7 +112,7 @@ namespace Azure.ResourceManager.Monitor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AutoscaleSettingRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AutoscaleSettingRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AutoscaleSettingResource(Client, AutoscaleSettingData.DeserializeAutoscaleSettingData(e)), AutoscaleSettingClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAutoscaleSettings", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AutoscaleSettingResource(Client, AutoscaleSettingData.DeserializeAutoscaleSettingData(e)), AutoscaleSettingClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAutoscaleSettings", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -127,7 +134,7 @@ namespace Azure.ResourceManager.Monitor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AutoscaleSettingRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AutoscaleSettingRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AutoscaleSettingResource(Client, AutoscaleSettingData.DeserializeAutoscaleSettingData(e)), AutoscaleSettingClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAutoscaleSettings", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AutoscaleSettingResource(Client, AutoscaleSettingData.DeserializeAutoscaleSettingData(e)), AutoscaleSettingClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAutoscaleSettings", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -148,7 +155,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual AsyncPageable<AlertRuleResource> GetAlertRulesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AlertRuleRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AlertRuleResource(Client, AlertRuleData.DeserializeAlertRuleData(e)), AlertRuleClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAlertRules", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AlertRuleResource(Client, AlertRuleData.DeserializeAlertRuleData(e)), AlertRuleClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAlertRules", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -169,139 +176,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual Pageable<AlertRuleResource> GetAlertRules(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AlertRuleRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new AlertRuleResource(Client, AlertRuleData.DeserializeAlertRuleData(e)), AlertRuleClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAlertRules", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Send test notifications to a set of provided receivers
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/createNotifications</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ActionGroups_PostTestNotifications</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The notification request body which includes the contact details. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<NotificationStatus>> CreateNotificationsAsync(WaitUntil waitUntil, NotificationContent content, CancellationToken cancellationToken = default)
-        {
-            using var scope = ActionGroupClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CreateNotifications");
-            scope.Start();
-            try
-            {
-                var response = await ActionGroupRestClient.PostTestNotificationsAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
-                var operation = new MonitorArmOperation<NotificationStatus>(new NotificationStatusOperationSource(), ActionGroupClientDiagnostics, Pipeline, ActionGroupRestClient.CreatePostTestNotificationsRequest(Id.SubscriptionId, content).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Send test notifications to a set of provided receivers
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/createNotifications</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ActionGroups_PostTestNotifications</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> The notification request body which includes the contact details. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<NotificationStatus> CreateNotifications(WaitUntil waitUntil, NotificationContent content, CancellationToken cancellationToken = default)
-        {
-            using var scope = ActionGroupClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CreateNotifications");
-            scope.Start();
-            try
-            {
-                var response = ActionGroupRestClient.PostTestNotifications(Id.SubscriptionId, content, cancellationToken);
-                var operation = new MonitorArmOperation<NotificationStatus>(new NotificationStatusOperationSource(), ActionGroupClientDiagnostics, Pipeline, ActionGroupRestClient.CreatePostTestNotificationsRequest(Id.SubscriptionId, content).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get the test notifications by the notification id
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/notificationStatus/{notificationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ActionGroups_GetTestNotifications</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="notificationId"> The notification id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NotificationStatus>> GetNotificationStatusAsync(string notificationId, CancellationToken cancellationToken = default)
-        {
-            using var scope = ActionGroupClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNotificationStatus");
-            scope.Start();
-            try
-            {
-                var response = await ActionGroupRestClient.GetTestNotificationsAsync(Id.SubscriptionId, notificationId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get the test notifications by the notification id
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/notificationStatus/{notificationId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ActionGroups_GetTestNotifications</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="notificationId"> The notification id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NotificationStatus> GetNotificationStatus(string notificationId, CancellationToken cancellationToken = default)
-        {
-            using var scope = ActionGroupClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNotificationStatus");
-            scope.Start();
-            try
-            {
-                var response = ActionGroupRestClient.GetTestNotifications(Id.SubscriptionId, notificationId, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new AlertRuleResource(Client, AlertRuleData.DeserializeAlertRuleData(e)), AlertRuleClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetAlertRules", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -322,7 +197,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual AsyncPageable<ActionGroupResource> GetActionGroupsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ActionGroupRestClient.CreateListBySubscriptionIdRequest(Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ActionGroupResource(Client, ActionGroupData.DeserializeActionGroupData(e)), ActionGroupClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetActionGroups", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new ActionGroupResource(Client, ActionGroupData.DeserializeActionGroupData(e)), ActionGroupClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetActionGroups", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -343,7 +218,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual Pageable<ActionGroupResource> GetActionGroups(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ActionGroupRestClient.CreateListBySubscriptionIdRequest(Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new ActionGroupResource(Client, ActionGroupData.DeserializeActionGroupData(e)), ActionGroupClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetActionGroups", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new ActionGroupResource(Client, ActionGroupData.DeserializeActionGroupData(e)), ActionGroupClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetActionGroups", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -359,7 +234,7 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> Reduces the set of data collected.&lt;br&gt;This argument is required and it also requires at least the start date/time.&lt;br&gt;The **$filter** argument is very restricted and allows only the following patterns.&lt;br&gt;- *List events for a resource group*: $filter=eventTimestamp ge &apos;2014-07-16T04:36:37.6407898Z&apos; and eventTimestamp le &apos;2014-07-20T04:36:37.6407898Z&apos; and resourceGroupName eq &apos;resourceGroupName&apos;.&lt;br&gt;- *List events for resource*: $filter=eventTimestamp ge &apos;2014-07-16T04:36:37.6407898Z&apos; and eventTimestamp le &apos;2014-07-20T04:36:37.6407898Z&apos; and resourceUri eq &apos;resourceURI&apos;.&lt;br&gt;- *List events for a subscription in a time range*: $filter=eventTimestamp ge &apos;2014-07-16T04:36:37.6407898Z&apos; and eventTimestamp le &apos;2014-07-20T04:36:37.6407898Z&apos;.&lt;br&gt;- *List events for a resource provider*: $filter=eventTimestamp ge &apos;2014-07-16T04:36:37.6407898Z&apos; and eventTimestamp le &apos;2014-07-20T04:36:37.6407898Z&apos; and resourceProvider eq &apos;resourceProviderName&apos;.&lt;br&gt;- *List events for a correlation Id*: $filter=eventTimestamp ge &apos;2014-07-16T04:36:37.6407898Z&apos; and eventTimestamp le &apos;2014-07-20T04:36:37.6407898Z&apos; and correlationId eq &apos;correlationID&apos;.&lt;br&gt;&lt;br&gt;**NOTE**: No other syntax is allowed. </param>
+        /// <param name="filter"> Reduces the set of data collected.&lt;br&gt;This argument is required and it also requires at least the start date/time.&lt;br&gt;The **$filter** argument is very restricted and allows only the following patterns.&lt;br&gt;- *List events for a resource group*: $filter=eventTimestamp ge '2014-07-16T04:36:37.6407898Z' and eventTimestamp le '2014-07-20T04:36:37.6407898Z' and resourceGroupName eq 'resourceGroupName'.&lt;br&gt;- *List events for resource*: $filter=eventTimestamp ge '2014-07-16T04:36:37.6407898Z' and eventTimestamp le '2014-07-20T04:36:37.6407898Z' and resourceUri eq 'resourceURI'.&lt;br&gt;- *List events for a subscription in a time range*: $filter=eventTimestamp ge '2014-07-16T04:36:37.6407898Z' and eventTimestamp le '2014-07-20T04:36:37.6407898Z'.&lt;br&gt;- *List events for a resource provider*: $filter=eventTimestamp ge '2014-07-16T04:36:37.6407898Z' and eventTimestamp le '2014-07-20T04:36:37.6407898Z' and resourceProvider eq 'resourceProviderName'.&lt;br&gt;- *List events for a correlation Id*: $filter=eventTimestamp ge '2014-07-16T04:36:37.6407898Z' and eventTimestamp le '2014-07-20T04:36:37.6407898Z' and correlationId eq 'correlationID'.&lt;br&gt;&lt;br&gt;**NOTE**: No other syntax is allowed. </param>
         /// <param name="select"> Used to fetch events with only the given properties.&lt;br&gt;The **$select** argument is a comma separated list of property names to be returned. Possible values are: *authorization*, *claims*, *correlationId*, *description*, *eventDataId*, *eventName*, *eventTimestamp*, *httpRequest*, *level*, *operationId*, *operationName*, *properties*, *resourceGroupName*, *resourceProviderName*, *resourceId*, *status*, *submissionTimestamp*, *subStatus*, *subscriptionId*. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="EventDataInfo" /> that may take multiple service requests to iterate over. </returns>
@@ -367,7 +242,7 @@ namespace Azure.ResourceManager.Monitor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ActivityLogsRestClient.CreateListRequest(Id.SubscriptionId, filter, select);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ActivityLogsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter, select);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, EventDataInfo.DeserializeEventDataInfo, ActivityLogsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetActivityLogs", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, EventDataInfo.DeserializeEventDataInfo, ActivityLogsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetActivityLogs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -383,7 +258,7 @@ namespace Azure.ResourceManager.Monitor
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="filter"> Reduces the set of data collected.&lt;br&gt;This argument is required and it also requires at least the start date/time.&lt;br&gt;The **$filter** argument is very restricted and allows only the following patterns.&lt;br&gt;- *List events for a resource group*: $filter=eventTimestamp ge &apos;2014-07-16T04:36:37.6407898Z&apos; and eventTimestamp le &apos;2014-07-20T04:36:37.6407898Z&apos; and resourceGroupName eq &apos;resourceGroupName&apos;.&lt;br&gt;- *List events for resource*: $filter=eventTimestamp ge &apos;2014-07-16T04:36:37.6407898Z&apos; and eventTimestamp le &apos;2014-07-20T04:36:37.6407898Z&apos; and resourceUri eq &apos;resourceURI&apos;.&lt;br&gt;- *List events for a subscription in a time range*: $filter=eventTimestamp ge &apos;2014-07-16T04:36:37.6407898Z&apos; and eventTimestamp le &apos;2014-07-20T04:36:37.6407898Z&apos;.&lt;br&gt;- *List events for a resource provider*: $filter=eventTimestamp ge &apos;2014-07-16T04:36:37.6407898Z&apos; and eventTimestamp le &apos;2014-07-20T04:36:37.6407898Z&apos; and resourceProvider eq &apos;resourceProviderName&apos;.&lt;br&gt;- *List events for a correlation Id*: $filter=eventTimestamp ge &apos;2014-07-16T04:36:37.6407898Z&apos; and eventTimestamp le &apos;2014-07-20T04:36:37.6407898Z&apos; and correlationId eq &apos;correlationID&apos;.&lt;br&gt;&lt;br&gt;**NOTE**: No other syntax is allowed. </param>
+        /// <param name="filter"> Reduces the set of data collected.&lt;br&gt;This argument is required and it also requires at least the start date/time.&lt;br&gt;The **$filter** argument is very restricted and allows only the following patterns.&lt;br&gt;- *List events for a resource group*: $filter=eventTimestamp ge '2014-07-16T04:36:37.6407898Z' and eventTimestamp le '2014-07-20T04:36:37.6407898Z' and resourceGroupName eq 'resourceGroupName'.&lt;br&gt;- *List events for resource*: $filter=eventTimestamp ge '2014-07-16T04:36:37.6407898Z' and eventTimestamp le '2014-07-20T04:36:37.6407898Z' and resourceUri eq 'resourceURI'.&lt;br&gt;- *List events for a subscription in a time range*: $filter=eventTimestamp ge '2014-07-16T04:36:37.6407898Z' and eventTimestamp le '2014-07-20T04:36:37.6407898Z'.&lt;br&gt;- *List events for a resource provider*: $filter=eventTimestamp ge '2014-07-16T04:36:37.6407898Z' and eventTimestamp le '2014-07-20T04:36:37.6407898Z' and resourceProvider eq 'resourceProviderName'.&lt;br&gt;- *List events for a correlation Id*: $filter=eventTimestamp ge '2014-07-16T04:36:37.6407898Z' and eventTimestamp le '2014-07-20T04:36:37.6407898Z' and correlationId eq 'correlationID'.&lt;br&gt;&lt;br&gt;**NOTE**: No other syntax is allowed. </param>
         /// <param name="select"> Used to fetch events with only the given properties.&lt;br&gt;The **$select** argument is a comma separated list of property names to be returned. Possible values are: *authorization*, *claims*, *correlationId*, *description*, *eventDataId*, *eventName*, *eventTimestamp*, *httpRequest*, *level*, *operationId*, *operationName*, *properties*, *resourceGroupName*, *resourceProviderName*, *resourceId*, *status*, *submissionTimestamp*, *subStatus*, *subscriptionId*. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="EventDataInfo" /> that may take multiple service requests to iterate over. </returns>
@@ -391,7 +266,95 @@ namespace Azure.ResourceManager.Monitor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ActivityLogsRestClient.CreateListRequest(Id.SubscriptionId, filter, select);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ActivityLogsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter, select);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, EventDataInfo.DeserializeEventDataInfo, ActivityLogsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetActivityLogs", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, EventDataInfo.DeserializeEventDataInfo, ActivityLogsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetActivityLogs", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// **Lists the metric data for a subscription**.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/metrics</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Metrics_ListAtSubscriptionScope</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SubscriptionMonitorMetric" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SubscriptionMonitorMetric> GetMonitorMetricsAsync(SubscriptionResourceGetMonitorMetricsOptions options, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MetricsRestClient.CreateListAtSubscriptionScopeRequest(Id.SubscriptionId, options.Region, options.Timespan, options.Interval, options.Metricnames, options.Aggregation, options.Top, options.Orderby, options.Filter, options.ResultType, options.Metricnamespace, options.AutoAdjustTimegrain, options.ValidateDimensions);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SubscriptionMonitorMetric.DeserializeSubscriptionMonitorMetric, MetricsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMonitorMetrics", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// **Lists the metric data for a subscription**.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/metrics</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Metrics_ListAtSubscriptionScope</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SubscriptionMonitorMetric" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SubscriptionMonitorMetric> GetMonitorMetrics(SubscriptionResourceGetMonitorMetricsOptions options, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MetricsRestClient.CreateListAtSubscriptionScopeRequest(Id.SubscriptionId, options.Region, options.Timespan, options.Interval, options.Metricnames, options.Aggregation, options.Top, options.Orderby, options.Filter, options.ResultType, options.Metricnamespace, options.AutoAdjustTimegrain, options.ValidateDimensions);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, SubscriptionMonitorMetric.DeserializeSubscriptionMonitorMetric, MetricsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMonitorMetrics", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// **Lists the metric data for a subscription**. Parameters can be specified on either query params or the body.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/metrics</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Metrics_ListAtSubscriptionScopePost</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="SubscriptionMonitorMetric" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SubscriptionMonitorMetric> GetMonitorMetricsWithPostAsync(SubscriptionResourceGetMonitorMetricsWithPostOptions options, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MetricsRestClient.CreateListAtSubscriptionScopePostRequest(Id.SubscriptionId, options.Region, options.Content, options.Timespan, options.Interval, options.Metricnames, options.Aggregation, options.Top, options.Orderby, options.Filter, options.ResultType, options.Metricnamespace, options.AutoAdjustTimegrain, options.ValidateDimensions);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SubscriptionMonitorMetric.DeserializeSubscriptionMonitorMetric, MetricsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMonitorMetricsWithPost", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// **Lists the metric data for a subscription**. Parameters can be specified on either query params or the body.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/metrics</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Metrics_ListAtSubscriptionScopePost</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SubscriptionMonitorMetric" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SubscriptionMonitorMetric> GetMonitorMetricsWithPost(SubscriptionResourceGetMonitorMetricsWithPostOptions options, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MetricsRestClient.CreateListAtSubscriptionScopePostRequest(Id.SubscriptionId, options.Region, options.Content, options.Timespan, options.Interval, options.Metricnames, options.Aggregation, options.Top, options.Orderby, options.Filter, options.ResultType, options.Metricnamespace, options.AutoAdjustTimegrain, options.ValidateDimensions);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, SubscriptionMonitorMetric.DeserializeSubscriptionMonitorMetric, MetricsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMonitorMetricsWithPost", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -412,7 +375,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual AsyncPageable<MetricAlertResource> GetMetricAlertsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MetricAlertRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MetricAlertResource(Client, MetricAlertData.DeserializeMetricAlertData(e)), MetricAlertClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMetricAlerts", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new MetricAlertResource(Client, MetricAlertData.DeserializeMetricAlertData(e)), MetricAlertClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMetricAlerts", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -433,7 +396,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual Pageable<MetricAlertResource> GetMetricAlerts(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MetricAlertRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new MetricAlertResource(Client, MetricAlertData.DeserializeMetricAlertData(e)), MetricAlertClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMetricAlerts", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new MetricAlertResource(Client, MetricAlertData.DeserializeMetricAlertData(e)), MetricAlertClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMetricAlerts", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -455,7 +418,7 @@ namespace Azure.ResourceManager.Monitor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ScheduledQueryRuleRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScheduledQueryRuleRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScheduledQueryRuleResource(Client, ScheduledQueryRuleData.DeserializeScheduledQueryRuleData(e)), ScheduledQueryRuleClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetScheduledQueryRules", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScheduledQueryRuleResource(Client, ScheduledQueryRuleData.DeserializeScheduledQueryRuleData(e)), ScheduledQueryRuleClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetScheduledQueryRules", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -477,7 +440,7 @@ namespace Azure.ResourceManager.Monitor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ScheduledQueryRuleRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScheduledQueryRuleRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScheduledQueryRuleResource(Client, ScheduledQueryRuleData.DeserializeScheduledQueryRuleData(e)), ScheduledQueryRuleClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetScheduledQueryRules", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScheduledQueryRuleResource(Client, ScheduledQueryRuleData.DeserializeScheduledQueryRuleData(e)), ScheduledQueryRuleClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetScheduledQueryRules", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -499,7 +462,7 @@ namespace Azure.ResourceManager.Monitor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MonitorPrivateLinkScopePrivateLinkScopesRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MonitorPrivateLinkScopePrivateLinkScopesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MonitorPrivateLinkScopeResource(Client, MonitorPrivateLinkScopeData.DeserializeMonitorPrivateLinkScopeData(e)), MonitorPrivateLinkScopePrivateLinkScopesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMonitorPrivateLinkScopes", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MonitorPrivateLinkScopeResource(Client, MonitorPrivateLinkScopeData.DeserializeMonitorPrivateLinkScopeData(e)), MonitorPrivateLinkScopePrivateLinkScopesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMonitorPrivateLinkScopes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -521,7 +484,7 @@ namespace Azure.ResourceManager.Monitor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => MonitorPrivateLinkScopePrivateLinkScopesRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MonitorPrivateLinkScopePrivateLinkScopesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MonitorPrivateLinkScopeResource(Client, MonitorPrivateLinkScopeData.DeserializeMonitorPrivateLinkScopeData(e)), MonitorPrivateLinkScopePrivateLinkScopesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMonitorPrivateLinkScopes", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MonitorPrivateLinkScopeResource(Client, MonitorPrivateLinkScopeData.DeserializeMonitorPrivateLinkScopeData(e)), MonitorPrivateLinkScopePrivateLinkScopesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMonitorPrivateLinkScopes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -543,7 +506,7 @@ namespace Azure.ResourceManager.Monitor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ActivityLogAlertRestClient.CreateListBySubscriptionIdRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ActivityLogAlertRestClient.CreateListBySubscriptionIdNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ActivityLogAlertResource(Client, ActivityLogAlertData.DeserializeActivityLogAlertData(e)), ActivityLogAlertClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetActivityLogAlerts", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ActivityLogAlertResource(Client, ActivityLogAlertData.DeserializeActivityLogAlertData(e)), ActivityLogAlertClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetActivityLogAlerts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -565,7 +528,7 @@ namespace Azure.ResourceManager.Monitor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ActivityLogAlertRestClient.CreateListBySubscriptionIdRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ActivityLogAlertRestClient.CreateListBySubscriptionIdNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ActivityLogAlertResource(Client, ActivityLogAlertData.DeserializeActivityLogAlertData(e)), ActivityLogAlertClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetActivityLogAlerts", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ActivityLogAlertResource(Client, ActivityLogAlertData.DeserializeActivityLogAlertData(e)), ActivityLogAlertClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetActivityLogAlerts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -587,7 +550,7 @@ namespace Azure.ResourceManager.Monitor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataCollectionEndpointRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataCollectionEndpointRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataCollectionEndpointResource(Client, DataCollectionEndpointData.DeserializeDataCollectionEndpointData(e)), DataCollectionEndpointClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataCollectionEndpoints", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataCollectionEndpointResource(Client, DataCollectionEndpointData.DeserializeDataCollectionEndpointData(e)), DataCollectionEndpointClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataCollectionEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -609,7 +572,7 @@ namespace Azure.ResourceManager.Monitor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataCollectionEndpointRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataCollectionEndpointRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataCollectionEndpointResource(Client, DataCollectionEndpointData.DeserializeDataCollectionEndpointData(e)), DataCollectionEndpointClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataCollectionEndpoints", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataCollectionEndpointResource(Client, DataCollectionEndpointData.DeserializeDataCollectionEndpointData(e)), DataCollectionEndpointClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataCollectionEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -631,7 +594,7 @@ namespace Azure.ResourceManager.Monitor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataCollectionRuleRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataCollectionRuleRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataCollectionRuleResource(Client, DataCollectionRuleData.DeserializeDataCollectionRuleData(e)), DataCollectionRuleClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataCollectionRules", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataCollectionRuleResource(Client, DataCollectionRuleData.DeserializeDataCollectionRuleData(e)), DataCollectionRuleClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataCollectionRules", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -653,7 +616,51 @@ namespace Azure.ResourceManager.Monitor
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataCollectionRuleRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataCollectionRuleRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataCollectionRuleResource(Client, DataCollectionRuleData.DeserializeDataCollectionRuleData(e)), DataCollectionRuleClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataCollectionRules", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataCollectionRuleResource(Client, DataCollectionRuleData.DeserializeDataCollectionRuleData(e)), DataCollectionRuleClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataCollectionRules", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all workspaces in the specified subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Monitor/accounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureMonitorWorkspaces_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="MonitorWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MonitorWorkspaceResource> GetMonitorWorkspaceResourcesAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MonitorWorkspaceResourceAzureMonitorWorkspacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MonitorWorkspaceResourceAzureMonitorWorkspacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MonitorWorkspaceResource(Client, MonitorWorkspaceResourceData.DeserializeMonitorWorkspaceResourceData(e)), MonitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMonitorWorkspaceResources", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all workspaces in the specified subscription
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Monitor/accounts</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AzureMonitorWorkspaces_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="MonitorWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MonitorWorkspaceResource> GetMonitorWorkspaceResources(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MonitorWorkspaceResourceAzureMonitorWorkspacesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MonitorWorkspaceResourceAzureMonitorWorkspacesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MonitorWorkspaceResource(Client, MonitorWorkspaceResourceData.DeserializeMonitorWorkspaceResourceData(e)), MonitorWorkspaceResourceAzureMonitorWorkspacesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMonitorWorkspaceResources", "value", "nextLink", cancellationToken);
         }
     }
 }

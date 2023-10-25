@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     {
         internal static HelmReleaseProperties DeserializeHelmReleaseProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long?> lastRevisionApplied = default;
             Optional<KubernetesObjectReference> helmChartRef = default;
             Optional<long?> failureCount = default;

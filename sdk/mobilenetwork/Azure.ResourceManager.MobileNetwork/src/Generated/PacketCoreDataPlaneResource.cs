@@ -88,11 +88,11 @@ namespace Azure.ResourceManager.MobileNetwork
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of AttachedDataNetworkResources in the PacketCoreDataPlane. </summary>
-        /// <returns> An object representing collection of AttachedDataNetworkResources and their operations over a AttachedDataNetworkResource. </returns>
-        public virtual AttachedDataNetworkCollection GetAttachedDataNetworks()
+        /// <summary> Gets a collection of MobileAttachedDataNetworkResources in the PacketCoreDataPlane. </summary>
+        /// <returns> An object representing collection of MobileAttachedDataNetworkResources and their operations over a MobileAttachedDataNetworkResource. </returns>
+        public virtual MobileAttachedDataNetworkCollection GetMobileAttachedDataNetworks()
         {
-            return GetCachedClient(Client => new AttachedDataNetworkCollection(Client, Id));
+            return GetCachedClient(Client => new MobileAttachedDataNetworkCollection(Client, Id));
         }
 
         /// <summary>
@@ -113,9 +113,9 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="attachedDataNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="attachedDataNetworkName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AttachedDataNetworkResource>> GetAttachedDataNetworkAsync(string attachedDataNetworkName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MobileAttachedDataNetworkResource>> GetMobileAttachedDataNetworkAsync(string attachedDataNetworkName, CancellationToken cancellationToken = default)
         {
-            return await GetAttachedDataNetworks().GetAsync(attachedDataNetworkName, cancellationToken).ConfigureAwait(false);
+            return await GetMobileAttachedDataNetworks().GetAsync(attachedDataNetworkName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -136,9 +136,9 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentException"> <paramref name="attachedDataNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="attachedDataNetworkName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AttachedDataNetworkResource> GetAttachedDataNetwork(string attachedDataNetworkName, CancellationToken cancellationToken = default)
+        public virtual Response<MobileAttachedDataNetworkResource> GetMobileAttachedDataNetwork(string attachedDataNetworkName, CancellationToken cancellationToken = default)
         {
-            return GetAttachedDataNetworks().Get(attachedDataNetworkName, cancellationToken);
+            return GetMobileAttachedDataNetworks().Get(attachedDataNetworkName, cancellationToken);
         }
 
         /// <summary>
@@ -286,18 +286,18 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tagsObject"> Parameters supplied to update packet core data plane tags. </param>
+        /// <param name="patch"> Parameters supplied to update packet core data plane tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
-        public virtual async Task<Response<PacketCoreDataPlaneResource>> UpdateAsync(TagsObject tagsObject, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<PacketCoreDataPlaneResource>> UpdateAsync(MobileNetworkTagsPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _packetCoreDataPlaneClientDiagnostics.CreateScope("PacketCoreDataPlaneResource.Update");
             scope.Start();
             try
             {
-                var response = await _packetCoreDataPlaneRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagsObject, cancellationToken).ConfigureAwait(false);
+                var response = await _packetCoreDataPlaneRestClient.UpdateTagsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new PacketCoreDataPlaneResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -320,18 +320,18 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="tagsObject"> Parameters supplied to update packet core data plane tags. </param>
+        /// <param name="patch"> Parameters supplied to update packet core data plane tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tagsObject"/> is null. </exception>
-        public virtual Response<PacketCoreDataPlaneResource> Update(TagsObject tagsObject, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<PacketCoreDataPlaneResource> Update(MobileNetworkTagsPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(tagsObject, nameof(tagsObject));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _packetCoreDataPlaneClientDiagnostics.CreateScope("PacketCoreDataPlaneResource.Update");
             scope.Start();
             try
             {
-                var response = _packetCoreDataPlaneRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tagsObject, cancellationToken);
+                var response = _packetCoreDataPlaneRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
                 return Response.FromValue(new PacketCoreDataPlaneResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new TagsObject();
+                    var patch = new MobileNetworkTagsPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new TagsObject();
+                    var patch = new MobileNetworkTagsPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new TagsObject();
+                    var patch = new MobileNetworkTagsPatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return result;
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new TagsObject();
+                    var patch = new MobileNetworkTagsPatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(patch, cancellationToken: cancellationToken);
                     return result;
@@ -582,7 +582,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new TagsObject();
+                    var patch = new MobileNetworkTagsPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -634,7 +634,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new TagsObject();
+                    var patch = new MobileNetworkTagsPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

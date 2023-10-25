@@ -1,6 +1,6 @@
 # Release History
 
-## 1.29.0-beta.1 (Unreleased)
+## 1.36.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,80 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.35.0 (2023-09-07)
+
+### Features Added
+
+- Expand the set of supported `DynamicData` property types to included heterogeneous arrays of allowed types.
+
+### Breaking Changes
+
+- Added the nullability annotation to `NullableResponse<T>.Value` to indicate that it is a nullable type.
+
+## 1.34.0 (2023-07-11)
+
+### Features Added
+
+- Added `IsCaeEnabled` property to `TokenRequestContext` to enabled per-request support for Continuous Access Evaluation
+- Updated dependency on System.Diagnostics.DiagnosticSource
+- Added `ContentLengthLong` property to `ResponseHeaders`
+
+## 1.33.0 (2023-06-16)
+
+### Features Added
+
+- Added `BinaryData.ToDynamicFromJson()` extension method to enable dynamic access to JSON.  See the [aka.ms/azsdk/net/dynamiccontent](https://aka.ms/azsdk/net/dynamiccontent) for further details.
+
+### Other Changes
+
+- Client redirects are now disabled by default and can be enabled by setting providing a custom transport in `ClientOptions'. Client Authors can also enable redirects by setting `HttpPipelineTransportOptions.IsClientRedirectEnabled` to `true` on the transport options passed to `HttpPipelineBuilder.Build`.
+
+## 1.32.0 (2023-05-09)
+
+### Features Added
+
+- Added the `GetRawResponse` method to `RequestFailedException`.
+- Added overloads of `Operation<T>.WaitForCompletion` and `Operation.WaitForCompletionResponse` that take a `DelayStrategy`.
+
+## 1.31.0 (2023-04-10)
+
+### Features Added
+
+- Added the `RetryPolicy` type which can be used to create a custom retry policy.
+- Added the `DelayStrategy` type which can be used to customize delays.
+
+### Bugs Fixed
+
+- Set the Activity status to `Error` on failed activity source activities.
+- Mark the `Azure.Core.Http.Request` span as failed if the request fails with an exception thrown in the pipeline.
+- Fixed equality comparison when comparing a `string` to a `ContentType` instance.
+- Jitter is added when using a `RetryMode` of `Fixed`.
+
+## 1.30.0 (2023-03-09)
+
+### Bugs Fixed
+
+- Fixed the issue with empty header names and values, caused by `ArrayBackedPropertyBag` keeping reference to the array after returning it to array pool [in `Dispose` method](https://github.com/Azure/azure-sdk-for-net/pull/34800).
+
+## 1.29.0 (2023-03-02)
+
+### Features Added
+
+- `ActivitySource` activities that are used when using the [experimental OpenTelemetry support](https://devblogs.microsoft.com/azure-sdk/introducing-experimental-opentelemetry-support-in-the-azure-sdk-for-net/) will include the `az.schema_url` tag indicating the OpenTelemetry schema version. They will also include the attribute names specified [here](https://github.com/Azure/azure-sdk/blob/main/docs/tracing/distributed-tracing-conventions.yml).
+- "West US 3", "Sweden Central" and "Qatar Central" locations are added to `Azure.Core.AzureLocation`
+
+### Improvements
+
+- `Azure.Core.ArrayBackedPropertyBag` is used to store request headers before `HttpRequestMessage` is created instead of `System.Net.Http.Headers.HttpContentHeaders`
+- `Azure.HttpRange.ToString` uses `string.Create` instead of `FormattableString.Invariant` in .NET 6.0+
+- `Azure.Core.Diagnostics.AzureCoreEventSource` checks `EventLevel` before formatting data for the events
+- `Azure.Core.Pipeline.HttpClientTransport.JoinHeaderValues` uses `System.Runtime.CompilerServices.DefaultInterpolatedStringHandler` to join header string values in .NET 6.0+
+
+### Bugs Fixed
+
+- `ActivitySource` activities will no longer be stamped with the `kind` attribute as this is redundant with the OpenTelemetry `SpanKind` attribute.
+- The product information section of the UserAgent header is now validated for invalid parenthesis formatting and escaped, if necessary.
 
 ## 1.28.0 (2023-02-06)
 

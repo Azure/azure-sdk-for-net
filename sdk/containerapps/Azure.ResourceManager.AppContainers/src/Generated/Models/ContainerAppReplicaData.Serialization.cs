@@ -31,18 +31,35 @@ namespace Azure.ResourceManager.AppContainers
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(InitContainers))
+            {
+                writer.WritePropertyName("initContainers"u8);
+                writer.WriteStartArray();
+                foreach (var item in InitContainers)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static ContainerAppReplicaData DeserializeContainerAppReplicaData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<DateTimeOffset> createdTime = default;
+            Optional<ContainerAppReplicaRunningState> runningState = default;
+            Optional<string> runningStateDetails = default;
             Optional<IList<ContainerAppReplicaContainer>> containers = default;
+            Optional<IList<ContainerAppReplicaContainer>> initContainers = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -64,7 +81,6 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -83,17 +99,29 @@ namespace Azure.ResourceManager.AppContainers
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createdTime = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("runningState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            runningState = new ContainerAppReplicaRunningState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("runningStateDetails"u8))
+                        {
+                            runningStateDetails = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("containers"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<ContainerAppReplicaContainer> array = new List<ContainerAppReplicaContainer>();
@@ -104,11 +132,25 @@ namespace Azure.ResourceManager.AppContainers
                             containers = array;
                             continue;
                         }
+                        if (property0.NameEquals("initContainers"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ContainerAppReplicaContainer> array = new List<ContainerAppReplicaContainer>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(ContainerAppReplicaContainer.DeserializeContainerAppReplicaContainer(item));
+                            }
+                            initContainers = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ContainerAppReplicaData(id, name, type, systemData.Value, Optional.ToNullable(createdTime), Optional.ToList(containers));
+            return new ContainerAppReplicaData(id, name, type, systemData.Value, Optional.ToNullable(createdTime), Optional.ToNullable(runningState), runningStateDetails.Value, Optional.ToList(containers), Optional.ToList(initContainers));
         }
     }
 }

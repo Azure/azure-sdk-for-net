@@ -7,7 +7,7 @@
 
 namespace Azure.MixedReality.RemoteRendering
 {
-    /// <summary> Information about the output of a successful conversion. Only present when the status of the conversion is &apos;Succeeded&apos;. </summary>
+    /// <summary> Information about the output of a successful conversion. Only present when the status of the conversion is 'Succeeded'. </summary>
     public partial class AssetConversionOutput
     {
         /// <summary> Initializes a new instance of AssetConversionOutput. </summary>

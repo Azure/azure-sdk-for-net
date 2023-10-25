@@ -11,7 +11,10 @@ using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> A class representing the SqlServerVirtualNetworkRule data model. </summary>
+    /// <summary>
+    /// A class representing the SqlServerVirtualNetworkRule data model.
+    /// A virtual network rule.
+    /// </summary>
     public partial class SqlServerVirtualNetworkRuleData : ResourceData
     {
         /// <summary> Initializes a new instance of SqlServerVirtualNetworkRuleData. </summary>

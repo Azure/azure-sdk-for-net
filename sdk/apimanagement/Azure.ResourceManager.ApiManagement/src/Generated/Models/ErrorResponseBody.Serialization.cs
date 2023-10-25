@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static ErrorResponseBody DeserializeErrorResponseBody(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> code = default;
             Optional<string> message = default;
             Optional<IList<ErrorFieldContract>> details = default;
@@ -60,7 +64,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ErrorFieldContract> array = new List<ErrorFieldContract>();

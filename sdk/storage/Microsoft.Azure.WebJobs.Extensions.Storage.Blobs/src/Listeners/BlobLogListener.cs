@@ -27,24 +27,21 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
         private readonly BlobServiceClient _blobClient;
         private readonly HashSet<string> _scannedBlobNames = new HashSet<string>();
         private readonly StorageAnalyticsLogParser _parser;
-        private readonly IWebJobsExceptionHandler _exceptionHandler;
         private readonly ILogger<BlobListener> _logger;
 
-        private BlobLogListener(BlobServiceClient blobClient, IWebJobsExceptionHandler exceptionHandler, ILogger<BlobListener> logger)
+        private BlobLogListener(BlobServiceClient blobClient, ILogger<BlobListener> logger)
         {
             _blobClient = blobClient;
-            _exceptionHandler = exceptionHandler ?? throw new ArgumentNullException(nameof(exceptionHandler));
 
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _parser = new StorageAnalyticsLogParser(logger);
         }
 
         // This will throw if the client credentials are not valid.
-        public static async Task<BlobLogListener> CreateAsync(BlobServiceClient blobClient,
-           IWebJobsExceptionHandler exceptionHandler, ILogger<BlobListener> logger, CancellationToken cancellationToken)
+        public static async Task<BlobLogListener> CreateAsync(BlobServiceClient blobClient, ILogger<BlobListener> logger, CancellationToken cancellationToken)
         {
             await EnableLoggingAsync(blobClient, cancellationToken).ConfigureAwait(false);
-            return new BlobLogListener(blobClient, exceptionHandler, logger);
+            return new BlobLogListener(blobClient, logger);
         }
 
         public async Task<IEnumerable<BlobWithContainer<BlobBaseClient>>> GetRecentBlobWritesAsync(CancellationToken cancellationToken,

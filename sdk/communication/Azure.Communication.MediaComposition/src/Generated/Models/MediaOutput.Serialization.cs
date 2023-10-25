@@ -23,6 +23,10 @@ namespace Azure.Communication.MediaComposition.Models
 
         internal static MediaOutput DeserializeMediaOutput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("kind", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

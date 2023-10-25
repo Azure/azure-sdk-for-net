@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Generic backup copy. </summary>
-    public partial class GenericRecoveryPoint : RecoveryPoint
+    public partial class GenericRecoveryPoint : BackupGenericRecoveryPoint
     {
         /// <summary> Initializes a new instance of GenericRecoveryPoint. </summary>
         public GenericRecoveryPoint()

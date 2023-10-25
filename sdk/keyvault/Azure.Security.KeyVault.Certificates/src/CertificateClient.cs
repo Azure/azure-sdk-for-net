@@ -157,7 +157,6 @@ namespace Azure.Security.KeyVault.Certificates
             }
         }
 
-#pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
 #pragma warning disable AZC0015 // Unexpected client method return type.
         /// <summary>
         /// Creates an <see cref="X509Certificate2"/> from the specified certificate.
@@ -333,7 +332,6 @@ namespace Azure.Security.KeyVault.Certificates
             }
         }
 #pragma warning restore AZC0015 // Unexpected client method return type.
-#pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
 
         /// <summary>
         /// Returns the latest version of the <see cref="KeyVaultCertificate"/> along with its <see cref="CertificatePolicy"/>. This operation requires the certificates/get permission.
@@ -1665,7 +1663,7 @@ namespace Azure.Security.KeyVault.Certificates
                         return Response.FromValue<CertificateOperationProperties>(null, response);
 
                     default:
-                        throw _pipeline.Diagnostics.CreateRequestFailedException(response);
+                        throw new RequestFailedException(response);
                 }
             }
             catch (Exception e)
@@ -1696,7 +1694,7 @@ namespace Azure.Security.KeyVault.Certificates
                         return Response.FromValue<CertificateOperationProperties>(null, response);
 
                     default:
-                        throw await _pipeline.Diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false);
+                        throw new RequestFailedException(response);
                 }
             }
             catch (Exception e)

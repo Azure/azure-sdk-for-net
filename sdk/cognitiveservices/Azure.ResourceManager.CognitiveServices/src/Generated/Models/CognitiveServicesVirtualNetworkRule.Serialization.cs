@@ -32,6 +32,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         internal static CognitiveServicesVirtualNetworkRule DeserializeCognitiveServicesVirtualNetworkRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             Optional<string> state = default;
             Optional<bool> ignoreMissingVnetServiceEndpoint = default;
@@ -51,7 +55,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ignoreMissingVnetServiceEndpoint = property.Value.GetBoolean();

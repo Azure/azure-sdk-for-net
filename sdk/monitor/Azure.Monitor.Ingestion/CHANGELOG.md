@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,37 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.1 (2023-10-16)
+
+## Features Added
+- Added documentation for using sovereign cloud
+
+## 1.1.0 (2023-10-10)
+
+## Features Added
+- Added `LogsIngestionAudience` for multi-cloud support to allow users to select the Azure cloud where the resource is located.
+
+## 1.1.0-beta.1 (2023-10-10)
+
+### Bugs Fixed
+- Fix sovereign support for US Gov and China clouds
+
+## 1.0.0 (2023-02-21)
+
+### Features Added
+- Added EventHandler to LogsUploadOptions for error handling.
+- Added Upload method in LogsIngestionClient that takes RequestContent.
+- Added LogsUploadOptions type which includes setting concurrency for multi-threading support and the serializer type of the input.
+
+### Breaking Changes
+ - Renamed UploadLogsOptions to LogsUploadOptions
+ - Renamed UploadLogsFailedEventArgs to LogsUploadFailedEventArgs
+
+### Other Changes
+- Removed Model `UploadLogsResult` containing the result of a logs upload operation
+- Removed Model `UploadLogsError` representing the error and the associated logs that failed when uploading a subset of logs to Azure Monitor.
+- Removed Model `UploadLogsStatus` indicating the status of a logs upload operation.
 
 ## 1.0.0-beta.4 (2022-10-11)
 

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -25,29 +26,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ValidationMode))
             {
                 writer.WritePropertyName("validationMode"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ValidationMode);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ValidationMode.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, ValidationMode);
             }
             if (Optional.IsDefined(DetectDataType))
             {
                 writer.WritePropertyName("detectDataType"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(DetectDataType);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(DetectDataType.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, DetectDataType);
             }
             if (Optional.IsDefined(Namespaces))
             {
                 writer.WritePropertyName("namespaces"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Namespaces);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Namespaces.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, Namespaces);
             }
             if (Optional.IsDefined(NamespacePrefixes))
             {
@@ -55,7 +44,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(NamespacePrefixes);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(NamespacePrefixes.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(NamespacePrefixes))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WritePropertyName("type"u8);
@@ -66,7 +58,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
@@ -74,10 +69,14 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static XmlReadSettings DeserializeXmlReadSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<CompressionReadSettings> compressionProperties = default;
-            Optional<BinaryData> validationMode = default;
-            Optional<BinaryData> detectDataType = default;
-            Optional<BinaryData> namespaces = default;
+            Optional<DataFactoryElement<string>> validationMode = default;
+            Optional<DataFactoryElement<bool>> detectDataType = default;
+            Optional<DataFactoryElement<bool>> namespaces = default;
             Optional<BinaryData> namespacePrefixes = default;
             string type = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -88,7 +87,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     compressionProperties = CompressionReadSettings.DeserializeCompressionReadSettings(property.Value);
@@ -98,37 +96,33 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    validationMode = BinaryData.FromString(property.Value.GetRawText());
+                    validationMode = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("detectDataType"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    detectDataType = BinaryData.FromString(property.Value.GetRawText());
+                    detectDataType = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("namespaces"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    namespaces = BinaryData.FromString(property.Value.GetRawText());
+                    namespaces = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("namespacePrefixes"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     namespacePrefixes = BinaryData.FromString(property.Value.GetRawText());

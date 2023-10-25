@@ -39,7 +39,7 @@
 /sdk/entra/                                                        @pallavit @jsquire
 /sdk/graphrbac/                                                    @pallavit @jsquire
 /sdk/machinelearningservices/                                      @pallavit @jsquire
-/sdk/maps/                                                         @pallavit @jsquire
+/sdk/maps/                                                         @pallavit @jsquire @dubiety @khmic5 @andykao1213
 # Note there are some sub-rules for this directory, defined below
 /sdk/operationalinsights/                                          @pallavit @jsquire
 /sdk/purview/                                                      @pallavit @jsquire
@@ -53,7 +53,7 @@
 /sdk/core/                                                         @JoshLove-msft @christothes @annelo-msft @KrzysztofCwalina
 
 # PRLabel: %Azure.Identity
-/sdk/identity/                                                     @schaabs @christothes
+/sdk/identity/                                                     @schaabs @christothes @Azure/azure-sdk-write-identity
 
 # Extensions
 /sdk/extensions/                                                   @jsquire
@@ -74,6 +74,12 @@
 
 # ServiceLabel: %Alerts Management %Service Attention
 /sdk/alertsmanagement/Microsoft.Azure.Management.AlertsManagement/ @liadtal @yairgil
+
+# ServiceLabel: %App Configuration
+#/<NotInRepo>/          @shenmuxiaosen @avanigupta
+
+# ServiceLabel: %Application Insights
+#/<NotInRepo>/          @azmonapplicationinsights
 
 # ServiceLabel: %ARM %Service Attention
 #/<NotInRepo>/                                                     @armleads-azure
@@ -96,6 +102,9 @@
 # ServiceLabel: %ARM - RBAC %Service Attention
 #/<NotInRepo>/                                                     @armleads-azure
 
+# ServiceLabel: %ARO
+#/<NotInRepo>/          @mjudeikis @jim-minter @julienstroheker @amanohar
+
 # ServiceLabel: %Advisor %Service Attention
 /sdk/advisor/Microsoft.Azure.Management.Advisor/                   @mojayara @Prasanna-Padmanabhan
 
@@ -106,14 +115,14 @@
 /sdk/apimanagement/Microsoft.Azure.Management.ApiManagement/       @miaojiang
 
 # PRLabel: %App Configuration
-/sdk/appconfiguration/                                             @nisha-bhatia @ShivangiReja @AlexanderSher @jsquire
+/sdk/appconfiguration/                                             @kinelski @ShivangiReja @jsquire @pallavit
 
 # ServiceLabel: %App Services %Service Attention
 #/<NotInRepo>/                                                     @antcp @AzureAppServiceCLI
 
 # ServiceLabel: %Attestation %Service Attention
 /sdk/attestation/                                                  @anilba06 @gkostal
-/sdk/attestation/azure-security-attestation                        @gkostal @Azure/azure-sdk-write-attestation @anilba06
+/sdk/attestation/Azure.Security.Attestation                        @gkostal @Azure/azure-sdk-write-attestation @anilba06
 
 # ServiceLabel: %Authorization %Service Attention
 /sdk/authorization/Microsoft.Azure.Management.Authorization/       @darshanhs90 @AshishGargMicrosoft
@@ -124,8 +133,11 @@
 # ServiceLabel: %AVS %Service Attention
 /sdk/avs/Microsoft.Azure.Management.Avs/                           @divka78 @amitchat @aishu
 
+# ServiceLabel: %Azure Data Explorer
+#/<NotInRepo>/          @ilayrn @orhasban @zoharHenMicrosoft @sagivf @Aviv-Yaniv
+
 # ServiceLabel: %Azure Stack %Service Attention
-/sdk/azurestack*                                                   @sijuman @sarathys @bganapa @rakku-ms
+/sdk/azurestack*/                                                   @sijuman @sarathys @bganapa @rakku-ms
 
 # ServiceLabel: %Azure.Spring - Cosmos %Service Attention
 #/<NotInRepo>/                                                     @kushagraThapar
@@ -135,7 +147,7 @@
 
 # ServiceLabel: %Batch %Service Attention
 # PRLabel: %Batch
-/sdk/batch/                                                        @paterasMSFT @dpwatrous @wiboris @NickKouds @bgklein
+/sdk/batch/                                                        @wiboris @dpwatrous
 
 # ServiceLabel: %BatchAI %Service Attention
 /sdk/batchai/Microsoft.Azure.Management.BatchAI/                   @matthchr
@@ -154,7 +166,7 @@
 
 # PRLabel: %Cognitive - Language
 # ServiceLabel: %Cognitive - Language %Service Attention
-/sdk/cognitivelanguage/                                            @heaths @rokulka @mshaban-msft
+/sdk/cognitivelanguage/                                            @quentinRobinson @wangyuantao @heaths
 
 # ServiceLabel: %Cognitive - Anomaly Detector %Service Attention
 /sdk/cognitiveservices/AnomalyDetector/                            @yingqunpku @bowgong
@@ -182,11 +194,21 @@
 
 # ServiceLabel: %Cognitive - Anomaly Detector %Service Attention
 /sdk/anomalydetector/Azure.AI.AnomalyDetector/                     @conhua @mengaims @juaduan @moreOver0
+
+# PRLabel: %Cognitive - Health Insights
+/sdk/healthinsights/                                              @asaflevi-ms @aviram-microsoft @gils-ms
+
+# ServiceLabel: %Cognitive - Health Insights Cancer Profiling %Service Attention
+/sdk/healthinsights/Azure.Health.Insights.CancerProfiling/        @asaflevi-ms @aviram-microsoft @gils-ms
+
+# ServiceLabel: %Cognitive - Health Insights Clinical Matching %Service Attention
+/sdk/healthinsights/Azure.Health.Insights.ClinicalMatching/       @asaflevi-ms @aviram-microsoft @gils-ms
+
 # ServiceLabel: %Cognitive - QnA Maker %Service Attention
 /sdk/cognitiveservices/Knowledge.QnAMaker/                         @bingisbestest @nerajput1607
 
 # PRLabel: %Cognitive - Text Analytics
-/sdk/textanalytics/                                                @joseharriaga @kinelski @heaths
+/sdk/textanalytics/                                                @quentinRobinson @wangyuantao @joseharriaga @kinelski @heaths
 
 # ServiceLabel: %Cognitive - Text Analytics %Service Attention
 /sdk/cognitiveservices/Language.TextAnalytics/                     @assafi
@@ -195,13 +217,13 @@
 #/<NotInRepo>/                                                     @swmachan
 
 # PRLabel: %Cognitive - Translator
-/sdk/translation/                                                  @mshaban-msft
+/sdk/translation/                                                  @mikeymcz @cpoulain @joseharriaga
 
 # ServiceLabel: %Cognitive - Speech %Service Attention
-#/<NotInRepo>/                                                     @robch @oscholz
+#/<NotInRepo>/                                                     @robch
 
 # ServiceLabel: %Cognitive - LUIS %Service Attention
-/sdk/cognitiveservices/Language.LUIS*                              @cahann @kayousef
+/sdk/cognitiveservices/Language.LUIS*/                              @cahann @kayousef
 
 # ServiceLabel: %Cognitive - Content Moderator %Service Attention
 #/<NotInRepo>/                                                     @swiftarrow11
@@ -216,13 +238,16 @@
 #/<NotInRepo>/                                                     @olduroja
 
 # ServiceLabel: %Cognitive - Bing %Service Attention
-/sdk/cognitiveservices/Search.Bing*                                @jaggerbodas-ms @arwong
+/sdk/cognitiveservices/Search.Bing*/                                @jaggerbodas-ms @arwong
 
 # ServiceLabel: %Cognitive - Mgmt %Service Attention
 /sdk/cognitiveservices/Microsoft.Azure.Management.CognitiveServices/ @yangyuan
 
 # ServiceLabel: %Commerce %Service Attention
 #/<NotInRepo>/                                                     @ms-premp @qiaozha
+
+# ServiceLabel: %Communication
+#/<NotInRepo>/          @acsdevx-msft
 
 # PRLabel: %Communication
 /sdk/communication/                                                @acsdevx-msft
@@ -234,10 +259,10 @@
 /sdk/communication/Azure.Communication.Chat/                       @LuChen-Microsoft
 
 # PRLabel: %Communication - Common
-/sdk/communication/Azure.Communication.Common/                     @Azure/acs-identity-sdk @petrsvihlik @AikoBB @maximrytych-ms @ostoliarova-msft @mjafferi-msft
+/sdk/communication/Azure.Communication.Common/                     @Azure/acs-identity-sdk @AikoBB @maximrytych-ms @mjafferi-msft
 
 # PRLabel: %Communication - Identity
-/sdk/communication/Azure.Communication.Identity/                   @Azure/acs-identity-sdk @petrsvihlik @AikoBB @maximrytych-ms @ostoliarova-msft @mjafferi-msft
+/sdk/communication/Azure.Communication.Identity/                   @Azure/acs-identity-sdk @AikoBB @maximrytych-ms @mjafferi-msft
 
 # PRLabel: %Communication - Network Traversal
 /sdk/communication/Azure.Communication.NetworkTraversal/           @ajpeacock0 @nathpete-msft
@@ -249,40 +274,58 @@
 /sdk/communication/Azure.Communication.ShortCodes/                 @guilhermeluizsp @danielav7
 
 # PRLabel: %Communication - SMS
-/sdk/communication/Azure.Communication.Sms/                        @RoyHerrod @arifibrahim4
+/sdk/communication/Azure.Communication.Sms/                        @DimaKolomiiets @ozgurcivi-msft @gfeitosa-msft @phermanov-msft @ilyapaliakou-msft
 
 # PRLabel: %Communication - Resource Manager
-/sdk/communication/Azure.ResourceManager.Communication/            @fengzhou-msft @archerzz @ArcturusZhang @Yao725 @ArthurMa1978
+/sdk/communication/Azure.ResourceManager.Communication/            @archerzz @ArcturusZhang @ArthurMa1978
+
+# PRLabel: %Communication - Rooms
+/sdk/communication/Azure.Communication.Rooms/                      @minnieliu @paolamvhz @alexokun @Mrayyan @shwali-msft @allchiang-msft @mikehang-msft
 
 # ServiceLabel: %Compute %Service Attention
-#/<NotInRepo>/                                                     @Drewm3 @TravisCragg-MSFT @nikhilpatel909 @jaylabell @sandeepraichura @hilaryw29 @MsGabsta
+#/<NotInRepo>/                                                     @Drewm3 @TravisCragg-MSFT @nikhilpatel909 @sandeepraichura @hilaryw29 @MsGabsta @ushnaarshadkhan
 
 # PRLabel: %Compute
-/sdk/compute/                                                      @bilaakpan-ms @sandido @dkulkarni-ms @haagha @madewithsmiles @MS-syh2qs @grizzlytheodore @amjads1 @avirishuv @vaibhav-agar @Drewm3
+/sdk/compute/                                                      @bilaakpan-ms @sandido @dkulkarni-ms @haagha @madewithsmiles @MS-syh2qs @grizzlytheodore @TravisCragg-MSFT
 
 # ServiceLabel: %Compute - Extensions %Service Attention
-#/<NotInRepo>/                                                     @amjads1 @Drewm3
+#/<NotInRepo>/                                                     @MsGabsta @TravisCragg-MSFT
 
 # ServiceLabel: %Compute - Images %Service Attention
-#/<NotInRepo>/                                                     @Drewm3 @vaibhav-agar
+#/<NotInRepo>/                                                     @TravisCragg-MSFT @sandeepraichura
 
 # ServiceLabel: %Compute - Managed Disks %Service Attention
-#/<NotInRepo>/                                                     @Drewm3 @vaibhav-agar
+#/<NotInRepo>/                                                     @TravisCragg-MSFT @ushnaarshadkhan
 
 # ServiceLabel: %Compute - RDFE %Service Attention
-#/<NotInRepo>/                                                     @Drewm3 @avirishuv
+#/<NotInRepo>/                                                     @Drewm3 @TravisCragg-MSFT
 
 # ServiceLabel: %Compute - VM %Service Attention
-#/<NotInRepo>/                                                     @Drewm3 @avirishuv
+#/<NotInRepo>/                                                     @Drewm3 @TravisCragg-MSFT
 
 # ServiceLabel: %Compute - VMSS %Service Attention
-#/<NotInRepo>/                                                     @Drewm3 @avirishuv
+#/<NotInRepo>/                                                     @TravisCragg-MSFT @hilaryw29
 
 # PRLabel: %Confidential Ledger
 /sdk/confidentialledger/                                           @christothes
 
 # ServiceLabel: %Consumption %Service Attention
 /sdk/consumption/Microsoft.Azure.Management.Consumption/           @ms-premp
+
+# ServiceLabel: %Consumption - Billing
+#/<NotInRepo>/          @ccmbpxpcrew
+
+# ServiceLabel: %Consumption - Budget
+#/<NotInRepo>/          @ccmaxpcrew
+
+# ServiceLabel: %Consumption - Query
+#/<NotInRepo>/          @ccmixpdevs
+
+# ServiceLabel: %Consumption - RIandShowBack
+#/<NotInRepo>/          @ccmshowbackdevs
+
+# ServiceLabel: %Consumption - UsageDetailsAndExport
+#/<NotInRepo>/          @TiagoCrewGitHubIssues
 
 # ServiceLabel: %Connected Kubernetes %Service Attention
 #/<NotInRepo>/                                                     @akashkeshari
@@ -291,16 +334,37 @@
 /sdk/containerinstance/Microsoft.Azure.Management.ContainerInstance/ @dkkapur
 
 # ServiceLabel: %Container Registry
-/sdk/containerregistry/                                            @ShivangiReja @pallavit @annelo-msft
+/sdk/containerregistry/                                            @ShivangiReja @pallavit @annelo-msft @Azure/azsdk-acr
 
 # ServiceLabel: %Container Registry %Service Attention
 /sdk/containerregistry/Microsoft.*/                                @toddysm @yugangw-MSFT
+
+# ServiceLabel: %Container Service
+#/<NotInRepo>/          @qike-ms @jwilder @thomas1206 @seanmck
 
 # ServiceLabel: %Cosmos %Service Attention
 /sdk/cosmosdb/                                                     @pjohari-ms @MehaKaushik @shurd @anfeldma-ms @zfoster @kushagraThapar
 
 # ServiceLabel: %Cost Management %Service Attention
-/sdk/cost-management/Microsoft.Azure.Management.CostManagement/    @ms-premp @ramaganesan-rg
+/sdk/costmanagement/Microsoft.Azure.Management.CostManagement/    @ms-premp @ramaganesan-rg
+
+# ServiceLabel: %Cost Management - Billing
+#/<NotInRepo>/          @ccmbpxpcrew
+
+# ServiceLabel: %Cost Management - Budget
+#/<NotInRepo>/          @ccmaxpcrew
+
+# ServiceLabel: %Cost Management - Query
+#/<NotInRepo>/          @ccmixpdevs
+
+# ServiceLabel: %Cost Management - RIandShowBack
+#/<NotInRepo>/          @ccmshowbackdevs
+
+# ServiceLabel: %Cost Management - UsageDetailsAndExport
+#/<NotInRepo>/          @TiagoCrewGitHubIssues
+
+# ServiceLabel: %Custom Providers
+#/<NotInRepo>/          @manoharp @MSEvanhi
 
 # ServiceLabel: %Customer Insights %Service Attention
 /sdk/customer-insights/Microsoft.Azure.Management.CustomerInsights/ @shefymk
@@ -316,6 +380,9 @@
 
 # ServiceLabel: %Data Catalog %Service Attention
 #/<NotInRepo>/                                                     @anilman
+
+# ServiceLabel: %DataBox Edge
+#/<NotInRepo>/          @a-t-mason @ganzee @manuaery
 
 # ServiceLabel: %Data Factory %Service Attention
 /sdk/datafactory/Microsoft.Azure.Management.DataFactory/           @shawnxzq @lmy269
@@ -338,15 +405,23 @@
 # ServiceLabel: %Data Migration %Service Attention
 /sdk/datamigration/Microsoft.Azure.Management.DataMigration/       @rgreenMSFT
 
+# ServiceLabel: %Data Share
+#/<NotInRepo>/          @raedJarrar @jifems
 
 # ServiceLabel: %DevCenter %Service Attention
 #/<NotInRepo>/                                                     @sebrenna @mharlan @chrissmiller
+
+# ServiceLabel: %Dev Spaces
+#/<NotInRepo>/          @yuzorMa @johnsta @greenie-msft
 
 # PRLabel: %DevCenter
 /sdk/devcenter/                                                    @sebrenna @mharlan @chrissmiller @shivangireja
 
 # ServiceLabel: %Devtestlab %Service Attention
 /sdk/devtestlabs/Microsoft.Azure.Management.DevTestLabs/           @Tanmayeekamath
+
+# ServiceLabel: %DevOps
+#/<NotInRepo>/          @narula0781 @ashishonce @romil07
 
 # ServiceLabel: %Device Provisioning Service %Service Attention
 /sdk/deviceprovisioningservices/Microsoft.Azure.Management.DeviceProvisioningServices/ @nberdy
@@ -358,9 +433,12 @@
 # ServiceLabel: %Digital Twins %Service Attention
 /sdk/digitaltwins/                                                 @johngallardo @efriesner @abhinav-ghai @Aashish93-stack @sjiherzig @Satya-Kolluri
 
+# ServiceLabel: %IoT - CLI
+#/<NotInRepo>/          @Azure/azure-iot-cli-triage
+
 # PRLabel: %IoT Models Repository
 # ServiceLabel: %IoT Models Repository %Service Attention
-/sdk/modelsrepository/                                             @drwill-ms @timtay-microsoft @abhipsaMisra @digimaun @brycewang-microsoft @andyk-ms @tmahmood-microsoft @ngastelum-ms
+/sdk/modelsrepository/                                             @timtay-microsoft @abhipsaMisra @digimaun @brycewang-microsoft @andyk-ms @tmahmood-microsoft
 
 # PRLabel: %TimeSeriesInsights
 # ServiceLabel: %TimeSeriesInsights %Service Attention
@@ -406,8 +484,11 @@
 # ServiceLabel: %Import Export %Service Attention
 #/<NotInRepo>/                                                     @madhurinms
 
+# ServiceLabel: %IoT
+#/<NotInRepo>/          @ethanann-ms @vighatke
+
 # PRLabel: %Iot
-/sdk/iot*                                                          @ethanann-ms @vighatke
+/sdk/iot*/                                                          @ethanann-ms @vighatke
 
 # PRLabel: %IotHub
 # ServiceLabel: %IotHub %Service Attention
@@ -422,8 +503,11 @@
 # ServiceLabel: %IotHub %Service Attention
 /sdk/iothub/Microsoft.Azure.Management.IotHub/                     @rkmanda @chieftn
 
+# ServiceLabel: %KeyVault
+#/<NotInRepo>/          @RandalliLama @jlichwa
+
 # PRLabel: %KeyVault
-/sdk/keyvault/                                                     @heaths @schaabs
+/sdk/keyvault/                                                     @heaths @schaabs @Azure/azsdk-keyvault
 
 # ServiceLabel: %Kubernetes Configuration %Service Attention
 /sdk/kubernetesconfiguration/Microsoft.Azure.Management.KubernetesConfiguration/ @NarayanThiru
@@ -478,44 +562,23 @@
 #/<NotInRepo>/                                                     @kpiteira
 
 # ServiceLabel: %Monitor %Service Attention
-/sdk/monitor/                                                      @SameergMS @dadunl
+#/<NotInRepo>/                                                     @SameergMS @dadunl @AzMonEssential @AzmonAlerts @AzmonActionG @AzmonLogA
 
-# PRLabel: %Monitor - Query
-/sdk/monitor/Azure.Monitor.Query/                                  @nisha-bhatia @ShivangiReja
-/sdk/monitor/ci.yml                                                @nisha-bhatia @ShivangiReja
+# PRLabel: %Monitor
+/sdk/monitor/ci.yml                                                @nisha-bhatia @JoshLove-msft @pallavit @Azure/azure-sdk-write-monitor-data-plane
+/sdk/monitor/Azure.Monitor.Ingestion/                              @nisha-bhatia @JoshLove-msft @pallavit @Azure/azure-sdk-write-monitor-data-plane
+/sdk/monitor/Azure.Monitor.Query/                                  @nisha-bhatia @JoshLove-msft @pallavit @Azure/azure-sdk-write-monitor-data-plane
 
-# PRLabel: %Monitor - ApplicationInsights
 # ServiceLabel: %Monitor - ApplicationInsights %Service Attention
-/sdk/applicationinsights/Microsoft.Azure.App*/                     @omziv @anatse @raronen @ischrei @danhadari @azmonapplicationinsights
-
-# ServiceLabel: %Monitor - Autoscale %Service Attention
-#/<NotInRepo>/                                                     @AzMonEssential
-
-# ServiceLabel: %Monitor - ActivityLogs %Service Attention
-#/<NotInRepo>/                                                     @AzMonEssential
-
-# PRLabel: %Monitor - Exporter
-# ServiceLabel: %Monitor - Exporter %Service Attention
-/sdk/monitor/Azure.Monitor.OpenTelemetry.*/                        @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @vishweshbankwar
+#/<NotInRepo>/                                                     @omziv @anatse @raronen @ischrei @danhadari @azmonapplicationinsights
 
 # PRLabel: %Monitor - Distro
 # ServiceLabel: %Monitor - Distro %Service Attention
-/sdk/monitor/Azure.Monitor.OpenTelemetry/     @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @vishweshbankwar
+/sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/               @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @vishweshbankwar
 
-# ServiceLabel: %Monitor - Metrics %Service Attention
-#/<NotInRepo>/                                                     @AzMonEssential
-
-# ServiceLabel: %Monitor - Diagnostic Settings %Service Attention
-#/<NotInRepo>/                                                     @AzMonEssential
-
-# ServiceLabel: %Monitor - Alerts %Service Attention
-#/<NotInRepo>/                                                     @AzmonAlerts
-
-# ServiceLabel: %Monitor - ActionGroups %Service Attention
-#/<NotInRepo>/                                                     @AzmonActionG
-
-# ServiceLabel: %Monitor - LogAnalytics %Service Attention
-#/<NotInRepo>/                                                     @AzmonLogA
+# PRLabel: %Monitor - Exporter
+# ServiceLabel: %Monitor - Exporter %Service Attention
+/sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter/                 @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @vishweshbankwar
 
 # ServiceLabel: %MySQL %Service Attention
 /sdk/mysql/Microsoft.Azure.Management.MySQL/                       @ajlam @ambhatna @kummanish
@@ -527,7 +590,7 @@
 /sdk/mixedreality/                                                 @crtreasu @rgarcia @JoshLove-msft
 
 # ServiceLabel: %Network %Service Attention
-/sdk/network*                                                      @aznetsuppgithub
+/sdk/network*/                                                      @aznetsuppgithub
 
 # ServiceLabel: %Network - Application Gateway %Service Attention
 #/<NotInRepo>/                                                     @appgwsuppgithub
@@ -541,7 +604,7 @@
 # ServiceLabel: %Network - DDOS Protection %Service Attention
 #/<NotInRepo>/                                                     @ddossuppgithub
 
-# ServiceLabel: %Network - ExpressRoutes %Service Attention
+# ServiceLabel: %Network - ExpressRoute %Service Attention
 #/<NotInRepo>/                                                     @exrsuppgithub
 
 # ServiceLabel: %Network - Firewall %Service Attention
@@ -563,13 +626,10 @@
 #/<NotInRepo>/                                                     @netwatchsuppgithub
 
 # ServiceLabel: %Network - DNS %Service Attention
-/sdk/dns*                                                          @dnssuppgithub
+/sdk/dns*/                                                          @dnssuppgithub
 
 # ServiceLabel: %Network - Network Virtual Appliance %Service Attention
 #/<NotInRepo>/                                                     @nvasuppgithub
-
-# ServiceLabel: %Network - Traffic Manager %Service Attention
-/sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/     @tmsuppgithub
 
 # ServiceLabel: %Network - Virtual WAN %Service Attention
 #/<NotInRepo>/                                                     @vwansuppgithub
@@ -588,9 +648,11 @@
 # PRLabel: %Mixed Reality
 /sdk/objectanchors/                                                @crtreasu @rgarcia @JoshLove-msft
 
-# PRLabel: %Operational Insights
-# ServiceLabel: %Operational Insights %Service Attention
-/sdk/operationalinsights/Microsoft.Azure.Ope*/                     @omziv @anatse @raronen @ischrei @danhadari @AzmonLogA
+# PRLabel: %OpenAI
+/sdk/openai/                                                       @jpalvarezl @trrwilson @joseharriaga @m-nash
+
+# ServiceLabel: %Monitor - Operational Insights %Service Attention
+#/<NotInRepo>/                                                     zy@omziv @anatse @raronen @ischrei @danhadari @AzmonLogA
 
 # ServiceLabel: %Policy %Service Attention
 #/<NotInRepo>/                                                     @aperezcloud @kenieva
@@ -611,7 +673,7 @@
 /sdk/recoveryservices-siterecovery/Microsoft.Azure.Management.RecoveryServices.SiteRecovery/ @Sharmistha-Rai
 
 # ServiceLabel: %Redis Cache %Service Attention
-/sdk/redis/Microsoft.Azure.Management.RedisCache/                  @yegu-ms
+#/<NotInRepo>/					                   @yegu-ms
 
 # ServiceLabel: %Relay %Service Attention
 /sdk/relay/Microsoft.Azure.Management.Relay/                       @jfggdl
@@ -634,8 +696,11 @@
 # ServiceLabel: %Security %Service Attention
 #/<NotInRepo>/                                                     @chlahav
 
+# ServiceLabel: %SecurityInsights
+#/<NotInRepo>/          @amirkeren
+
 # PRLabel: %Search
-/sdk/search/                                                       @ShivangiReja @kinelski @tg-msft @heaths
+/sdk/search/                                                       @ShivangiReja @kinelski @tg-msft @heaths @Azure/azsdk-search
 
 # ServiceLabel: %Search %Service Attention
 /sdk/search/Microsoft.*/                                           @arv100kri @bleroy @tjacobhi
@@ -657,7 +722,7 @@
 /sdk/schemaregistry/                                               @jsquire @JoshLove-msft
 
 # ServiceLabel: %Schema Registry %Service Attention
-#/sdk/schemaregistry/                                              @hmlam
+#/<NotInRepo>/                                                     @hmlam
 
 # ServiceLabel: %SignalR %Service Attention
 /sdk/signalr/                                                      @sffamily @chenkennt @Y-Sindo
@@ -684,10 +749,10 @@
 #/<NotInRepo>/                                                     @azureSQLGitHub
 
 # PRLabel: %Storage
-/sdk/storage*                                                      @seanmcc-msft @amnguye @jaschrep-msft @tg-msft
+/sdk/storage*/                                                      @seanmcc-msft @amnguye @jaschrep-msft @schaabs @tg-msft
 
 # PRLabel: %Storage
-/sdk/storage/Azure.Storage.*/                                      @seanmcc-msft @amnguye @jaschrep-msft @tg-msft
+/sdk/storage/Azure.Storage.*/                                      @seanmcc-msft @amnguye @jaschrep-msft @schaabs @tg-msft
 
 # PRLabel: %Storage
 /sdk/storage/Microsoft.Azure.WebJobs.*/                            @seanmcc-msft @amnguye @jaschrep-msft @tg-msft @fabiocav @mathewc
@@ -697,9 +762,6 @@
 
 # ServiceLabel: %Storsimple %Service Attention
 /sdk/storsimple/Microsoft.Azure.Management.StorSimple/             @anoobbacker @ganzee @manuaery @patelkunal
-
-# ServiceLabel: %Storsimple %Service Attention
-/sdk/storsimple8000series/Microsoft.Azure.Management.StorSimple8000Series/ @fengzhou-msft @archerzz @ArcturusZhang @Yao725 @ArthurMa1978
 
 # ServiceLabel: %Stream Analytics %Service Attention
 /sdk/streamanalytics/Microsoft.Azure.Management.StreamAnalytics/   @atpham256
@@ -750,8 +812,8 @@
 
 # ######## Management Plane ########
 
-/**/*Management*/                                                  @fengzhou-msft @archerzz @ArcturusZhang @Yao725 @ArthurMa1978
-/**/Azure.ResourceManager*/                                        @fengzhou-msft @archerzz @ArcturusZhang @Yao725 @ArthurMa1978
+/**/*Management*/                                                  @archerzz @ArcturusZhang @ArthurMa1978
+/**/Azure.ResourceManager*/                                        @archerzz @ArcturusZhang @ArthurMa1978
 
 # Reviewers to double check any API changes
 /sdk/**/api/                                                       @KrzysztofCwalina @tg-msft
@@ -768,7 +830,10 @@
 # ######## DPG ########
 
 # Onboarding Documentation and Quickstarts
-/doc/Data\ Plane\ Code\ Generation                                 @chunyu3 @pshao25 @fengzhou-msft @lirenhe @annelo-msft
+/doc/DataPlaneCodeGeneration                                       @chunyu3 @pshao25 @lirenhe @annelo-msft
 
-# Client generation tooling
-/eng/templates/Azure.ServiceTemplate.Template                      @chunyu3 @lirenhe
+# PRLabel: %Cognitive - Content Safety
+/sdk/contentsafety/												   @bowgong @mengaims
+
+# ServiceLabel: %Cognitive - Content Safety %Service Attention
+/sdk/contentsafety/Azure.AI.ContentSafety/                     	   @bowgong @mengaims

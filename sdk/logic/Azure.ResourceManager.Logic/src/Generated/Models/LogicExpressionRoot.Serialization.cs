@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Logic.Models
     {
         internal static LogicExpressionRoot DeserializeLogicExpressionRoot(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> path = default;
             Optional<string> text = default;
             Optional<BinaryData> value = default;
@@ -37,7 +41,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     value = BinaryData.FromString(property.Value.GetRawText());
@@ -47,7 +50,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<LogicExpression> array = new List<LogicExpression>();
@@ -62,7 +64,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     error = LogicExpressionErrorInfo.DeserializeLogicExpressionErrorInfo(property.Value);

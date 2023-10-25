@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     {
         internal static EdgeOrderProductBillingMeterDetails DeserializeEdgeOrderProductBillingMeterDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<EdgeOrderProductMeterDetails> meterDetails = default;
             Optional<EdgeOrderProductMeteringType> meteringType = default;
@@ -29,7 +33,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     meterDetails = EdgeOrderProductMeterDetails.DeserializeEdgeOrderProductMeterDetails(property.Value);
@@ -39,7 +42,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     meteringType = new EdgeOrderProductMeteringType(property.Value.GetString());

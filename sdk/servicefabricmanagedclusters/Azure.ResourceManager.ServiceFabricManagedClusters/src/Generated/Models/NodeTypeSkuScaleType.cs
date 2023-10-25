@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary>
     /// Node type capacity scale type.
-    /// 
+    ///
     /// </summary>
     public readonly partial struct NodeTypeSkuScaleType : IEquatable<NodeTypeSkuScaleType>
     {

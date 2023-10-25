@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static WebSiteAvailabilityState ToWebSiteAvailabilityState(this string value)
         {
-            if (string.Equals(value, "Normal", StringComparison.InvariantCultureIgnoreCase)) return WebSiteAvailabilityState.Normal;
-            if (string.Equals(value, "Limited", StringComparison.InvariantCultureIgnoreCase)) return WebSiteAvailabilityState.Limited;
-            if (string.Equals(value, "DisasterRecoveryMode", StringComparison.InvariantCultureIgnoreCase)) return WebSiteAvailabilityState.DisasterRecoveryMode;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Normal")) return WebSiteAvailabilityState.Normal;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Limited")) return WebSiteAvailabilityState.Limited;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DisasterRecoveryMode")) return WebSiteAvailabilityState.DisasterRecoveryMode;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown WebSiteAvailabilityState value.");
         }
     }

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of SnapshotRecoverySource. </summary>
         /// <param name="location"> Geographical location of the source web app, e.g. SouthEastAsia, SouthCentralUS. </param>
         /// <param name="id">
-        /// ARM resource ID of the source app. 
-        /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName} for production slots and 
+        /// ARM resource ID of the source app.
+        /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName} for production slots and
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slotName} for other slots.
         /// </param>
         internal SnapshotRecoverySource(AzureLocation? location, ResourceIdentifier id)
@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Geographical location of the source web app, e.g. SouthEastAsia, SouthCentralUS. </summary>
         public AzureLocation? Location { get; set; }
         /// <summary>
-        /// ARM resource ID of the source app. 
-        /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName} for production slots and 
+        /// ARM resource ID of the source app.
+        /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName} for production slots and
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slotName} for other slots.
         /// </summary>
         public ResourceIdentifier Id { get; set; }

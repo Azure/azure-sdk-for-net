@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static PairedRegion DeserializePairedRegion(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> name = default;
             Optional<string> id = default;
             Optional<string> subscriptionId = default;

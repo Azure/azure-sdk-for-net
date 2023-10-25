@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (DefaultCustomBlockResponseStatusCode != null)
                 {
                     writer.WritePropertyName("defaultCustomBlockResponseStatusCode"u8);
-                    writer.WriteStringValue(DefaultCustomBlockResponseStatusCode.Value.ToString());
+                    writer.WriteNumberValue(DefaultCustomBlockResponseStatusCode.Value.ToSerialInt32());
                 }
                 else
                 {
@@ -51,7 +51,10 @@ namespace Azure.ResourceManager.Cdn.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(DefaultCustomBlockResponseBody);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(DefaultCustomBlockResponseBody.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(DefaultCustomBlockResponseBody))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
                 else
@@ -64,6 +67,10 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static WafPolicySettings DeserializeWafPolicySettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PolicyEnabledState> enabledState = default;
             Optional<PolicyMode> mode = default;
             Optional<Uri> defaultRedirectUri = default;
@@ -75,7 +82,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enabledState = new PolicyEnabledState(property.Value.GetString());
@@ -85,7 +91,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     mode = new PolicyMode(property.Value.GetString());
@@ -95,7 +100,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        defaultRedirectUri = null;
                         continue;
                     }
                     defaultRedirectUri = new Uri(property.Value.GetString());

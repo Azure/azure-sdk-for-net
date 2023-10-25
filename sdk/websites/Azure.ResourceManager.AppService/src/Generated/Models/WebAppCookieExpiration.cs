@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary> The configuration settings of the session cookie&apos;s expiration. </summary>
+    /// <summary> The configuration settings of the session cookie's expiration. </summary>
     public partial class WebAppCookieExpiration
     {
         /// <summary> Initializes a new instance of WebAppCookieExpiration. </summary>
@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of WebAppCookieExpiration. </summary>
-        /// <param name="convention"> The convention used when determining the session cookie&apos;s expiration. </param>
+        /// <param name="convention"> The convention used when determining the session cookie's expiration. </param>
         /// <param name="timeToExpiration"> The time after the request is made when the session cookie should expire. </param>
         internal WebAppCookieExpiration(CookieExpirationConvention? convention, string timeToExpiration)
         {
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.AppService.Models
             TimeToExpiration = timeToExpiration;
         }
 
-        /// <summary> The convention used when determining the session cookie&apos;s expiration. </summary>
+        /// <summary> The convention used when determining the session cookie's expiration. </summary>
         public CookieExpirationConvention? Convention { get; set; }
         /// <summary> The time after the request is made when the session cookie should expire. </summary>
         public string TimeToExpiration { get; set; }

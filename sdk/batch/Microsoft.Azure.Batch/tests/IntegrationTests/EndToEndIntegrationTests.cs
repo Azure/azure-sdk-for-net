@@ -272,37 +272,6 @@
         [Fact]
         [LiveTest]
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
-        public void Bug1771070_1771072_JobAndPoolLifetimeStats()
-        {
-            void test()
-            {
-                using BatchClient batchCli = TestUtilities.OpenBatchClient(TestUtilities.GetCredentialsFromEnvironment());
-                JobStatistics jobStatistics = batchCli.JobOperations.GetAllLifetimeStatistics();
-                PoolStatistics poolStatistics = batchCli.PoolOperations.GetAllLifetimeStatistics();
-
-                Assert.NotNull(jobStatistics);
-                Assert.NotNull(poolStatistics);
-
-                //Since we cannot really validate that the stats returned by the service are correct, the best we can do is make sure we get some
-
-                //Dump a few properties from each stats bag to make sure they are populated
-                testOutputHelper.WriteLine("JobScheduleStatistics.StartTime: {0}", jobStatistics.StartTime);
-                testOutputHelper.WriteLine("JobScheduleStatistics.LastUpdateTime: {0}", jobStatistics.LastUpdateTime);
-                testOutputHelper.WriteLine("JobScheduleStatistics.NumSucceededTasks: {0}", jobStatistics.SucceededTaskCount);
-                testOutputHelper.WriteLine("JobScheduleStatistics.UserCpuTime: {0}", jobStatistics.UserCpuTime);
-
-                testOutputHelper.WriteLine("PoolStatistics.StartTime: {0}", poolStatistics.StartTime);
-                testOutputHelper.WriteLine("PoolStatistics.LastUpdateTime: {0}", poolStatistics.LastUpdateTime);
-                testOutputHelper.WriteLine("PoolStatistics.ResourceStatistics.AvgMemory: {0}", poolStatistics.ResourceStatistics.AverageMemoryGiB);
-                testOutputHelper.WriteLine("PoolStatistics.UsageStatistics.DedicatedCoreTime: {0}", poolStatistics.UsageStatistics.DedicatedCoreTime);
-            }
-
-            SynchronizationContextHelper.RunTest(test, TestTimeout);
-        }
-
-        [Fact]
-        [LiveTest]
-        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public void ReadClientRequestIdAndRequestIdFromResponse()
         {
             void test()

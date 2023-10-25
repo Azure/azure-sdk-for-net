@@ -1,14 +1,38 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.1.0 (2023-10-30)
 
 ### Features Added
 
-### Breaking Changes
+- Upgrade to API version 2023-10-01
 
-### Bugs Fixed
+## 1.1.0-beta.2 (2023-08-08)
+
+### Features Added
+
+- Upgrade to API version 2023-07-01-preview
+- Added support for SMB endpoint and SMB file share endpoint.
+
+## 1.1.0-beta.1 (2023-05-31)
+
+### Features Added
+
+- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
 
 ### Other Changes
+
+- Upgraded dependent Azure.Core to 1.32.0.
+- Upgraded dependent Azure.ResourceManager to 1.6.0.
+
+## 1.0.1 (2023-03-11)
+
+### Other Changes
+- Upgraded dependent `Azure.Core` to `1.30.0`.
+
+## 1.0.0 (2023-03-03)
+
+### Other Changes
+This is the first stable release of StorageMover client library.
 
 ## 1.0.0-beta.1 (2022-12-09)
 

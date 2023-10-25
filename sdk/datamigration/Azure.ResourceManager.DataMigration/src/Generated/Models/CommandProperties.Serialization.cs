@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static CommandProperties DeserializeCommandProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("commandType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.HDInsight.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_PatchHDInsightLinuxClusters()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/stable/2021-06-01/examples/PatchLinuxHadoopCluster.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2023-04-15-preview/examples/PatchLinuxHadoopCluster.json
             // this example is just showing the usage of "Clusters_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HDInsight.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteHadoopOnLinuxCluster()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/stable/2021-06-01/examples/DeleteLinuxHadoopCluster.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2023-04-15-preview/examples/DeleteLinuxHadoopCluster.json
             // this example is just showing the usage of "Clusters_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.HDInsight.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetHadoopOnLinuxCluster()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/stable/2021-06-01/examples/GetLinuxHadoopCluster.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2023-04-15-preview/examples/GetLinuxHadoopCluster.json
             // this example is just showing the usage of "Clusters_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.HDInsight.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetSparkOnLinuxCluster()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/stable/2021-06-01/examples/GetLinuxSparkCluster.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2023-04-15-preview/examples/GetLinuxSparkCluster.json
             // this example is just showing the usage of "Clusters_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.HDInsight.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Resize_ResizeTheWorkerNodesForAHadoopOnLinuxCluster()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/stable/2021-06-01/examples/ResizeLinuxHadoopCluster.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2023-04-15-preview/examples/ResizeLinuxHadoopCluster.json
             // this example is just showing the usage of "Clusters_Resize" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.HDInsight.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task UpdateAutoScaleConfiguration_DisableAutoscaleForTheHDInsightCluster()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/stable/2021-06-01/examples/DisableClusterAutoScale.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2023-04-15-preview/examples/DisableClusterAutoScale.json
             // this example is just showing the usage of "Clusters_UpdateAutoScaleConfiguration" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.HDInsight.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task UpdateAutoScaleConfiguration_EnableOrUpdateAutoscaleWithTheLoadBasedConfigurationForHDInsightCluster()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/stable/2021-06-01/examples/EnableOrUpdateAutoScaleWithLoadBasedConfiguration.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2023-04-15-preview/examples/EnableOrUpdateAutoScaleWithLoadBasedConfiguration.json
             // this example is just showing the usage of "Clusters_UpdateAutoScaleConfiguration" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.HDInsight.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task UpdateAutoScaleConfiguration_EnableOrUpdateAutoscaleWithTheScheduleBasedConfigurationForHDInsightCluster()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/stable/2021-06-01/examples/EnableOrUpdateAutoScaleWithScheduleBasedConfiguration.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2023-04-15-preview/examples/EnableOrUpdateAutoScaleWithScheduleBasedConfiguration.json
             // this example is just showing the usage of "Clusters_UpdateAutoScaleConfiguration" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -307,7 +307,7 @@ MaxInstanceCount = 4,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetHDInsightClusters_GetAllHadoopOnLinuxClusters()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/stable/2021-06-01/examples/GetLinuxHadoopAllClusters.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2023-04-15-preview/examples/GetLinuxHadoopAllClusters.json
             // this example is just showing the usage of "Clusters_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -339,7 +339,7 @@ MaxInstanceCount = 4,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task RotateDiskEncryptionKey_RotateDiskEncryptionKeyOfTheSpecifiedHDInsightCluster()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/stable/2021-06-01/examples/RotateLinuxHadoopClusterDiskEncryptionKey.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2023-04-15-preview/examples/RotateLinuxHadoopClusterDiskEncryptionKey.json
             // this example is just showing the usage of "Clusters_RotateDiskEncryptionKey" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -372,7 +372,7 @@ MaxInstanceCount = 4,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetGatewaySettings_GetHTTPSettings()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/stable/2021-06-01/examples/HDI_Clusters_GetGatewaySettings.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2023-04-15-preview/examples/HDI_Clusters_GetGatewaySettings.json
             // this example is just showing the usage of "Clusters_GetGatewaySettings" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -399,7 +399,7 @@ MaxInstanceCount = 4,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task UpdateGatewaySettings_EnableHTTPConnectivity()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/stable/2021-06-01/examples/HDI_Clusters_UpdateGatewaySettings_Enable.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2023-04-15-preview/examples/HDI_Clusters_UpdateGatewaySettings_Enable.json
             // this example is just showing the usage of "Clusters_UpdateGatewaySettings" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -432,7 +432,7 @@ MaxInstanceCount = 4,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAsyncOperationStatus_GetAsyncOperationStatusOfCreatingCluster()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/stable/2021-06-01/examples/GetClusterCreatingAsyncOperationStatus.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2023-04-15-preview/examples/GetClusterCreatingAsyncOperationStatus.json
             // this example is just showing the usage of "Clusters_GetAzureAsyncOperationStatus" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -460,7 +460,7 @@ MaxInstanceCount = 4,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task UpdateIdentityCertificate_UpdateClusterIdentityCertificate()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/stable/2021-06-01/examples/HDI_Clusters_UpdateClusterIdentityCertificate.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2023-04-15-preview/examples/HDI_Clusters_UpdateClusterIdentityCertificate.json
             // this example is just showing the usage of "Clusters_UpdateIdentityCertificate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -493,7 +493,7 @@ MaxInstanceCount = 4,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task ExecuteScriptActions_ExecuteScriptActionOnHDInsightCluster()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/stable/2021-06-01/examples/PostExecuteScriptAction.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2023-04-15-preview/examples/PostExecuteScriptAction.json
             // this example is just showing the usage of "Clusters_ExecuteScriptActions" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -533,7 +533,7 @@ Parameters = "",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetConfiguration_GetAllConfigurationInformation()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/stable/2021-06-01/examples/HDI_Configurations_List.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2023-04-15-preview/examples/HDI_Configurations_List.json
             // this example is just showing the usage of "Configurations_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -560,7 +560,7 @@ Parameters = "",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task UpdateConfiguration_DisableHTTPConnectivity()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/stable/2021-06-01/examples/ChangeHttpConnectivityDisable.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2023-04-15-preview/examples/ChangeHttpConnectivityDisable.json
             // this example is just showing the usage of "Configurations_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -592,7 +592,7 @@ Parameters = "",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task UpdateConfiguration_EnableHTTPConnectivity()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/stable/2021-06-01/examples/ChangeHttpConnectivityEnable.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2023-04-15-preview/examples/ChangeHttpConnectivityEnable.json
             // this example is just showing the usage of "Configurations_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -626,7 +626,7 @@ Parameters = "",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetConfiguration_GetCoreSiteSettings()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/stable/2021-06-01/examples/HDI_Configurations_Get.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2023-04-15-preview/examples/HDI_Configurations_Get.json
             // this example is just showing the usage of "Configurations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -655,7 +655,7 @@ Parameters = "",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task EnableClusterMonitoringExtension_EnableClusterMonitoring()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/stable/2021-06-01/examples/EnableLinuxClusterMonitoring.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2023-04-15-preview/examples/EnableLinuxClusterMonitoring.json
             // this example is just showing the usage of "Extensions_EnableMonitoring" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -687,7 +687,7 @@ Parameters = "",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetClusterMonitoringExtensionStatus_EnableClusterMonitoring()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/stable/2021-06-01/examples/GetLinuxClusterMonitoringStatus.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2023-04-15-preview/examples/GetLinuxClusterMonitoringStatus.json
             // this example is just showing the usage of "Extensions_GetMonitoringStatus" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -714,7 +714,7 @@ Parameters = "",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task DisableClusterMonitoringExtension_EnableClusterMonitoring()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/stable/2021-06-01/examples/DisableLinuxClusterMonitoring.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2023-04-15-preview/examples/DisableLinuxClusterMonitoring.json
             // this example is just showing the usage of "Extensions_DisableMonitoring" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -741,7 +741,7 @@ Parameters = "",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task EnableAzureMonitorExtension_EnableClusterMonitoring()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/stable/2021-06-01/examples/EnableLinuxClusterAzureMonitor.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2023-04-15-preview/examples/EnableLinuxClusterAzureMonitor.json
             // this example is just showing the usage of "Extensions_EnableAzureMonitor" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -773,7 +773,7 @@ Parameters = "",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAzureMonitorExtensionStatus_EnableClusterMonitoring()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/stable/2021-06-01/examples/GetLinuxClusterAzureMonitorStatus.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2023-04-15-preview/examples/GetLinuxClusterAzureMonitorStatus.json
             // this example is just showing the usage of "Extensions_GetAzureMonitorStatus" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -800,7 +800,7 @@ Parameters = "",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task DisableAzureMonitorExtension_EnableClusterMonitoring()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/stable/2021-06-01/examples/DisableLinuxClusterAzureMonitor.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2023-04-15-preview/examples/DisableLinuxClusterAzureMonitor.json
             // this example is just showing the usage of "Extensions_DisableAzureMonitor" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -827,7 +827,7 @@ Parameters = "",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateExtension_CreateAMonitoringExtensionOnHadoopLinuxCluster()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/stable/2021-06-01/examples/CreateExtension.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2023-04-15-preview/examples/CreateExtension.json
             // this example is just showing the usage of "Extensions_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -860,7 +860,7 @@ Parameters = "",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetExtension_GetAnExtension()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/stable/2021-06-01/examples/GetExtension.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2023-04-15-preview/examples/GetExtension.json
             // this example is just showing the usage of "Extensions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -888,7 +888,7 @@ Parameters = "",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task DeleteExtension_DeleteAnExtension()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/stable/2021-06-01/examples/DeleteExtension.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2023-04-15-preview/examples/DeleteExtension.json
             // this example is just showing the usage of "Extensions_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -916,7 +916,7 @@ Parameters = "",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetExtensionAsyncOperationStatus_GetsTheAzureAsyncOperationStatus()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/stable/2021-06-01/examples/GetExtensionCreationAsyncOperationStatus.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2023-04-15-preview/examples/GetExtensionCreationAsyncOperationStatus.json
             // this example is just showing the usage of "Extensions_GetAzureAsyncOperationStatus" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -945,7 +945,7 @@ Parameters = "",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task DeleteScriptAction_DeleteAScriptActionOnHDInsightCluster()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/stable/2021-06-01/examples/DeleteScriptAction.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2023-04-15-preview/examples/DeleteScriptAction.json
             // this example is just showing the usage of "ScriptActions_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -973,7 +973,7 @@ Parameters = "",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetScriptActions_ListAllPersistedScriptActionsForTheGivenCluster()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/stable/2021-06-01/examples/GetLinuxHadoopScriptAction.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2023-04-15-preview/examples/GetLinuxHadoopScriptAction.json
             // this example is just showing the usage of "ScriptActions_ListByCluster" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1003,7 +1003,7 @@ Parameters = "",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetScriptActionExecutionDetail_GetScriptExecutionHistoryByScriptId()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/stable/2021-06-01/examples/GetScriptActionById.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2023-04-15-preview/examples/GetScriptActionById.json
             // this example is just showing the usage of "ScriptActions_GetExecutionDetail" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1031,7 +1031,7 @@ Parameters = "",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetScriptActionExecutionAsyncOperationStatus_GetsTheAsyncExecutionOperationStatus()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/stable/2021-06-01/examples/GetScriptExecutionAsyncOperationStatus.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2023-04-15-preview/examples/GetScriptExecutionAsyncOperationStatus.json
             // this example is just showing the usage of "ScriptActions_GetExecutionAsyncOperationStatus" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1059,7 +1059,7 @@ Parameters = "",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetScriptExecutionHistories_GetScriptExecutionHistoryList()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/stable/2021-06-01/examples/GetScriptExecutionHistory.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2023-04-15-preview/examples/GetScriptExecutionHistory.json
             // this example is just showing the usage of "ScriptExecutionHistory_ListByCluster" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1089,7 +1089,7 @@ Parameters = "",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task PromoteScriptExecutionHistory_PromoteAScriptActionOnHDInsightCluster()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/stable/2021-06-01/examples/PromoteLinuxHadoopScriptAction.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2023-04-15-preview/examples/PromoteLinuxHadoopScriptAction.json
             // this example is just showing the usage of "ScriptExecutionHistory_Promote" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1117,7 +1117,7 @@ Parameters = "",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetVirtualMachineHosts_GetAllHostsInTheCluster()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/stable/2021-06-01/examples/GetClusterVirtualMachines.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2023-04-15-preview/examples/GetClusterVirtualMachines.json
             // this example is just showing the usage of "VirtualMachines_ListHosts" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1147,7 +1147,7 @@ Parameters = "",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task RestartVirtualMachineHosts_RestartsTheSpecifiedHDInsightClusterHosts()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/stable/2021-06-01/examples/RestartVirtualMachinesOperation.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2023-04-15-preview/examples/RestartVirtualMachinesOperation.json
             // this example is just showing the usage of "VirtualMachines_RestartHosts" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1178,7 +1178,7 @@ Parameters = "",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetVirtualMachineAsyncOperationStatus_GetsTheAsyncOperationStatusOfRestartingHost()
         {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/stable/2021-06-01/examples/GetRestartHostsAsyncOperationStatus.json
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2023-04-15-preview/examples/GetRestartHostsAsyncOperationStatus.json
             // this example is just showing the usage of "VirtualMachines_GetAsyncOperationStatus" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

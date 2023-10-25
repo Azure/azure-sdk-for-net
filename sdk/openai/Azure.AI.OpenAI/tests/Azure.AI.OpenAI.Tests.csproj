@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <Folder Include="SessionRecords\" />
+    <None Include="SessionRecords\**\*" />
   </ItemGroup>
 
 </Project>

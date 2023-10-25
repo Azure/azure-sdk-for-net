@@ -17,7 +17,7 @@ namespace Azure.IoT.TimeSeriesInsights
     {
         /// <summary> The range of time on which the query is executed. Cannot be null. </summary>
         public DateTimeRange SearchSpan { get; }
-        /// <summary> Top-level filter over the events that restricts the number of events being considered for computation. This filter is AND&apos;ed with filter in each variable. Example: &quot;$event.Status.String=&apos;Good&apos;&quot;. Optional. </summary>
+        /// <summary> Top-level filter over the events that restricts the number of events being considered for computation. This filter is AND'ed with filter in each variable. Example: "$event.Status.String='Good'". Optional. </summary>
         public TimeSeriesExpression Filter { get; set; }
         /// <summary> Selected variables that needs to be projected in the query result. When it is null or not set, all the variables from inlineVariables and time series type in the model are returned. Can be null. </summary>
         public IList<string> ProjectedVariables { get; }

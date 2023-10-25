@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.PrivateDns
 
         internal static PrivateDnsZoneData DeserializePrivateDnsZoneData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> etag = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -66,7 +70,6 @@ namespace Azure.ResourceManager.PrivateDns
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -76,7 +79,6 @@ namespace Azure.ResourceManager.PrivateDns
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -111,7 +113,6 @@ namespace Azure.ResourceManager.PrivateDns
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -130,7 +131,6 @@ namespace Azure.ResourceManager.PrivateDns
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             maxNumberOfRecordSets = property0.Value.GetInt64();
@@ -140,7 +140,6 @@ namespace Azure.ResourceManager.PrivateDns
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             numberOfRecordSets = property0.Value.GetInt64();
@@ -150,7 +149,6 @@ namespace Azure.ResourceManager.PrivateDns
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             maxNumberOfVirtualNetworkLinks = property0.Value.GetInt64();
@@ -160,7 +158,6 @@ namespace Azure.ResourceManager.PrivateDns
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             numberOfVirtualNetworkLinks = property0.Value.GetInt64();
@@ -170,7 +167,6 @@ namespace Azure.ResourceManager.PrivateDns
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             maxNumberOfVirtualNetworkLinksWithRegistration = property0.Value.GetInt64();
@@ -180,7 +176,6 @@ namespace Azure.ResourceManager.PrivateDns
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             numberOfVirtualNetworkLinksWithRegistration = property0.Value.GetInt64();
@@ -190,7 +185,6 @@ namespace Azure.ResourceManager.PrivateDns
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             privateDnsProvisioningState = new PrivateDnsProvisioningState(property0.Value.GetString());

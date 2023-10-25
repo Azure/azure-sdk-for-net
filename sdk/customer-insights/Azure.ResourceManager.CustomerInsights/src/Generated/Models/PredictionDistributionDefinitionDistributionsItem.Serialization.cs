@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
     {
         internal static PredictionDistributionDefinitionDistributionsItem DeserializePredictionDistributionDefinitionDistributionsItem(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> scoreThreshold = default;
             Optional<long> positives = default;
             Optional<long> negatives = default;
@@ -25,7 +29,6 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     scoreThreshold = property.Value.GetInt32();
@@ -35,7 +38,6 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     positives = property.Value.GetInt64();
@@ -45,7 +47,6 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     negatives = property.Value.GetInt64();
@@ -55,7 +56,6 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     positivesAboveThreshold = property.Value.GetInt64();
@@ -65,7 +65,6 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     negativesAboveThreshold = property.Value.GetInt64();

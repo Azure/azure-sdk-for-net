@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static PatchSettings DeserializePatchSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<WindowsVmGuestPatchMode> patchMode = default;
             Optional<bool> enableHotpatching = default;
             Optional<WindowsPatchAssessmentMode> assessmentMode = default;
@@ -50,7 +54,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     patchMode = new WindowsVmGuestPatchMode(property.Value.GetString());
@@ -60,7 +63,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enableHotpatching = property.Value.GetBoolean();
@@ -70,7 +72,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     assessmentMode = new WindowsPatchAssessmentMode(property.Value.GetString());
@@ -80,7 +81,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     automaticByPlatformSettings = WindowsVmGuestPatchAutomaticByPlatformSettings.DeserializeWindowsVmGuestPatchAutomaticByPlatformSettings(property.Value);

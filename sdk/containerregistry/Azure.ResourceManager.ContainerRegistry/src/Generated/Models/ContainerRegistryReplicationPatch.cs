@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> The tags for the replication. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> Specifies whether the replication&apos;s regional endpoint is enabled. Requests will not be routed to a replication whose regional endpoint is disabled, however its data will continue to be synced with other replications. </summary>
+        /// <summary> Specifies whether the replication's regional endpoint is enabled. Requests will not be routed to a replication whose regional endpoint is disabled, however its data will continue to be synced with other replications. </summary>
         public bool? IsRegionEndpointEnabled { get; set; }
     }
 }

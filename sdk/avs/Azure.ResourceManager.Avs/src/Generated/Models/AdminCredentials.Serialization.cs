@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Avs.Models
     {
         internal static AdminCredentials DeserializeAdminCredentials(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nsxtUsername = default;
             Optional<string> nsxtPassword = default;
             Optional<string> vcenterUsername = default;

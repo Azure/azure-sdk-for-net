@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput DeserializeConnectToTargetOracleAzureDBForPostgreSqlSyncTaskInput(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             PostgreSqlConnectionInfo targetConnectionInfo = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static CertificateOrderContact DeserializeCertificateOrderContact(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> email = default;
             Optional<string> nameFirst = default;
             Optional<string> nameLast = default;

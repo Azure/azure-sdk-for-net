@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="endOn"> Schedule end time. </param>
         /// <param name="scheduleType"> Schedule interval type. </param>
         /// <param name="isEnabled"> Whether or not the schedule is enabled. </param>
-        /// <param name="interval"> Value of the schedule&apos;s recurring interval, if the ScheduleType is recurring. ISO8601 duration format. </param>
+        /// <param name="interval"> Value of the schedule's recurring interval, if the ScheduleType is recurring. ISO8601 duration format. </param>
         internal SqlServerJobSchedule(DateTimeOffset? startOn, DateTimeOffset? endOn, SqlServerJobScheduleType? scheduleType, bool? isEnabled, TimeSpan? interval)
         {
             StartOn = startOn;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Sql.Models
         public SqlServerJobScheduleType? ScheduleType { get; set; }
         /// <summary> Whether or not the schedule is enabled. </summary>
         public bool? IsEnabled { get; set; }
-        /// <summary> Value of the schedule&apos;s recurring interval, if the ScheduleType is recurring. ISO8601 duration format. </summary>
+        /// <summary> Value of the schedule's recurring interval, if the ScheduleType is recurring. ISO8601 duration format. </summary>
         public TimeSpan? Interval { get; set; }
     }
 }

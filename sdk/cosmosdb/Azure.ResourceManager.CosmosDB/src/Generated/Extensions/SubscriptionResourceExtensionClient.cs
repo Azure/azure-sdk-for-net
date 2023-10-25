@@ -5,8 +5,8 @@
 
 #nullable disable
 
-using System;
 using System.Threading;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -21,6 +21,8 @@ namespace Azure.ResourceManager.CosmosDB
         private DatabaseAccountsRestOperations _cosmosDBAccountDatabaseAccountsRestClient;
         private ClientDiagnostics _cassandraClusterClientDiagnostics;
         private CassandraClustersRestOperations _cassandraClusterRestClient;
+        private ClientDiagnostics _mongoClusterClientDiagnostics;
+        private MongoClustersRestOperations _mongoClusterRestClient;
         private ClientDiagnostics _restorableCosmosDBAccountRestorableDatabaseAccountsClientDiagnostics;
         private RestorableDatabaseAccountsRestOperations _restorableCosmosDBAccountRestorableDatabaseAccountsRestClient;
 
@@ -40,6 +42,8 @@ namespace Azure.ResourceManager.CosmosDB
         private DatabaseAccountsRestOperations CosmosDBAccountDatabaseAccountsRestClient => _cosmosDBAccountDatabaseAccountsRestClient ??= new DatabaseAccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CosmosDBAccountResource.ResourceType));
         private ClientDiagnostics CassandraClusterClientDiagnostics => _cassandraClusterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CassandraClusterResource.ResourceType.Namespace, Diagnostics);
         private CassandraClustersRestOperations CassandraClusterRestClient => _cassandraClusterRestClient ??= new CassandraClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CassandraClusterResource.ResourceType));
+        private ClientDiagnostics MongoClusterClientDiagnostics => _mongoClusterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB", MongoClusterResource.ResourceType.Namespace, Diagnostics);
+        private MongoClustersRestOperations MongoClusterRestClient => _mongoClusterRestClient ??= new MongoClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(MongoClusterResource.ResourceType));
         private ClientDiagnostics RestorableCosmosDBAccountRestorableDatabaseAccountsClientDiagnostics => _restorableCosmosDBAccountRestorableDatabaseAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB", RestorableCosmosDBAccountResource.ResourceType.Namespace, Diagnostics);
         private RestorableDatabaseAccountsRestOperations RestorableCosmosDBAccountRestorableDatabaseAccountsRestClient => _restorableCosmosDBAccountRestorableDatabaseAccountsRestClient ??= new RestorableDatabaseAccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(RestorableCosmosDBAccountResource.ResourceType));
 
@@ -74,7 +78,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<CosmosDBAccountResource> GetCosmosDBAccountsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CosmosDBAccountDatabaseAccountsRestClient.CreateListRequest(Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CosmosDBAccountResource(Client, CosmosDBAccountData.DeserializeCosmosDBAccountData(e)), CosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCosmosDBAccounts", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CosmosDBAccountResource(Client, CosmosDBAccountData.DeserializeCosmosDBAccountData(e)), CosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCosmosDBAccounts", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -95,7 +99,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<CosmosDBAccountResource> GetCosmosDBAccounts(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CosmosDBAccountDatabaseAccountsRestClient.CreateListRequest(Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CosmosDBAccountResource(Client, CosmosDBAccountData.DeserializeCosmosDBAccountData(e)), CosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCosmosDBAccounts", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new CosmosDBAccountResource(Client, CosmosDBAccountData.DeserializeCosmosDBAccountData(e)), CosmosDBAccountDatabaseAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCosmosDBAccounts", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -116,7 +120,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<CassandraClusterResource> GetCassandraClustersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CassandraClusterRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CassandraClusterResource(Client, CassandraClusterData.DeserializeCassandraClusterData(e)), CassandraClusterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCassandraClusters", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new CassandraClusterResource(Client, CassandraClusterData.DeserializeCassandraClusterData(e)), CassandraClusterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCassandraClusters", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -137,11 +141,55 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<CassandraClusterResource> GetCassandraClusters(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CassandraClusterRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new CassandraClusterResource(Client, CassandraClusterData.DeserializeCassandraClusterData(e)), CassandraClusterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCassandraClusters", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new CassandraClusterResource(Client, CassandraClusterData.DeserializeCassandraClusterData(e)), CassandraClusterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetCassandraClusters", "value", null, cancellationToken);
         }
 
         /// <summary>
-        /// Lists all the restorable Azure Cosmos DB database accounts available under the subscription. This call requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read&apos; permission.
+        /// List all the mongo clusters in a given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/mongoClusters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MongoClusters_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="MongoClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MongoClusterResource> GetMongoClustersAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MongoClusterRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MongoClusterRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MongoClusterResource(Client, MongoClusterData.DeserializeMongoClusterData(e)), MongoClusterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMongoClusters", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List all the mongo clusters in a given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/mongoClusters</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MongoClusters_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="MongoClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MongoClusterResource> GetMongoClusters(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => MongoClusterRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => MongoClusterRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MongoClusterResource(Client, MongoClusterData.DeserializeMongoClusterData(e)), MongoClusterClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetMongoClusters", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all the restorable Azure Cosmos DB database accounts available under the subscription. This call requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read' permission.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -158,11 +206,11 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual AsyncPageable<RestorableCosmosDBAccountResource> GetRestorableCosmosDBAccountsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestorableCosmosDBAccountRestorableDatabaseAccountsRestClient.CreateListRequest(Id.SubscriptionId);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new RestorableCosmosDBAccountResource(Client, RestorableCosmosDBAccountData.DeserializeRestorableCosmosDBAccountData(e)), RestorableCosmosDBAccountRestorableDatabaseAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetRestorableCosmosDBAccounts", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new RestorableCosmosDBAccountResource(Client, RestorableCosmosDBAccountData.DeserializeRestorableCosmosDBAccountData(e)), RestorableCosmosDBAccountRestorableDatabaseAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetRestorableCosmosDBAccounts", "value", null, cancellationToken);
         }
 
         /// <summary>
-        /// Lists all the restorable Azure Cosmos DB database accounts available under the subscription. This call requires &apos;Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read&apos; permission.
+        /// Lists all the restorable Azure Cosmos DB database accounts available under the subscription. This call requires 'Microsoft.DocumentDB/locations/restorableDatabaseAccounts/read' permission.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -179,7 +227,7 @@ namespace Azure.ResourceManager.CosmosDB
         public virtual Pageable<RestorableCosmosDBAccountResource> GetRestorableCosmosDBAccounts(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RestorableCosmosDBAccountRestorableDatabaseAccountsRestClient.CreateListRequest(Id.SubscriptionId);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new RestorableCosmosDBAccountResource(Client, RestorableCosmosDBAccountData.DeserializeRestorableCosmosDBAccountData(e)), RestorableCosmosDBAccountRestorableDatabaseAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetRestorableCosmosDBAccounts", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new RestorableCosmosDBAccountResource(Client, RestorableCosmosDBAccountData.DeserializeRestorableCosmosDBAccountData(e)), RestorableCosmosDBAccountRestorableDatabaseAccountsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetRestorableCosmosDBAccounts", "value", null, cancellationToken);
         }
     }
 }

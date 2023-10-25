@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Support.Models
         public string PreferredTimeZone { get; set; }
         /// <summary> Country of the user. This is the ISO 3166-1 alpha-3 code. </summary>
         public string Country { get; set; }
-        /// <summary> Preferred language of support from Azure. Support languages vary based on the severity you choose for your support ticket. Learn more at [Azure Severity and responsiveness](https://azure.microsoft.com/support/plans/response/). Use the standard language-country code. Valid values are &apos;en-us&apos; for English, &apos;zh-hans&apos; for Chinese, &apos;es-es&apos; for Spanish, &apos;fr-fr&apos; for French, &apos;ja-jp&apos; for Japanese, &apos;ko-kr&apos; for Korean, &apos;ru-ru&apos; for Russian, &apos;pt-br&apos; for Portuguese, &apos;it-it&apos; for Italian, &apos;zh-tw&apos; for Chinese and &apos;de-de&apos; for German. </summary>
+        /// <summary> Preferred language of support from Azure. Support languages vary based on the severity you choose for your support ticket. Learn more at [Azure Severity and responsiveness](https://azure.microsoft.com/support/plans/response/). Use the standard language-country code. Valid values are 'en-us' for English, 'zh-hans' for Chinese, 'es-es' for Spanish, 'fr-fr' for French, 'ja-jp' for Japanese, 'ko-kr' for Korean, 'ru-ru' for Russian, 'pt-br' for Portuguese, 'it-it' for Italian, 'zh-tw' for Chinese and 'de-de' for German. </summary>
         public string PreferredSupportLanguage { get; set; }
     }
 }

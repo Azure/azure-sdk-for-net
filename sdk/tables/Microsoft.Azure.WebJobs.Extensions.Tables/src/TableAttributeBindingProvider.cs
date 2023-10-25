@@ -33,8 +33,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Tables
                 return null;
             }
 
-            // JArray is bound by the next binding
-            if (parameter.ParameterType == typeof(JArray))
+            // ParameterBindingData and JArray are bound by separate binding methods using BindToInput<> specific to those respective types
+            if (parameter.ParameterType == typeof(JArray) || parameter.ParameterType == typeof(ParameterBindingData))
             {
                 return null;
             }

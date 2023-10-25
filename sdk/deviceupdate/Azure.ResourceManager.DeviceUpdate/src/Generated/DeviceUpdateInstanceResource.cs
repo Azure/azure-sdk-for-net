@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         }
 
         /// <summary>
-        /// Updates instance&apos;s tags.
+        /// Updates instance's tags.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.DeviceUpdate
         }
 
         /// <summary>
-        /// Updates instance&apos;s tags.
+        /// Updates instance's tags.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

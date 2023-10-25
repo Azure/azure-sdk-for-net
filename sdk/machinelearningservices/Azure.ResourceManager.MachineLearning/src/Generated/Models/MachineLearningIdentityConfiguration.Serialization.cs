@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningIdentityConfiguration DeserializeMachineLearningIdentityConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("identityType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

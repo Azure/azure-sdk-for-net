@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Support.Models
 
         public static SupportResourceType ToSupportResourceType(this string value)
         {
-            if (string.Equals(value, "Microsoft.Support/supportTickets", StringComparison.InvariantCultureIgnoreCase)) return SupportResourceType.MicrosoftSupportSupportTickets;
-            if (string.Equals(value, "Microsoft.Support/communications", StringComparison.InvariantCultureIgnoreCase)) return SupportResourceType.MicrosoftSupportCommunications;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Microsoft.Support/supportTickets")) return SupportResourceType.MicrosoftSupportSupportTickets;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Microsoft.Support/communications")) return SupportResourceType.MicrosoftSupportCommunications;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SupportResourceType value.");
         }
     }

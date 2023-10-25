@@ -35,6 +35,7 @@ namespace Azure.Storage.Blobs
         }
 
         protected override async Task AppendInternal(
+            UploadTransferValidationOptions validationOptions,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -44,7 +45,7 @@ namespace Azure.Storage.Blobs
 
                 Response<BlobAppendInfo> response = await _appendBlobClient.AppendBlockInternal(
                     content: _buffer,
-                    _validationOptions,
+                    validationOptions,
                     _conditions,
                     _progressHandler,
                     async: async,
@@ -52,13 +53,8 @@ namespace Azure.Storage.Blobs
                     .ConfigureAwait(false);
 
                 _conditions.IfMatch = response.Value.ETag;
-
-                _buffer.Clear();
             }
         }
-
-        protected override async Task FlushInternal(bool async, CancellationToken cancellationToken)
-            => await AppendInternal(async, cancellationToken).ConfigureAwait(false);
 
         protected override void ValidateBufferSize(long bufferSize)
         {

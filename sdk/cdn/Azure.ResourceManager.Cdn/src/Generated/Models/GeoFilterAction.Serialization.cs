@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Cdn.Models
 
         public static GeoFilterAction ToGeoFilterAction(this string value)
         {
-            if (string.Equals(value, "Block", StringComparison.InvariantCultureIgnoreCase)) return GeoFilterAction.Block;
-            if (string.Equals(value, "Allow", StringComparison.InvariantCultureIgnoreCase)) return GeoFilterAction.Allow;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Block")) return GeoFilterAction.Block;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Allow")) return GeoFilterAction.Allow;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown GeoFilterAction value.");
         }
     }

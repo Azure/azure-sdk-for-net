@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static FlowAccessControlConfiguration DeserializeFlowAccessControlConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<FlowAccessControlConfigurationPolicy> triggers = default;
             Optional<FlowAccessControlConfigurationPolicy> contents = default;
             Optional<FlowAccessControlConfigurationPolicy> actions = default;
@@ -50,7 +54,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     triggers = FlowAccessControlConfigurationPolicy.DeserializeFlowAccessControlConfigurationPolicy(property.Value);
@@ -60,7 +63,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     contents = FlowAccessControlConfigurationPolicy.DeserializeFlowAccessControlConfigurationPolicy(property.Value);
@@ -70,7 +72,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     actions = FlowAccessControlConfigurationPolicy.DeserializeFlowAccessControlConfigurationPolicy(property.Value);
@@ -80,7 +81,6 @@ namespace Azure.ResourceManager.Logic.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     workflowManagement = FlowAccessControlConfigurationPolicy.DeserializeFlowAccessControlConfigurationPolicy(property.Value);

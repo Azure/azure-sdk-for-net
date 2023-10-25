@@ -13,18 +13,66 @@ using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Maps;
 using Azure.ResourceManager.Maps.Models;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Maps.Samples
 {
     public partial class Sample_MapsAccountResource
     {
+        // Update Account Managed Identities
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Update_UpdateAccountManagedIdentities()
+        {
+            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/preview/2021-12-01-preview/examples/UpdateAccountManagedIdentity.json
+            // this example is just showing the usage of "Accounts_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MapsAccountResource created on azure
+            // for more information of creating MapsAccountResource, please refer to the document of MapsAccountResource
+            string subscriptionId = "21a9967a-e8a9-4656-a70b-96ff1c4d05a0";
+            string resourceGroupName = "myResourceGroup";
+            string accountName = "myMapsAccount";
+            ResourceIdentifier mapsAccountResourceId = MapsAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            MapsAccountResource mapsAccount = client.GetMapsAccountResource(mapsAccountResourceId);
+
+            // invoke the operation
+            MapsAccountPatch patch = new MapsAccountPatch()
+            {
+                Kind = MapsAccountKind.Gen2,
+                Sku = new MapsSku(MapsSkuName.G2),
+                Identity = new ManagedServiceIdentity("SystemAssigned, UserAssigned")
+                {
+                    UserAssignedIdentities =
+{
+[new ResourceIdentifier("/subscriptions/21a9967a-e8a9-4656-a70b-96ff1c4d05a0/resourceGroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/identityName")] = new UserAssignedIdentity(),
+},
+                },
+                LinkedResources =
+{
+new MapsLinkedResource("myBatchStorageAccount","/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/accounts/{storageName}")
+},
+            };
+            MapsAccountResource result = await mapsAccount.UpdateAsync(patch);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            MapsAccountData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
         // Update Account Tags
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_UpdateAccountTags()
         {
-            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/stable/2021-02-01/examples/UpdateAccount.json
+            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/preview/2021-12-01-preview/examples/UpdateAccount.json
             // this example is just showing the usage of "Accounts_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -62,7 +110,7 @@ namespace Azure.ResourceManager.Maps.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_UpdateToGen1Account()
         {
-            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/stable/2021-02-01/examples/UpdateAccountGen1.json
+            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/preview/2021-12-01-preview/examples/UpdateAccountGen1.json
             // this example is just showing the usage of "Accounts_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -98,7 +146,7 @@ namespace Azure.ResourceManager.Maps.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_UpdateToGen2Account()
         {
-            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/stable/2021-02-01/examples/UpdateAccountGen2.json
+            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/preview/2021-12-01-preview/examples/UpdateAccountGen2.json
             // this example is just showing the usage of "Accounts_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -134,7 +182,7 @@ namespace Azure.ResourceManager.Maps.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteAccount()
         {
-            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/stable/2021-02-01/examples/DeleteAccount.json
+            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/preview/2021-12-01-preview/examples/DeleteAccount.json
             // this example is just showing the usage of "Accounts_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -161,7 +209,7 @@ namespace Azure.ResourceManager.Maps.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetAccount()
         {
-            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/stable/2021-02-01/examples/GetAccount.json
+            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/preview/2021-12-01-preview/examples/GetAccount.json
             // this example is just showing the usage of "Accounts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -192,7 +240,7 @@ namespace Azure.ResourceManager.Maps.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetMapsAccounts_ListAccountsBySubscription()
         {
-            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/stable/2021-02-01/examples/ListAccountsBySubscription.json
+            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/preview/2021-12-01-preview/examples/ListAccountsBySubscription.json
             // this example is just showing the usage of "Accounts_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -219,12 +267,46 @@ namespace Azure.ResourceManager.Maps.Samples
             Console.WriteLine($"Succeeded");
         }
 
+        // List Account Sas
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetSas_ListAccountSas()
+        {
+            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/preview/2021-12-01-preview/examples/AccountListSAS.json
+            // this example is just showing the usage of "Accounts_ListSas" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MapsAccountResource created on azure
+            // for more information of creating MapsAccountResource, please refer to the document of MapsAccountResource
+            string subscriptionId = "21a9967a-e8a9-4656-a70b-96ff1c4d05a0";
+            string resourceGroupName = "myResourceGroup";
+            string accountName = "myMapsAccount";
+            ResourceIdentifier mapsAccountResourceId = MapsAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            MapsAccountResource mapsAccount = client.GetMapsAccountResource(mapsAccountResourceId);
+
+            // invoke the operation
+            MapsAccountSasContent content = new MapsAccountSasContent(MapsSigningKey.PrimaryKey, "e917f87b-324d-4728-98ed-e31d311a7d65", 500, "2017-05-24T10:42:03.1567373Z", "2017-05-24T11:42:03.1567373Z")
+            {
+                Regions =
+{
+"eastus"
+},
+            };
+            MapsAccountSasToken result = await mapsAccount.GetSasAsync(content);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
         // List Keys
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetKeys_ListKeys()
         {
-            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/stable/2021-02-01/examples/ListKeys.json
+            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/preview/2021-12-01-preview/examples/ListKeys.json
             // this example is just showing the usage of "Accounts_ListKeys" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -251,7 +333,7 @@ namespace Azure.ResourceManager.Maps.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task RegenerateKeys_RegenerateKey()
         {
-            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/stable/2021-02-01/examples/RegenerateKey.json
+            // Generated from example definition: specification/maps/resource-manager/Microsoft.Maps/preview/2021-12-01-preview/examples/RegenerateKey.json
             // this example is just showing the usage of "Accounts_RegenerateKeys" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

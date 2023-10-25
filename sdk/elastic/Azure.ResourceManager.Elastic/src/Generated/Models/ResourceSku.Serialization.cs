@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.Elastic.Models
 
         internal static ResourceSku DeserializeResourceSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             foreach (var property in element.EnumerateObject())
             {

@@ -236,7 +236,7 @@ namespace Azure.Storage.Files.DataLake
         /// The token credential used to sign requests.
         /// </param>
         public DataLakeFileClient(Uri fileUri, TokenCredential credential)
-            : this(fileUri, credential.AsPolicy(new DataLakeClientOptions()), null, storageSharedKeyCredential:null)
+            : this(fileUri, credential, new DataLakeClientOptions())
         {
             Errors.VerifyHttpsTokenAuth(fileUri);
         }
@@ -258,7 +258,13 @@ namespace Azure.Storage.Files.DataLake
         /// applied to every request.
         /// </param>
         public DataLakeFileClient(Uri fileUri, TokenCredential credential, DataLakeClientOptions options)
-            : this(fileUri, credential.AsPolicy(options), options, storageSharedKeyCredential:null)
+            : this(
+                fileUri,
+                credential.AsPolicy(
+                    string.IsNullOrEmpty(options?.Audience?.ToString()) ? DataLakeAudience.DefaultAudience.CreateDefaultScope() : options.Audience.Value.CreateDefaultScope(),
+                    options),
+                options,
+                credential)
         {
             Errors.VerifyHttpsTokenAuth(fileUri);
         }
@@ -288,7 +294,13 @@ namespace Azure.Storage.Files.DataLake
             HttpPipelinePolicy authentication,
             DataLakeClientOptions options,
             StorageSharedKeyCredential storageSharedKeyCredential)
-            : base(fileUri, authentication, options, storageSharedKeyCredential)
+            : base(
+                  fileUri,
+                  authentication,
+                  options,
+                  storageSharedKeyCredential: storageSharedKeyCredential,
+                  sasCredential: null,
+                  tokenCredential: null)
         {
         }
 
@@ -317,7 +329,46 @@ namespace Azure.Storage.Files.DataLake
             HttpPipelinePolicy authentication,
             DataLakeClientOptions options,
             AzureSasCredential sasCredential)
-            : base(fileUri, authentication, options, sasCredential)
+            : base(fileUri,
+                  authentication,
+                  options,
+                  storageSharedKeyCredential: null,
+                  sasCredential: sasCredential,
+                  tokenCredential: null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataLakeFileClient"/>
+        /// class.
+        /// </summary>
+        /// <param name="fileUri">
+        /// A <see cref="Uri"/> referencing the file that includes the
+        /// name of the account, the name of the file system, and the path of the
+        /// file.
+        /// </param>
+        /// <param name="authentication">
+        /// An optional authentication policy used to sign requests.
+        /// </param>
+        /// <param name="options">
+        /// Optional client options that define the transport pipeline
+        /// policies for authentication, retries, etc., that are applied to
+        /// every request.
+        /// </param>
+        /// <param name="tokenCredential">
+        /// Token credential.
+        /// </param>
+        internal DataLakeFileClient(
+            Uri fileUri,
+            HttpPipelinePolicy authentication,
+            DataLakeClientOptions options,
+            TokenCredential tokenCredential)
+            : base(fileUri,
+                  authentication,
+                  options,
+                  storageSharedKeyCredential: null,
+                  sasCredential: null,
+                  tokenCredential: tokenCredential)
         {
         }
 
@@ -1135,11 +1186,11 @@ namespace Azure.Storage.Files.DataLake
                 scope.Start();
 
                 Response<DataLakePathClient> response = base.Rename(
-                    destinationFileSystem,
-                    destinationPath,
-                    sourceConditions,
-                    destinationConditions,
-                    cancellationToken);
+                    destinationPath: destinationPath,
+                    destinationFileSystem: destinationFileSystem,
+                    sourceConditions: sourceConditions,
+                    destinationConditions: destinationConditions,
+                    cancellationToken: cancellationToken);
 
                 return Response.FromValue(
                     new DataLakeFileClient(response.Value.DfsUri, response.Value.ClientConfiguration),
@@ -1202,11 +1253,11 @@ namespace Azure.Storage.Files.DataLake
                 scope.Start();
 
                 Response<DataLakePathClient> response = await base.RenameAsync(
-                    destinationFileSystem,
-                    destinationPath,
-                    sourceConditions,
-                    destinationConditions,
-                    cancellationToken)
+                    destinationPath: destinationPath,
+                    destinationFileSystem: destinationFileSystem,
+                    sourceConditions: sourceConditions,
+                    destinationConditions: destinationConditions,
+                    cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
 
                 return Response.FromValue(
@@ -1380,6 +1431,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [CallerShouldAudit(Reason = "https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public override Response<PathInfo> SetAccessControlList(
             IList<PathAccessControlItem> accessControlList,
             string owner = default,
@@ -1444,6 +1496,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [CallerShouldAudit(Reason = "https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public override async Task<Response<PathInfo>> SetAccessControlListAsync(
             IList<PathAccessControlItem> accessControlList,
             string owner = default,
@@ -1511,6 +1564,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [CallerShouldAudit(Reason = "https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public override Response<PathInfo> SetPermissions(
             PathPermissions permissions,
             string owner = default,
@@ -1575,6 +1629,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [CallerShouldAudit(Reason = "https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public override async Task<Response<PathInfo>> SetPermissionsAsync(
             PathPermissions permissions,
             string owner = default,
@@ -2276,7 +2331,11 @@ namespace Azure.Storage.Files.DataLake
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(DataLakeFileClient)))
             {
                 // compute hash BEFORE attaching progress handler
-                ContentHasher.GetHashResult hashResult = ContentHasher.GetHashOrDefault(content, validationOptions);
+                ContentHasher.GetHashResult hashResult = await ContentHasher.GetHashOrDefaultInternal(
+                    content,
+                    validationOptions,
+                    async,
+                    cancellationToken).ConfigureAwait(false);
 
                 content = content?.WithNoDispose().WithProgress(progressHandler);
                 ClientConfiguration.Pipeline.LogMethodEnter(
@@ -2795,7 +2854,7 @@ namespace Azure.Storage.Files.DataLake
                 Response<Blobs.Models.BlobDownloadStreamingResult> response = _blockBlobClient.DownloadStreaming();
 
                 return Response.FromValue(
-                    response.Value.ToFileDownloadInfo(),
+                    response.ToFileDownloadInfo(),
                     response.GetRawResponse());
             }
             catch (Exception ex)
@@ -2838,7 +2897,7 @@ namespace Azure.Storage.Files.DataLake
                     = await _blockBlobClient.DownloadStreamingAsync(cancellationToken: CancellationToken.None).ConfigureAwait(false);
 
                 return Response.FromValue(
-                    response.Value.ToFileDownloadInfo(),
+                    response.ToFileDownloadInfo(),
                     response.GetRawResponse());
             }
             catch (Exception ex)
@@ -2885,7 +2944,7 @@ namespace Azure.Storage.Files.DataLake
                 Response<Blobs.Models.BlobDownloadStreamingResult> response = _blockBlobClient.DownloadStreaming(cancellationToken: cancellationToken);
 
                 return Response.FromValue(
-                    response.Value.ToFileDownloadInfo(),
+                    response.ToFileDownloadInfo(),
                     response.GetRawResponse());
             }
             catch (Exception ex)
@@ -2933,7 +2992,7 @@ namespace Azure.Storage.Files.DataLake
                     = await _blockBlobClient.DownloadStreamingAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
 
                 return Response.FromValue(
-                    response.Value.ToFileDownloadInfo(),
+                    response.ToFileDownloadInfo(),
                     response.GetRawResponse());
             }
             catch (Exception ex)
@@ -3007,7 +3066,7 @@ namespace Azure.Storage.Files.DataLake
                     cancellationToken: cancellationToken);
 
                 return Response.FromValue(
-                    response.Value.ToFileDownloadInfo(),
+                    response.ToFileDownloadInfo(),
                     response.GetRawResponse());
             }
             catch (Exception ex)
@@ -3082,7 +3141,7 @@ namespace Azure.Storage.Files.DataLake
                     .ConfigureAwait(false);
 
                 return Response.FromValue(
-                    response.Value.ToFileDownloadInfo(),
+                    response.ToFileDownloadInfo(),
                     response.GetRawResponse());
             }
             catch (Exception ex)
@@ -3136,7 +3195,7 @@ namespace Azure.Storage.Files.DataLake
                     cancellationToken: cancellationToken);
 
                 return Response.FromValue(
-                    response.Value.ToFileDownloadInfo(),
+                    response.ToFileDownloadInfo(),
                     response.GetRawResponse());
             }
             catch (Exception ex)
@@ -3191,7 +3250,7 @@ namespace Azure.Storage.Files.DataLake
                     .ConfigureAwait(false);
 
                 return Response.FromValue(
-                    response.Value.ToFileDownloadInfo(),
+                    response.ToFileDownloadInfo(),
                     response.GetRawResponse());
             }
             catch (Exception ex)
@@ -4402,7 +4461,7 @@ namespace Azure.Storage.Files.DataLake
 
             var uploader = GetPartitionedUploader(
                 options.TransferOptions,
-                validationOptions: options?.TransferValidation,
+                validationOptions: options?.TransferValidation ?? ClientConfiguration.TransferValidation.Upload,
                 operationName: $"{nameof(DataLakeFileClient)}.{nameof(Upload)}");
 
             return await uploader.UploadInternal(
@@ -4655,7 +4714,7 @@ namespace Azure.Storage.Files.DataLake
                     cancellationToken);
 
                 return Response.FromValue(
-                    response.Value.ToFileDownloadInfo(),
+                    response.ToFileDownloadInfo(),
                     response.GetRawResponse());
             }
             catch (Exception ex)
@@ -4706,7 +4765,7 @@ namespace Azure.Storage.Files.DataLake
                     .ConfigureAwait(false);
 
                 return Response.FromValue(
-                    response.Value.ToFileDownloadInfo(),
+                    response.ToFileDownloadInfo(),
                     response.GetRawResponse());
             }
             catch (Exception ex)
@@ -5099,6 +5158,7 @@ namespace Azure.Storage.Files.DataLake
                         leaseDuration: default,
                         timeToExpire: default,
                         expiresOn: default,
+                        encryptionContext: default,
                         conditions: options?.OpenConditions,
                         async: async,
                         cancellationToken: cancellationToken)
@@ -5145,6 +5205,7 @@ namespace Azure.Storage.Files.DataLake
                             leaseDuration: default,
                             timeToExpire: default,
                             expiresOn: default,
+                            encryptionContext: default,
                             conditions: options?.OpenConditions,
                             async: async,
                             cancellationToken: cancellationToken)
@@ -5167,7 +5228,7 @@ namespace Azure.Storage.Files.DataLake
                     position: position,
                     conditions: conditions,
                     progressHandler: options?.ProgressHandler,
-                    validationOptions: options?.TransferValidation,
+                    validationOptions: options?.TransferValidation ?? ClientConfiguration.TransferValidation.Upload,
                     closeEvent: options?.Close);
             }
             catch (Exception ex)
@@ -5213,10 +5274,11 @@ namespace Azure.Storage.Files.DataLake
                         leaseDuration: default,
                         timeToExpire: default,
                         expiresOn: default,
+                        encryptionContext: args.EncryptionContext,
                         conditions: args.Conditions,
                         async: async,
                         cancellationToken: cancellationToken).ConfigureAwait(false),
-                SingleUpload = async (stream, args, progressHandler, validationOptions, operationName, async, cancellationToken) =>
+                SingleUploadStreaming = async (stream, args, progressHandler, validationOptions, operationName, async, cancellationToken) =>
                 {
                     // After the File is Create, Lease ID is the only valid request parameter.
                     if (args?.Conditions != null)
@@ -5252,9 +5314,58 @@ namespace Azure.Storage.Files.DataLake
                         cancellationToken)
                         .ConfigureAwait(false);
                 },
-                UploadPartition = async (stream, offset, args, progressHandler, validationOptions, async, cancellationToken)
+                SingleUploadBinaryData = async (content, args, progressHandler, validationOptions, operationName, async, cancellationToken) =>
+                {
+                    // After the File is Create, Lease ID is the only valid request parameter.
+                    if (args?.Conditions != null)
+                        args.Conditions = new DataLakeRequestConditions { LeaseId = args.Conditions.LeaseId };
+
+                    long newPosition = content.ToMemory().Length;
+
+                    // Append data
+                    await client.AppendInternal(
+                        content.ToStream(),
+                        offset: 0,
+                        validationOptions,
+                        args?.Conditions?.LeaseId,
+                        leaseAction: null,
+                        leaseDuration: null,
+                        proposedLeaseId: null,
+                        progressHandler,
+                        flush: null,
+                        async,
+                        cancellationToken).ConfigureAwait(false);
+
+                    // Flush data
+                    return await client.FlushInternal(
+                        position: newPosition,
+                        retainUncommittedData: default,
+                        close: args.Close,
+                        args.HttpHeaders,
+                        args.Conditions,
+                        leaseAction: null,
+                        leaseDuration: null,
+                        proposedLeaseId: null,
+                        async,
+                        cancellationToken)
+                        .ConfigureAwait(false);
+                },
+                UploadPartitionStreaming = async (stream, offset, args, progressHandler, validationOptions, async, cancellationToken)
                     => await client.AppendInternal(
                         stream,
+                        offset,
+                        validationOptions,
+                        args?.Conditions?.LeaseId,
+                        leaseAction: null,
+                        leaseDuration: null,
+                        proposedLeaseId: null,
+                        progressHandler,
+                        flush: null,
+                        async,
+                        cancellationToken).ConfigureAwait(false),
+                UploadPartitionBinaryData = async (content, offset, args, progressHandler, validationOptions, async, cancellationToken)
+                    => await client.AppendInternal(
+                        content.ToStream(),
                         offset,
                         validationOptions,
                         args?.Conditions?.LeaseId,

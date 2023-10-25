@@ -21,9 +21,9 @@ namespace Azure.Search.Documents.Indexes.Models
 
         public static IndexerStatus ToIndexerStatus(this string value)
         {
-            if (string.Equals(value, "unknown", StringComparison.InvariantCultureIgnoreCase)) return IndexerStatus.Unknown;
-            if (string.Equals(value, "error", StringComparison.InvariantCultureIgnoreCase)) return IndexerStatus.Error;
-            if (string.Equals(value, "running", StringComparison.InvariantCultureIgnoreCase)) return IndexerStatus.Running;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "unknown")) return IndexerStatus.Unknown;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "error")) return IndexerStatus.Error;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "running")) return IndexerStatus.Running;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown IndexerStatus value.");
         }
     }

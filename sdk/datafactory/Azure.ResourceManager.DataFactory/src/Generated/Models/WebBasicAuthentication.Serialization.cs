@@ -5,9 +5,9 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -17,19 +17,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("username"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Username);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(Username.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, Username);
             writer.WritePropertyName("password"u8);
-            writer.WriteObjectValue(Password);
+            JsonSerializer.Serialize(writer, Password);
             writer.WritePropertyName("url"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Uri);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(Uri.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, Uri);
             writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
             writer.WriteEndObject();
@@ -37,25 +29,29 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static WebBasicAuthentication DeserializeWebBasicAuthentication(JsonElement element)
         {
-            BinaryData username = default;
-            FactorySecretBaseDefinition password = default;
-            BinaryData url = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            DataFactoryElement<string> username = default;
+            DataFactorySecretBaseDefinition password = default;
+            DataFactoryElement<string> url = default;
             WebAuthenticationType authenticationType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("username"u8))
                 {
-                    username = BinaryData.FromString(property.Value.GetRawText());
+                    username = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("password"u8))
                 {
-                    password = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property.Value);
+                    password = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("url"u8))
                 {
-                    url = BinaryData.FromString(property.Value.GetRawText());
+                    url = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("authenticationType"u8))

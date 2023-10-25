@@ -33,12 +33,12 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="title">Backend Title.</param>
         /// <param name="description">Backend Description.</param>
         /// <param name="resourceId">Management Uri of the Resource in External
-        /// System. This url can be the Arm Resource Id of Logic Apps, Function
+        /// System. This URL can be the Arm Resource Id of Logic Apps, Function
         /// Apps or API Apps.</param>
         /// <param name="properties">Backend Properties contract</param>
         /// <param name="credentials">Backend Credentials Contract
         /// Properties</param>
-        /// <param name="proxy">Backend Proxy Contract Properties</param>
+        /// <param name="proxy">Backend gateway Contract Properties</param>
         /// <param name="tls">Backend TLS Properties</param>
         public BackendBaseParameters(string title = default(string), string description = default(string), string resourceId = default(string), BackendProperties properties = default(BackendProperties), BackendCredentialsContract credentials = default(BackendCredentialsContract), BackendProxyContract proxy = default(BackendProxyContract), BackendTlsProperties tls = default(BackendTlsProperties))
         {
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
 
         /// <summary>
         /// Gets or sets management Uri of the Resource in External System.
-        /// This url can be the Arm Resource Id of Logic Apps, Function Apps or
+        /// This URL can be the Arm Resource Id of Logic Apps, Function Apps or
         /// API Apps.
         /// </summary>
         [JsonProperty(PropertyName = "resourceId")]
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public BackendCredentialsContract Credentials { get; set; }
 
         /// <summary>
-        /// Gets or sets backend Proxy Contract Properties
+        /// Gets or sets backend gateway Contract Properties
         /// </summary>
         [JsonProperty(PropertyName = "proxy")]
         public BackendProxyContract Proxy { get; set; }

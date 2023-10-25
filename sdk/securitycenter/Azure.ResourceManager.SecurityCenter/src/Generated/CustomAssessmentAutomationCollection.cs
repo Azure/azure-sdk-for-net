@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -229,7 +230,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _customAssessmentAutomationRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _customAssessmentAutomationRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CustomAssessmentAutomationResource(Client, CustomAssessmentAutomationData.DeserializeCustomAssessmentAutomationData(e)), _customAssessmentAutomationClientDiagnostics, Pipeline, "CustomAssessmentAutomationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CustomAssessmentAutomationResource(Client, CustomAssessmentAutomationData.DeserializeCustomAssessmentAutomationData(e)), _customAssessmentAutomationClientDiagnostics, Pipeline, "CustomAssessmentAutomationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +252,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _customAssessmentAutomationRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _customAssessmentAutomationRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CustomAssessmentAutomationResource(Client, CustomAssessmentAutomationData.DeserializeCustomAssessmentAutomationData(e)), _customAssessmentAutomationClientDiagnostics, Pipeline, "CustomAssessmentAutomationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CustomAssessmentAutomationResource(Client, CustomAssessmentAutomationData.DeserializeCustomAssessmentAutomationData(e)), _customAssessmentAutomationClientDiagnostics, Pipeline, "CustomAssessmentAutomationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -316,6 +317,80 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 var response = _customAssessmentAutomationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, customAssessmentAutomationName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Security/customAssessmentAutomations/{customAssessmentAutomationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CustomAssessmentAutomations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="customAssessmentAutomationName"> Name of the Custom Assessment Automation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="customAssessmentAutomationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="customAssessmentAutomationName"/> is null. </exception>
+        public virtual async Task<NullableResponse<CustomAssessmentAutomationResource>> GetIfExistsAsync(string customAssessmentAutomationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(customAssessmentAutomationName, nameof(customAssessmentAutomationName));
+
+            using var scope = _customAssessmentAutomationClientDiagnostics.CreateScope("CustomAssessmentAutomationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _customAssessmentAutomationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, customAssessmentAutomationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<CustomAssessmentAutomationResource>(response.GetRawResponse());
+                return Response.FromValue(new CustomAssessmentAutomationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Security/customAssessmentAutomations/{customAssessmentAutomationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CustomAssessmentAutomations_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="customAssessmentAutomationName"> Name of the Custom Assessment Automation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="customAssessmentAutomationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="customAssessmentAutomationName"/> is null. </exception>
+        public virtual NullableResponse<CustomAssessmentAutomationResource> GetIfExists(string customAssessmentAutomationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(customAssessmentAutomationName, nameof(customAssessmentAutomationName));
+
+            using var scope = _customAssessmentAutomationClientDiagnostics.CreateScope("CustomAssessmentAutomationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _customAssessmentAutomationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, customAssessmentAutomationName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<CustomAssessmentAutomationResource>(response.GetRawResponse());
+                return Response.FromValue(new CustomAssessmentAutomationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

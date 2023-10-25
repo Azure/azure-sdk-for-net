@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
         /// <param name="collection">Configruation profile version collection to perform actions against</param>
         /// <param name="versionName">Desired configuration profile version name</param>
         /// <returns>ConfigurationProfileVersionResource</returns>
-        protected async Task<ConfigurationProfileVersionResource> CreateConfigurationProfileVersion(ConfigurationProfileVersionCollection collection, string versionName)
+        protected async Task<AutomanageConfigurationProfileVersionResource> CreateConfigurationProfileVersion(AutomanageConfigurationProfileVersionCollection collection, string versionName)
         {
             string configuration = "{" +
                 "\"Antimalware/Enable\":true," +
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
                 "\"BootDiagnostics/Enable\":true" +
             "}";
 
-            ConfigurationProfileData data = new ConfigurationProfileData(DefaultLocation)
+            AutomanageConfigurationProfileData data = new AutomanageConfigurationProfileData(DefaultLocation)
             {
                 Configuration = new BinaryData(configuration)
             };
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Automanage.Tests.Scenario
         /// </summary>
         /// <param name="version">ConfigurationProfileVersionResource to assert</param>
         /// <param name="versionName">ConfigurationProfileVersionResource name to verify</param>
-        protected void AssertValues(ConfigurationProfileVersionResource version, string versionName)
+        protected void AssertValues(AutomanageConfigurationProfileVersionResource version, string versionName)
         {
             Assert.NotNull(version);
             Assert.True(version.HasData);

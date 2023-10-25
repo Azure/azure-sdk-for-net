@@ -59,6 +59,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Triggers
                 new ConverterArgumentBindingProvider<string>(new StorageQueueMessageToStringConverter(), loggerFactory),
                 new ConverterArgumentBindingProvider<byte[]>(new StorageQueueMessageToByteArrayConverter(), loggerFactory),
                 new ConverterArgumentBindingProvider<BinaryData>(new StorageQueueMessageToBinaryDataConverter(), loggerFactory),
+                new ConverterArgumentBindingProvider<ParameterBindingData>(new StorageQueueMessageToParameterBindingDataConverter(), loggerFactory),
                 new UserTypeArgumentBindingProvider(loggerFactory)); // Must come last, because it will attempt to bind all types.
         }
 

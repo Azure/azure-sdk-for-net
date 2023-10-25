@@ -30,6 +30,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static PemCertificateList DeserializePemCertificateList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<string> certificates = default;
             string type = default;
             foreach (var property in element.EnumerateObject())

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// </param>
         /// <param name="xPathQueries"> A list of Windows Event Log queries in XPATH format. </param>
         /// <param name="name">
-        /// A friendly name for the data source. 
+        /// A friendly name for the data source.
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
         /// </param>
         internal WindowsEventLogDataSource(IList<WindowsEventLogDataSourceStream> streams, IList<string> xPathQueries, string name)
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> A list of Windows Event Log queries in XPATH format. </summary>
         public IList<string> XPathQueries { get; }
         /// <summary>
-        /// A friendly name for the data source. 
+        /// A friendly name for the data source.
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
         /// </summary>
         public string Name { get; set; }

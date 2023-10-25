@@ -92,6 +92,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         internal static VirtualApplicationData DeserializeVirtualApplicationData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -131,7 +135,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -190,7 +193,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             applicationType = new RemoteApplicationType(property0.Value.GetString());
@@ -210,7 +212,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             showInPortal = property0.Value.GetBoolean();
@@ -225,7 +226,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             iconIndex = property0.Value.GetInt32();
@@ -240,7 +240,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             iconContent = BinaryData.FromString(property0.Value.GetRawText());

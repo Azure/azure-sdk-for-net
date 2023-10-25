@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Initializes a new instance of CosmosDBAccountCapability. </summary>
-        /// <param name="name"> Name of the Cosmos DB capability. For example, &quot;name&quot;: &quot;EnableCassandra&quot;. Current values also include &quot;EnableTable&quot; and &quot;EnableGremlin&quot;. </param>
+        /// <param name="name"> Name of the Cosmos DB capability. For example, "name": "EnableCassandra". Current values also include "EnableTable" and "EnableGremlin". </param>
         internal CosmosDBAccountCapability(string name)
         {
             Name = name;
         }
 
-        /// <summary> Name of the Cosmos DB capability. For example, &quot;name&quot;: &quot;EnableCassandra&quot;. Current values also include &quot;EnableTable&quot; and &quot;EnableGremlin&quot;. </summary>
+        /// <summary> Name of the Cosmos DB capability. For example, "name": "EnableCassandra". Current values also include "EnableTable" and "EnableGremlin". </summary>
         public string Name { get; set; }
     }
 }

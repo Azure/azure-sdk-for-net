@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.StoragePool.Models
     {
         internal static DiskPoolIscsiTargetList DeserializeDiskPoolIscsiTargetList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<DiskPoolIscsiTargetData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

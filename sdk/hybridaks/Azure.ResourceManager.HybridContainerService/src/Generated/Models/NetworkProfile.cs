@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         /// <summary> Initializes a new instance of NetworkProfile. </summary>
         /// <param name="loadBalancerProfile"> LoadBalancerProfile - Profile of the cluster load balancer. </param>
-        /// <param name="loadBalancerSku"> LoadBalancerSku - The load balancer sku for the provisioned cluster. Possible values: &apos;unstacked-haproxy&apos;, &apos;stacked-kube-vip&apos;, &apos;stacked-metallb&apos;, &apos;unmanaged&apos;. The default is &apos;unmanaged&apos;. </param>
+        /// <param name="loadBalancerSku"> LoadBalancerSku - The load balancer sku for the provisioned cluster. Possible values: 'unstacked-haproxy', 'stacked-kube-vip', 'stacked-metallb', 'unmanaged'. The default is 'unmanaged'. </param>
         /// <param name="dnsServiceIP"> DNSServiceIP - An IP address assigned to the Kubernetes DNS service. It must be within the Kubernetes service address range specified in serviceCidr. </param>
-        /// <param name="networkPolicy"> NetworkPolicy - Network policy used for building Kubernetes network. Possible values include: &apos;calico&apos;, &apos;flannel&apos;. Default is &apos;calico&apos;. </param>
+        /// <param name="networkPolicy"> NetworkPolicy - Network policy used for building Kubernetes network. Possible values include: 'calico', 'flannel'. Default is 'calico'. </param>
         /// <param name="podCidr"> PodCidr - A CIDR notation IP range from which to assign pod IPs when kubenet is used. </param>
         /// <param name="podCidrs"> The CIDR notation IP ranges from which to assign pod IPs. One IPv4 CIDR is expected for single-stack networking. Two CIDRs, one for each IP family (IPv4/IPv6), is expected for dual-stack networking. </param>
         /// <param name="serviceCidr"> ServiceCidr - A CIDR notation IP range from which to assign service cluster IPs. It must not overlap with any Subnet IP ranges. </param>
@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.HybridContainerService.Models
 
         /// <summary> LoadBalancerProfile - Profile of the cluster load balancer. </summary>
         public LoadBalancerProfile LoadBalancerProfile { get; set; }
-        /// <summary> LoadBalancerSku - The load balancer sku for the provisioned cluster. Possible values: &apos;unstacked-haproxy&apos;, &apos;stacked-kube-vip&apos;, &apos;stacked-metallb&apos;, &apos;unmanaged&apos;. The default is &apos;unmanaged&apos;. </summary>
+        /// <summary> LoadBalancerSku - The load balancer sku for the provisioned cluster. Possible values: 'unstacked-haproxy', 'stacked-kube-vip', 'stacked-metallb', 'unmanaged'. The default is 'unmanaged'. </summary>
         public LoadBalancerSku? LoadBalancerSku { get; set; }
         /// <summary> DNSServiceIP - An IP address assigned to the Kubernetes DNS service. It must be within the Kubernetes service address range specified in serviceCidr. </summary>
         public string DnsServiceIP { get; set; }
-        /// <summary> NetworkPolicy - Network policy used for building Kubernetes network. Possible values include: &apos;calico&apos;, &apos;flannel&apos;. Default is &apos;calico&apos;. </summary>
+        /// <summary> NetworkPolicy - Network policy used for building Kubernetes network. Possible values include: 'calico', 'flannel'. Default is 'calico'. </summary>
         public NetworkPolicy? NetworkPolicy { get; set; }
         /// <summary> PodCidr - A CIDR notation IP range from which to assign pod IPs when kubenet is used. </summary>
         public string PodCidr { get; set; }

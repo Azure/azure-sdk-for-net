@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         internal static DevTestLabSupport DeserializeDevTestLabSupport(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DevTestLabEnableStatus> enabled = default;
             Optional<string> markdown = default;
             foreach (var property in element.EnumerateObject())
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enabled = new DevTestLabEnableStatus(property.Value.GetString());

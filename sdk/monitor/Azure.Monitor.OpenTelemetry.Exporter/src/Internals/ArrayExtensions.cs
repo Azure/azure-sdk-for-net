@@ -27,7 +27,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             StringBuilder sb = new(input.Length);
             foreach (var item in input)
             {
-                // TODO: Consider changing it to JSon array.
                 if (item != null)
                 {
                     sb.Append(item);

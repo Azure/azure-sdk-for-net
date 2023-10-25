@@ -30,6 +30,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("contextPath"u8);
                 writer.WriteStringValue(ContextPath);
             }
+            if (Optional.IsDefined(GitHubPersonalAccessToken))
+            {
+                writer.WritePropertyName("githubPersonalAccessToken"u8);
+                writer.WriteStringValue(GitHubPersonalAccessToken);
+            }
             if (Optional.IsDefined(Image))
             {
                 writer.WritePropertyName("image"u8);
@@ -60,9 +65,14 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         internal static ContainerAppGitHubActionConfiguration DeserializeContainerAppGitHubActionConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ContainerAppRegistryInfo> registryInfo = default;
             Optional<ContainerAppCredentials> azureCredentials = default;
             Optional<string> contextPath = default;
+            Optional<string> gitHubPersonalAccessToken = default;
             Optional<string> image = default;
             Optional<string> publishType = default;
             Optional<string> os = default;
@@ -74,7 +84,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     registryInfo = ContainerAppRegistryInfo.DeserializeContainerAppRegistryInfo(property.Value);
@@ -84,7 +93,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     azureCredentials = ContainerAppCredentials.DeserializeContainerAppCredentials(property.Value);
@@ -93,6 +101,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 if (property.NameEquals("contextPath"u8))
                 {
                     contextPath = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("githubPersonalAccessToken"u8))
+                {
+                    gitHubPersonalAccessToken = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("image"u8))
@@ -121,7 +134,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppGitHubActionConfiguration(registryInfo.Value, azureCredentials.Value, contextPath.Value, image.Value, publishType.Value, os.Value, runtimeStack.Value, runtimeVersion.Value);
+            return new ContainerAppGitHubActionConfiguration(registryInfo.Value, azureCredentials.Value, contextPath.Value, gitHubPersonalAccessToken.Value, image.Value, publishType.Value, os.Value, runtimeStack.Value, runtimeVersion.Value);
         }
     }
 }

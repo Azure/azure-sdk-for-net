@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearningCompute
 {
-    /// <summary> A class representing the OperationalizationCluster data model. </summary>
+    /// <summary>
+    /// A class representing the OperationalizationCluster data model.
+    /// Instance of an Azure ML Operationalization Cluster resource.
+    /// </summary>
     public partial class OperationalizationClusterData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of OperationalizationClusterData. </summary>

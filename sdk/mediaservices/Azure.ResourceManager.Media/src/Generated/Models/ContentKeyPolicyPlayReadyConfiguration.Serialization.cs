@@ -30,7 +30,10 @@ namespace Azure.ResourceManager.Media.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ResponseCustomData);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ResponseCustomData.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(ResponseCustomData))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WritePropertyName("@odata.type"u8);
@@ -40,6 +43,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static ContentKeyPolicyPlayReadyConfiguration DeserializeContentKeyPolicyPlayReadyConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IList<ContentKeyPolicyPlayReadyLicense> licenses = default;
             Optional<BinaryData> responseCustomData = default;
             string odataType = default;
@@ -59,7 +66,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     responseCustomData = BinaryData.FromString(property.Value.GetRawText());

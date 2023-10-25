@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary> List all the alerts that are associated with the resource group. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary> List all the alerts that are associated with the resource group. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary> List all the alerts that are associated with the resource group that are stored in a specific location. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary> List all the alerts that are associated with the resource group that are stored in a specific location. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary> Get an alert that is associated a resource group or a resource in a resource group. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="alertName"> Name of the alert object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary> Get an alert that is associated a resource group or a resource in a resource group. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="alertName"> Name of the alert object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.SecurityCenter
             return message;
         }
 
-        /// <summary> Update the alert&apos;s state. </summary>
+        /// <summary> Update the alert's state. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="alertName"> Name of the alert object. </param>
@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        /// <summary> Update the alert&apos;s state. </summary>
+        /// <summary> Update the alert's state. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="alertName"> Name of the alert object. </param>
@@ -579,7 +579,7 @@ namespace Azure.ResourceManager.SecurityCenter
             return message;
         }
 
-        /// <summary> Update the alert&apos;s state. </summary>
+        /// <summary> Update the alert's state. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="alertName"> Name of the alert object. </param>
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        /// <summary> Update the alert&apos;s state. </summary>
+        /// <summary> Update the alert's state. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="alertName"> Name of the alert object. </param>
@@ -646,7 +646,7 @@ namespace Azure.ResourceManager.SecurityCenter
             return message;
         }
 
-        /// <summary> Update the alert&apos;s state. </summary>
+        /// <summary> Update the alert's state. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="alertName"> Name of the alert object. </param>
@@ -669,7 +669,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        /// <summary> Update the alert&apos;s state. </summary>
+        /// <summary> Update the alert's state. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="alertName"> Name of the alert object. </param>
@@ -713,7 +713,7 @@ namespace Azure.ResourceManager.SecurityCenter
             return message;
         }
 
-        /// <summary> Update the alert&apos;s state. </summary>
+        /// <summary> Update the alert's state. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="alertName"> Name of the alert object. </param>
@@ -736,7 +736,7 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        /// <summary> Update the alert&apos;s state. </summary>
+        /// <summary> Update the alert's state. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="alertName"> Name of the alert object. </param>
@@ -782,9 +782,9 @@ namespace Azure.ResourceManager.SecurityCenter
             return message;
         }
 
-        /// <summary> Update the alert&apos;s state. </summary>
+        /// <summary> Update the alert's state. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="alertName"> Name of the alert object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -807,9 +807,9 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        /// <summary> Update the alert&apos;s state. </summary>
+        /// <summary> Update the alert's state. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="alertName"> Name of the alert object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -855,9 +855,9 @@ namespace Azure.ResourceManager.SecurityCenter
             return message;
         }
 
-        /// <summary> Update the alert&apos;s state. </summary>
+        /// <summary> Update the alert's state. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="alertName"> Name of the alert object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -880,9 +880,9 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        /// <summary> Update the alert&apos;s state. </summary>
+        /// <summary> Update the alert's state. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="alertName"> Name of the alert object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -928,9 +928,9 @@ namespace Azure.ResourceManager.SecurityCenter
             return message;
         }
 
-        /// <summary> Update the alert&apos;s state. </summary>
+        /// <summary> Update the alert's state. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="alertName"> Name of the alert object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -953,9 +953,9 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        /// <summary> Update the alert&apos;s state. </summary>
+        /// <summary> Update the alert's state. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="alertName"> Name of the alert object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1001,9 +1001,9 @@ namespace Azure.ResourceManager.SecurityCenter
             return message;
         }
 
-        /// <summary> Update the alert&apos;s state. </summary>
+        /// <summary> Update the alert's state. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="alertName"> Name of the alert object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1026,9 +1026,9 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
-        /// <summary> Update the alert&apos;s state. </summary>
+        /// <summary> Update the alert's state. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="alertName"> Name of the alert object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1205,7 +1205,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> List all the alerts that are associated with the resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1234,7 +1234,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> List all the alerts that are associated with the resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1347,7 +1347,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> List all the alerts that are associated with the resource group that are stored in a specific location. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
@@ -1377,7 +1377,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> List all the alerts that are associated with the resource group that are stored in a specific location. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>

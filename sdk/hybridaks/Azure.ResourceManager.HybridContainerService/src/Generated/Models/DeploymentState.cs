@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    /// <summary> Observed deployment state of the Arc Agents on the target cluster. Possible values include: &apos;pending&apos;, &apos;provisioning&apos;, &apos;provisioned&apos;, &apos;deleting&apos;, &apos;failed&apos;, &apos;upgrading&apos;. </summary>
+    /// <summary> Observed deployment state of the Arc Agents on the target cluster. Possible values include: 'pending', 'provisioning', 'provisioned', 'deleting', 'failed', 'upgrading'. </summary>
     public readonly partial struct DeploymentState : IEquatable<DeploymentState>
     {
         private readonly string _value;

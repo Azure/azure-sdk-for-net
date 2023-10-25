@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -507,7 +508,7 @@ namespace Azure.ResourceManager.ContainerInstance
         public virtual AsyncPageable<string> GetOutboundNetworkDependenciesEndpointsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerGroupRestClient.CreateGetOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => e.GetString(), _containerGroupClientDiagnostics, Pipeline, "ContainerGroupResource.GetOutboundNetworkDependenciesEndpoints", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => e.GetString(), _containerGroupClientDiagnostics, Pipeline, "ContainerGroupResource.GetOutboundNetworkDependenciesEndpoints", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -528,7 +529,7 @@ namespace Azure.ResourceManager.ContainerInstance
         public virtual Pageable<string> GetOutboundNetworkDependenciesEndpoints(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerGroupRestClient.CreateGetOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => e.GetString(), _containerGroupClientDiagnostics, Pipeline, "ContainerGroupResource.GetOutboundNetworkDependenciesEndpoints", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => e.GetString(), _containerGroupClientDiagnostics, Pipeline, "ContainerGroupResource.GetOutboundNetworkDependenciesEndpoints", "", null, cancellationToken);
         }
 
         /// <summary>

@@ -24,7 +24,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Thumbprint);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Thumbprint.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(Thumbprint))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsDefined(CommonName))
@@ -38,7 +41,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(IssuerThumbprint);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(IssuerThumbprint.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(IssuerThumbprint))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
@@ -46,6 +52,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static ManagedClusterClientCertificate DeserializeManagedClusterClientCertificate(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             bool isAdmin = default;
             Optional<BinaryData> thumbprint = default;
             Optional<string> commonName = default;
@@ -61,7 +71,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     thumbprint = BinaryData.FromString(property.Value.GetRawText());
@@ -76,7 +85,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     issuerThumbprint = BinaryData.FromString(property.Value.GetRawText());

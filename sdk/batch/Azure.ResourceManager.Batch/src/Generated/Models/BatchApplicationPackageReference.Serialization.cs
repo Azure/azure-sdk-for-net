@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.Batch.Models
 
         internal static BatchApplicationPackageReference DeserializeBatchApplicationPackageReference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             Optional<string> version = default;
             foreach (var property in element.EnumerateObject())

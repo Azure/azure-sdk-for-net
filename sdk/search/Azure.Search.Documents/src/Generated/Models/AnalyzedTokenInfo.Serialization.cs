@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -14,6 +13,10 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         internal static AnalyzedTokenInfo DeserializeAnalyzedTokenInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string token = default;
             int startOffset = default;
             int endOffset = default;

@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         internal static CapabilitiesResultProperties DeserializeCapabilitiesResultProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IList<DnsZoneResult>> dnsZones = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DnsZoneResult> array = new List<DnsZoneResult>();

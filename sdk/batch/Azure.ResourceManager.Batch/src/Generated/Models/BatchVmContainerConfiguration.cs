@@ -14,16 +14,17 @@ namespace Azure.ResourceManager.Batch.Models
     public partial class BatchVmContainerConfiguration
     {
         /// <summary> Initializes a new instance of BatchVmContainerConfiguration. </summary>
-        public BatchVmContainerConfiguration()
+        /// <param name="containerType"> The container technology to be used. </param>
+        public BatchVmContainerConfiguration(BatchVmContainerType containerType)
         {
-            ContainerType = BatchVmContainerType.DockerCompatible;
+            ContainerType = containerType;
             ContainerImageNames = new ChangeTrackingList<string>();
             ContainerRegistries = new ChangeTrackingList<BatchVmContainerRegistry>();
         }
 
         /// <summary> Initializes a new instance of BatchVmContainerConfiguration. </summary>
         /// <param name="containerType"> The container technology to be used. </param>
-        /// <param name="containerImageNames"> This is the full image reference, as would be specified to &quot;docker pull&quot;. An image will be sourced from the default Docker registry unless the image is fully qualified with an alternative registry. </param>
+        /// <param name="containerImageNames"> This is the full image reference, as would be specified to "docker pull". An image will be sourced from the default Docker registry unless the image is fully qualified with an alternative registry. </param>
         /// <param name="containerRegistries"> If any images must be downloaded from a private registry which requires credentials, then those credentials must be provided here. </param>
         internal BatchVmContainerConfiguration(BatchVmContainerType containerType, IList<string> containerImageNames, IList<BatchVmContainerRegistry> containerRegistries)
         {
@@ -31,10 +32,7 @@ namespace Azure.ResourceManager.Batch.Models
             ContainerImageNames = containerImageNames;
             ContainerRegistries = containerRegistries;
         }
-
-        /// <summary> The container technology to be used. </summary>
-        public BatchVmContainerType ContainerType { get; set; }
-        /// <summary> This is the full image reference, as would be specified to &quot;docker pull&quot;. An image will be sourced from the default Docker registry unless the image is fully qualified with an alternative registry. </summary>
+        /// <summary> This is the full image reference, as would be specified to "docker pull". An image will be sourced from the default Docker registry unless the image is fully qualified with an alternative registry. </summary>
         public IList<string> ContainerImageNames { get; }
         /// <summary> If any images must be downloaded from a private registry which requires credentials, then those credentials must be provided here. </summary>
         public IList<BatchVmContainerRegistry> ContainerRegistries { get; }

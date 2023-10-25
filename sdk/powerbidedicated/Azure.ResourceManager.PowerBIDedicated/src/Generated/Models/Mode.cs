@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PowerBIDedicated.Models
 {
-    /// <summary> Specifies the generation of the Power BI Embedded capacity. If no value is specified, the default value &apos;Gen2&apos; is used. [Learn More](https://docs.microsoft.com/power-bi/developer/embedded/power-bi-embedded-generation-2). </summary>
+    /// <summary> Specifies the generation of the Power BI Embedded capacity. If no value is specified, the default value 'Gen2' is used. [Learn More](https://docs.microsoft.com/power-bi/developer/embedded/power-bi-embedded-generation-2). </summary>
     public readonly partial struct Mode : IEquatable<Mode>
     {
         private readonly string _value;

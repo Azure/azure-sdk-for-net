@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static TextTrack DeserializeTextTrack(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> fileName = default;
             Optional<string> displayName = default;
             Optional<string> languageCode = default;
@@ -69,7 +73,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     playerVisibility = new PlayerVisibility(property.Value.GetString());
@@ -79,7 +82,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     hlsSettings = HlsSettings.DeserializeHlsSettings(property.Value);

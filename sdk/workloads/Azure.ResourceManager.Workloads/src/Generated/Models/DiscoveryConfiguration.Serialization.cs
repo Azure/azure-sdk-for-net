@@ -20,6 +20,11 @@ namespace Azure.ResourceManager.Workloads.Models
                 writer.WritePropertyName("centralServerVmId"u8);
                 writer.WriteStringValue(CentralServerVmId);
             }
+            if (Optional.IsDefined(ManagedRgStorageAccountName))
+            {
+                writer.WritePropertyName("managedRgStorageAccountName"u8);
+                writer.WriteStringValue(ManagedRgStorageAccountName);
+            }
             writer.WritePropertyName("configurationType"u8);
             writer.WriteStringValue(ConfigurationType.ToString());
             writer.WriteEndObject();
@@ -27,21 +32,34 @@ namespace Azure.ResourceManager.Workloads.Models
 
         internal static DiscoveryConfiguration DeserializeDiscoveryConfiguration(JsonElement element)
         {
-            Optional<string> centralServerVmId = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<ResourceIdentifier> centralServerVmId = default;
+            Optional<string> managedRgStorageAccountName = default;
             Optional<AzureLocation> appLocation = default;
             SapConfigurationType configurationType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("centralServerVmId"u8))
                 {
-                    centralServerVmId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    centralServerVmId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("managedRgStorageAccountName"u8))
+                {
+                    managedRgStorageAccountName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("appLocation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     appLocation = new AzureLocation(property.Value.GetString());
@@ -53,7 +71,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     continue;
                 }
             }
-            return new DiscoveryConfiguration(configurationType, centralServerVmId.Value, Optional.ToNullable(appLocation));
+            return new DiscoveryConfiguration(configurationType, centralServerVmId.Value, managedRgStorageAccountName.Value, Optional.ToNullable(appLocation));
         }
     }
 }

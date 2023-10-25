@@ -29,12 +29,14 @@ namespace Azure.ResourceManager.Nginx.Tests
         protected NginxManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
+            IgnoreNetworkDependencyVersions();
             IgnoreTestInLiveMode();
         }
 
         protected NginxManagementTestBase(bool isAsync)
             : base(isAsync)
         {
+            IgnoreNetworkDependencyVersions();
             IgnoreTestInLiveMode();
         }
 

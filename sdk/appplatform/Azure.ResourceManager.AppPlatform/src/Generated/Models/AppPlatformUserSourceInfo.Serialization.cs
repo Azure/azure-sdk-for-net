@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformUserSourceInfo DeserializeAppPlatformUserSourceInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

@@ -13,7 +13,6 @@ using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ApplicationInsights;
 using Azure.ResourceManager.ApplicationInsights.Models;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ApplicationInsights.Samples
 {
@@ -32,20 +31,20 @@ namespace Azure.ResourceManager.ApplicationInsights.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            // this example assumes you already have this ApplicationInsightsComponentResource created on azure
+            // for more information of creating ApplicationInsightsComponentResource, please refer to the document of ApplicationInsightsComponentResource
             string subscriptionId = "86dc51d3-92ed-4d7e-947a-775ea79b4918";
             string resourceGroupName = "someResourceGroupName";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+            string resourceName = "myComponent";
+            ResourceIdentifier applicationInsightsComponentResourceId = ApplicationInsightsComponentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            ApplicationInsightsComponentResource applicationInsightsComponent = client.GetApplicationInsightsComponentResource(applicationInsightsComponentResourceId);
 
             // get the collection of this ComponentLinkedStorageAccountResource
-            ComponentLinkedStorageAccountCollection collection = resourceGroupResource.GetComponentLinkedStorageAccounts();
+            ComponentLinkedStorageAccountCollection collection = applicationInsightsComponent.GetComponentLinkedStorageAccounts();
 
             // invoke the operation
-            string resourceName = "myComponent";
             StorageType storageType = StorageType.ServiceProfiler;
-            ComponentLinkedStorageAccountResource result = await collection.GetAsync(resourceName, storageType);
+            ComponentLinkedStorageAccountResource result = await collection.GetAsync(storageType);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -67,22 +66,65 @@ namespace Azure.ResourceManager.ApplicationInsights.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            // this example assumes you already have this ApplicationInsightsComponentResource created on azure
+            // for more information of creating ApplicationInsightsComponentResource, please refer to the document of ApplicationInsightsComponentResource
             string subscriptionId = "86dc51d3-92ed-4d7e-947a-775ea79b4918";
             string resourceGroupName = "someResourceGroupName";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+            string resourceName = "myComponent";
+            ResourceIdentifier applicationInsightsComponentResourceId = ApplicationInsightsComponentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            ApplicationInsightsComponentResource applicationInsightsComponent = client.GetApplicationInsightsComponentResource(applicationInsightsComponentResourceId);
 
             // get the collection of this ComponentLinkedStorageAccountResource
-            ComponentLinkedStorageAccountCollection collection = resourceGroupResource.GetComponentLinkedStorageAccounts();
+            ComponentLinkedStorageAccountCollection collection = applicationInsightsComponent.GetComponentLinkedStorageAccounts();
 
             // invoke the operation
-            string resourceName = "myComponent";
             StorageType storageType = StorageType.ServiceProfiler;
-            bool result = await collection.ExistsAsync(resourceName, storageType);
+            bool result = await collection.ExistsAsync(storageType);
 
             Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // ComponentLinkedStorageAccountsGet
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_ComponentLinkedStorageAccountsGet()
+        {
+            // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/preview/2020-03-01-preview/examples/ComponentLinkedStorageAccountsGet.json
+            // this example is just showing the usage of "ComponentLinkedStorageAccounts_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApplicationInsightsComponentResource created on azure
+            // for more information of creating ApplicationInsightsComponentResource, please refer to the document of ApplicationInsightsComponentResource
+            string subscriptionId = "86dc51d3-92ed-4d7e-947a-775ea79b4918";
+            string resourceGroupName = "someResourceGroupName";
+            string resourceName = "myComponent";
+            ResourceIdentifier applicationInsightsComponentResourceId = ApplicationInsightsComponentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            ApplicationInsightsComponentResource applicationInsightsComponent = client.GetApplicationInsightsComponentResource(applicationInsightsComponentResourceId);
+
+            // get the collection of this ComponentLinkedStorageAccountResource
+            ComponentLinkedStorageAccountCollection collection = applicationInsightsComponent.GetComponentLinkedStorageAccounts();
+
+            // invoke the operation
+            StorageType storageType = StorageType.ServiceProfiler;
+            NullableResponse<ComponentLinkedStorageAccountResource> response = await collection.GetIfExistsAsync(storageType);
+            ComponentLinkedStorageAccountResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ComponentLinkedStorageAccountData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
 
         // ComponentLinkedStorageAccountsCreateAndUpdate
@@ -98,24 +140,24 @@ namespace Azure.ResourceManager.ApplicationInsights.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            // this example assumes you already have this ApplicationInsightsComponentResource created on azure
+            // for more information of creating ApplicationInsightsComponentResource, please refer to the document of ApplicationInsightsComponentResource
             string subscriptionId = "86dc51d3-92ed-4d7e-947a-775ea79b4918";
             string resourceGroupName = "someResourceGroupName";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+            string resourceName = "myComponent";
+            ResourceIdentifier applicationInsightsComponentResourceId = ApplicationInsightsComponentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            ApplicationInsightsComponentResource applicationInsightsComponent = client.GetApplicationInsightsComponentResource(applicationInsightsComponentResourceId);
 
             // get the collection of this ComponentLinkedStorageAccountResource
-            ComponentLinkedStorageAccountCollection collection = resourceGroupResource.GetComponentLinkedStorageAccounts();
+            ComponentLinkedStorageAccountCollection collection = applicationInsightsComponent.GetComponentLinkedStorageAccounts();
 
             // invoke the operation
-            string resourceName = "myComponent";
             StorageType storageType = StorageType.ServiceProfiler;
             ComponentLinkedStorageAccountData data = new ComponentLinkedStorageAccountData()
             {
                 LinkedStorageAccount = "/subscriptions/86dc51d3-92ed-4d7e-947a-775ea79b4918/resourceGroups/someResourceGroupName/providers/Microsoft.Storage/storageAccounts/storageaccountname",
             };
-            ArmOperation<ComponentLinkedStorageAccountResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, storageType, data);
+            ArmOperation<ComponentLinkedStorageAccountResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, storageType, data);
             ComponentLinkedStorageAccountResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

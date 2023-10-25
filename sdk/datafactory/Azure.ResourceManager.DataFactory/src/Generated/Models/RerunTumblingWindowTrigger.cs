@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Trigger that schedules pipeline reruns for all fixed time interval windows from a requested start time to requested end time. </summary>
-    public partial class RerunTumblingWindowTrigger : FactoryTriggerDefinition
+    public partial class RerunTumblingWindowTrigger : DataFactoryTriggerProperties
     {
         /// <summary> Initializes a new instance of RerunTumblingWindowTrigger. </summary>
         /// <param name="parentTrigger"> The parent trigger reference. </param>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="requestedStartOn"> The start time for the time period for which restatement is initiated. Only UTC time is currently supported. </param>
         /// <param name="requestedEndOn"> The end time for the time period for which restatement is initiated. Only UTC time is currently supported. </param>
         /// <param name="rerunConcurrency"> The max number of parallel time windows (ready for execution) for which a rerun is triggered. </param>
-        internal RerunTumblingWindowTrigger(string triggerType, string description, FactoryTriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData parentTrigger, DateTimeOffset requestedStartOn, DateTimeOffset requestedEndOn, int rerunConcurrency) : base(triggerType, description, runtimeState, annotations, additionalProperties)
+        internal RerunTumblingWindowTrigger(string triggerType, string description, DataFactoryTriggerRuntimeState? runtimeState, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData parentTrigger, DateTimeOffset requestedStartOn, DateTimeOffset requestedEndOn, int rerunConcurrency) : base(triggerType, description, runtimeState, annotations, additionalProperties)
         {
             ParentTrigger = parentTrigger;
             RequestedStartOn = requestedStartOn;

@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="streams"> IIS streams. </param>
         /// <param name="logDirectories"> Absolute paths file location. </param>
         /// <param name="name">
-        /// A friendly name for the data source. 
+        /// A friendly name for the data source.
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
         /// </param>
         internal IisLogsDataSource(IList<string> streams, IList<string> logDirectories, string name)
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Absolute paths file location. </summary>
         public IList<string> LogDirectories { get; }
         /// <summary>
-        /// A friendly name for the data source. 
+        /// A friendly name for the data source.
         /// This name should be unique across all data sources (regardless of type) within the data collection rule.
         /// </summary>
         public string Name { get; set; }

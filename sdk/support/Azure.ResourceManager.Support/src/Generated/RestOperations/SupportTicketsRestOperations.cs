@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Support
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2020-04-01";
+            _apiVersion = apiVersion ?? "2022-09-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Support
         /// <summary> Lists all the support tickets for an Azure subscription. You can also filter the support tickets by _Status_, _CreatedDate_, _ServiceId_, and _ProblemClassificationId_ using the $filter parameter. Output will be a paged result with _nextLink_, using which you can retrieve the next set of support tickets. &lt;br/&gt;&lt;br/&gt;Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error. </summary>
         /// <param name="subscriptionId"> Azure subscription Id. </param>
         /// <param name="top"> The number of values to return in the collection. Default is 25 and max is 100. </param>
-        /// <param name="filter"> The filter to apply on the operation. We support &apos;odata v4.0&apos; filter semantics. [Learn more](https://docs.microsoft.com/odata/concepts/queryoptions-overview). _Status_, _ServiceId_, and _ProblemClassificationId_ filters can only be used with Equals (&apos;eq&apos;) operator. For _CreatedDate_ filter, the supported operators are Greater Than (&apos;gt&apos;) and Greater Than or Equals (&apos;ge&apos;). When using both filters, combine them using the logical &apos;AND&apos;. </param>
+        /// <param name="filter"> The filter to apply on the operation. We support 'odata v4.0' filter semantics. [Learn more](https://docs.microsoft.com/odata/concepts/queryoptions-overview). _Status_, _ServiceId_, and _ProblemClassificationId_ filters can only be used with Equals ('eq') operator. For _CreatedDate_ filter, the supported operators are Greater Than ('gt') and Greater Than or Equals ('ge'). When using both filters, combine them using the logical 'AND'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Support
         /// <summary> Lists all the support tickets for an Azure subscription. You can also filter the support tickets by _Status_, _CreatedDate_, _ServiceId_, and _ProblemClassificationId_ using the $filter parameter. Output will be a paged result with _nextLink_, using which you can retrieve the next set of support tickets. &lt;br/&gt;&lt;br/&gt;Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error. </summary>
         /// <param name="subscriptionId"> Azure subscription Id. </param>
         /// <param name="top"> The number of values to return in the collection. Default is 25 and max is 100. </param>
-        /// <param name="filter"> The filter to apply on the operation. We support &apos;odata v4.0&apos; filter semantics. [Learn more](https://docs.microsoft.com/odata/concepts/queryoptions-overview). _Status_, _ServiceId_, and _ProblemClassificationId_ filters can only be used with Equals (&apos;eq&apos;) operator. For _CreatedDate_ filter, the supported operators are Greater Than (&apos;gt&apos;) and Greater Than or Equals (&apos;ge&apos;). When using both filters, combine them using the logical &apos;AND&apos;. </param>
+        /// <param name="filter"> The filter to apply on the operation. We support 'odata v4.0' filter semantics. [Learn more](https://docs.microsoft.com/odata/concepts/queryoptions-overview). _Status_, _ServiceId_, and _ProblemClassificationId_ filters can only be used with Equals ('eq') operator. For _CreatedDate_ filter, the supported operators are Greater Than ('gt') and Greater Than or Equals ('ge'). When using both filters, combine them using the logical 'AND'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Support
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string supportTicketName, SupportTicketPatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string supportTicketName, UpdateSupportTicket updateSupportTicket)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -283,26 +283,26 @@ namespace Azure.ResourceManager.Support
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue(updateSupportTicket);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> This API allows you to update the severity level, ticket status, and your contact information in the support ticket.&lt;br/&gt;&lt;br/&gt;Note: The severity levels cannot be changed if a support ticket is actively being worked upon by an Azure support engineer. In such a case, contact your support engineer to request severity update by adding a new communication using the Communications API.&lt;br/&gt;&lt;br/&gt;Changing the ticket status to _closed_ is allowed only on an unassigned case. When an engineer is actively working on the ticket, send your ticket closure request by sending a note to your engineer. </summary>
+        /// <summary> This API allows you to update the severity level, ticket status, advanced diagnostic consent and your contact information in the support ticket.&lt;br/&gt;&lt;br/&gt;Note: The severity levels cannot be changed if a support ticket is actively being worked upon by an Azure support engineer. In such a case, contact your support engineer to request severity update by adding a new communication using the Communications API. </summary>
         /// <param name="subscriptionId"> Azure subscription Id. </param>
         /// <param name="supportTicketName"> Support ticket name. </param>
-        /// <param name="patch"> UpdateSupportTicket object. </param>
+        /// <param name="updateSupportTicket"> UpdateSupportTicket object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="supportTicketName"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="supportTicketName"/> or <paramref name="updateSupportTicket"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SupportTicketData>> UpdateAsync(string subscriptionId, string supportTicketName, SupportTicketPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<SupportTicketData>> UpdateAsync(string subscriptionId, string supportTicketName, UpdateSupportTicket updateSupportTicket, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(updateSupportTicket, nameof(updateSupportTicket));
 
-            using var message = CreateUpdateRequest(subscriptionId, supportTicketName, patch);
+            using var message = CreateUpdateRequest(subscriptionId, supportTicketName, updateSupportTicket);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -318,20 +318,20 @@ namespace Azure.ResourceManager.Support
             }
         }
 
-        /// <summary> This API allows you to update the severity level, ticket status, and your contact information in the support ticket.&lt;br/&gt;&lt;br/&gt;Note: The severity levels cannot be changed if a support ticket is actively being worked upon by an Azure support engineer. In such a case, contact your support engineer to request severity update by adding a new communication using the Communications API.&lt;br/&gt;&lt;br/&gt;Changing the ticket status to _closed_ is allowed only on an unassigned case. When an engineer is actively working on the ticket, send your ticket closure request by sending a note to your engineer. </summary>
+        /// <summary> This API allows you to update the severity level, ticket status, advanced diagnostic consent and your contact information in the support ticket.&lt;br/&gt;&lt;br/&gt;Note: The severity levels cannot be changed if a support ticket is actively being worked upon by an Azure support engineer. In such a case, contact your support engineer to request severity update by adding a new communication using the Communications API. </summary>
         /// <param name="subscriptionId"> Azure subscription Id. </param>
         /// <param name="supportTicketName"> Support ticket name. </param>
-        /// <param name="patch"> UpdateSupportTicket object. </param>
+        /// <param name="updateSupportTicket"> UpdateSupportTicket object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="supportTicketName"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="supportTicketName"/> or <paramref name="updateSupportTicket"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SupportTicketData> Update(string subscriptionId, string supportTicketName, SupportTicketPatch patch, CancellationToken cancellationToken = default)
+        public Response<SupportTicketData> Update(string subscriptionId, string supportTicketName, UpdateSupportTicket updateSupportTicket, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(updateSupportTicket, nameof(updateSupportTicket));
 
-            using var message = CreateUpdateRequest(subscriptionId, supportTicketName, patch);
+            using var message = CreateUpdateRequest(subscriptionId, supportTicketName, updateSupportTicket);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.Support
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Azure subscription Id. </param>
         /// <param name="top"> The number of values to return in the collection. Default is 25 and max is 100. </param>
-        /// <param name="filter"> The filter to apply on the operation. We support &apos;odata v4.0&apos; filter semantics. [Learn more](https://docs.microsoft.com/odata/concepts/queryoptions-overview). _Status_, _ServiceId_, and _ProblemClassificationId_ filters can only be used with Equals (&apos;eq&apos;) operator. For _CreatedDate_ filter, the supported operators are Greater Than (&apos;gt&apos;) and Greater Than or Equals (&apos;ge&apos;). When using both filters, combine them using the logical &apos;AND&apos;. </param>
+        /// <param name="filter"> The filter to apply on the operation. We support 'odata v4.0' filter semantics. [Learn more](https://docs.microsoft.com/odata/concepts/queryoptions-overview). _Status_, _ServiceId_, and _ProblemClassificationId_ filters can only be used with Equals ('eq') operator. For _CreatedDate_ filter, the supported operators are Greater Than ('gt') and Greater Than or Equals ('ge'). When using both filters, combine them using the logical 'AND'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.Support
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Azure subscription Id. </param>
         /// <param name="top"> The number of values to return in the collection. Default is 25 and max is 100. </param>
-        /// <param name="filter"> The filter to apply on the operation. We support &apos;odata v4.0&apos; filter semantics. [Learn more](https://docs.microsoft.com/odata/concepts/queryoptions-overview). _Status_, _ServiceId_, and _ProblemClassificationId_ filters can only be used with Equals (&apos;eq&apos;) operator. For _CreatedDate_ filter, the supported operators are Greater Than (&apos;gt&apos;) and Greater Than or Equals (&apos;ge&apos;). When using both filters, combine them using the logical &apos;AND&apos;. </param>
+        /// <param name="filter"> The filter to apply on the operation. We support 'odata v4.0' filter semantics. [Learn more](https://docs.microsoft.com/odata/concepts/queryoptions-overview). _Status_, _ServiceId_, and _ProblemClassificationId_ filters can only be used with Equals ('eq') operator. For _CreatedDate_ filter, the supported operators are Greater Than ('gt') and Greater Than or Equals ('ge'). When using both filters, combine them using the logical 'AND'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>

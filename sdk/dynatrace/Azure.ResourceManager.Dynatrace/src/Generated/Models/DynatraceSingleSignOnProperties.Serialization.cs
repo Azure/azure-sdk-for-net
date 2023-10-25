@@ -47,6 +47,10 @@ namespace Azure.ResourceManager.Dynatrace.Models
 
         internal static DynatraceSingleSignOnProperties DeserializeDynatraceSingleSignOnProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<DynatraceSingleSignOnState> singleSignOnState = default;
             Optional<Guid> enterpriseAppId = default;
             Optional<Uri> singleSignOnUrl = default;
@@ -58,7 +62,6 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     singleSignOnState = new DynatraceSingleSignOnState(property.Value.GetString());
@@ -68,7 +71,6 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enterpriseAppId = property.Value.GetGuid();
@@ -78,7 +80,6 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        singleSignOnUrl = null;
                         continue;
                     }
                     singleSignOnUrl = new Uri(property.Value.GetString());
@@ -88,7 +89,6 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();
@@ -103,7 +103,6 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new DynatraceProvisioningState(property.Value.GetString());

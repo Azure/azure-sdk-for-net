@@ -5,9 +5,11 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.DevCenter.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevCenter
@@ -43,6 +45,10 @@ namespace Azure.ResourceManager.DevCenter
 
         internal static DevCenterData DeserializeDevCenterData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -50,14 +56,14 @@ namespace Azure.ResourceManager.DevCenter
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> provisioningState = default;
+            Optional<DevCenterProvisioningState> provisioningState = default;
+            Optional<Uri> devCenterUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
@@ -67,7 +73,6 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -102,7 +107,6 @@ namespace Azure.ResourceManager.DevCenter
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -119,14 +123,27 @@ namespace Azure.ResourceManager.DevCenter
                     {
                         if (property0.NameEquals("provisioningState"u8))
                         {
-                            provisioningState = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new DevCenterProvisioningState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("devCenterUri"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            devCenterUri = new Uri(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new DevCenterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, provisioningState.Value);
+            return new DevCenterData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(provisioningState), devCenterUri.Value);
         }
     }
 }

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.BotService
     public partial class BotChannelResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="BotChannelResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, ChannelName channelName)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, BotChannelName channelName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/channels/{channelName}";
             return new ResourceIdentifier(resourceId);
@@ -302,9 +302,9 @@ namespace Azure.ResourceManager.BotService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ListChannelWithKeysResponse>> GetWithKeysAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BotChannelGetWithKeysResult>> GetChannelWithKeysAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _botChannelChannelsClientDiagnostics.CreateScope("BotChannelResource.GetWithKeys");
+            using var scope = _botChannelChannelsClientDiagnostics.CreateScope("BotChannelResource.GetChannelWithKeys");
             scope.Start();
             try
             {
@@ -332,9 +332,9 @@ namespace Azure.ResourceManager.BotService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ListChannelWithKeysResponse> GetWithKeys(CancellationToken cancellationToken = default)
+        public virtual Response<BotChannelGetWithKeysResult> GetChannelWithKeys(CancellationToken cancellationToken = default)
         {
-            using var scope = _botChannelChannelsClientDiagnostics.CreateScope("BotChannelResource.GetWithKeys");
+            using var scope = _botChannelChannelsClientDiagnostics.CreateScope("BotChannelResource.GetChannelWithKeys");
             scope.Start();
             try
             {

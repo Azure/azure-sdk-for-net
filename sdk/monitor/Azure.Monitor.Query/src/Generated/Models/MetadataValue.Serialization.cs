@@ -14,6 +14,10 @@ namespace Azure.Monitor.Query.Models
     {
         internal static MetadataValue DeserializeMetadataValue(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<LocalizableString> name = default;
             Optional<string> value = default;
             foreach (var property in element.EnumerateObject())
@@ -22,7 +26,6 @@ namespace Azure.Monitor.Query.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     name = LocalizableString.DeserializeLocalizableString(property.Value);

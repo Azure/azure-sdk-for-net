@@ -38,6 +38,10 @@ namespace Azure.ResourceManager.Logic
 
         internal static IntegrationAccountAssemblyDefinitionData DeserializeIntegrationAccountAssemblyDefinitionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IntegrationAccountAssemblyProperties properties = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -56,7 +60,6 @@ namespace Azure.ResourceManager.Logic
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -91,7 +94,6 @@ namespace Azure.ResourceManager.Logic
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());

@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static StreamingEndpointAccessControl DeserializeStreamingEndpointAccessControl(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<AkamaiAccessControl> akamai = default;
             Optional<IPAccessControl> ip = default;
             foreach (var property in element.EnumerateObject())
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     akamai = AkamaiAccessControl.DeserializeAkamaiAccessControl(property.Value);
@@ -48,7 +51,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ip = IPAccessControl.DeserializeIPAccessControl(property.Value);

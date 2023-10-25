@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DataShare
         }
 
         /// <summary>
-        /// Adjust a share subscription&apos;s expiration date in a provider share
+        /// Adjust a share subscription's expiration date in a provider share
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.DataShare
         }
 
         /// <summary>
-        /// Adjust a share subscription&apos;s expiration date in a provider share
+        /// Adjust a share subscription's expiration date in a provider share
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

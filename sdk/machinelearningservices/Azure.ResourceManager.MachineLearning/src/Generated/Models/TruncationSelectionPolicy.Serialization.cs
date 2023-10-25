@@ -37,6 +37,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static TruncationSelectionPolicy DeserializeTruncationSelectionPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<int> truncationPercentage = default;
             Optional<int> delayEvaluation = default;
             Optional<int> evaluationInterval = default;
@@ -47,7 +51,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     truncationPercentage = property.Value.GetInt32();
@@ -57,7 +60,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     delayEvaluation = property.Value.GetInt32();
@@ -67,7 +69,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     evaluationInterval = property.Value.GetInt32();

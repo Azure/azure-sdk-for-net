@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    /// <summary> Currency and amount that customer will be charged in customer&apos;s local currency for renewal purchase. Tax is not included. </summary>
+    /// <summary> Currency and amount that customer will be charged in customer's local currency for renewal purchase. Tax is not included. </summary>
     public partial class RenewPropertiesBillingCurrencyTotal
     {
         /// <summary> Initializes a new instance of RenewPropertiesBillingCurrencyTotal. </summary>

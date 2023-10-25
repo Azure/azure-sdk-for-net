@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.TextAnalytics
 {
-    /// <summary> The status of the task at the mentioned last update time. </summary>
+    /// <summary> The State. </summary>
     public readonly partial struct TextAnalyticsOperationStatus : IEquatable<TextAnalyticsOperationStatus>
     {
         private readonly string _value;

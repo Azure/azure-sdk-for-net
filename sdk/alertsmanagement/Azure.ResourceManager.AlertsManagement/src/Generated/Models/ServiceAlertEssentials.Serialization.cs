@@ -51,6 +51,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
 
         internal static ServiceAlertEssentials DeserializeServiceAlertEssentials(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ServiceAlertSeverity> severity = default;
             Optional<ServiceAlertSignalType> signalType = default;
             Optional<ServiceAlertState> alertState = default;
@@ -76,7 +80,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     severity = new ServiceAlertSeverity(property.Value.GetString());
@@ -86,7 +89,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     signalType = new ServiceAlertSignalType(property.Value.GetString());
@@ -96,7 +98,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     alertState = new ServiceAlertState(property.Value.GetString());
@@ -106,7 +107,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     monitorCondition = new MonitorCondition(property.Value.GetString());
@@ -136,7 +136,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     monitorService = new MonitorServiceSourceForAlert(property.Value.GetString());
@@ -156,7 +155,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     smartGroupId = property.Value.GetGuid();
@@ -171,7 +169,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startDateTime = property.Value.GetDateTimeOffset("O");
@@ -181,7 +178,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastModifiedDateTime = property.Value.GetDateTimeOffset("O");
@@ -191,7 +187,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     monitorConditionResolvedDateTime = property.Value.GetDateTimeOffset("O");
@@ -206,7 +201,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     actionStatus = ServiceAlertActionStatus.DeserializeServiceAlertActionStatus(property.Value);

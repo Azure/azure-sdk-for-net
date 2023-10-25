@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     {
         internal static ServiceFabricApplicationTypeVersionList DeserializeServiceFabricApplicationTypeVersionList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ServiceFabricApplicationTypeVersionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ServiceFabricApplicationTypeVersionData> array = new List<ServiceFabricApplicationTypeVersionData>();

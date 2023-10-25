@@ -25,6 +25,10 @@ namespace Azure.AI.MetricsAdvisor.Models
 
         internal static DataLakeGen2SharedKeyParam DeserializeDataLakeGen2SharedKeyParam(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> accountKey = default;
             foreach (var property in element.EnumerateObject())
             {

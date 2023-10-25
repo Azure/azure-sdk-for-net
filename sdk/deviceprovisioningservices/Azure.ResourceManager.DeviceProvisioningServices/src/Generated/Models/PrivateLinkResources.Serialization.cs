@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     {
         internal static PrivateLinkResources DeserializePrivateLinkResources(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<DeviceProvisioningServicesPrivateLinkResourceData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<DeviceProvisioningServicesPrivateLinkResourceData> array = new List<DeviceProvisioningServicesPrivateLinkResourceData>();

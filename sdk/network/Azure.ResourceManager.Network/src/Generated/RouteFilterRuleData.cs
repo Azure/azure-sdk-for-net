@@ -12,7 +12,10 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the RouteFilterRule data model. </summary>
+    /// <summary>
+    /// A class representing the RouteFilterRule data model.
+    /// Route Filter Rule Resource.
+    /// </summary>
     public partial class RouteFilterRuleData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of RouteFilterRuleData. </summary>
@@ -29,7 +32,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="access"> The access type of the rule. </param>
         /// <param name="routeFilterRuleType"> The rule type of the rule. </param>
-        /// <param name="communities"> The collection for bgp community values to filter on. e.g. [&apos;12076:5010&apos;,&apos;12076:5020&apos;]. </param>
+        /// <param name="communities"> The collection for bgp community values to filter on. e.g. ['12076:5010','12076:5020']. </param>
         /// <param name="provisioningState"> The provisioning state of the route filter rule resource. </param>
         internal RouteFilterRuleData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, ETag? etag, NetworkAccess? access, RouteFilterRuleType? routeFilterRuleType, IList<string> communities, NetworkProvisioningState? provisioningState) : base(id, name, resourceType)
         {
@@ -49,7 +52,7 @@ namespace Azure.ResourceManager.Network
         public NetworkAccess? Access { get; set; }
         /// <summary> The rule type of the rule. </summary>
         public RouteFilterRuleType? RouteFilterRuleType { get; set; }
-        /// <summary> The collection for bgp community values to filter on. e.g. [&apos;12076:5010&apos;,&apos;12076:5020&apos;]. </summary>
+        /// <summary> The collection for bgp community values to filter on. e.g. ['12076:5010','12076:5020']. </summary>
         public IList<string> Communities { get; }
         /// <summary> The provisioning state of the route filter rule resource. </summary>
         public NetworkProvisioningState? ProvisioningState { get; }

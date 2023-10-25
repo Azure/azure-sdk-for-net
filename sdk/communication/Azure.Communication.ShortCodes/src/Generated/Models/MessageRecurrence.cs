@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.ShortCodes.Models
 {
-    /// <summary> Indicates the nature of the messaging associated with the program e.g. &apos;subscription&apos;, &apos;transaction&apos;. </summary>
+    /// <summary> Indicates the nature of the messaging associated with the program e.g. 'subscription', 'transaction'. </summary>
     public readonly partial struct MessageRecurrence : IEquatable<MessageRecurrence>
     {
         private readonly string _value;

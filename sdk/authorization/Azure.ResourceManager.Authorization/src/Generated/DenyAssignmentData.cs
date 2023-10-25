@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Authorization
 {
-    /// <summary> A class representing the DenyAssignment data model. </summary>
+    /// <summary>
+    /// A class representing the DenyAssignment data model.
+    /// Deny Assignment
+    /// </summary>
     public partial class DenyAssignmentData : ResourceData
     {
         /// <summary> Initializes a new instance of DenyAssignmentData. </summary>

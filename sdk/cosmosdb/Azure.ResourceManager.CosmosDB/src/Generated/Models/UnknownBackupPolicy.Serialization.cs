@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static UnknownBackupPolicy DeserializeUnknownBackupPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             BackupPolicyType type = "Unknown";
             Optional<BackupPolicyMigrationState> migrationState = default;
             foreach (var property in element.EnumerateObject())
@@ -40,7 +44,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     migrationState = BackupPolicyMigrationState.DeserializeBackupPolicyMigrationState(property.Value);

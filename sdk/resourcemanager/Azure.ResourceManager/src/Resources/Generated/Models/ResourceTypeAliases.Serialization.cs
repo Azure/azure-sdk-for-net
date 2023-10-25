@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Resources.Models
     {
         internal static ResourceTypeAliases DeserializeResourceTypeAliases(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> resourceType = default;
             Optional<IReadOnlyList<ResourceTypeAlias>> aliases = default;
             foreach (var property in element.EnumerateObject())
@@ -28,7 +32,6 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ResourceTypeAlias> array = new List<ResourceTypeAlias>();

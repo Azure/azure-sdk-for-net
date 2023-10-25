@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Compute.Models
 
         internal static DiskImageEncryption DeserializeDiskImageEncryption(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ResourceIdentifier> diskEncryptionSetId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -32,7 +36,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     diskEncryptionSetId = new ResourceIdentifier(property.Value.GetString());

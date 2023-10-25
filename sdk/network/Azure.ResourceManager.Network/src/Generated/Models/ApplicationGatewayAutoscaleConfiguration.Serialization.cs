@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewayAutoscaleConfiguration DeserializeApplicationGatewayAutoscaleConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int minCapacity = default;
             Optional<int> maxCapacity = default;
             foreach (var property in element.EnumerateObject())
@@ -40,7 +44,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxCapacity = property.Value.GetInt32();

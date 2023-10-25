@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Monitor.Models
     {
         internal static SenderAuthorization DeserializeSenderAuthorization(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> action = default;
             Optional<string> role = default;
             Optional<string> scope = default;

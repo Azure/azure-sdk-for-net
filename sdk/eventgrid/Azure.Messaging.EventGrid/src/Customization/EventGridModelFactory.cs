@@ -5,15 +5,17 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Messaging.EventGrid.Models;
 using Azure.Messaging.EventGrid.SystemEvents;
+using AcsRouterJobStatus = Azure.Messaging.EventGrid.Models.AcsRouterJobStatus;
 
 namespace Azure.Messaging.EventGrid
 {
 #pragma warning disable CA1054 // URI-like parameters should not be strings
-    [CodeGenType(nameof(EventGridModelFactory))]
+    [CodeGenType("MessagingEventGridModelFactory")]
     public static partial class EventGridModelFactory
     {
         /// <summary> Initializes new instance of MediaJobError class. </summary>
@@ -530,6 +532,84 @@ namespace Azure.Messaging.EventGrid
         public static StorageDirectoryDeletedEventData StorageDirectoryDeletedEventData(string api = null, string clientRequestId = null, string requestId = null, string url = null, bool? recursive = null, string sequencer = null, string identity = null, object storageDiagnostics = null)
         {
             return new StorageDirectoryDeletedEventData(api, clientRequestId, requestId, url, recursive?.ToString(), sequencer, identity, storageDiagnostics);
+        }
+
+        /// <summary> Initializes a new instance of AcsEmailDeliveryReportReceivedEventData. </summary>
+        /// <param name="sender"> The Sender Email Address. </param>
+        /// <param name="recipient"> The recipient Email Address. </param>
+        /// <param name="messageId"> The Id of the email been sent. </param>
+        /// <param name="status"> The status of the email. </param>
+        /// <param name="deliveryAttemptTimestamp"> The time at which the email delivery report received timestamp. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsEmailDeliveryReportReceivedEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AcsEmailDeliveryReportReceivedEventData AcsEmailDeliveryReportReceivedEventData(string sender = null, string recipient = null, string messageId = null, AcsEmailDeliveryReportStatus? status = null, DateTimeOffset? deliveryAttemptTimestamp = null)
+        {
+            return new AcsEmailDeliveryReportReceivedEventData(sender, recipient, messageId, status, default, deliveryAttemptTimestamp);
+        }
+
+        /// <summary> Initializes a new instance of HealthcareDicomImageCreatedEventData. </summary>
+        /// <param name="imageStudyInstanceUid"> Unique identifier for the Study. </param>
+        /// <param name="imageSeriesInstanceUid"> Unique identifier for the Series. </param>
+        /// <param name="imageSopInstanceUid"> Unique identifier for the DICOM Image. </param>
+        /// <param name="serviceHostName"> Domain name of the DICOM account for this image. </param>
+        /// <param name="sequenceNumber"> Sequence number of the DICOM Service within Azure Health Data Services. It is unique for every image creation and deletion within the service. </param>
+        /// <returns> A new <see cref="SystemEvents.HealthcareDicomImageCreatedEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static HealthcareDicomImageCreatedEventData HealthcareDicomImageCreatedEventData(string imageStudyInstanceUid = null, string imageSeriesInstanceUid = null, string imageSopInstanceUid = null, string serviceHostName = null, long? sequenceNumber = null)
+        {
+            return new HealthcareDicomImageCreatedEventData(default, imageStudyInstanceUid, imageSeriesInstanceUid, imageSopInstanceUid, serviceHostName, sequenceNumber);
+        }
+
+        /// <summary> Initializes a new instance of HealthcareDicomImageDeletedEventData. </summary>
+        /// <param name="imageStudyInstanceUid"> Unique identifier for the Study. </param>
+        /// <param name="imageSeriesInstanceUid"> Unique identifier for the Series. </param>
+        /// <param name="imageSopInstanceUid"> Unique identifier for the DICOM Image. </param>
+        /// <param name="serviceHostName"> Host name of the DICOM account for this image. </param>
+        /// <param name="sequenceNumber"> Sequence number of the DICOM Service within Azure Health Data Services. It is unique for every image creation and deletion within the service. </param>
+        /// <returns> A new <see cref="SystemEvents.HealthcareDicomImageDeletedEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static HealthcareDicomImageDeletedEventData HealthcareDicomImageDeletedEventData(string imageStudyInstanceUid = null, string imageSeriesInstanceUid = null, string imageSopInstanceUid = null, string serviceHostName = null, long? sequenceNumber = null)
+        {
+            return new HealthcareDicomImageDeletedEventData(default, imageStudyInstanceUid, imageSeriesInstanceUid, imageSopInstanceUid, serviceHostName, sequenceNumber);
+        }
+
+        /// <summary> Initializes a new instance of AcsEmailEngagementTrackingReportReceivedEventData. </summary>
+        /// <param name="sender"> The Sender Email Address. </param>
+        /// <param name="messageId"> The Id of the email that has been sent. </param>
+        /// <param name="userActionTimestamp"> The time at which the user interacted with the email. </param>
+        /// <param name="engagementContext"> The context of the type of engagement user had with email. </param>
+        /// <param name="userAgent"> The user agent interacting with the email. </param>
+        /// <param name="engagement"> The type of engagement user have with email. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsEmailEngagementTrackingReportReceivedEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AcsEmailEngagementTrackingReportReceivedEventData AcsEmailEngagementTrackingReportReceivedEventData(string sender, string messageId, DateTimeOffset? userActionTimestamp, string engagementContext, string userAgent, AcsUserEngagement? engagement)
+        {
+            return new AcsEmailEngagementTrackingReportReceivedEventData(sender, null, messageId, userActionTimestamp, engagementContext, userAgent, engagement);
+        }
+
+        /// <summary> Initializes a new instance of AcsRouterJobReceivedEventData. </summary>
+        /// <param name="jobId"> Router Event Job ID. </param>
+        /// <param name="channelReference"> Router Event Channel Reference. </param>
+        /// <param name="channelId"> Router Event Channel ID. </param>
+        /// <param name="queueId"> Router Job events Queue Id. </param>
+        /// <param name="labels"> Router Job events Labels. </param>
+        /// <param name="tags"> Router Jobs events Tags. </param>
+        /// <param name="jobStatus"> Router Job Received Job Status. </param>
+        /// <param name="classificationPolicyId"> Router Job Classification Policy Id. </param>
+        /// <param name="priority"> Router Job Priority. </param>
+        /// <param name="requestedWorkerSelectors"> Router Job Received Requested Worker Selectors. </param>
+        /// <param name="scheduledOn"> Router Job Received Scheduled Time in UTC. </param>
+        /// <param name="unavailableForMatching"> Unavailable For Matching for Router Job Received. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsRouterJobReceivedEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AcsRouterJobReceivedEventData AcsRouterJobReceivedEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IReadOnlyDictionary<string, string> labels = null, IReadOnlyDictionary<string, string> tags = null, Azure.Messaging.EventGrid.Models.AcsRouterJobStatus? jobStatus = null, string classificationPolicyId = null, int? priority = null, IEnumerable<AcsRouterWorkerSelector> requestedWorkerSelectors = null, DateTimeOffset? scheduledOn = null, bool unavailableForMatching = default)
+        {
+            labels ??= new Dictionary<string, string>();
+            tags ??= new Dictionary<string, string>();
+            requestedWorkerSelectors ??= new List<AcsRouterWorkerSelector>();
+            Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobStatus? status = jobStatus.HasValue ? new Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobStatus(jobStatus.ToString()) : null;
+
+            return new AcsRouterJobReceivedEventData(jobId, channelReference, channelId, queueId, labels, tags, status, classificationPolicyId, priority, requestedWorkerSelectors?.ToList(), scheduledOn, unavailableForMatching);
         }
     }
 #pragma warning restore CA1054 // URI-like parameters should not be strings

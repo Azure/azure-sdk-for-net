@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,38 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0-beta.1 (2023-05-31)
+
+### Features Added
+
+- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+- Updated api-version to `2023-03-01-preview`
+- Added operation Flush
+- Added operation group SkusOperations
+- Model Cluster has a new parameter encryption
+- Model Cluster has a new parameter identity
+- Model ClusterUpdate has a new parameter encryption
+- Model ClusterUpdate has a new parameter identity
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.32.0.
+- Upgraded dependent Azure.ResourceManager to 1.6.0.
+- Model Database has a new parameter system_data
+- Model PrivateEndpointConnection has a new parameter system_data
+- Model PrivateLinkResource has a new parameter system_data
+- Model ProxyResource has a new parameter system_data
+- Model Resource has a new parameter system_data
+- Model TrackedResource has a new parameter system_data
+- Model Cluster has a new parameter system_data
+
+## 1.0.1 (2023-02-20)
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.28.0`.
+- Upgraded dependent `Azure.ResourceManager` to `1.4.0`.
 
 ## 1.0.0 (2022-09-19)
 

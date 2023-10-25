@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.MixedReality.Models
     {
         internal static MixedRealityAccountKeys DeserializeMixedRealityAccountKeys(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> primaryKey = default;
             Optional<string> secondaryKey = default;
             foreach (var property in element.EnumerateObject())

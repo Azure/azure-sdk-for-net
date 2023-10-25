@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         }
 
         /// <summary> Initializes a new instance of AwsOrganizationalDataMaster. </summary>
-        /// <param name="organizationMembershipType"> The multi cloud account&apos;s membership type in the organization. </param>
+        /// <param name="organizationMembershipType"> The multi cloud account's membership type in the organization. </param>
         /// <param name="stacksetName"> If the multi cloud account is of membership type organization, this will be the name of the onboarding stackset. </param>
         /// <param name="excludedAccountIds"> If the multi cloud account is of membership type organization, list of accounts excluded from offering. </param>
         internal AwsOrganizationalDataMaster(OrganizationMembershipType organizationMembershipType, string stacksetName, IList<string> excludedAccountIds) : base(organizationMembershipType)

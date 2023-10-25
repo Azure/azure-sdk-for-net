@@ -12,7 +12,10 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    /// <summary> A class representing the SynapseEncryptionProtector data model. </summary>
+    /// <summary>
+    /// A class representing the SynapseEncryptionProtector data model.
+    /// The server encryption protector.
+    /// </summary>
     public partial class SynapseEncryptionProtectorData : ResourceData
     {
         /// <summary> Initializes a new instance of SynapseEncryptionProtectorData. </summary>
@@ -29,7 +32,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="location"> Resource location. </param>
         /// <param name="subregion"> Subregion of the encryption protector. </param>
         /// <param name="serverKeyName"> The name of the server key. </param>
-        /// <param name="serverKeyType"> The encryption protector type like &apos;ServiceManaged&apos;, &apos;AzureKeyVault&apos;. </param>
+        /// <param name="serverKeyType"> The encryption protector type like 'ServiceManaged', 'AzureKeyVault'. </param>
         /// <param name="uri"> The URI of the server key. </param>
         /// <param name="thumbprint"> Thumbprint of the server key. </param>
         internal SynapseEncryptionProtectorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, AzureLocation? location, string subregion, string serverKeyName, SynapseServerKeyType? serverKeyType, Uri uri, BinaryData thumbprint) : base(id, name, resourceType, systemData)
@@ -51,7 +54,7 @@ namespace Azure.ResourceManager.Synapse
         public string Subregion { get; }
         /// <summary> The name of the server key. </summary>
         public string ServerKeyName { get; set; }
-        /// <summary> The encryption protector type like &apos;ServiceManaged&apos;, &apos;AzureKeyVault&apos;. </summary>
+        /// <summary> The encryption protector type like 'ServiceManaged', 'AzureKeyVault'. </summary>
         public SynapseServerKeyType? ServerKeyType { get; set; }
         /// <summary> The URI of the server key. </summary>
         public Uri Uri { get; }

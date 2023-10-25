@@ -20,7 +20,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(EndpointInvocationDefinition);
 #else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(EndpointInvocationDefinition.ToString()).RootElement);
+            using (JsonDocument document = JsonDocument.Parse(EndpointInvocationDefinition))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
 #endif
             writer.WritePropertyName("actionType"u8);
             writer.WriteStringValue(ActionType.ToString());
@@ -29,6 +32,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningEndpointScheduleAction DeserializeMachineLearningEndpointScheduleAction(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             BinaryData endpointInvocationDefinition = default;
             ScheduleActionType actionType = default;
             foreach (var property in element.EnumerateObject())

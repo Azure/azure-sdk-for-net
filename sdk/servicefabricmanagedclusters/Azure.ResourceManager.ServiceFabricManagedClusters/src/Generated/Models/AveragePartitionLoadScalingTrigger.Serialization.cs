@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static AveragePartitionLoadScalingTrigger DeserializeAveragePartitionLoadScalingTrigger(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string metricName = default;
             double lowerLoadThreshold = default;
             double upperLoadThreshold = default;

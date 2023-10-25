@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         }
 
         /// <summary> Initializes a new instance of SavingsPlanSummary. </summary>
-        /// <param name="name"> This property has value &apos;summary&apos;. </param>
+        /// <param name="name"> This property has value 'summary'. </param>
         /// <param name="value"> The roll up count summary of savings plans in each state. </param>
         internal SavingsPlanSummary(string name, SavingsPlanSummaryCount value)
         {
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             Value = value;
         }
 
-        /// <summary> This property has value &apos;summary&apos;. </summary>
+        /// <summary> This property has value 'summary'. </summary>
         public string Name { get; }
         /// <summary> The roll up count summary of savings plans in each state. </summary>
         public SavingsPlanSummaryCount Value { get; }

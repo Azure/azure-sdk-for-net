@@ -11,19 +11,43 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class RestorePointSourceVmStorageProfile
+    public partial class RestorePointSourceVmStorageProfile : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(OSDisk))
+            {
+                writer.WritePropertyName("osDisk"u8);
+                writer.WriteObjectValue(OSDisk);
+            }
+            if (Optional.IsCollectionDefined(DataDiskList))
+            {
+                writer.WritePropertyName("dataDisks"u8);
+                writer.WriteStartArray();
+                foreach (var item in DataDiskList)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WriteEndObject();
+        }
+
         internal static RestorePointSourceVmStorageProfile DeserializeRestorePointSourceVmStorageProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<RestorePointSourceVmOSDisk> osDisk = default;
-            Optional<IReadOnlyList<RestorePointSourceVmDataDisk>> dataDisks = default;
+            Optional<IList<RestorePointSourceVmDataDisk>> dataDisks = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("osDisk"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     osDisk = RestorePointSourceVmOSDisk.DeserializeRestorePointSourceVmOSDisk(property.Value);
@@ -33,7 +57,6 @@ namespace Azure.ResourceManager.Compute.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RestorePointSourceVmDataDisk> array = new List<RestorePointSourceVmDataDisk>();

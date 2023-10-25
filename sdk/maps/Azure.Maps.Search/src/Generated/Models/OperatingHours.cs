@@ -20,7 +20,7 @@ namespace Azure.Maps.Search.Models
         }
 
         /// <summary> Initializes a new instance of OperatingHours. </summary>
-        /// <param name="mode"> Value used in the request: none or &quot;nextSevenDays&quot;. </param>
+        /// <param name="mode"> Value used in the request: none or "nextSevenDays". </param>
         /// <param name="timeRanges"> List of time ranges for the next 7 days. </param>
         internal OperatingHours(string mode, IReadOnlyList<OperatingHoursTimeRange> timeRanges)
         {
@@ -28,7 +28,7 @@ namespace Azure.Maps.Search.Models
             TimeRanges = timeRanges;
         }
 
-        /// <summary> Value used in the request: none or &quot;nextSevenDays&quot;. </summary>
+        /// <summary> Value used in the request: none or "nextSevenDays". </summary>
         public string Mode { get; }
         /// <summary> List of time ranges for the next 7 days. </summary>
         public IReadOnlyList<OperatingHoursTimeRange> TimeRanges { get; }

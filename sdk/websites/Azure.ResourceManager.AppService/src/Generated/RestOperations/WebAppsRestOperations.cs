@@ -2038,7 +2038,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Updates site&apos;s Authentication / Authorization settings for apps via the V2 format. </summary>
+        /// <summary> Description for Updates site's Authentication / Authorization settings for apps via the V2 format. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -2069,7 +2069,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Updates site&apos;s Authentication / Authorization settings for apps via the V2 format. </summary>
+        /// <summary> Description for Updates site's Authentication / Authorization settings for apps via the V2 format. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -2121,7 +2121,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets site&apos;s Authentication / Authorization settings for apps via the V2 format. </summary>
+        /// <summary> Description for Gets site's Authentication / Authorization settings for apps via the V2 format. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -2150,7 +2150,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets site&apos;s Authentication / Authorization settings for apps via the V2 format. </summary>
+        /// <summary> Description for Gets site's Authentication / Authorization settings for apps via the V2 format. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -3192,7 +3192,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
-        /// <param name="data"> A SiteLogsConfig JSON object that contains the logging configuration to change in the &quot;properties&quot; property. </param>
+        /// <param name="data"> A SiteLogsConfig JSON object that contains the logging configuration to change in the "properties" property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -3223,7 +3223,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
-        /// <param name="data"> A SiteLogsConfig JSON object that contains the logging configuration to change in the &quot;properties&quot; property. </param>
+        /// <param name="data"> A SiteLogsConfig JSON object that contains the logging configuration to change in the "properties" property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -5233,7 +5233,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
-        /// <param name="id"> The ID of a specific deployment. This is the value of the name property in the JSON response from &quot;GET /api/sites/{siteName}/deployments&quot;. </param>
+        /// <param name="id"> The ID of a specific deployment. This is the value of the name property in the JSON response from "GET /api/sites/{siteName}/deployments". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
@@ -5264,7 +5264,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
-        /// <param name="id"> The ID of a specific deployment. This is the value of the name property in the JSON response from &quot;GET /api/sites/{siteName}/deployments&quot;. </param>
+        /// <param name="id"> The ID of a specific deployment. This is the value of the name property in the JSON response from "GET /api/sites/{siteName}/deployments". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
@@ -8853,7 +8853,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
-        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
+        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from "GET api/sites/{siteName}/instances". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="instanceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -8884,7 +8884,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
-        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
+        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from "GET api/sites/{siteName}/instances". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="instanceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -8939,7 +8939,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
-        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
+        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from "GET api/sites/{siteName}/instances". </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
@@ -8974,7 +8974,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
-        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
+        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from "GET api/sites/{siteName}/instances". </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
@@ -9033,7 +9033,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
-        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
+        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from "GET api/sites/{siteName}/instances". </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
@@ -9061,7 +9061,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
-        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
+        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from "GET api/sites/{siteName}/instances". </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
@@ -9114,7 +9114,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
-        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
+        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from "GET api/sites/{siteName}/instances". </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
@@ -9145,7 +9145,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
-        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
+        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from "GET api/sites/{siteName}/instances". </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
@@ -9201,7 +9201,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
-        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
+        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from "GET api/sites/{siteName}/instances". </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
@@ -9234,7 +9234,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
-        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
+        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from "GET api/sites/{siteName}/instances". </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
@@ -9293,7 +9293,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
-        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
+        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from "GET api/sites/{siteName}/instances". </param>
         /// <param name="processId"> PID. </param>
         /// <param name="baseAddress"> Module base address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -9330,7 +9330,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
-        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
+        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from "GET api/sites/{siteName}/instances". </param>
         /// <param name="processId"> PID. </param>
         /// <param name="baseAddress"> Module base address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -9392,7 +9392,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
-        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
+        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from "GET api/sites/{siteName}/instances". </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
@@ -9425,7 +9425,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
-        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
+        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from "GET api/sites/{siteName}/instances". </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
@@ -10038,7 +10038,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Integrates this Web App with a Virtual Network. This requires that 1) &quot;swiftSupported&quot; is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is not
+        /// Description for Integrates this Web App with a Virtual Network. This requires that 1) "swiftSupported" is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is not
         /// in use by another App Service Plan other than the one this App is in.
         /// </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
@@ -10072,7 +10072,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Integrates this Web App with a Virtual Network. This requires that 1) &quot;swiftSupported&quot; is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is not
+        /// Description for Integrates this Web App with a Virtual Network. This requires that 1) "swiftSupported" is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is not
         /// in use by another App Service Plan other than the one this App is in.
         /// </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
@@ -10200,7 +10200,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Integrates this Web App with a Virtual Network. This requires that 1) &quot;swiftSupported&quot; is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is not
+        /// Description for Integrates this Web App with a Virtual Network. This requires that 1) "swiftSupported" is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is not
         /// in use by another App Service Plan other than the one this App is in.
         /// </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
@@ -10234,7 +10234,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Integrates this Web App with a Virtual Network. This requires that 1) &quot;swiftSupported&quot; is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is not
+        /// Description for Integrates this Web App with a Virtual Network. This requires that 1) "swiftSupported" is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is not
         /// in use by another App Service Plan other than the one this App is in.
         /// </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
@@ -10293,7 +10293,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
-        /// <param name="view"> The type of view. Only &quot;summary&quot; is supported at this time. </param>
+        /// <param name="view"> The type of view. Only "summary" is supported at this time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="view"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="view"/> is an empty string, and was expected to be non-empty. </exception>
@@ -10324,7 +10324,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
-        /// <param name="view"> The type of view. Only &quot;summary&quot; is supported at this time. </param>
+        /// <param name="view"> The type of view. Only "summary" is supported at this time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="view"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="view"/> is an empty string, and was expected to be non-empty. </exception>
@@ -11088,7 +11088,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
-        /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[Hour|Minute|Day]&apos;. </param>
+        /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[Hour|Minute|Day]'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -11118,7 +11118,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
-        /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[Hour|Minute|Day]&apos;. </param>
+        /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[Hour|Minute|Day]'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -11165,7 +11165,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets web app&apos;s event logs. </summary>
+        /// <summary> Description for Gets web app's event logs. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -11194,7 +11194,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets web app&apos;s event logs. </summary>
+        /// <summary> Description for Gets web app's event logs. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -13176,7 +13176,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
-        /// <param name="publishingProfileOptions"> Specifies publishingProfileOptions for publishing profile. For example, use {&quot;format&quot;: &quot;FileZilla3&quot;} to get a FileZilla publishing profile. </param>
+        /// <param name="publishingProfileOptions"> Specifies publishingProfileOptions for publishing profile. For example, use {"format": "FileZilla3"} to get a FileZilla publishing profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="publishingProfileOptions"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -13205,7 +13205,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
-        /// <param name="publishingProfileOptions"> Specifies publishingProfileOptions for publishing profile. For example, use {&quot;format&quot;: &quot;FileZilla3&quot;} to get a FileZilla publishing profile. </param>
+        /// <param name="publishingProfileOptions"> Specifies publishingProfileOptions for publishing profile. For example, use {"format": "FileZilla3"} to get a FileZilla publishing profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="publishingProfileOptions"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -13955,7 +13955,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets an app&apos;s deployment slots. </summary>
+        /// <summary> Description for Gets an app's deployment slots. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -13984,7 +13984,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets an app&apos;s deployment slots. </summary>
+        /// <summary> Description for Gets an app's deployment slots. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -16000,7 +16000,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Updates site&apos;s Authentication / Authorization settings for apps via the V2 format. </summary>
+        /// <summary> Description for Updates site's Authentication / Authorization settings for apps via the V2 format. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -16033,7 +16033,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Updates site&apos;s Authentication / Authorization settings for apps via the V2 format. </summary>
+        /// <summary> Description for Updates site's Authentication / Authorization settings for apps via the V2 format. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -16089,7 +16089,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets site&apos;s Authentication / Authorization settings for apps via the V2 format. </summary>
+        /// <summary> Description for Gets site's Authentication / Authorization settings for apps via the V2 format. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -16120,7 +16120,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets site&apos;s Authentication / Authorization settings for apps via the V2 format. </summary>
+        /// <summary> Description for Gets site's Authentication / Authorization settings for apps via the V2 format. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
@@ -17239,7 +17239,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will update the logging configuration for the production slot. </param>
-        /// <param name="data"> A SiteLogsConfig JSON object that contains the logging configuration to change in the &quot;properties&quot; property. </param>
+        /// <param name="data"> A SiteLogsConfig JSON object that contains the logging configuration to change in the "properties" property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
@@ -17272,7 +17272,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will update the logging configuration for the production slot. </param>
-        /// <param name="data"> A SiteLogsConfig JSON object that contains the logging configuration to change in the &quot;properties&quot; property. </param>
+        /// <param name="data"> A SiteLogsConfig JSON object that contains the logging configuration to change in the "properties" property. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
@@ -19248,7 +19248,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
-        /// <param name="id"> The ID of a specific deployment. This is the value of the name property in the JSON response from &quot;GET /api/sites/{siteName}/deployments&quot;. </param>
+        /// <param name="id"> The ID of a specific deployment. This is the value of the name property in the JSON response from "GET /api/sites/{siteName}/deployments". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
@@ -19281,7 +19281,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
-        /// <param name="id"> The ID of a specific deployment. This is the value of the name property in the JSON response from &quot;GET /api/sites/{siteName}/deployments&quot;. </param>
+        /// <param name="id"> The ID of a specific deployment. This is the value of the name property in the JSON response from "GET /api/sites/{siteName}/deployments". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
@@ -23126,7 +23126,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
-        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
+        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from "GET api/sites/{siteName}/instances". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="instanceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -23159,7 +23159,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
-        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
+        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from "GET api/sites/{siteName}/instances". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="instanceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -23218,7 +23218,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
-        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
+        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from "GET api/sites/{siteName}/instances". </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
@@ -23255,7 +23255,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
-        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
+        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from "GET api/sites/{siteName}/instances". </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
@@ -23318,7 +23318,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
-        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
+        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from "GET api/sites/{siteName}/instances". </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
@@ -23348,7 +23348,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
-        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
+        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from "GET api/sites/{siteName}/instances". </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
@@ -23405,7 +23405,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
-        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
+        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from "GET api/sites/{siteName}/instances". </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
@@ -23438,7 +23438,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
-        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
+        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from "GET api/sites/{siteName}/instances". </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
@@ -23498,7 +23498,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
-        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
+        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from "GET api/sites/{siteName}/instances". </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
@@ -23533,7 +23533,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
-        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
+        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from "GET api/sites/{siteName}/instances". </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
@@ -23596,7 +23596,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
-        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
+        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from "GET api/sites/{siteName}/instances". </param>
         /// <param name="processId"> PID. </param>
         /// <param name="baseAddress"> Module base address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -23635,7 +23635,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
-        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
+        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from "GET api/sites/{siteName}/instances". </param>
         /// <param name="processId"> PID. </param>
         /// <param name="baseAddress"> Module base address. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -23701,7 +23701,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
-        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
+        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from "GET api/sites/{siteName}/instances". </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
@@ -23736,7 +23736,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
-        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
+        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from "GET api/sites/{siteName}/instances". </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
@@ -24137,7 +24137,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
-        /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get a gateway for the production slot&apos;s Virtual Network. </param>
+        /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get a gateway for the production slot's Virtual Network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
@@ -24170,7 +24170,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
-        /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get a gateway for the production slot&apos;s Virtual Network. </param>
+        /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get a gateway for the production slot's Virtual Network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
@@ -24227,7 +24227,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Integrates this Web App with a Virtual Network. This requires that 1) &quot;swiftSupported&quot; is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is not
+        /// Description for Integrates this Web App with a Virtual Network. This requires that 1) "swiftSupported" is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is not
         /// in use by another App Service Plan other than the one this App is in.
         /// </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
@@ -24263,7 +24263,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Integrates this Web App with a Virtual Network. This requires that 1) &quot;swiftSupported&quot; is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is not
+        /// Description for Integrates this Web App with a Virtual Network. This requires that 1) "swiftSupported" is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is not
         /// in use by another App Service Plan other than the one this App is in.
         /// </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
@@ -24401,7 +24401,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Integrates this Web App with a Virtual Network. This requires that 1) &quot;swiftSupported&quot; is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is not
+        /// Description for Integrates this Web App with a Virtual Network. This requires that 1) "swiftSupported" is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is not
         /// in use by another App Service Plan other than the one this App is in.
         /// </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
@@ -24437,7 +24437,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for Integrates this Web App with a Virtual Network. This requires that 1) &quot;swiftSupported&quot; is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is not
+        /// Description for Integrates this Web App with a Virtual Network. This requires that 1) "swiftSupported" is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is not
         /// in use by another App Service Plan other than the one this App is in.
         /// </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
@@ -24501,7 +24501,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get network features for the production slot. </param>
-        /// <param name="view"> The type of view. Only &quot;summary&quot; is supported at this time. </param>
+        /// <param name="view"> The type of view. Only "summary" is supported at this time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="view"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="view"/> is an empty string, and was expected to be non-empty. </exception>
@@ -24536,7 +24536,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get network features for the production slot. </param>
-        /// <param name="view"> The type of view. Only &quot;summary&quot; is supported at this time. </param>
+        /// <param name="view"> The type of view. Only "summary" is supported at this time. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="view"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="view"/> is an empty string, and was expected to be non-empty. </exception>
@@ -25354,7 +25354,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
-        /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[Hour|Minute|Day]&apos;. </param>
+        /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[Hour|Minute|Day]'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
@@ -25386,7 +25386,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
-        /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[Hour|Minute|Day]&apos;. </param>
+        /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[Hour|Minute|Day]'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
@@ -25436,7 +25436,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets web app&apos;s event logs. </summary>
+        /// <summary> Description for Gets web app's event logs. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -25467,7 +25467,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets web app&apos;s event logs. </summary>
+        /// <summary> Description for Gets web app's event logs. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
@@ -27592,7 +27592,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get the publishing profile for the production slot. </param>
-        /// <param name="publishingProfileOptions"> Specifies publishingProfileOptions for publishing profile. For example, use {&quot;format&quot;: &quot;FileZilla3&quot;} to get a FileZilla publishing profile. </param>
+        /// <param name="publishingProfileOptions"> Specifies publishingProfileOptions for publishing profile. For example, use {"format": "FileZilla3"} to get a FileZilla publishing profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="publishingProfileOptions"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
@@ -27623,7 +27623,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get the publishing profile for the production slot. </param>
-        /// <param name="publishingProfileOptions"> Specifies publishingProfileOptions for publishing profile. For example, use {&quot;format&quot;: &quot;FileZilla3&quot;} to get a FileZilla publishing profile. </param>
+        /// <param name="publishingProfileOptions"> Specifies publishingProfileOptions for publishing profile. For example, use {"format": "FileZilla3"} to get a FileZilla publishing profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="publishingProfileOptions"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
@@ -29873,7 +29873,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List a triggered web job&apos;s history for an app, or a deployment slot. </summary>
+        /// <summary> Description for List a triggered web job's history for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -29906,7 +29906,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List a triggered web job&apos;s history for an app, or a deployment slot. </summary>
+        /// <summary> Description for List a triggered web job's history for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -29965,7 +29965,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets a triggered web job&apos;s history by its ID for an app, , or a deployment slot. </summary>
+        /// <summary> Description for Gets a triggered web job's history by its ID for an app, , or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -30002,7 +30002,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets a triggered web job&apos;s history by its ID for an app, , or a deployment slot. </summary>
+        /// <summary> Description for Gets a triggered web job's history by its ID for an app, , or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -30152,7 +30152,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get quota information of the production slot. </param>
-        /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=(name.value eq &apos;Metric1&apos; or name.value eq &apos;Metric2&apos;) and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[Hour|Minute|Day]&apos;. </param>
+        /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=(name.value eq 'Metric1' or name.value eq 'Metric2') and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[Hour|Minute|Day]'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
@@ -30184,7 +30184,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get quota information of the production slot. </param>
-        /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=(name.value eq &apos;Metric1&apos; or name.value eq &apos;Metric2&apos;) and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[Hour|Minute|Day]&apos;. </param>
+        /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=(name.value eq 'Metric1' or name.value eq 'Metric2') and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[Hour|Minute|Day]'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
@@ -30702,13 +30702,13 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets an app&apos;s Virtual Network gateway. </summary>
+        /// <summary> Description for Gets an app's Virtual Network gateway. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
-        /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get a gateway for the production slot&apos;s Virtual Network. </param>
+        /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get a gateway for the production slot's Virtual Network. </param>
         /// <param name="vnetName"> Name of the Virtual Network. </param>
-        /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
+        /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is "primary". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="vnetName"/> or <paramref name="gatewayName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="vnetName"/> or <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -30739,13 +30739,13 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets an app&apos;s Virtual Network gateway. </summary>
+        /// <summary> Description for Gets an app's Virtual Network gateway. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
-        /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get a gateway for the production slot&apos;s Virtual Network. </param>
+        /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get a gateway for the production slot's Virtual Network. </param>
         /// <param name="vnetName"> Name of the Virtual Network. </param>
-        /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
+        /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is "primary". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="vnetName"/> or <paramref name="gatewayName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="vnetName"/> or <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -30810,9 +30810,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
-        /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will add or update a gateway for the production slot&apos;s Virtual Network. </param>
+        /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will add or update a gateway for the production slot's Virtual Network. </param>
         /// <param name="vnetName"> Name of the Virtual Network. </param>
-        /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
+        /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is "primary". </param>
         /// <param name="data"> The properties to update this gateway with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="vnetName"/>, <paramref name="gatewayName"/> or <paramref name="data"/> is null. </exception>
@@ -30847,9 +30847,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
-        /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will add or update a gateway for the production slot&apos;s Virtual Network. </param>
+        /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will add or update a gateway for the production slot's Virtual Network. </param>
         /// <param name="vnetName"> Name of the Virtual Network. </param>
-        /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
+        /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is "primary". </param>
         /// <param name="data"> The properties to update this gateway with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="vnetName"/>, <paramref name="gatewayName"/> or <paramref name="data"/> is null. </exception>
@@ -30914,9 +30914,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
-        /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will add or update a gateway for the production slot&apos;s Virtual Network. </param>
+        /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will add or update a gateway for the production slot's Virtual Network. </param>
         /// <param name="vnetName"> Name of the Virtual Network. </param>
-        /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
+        /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is "primary". </param>
         /// <param name="data"> The properties to update this gateway with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="vnetName"/>, <paramref name="gatewayName"/> or <paramref name="data"/> is null. </exception>
@@ -30951,9 +30951,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
-        /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will add or update a gateway for the production slot&apos;s Virtual Network. </param>
+        /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will add or update a gateway for the production slot's Virtual Network. </param>
         /// <param name="vnetName"> Name of the Virtual Network. </param>
-        /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
+        /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is "primary". </param>
         /// <param name="data"> The properties to update this gateway with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="vnetName"/>, <paramref name="gatewayName"/> or <paramref name="data"/> is null. </exception>
@@ -32525,7 +32525,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List a triggered web job&apos;s history for an app, or a deployment slot. </summary>
+        /// <summary> Description for List a triggered web job's history for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -32556,7 +32556,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List a triggered web job&apos;s history for an app, or a deployment slot. </summary>
+        /// <summary> Description for List a triggered web job's history for an app, or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -32611,7 +32611,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets a triggered web job&apos;s history by its ID for an app, , or a deployment slot. </summary>
+        /// <summary> Description for Gets a triggered web job's history by its ID for an app, , or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -32646,7 +32646,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets a triggered web job&apos;s history by its ID for an app, , or a deployment slot. </summary>
+        /// <summary> Description for Gets a triggered web job's history by its ID for an app, , or a deployment slot. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
@@ -32785,7 +32785,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
-        /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=(name.value eq &apos;Metric1&apos; or name.value eq &apos;Metric2&apos;) and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[Hour|Minute|Day]&apos;. </param>
+        /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=(name.value eq 'Metric1' or name.value eq 'Metric2') and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[Hour|Minute|Day]'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -32815,7 +32815,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
-        /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=(name.value eq &apos;Metric1&apos; or name.value eq &apos;Metric2&apos;) and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[Hour|Minute|Day]&apos;. </param>
+        /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=(name.value eq 'Metric1' or name.value eq 'Metric2') and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[Hour|Minute|Day]'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -33300,12 +33300,12 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets an app&apos;s Virtual Network gateway. </summary>
+        /// <summary> Description for Gets an app's Virtual Network gateway. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="vnetName"> Name of the Virtual Network. </param>
-        /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
+        /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is "primary". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/> or <paramref name="gatewayName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/> or <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -33335,12 +33335,12 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets an app&apos;s Virtual Network gateway. </summary>
+        /// <summary> Description for Gets an app's Virtual Network gateway. </summary>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="vnetName"> Name of the Virtual Network. </param>
-        /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
+        /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is "primary". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/> or <paramref name="gatewayName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/> or <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -33403,7 +33403,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="vnetName"> Name of the Virtual Network. </param>
-        /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
+        /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is "primary". </param>
         /// <param name="data"> The properties to update this gateway with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/>, <paramref name="gatewayName"/> or <paramref name="data"/> is null. </exception>
@@ -33438,7 +33438,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="vnetName"> Name of the Virtual Network. </param>
-        /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
+        /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is "primary". </param>
         /// <param name="data"> The properties to update this gateway with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/>, <paramref name="gatewayName"/> or <paramref name="data"/> is null. </exception>
@@ -33501,7 +33501,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="vnetName"> Name of the Virtual Network. </param>
-        /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
+        /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is "primary". </param>
         /// <param name="data"> The properties to update this gateway with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/>, <paramref name="gatewayName"/> or <paramref name="data"/> is null. </exception>
@@ -33536,7 +33536,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="vnetName"> Name of the Virtual Network. </param>
-        /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is &quot;primary&quot;. </param>
+        /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is "primary". </param>
         /// <param name="data"> The properties to update this gateway with. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="vnetName"/>, <paramref name="gatewayName"/> or <paramref name="data"/> is null. </exception>
@@ -34806,7 +34806,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
-        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
+        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from "GET api/sites/{siteName}/instances". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="instanceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -34839,7 +34839,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
-        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
+        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from "GET api/sites/{siteName}/instances". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="instanceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -34886,7 +34886,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
-        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
+        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from "GET api/sites/{siteName}/instances". </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
@@ -34921,7 +34921,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
-        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
+        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from "GET api/sites/{siteName}/instances". </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
@@ -34970,7 +34970,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
-        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
+        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from "GET api/sites/{siteName}/instances". </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
@@ -35005,7 +35005,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
-        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
+        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from "GET api/sites/{siteName}/instances". </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
@@ -35130,7 +35130,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
-        /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[Hour|Minute|Day]&apos;. </param>
+        /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[Hour|Minute|Day]'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -35162,7 +35162,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
-        /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[Hour|Minute|Day]&apos;. </param>
+        /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[Hour|Minute|Day]'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -35667,7 +35667,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for Gets an app&apos;s deployment slots. </summary>
+        /// <summary> Description for Gets an app's deployment slots. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -35698,7 +35698,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for Gets an app&apos;s deployment slots. </summary>
+        /// <summary> Description for Gets an app's deployment slots. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -36709,7 +36709,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
-        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
+        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from "GET api/sites/{siteName}/instances". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="instanceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -36744,7 +36744,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
-        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
+        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from "GET api/sites/{siteName}/instances". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="instanceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -36793,7 +36793,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
-        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
+        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from "GET api/sites/{siteName}/instances". </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
@@ -36830,7 +36830,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
-        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
+        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from "GET api/sites/{siteName}/instances". </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
@@ -36881,7 +36881,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
-        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
+        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from "GET api/sites/{siteName}/instances". </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
@@ -36918,7 +36918,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Site name. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API returns deployments for the production slot. </param>
-        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from &quot;GET api/sites/{siteName}/instances&quot;. </param>
+        /// <param name="instanceId"> ID of a specific scaled-out instance. This is the value of the name property in the JSON response from "GET api/sites/{siteName}/instances". </param>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/> or <paramref name="processId"/> is null. </exception>
@@ -37049,7 +37049,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
-        /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[Hour|Minute|Day]&apos;. </param>
+        /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[Hour|Minute|Day]'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
@@ -37083,7 +37083,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
-        /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[Hour|Minute|Day]&apos;. </param>
+        /// <param name="filter"> Return only usages/metrics specified in the filter. Filter conforms to odata syntax. Example: $filter=(startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[Hour|Minute|Day]'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
@@ -37937,7 +37937,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List a triggered web job&apos;s history for an app, or a deployment slot. </summary>
+        /// <summary> Description for List a triggered web job's history for an app, or a deployment slot. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -37972,7 +37972,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List a triggered web job&apos;s history for an app, or a deployment slot. </summary>
+        /// <summary> Description for List a triggered web job's history for an app, or a deployment slot. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -38027,7 +38027,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get quota information of the production slot. </param>
-        /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=(name.value eq &apos;Metric1&apos; or name.value eq &apos;Metric2&apos;) and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[Hour|Minute|Day]&apos;. </param>
+        /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=(name.value eq 'Metric1' or name.value eq 'Metric2') and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[Hour|Minute|Day]'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
@@ -38061,7 +38061,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will get quota information of the production slot. </param>
-        /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=(name.value eq &apos;Metric1&apos; or name.value eq &apos;Metric2&apos;) and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[Hour|Minute|Day]&apos;. </param>
+        /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=(name.value eq 'Metric1' or name.value eq 'Metric2') and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[Hour|Minute|Day]'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
@@ -38491,7 +38491,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        /// <summary> Description for List a triggered web job&apos;s history for an app, or a deployment slot. </summary>
+        /// <summary> Description for List a triggered web job's history for an app, or a deployment slot. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -38524,7 +38524,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        /// <summary> Description for List a triggered web job&apos;s history for an app, or a deployment slot. </summary>
+        /// <summary> Description for List a triggered web job's history for an app, or a deployment slot. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
@@ -38576,7 +38576,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
-        /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=(name.value eq &apos;Metric1&apos; or name.value eq &apos;Metric2&apos;) and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[Hour|Minute|Day]&apos;. </param>
+        /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=(name.value eq 'Metric1' or name.value eq 'Metric2') and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[Hour|Minute|Day]'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
@@ -38608,7 +38608,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
-        /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=(name.value eq &apos;Metric1&apos; or name.value eq &apos;Metric2&apos;) and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration&apos;[Hour|Minute|Day]&apos;. </param>
+        /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=(name.value eq 'Metric1' or name.value eq 'Metric2') and startTime eq 2014-01-01T00:00:00Z and endTime eq 2014-12-31T23:59:59Z and timeGrain eq duration'[Hour|Minute|Day]'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>

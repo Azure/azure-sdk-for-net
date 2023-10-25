@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.AppConfiguration.Models
     {
         internal static AppConfigurationStoreApiKeyListResult DeserializeAppConfigurationStoreApiKeyListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<AppConfigurationStoreApiKey>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AppConfigurationStoreApiKey> array = new List<AppConfigurationStoreApiKey>();

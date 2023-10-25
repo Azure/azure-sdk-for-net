@@ -20,7 +20,8 @@ namespace Azure.ResourceManager.ArcScVmm
         {
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
-            JsonSerializer.Serialize(writer, ExtendedLocation); if (Optional.IsCollectionDefined(Tags))
+            JsonSerializer.Serialize(writer, ExtendedLocation);
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -121,6 +122,10 @@ namespace Azure.ResourceManager.ArcScVmm
 
         internal static ScVmmVirtualMachineData DeserializeScVmmVirtualMachineData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ExtendedLocation extendedLocation = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -155,7 +160,6 @@ namespace Azure.ResourceManager.ArcScVmm
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -190,7 +194,6 @@ namespace Azure.ResourceManager.ArcScVmm
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -234,7 +237,6 @@ namespace Azure.ResourceManager.ArcScVmm
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<Checkpoint> array = new List<Checkpoint>();
@@ -249,7 +251,6 @@ namespace Azure.ResourceManager.ArcScVmm
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<AvailabilitySetListItem> array = new List<AvailabilitySetListItem>();
@@ -264,7 +265,6 @@ namespace Azure.ResourceManager.ArcScVmm
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             osProfile = OSProfile.DeserializeOSProfile(property0.Value);
@@ -274,7 +274,6 @@ namespace Azure.ResourceManager.ArcScVmm
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             hardwareProfile = HardwareProfile.DeserializeHardwareProfile(property0.Value);
@@ -284,7 +283,6 @@ namespace Azure.ResourceManager.ArcScVmm
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             networkProfile = NetworkProfile.DeserializeNetworkProfile(property0.Value);
@@ -294,7 +292,6 @@ namespace Azure.ResourceManager.ArcScVmm
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             storageProfile = StorageProfile.DeserializeStorageProfile(property0.Value);
@@ -314,7 +311,6 @@ namespace Azure.ResourceManager.ArcScVmm
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             generation = property0.Value.GetInt32();

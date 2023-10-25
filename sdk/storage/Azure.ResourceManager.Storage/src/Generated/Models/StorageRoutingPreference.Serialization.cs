@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static StorageRoutingPreference DeserializeStorageRoutingPreference(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<StorageRoutingChoice> routingChoice = default;
             Optional<bool> publishMicrosoftEndpoints = default;
             Optional<bool> publishInternetEndpoints = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     routingChoice = new StorageRoutingChoice(property.Value.GetString());
@@ -54,7 +57,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     publishMicrosoftEndpoints = property.Value.GetBoolean();
@@ -64,7 +66,6 @@ namespace Azure.ResourceManager.Storage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     publishInternetEndpoints = property.Value.GetBoolean();

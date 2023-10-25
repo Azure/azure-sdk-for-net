@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Media.Models
     {
         internal static MediaJobErrorDetail DeserializeMediaJobErrorDetail(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> code = default;
             Optional<string> message = default;
             foreach (var property in element.EnumerateObject())

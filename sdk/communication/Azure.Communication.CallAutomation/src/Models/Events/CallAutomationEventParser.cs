@@ -92,10 +92,10 @@ namespace Azure.Communication.CallAutomation
             var eventType = type.Replace(EventPrefix, "");
             switch (eventType)
             {
-                case nameof(AddParticipantsFailed):
-                    return AddParticipantsFailed.Deserialize(eventData);
-                case nameof(AddParticipantsSucceeded):
-                    return AddParticipantsSucceeded.Deserialize(eventData);
+                case nameof(AddParticipantFailed):
+                    return AddParticipantFailed.Deserialize(eventData);
+                case nameof(AddParticipantSucceeded):
+                    return AddParticipantSucceeded.Deserialize(eventData);
                 case nameof(CallConnected):
                     return CallConnected.Deserialize(eventData);
                 case nameof(CallDisconnected):
@@ -120,6 +120,50 @@ namespace Azure.Communication.CallAutomation
                     return RecognizeFailed.Deserialize(eventData);
                 case nameof(RecognizeCanceled):
                     return RecognizeCanceled.Deserialize(eventData);
+                case nameof(RemoveParticipantSucceeded):
+                    return RemoveParticipantSucceeded.Deserialize(eventData);
+                case nameof(RemoveParticipantFailed):
+                    return RemoveParticipantFailed.Deserialize(eventData);
+                case nameof(ContinuousDtmfRecognitionToneReceived):
+                    return ContinuousDtmfRecognitionToneReceived.Deserialize(eventData);
+                case nameof(ContinuousDtmfRecognitionToneFailed):
+                    return ContinuousDtmfRecognitionToneFailed.Deserialize(eventData);
+                case nameof(ContinuousDtmfRecognitionStopped):
+                    return ContinuousDtmfRecognitionStopped.Deserialize(eventData);
+                case nameof(SendDtmfCompleted):
+                    return SendDtmfCompleted.Deserialize(eventData);
+                case nameof(SendDtmfFailed):
+                    return SendDtmfFailed.Deserialize(eventData);
+                case nameof(CancelAddParticipantFailed):
+                    return CancelAddParticipantFailed.Deserialize(eventData);
+                case nameof(AddParticipantCancelled):
+                    return AddParticipantCancelled.Deserialize(eventData);
+                case nameof(TranscriptionStarted):
+                    return TranscriptionStarted.Deserialize(eventData);
+                case nameof(TranscriptionStopped):
+                    return TranscriptionStopped.Deserialize(eventData);
+                case nameof(TranscriptionResumed):
+                    return TranscriptionResumed.Deserialize(eventData);
+                case nameof(TranscriptionFailed):
+                    return TranscriptionFailed.Deserialize(eventData);
+                #region Dialog
+                case nameof(DialogCompleted):
+                    return DialogCompleted.Deserialize(eventData);
+                case nameof(DialogFailed):
+                    return DialogFailed.Deserialize(eventData);
+                case nameof(DialogConsent):
+                    return DialogConsent.Deserialize(eventData);
+                case nameof(DialogStarted):
+                    return DialogStarted.Deserialize(eventData);
+                case nameof(DialogHangup):
+                    return DialogHangup.Deserialize(eventData);
+                case nameof(DialogTransfer):
+                    return DialogTransfer.Deserialize(eventData);
+                case nameof(DialogSensitivityUpdate):
+                    return DialogSensitivityUpdate.Deserialize(eventData);
+                case nameof(DialogLanguageChange):
+                    return DialogLanguageChange.Deserialize(eventData);
+                #endregion
                 default:
                     return null;
             }

@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     {
         internal static DataExportListResult DeserializeDataExportListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<OperationalInsightsDataExportData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<OperationalInsightsDataExportData> array = new List<OperationalInsightsDataExportData>();

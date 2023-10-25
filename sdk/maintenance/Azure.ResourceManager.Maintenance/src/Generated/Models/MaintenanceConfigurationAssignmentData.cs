@@ -26,11 +26,13 @@ namespace Azure.ResourceManager.Maintenance.Models
         /// <param name="location"> Location of the resource. </param>
         /// <param name="maintenanceConfigurationId"> The maintenance configuration Id. </param>
         /// <param name="resourceId"> The unique resourceId. </param>
-        internal MaintenanceConfigurationAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, ResourceIdentifier maintenanceConfigurationId, ResourceIdentifier resourceId) : base(id, name, resourceType, systemData)
+        /// <param name="filter"> Properties of the configuration assignment. </param>
+        internal MaintenanceConfigurationAssignmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, ResourceIdentifier maintenanceConfigurationId, ResourceIdentifier resourceId, MaintenanceConfigurationAssignmentFilter filter) : base(id, name, resourceType, systemData)
         {
             Location = location;
             MaintenanceConfigurationId = maintenanceConfigurationId;
             ResourceId = resourceId;
+            Filter = filter;
         }
 
         /// <summary> Location of the resource. </summary>
@@ -39,5 +41,7 @@ namespace Azure.ResourceManager.Maintenance.Models
         public ResourceIdentifier MaintenanceConfigurationId { get; set; }
         /// <summary> The unique resourceId. </summary>
         public ResourceIdentifier ResourceId { get; set; }
+        /// <summary> Properties of the configuration assignment. </summary>
+        public MaintenanceConfigurationAssignmentFilter Filter { get; set; }
     }
 }

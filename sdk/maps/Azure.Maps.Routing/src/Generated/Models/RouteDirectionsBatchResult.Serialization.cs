@@ -15,6 +15,10 @@ namespace Azure.Maps.Routing.Models
     {
         internal static RouteDirectionsBatchResult DeserializeRouteDirectionsBatchResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<RouteDirectionsBatchItem>> batchItems = default;
             Optional<BatchResultSummary> summary = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +27,6 @@ namespace Azure.Maps.Routing.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RouteDirectionsBatchItem> array = new List<RouteDirectionsBatchItem>();
@@ -38,7 +41,6 @@ namespace Azure.Maps.Routing.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     summary = BatchResultSummary.DeserializeBatchResultSummary(property.Value);

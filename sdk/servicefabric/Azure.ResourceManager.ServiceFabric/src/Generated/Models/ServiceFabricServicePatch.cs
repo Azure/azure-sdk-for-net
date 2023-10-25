@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="placementConstraints"> The placement constraints as a string. Placement constraints are boolean expressions on node properties and allow for restricting a service to particular nodes based on the service requirements. For example, to place a service on nodes where NodeType is blue specify the following: &quot;NodeColor == blue)&quot;. </param>
+        /// <param name="placementConstraints"> The placement constraints as a string. Placement constraints are boolean expressions on node properties and allow for restricting a service to particular nodes based on the service requirements. For example, to place a service on nodes where NodeType is blue specify the following: "NodeColor == blue)". </param>
         /// <param name="correlationScheme"> A list that describes the correlation of the service with other services. </param>
         /// <param name="serviceLoadMetrics"> The service load metrics is given as an array of ServiceLoadMetricDescription objects. </param>
         /// <param name="servicePlacementPolicies"> A list that describes the correlation of the service with other services. </param>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             ETag = etag;
         }
 
-        /// <summary> The placement constraints as a string. Placement constraints are boolean expressions on node properties and allow for restricting a service to particular nodes based on the service requirements. For example, to place a service on nodes where NodeType is blue specify the following: &quot;NodeColor == blue)&quot;. </summary>
+        /// <summary> The placement constraints as a string. Placement constraints are boolean expressions on node properties and allow for restricting a service to particular nodes based on the service requirements. For example, to place a service on nodes where NodeType is blue specify the following: "NodeColor == blue)". </summary>
         public string PlacementConstraints { get; set; }
         /// <summary> A list that describes the correlation of the service with other services. </summary>
         public IList<ServiceCorrelationDescription> CorrelationScheme { get; }

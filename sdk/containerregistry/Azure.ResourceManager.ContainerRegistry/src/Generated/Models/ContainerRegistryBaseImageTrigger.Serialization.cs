@@ -39,6 +39,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static ContainerRegistryBaseImageTrigger DeserializeContainerRegistryBaseImageTrigger(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ContainerRegistryBaseImageTriggerType baseImageTriggerType = default;
             Optional<string> updateTriggerEndpoint = default;
             Optional<ContainerRegistryUpdateTriggerPayloadType> updateTriggerPayloadType = default;
@@ -60,7 +64,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     updateTriggerPayloadType = new ContainerRegistryUpdateTriggerPayloadType(property.Value.GetString());
@@ -70,7 +73,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     status = new ContainerRegistryTriggerStatus(property.Value.GetString());

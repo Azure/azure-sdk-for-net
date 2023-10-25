@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Logic
 {
-    /// <summary> A class representing the IntegrationAccountBatchConfiguration data model. </summary>
+    /// <summary>
+    /// A class representing the IntegrationAccountBatchConfiguration data model.
+    /// The batch configuration resource definition.
+    /// </summary>
     public partial class IntegrationAccountBatchConfigurationData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of IntegrationAccountBatchConfigurationData. </summary>

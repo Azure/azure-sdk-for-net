@@ -38,7 +38,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             return forwardToUri.AbsoluteUri;
         }
 
-        public static async Task<SubscriptionProperties> ParseResponseAsync(string topicName, Response response, ClientDiagnostics diagnostics)
+        public static async Task<SubscriptionProperties> ParseResponseAsync(string topicName, Response response)
         {
             try
             {
@@ -48,7 +48,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                 {
                     if (xDoc.Name.LocalName == "entry")
                     {
-                        return await ParseFromEntryElementAsync(topicName, xDoc, response, diagnostics).ConfigureAwait(false);
+                        return ParseFromEntryElement(topicName, xDoc, response);
                     }
                 }
             }
@@ -59,7 +59,7 @@ namespace Azure.Messaging.ServiceBus.Administration
             throw new ServiceBusException(
                 "Subscription was not found",
                 ServiceBusFailureReason.MessagingEntityNotFound,
-                innerException: await diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false));
+                innerException: new RequestFailedException(response));
         }
 
         public static async Task<List<SubscriptionProperties>> ParsePagedResponseAsync(string topicName, Response response, ClientDiagnostics diagnostics)
@@ -77,7 +77,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                         var entryList = xDoc.Elements(XName.Get("entry", AdministrationClientConstants.AtomNamespace));
                         foreach (var entry in entryList)
                         {
-                            subscriptionList.Add(await ParseFromEntryElementAsync(topicName, entry, response, diagnostics).ConfigureAwait(false));
+                            subscriptionList.Add(ParseFromEntryElement(topicName, entry, response));
                         }
 
                         return subscriptionList;
@@ -92,10 +92,10 @@ namespace Azure.Messaging.ServiceBus.Administration
             throw new ServiceBusException(
                 "No subscriptions were found",
                 ServiceBusFailureReason.MessagingEntityNotFound,
-                innerException: await diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false));
+                innerException: new RequestFailedException(response));
         }
 
-        private static async Task<SubscriptionProperties> ParseFromEntryElementAsync(string topicName, XElement xEntry, Response response, ClientDiagnostics diagnostics)
+        private static SubscriptionProperties ParseFromEntryElement(string topicName, XElement xEntry, Response response)
         {
             var name = xEntry.Element(XName.Get("title", AdministrationClientConstants.AtomNamespace)).Value;
             var subscriptionProperties = new SubscriptionProperties(topicName, name);
@@ -108,7 +108,7 @@ namespace Azure.Messaging.ServiceBus.Administration
                 throw new ServiceBusException(
                     "Subscription was not found",
                     ServiceBusFailureReason.MessagingEntityNotFound,
-                    innerException: await diagnostics.CreateRequestFailedExceptionAsync(response).ConfigureAwait(false));
+                    innerException: new RequestFailedException(response));
             }
 
             foreach (var element in subscriptionXml.Elements())

@@ -12,13 +12,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ElasticSan
 {
-    /// <summary> A class representing the ElasticSanVolumeGroup data model. </summary>
+    /// <summary>
+    /// A class representing the ElasticSanVolumeGroup data model.
+    /// Response for Volume Group request.
+    /// </summary>
     public partial class ElasticSanVolumeGroupData : ResourceData
     {
         /// <summary> Initializes a new instance of ElasticSanVolumeGroupData. </summary>
         public ElasticSanVolumeGroupData()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            PrivateEndpointConnections = new ChangeTrackingList<ElasticSanPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of ElasticSanVolumeGroupData. </summary>
@@ -26,26 +29,34 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="identity"> The identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
         /// <param name="provisioningState"> State of the operation on the resource. </param>
         /// <param name="protocolType"> Type of storage target. </param>
         /// <param name="encryption"> Type of encryption. </param>
+        /// <param name="encryptionProperties"> Encryption Properties describing Key Vault and Identity information. </param>
         /// <param name="networkAcls"> A collection of rules governing the accessibility from specific network locations. </param>
-        /// <param name="tags"> Azure resource tags. </param>
-        internal ElasticSanVolumeGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ElasticSanProvisioningState? provisioningState, StorageTargetType? protocolType, ElasticSanEncryptionType? encryption, NetworkRuleSet networkAcls, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        /// <param name="privateEndpointConnections"> The list of Private Endpoint Connections. </param>
+        internal ElasticSanVolumeGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, ElasticSanProvisioningState? provisioningState, StorageTargetType? protocolType, ElasticSanEncryptionType? encryption, Models.EncryptionProperties encryptionProperties, NetworkRuleSet networkAcls, IReadOnlyList<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections) : base(id, name, resourceType, systemData)
         {
+            Identity = identity;
             ProvisioningState = provisioningState;
             ProtocolType = protocolType;
             Encryption = encryption;
+            EncryptionProperties = encryptionProperties;
             NetworkAcls = networkAcls;
-            Tags = tags;
+            PrivateEndpointConnections = privateEndpointConnections;
         }
 
+        /// <summary> The identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> State of the operation on the resource. </summary>
         public ElasticSanProvisioningState? ProvisioningState { get; }
         /// <summary> Type of storage target. </summary>
         public StorageTargetType? ProtocolType { get; set; }
         /// <summary> Type of encryption. </summary>
         public ElasticSanEncryptionType? Encryption { get; set; }
+        /// <summary> Encryption Properties describing Key Vault and Identity information. </summary>
+        public Models.EncryptionProperties EncryptionProperties { get; set; }
         /// <summary> A collection of rules governing the accessibility from specific network locations. </summary>
         internal NetworkRuleSet NetworkAcls { get; set; }
         /// <summary> The list of virtual network rules. </summary>
@@ -59,7 +70,7 @@ namespace Azure.ResourceManager.ElasticSan
             }
         }
 
-        /// <summary> Azure resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
+        /// <summary> The list of Private Endpoint Connections. </summary>
+        public IReadOnlyList<ElasticSanPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
     }
 }

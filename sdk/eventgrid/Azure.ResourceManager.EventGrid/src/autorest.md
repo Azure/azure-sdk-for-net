@@ -5,13 +5,23 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 
 azure-arm: true
-generate-model-factory: false
 csharp: true
 library-name: EventGrid
 namespace: Azure.ResourceManager.EventGrid
-require: https://github.com/Azure/azure-rest-api-specs/blob/df70965d3a207eb2a628c96aa6ed935edc6b7911/specification/eventgrid/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/4b7481587132ce0bde5f0a6d6ab590129f7b7179/specification/eventgrid/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
+  skipped-operations:
+  - Topics_ListEventTypes # because we use customized code to rewrite this operation
+  - EventSubscriptions_ListGlobalBySubscriptionForTopicType # because we use customized code to rewrite this operation
+  - EventSubscriptions_ListGlobalByResourceGroupForTopicType # because we use customized code to rewrite this operation
+  - EventSubscriptions_ListRegionalByResourceGroupForTopicType # because we use customized code to rewrite this operation
+  - EventSubscriptions_ListRegionalBySubscriptionForTopicType # because we use customized code to rewrite this operation
+  - EventSubscriptions_ListRegionalByResourceGroup # because we use customized code to rewrite this operation
+  - EventSubscriptions_ListRegionalBySubscription # because we use customized code to rewrite this operation
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -40,7 +50,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -101,6 +111,16 @@ rename-mapping:
   SystemTopic.properties.source: -|arm-id
   SystemTopic.properties.metricResourceId: -|uuid
   Topic: EventGridTopic
+  TopicRegenerateKeyRequest: TopicRegenerateKeyContent
+  Subscription: NamespaceTopicEventSubscription
+  Client: EventGridNamespaceClient
+  ClientGroup: EventGridNamespaceClientGroup
+  Namespace: EventGridNamespace
+  PermissionBinding: EventGridNamespacePermissionBinding
+  ClientAuthentication: EventGridNamespaceClientAuthentication
+  ClientProvisioningState: EventGridNamespaceClientProvisioningState
+  ClientState: EventGridNamespaceClientState
+  Filter: EventGridFilter
   Topic.properties.disableLocalAuth: IsLocalAuthDisabled
   Topic.properties.endpoint: Endpoint|Uri
   TopicUpdateParameters.properties.disableLocalAuth: IsLocalAuthDisabled

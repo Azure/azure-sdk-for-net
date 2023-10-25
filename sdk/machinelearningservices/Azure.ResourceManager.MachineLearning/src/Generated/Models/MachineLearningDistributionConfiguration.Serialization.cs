@@ -22,12 +22,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningDistributionConfiguration DeserializeMachineLearningDistributionConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("distributionType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
                     case "Mpi": return MpiDistributionConfiguration.DeserializeMpiDistributionConfiguration(element);
                     case "PyTorch": return PyTorchDistributionConfiguration.DeserializePyTorchDistributionConfiguration(element);
+                    case "Ray": return RayDistributionConfiguration.DeserializeRayDistributionConfiguration(element);
                     case "TensorFlow": return TensorFlowDistributionConfiguration.DeserializeTensorFlowDistributionConfiguration(element);
                 }
             }

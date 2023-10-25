@@ -33,6 +33,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         internal static RollingUpgradeMonitoringPolicy DeserializeRollingUpgradeMonitoringPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             PolicyViolationCompensationAction failureAction = default;
             TimeSpan healthCheckWaitDuration = default;
             TimeSpan healthCheckStableDuration = default;

@@ -13,7 +13,10 @@ using Azure.ResourceManager.ServiceNetworking.Models;
 
 namespace Azure.ResourceManager.ServiceNetworking
 {
-    /// <summary> A class representing the Association data model. </summary>
+    /// <summary>
+    /// A class representing the Association data model.
+    /// Association Subresource of Traffic Controller
+    /// </summary>
     public partial class AssociationData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of AssociationData. </summary>
@@ -31,7 +34,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <param name="location"> The location. </param>
         /// <param name="associationType"> Association Type. </param>
         /// <param name="subnet"> Association Subnet. </param>
-        /// <param name="provisioningState"> Provisioning State. </param>
+        /// <param name="provisioningState"> Provisioning State of Traffic Controller Association Resource. </param>
         internal AssociationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, AssociationType? associationType, WritableSubResource subnet, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             AssociationType = associationType;
@@ -55,7 +58,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             }
         }
 
-        /// <summary> Provisioning State. </summary>
+        /// <summary> Provisioning State of Traffic Controller Association Resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }
 }

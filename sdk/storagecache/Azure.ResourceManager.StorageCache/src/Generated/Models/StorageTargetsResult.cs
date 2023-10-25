@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         /// <summary> Initializes a new instance of StorageTargetsResult. </summary>
         /// <param name="nextLink"> The URI to fetch the next page of Storage Targets. </param>
-        /// <param name="value"> The list of Storage Targets defined for the Cache. </param>
+        /// <param name="value"> The list of Storage Targets defined for the cache. </param>
         internal StorageTargetsResult(string nextLink, IReadOnlyList<StorageTargetData> value)
         {
             NextLink = nextLink;
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         /// <summary> The URI to fetch the next page of Storage Targets. </summary>
         public string NextLink { get; }
-        /// <summary> The list of Storage Targets defined for the Cache. </summary>
+        /// <summary> The list of Storage Targets defined for the cache. </summary>
         public IReadOnlyList<StorageTargetData> Value { get; }
     }
 }

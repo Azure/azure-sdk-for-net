@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
@@ -16,6 +15,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     {
         internal static PricingList DeserializePricingList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<SecurityCenterPricingData> value = default;
             foreach (var property in element.EnumerateObject())
             {

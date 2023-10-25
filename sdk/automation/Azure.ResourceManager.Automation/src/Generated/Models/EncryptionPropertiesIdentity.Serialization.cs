@@ -22,7 +22,10 @@ namespace Azure.ResourceManager.Automation.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(UserAssignedIdentity);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(UserAssignedIdentity.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(UserAssignedIdentity))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
@@ -30,6 +33,10 @@ namespace Azure.ResourceManager.Automation.Models
 
         internal static EncryptionPropertiesIdentity DeserializeEncryptionPropertiesIdentity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<BinaryData> userAssignedIdentity = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -37,7 +44,6 @@ namespace Azure.ResourceManager.Automation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     userAssignedIdentity = BinaryData.FromString(property.Value.GetRawText());

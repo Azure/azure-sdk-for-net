@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="description"> A description, will be applied to methods in the generated OpenAPI documentation. </param>
         /// <param name="uri"> Full uri, will override `appName`. </param>
         /// <param name="isSsoEnabled"> Enable sso validation. </param>
-        /// <param name="isTokenRelayed"> Pass currently-authenticated user&apos;s identity token to application service, default is &apos;false&apos;. </param>
+        /// <param name="isTokenRelayed"> Pass currently-authenticated user's identity token to application service, default is 'false'. </param>
         /// <param name="predicates"> A number of conditions to evaluate a route for each request. Each predicate may be evaluated against request headers and parameter values. All of the predicates associated with a route must evaluate to true for the route to be matched to the request. </param>
         /// <param name="filters"> To modify the request before sending it to the target endpoint, or the received response. </param>
         /// <param name="order"> Route processing order. </param>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public Uri Uri { get; set; }
         /// <summary> Enable sso validation. </summary>
         public bool? IsSsoEnabled { get; set; }
-        /// <summary> Pass currently-authenticated user&apos;s identity token to application service, default is &apos;false&apos;. </summary>
+        /// <summary> Pass currently-authenticated user's identity token to application service, default is 'false'. </summary>
         public bool? IsTokenRelayed { get; set; }
         /// <summary> A number of conditions to evaluate a route for each request. Each predicate may be evaluated against request headers and parameter values. All of the predicates associated with a route must evaluate to true for the route to be matched to the request. </summary>
         public IList<string> Predicates { get; }

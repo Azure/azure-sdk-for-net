@@ -22,6 +22,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static X12MessageIdentifier DeserializeX12MessageIdentifier(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string messageId = default;
             foreach (var property in element.EnumerateObject())
             {

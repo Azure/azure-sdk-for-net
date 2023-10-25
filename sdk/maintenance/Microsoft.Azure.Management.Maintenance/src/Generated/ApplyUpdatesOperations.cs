@@ -59,14 +59,14 @@ namespace Microsoft.Azure.Management.Maintenance
         /// <param name='resourceGroupName'>
         /// Resource group name
         /// </param>
+        /// <param name='providerName'>
+        /// Resource provider name
+        /// </param>
         /// <param name='resourceParentType'>
         /// Resource parent type
         /// </param>
         /// <param name='resourceParentName'>
         /// Resource parent identifier
-        /// </param>
-        /// <param name='providerName'>
-        /// Resource provider name
         /// </param>
         /// <param name='resourceType'>
         /// Resource type
@@ -98,7 +98,7 @@ namespace Microsoft.Azure.Management.Maintenance
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ApplyUpdate>> GetParentWithHttpMessagesAsync(string resourceGroupName, string resourceParentType, string resourceParentName, string providerName, string resourceType, string resourceName, string applyUpdateName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ApplyUpdate>> GetParentWithHttpMessagesAsync(string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string applyUpdateName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -108,6 +108,10 @@ namespace Microsoft.Azure.Management.Maintenance
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
+            if (providerName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "providerName");
+            }
             if (resourceParentType == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceParentType");
@@ -115,10 +119,6 @@ namespace Microsoft.Azure.Management.Maintenance
             if (resourceParentName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceParentName");
-            }
-            if (providerName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "providerName");
             }
             if (resourceType == null)
             {
@@ -144,9 +144,9 @@ namespace Microsoft.Azure.Management.Maintenance
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("providerName", providerName);
                 tracingParameters.Add("resourceParentType", resourceParentType);
                 tracingParameters.Add("resourceParentName", resourceParentName);
-                tracingParameters.Add("providerName", providerName);
                 tracingParameters.Add("resourceType", resourceType);
                 tracingParameters.Add("resourceName", resourceName);
                 tracingParameters.Add("applyUpdateName", applyUpdateName);
@@ -158,9 +158,9 @@ namespace Microsoft.Azure.Management.Maintenance
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{providerName}/{resourceParentType}/{resourceParentName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/applyUpdates/{applyUpdateName}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{providerName}", System.Uri.EscapeDataString(providerName));
             _url = _url.Replace("{resourceParentType}", System.Uri.EscapeDataString(resourceParentType));
             _url = _url.Replace("{resourceParentName}", System.Uri.EscapeDataString(resourceParentName));
-            _url = _url.Replace("{providerName}", System.Uri.EscapeDataString(providerName));
             _url = _url.Replace("{resourceType}", System.Uri.EscapeDataString(resourceType));
             _url = _url.Replace("{resourceName}", System.Uri.EscapeDataString(resourceName));
             _url = _url.Replace("{applyUpdateName}", System.Uri.EscapeDataString(applyUpdateName));
@@ -678,7 +678,7 @@ namespace Microsoft.Azure.Management.Maintenance
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200)
+            if ((int)_statusCode != 200 && (int)_statusCode != 201)
             {
                 var ex = new MaintenanceErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -717,6 +717,24 @@ namespace Microsoft.Azure.Management.Maintenance
             }
             // Deserialize Response
             if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ApplyUpdate>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 201)
             {
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
@@ -890,7 +908,7 @@ namespace Microsoft.Azure.Management.Maintenance
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200)
+            if ((int)_statusCode != 200 && (int)_statusCode != 201)
             {
                 var ex = new MaintenanceErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -929,6 +947,24 @@ namespace Microsoft.Azure.Management.Maintenance
             }
             // Deserialize Response
             if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ApplyUpdate>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 201)
             {
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try

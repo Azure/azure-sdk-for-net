@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -19,16 +20,24 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Initializes a new instance of ManagedHsmPrivateEndpointConnectionItemData. </summary>
+        /// <param name="id"> Id of private endpoint connection. </param>
+        /// <param name="etag"> Modified whenever there is a change in the state of private endpoint connection. </param>
         /// <param name="privateEndpoint"> Properties of the private endpoint object. </param>
         /// <param name="privateLinkServiceConnectionState"> Approval state of the private link connection. </param>
         /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
-        internal ManagedHsmPrivateEndpointConnectionItemData(SubResource privateEndpoint, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState, ManagedHsmPrivateEndpointConnectionProvisioningState? provisioningState)
+        internal ManagedHsmPrivateEndpointConnectionItemData(ResourceIdentifier id, ETag? etag, SubResource privateEndpoint, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState, ManagedHsmPrivateEndpointConnectionProvisioningState? provisioningState)
         {
+            Id = id;
+            ETag = etag;
             PrivateEndpoint = privateEndpoint;
             PrivateLinkServiceConnectionState = privateLinkServiceConnectionState;
             ProvisioningState = provisioningState;
         }
 
+        /// <summary> Id of private endpoint connection. </summary>
+        public ResourceIdentifier Id { get; }
+        /// <summary> Modified whenever there is a change in the state of private endpoint connection. </summary>
+        public ETag? ETag { get; }
         /// <summary> Properties of the private endpoint object. </summary>
         internal SubResource PrivateEndpoint { get; }
         /// <summary> Gets Id. </summary>

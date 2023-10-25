@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static TermsOfServiceProperties DeserializeTermsOfServiceProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> text = default;
             Optional<bool> enabled = default;
             Optional<bool> consentRequired = default;
@@ -49,7 +53,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     enabled = property.Value.GetBoolean();
@@ -59,7 +62,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     consentRequired = property.Value.GetBoolean();

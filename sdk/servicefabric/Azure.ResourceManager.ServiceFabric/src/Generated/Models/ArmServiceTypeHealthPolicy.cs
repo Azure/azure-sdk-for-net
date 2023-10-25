@@ -9,7 +9,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 {
     /// <summary>
     /// Represents the health policy used to evaluate the health of services belonging to a service type.
-    /// 
+    ///
     /// </summary>
     public partial class ArmServiceTypeHealthPolicy
     {
@@ -21,15 +21,15 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <summary> Initializes a new instance of ArmServiceTypeHealthPolicy. </summary>
         /// <param name="maxPercentUnhealthyServices">
         /// The maximum percentage of services allowed to be unhealthy before your application is considered in error.
-        /// 
+        ///
         /// </param>
         /// <param name="maxPercentUnhealthyPartitionsPerService">
         /// The maximum percentage of partitions per service allowed to be unhealthy before your application is considered in error.
-        /// 
+        ///
         /// </param>
         /// <param name="maxPercentUnhealthyReplicasPerPartition">
         /// The maximum percentage of replicas per partition allowed to be unhealthy before your application is considered in error.
-        /// 
+        ///
         /// </param>
         internal ArmServiceTypeHealthPolicy(int? maxPercentUnhealthyServices, int? maxPercentUnhealthyPartitionsPerService, int? maxPercentUnhealthyReplicasPerPartition)
         {
@@ -40,17 +40,17 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         /// <summary>
         /// The maximum percentage of services allowed to be unhealthy before your application is considered in error.
-        /// 
+        ///
         /// </summary>
         public int? MaxPercentUnhealthyServices { get; set; }
         /// <summary>
         /// The maximum percentage of partitions per service allowed to be unhealthy before your application is considered in error.
-        /// 
+        ///
         /// </summary>
         public int? MaxPercentUnhealthyPartitionsPerService { get; set; }
         /// <summary>
         /// The maximum percentage of replicas per partition allowed to be unhealthy before your application is considered in error.
-        /// 
+        ///
         /// </summary>
         public int? MaxPercentUnhealthyReplicasPerPartition { get; set; }
     }

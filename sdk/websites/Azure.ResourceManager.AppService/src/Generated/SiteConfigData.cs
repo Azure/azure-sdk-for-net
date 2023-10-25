@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the SiteConfig data model. </summary>
+    /// <summary>
+    /// A class representing the SiteConfig data model.
+    /// Web app configuration ARM resource.
+    /// </summary>
     public partial class SiteConfigData : ResourceData
     {
         /// <summary> Initializes a new instance of SiteConfigData. </summary>

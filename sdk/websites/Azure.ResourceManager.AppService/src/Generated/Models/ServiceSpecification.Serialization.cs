@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static ServiceSpecification DeserializeServiceSpecification(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<MetricSpecification>> metricSpecifications = default;
             Optional<IReadOnlyList<LogSpecification>> logSpecifications = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MetricSpecification> array = new List<MetricSpecification>();
@@ -38,7 +41,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<LogSpecification> array = new List<LogSpecification>();

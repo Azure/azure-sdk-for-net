@@ -1801,7 +1801,7 @@ namespace Azure.Storage.Blobs
             {
                 if (_blockBlobClient == null)
                 {
-                    _blockBlobClient = new BlockBlobClient(Uri, ClientConfiguration);
+                    _blockBlobClient = new BlockBlobClient(Uri, ClientConfiguration, ClientSideEncryption);
                 }
                 return _blockBlobClient;
             }

@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         public int? Top { get; set; }
         /// <summary> OData filter expression. </summary>
         public string Filter { get; set; }
-        /// <summary> Ordering expression using OData notation. One or more comma-separated column names with an optional &quot;desc&quot; (the default) or &quot;asc&quot;, e.g. &quot;$orderby=PolicyAssignmentId, ResourceId asc&quot;. </summary>
+        /// <summary> Ordering expression using OData notation. One or more comma-separated column names with an optional "desc" (the default) or "asc", e.g. "$orderby=PolicyAssignmentId, ResourceId asc". </summary>
         public string OrderBy { get; set; }
-        /// <summary> Select expression using OData notation. Limits the columns on each record to just those requested, e.g. &quot;$select=PolicyAssignmentId, ResourceId&quot;. </summary>
+        /// <summary> Select expression using OData notation. Limits the columns on each record to just those requested, e.g. "$select=PolicyAssignmentId, ResourceId". </summary>
         public string Select { get; set; }
         /// <summary> ISO 8601 formatted timestamp specifying the start time of the interval to query. When not specified, the service uses ($to - 1-day). </summary>
         public DateTimeOffset? From { get; set; }

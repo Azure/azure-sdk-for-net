@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary>
         /// Logistic regression is a fundamental classification technique.
         /// It belongs to the group of linear classifiers and is somewhat similar to polynomial and linear regression.
-        /// Logistic regression is fast and relatively uncomplicated, and it&apos;s convenient for you to interpret the results.
-        /// Although it&apos;s essentially a method for binary classification, it can also be applied to multiclass problems.
+        /// Logistic regression is fast and relatively uncomplicated, and it's convenient for you to interpret the results.
+        /// Although it's essentially a method for binary classification, it can also be applied to multiclass problems.
         /// </summary>
         public static ClassificationModel LogisticRegression { get; } = new ClassificationModel(LogisticRegressionValue);
         /// <summary>
@@ -57,17 +57,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static ClassificationModel BernoulliNaiveBayes { get; } = new ClassificationModel(BernoulliNaiveBayesValue);
         /// <summary>
         /// A support vector machine (SVM) is a supervised machine learning model that uses classification algorithms for two-group classification problems.
-        /// After giving an SVM model sets of labeled training data for each category, they&apos;re able to categorize new text.
+        /// After giving an SVM model sets of labeled training data for each category, they're able to categorize new text.
         /// </summary>
         public static ClassificationModel SVM { get; } = new ClassificationModel(SVMValue);
         /// <summary>
         /// A support vector machine (SVM) is a supervised machine learning model that uses classification algorithms for two-group classification problems.
-        /// After giving an SVM model sets of labeled training data for each category, they&apos;re able to categorize new text.
+        /// After giving an SVM model sets of labeled training data for each category, they're able to categorize new text.
         /// Linear SVM performs best when input data is linear, i.e., data can be easily classified by drawing the straight line between classified values on a plotted graph.
         /// </summary>
         public static ClassificationModel LinearSVM { get; } = new ClassificationModel(LinearSVMValue);
         /// <summary>
-        /// K-nearest neighbors (KNN) algorithm uses &apos;feature similarity&apos; to predict the values of new datapoints
+        /// K-nearest neighbors (KNN) algorithm uses 'feature similarity' to predict the values of new datapoints
         /// which further means that the new data point will be assigned a value based on how closely it matches the points in the training set.
         /// </summary>
         public static ClassificationModel KNN { get; } = new ClassificationModel(KNNValue);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static ClassificationModel DecisionTree { get; } = new ClassificationModel(DecisionTreeValue);
         /// <summary>
         /// Random forest is a supervised learning algorithm.
-        /// The &quot;forest&quot; it builds, is an ensemble of decision trees, usually trained with the “bagging” method.
+        /// The "forest" it builds, is an ensemble of decision trees, usually trained with the bagging method.
         /// The general idea of the bagging method is that a combination of learning models increases the overall result.
         /// </summary>
         public static ClassificationModel RandomForest { get; } = new ClassificationModel(RandomForestValue);

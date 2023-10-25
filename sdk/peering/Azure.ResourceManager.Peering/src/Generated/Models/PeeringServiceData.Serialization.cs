@@ -69,6 +69,10 @@ namespace Azure.ResourceManager.Peering
 
         internal static PeeringServiceData DeserializePeeringServiceData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<PeeringServiceSku> sku = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -88,7 +92,6 @@ namespace Azure.ResourceManager.Peering
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sku = PeeringServiceSku.DeserializePeeringServiceSku(property.Value);
@@ -98,7 +101,6 @@ namespace Azure.ResourceManager.Peering
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -133,7 +135,6 @@ namespace Azure.ResourceManager.Peering
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -162,7 +163,6 @@ namespace Azure.ResourceManager.Peering
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new PeeringProvisioningState(property0.Value.GetString());
@@ -182,7 +182,6 @@ namespace Azure.ResourceManager.Peering
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             logAnalyticsWorkspaceProperties = PeeringLogAnalyticsWorkspaceProperties.DeserializePeeringLogAnalyticsWorkspaceProperties(property0.Value);

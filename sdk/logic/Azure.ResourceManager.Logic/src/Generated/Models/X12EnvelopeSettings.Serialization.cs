@@ -77,6 +77,10 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static X12EnvelopeSettings DeserializeX12EnvelopeSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             int controlStandardsId = default;
             bool useControlStandardsIdAsRepetitionCharacter = default;
             string senderApplicationId = default;

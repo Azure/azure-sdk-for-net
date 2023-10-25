@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Azure.Core.Experimental.csproj" />
+    <ProjectReference Include="..\..\..\Azure.Core\src\Azure.Core.csproj" />
   </ItemGroup>
 
 </Project>

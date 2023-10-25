@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     public partial class KeyVaultAccessPolicyProperties
     {
         /// <summary> Initializes a new instance of KeyVaultAccessPolicyProperties. </summary>
-        /// <param name="accessPolicies"> An array of 0 to 16 identities that have access to the key vault. All identities in the array must use the same tenant ID as the key vault&apos;s tenant ID. </param>
+        /// <param name="accessPolicies"> An array of 0 to 16 identities that have access to the key vault. All identities in the array must use the same tenant ID as the key vault's tenant ID. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accessPolicies"/> is null. </exception>
         public KeyVaultAccessPolicyProperties(IEnumerable<KeyVaultAccessPolicy> accessPolicies)
         {
@@ -26,13 +26,13 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Initializes a new instance of KeyVaultAccessPolicyProperties. </summary>
-        /// <param name="accessPolicies"> An array of 0 to 16 identities that have access to the key vault. All identities in the array must use the same tenant ID as the key vault&apos;s tenant ID. </param>
+        /// <param name="accessPolicies"> An array of 0 to 16 identities that have access to the key vault. All identities in the array must use the same tenant ID as the key vault's tenant ID. </param>
         internal KeyVaultAccessPolicyProperties(IList<KeyVaultAccessPolicy> accessPolicies)
         {
             AccessPolicies = accessPolicies;
         }
 
-        /// <summary> An array of 0 to 16 identities that have access to the key vault. All identities in the array must use the same tenant ID as the key vault&apos;s tenant ID. </summary>
+        /// <summary> An array of 0 to 16 identities that have access to the key vault. All identities in the array must use the same tenant ID as the key vault's tenant ID. </summary>
         public IList<KeyVaultAccessPolicy> AccessPolicies { get; }
     }
 }

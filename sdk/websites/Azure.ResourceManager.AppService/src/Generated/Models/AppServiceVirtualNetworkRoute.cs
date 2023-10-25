@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// DEFAULT - By default, every app has routes to the local address ranges specified by RFC1918
         /// INHERITED - Routes inherited from the real Virtual Network routes
         /// STATIC - Static route set on the app only
-        /// 
-        /// These values will be used for syncing an app&apos;s routes with those from a Virtual Network.
+        ///
+        /// These values will be used for syncing an app's routes with those from a Virtual Network.
         /// </param>
         /// <param name="kind"> Kind of resource. </param>
         internal AppServiceVirtualNetworkRoute(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string startAddress, string endAddress, AppServiceVirtualNetworkRouteType? routeType, string kind) : base(id, name, resourceType, systemData)
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// DEFAULT - By default, every app has routes to the local address ranges specified by RFC1918
         /// INHERITED - Routes inherited from the real Virtual Network routes
         /// STATIC - Static route set on the app only
-        /// 
-        /// These values will be used for syncing an app&apos;s routes with those from a Virtual Network.
+        ///
+        /// These values will be used for syncing an app's routes with those from a Virtual Network.
         /// </summary>
         public AppServiceVirtualNetworkRouteType? RouteType { get; set; }
         /// <summary> Kind of resource. </summary>

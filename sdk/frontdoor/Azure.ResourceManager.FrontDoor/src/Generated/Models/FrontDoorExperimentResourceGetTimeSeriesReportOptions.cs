@@ -34,9 +34,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> The type of Timeseries. </summary>
         public FrontDoorTimeSeriesType TimeSeriesType { get; }
         /// <summary> The specific endpoint. </summary>
-        public string Endpoint { get; set; } = null;
-
+        public string Endpoint { get; set; }
         /// <summary> The country associated with the Timeseries. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </summary>
-        public string Country { get; set; } = null;
+        public string Country { get; set; }
     }
 }

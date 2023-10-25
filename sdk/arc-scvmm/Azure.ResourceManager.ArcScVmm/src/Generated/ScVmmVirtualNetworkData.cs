@@ -13,7 +13,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ArcScVmm
 {
-    /// <summary> A class representing the ScVmmVirtualNetwork data model. </summary>
+    /// <summary>
+    /// A class representing the ScVmmVirtualNetwork data model.
+    /// The VirtualNetworks resource definition.
+    /// </summary>
     public partial class ScVmmVirtualNetworkData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of ScVmmVirtualNetworkData. </summary>

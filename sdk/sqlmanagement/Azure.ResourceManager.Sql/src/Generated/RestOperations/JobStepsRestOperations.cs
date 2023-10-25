@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        /// <summary> Gets all job steps for a job&apos;s current version. </summary>
+        /// <summary> Gets all job steps for a job's current version. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Gets all job steps for a job&apos;s current version. </summary>
+        /// <summary> Gets all job steps for a job's current version. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        /// <summary> Gets a job step in a job&apos;s current version. </summary>
+        /// <summary> Gets a job step in a job's current version. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Gets a job step in a job&apos;s current version. </summary>
+        /// <summary> Gets a job step in a job's current version. </summary>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
         /// <param name="serverName"> The name of the server. </param>
@@ -720,7 +720,7 @@ namespace Azure.ResourceManager.Sql
             return message;
         }
 
-        /// <summary> Gets all job steps for a job&apos;s current version. </summary>
+        /// <summary> Gets all job steps for a job's current version. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
@@ -755,7 +755,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        /// <summary> Gets all job steps for a job&apos;s current version. </summary>
+        /// <summary> Gets all job steps for a job's current version. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>

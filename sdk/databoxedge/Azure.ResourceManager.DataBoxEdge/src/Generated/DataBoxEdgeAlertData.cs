@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataBoxEdge
 {
-    /// <summary> A class representing the DataBoxEdgeAlert data model. </summary>
+    /// <summary>
+    /// A class representing the DataBoxEdgeAlert data model.
+    /// Alert on the data box edge/gateway device.
+    /// </summary>
     public partial class DataBoxEdgeAlertData : ResourceData
     {
         /// <summary> Initializes a new instance of DataBoxEdgeAlertData. </summary>

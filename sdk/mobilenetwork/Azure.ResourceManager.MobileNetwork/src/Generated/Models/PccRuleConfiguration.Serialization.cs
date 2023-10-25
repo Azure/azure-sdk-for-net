@@ -42,11 +42,15 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         internal static PccRuleConfiguration DeserializePccRuleConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string ruleName = default;
             int rulePrecedence = default;
             Optional<PccRuleQosPolicy> ruleQosPolicy = default;
-            Optional<TrafficControlPermission> trafficControl = default;
-            IList<ServiceDataFlowTemplate> serviceDataFlowTemplates = default;
+            Optional<MobileNetworkTrafficControlPermission> trafficControl = default;
+            IList<MobileNetworkServiceDataFlowTemplate> serviceDataFlowTemplates = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ruleName"u8))
@@ -63,7 +67,6 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     ruleQosPolicy = PccRuleQosPolicy.DeserializePccRuleQosPolicy(property.Value);
@@ -73,18 +76,17 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    trafficControl = new TrafficControlPermission(property.Value.GetString());
+                    trafficControl = new MobileNetworkTrafficControlPermission(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("serviceDataFlowTemplates"u8))
                 {
-                    List<ServiceDataFlowTemplate> array = new List<ServiceDataFlowTemplate>();
+                    List<MobileNetworkServiceDataFlowTemplate> array = new List<MobileNetworkServiceDataFlowTemplate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceDataFlowTemplate.DeserializeServiceDataFlowTemplate(item));
+                        array.Add(MobileNetworkServiceDataFlowTemplate.DeserializeMobileNetworkServiceDataFlowTemplate(item));
                     }
                     serviceDataFlowTemplates = array;
                     continue;

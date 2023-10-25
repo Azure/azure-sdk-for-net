@@ -17,13 +17,25 @@ namespace Azure.ResourceManager.ResourceMover.Models
             writer.WriteStartObject();
             writer.WritePropertyName("resourceType"u8);
             writer.WriteStringValue(ResourceType);
-            writer.WritePropertyName("targetResourceName"u8);
-            writer.WriteStringValue(TargetResourceName);
+            if (Optional.IsDefined(TargetResourceName))
+            {
+                writer.WritePropertyName("targetResourceName"u8);
+                writer.WriteStringValue(TargetResourceName);
+            }
+            if (Optional.IsDefined(TargetResourceGroupName))
+            {
+                writer.WritePropertyName("targetResourceGroupName"u8);
+                writer.WriteStringValue(TargetResourceGroupName);
+            }
             writer.WriteEndObject();
         }
 
         internal static MoverResourceSettings DeserializeMoverResourceSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("resourceType", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())

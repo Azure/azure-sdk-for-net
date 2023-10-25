@@ -12,7 +12,7 @@ namespace Azure.AI.MetricsAdvisor.Models
 {
     /// <summary>
     /// cross metrics operator
-    /// 
+    ///
     /// should be specified when setting up multiple metric alerting configurations
     /// </summary>
     public readonly partial struct MetricAlertConfigurationsOperator : IEquatable<MetricAlertConfigurationsOperator>

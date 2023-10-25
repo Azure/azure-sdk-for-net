@@ -4,12 +4,14 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
-generate-model-factory: false
 csharp: true
 namespace: Azure.ResourceManager.Storage
 require: https://github.com/Azure/azure-rest-api-specs/blob/da0cfefaa0e6c237e1e3819f1cb2e11d7606878d/specification/storage/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -35,7 +37,7 @@ format-by-name-rules:
   '*Guid': 'uuid'
   'ifMatch': 'etag'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -313,4 +315,7 @@ directive:
   - from: swagger-document
     where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Storage/storageAccounts/{accountName}/restoreBlobRanges"].post
     transform: $["x-ms-long-running-operation-options"]["enable-interim-state"] = true
+  - from: swagger-document
+    where: $.definitions.StorageAccountCheckNameAvailabilityParameters.properties.type
+    transform: $["x-ms-constant"] = true;
 ```

@@ -23,10 +23,15 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static DataDeletionDetectionPolicy DeserializeDataDeletionDetectionPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("@odata.type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
+                    case "#Microsoft.Azure.Search.NativeBlobSoftDeleteDeletionDetectionPolicy": return NativeBlobSoftDeleteDeletionDetectionPolicy.DeserializeNativeBlobSoftDeleteDeletionDetectionPolicy(element);
                     case "#Microsoft.Azure.Search.SoftDeleteColumnDeletionDetectionPolicy": return SoftDeleteColumnDeletionDetectionPolicy.DeserializeSoftDeleteColumnDeletionDetectionPolicy(element);
                 }
             }

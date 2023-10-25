@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Automanage.Models
     {
         internal static ConfigurationProfileAssignmentList DeserializeConfigurationProfileAssignmentList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<AutomanageConfigurationProfileAssignmentData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.Automanage.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<AutomanageConfigurationProfileAssignmentData> array = new List<AutomanageConfigurationProfileAssignmentData>();

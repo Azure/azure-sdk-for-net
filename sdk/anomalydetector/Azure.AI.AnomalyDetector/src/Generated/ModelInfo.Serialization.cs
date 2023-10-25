@@ -19,18 +19,11 @@ namespace Azure.AI.AnomalyDetector
         {
             writer.WriteStartObject();
             writer.WritePropertyName("dataSource"u8);
-            writer.WriteStringValue(DataSource);
+            writer.WriteStringValue(DataSource.AbsoluteUri);
             if (Optional.IsDefined(DataSchema))
             {
-                if (DataSchema != null)
-                {
-                    writer.WritePropertyName("dataSchema"u8);
-                    writer.WriteStringValue(DataSchema.Value.ToString());
-                }
-                else
-                {
-                    writer.WriteNull("dataSchema");
-                }
+                writer.WritePropertyName("dataSchema"u8);
+                writer.WriteStringValue(DataSchema.Value.ToString());
             }
             writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartTime, "O");
@@ -43,65 +36,44 @@ namespace Azure.AI.AnomalyDetector
             }
             if (Optional.IsDefined(SlidingWindow))
             {
-                if (SlidingWindow != null)
-                {
-                    writer.WritePropertyName("slidingWindow"u8);
-                    writer.WriteNumberValue(SlidingWindow.Value);
-                }
-                else
-                {
-                    writer.WriteNull("slidingWindow");
-                }
+                writer.WritePropertyName("slidingWindow"u8);
+                writer.WriteNumberValue(SlidingWindow.Value);
             }
             if (Optional.IsDefined(AlignPolicy))
             {
                 writer.WritePropertyName("alignPolicy"u8);
                 writer.WriteObjectValue(AlignPolicy);
             }
-            if (Optional.IsDefined(Status))
-            {
-                if (Status != null)
-                {
-                    writer.WritePropertyName("status"u8);
-                    writer.WriteStringValue(Status.Value.ToSerialString());
-                }
-                else
-                {
-                    writer.WriteNull("status");
-                }
-            }
-            if (Optional.IsDefined(DiagnosticsInfo))
-            {
-                writer.WritePropertyName("diagnosticsInfo"u8);
-                writer.WriteObjectValue(DiagnosticsInfo);
-            }
             writer.WriteEndObject();
         }
 
         internal static ModelInfo DeserializeModelInfo(JsonElement element)
         {
-            string dataSource = default;
-            Optional<DataSchema?> dataSchema = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Uri dataSource = default;
+            Optional<DataSchema> dataSchema = default;
             DateTimeOffset startTime = default;
             DateTimeOffset endTime = default;
             Optional<string> displayName = default;
-            Optional<int?> slidingWindow = default;
+            Optional<int> slidingWindow = default;
             Optional<AlignPolicy> alignPolicy = default;
-            Optional<ModelStatus?> status = default;
+            Optional<ModelStatus> status = default;
             Optional<IReadOnlyList<ErrorResponse>> errors = default;
             Optional<DiagnosticsInfo> diagnosticsInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataSource"u8))
                 {
-                    dataSource = property.Value.GetString();
+                    dataSource = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dataSchema"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        dataSchema = null;
                         continue;
                     }
                     dataSchema = new DataSchema(property.Value.GetString());
@@ -126,7 +98,6 @@ namespace Azure.AI.AnomalyDetector
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        slidingWindow = null;
                         continue;
                     }
                     slidingWindow = property.Value.GetInt32();
@@ -136,7 +107,6 @@ namespace Azure.AI.AnomalyDetector
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     alignPolicy = AlignPolicy.DeserializeAlignPolicy(property.Value);
@@ -146,17 +116,15 @@ namespace Azure.AI.AnomalyDetector
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        status = null;
                         continue;
                     }
-                    status = property.Value.GetString().ToModelStatus();
+                    status = new ModelStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("errors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ErrorResponse> array = new List<ErrorResponse>();
@@ -171,14 +139,13 @@ namespace Azure.AI.AnomalyDetector
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     diagnosticsInfo = DiagnosticsInfo.DeserializeDiagnosticsInfo(property.Value);
                     continue;
                 }
             }
-            return new ModelInfo(dataSource, Optional.ToNullable(dataSchema), startTime, endTime, displayName, Optional.ToNullable(slidingWindow), alignPolicy, Optional.ToNullable(status), Optional.ToList(errors), diagnosticsInfo);
+            return new ModelInfo(dataSource, Optional.ToNullable(dataSchema), startTime, endTime, displayName.Value, Optional.ToNullable(slidingWindow), alignPolicy.Value, Optional.ToNullable(status), Optional.ToList(errors), diagnosticsInfo.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

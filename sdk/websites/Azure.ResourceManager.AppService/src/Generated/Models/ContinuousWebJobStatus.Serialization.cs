@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         public static ContinuousWebJobStatus ToContinuousWebJobStatus(this string value)
         {
-            if (string.Equals(value, "Initializing", StringComparison.InvariantCultureIgnoreCase)) return ContinuousWebJobStatus.Initializing;
-            if (string.Equals(value, "Starting", StringComparison.InvariantCultureIgnoreCase)) return ContinuousWebJobStatus.Starting;
-            if (string.Equals(value, "Running", StringComparison.InvariantCultureIgnoreCase)) return ContinuousWebJobStatus.Running;
-            if (string.Equals(value, "PendingRestart", StringComparison.InvariantCultureIgnoreCase)) return ContinuousWebJobStatus.PendingRestart;
-            if (string.Equals(value, "Stopped", StringComparison.InvariantCultureIgnoreCase)) return ContinuousWebJobStatus.Stopped;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Initializing")) return ContinuousWebJobStatus.Initializing;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Starting")) return ContinuousWebJobStatus.Starting;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Running")) return ContinuousWebJobStatus.Running;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PendingRestart")) return ContinuousWebJobStatus.PendingRestart;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Stopped")) return ContinuousWebJobStatus.Stopped;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ContinuousWebJobStatus value.");
         }
     }

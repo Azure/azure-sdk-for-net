@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetJobDetailsAsync(string,RequestContext)">
+      <example>
+This sample shows how to call GetJobDetailsAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+FarmOperationsDataIngestion client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(apiVersion: "2022-11-01-preview");
+
+Response response = await client.GetJobDetailsAsync("<jobId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("authProviderId").ToString());
+Console.WriteLine(result.GetProperty("startYear").ToString());
+]]></code>
+This sample shows how to call GetJobDetailsAsync with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+FarmOperationsDataIngestion client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(apiVersion: "2022-11-01-preview");
+
+Response response = await client.GetJobDetailsAsync("<jobId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("authProviderId").ToString());
+Console.WriteLine(result.GetProperty("operations")[0].ToString());
+Console.WriteLine(result.GetProperty("startYear").ToString());
+Console.WriteLine(result.GetProperty("isIncremental").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+Console.WriteLine(result.GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="GetJobDetails(string,RequestContext)">
+      <example>
+This sample shows how to call GetJobDetails and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+FarmOperationsDataIngestion client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(apiVersion: "2022-11-01-preview");
+
+Response response = client.GetJobDetails("<jobId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("authProviderId").ToString());
+Console.WriteLine(result.GetProperty("startYear").ToString());
+]]></code>
+This sample shows how to call GetJobDetails with all parameters and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+FarmOperationsDataIngestion client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(apiVersion: "2022-11-01-preview");
+
+Response response = client.GetJobDetails("<jobId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("authProviderId").ToString());
+Console.WriteLine(result.GetProperty("operations")[0].ToString());
+Console.WriteLine(result.GetProperty("startYear").ToString());
+Console.WriteLine(result.GetProperty("isIncremental").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+Console.WriteLine(result.GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateJobAsync(WaitUntil,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateJobAsync and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+FarmOperationsDataIngestion client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(apiVersion: "2022-11-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    partyId = "<partyId>",
+    authProviderId = "<authProviderId>",
+    startYear = 1234,
+});
+Operation<BinaryData> operation = await client.CreateJobAsync(WaitUntil.Completed, "<jobId>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("authProviderId").ToString());
+Console.WriteLine(result.GetProperty("startYear").ToString());
+]]></code>
+This sample shows how to call CreateJobAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+FarmOperationsDataIngestion client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(apiVersion: "2022-11-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    partyId = "<partyId>",
+    authProviderId = "<authProviderId>",
+    operations = new object[]
+    {
+        "<operations>"
+    },
+    startYear = 1234,
+    isIncremental = true,
+    name = "<name>",
+    description = "<description>",
+    properties = new
+    {
+        key = new object(),
+    },
+});
+Operation<BinaryData> operation = await client.CreateJobAsync(WaitUntil.Completed, "<jobId>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("authProviderId").ToString());
+Console.WriteLine(result.GetProperty("operations")[0].ToString());
+Console.WriteLine(result.GetProperty("startYear").ToString());
+Console.WriteLine(result.GetProperty("isIncremental").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+Console.WriteLine(result.GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+    <member name="CreateJob(WaitUntil,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateJob and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+FarmOperationsDataIngestion client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(apiVersion: "2022-11-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    partyId = "<partyId>",
+    authProviderId = "<authProviderId>",
+    startYear = 1234,
+});
+Operation<BinaryData> operation = client.CreateJob(WaitUntil.Completed, "<jobId>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("authProviderId").ToString());
+Console.WriteLine(result.GetProperty("startYear").ToString());
+]]></code>
+This sample shows how to call CreateJob with all parameters and request content and parse the result.
+<code><![CDATA[
+TokenCredential credential = new DefaultAzureCredential();
+FarmOperationsDataIngestion client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(apiVersion: "2022-11-01-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    partyId = "<partyId>",
+    authProviderId = "<authProviderId>",
+    operations = new object[]
+    {
+        "<operations>"
+    },
+    startYear = 1234,
+    isIncremental = true,
+    name = "<name>",
+    description = "<description>",
+    properties = new
+    {
+        key = new object(),
+    },
+});
+Operation<BinaryData> operation = client.CreateJob(WaitUntil.Completed, "<jobId>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("partyId").ToString());
+Console.WriteLine(result.GetProperty("authProviderId").ToString());
+Console.WriteLine(result.GetProperty("operations")[0].ToString());
+Console.WriteLine(result.GetProperty("startYear").ToString());
+Console.WriteLine(result.GetProperty("isIncremental").ToString());
+Console.WriteLine(result.GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("durationInSeconds").ToString());
+Console.WriteLine(result.GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errorCode").ToString());
+Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+Console.WriteLine(result.GetProperty("lastActionDateTime").ToString());
+Console.WriteLine(result.GetProperty("startTime").ToString());
+Console.WriteLine(result.GetProperty("endTime").ToString());
+Console.WriteLine(result.GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("description").ToString());
+Console.WriteLine(result.GetProperty("createdBy").ToString());
+Console.WriteLine(result.GetProperty("modifiedBy").ToString());
+Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+]]></code></example>
+    </member>
+  </members>
+</doc>

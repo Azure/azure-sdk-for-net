@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ReadBehavior))
             {
                 writer.WritePropertyName("readBehavior"u8);
-                writer.WriteStringValue(ReadBehavior.Value.ToString());
+                writer.WriteObjectValue(ReadBehavior);
             }
             if (Optional.IsDefined(QueryTimeout))
             {
@@ -66,8 +66,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         internal static SalesforceSource DeserializeSalesforceSource(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> query = default;
-            Optional<SalesforceSourceReadBehavior> readBehavior = default;
+            Optional<object> readBehavior = default;
             Optional<object> queryTimeout = default;
             Optional<object> additionalColumns = default;
             string type = default;
@@ -82,7 +86,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     query = property.Value.GetObject();
@@ -92,17 +95,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    readBehavior = new SalesforceSourceReadBehavior(property.Value.GetString());
+                    readBehavior = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("queryTimeout"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     queryTimeout = property.Value.GetObject();
@@ -112,7 +113,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     additionalColumns = property.Value.GetObject();
@@ -127,7 +127,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sourceRetryCount = property.Value.GetObject();
@@ -137,7 +136,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     sourceRetryWait = property.Value.GetObject();
@@ -147,7 +145,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     maxConcurrentConnections = property.Value.GetObject();
@@ -156,7 +153,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SalesforceSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value, query.Value, Optional.ToNullable(readBehavior));
+            return new SalesforceSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value, query.Value, readBehavior.Value);
         }
 
         internal partial class SalesforceSourceConverter : JsonConverter<SalesforceSource>

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <summary> Initializes a new instance of WindowsServerFailoverClusterDomainProfile. </summary>
         /// <param name="domainFqdn"> Fully qualified name of the domain. </param>
         /// <param name="organizationalUnitPath"> Organizational Unit path in which the nodes and cluster will be present. </param>
-        /// <param name="clusterBootstrapAccount"> Account name used for creating cluster (at minimum needs permissions to &apos;Create Computer Objects&apos; in domain). </param>
+        /// <param name="clusterBootstrapAccount"> Account name used for creating cluster (at minimum needs permissions to 'Create Computer Objects' in domain). </param>
         /// <param name="clusterOperatorAccount"> Account name used for operating cluster i.e. will be part of administrators group on all the participating virtual machines in the cluster. </param>
         /// <param name="sqlServiceAccount"> Account name under which SQL service will run on all participating SQL virtual machines in the cluster. </param>
         /// <param name="fileShareWitnessPath"> Optional path for fileshare witness. </param>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         public string DomainFqdn { get; set; }
         /// <summary> Organizational Unit path in which the nodes and cluster will be present. </summary>
         public string OrganizationalUnitPath { get; set; }
-        /// <summary> Account name used for creating cluster (at minimum needs permissions to &apos;Create Computer Objects&apos; in domain). </summary>
+        /// <summary> Account name used for creating cluster (at minimum needs permissions to 'Create Computer Objects' in domain). </summary>
         public string ClusterBootstrapAccount { get; set; }
         /// <summary> Account name used for operating cluster i.e. will be part of administrators group on all the participating virtual machines in the cluster. </summary>
         public string ClusterOperatorAccount { get; set; }

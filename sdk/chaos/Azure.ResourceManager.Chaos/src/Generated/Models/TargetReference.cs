@@ -14,21 +14,13 @@ namespace Azure.ResourceManager.Chaos.Models
     public partial class TargetReference
     {
         /// <summary> Initializes a new instance of TargetReference. </summary>
+        /// <param name="referenceType"> Enum of the Target reference type. </param>
         /// <param name="id"> String of the resource ID of a Target resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public TargetReference(string id)
+        public TargetReference(TargetReferenceType referenceType, string id)
         {
             Argument.AssertNotNull(id, nameof(id));
 
-            ReferenceType = TargetReferenceType.ChaosTarget;
-            Id = id;
-        }
-
-        /// <summary> Initializes a new instance of TargetReference. </summary>
-        /// <param name="referenceType"> Enum of the Target reference type. </param>
-        /// <param name="id"> String of the resource ID of a Target resource. </param>
-        internal TargetReference(TargetReferenceType referenceType, string id)
-        {
             ReferenceType = referenceType;
             Id = id;
         }

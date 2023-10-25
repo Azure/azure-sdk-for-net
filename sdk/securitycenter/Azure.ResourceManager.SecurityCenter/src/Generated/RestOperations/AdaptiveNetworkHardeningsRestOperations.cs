@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary> Gets a list of Adaptive Network Hardenings resources in scope of an extended resource. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="resourceNamespace"> The Namespace of the resource. </param>
         /// <param name="resourceType"> The type of the resource. </param>
         /// <param name="resourceName"> Name of the resource. </param>
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary> Gets a list of Adaptive Network Hardenings resources in scope of an extended resource. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="resourceNamespace"> The Namespace of the resource. </param>
         /// <param name="resourceType"> The type of the resource. </param>
         /// <param name="resourceName"> Name of the resource. </param>
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary> Gets a single Adaptive Network Hardening resource. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="resourceNamespace"> The Namespace of the resource. </param>
         /// <param name="resourceType"> The type of the resource. </param>
         /// <param name="resourceName"> Name of the resource. </param>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary> Gets a single Adaptive Network Hardening resource. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="resourceNamespace"> The Namespace of the resource. </param>
         /// <param name="resourceType"> The type of the resource. </param>
         /// <param name="resourceName"> Name of the resource. </param>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary> Enforces the given rules on the NSG(s) listed in the request. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="resourceNamespace"> The Namespace of the resource. </param>
         /// <param name="resourceType"> The type of the resource. </param>
         /// <param name="resourceName"> Name of the resource. </param>
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.SecurityCenter
 
         /// <summary> Enforces the given rules on the NSG(s) listed in the request. </summary>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="resourceNamespace"> The Namespace of the resource. </param>
         /// <param name="resourceType"> The type of the resource. </param>
         /// <param name="resourceName"> Name of the resource. </param>
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Gets a list of Adaptive Network Hardenings resources in scope of an extended resource. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="resourceNamespace"> The Namespace of the resource. </param>
         /// <param name="resourceType"> The type of the resource. </param>
         /// <param name="resourceName"> Name of the resource. </param>
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Gets a list of Adaptive Network Hardenings resources in scope of an extended resource. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group within the user&apos;s subscription. The name is case insensitive. </param>
+        /// <param name="resourceGroupName"> The name of the resource group within the user's subscription. The name is case insensitive. </param>
         /// <param name="resourceNamespace"> The Namespace of the resource. </param>
         /// <param name="resourceType"> The type of the resource. </param>
         /// <param name="resourceName"> Name of the resource. </param>

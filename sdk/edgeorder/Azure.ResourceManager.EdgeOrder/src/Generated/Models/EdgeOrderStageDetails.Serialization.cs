@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     {
         internal static EdgeOrderStageDetails DeserializeEdgeOrderStageDetails(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<EdgeOrderStageStatus> stageStatus = default;
             Optional<EdgeOrderStageName> stageName = default;
             Optional<string> displayName = default;
@@ -25,7 +29,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     stageStatus = new EdgeOrderStageStatus(property.Value.GetString());
@@ -35,7 +38,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     stageName = new EdgeOrderStageName(property.Value.GetString());
@@ -50,7 +52,6 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     startTime = property.Value.GetDateTimeOffset("O");

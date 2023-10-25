@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static ApplicationGatewaySku DeserializeApplicationGatewaySku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ApplicationGatewaySkuName> name = default;
             Optional<ApplicationGatewayTier> tier = default;
             Optional<int> capacity = default;
@@ -44,7 +48,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     name = new ApplicationGatewaySkuName(property.Value.GetString());
@@ -54,7 +57,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tier = new ApplicationGatewayTier(property.Value.GetString());
@@ -64,7 +66,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     capacity = property.Value.GetInt32();

@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static JitSchedulingPolicy DeserializeJitSchedulingPolicy(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             JitSchedulingType type = default;
             TimeSpan duration = default;
             DateTimeOffset startTime = default;

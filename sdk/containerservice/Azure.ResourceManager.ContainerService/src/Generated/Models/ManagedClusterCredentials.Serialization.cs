@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ContainerService.Models
     {
         internal static ManagedClusterCredentials DeserializeManagedClusterCredentials(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ManagedClusterCredential>> kubeconfigs = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -22,7 +26,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ManagedClusterCredential> array = new List<ManagedClusterCredential>();

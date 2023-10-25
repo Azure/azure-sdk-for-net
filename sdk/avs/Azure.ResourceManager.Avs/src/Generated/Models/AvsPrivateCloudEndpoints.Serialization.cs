@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.Avs.Models
     {
         internal static AvsPrivateCloudEndpoints DeserializeAvsPrivateCloudEndpoints(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> nsxtManager = default;
             Optional<string> vcsa = default;
             Optional<string> hcxCloudManager = default;

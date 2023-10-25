@@ -30,6 +30,10 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static ConditionFailingPeriods DeserializeConditionFailingPeriods(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<long> numberOfEvaluationPeriods = default;
             Optional<long> minFailingPeriodsToAlert = default;
             foreach (var property in element.EnumerateObject())
@@ -38,7 +42,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     numberOfEvaluationPeriods = property.Value.GetInt64();
@@ -48,7 +51,6 @@ namespace Azure.ResourceManager.Monitor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     minFailingPeriodsToAlert = property.Value.GetInt64();

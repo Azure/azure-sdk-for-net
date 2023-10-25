@@ -13,7 +13,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> A class representing the StaticSite data model. </summary>
+    /// <summary>
+    /// A class representing the StaticSite data model.
+    /// Static Site ARM resource.
+    /// </summary>
     public partial class StaticSiteData : TrackedResourceData
     {
         /// <summary> Initializes a new instance of StaticSiteData. </summary>
@@ -38,7 +41,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="repositoryUri"> URL for the repository of the static site. </param>
         /// <param name="branch"> The target branch in the repository. </param>
         /// <param name="customDomains"> The custom domains associated with this static site. </param>
-        /// <param name="repositoryToken"> A user&apos;s github repository token. This is used to setup the Github Actions workflow file and API secrets. </param>
+        /// <param name="repositoryToken"> A user's github repository token. This is used to setup the Github Actions workflow file and API secrets. </param>
         /// <param name="buildProperties"> Build properties to configure on the repository. </param>
         /// <param name="privateEndpointConnections"> Private endpoint connections. </param>
         /// <param name="stagingEnvironmentPolicy"> State indicating whether staging environments are allowed or not allowed for a static web app. </param>
@@ -82,7 +85,7 @@ namespace Azure.ResourceManager.AppService
         public string Branch { get; set; }
         /// <summary> The custom domains associated with this static site. </summary>
         public IReadOnlyList<string> CustomDomains { get; }
-        /// <summary> A user&apos;s github repository token. This is used to setup the Github Actions workflow file and API secrets. </summary>
+        /// <summary> A user's github repository token. This is used to setup the Github Actions workflow file and API secrets. </summary>
         public string RepositoryToken { get; set; }
         /// <summary> Build properties to configure on the repository. </summary>
         public StaticSiteBuildProperties BuildProperties { get; set; }

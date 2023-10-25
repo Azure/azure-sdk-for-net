@@ -23,7 +23,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        /// <param name="publicEventType"> The public event namespace used as the &quot;type&quot; property in the CloudEvent. </param>
+        /// <param name="publicEventType"> The public event namespace used as the "type" property in the CloudEvent. </param>
         internal CallDisconnected(string eventSource, string version, string operationContext, ResultInformation resultInformation, string callConnectionId, string serverCallId, string correlationId, string publicEventType)
         {
             EventSource = eventSource;
@@ -44,7 +44,7 @@ namespace Azure.Communication.CallingServer
         public string OperationContext { get; }
         /// <summary> Contains the resulting SIP code/sub-code and message from NGC services. </summary>
         public ResultInformation ResultInformation { get; }
-        /// <summary> The public event namespace used as the &quot;type&quot; property in the CloudEvent. </summary>
+        /// <summary> The public event namespace used as the "type" property in the CloudEvent. </summary>
         public string PublicEventType { get; }
     }
 }

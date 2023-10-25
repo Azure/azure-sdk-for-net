@@ -21,11 +21,13 @@ namespace Azure.ResourceManager.Search.Tests
         protected SearchManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
+            JsonPathSanitizers.Add("$.value.[*].key");
         }
 
         protected SearchManagementTestBase(bool isAsync)
             : base(isAsync)
         {
+            JsonPathSanitizers.Add("$.value.[*].key");
         }
 
         [SetUp]

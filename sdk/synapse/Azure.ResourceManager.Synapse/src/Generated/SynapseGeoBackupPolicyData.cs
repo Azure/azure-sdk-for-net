@@ -11,7 +11,10 @@ using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
 {
-    /// <summary> A class representing the SynapseGeoBackupPolicy data model. </summary>
+    /// <summary>
+    /// A class representing the SynapseGeoBackupPolicy data model.
+    /// A database geo backup policy.
+    /// </summary>
     public partial class SynapseGeoBackupPolicyData : ResourceData
     {
         /// <summary> Initializes a new instance of SynapseGeoBackupPolicyData. </summary>

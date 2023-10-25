@@ -18,8 +18,8 @@ namespace Azure.Maps.Search.Models
         /// <summary> Initializes a new instance of AddressRanges. </summary>
         /// <param name="rangeLeft"> Address range on the left side of the street. </param>
         /// <param name="rangeRight"> Address range on the right side of the street. </param>
-        /// <param name="fromInternal"> A location represented as a latitude and longitude using short names &apos;lat&apos; &amp; &apos;lon&apos;. </param>
-        /// <param name="toInternal"> A location represented as a latitude and longitude using short names &apos;lat&apos; &amp; &apos;lon&apos;. </param>
+        /// <param name="fromInternal"> A location represented as a latitude and longitude using short names 'lat' &amp; 'lon'. </param>
+        /// <param name="toInternal"> A location represented as a latitude and longitude using short names 'lat' &amp; 'lon'. </param>
         internal AddressRanges(string rangeLeft, string rangeRight, LatLongPairAbbreviated fromInternal, LatLongPairAbbreviated toInternal)
         {
             RangeLeft = rangeLeft;

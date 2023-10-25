@@ -24,6 +24,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 
         internal static MySqlFlexibleServerSku DeserializeMySqlFlexibleServerSku(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             MySqlFlexibleServerSkuTier tier = default;
             foreach (var property in element.EnumerateObject())

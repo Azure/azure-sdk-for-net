@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static AppSnapshotListResult DeserializeAppSnapshotListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             IReadOnlyList<AppSnapshot> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())

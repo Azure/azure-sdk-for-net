@@ -51,6 +51,35 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("instanceType");
                 }
             }
+            if (Optional.IsCollectionDefined(Locations))
+            {
+                if (Locations != null)
+                {
+                    writer.WritePropertyName("locations"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Locations)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+                else
+                {
+                    writer.WriteNull("locations");
+                }
+            }
+            if (Optional.IsDefined(MaxInstanceCount))
+            {
+                if (MaxInstanceCount != null)
+                {
+                    writer.WritePropertyName("maxInstanceCount"u8);
+                    writer.WriteNumberValue(MaxInstanceCount.Value);
+                }
+                else
+                {
+                    writer.WriteNull("maxInstanceCount");
+                }
+            }
             if (Optional.IsCollectionDefined(Properties))
             {
                 if (Properties != null)
@@ -60,10 +89,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in Properties)
                     {
                         writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                        JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                        using (JsonDocument document = JsonDocument.Parse(item.Value))
+                        {
+                            JsonSerializer.Serialize(writer, document.RootElement);
+                        }
 #endif
                     }
                     writer.WriteEndObject();
@@ -78,10 +115,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MachineLearningJobResourceConfiguration DeserializeMachineLearningJobResourceConfiguration(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> dockerArgs = default;
             Optional<string> shmSize = default;
             Optional<int> instanceCount = default;
             Optional<string> instanceType = default;
+            Optional<IList<string>> locations = default;
+            Optional<int?> maxInstanceCount = default;
             Optional<IDictionary<string, BinaryData>> properties = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -104,7 +147,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     instanceCount = property.Value.GetInt32();
@@ -120,6 +162,31 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("locations"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        locations = null;
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    locations = array;
+                    continue;
+                }
+                if (property.NameEquals("maxInstanceCount"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        maxInstanceCount = null;
+                        continue;
+                    }
+                    maxInstanceCount = property.Value.GetInt32();
+                    continue;
+                }
                 if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -130,13 +197,20 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                        }
                     }
                     properties = dictionary;
                     continue;
                 }
             }
-            return new MachineLearningJobResourceConfiguration(Optional.ToNullable(instanceCount), instanceType.Value, Optional.ToDictionary(properties), dockerArgs.Value, shmSize.Value);
+            return new MachineLearningJobResourceConfiguration(Optional.ToNullable(instanceCount), instanceType.Value, Optional.ToList(locations), Optional.ToNullable(maxInstanceCount), Optional.ToDictionary(properties), dockerArgs.Value, shmSize.Value);
         }
     }
 }

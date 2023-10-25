@@ -15,6 +15,10 @@ namespace Azure.AI.Translation.Document
     {
         internal static DocumentTranslationFileFormat DeserializeDocumentTranslationFileFormat(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string format = default;
             IReadOnlyList<string> fileExtensions = default;
             IReadOnlyList<string> contentTypes = default;
@@ -56,7 +60,6 @@ namespace Azure.AI.Translation.Document
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<string> array = new List<string>();

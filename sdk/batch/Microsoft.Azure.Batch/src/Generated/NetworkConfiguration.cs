@@ -25,6 +25,7 @@ namespace Microsoft.Azure.Batch
         private class PropertyContainer : PropertyCollection
         {
             public readonly PropertyAccessor<Common.DynamicVNetAssignmentScope?> DynamicVNetAssignmentScopeProperty;
+            public readonly PropertyAccessor<bool?> EnableAcceleratedNetworkingProperty;
             public readonly PropertyAccessor<PoolEndpointConfiguration> EndpointConfigurationProperty;
             public readonly PropertyAccessor<PublicIPAddressConfiguration> PublicIPAddressConfigurationProperty;
             public readonly PropertyAccessor<string> SubnetIdProperty;
@@ -32,6 +33,7 @@ namespace Microsoft.Azure.Batch
             public PropertyContainer() : base(BindingState.Unbound)
             {
                 this.DynamicVNetAssignmentScopeProperty = this.CreatePropertyAccessor<Common.DynamicVNetAssignmentScope?>(nameof(DynamicVNetAssignmentScope), BindingAccess.Read | BindingAccess.Write);
+                this.EnableAcceleratedNetworkingProperty = this.CreatePropertyAccessor<bool?>(nameof(EnableAcceleratedNetworking), BindingAccess.Read | BindingAccess.Write);
                 this.EndpointConfigurationProperty = this.CreatePropertyAccessor<PoolEndpointConfiguration>(nameof(EndpointConfiguration), BindingAccess.Read | BindingAccess.Write);
                 this.PublicIPAddressConfigurationProperty = this.CreatePropertyAccessor<PublicIPAddressConfiguration>(nameof(PublicIPAddressConfiguration), BindingAccess.Read | BindingAccess.Write);
                 this.SubnetIdProperty = this.CreatePropertyAccessor<string>(nameof(SubnetId), BindingAccess.Read | BindingAccess.Write);
@@ -42,6 +44,10 @@ namespace Microsoft.Azure.Batch
                 this.DynamicVNetAssignmentScopeProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.MapNullableEnum<Models.DynamicVNetAssignmentScope, Common.DynamicVNetAssignmentScope>(protocolObject.DynamicVNetAssignmentScope),
                     nameof(DynamicVNetAssignmentScope),
+                    BindingAccess.Read);
+                this.EnableAcceleratedNetworkingProperty = this.CreatePropertyAccessor(
+                    protocolObject.EnableAcceleratedNetworking,
+                    nameof(EnableAcceleratedNetworking),
                     BindingAccess.Read);
                 this.EndpointConfigurationProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.EndpointConfiguration, o => new PoolEndpointConfiguration(o).Freeze()),
@@ -89,6 +95,18 @@ namespace Microsoft.Azure.Batch
         {
             get { return this.propertyContainer.DynamicVNetAssignmentScopeProperty.Value; }
             set { this.propertyContainer.DynamicVNetAssignmentScopeProperty.Value = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets whether this pool should enable accelerated networking.
+        /// </summary>
+        /// <remarks>
+        /// This property can only be specified for pools created with a <see cref="CloudPool.VirtualMachineConfiguration"/>.
+        /// </remarks>
+        public bool? EnableAcceleratedNetworking
+        {
+            get { return this.propertyContainer.EnableAcceleratedNetworkingProperty.Value; }
+            set { this.propertyContainer.EnableAcceleratedNetworkingProperty.Value = value; }
         }
 
         /// <summary>
@@ -169,6 +187,7 @@ namespace Microsoft.Azure.Batch
             Models.NetworkConfiguration result = new Models.NetworkConfiguration()
             {
                 DynamicVNetAssignmentScope = UtilitiesInternal.MapNullableEnum<Common.DynamicVNetAssignmentScope, Models.DynamicVNetAssignmentScope>(this.DynamicVNetAssignmentScope),
+                EnableAcceleratedNetworking = this.EnableAcceleratedNetworking,
                 EndpointConfiguration = UtilitiesInternal.CreateObjectWithNullCheck(this.EndpointConfiguration, (o) => o.GetTransportObject()),
                 PublicIPAddressConfiguration = UtilitiesInternal.CreateObjectWithNullCheck(this.PublicIPAddressConfiguration, (o) => o.GetTransportObject()),
                 SubnetId = this.SubnetId,

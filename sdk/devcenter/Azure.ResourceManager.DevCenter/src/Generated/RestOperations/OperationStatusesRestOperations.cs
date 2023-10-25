@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DevCenter
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-08-01-preview";
+            _apiVersion = apiVersion ?? "2023-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -58,13 +58,13 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Gets the current status of an async operation. </summary>
-        /// <param name="subscriptionId"> Unique identifier of the Azure subscription. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="location"> The Azure region. </param>
         /// <param name="operationId"> The ID of an ongoing async operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<OperationStatus>> GetAsync(string subscriptionId, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
+        public async Task<Response<DevCenterOperationStatus>> GetAsync(string subscriptionId, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
@@ -76,9 +76,9 @@ namespace Azure.ResourceManager.DevCenter
                 case 200:
                 case 202:
                     {
-                        OperationStatus value = default;
+                        DevCenterOperationStatus value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = OperationStatus.DeserializeOperationStatus(document.RootElement);
+                        value = DevCenterOperationStatus.DeserializeDevCenterOperationStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -87,13 +87,13 @@ namespace Azure.ResourceManager.DevCenter
         }
 
         /// <summary> Gets the current status of an async operation. </summary>
-        /// <param name="subscriptionId"> Unique identifier of the Azure subscription. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="location"> The Azure region. </param>
         /// <param name="operationId"> The ID of an ongoing async operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<OperationStatus> Get(string subscriptionId, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
+        public Response<DevCenterOperationStatus> Get(string subscriptionId, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
@@ -105,9 +105,9 @@ namespace Azure.ResourceManager.DevCenter
                 case 200:
                 case 202:
                     {
-                        OperationStatus value = default;
+                        DevCenterOperationStatus value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = OperationStatus.DeserializeOperationStatus(document.RootElement);
+                        value = DevCenterOperationStatus.DeserializeDevCenterOperationStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

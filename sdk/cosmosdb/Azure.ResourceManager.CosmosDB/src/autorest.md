@@ -6,17 +6,18 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ```yaml
 azure-arm: true
-generate-model-factory: false
 csharp: true
 library-name: CosmosDB
 namespace: Azure.ResourceManager.CosmosDB
-require: https://github.com/Azure/azure-rest-api-specs/blob/e4f7afa7b2b1fbba16c61f6935bfafb14df9042e/specification/cosmos-db/resource-manager/readme.md
-tag: package-2022-08
+require: https://github.com/Azure/azure-rest-api-specs/blob/44e83346defd3d4ca99efade8b1ee90c67d9f249/specification/cosmos-db/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+  lenient-model-deduplication: true
+# mgmt-debug:
+#   show-serialized-names: true
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/throughputSettings/default: CassandraKeyspaceThroughputSetting
@@ -28,6 +29,7 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/mongodbDatabases/{databaseName}/collections/{collectionName}/throughputSettings/default: MongoDBCollectionThroughputSetting
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/throughputSettings/default: CosmosDBSqlDatabaseThroughputSetting
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlDatabases/{databaseName}/containers/{containerName}/throughputSettings/default: CosmosDBSqlContainerThroughputSetting
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/views/{viewName}/throughputSettings/default: CassandraViewThroughputSetting
 operation-id-mappings:
   CassandraKeyspaceThroughputSetting:
       accountName: Microsoft.DocumentDB/databaseAccounts
@@ -85,7 +87,7 @@ format-by-name-rules:
   'partitionId': 'uuid'
   'instanceId': 'uuid'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -117,6 +119,7 @@ override-operation-name:
   RestorableMongodbCollections_List: GetRestorableMongoDBCollections
   RestorableMongodbResources_List: GetAllRestorableMongoDBResourceData
   RestorableSqlResources_List: GetAllRestorableSqlResourceData
+  MongoClusters_CheckNameAvailability: CheckMongoClusterNameAailability
 
 rename-mapping:
   MongoRoleDefinitionGetResults: MongoDBRoleDefinition
@@ -147,7 +150,13 @@ rename-mapping:
   CassandraTablePropertiesResource: ExtendedCassandraTableResourceInfo
   CassandraTableResource: CassandraTableResourceInfo
   CosmosTablePropertiesResource: ExtendedCosmosTableResourceInfo
+  ClientEncryptionKeyGetPropertiesResource: CosmosDBSqlClientEncryptionKeyProperties
+  ClientEncryptionKeyResource: CosmosDBSqlClientEncryptionKeyResourceInfo
+  ClientEncryptionPolicy: CosmosDBClientEncryptionPolicy
+  ClientEncryptionIncludedPath: CosmosDBClientEncryptionIncludedPath
+  ClientEncryptionKeyGetResults: CosmosDBSqlClientEncryptionKey
   DatabaseRestoreResource: DatabaseRestoreResourceInfo
+  GremlinDatabaseRestoreResource: GremlinDatabaseRestoreResourceInfo
   GremlinDatabasePropertiesResource: ExtendedGremlinDatabaseResourceInfo
   GremlinDatabaseResource: GremlinDatabaseResourceInfo
   GremlinGraphPropertiesResource: ExtendedGremlinGraphResourceInfo
@@ -162,6 +171,9 @@ rename-mapping:
   RestorableMongodbDatabasePropertiesResource: ExtendedRestorableMongoDBDatabaseResourceInfo
   RestorableSqlContainerPropertiesResource: ExtendedRestorableSqlContainerResourceInfo
   RestorableSqlDatabasePropertiesResource: ExtendedRestorableSqlDatabaseResourceInfo
+  RestorableGremlinDatabasePropertiesResource: ExtendedRestorableGremlinDatabaseResourceInfo
+  RestorableGremlinGraphPropertiesResource: ExtendedRestorableGremlinGraphResourceInfo
+  RestorableTablePropertiesResource: ExtendedRestorableTableResourceInfo
   CosmosDBSqlContainerPropertiesResource: ExtendedCosmosDBSqlContainerResourceInfo
   SqlContainerResource: CosmosDBSqlContainerResourceInfo
   SqlDatabaseResource: CosmosDBSqlDatabaseResourceInfo
@@ -243,6 +255,12 @@ rename-mapping:
   RestorableSqlContainerPropertiesResource.ownerResourceId: ContainerId
   RestorableSqlDatabasePropertiesResource.ownerId: DatabaseName
   RestorableSqlDatabasePropertiesResource.ownerResourceId: DatabaseId
+  RestorableGremlinDatabasePropertiesResource.ownerId: DatabaseName
+  RestorableGremlinDatabasePropertiesResource.ownerResourceId: DatabaseId
+  RestorableGremlinGraphPropertiesResource.ownerId: GraphName
+  RestorableGremlinGraphPropertiesResource.ownerResourceId: GraphId
+  RestorableTablePropertiesResource.ownerId: TableName
+  RestorableTablePropertiesResource.ownerResourceId: TableId
   CosmosDBAccount.properties.enableFreeTier: IsFreeTierEnabled
   CosmosDBAccount.properties.enableAnalyticalStorage: IsAnalyticalStorageEnabled
   ContainerPartitionKey.systemKey: IsSystemKey
@@ -260,6 +278,8 @@ rename-mapping:
   PrimaryAggregationType: CosmosDBMetricPrimaryAggregationType
   RestorableSqlResourcesGetResult: RestorableSqlResourceData
   RestorableMongodbResourcesGetResult: RestorableMongoDBResourceData
+  RestorableGremlinResourcesGetResult : RestorableGremlinResourceData
+  RestorableTableResourcesGetResult: RestorableTableResourceData
   ServiceResourceProperties: CosmosDBServiceProperties
   ServiceResourceCreateUpdateParameters: CosmosDBServiceCreateUpdateParameters
   ServiceResource: CosmosDBService
@@ -279,6 +299,13 @@ rename-mapping:
   AccountKeyMetadata.generationTime: GeneratedOn
   PrivilegeResource: MongoDBPrivilegeResourceInfo
   PrivilegeResource.db: DBName
+  MinimalTlsVersion: CosmosDBMinimalTlsVersion
+  BackupResource: CassandraClusterBackupResource
+  CheckNameAvailabilityRequest: CheckCosmosDBNameAvailabilityContent
+  CheckNameAvailabilityResponse: CheckCosmosDBNameAvailabilityResponse
+  CheckNameAvailabilityReason: CosmosDBNameUnavailableReason
+  NodeGroupProperties.diskSizeGB: DiskSizeInGB
+  IpAddressOrRange: CosmosDBIPAddressOrRange
 
 prepend-rp-prefix:
 - UniqueKey
@@ -293,7 +320,6 @@ prepend-rp-prefix:
 - MetricAvailability
 - LocationProperties
 - LocationListResult
-- IPAddressOrRange
 - DataType
 - IndexingPolicy
 - ExcludedPath
@@ -313,6 +339,14 @@ prepend-rp-prefix:
 - PublicNetworkAccess
 - SpatialType
 - ContainerPartitionKey
+- FirewallRule
+- Status
+- ProvisioningState
+- Type
+- ConnectionString
+
+models-to-treat-empty-string-as-null:
+  - CosmosDBAccountData
 
 directive:
 # The notebook is offline due to security issues
@@ -352,6 +386,7 @@ directive:
     $.MetricDefinition.properties.resourceUri['x-ms-client-name'] = 'ResourceId';
     $.MetricDefinition.properties.resourceUri['x-ms-format'] = 'arm-id';
     $.VirtualNetworkRule.properties.id['x-ms-format'] = 'arm-id';
+    $.DatabaseAccountConnectionString.properties.type['x-ms-client-name'] = 'KeyType';
 # add a missing response code for long running operation. an issue was filed on swagger: https://github.com/Azure/azure-rest-api-specs/issues/16508
 - from: swagger-document
   where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/notebookWorkspaces/{notebookWorkspaceName}'].put
@@ -506,6 +541,18 @@ directive:
 - rename-model:
     from: RestorableMongodbDatabaseGetResult
     to: RestorableMongoDBDatabase
+- rename-model:
+    from: RestorableGremlinDatabaseGetResult
+    to: RestorableGremlinDatabase
+- rename-model:
+    from: RestorableGremlinGraphGetResult
+    to: RestorableGremlinGraph
+- rename-model:
+    from: RestorableTableGetResult
+    to: RestorableTable
+- rename-model:
+    from: KeyWrapMetadata
+    to: CosmosDBKeyWrapMetadata
 # same as `Metric`
 - rename-model:
     from: Metric

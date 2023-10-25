@@ -14,6 +14,10 @@ namespace Azure.Containers.ContainerRegistry
     {
         internal static History DeserializeHistory(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> v1Compatibility = default;
             foreach (var property in element.EnumerateObject())
             {

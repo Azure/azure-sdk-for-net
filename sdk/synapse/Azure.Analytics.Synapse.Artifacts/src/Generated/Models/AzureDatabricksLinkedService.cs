@@ -46,7 +46,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="existingClusterId"> The id of an existing interactive cluster that will be used for all runs of this activity. Type: string (or Expression with resultType string). </param>
         /// <param name="instancePoolId"> The id of an existing instance pool that will be used for all runs of this activity. Type: string (or Expression with resultType string). </param>
         /// <param name="newClusterVersion"> If not using an existing interactive cluster, this specifies the Spark version of a new job cluster or instance pool nodes created for each run of this activity. Required if instancePoolId is specified. Type: string (or Expression with resultType string). </param>
-        /// <param name="newClusterNumOfWorker"> If not using an existing interactive cluster, this specifies the number of worker nodes to use for the new job cluster or instance pool. For new job clusters, this a string-formatted Int32, like &apos;1&apos; means numOfWorker is 1 or &apos;1:10&apos; means auto-scale from 1 (min) to 10 (max). For instance pools, this is a string-formatted Int32, and can only specify a fixed number of worker nodes, such as &apos;2&apos;. Required if newClusterVersion is specified. Type: string (or Expression with resultType string). </param>
+        /// <param name="newClusterNumOfWorker"> If not using an existing interactive cluster, this specifies the number of worker nodes to use for the new job cluster or instance pool. For new job clusters, this a string-formatted Int32, like '1' means numOfWorker is 1 or '1:10' means auto-scale from 1 (min) to 10 (max). For instance pools, this is a string-formatted Int32, and can only specify a fixed number of worker nodes, such as '2'. Required if newClusterVersion is specified. Type: string (or Expression with resultType string). </param>
         /// <param name="newClusterNodeType"> The node type of the new job cluster. This property is required if newClusterVersion is specified and instancePoolId is not specified. If instancePoolId is specified, this property is ignored. Type: string (or Expression with resultType string). </param>
         /// <param name="newClusterSparkConf"> A set of optional, user-specified Spark configuration key-value pairs. </param>
         /// <param name="newClusterSparkEnvVars"> A set of optional, user-specified Spark environment variables key-value pairs. </param>
@@ -57,7 +57,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="newClusterEnableElasticDisk"> Enable the elastic disk on the new cluster. This property is now ignored, and takes the default elastic disk behavior in Databricks (elastic disks are always enabled). Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
         /// <param name="policyId"> The policy id for limiting the ability to configure clusters based on a user defined set of rules. Type: string (or Expression with resultType string). </param>
-        internal AzureDatabricksLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object domain, SecretBase accessToken, object authentication, object workspaceResourceId, object existingClusterId, object instancePoolId, object newClusterVersion, object newClusterNumOfWorker, object newClusterNodeType, IDictionary<string, object> newClusterSparkConf, IDictionary<string, object> newClusterSparkEnvVars, IDictionary<string, object> newClusterCustomTags, object newClusterLogDestination, object newClusterDriverNodeType, object newClusterInitScripts, object newClusterEnableElasticDisk, object encryptedCredential, object policyId) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="credential"> The credential reference containing authentication information. </param>
+        internal AzureDatabricksLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object domain, SecretBase accessToken, object authentication, object workspaceResourceId, object existingClusterId, object instancePoolId, object newClusterVersion, object newClusterNumOfWorker, object newClusterNodeType, IDictionary<string, object> newClusterSparkConf, IDictionary<string, object> newClusterSparkEnvVars, IDictionary<string, object> newClusterCustomTags, object newClusterLogDestination, object newClusterDriverNodeType, object newClusterInitScripts, object newClusterEnableElasticDisk, object encryptedCredential, object policyId, CredentialReference credential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             Domain = domain;
             AccessToken = accessToken;
@@ -77,6 +78,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             NewClusterEnableElasticDisk = newClusterEnableElasticDisk;
             EncryptedCredential = encryptedCredential;
             PolicyId = policyId;
+            Credential = credential;
             Type = type ?? "AzureDatabricks";
         }
 
@@ -98,7 +100,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object InstancePoolId { get; set; }
         /// <summary> If not using an existing interactive cluster, this specifies the Spark version of a new job cluster or instance pool nodes created for each run of this activity. Required if instancePoolId is specified. Type: string (or Expression with resultType string). </summary>
         public object NewClusterVersion { get; set; }
-        /// <summary> If not using an existing interactive cluster, this specifies the number of worker nodes to use for the new job cluster or instance pool. For new job clusters, this a string-formatted Int32, like &apos;1&apos; means numOfWorker is 1 or &apos;1:10&apos; means auto-scale from 1 (min) to 10 (max). For instance pools, this is a string-formatted Int32, and can only specify a fixed number of worker nodes, such as &apos;2&apos;. Required if newClusterVersion is specified. Type: string (or Expression with resultType string). </summary>
+        /// <summary> If not using an existing interactive cluster, this specifies the number of worker nodes to use for the new job cluster or instance pool. For new job clusters, this a string-formatted Int32, like '1' means numOfWorker is 1 or '1:10' means auto-scale from 1 (min) to 10 (max). For instance pools, this is a string-formatted Int32, and can only specify a fixed number of worker nodes, such as '2'. Required if newClusterVersion is specified. Type: string (or Expression with resultType string). </summary>
         public object NewClusterNumOfWorker { get; set; }
         /// <summary> The node type of the new job cluster. This property is required if newClusterVersion is specified and instancePoolId is not specified. If instancePoolId is specified, this property is ignored. Type: string (or Expression with resultType string). </summary>
         public object NewClusterNodeType { get; set; }
@@ -120,5 +122,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object EncryptedCredential { get; set; }
         /// <summary> The policy id for limiting the ability to configure clusters based on a user defined set of rules. Type: string (or Expression with resultType string). </summary>
         public object PolicyId { get; set; }
+        /// <summary> The credential reference containing authentication information. </summary>
+        public CredentialReference Credential { get; set; }
     }
 }

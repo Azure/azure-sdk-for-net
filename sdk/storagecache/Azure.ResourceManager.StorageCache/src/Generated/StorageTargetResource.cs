@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Returns a Storage Target from a Cache.
+        /// Returns a Storage Target from a cache.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Returns a Storage Target from a Cache.
+        /// Returns a Storage Target from a cache.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Removes a Storage Target from a Cache. This operation is allowed at any time, but if the Cache is down or unhealthy, the actual removal of the Storage Target may be delayed until the Cache is healthy again. Note that if the Cache has data to flush to the Storage Target, the data will be flushed before the Storage Target will be deleted.
+        /// Removes a Storage Target from a cache. This operation is allowed at any time, but if the cache is down or unhealthy, the actual removal of the Storage Target may be delayed until the cache is healthy again. Note that if the cache has data to flush to the Storage Target, the data will be flushed before the Storage Target will be deleted.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Removes a Storage Target from a Cache. This operation is allowed at any time, but if the Cache is down or unhealthy, the actual removal of the Storage Target may be delayed until the Cache is healthy again. Note that if the Cache has data to flush to the Storage Target, the data will be flushed before the Storage Target will be deleted.
+        /// Removes a Storage Target from a cache. This operation is allowed at any time, but if the cache is down or unhealthy, the actual removal of the Storage Target may be delayed until the cache is healthy again. Note that if the cache has data to flush to the Storage Target, the data will be flushed before the Storage Target will be deleted.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Create or update a Storage Target. This operation is allowed at any time, but if the Cache is down or unhealthy, the actual creation/modification of the Storage Target may be delayed until the Cache is healthy again.
+        /// Create or update a Storage Target. This operation is allowed at any time, but if the cache is down or unhealthy, the actual creation/modification of the Storage Target may be delayed until the cache is healthy again.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Create or update a Storage Target. This operation is allowed at any time, but if the Cache is down or unhealthy, the actual creation/modification of the Storage Target may be delayed until the Cache is healthy again.
+        /// Create or update a Storage Target. This operation is allowed at any time, but if the cache is down or unhealthy, the actual creation/modification of the Storage Target may be delayed until the cache is healthy again.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Tells the cache to write all dirty data to the Storage Target&apos;s backend storage. Client requests to this storage target&apos;s namespace will return errors until the flush operation completes.
+        /// Tells the cache to write all dirty data to the Storage Target's backend storage. Client requests to this storage target's namespace will return errors until the flush operation completes.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary>
-        /// Tells the cache to write all dirty data to the Storage Target&apos;s backend storage. Client requests to this storage target&apos;s namespace will return errors until the flush operation completes.
+        /// Tells the cache to write all dirty data to the Storage Target's backend storage. Client requests to this storage target's namespace will return errors until the flush operation completes.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -625,6 +625,74 @@ namespace Azure.ResourceManager.StorageCache
             {
                 var response = _storageTargetRestClient.Invalidate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 var operation = new StorageCacheArmOperation(_storageTargetClientDiagnostics, Pipeline, _storageTargetRestClient.CreateInvalidateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tells a storage target to restore its settings to their default values.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/caches/{cacheName}/storageTargets/{storageTargetName}/restoreDefaults</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StorageTargets_RestoreDefaults</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> RestoreDefaultsAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _storageTargetClientDiagnostics.CreateScope("StorageTargetResource.RestoreDefaults");
+            scope.Start();
+            try
+            {
+                var response = await _storageTargetRestClient.RestoreDefaultsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new StorageCacheArmOperation(_storageTargetClientDiagnostics, Pipeline, _storageTargetRestClient.CreateRestoreDefaultsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tells a storage target to restore its settings to their default values.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/caches/{cacheName}/storageTargets/{storageTargetName}/restoreDefaults</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StorageTargets_RestoreDefaults</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation RestoreDefaults(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _storageTargetClientDiagnostics.CreateScope("StorageTargetResource.RestoreDefaults");
+            scope.Start();
+            try
+            {
+                var response = _storageTargetRestClient.RestoreDefaults(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new StorageCacheArmOperation(_storageTargetClientDiagnostics, Pipeline, _storageTargetRestClient.CreateRestoreDefaultsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

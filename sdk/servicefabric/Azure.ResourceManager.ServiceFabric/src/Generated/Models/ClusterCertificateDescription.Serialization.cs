@@ -20,7 +20,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Thumbprint);
 #else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(Thumbprint.ToString()).RootElement);
+            using (JsonDocument document = JsonDocument.Parse(Thumbprint))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
 #endif
             if (Optional.IsDefined(ThumbprintSecondary))
             {
@@ -37,6 +40,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 
         internal static ClusterCertificateDescription DeserializeClusterCertificateDescription(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             BinaryData thumbprint = default;
             Optional<string> thumbprintSecondary = default;
             Optional<ClusterCertificateStoreName> x509StoreName = default;
@@ -56,7 +63,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     x509StoreName = new ClusterCertificateStoreName(property.Value.GetString());

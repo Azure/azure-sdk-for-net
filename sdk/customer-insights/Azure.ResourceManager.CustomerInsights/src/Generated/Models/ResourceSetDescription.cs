@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         /// <summary> Initializes a new instance of ResourceSetDescription. </summary>
         /// <param name="elements"> The elements included in the set. </param>
-        /// <param name="exceptions"> The elements that are not included in the set, in case elements contains &apos;*&apos; indicating &apos;all&apos;. </param>
+        /// <param name="exceptions"> The elements that are not included in the set, in case elements contains '*' indicating 'all'. </param>
         internal ResourceSetDescription(IList<string> elements, IList<string> exceptions)
         {
             Elements = elements;
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         /// <summary> The elements included in the set. </summary>
         public IList<string> Elements { get; }
-        /// <summary> The elements that are not included in the set, in case elements contains &apos;*&apos; indicating &apos;all&apos;. </summary>
+        /// <summary> The elements that are not included in the set, in case elements contains '*' indicating 'all'. </summary>
         public IList<string> Exceptions { get; }
     }
 }

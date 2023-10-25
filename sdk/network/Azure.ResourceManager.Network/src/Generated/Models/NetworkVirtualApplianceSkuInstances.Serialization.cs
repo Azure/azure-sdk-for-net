@@ -20,6 +20,10 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static NetworkVirtualApplianceSkuInstances DeserializeNetworkVirtualApplianceSkuInstances(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> scaleUnit = default;
             Optional<int> instanceCount = default;
             foreach (var property in element.EnumerateObject())
@@ -33,7 +37,6 @@ namespace Azure.ResourceManager.Network.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     instanceCount = property.Value.GetInt32();

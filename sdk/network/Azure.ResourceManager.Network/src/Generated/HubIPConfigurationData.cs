@@ -11,7 +11,10 @@ using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> A class representing the HubIPConfiguration data model. </summary>
+    /// <summary>
+    /// A class representing the HubIPConfiguration data model.
+    /// IpConfigurations.
+    /// </summary>
     public partial class HubIPConfigurationData : NetworkResourceData
     {
         /// <summary> Initializes a new instance of HubIPConfigurationData. </summary>

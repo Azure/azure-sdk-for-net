@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DevCenter.Tests
         {
             ResourceIdentifier projectId = new ResourceIdentifier(TestEnvironment.DefaultProjectId);
 
-            var project = Client.GetProjectResource(projectId);
+            var project = Client.GetDevCenterProjectResource(projectId);
 
             List<ProjectDevBoxDefinitionResource> devBoxDefinitions = await project.GetProjectDevBoxDefinitions().GetAllAsync().ToEnumerableAsync();
             Assert.IsTrue(devBoxDefinitions.Count > 0);

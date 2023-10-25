@@ -4,7 +4,6 @@
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_UsingStatements
 using Azure.Communication.JobRouter;
-using Azure.Communication.JobRouter.Models;
 ```
 
 ## Create a client
@@ -12,8 +11,8 @@ using Azure.Communication.JobRouter.Models;
 Create a `RouterClient`.
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateClient
-RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
-RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
+JobRouterClient routerClient = new JobRouterClient("<< CONNECTION STRING >>");
+JobRouterAdministrationClient routerAdministrationClient = new JobRouterAdministrationClient("<< CONNECTION STRING >>");
 ```
 
 ## Create a distribution policy
@@ -24,7 +23,7 @@ string distributionPolicyId = "my-distribution-policy";
 Response<DistributionPolicy> distributionPolicy = routerAdministrationClient.CreateDistributionPolicy(
     new CreateDistributionPolicyOptions(
         distributionPolicyId: distributionPolicyId,
-        offerTtl: TimeSpan.FromMinutes(1),
+        offerExpiresAfter: TimeSpan.FromMinutes(1),
         mode: new LongestIdleMode())
     {
         Name = "My distribution policy"

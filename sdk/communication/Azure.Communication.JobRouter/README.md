@@ -24,15 +24,14 @@ To create a new Communication Service, you can use the [Azure Portal][communicat
 ### Using statements
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_UsingStatements
 using Azure.Communication.JobRouter;
-using Azure.Communication.JobRouter.Models;
 ```
 
 ### Create a JobRouter Client
 
 This will allow you to interact with the JobRouter Service
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateClient
-RouterClient routerClient = new RouterClient("<< CONNECTION STRING >>");
-RouterAdministrationClient routerAdministrationClient = new RouterAdministrationClient("<< CONNECTION STRING >>");
+JobRouterClient routerClient = new JobRouterClient("<< CONNECTION STRING >>");
+JobRouterAdministrationClient routerAdministrationClient = new JobRouterAdministrationClient("<< CONNECTION STRING >>");
 ```
 
 ## Key concepts
@@ -90,7 +89,7 @@ Before we can create a Queue, we need a Distribution Policy.
 Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
     new CreateDistributionPolicyOptions(
         distributionPolicyId: "distribution-policy-1",
-        offerTtl: TimeSpan.FromDays(1),
+        offerExpiresAfter: TimeSpan.FromDays(1),
         mode: new LongestIdleMode())
 );
 ```
@@ -98,7 +97,7 @@ Response<DistributionPolicy> distributionPolicy = await routerAdministrationClie
 ### Queue
 Next, we can create the queue.
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateQueue_Async
-Response<JobQueue> queue = await routerAdministrationClient.CreateQueueAsync(
+Response<RouterQueue> queue = await routerAdministrationClient.CreateQueueAsync(
     new CreateQueueOptions(
         queueId: "queue-1",
         distributionPolicyId: distributionPolicy.Value.Id)
@@ -116,9 +115,9 @@ Response<RouterJob> job = await routerClient.CreateJobAsync(
     {
         ChannelReference = "12345",
         Priority = 1,
-        RequestedWorkerSelectors = new List<WorkerSelector>
+        RequestedWorkerSelectors =
         {
-            new WorkerSelector("Some-Skill", LabelOperator.GreaterThan, new LabelValue(10))
+            new RouterWorkerSelector("Some-Skill", LabelOperator.GreaterThan, new LabelValue(10))
         }
     });
 ```
@@ -127,19 +126,11 @@ Response<RouterJob> job = await routerClient.CreateJobAsync(
 Now, we register a worker to receive work from that queue, with a label of `Some-Skill` equal to 11.
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_RegisterWorker_Async
 Response<RouterWorker> worker = await routerClient.CreateWorkerAsync(
-    new CreateWorkerOptions(
-        workerId: "worker-1",
-        totalCapacity: 1)
+    new CreateWorkerOptions(workerId: "worker-1", totalCapacity: 1)
     {
-        QueueIds = new Dictionary<string, QueueAssignment>() { [queue.Value.Id] = new QueueAssignment() },
-        Labels = new Dictionary<string, LabelValue>()
-        {
-            ["Some-Skill"] = new LabelValue(11)
-        },
-        ChannelConfigurations = new Dictionary<string, ChannelConfiguration>()
-        {
-            ["my-channel"] = new ChannelConfiguration(1)
-        },
+        QueueAssignments = { [queue.Value.Id] = new RouterQueueAssignment() },
+        Labels = { ["Some-Skill"] = new LabelValue(11) },
+        ChannelConfigurations = { ["my-channel"] = new ChannelConfiguration(1) },
         AvailableForOffers = true,
     }
 );
@@ -165,7 +156,7 @@ foreach (EventGridEvent egEvent in egEvents)
     // This is a temporary fix before Router events are on-boarded as system events
     switch (egEvent.EventType)
     {
-        case "Microsoft.Communication.RouterWorkerOfferIssued":
+        case "Microsoft.Communication.WorkerOfferIssued":
             AcsRouterWorkerOfferIssuedEventData deserializedEventData =
                 egEvent.Data.ToObjectFromJson<AcsRouterWorkerOfferIssuedEventData>();
             Console.Write(deserializedEventData.OfferId); // Offer Id
@@ -183,7 +174,7 @@ foreach (EventGridEvent egEvent in egEvents)
 However, we could also wait a few seconds and then query the worker directly against the JobRouter API to see if an offer was issued to it.
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_QueryWorker_Async
 Response<RouterWorker> result = await routerClient.GetWorkerAsync(worker.Value.Id);
-foreach (JobOffer? offer in result.Value.Offers)
+foreach (RouterJobOffer? offer in result.Value.Offers)
 {
     Console.WriteLine($"Worker {worker.Value.Id} has an active offer for job {offer.JobId}");
 }
@@ -193,25 +184,25 @@ foreach (JobOffer? offer in result.Value.Offers)
 Once a worker receives an offer, it can take two possible actions: accept or decline. We are going to accept the offer.
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_AcceptOffer_Async
 // fetching the offer id
-JobOffer jobOffer = result.Value.Offers.First(x => x.JobId == job.Value.Id);
+RouterJobOffer jobOffer = result.Value.Offers.First<RouterJobOffer>(x => x.JobId == job.Value.Id);
 
-string offerId = jobOffer.Id; // `OfferId` can be retrieved directly from consuming event from Event grid
+string offerId = jobOffer.OfferId; // `OfferId` can be retrieved directly from consuming event from Event grid
 
 // accepting the offer sent to `worker-1`
 Response<AcceptJobOfferResult> acceptJobOfferResult = await routerClient.AcceptJobOfferAsync(worker.Value.Id, offerId);
 
-Console.WriteLine($"Offer: {jobOffer.Id} sent to worker: {worker.Value.Id} has been accepted");
+Console.WriteLine($"Offer: {jobOffer.OfferId} sent to worker: {worker.Value.Id} has been accepted");
 Console.WriteLine($"Job has been assigned to worker: {worker.Value.Id} with assignment: {acceptJobOfferResult.Value.AssignmentId}");
 
 // verify job assignment is populated when querying job
 Response<RouterJob> updatedJob = await routerClient.GetJobAsync(job.Value.Id);
-Console.WriteLine($"Job assignment has been successful: {updatedJob.Value.JobStatus == RouterJobStatus.Assigned && updatedJob.Value.Assignments.ContainsKey(acceptJobOfferResult.Value.AssignmentId)}");
+Console.WriteLine($"Job assignment has been successful: {updatedJob.Value.Status == RouterJobStatus.Assigned && updatedJob.Value.Assignments.ContainsKey(acceptJobOfferResult.Value.AssignmentId)}");
 ```
 
 ### Completing a job
 Once the worker is done with the job, the worker has to mark the job as `completed`.
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CompleteJob_Async
-Response<CompleteJobResult> completeJob = await routerClient.CompleteJobAsync(
+Response completeJob = await routerClient.CompleteJobAsync(
     options: new CompleteJobOptions(
             jobId: job.Value.Id,
             assignmentId: acceptJobOfferResult.Value.AssignmentId)
@@ -219,23 +210,23 @@ Response<CompleteJobResult> completeJob = await routerClient.CompleteJobAsync(
         Note = $"Job has been completed by {worker.Value.Id} at {DateTimeOffset.UtcNow}"
     });
 
-Console.WriteLine($"Job has been successfully completed: {completeJob.GetRawResponse().Status == 200}");
+Console.WriteLine($"Job has been successfully completed: {completeJob.Status == 200}");
 ```
 
 ### Closing a job
 After a job has been completed, the worker can perform wrap up actions to the job before closing the job and finally releasing its capacity to accept more incoming jobs
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CloseJob_Async
-Response<CloseJobResult> closeJob = await routerClient.CloseJobAsync(
+Response closeJob = await routerClient.CloseJobAsync(
     options: new CloseJobOptions(
         jobId: job.Value.Id,
         assignmentId: acceptJobOfferResult.Value.AssignmentId)
     {
         Note = $"Job has been closed by {worker.Value.Id} at {DateTimeOffset.UtcNow}"
     });
-Console.WriteLine($"Job has been successfully closed: {closeJob.GetRawResponse().Status == 200}");
+Console.WriteLine($"Job has been successfully closed: {closeJob.Status == 200}");
 
 updatedJob = await routerClient.GetJobAsync(job.Value.Id);
-Console.WriteLine($"Updated job status: {updatedJob.Value.JobStatus == RouterJobStatus.Closed}");
+Console.WriteLine($"Updated job status: {updatedJob.Value.Status == RouterJobStatus.Closed}");
 ```
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CloseJobInFuture_Async
@@ -243,15 +234,15 @@ Console.WriteLine($"Updated job status: {updatedJob.Value.JobStatus == RouterJob
 var closeJobInFuture = await routerClient.CloseJobAsync(
     options: new CloseJobOptions(job.Value.Id, acceptJobOfferResult.Value.AssignmentId)
     {
-        CloseTime = DateTimeOffset.UtcNow.AddSeconds(2), // this will mark the job as closed after 2 seconds
+        CloseAt = DateTimeOffset.UtcNow.AddSeconds(2), // this will mark the job as closed after 2 seconds
         Note = $"Job has been marked to close in the future by {worker.Value.Id} at {DateTimeOffset.UtcNow}"
     });
-Console.WriteLine($"Job has been marked to close: {closeJob.GetRawResponse().Status == 202}"); // You'll received a 202 in that case
+Console.WriteLine($"Job has been marked to close: {closeJob.Status == 202}"); // You'll received a 202 in that case
 
 await Task.Delay(TimeSpan.FromSeconds(2));
 
 updatedJob = await routerClient.GetJobAsync(job.Value.Id);
-Console.WriteLine($"Updated job status: {updatedJob.Value.JobStatus == RouterJobStatus.Closed}");
+Console.WriteLine($"Updated job status: {updatedJob.Value.Status == RouterJobStatus.Closed}");
 ```
 
 ## Troubleshooting

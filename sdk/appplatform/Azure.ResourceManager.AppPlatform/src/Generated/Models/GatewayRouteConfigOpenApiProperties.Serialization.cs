@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static GatewayRouteConfigOpenApiProperties DeserializeGatewayRouteConfigOpenApiProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> uri = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -33,7 +37,6 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        uri = null;
                         continue;
                     }
                     uri = new Uri(property.Value.GetString());

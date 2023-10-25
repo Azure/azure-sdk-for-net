@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.HDInsight.Models
     {
         internal static HDInsightUsage DeserializeHDInsightUsage(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> unit = default;
             Optional<long> currentValue = default;
             Optional<long> limit = default;
@@ -29,7 +33,6 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     currentValue = property.Value.GetInt64();
@@ -39,7 +42,6 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     limit = property.Value.GetInt64();
@@ -49,7 +51,6 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     name = HDInsightLocalizedName.DeserializeHDInsightLocalizedName(property.Value);

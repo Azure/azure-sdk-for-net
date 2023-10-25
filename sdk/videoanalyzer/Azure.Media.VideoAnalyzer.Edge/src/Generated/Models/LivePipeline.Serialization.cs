@@ -32,6 +32,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
 
         internal static LivePipeline DeserializeLivePipeline(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<SystemData> systemData = default;
             Optional<LivePipelineProperties> properties = default;
@@ -46,7 +50,6 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = SystemData.DeserializeSystemData(property.Value);
@@ -56,7 +59,6 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     properties = LivePipelineProperties.DeserializeLivePipelineProperties(property.Value);

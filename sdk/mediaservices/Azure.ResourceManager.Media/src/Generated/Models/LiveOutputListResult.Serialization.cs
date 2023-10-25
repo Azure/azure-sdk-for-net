@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Media.Models
     {
         internal static LiveOutputListResult DeserializeLiveOutputListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<MediaLiveOutputData>> value = default;
             Optional<int> odataCount = default;
             Optional<string> odataNextLink = default;
@@ -25,7 +29,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<MediaLiveOutputData> array = new List<MediaLiveOutputData>();
@@ -40,7 +43,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     odataCount = property.Value.GetInt32();

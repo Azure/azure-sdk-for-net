@@ -56,11 +56,25 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WritePropertyName("addressType"u8);
                 writer.WriteStringValue(AddressType.Value.ToSerialString());
             }
+            if (Optional.IsDefined(SkipAddressValidation))
+            {
+                writer.WritePropertyName("skipAddressValidation"u8);
+                writer.WriteBooleanValue(SkipAddressValidation.Value);
+            }
+            if (Optional.IsDefined(TaxIdentificationNumber))
+            {
+                writer.WritePropertyName("taxIdentificationNumber"u8);
+                writer.WriteStringValue(TaxIdentificationNumber);
+            }
             writer.WriteEndObject();
         }
 
         internal static DataBoxShippingAddress DeserializeDataBoxShippingAddress(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string streetAddress1 = default;
             Optional<string> streetAddress2 = default;
             Optional<string> streetAddress3 = default;
@@ -71,6 +85,8 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<string> zipExtendedCode = default;
             Optional<string> companyName = default;
             Optional<DataBoxShippingAddressType> addressType = default;
+            Optional<bool> skipAddressValidation = default;
+            Optional<string> taxIdentificationNumber = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("streetAddress1"u8))
@@ -122,14 +138,27 @@ namespace Azure.ResourceManager.DataBox.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     addressType = property.Value.GetString().ToDataBoxShippingAddressType();
                     continue;
                 }
+                if (property.NameEquals("skipAddressValidation"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    skipAddressValidation = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("taxIdentificationNumber"u8))
+                {
+                    taxIdentificationNumber = property.Value.GetString();
+                    continue;
+                }
             }
-            return new DataBoxShippingAddress(streetAddress1, streetAddress2.Value, streetAddress3.Value, city.Value, stateOrProvince.Value, country, postalCode, zipExtendedCode.Value, companyName.Value, Optional.ToNullable(addressType));
+            return new DataBoxShippingAddress(streetAddress1, streetAddress2.Value, streetAddress3.Value, city.Value, stateOrProvince.Value, country, postalCode, zipExtendedCode.Value, companyName.Value, Optional.ToNullable(addressType), Optional.ToNullable(skipAddressValidation), taxIdentificationNumber.Value);
         }
     }
 }

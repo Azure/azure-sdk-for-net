@@ -28,7 +28,7 @@ namespace Azure.Maps.Routing
         private GeoCollection _SupportingPoints;
         /// <summary>
         /// A GeoJSON collection representing sequence of coordinates used as input for route reconstruction and for calculating zero or more alternative routes to this reference route.
-        /// <list>
+        /// <list type="bullet">
         /// <item><description> The provided sequence of supporting points is used as input for route reconstruction. </description></item>
         /// <item><description> The alternative routes are calculated between the origin and destination points specified in the base path parameter locations. </description></item>
         /// <item><description> If both <c>MinDeviationDistance</c> and <c>MinDeviationTime</c> are set to zero, then these origin and destination points are expected to be at (or very near) the beginning and end of the reference route, respectively. </description></item>

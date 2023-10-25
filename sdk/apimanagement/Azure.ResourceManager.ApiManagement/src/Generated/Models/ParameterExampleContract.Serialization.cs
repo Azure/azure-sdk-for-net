@@ -32,7 +32,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsDefined(ExternalValue))
@@ -45,6 +48,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static ParameterExampleContract DeserializeParameterExampleContract(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> summary = default;
             Optional<string> description = default;
             Optional<BinaryData> value = default;
@@ -65,7 +72,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     value = BinaryData.FromString(property.Value.GetRawText());

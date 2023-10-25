@@ -6,7 +6,6 @@ using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    [CodeGenModel("OperationSummary")]
     public partial class OperationSummary
     {
         /// <summary>
@@ -26,7 +25,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// </summary>
         public Uri ResourceLocation { get; }
 
-        /// <summary> API version used to create this operation. </summary>
-        internal string ApiVersion { get; }
+        /// <summary>
+        /// Service version used to create this operation.
+        /// </summary>
+        [CodeGenMember("ApiVersion")]
+        public string ServiceVersion { get; }
     }
 }

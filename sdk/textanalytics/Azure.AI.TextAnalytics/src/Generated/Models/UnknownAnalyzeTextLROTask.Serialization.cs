@@ -27,6 +27,10 @@ namespace Azure.AI.TextAnalytics.Models
 
         internal static UnknownAnalyzeTextLROTask DeserializeUnknownAnalyzeTextLROTask(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AnalyzeTextLROTaskKind kind = "Unknown";
             Optional<string> taskName = default;
             foreach (var property in element.EnumerateObject())

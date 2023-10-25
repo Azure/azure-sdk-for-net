@@ -31,6 +31,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 
         internal static DeviceProvisioningServicesIPFilterRule DeserializeDeviceProvisioningServicesIPFilterRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string filterName = default;
             DeviceProvisioningServicesIPFilterActionType action = default;
             string ipMask = default;
@@ -56,7 +60,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     target = property.Value.GetString().ToDeviceProvisioningServicesIPFilterTargetType();

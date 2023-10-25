@@ -88,6 +88,16 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("proximityPlacementGroup"u8);
                 JsonSerializer.Serialize(writer, ProximityPlacementGroup);
             }
+            if (Optional.IsDefined(PriorityMixPolicy))
+            {
+                writer.WritePropertyName("priorityMixPolicy"u8);
+                writer.WriteObjectValue(PriorityMixPolicy);
+            }
+            if (Optional.IsDefined(SpotRestorePolicy))
+            {
+                writer.WritePropertyName("spotRestorePolicy"u8);
+                writer.WriteObjectValue(SpotRestorePolicy);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }

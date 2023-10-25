@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         /// <summary> Initializes a new instance of StorageCacheUsage. </summary>
         /// <param name="limit"> The limit (quota) for this resource. </param>
-        /// <param name="unit"> Unit that the limit and usages are expressed in, such as &apos;Count&apos;. </param>
+        /// <param name="unit"> Unit that the limit and usages are expressed in, such as 'Count'. </param>
         /// <param name="currentValue"> The current usage of this resource. </param>
         /// <param name="name"> Naming information for this resource type. </param>
         internal StorageCacheUsage(int? limit, string unit, int? currentValue, StorageCacheUsageName name)
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.StorageCache.Models
 
         /// <summary> The limit (quota) for this resource. </summary>
         public int? Limit { get; }
-        /// <summary> Unit that the limit and usages are expressed in, such as &apos;Count&apos;. </summary>
+        /// <summary> Unit that the limit and usages are expressed in, such as 'Count'. </summary>
         public string Unit { get; }
         /// <summary> The current usage of this resource. </summary>
         public int? CurrentValue { get; }

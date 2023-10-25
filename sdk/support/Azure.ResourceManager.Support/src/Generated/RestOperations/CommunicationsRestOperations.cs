@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Support
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2020-04-01";
+            _apiVersion = apiVersion ?? "2022-09-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Support
         /// <param name="subscriptionId"> Azure subscription Id. </param>
         /// <param name="supportTicketName"> Support ticket name. </param>
         /// <param name="top"> The number of values to return in the collection. Default is 10 and max is 10. </param>
-        /// <param name="filter"> The filter to apply on the operation. You can filter by communicationType and createdDate properties. CommunicationType supports Equals (&apos;eq&apos;) operator and createdDate supports Greater Than (&apos;gt&apos;) and Greater Than or Equals (&apos;ge&apos;) operators. You may combine the CommunicationType and CreatedDate filters by Logical And (&apos;and&apos;) operator. </param>
+        /// <param name="filter"> The filter to apply on the operation. You can filter by communicationType and createdDate properties. CommunicationType supports Equals ('eq') operator and createdDate supports Greater Than ('gt') and Greater Than or Equals ('ge') operators. You may combine the CommunicationType and CreatedDate filters by Logical And ('and') operator. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="supportTicketName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Support
         /// <param name="subscriptionId"> Azure subscription Id. </param>
         /// <param name="supportTicketName"> Support ticket name. </param>
         /// <param name="top"> The number of values to return in the collection. Default is 10 and max is 10. </param>
-        /// <param name="filter"> The filter to apply on the operation. You can filter by communicationType and createdDate properties. CommunicationType supports Equals (&apos;eq&apos;) operator and createdDate supports Greater Than (&apos;gt&apos;) and Greater Than or Equals (&apos;ge&apos;) operators. You may combine the CommunicationType and CreatedDate filters by Logical And (&apos;and&apos;) operator. </param>
+        /// <param name="filter"> The filter to apply on the operation. You can filter by communicationType and createdDate properties. CommunicationType supports Equals ('eq') operator and createdDate supports Greater Than ('gt') and Greater Than or Equals ('ge') operators. You may combine the CommunicationType and CreatedDate filters by Logical And ('and') operator. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="supportTicketName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Support
         /// <param name="subscriptionId"> Azure subscription Id. </param>
         /// <param name="supportTicketName"> Support ticket name. </param>
         /// <param name="top"> The number of values to return in the collection. Default is 10 and max is 10. </param>
-        /// <param name="filter"> The filter to apply on the operation. You can filter by communicationType and createdDate properties. CommunicationType supports Equals (&apos;eq&apos;) operator and createdDate supports Greater Than (&apos;gt&apos;) and Greater Than or Equals (&apos;ge&apos;) operators. You may combine the CommunicationType and CreatedDate filters by Logical And (&apos;and&apos;) operator. </param>
+        /// <param name="filter"> The filter to apply on the operation. You can filter by communicationType and createdDate properties. CommunicationType supports Equals ('eq') operator and createdDate supports Greater Than ('gt') and Greater Than or Equals ('ge') operators. You may combine the CommunicationType and CreatedDate filters by Logical And ('and') operator. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="supportTicketName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.Support
         /// <param name="subscriptionId"> Azure subscription Id. </param>
         /// <param name="supportTicketName"> Support ticket name. </param>
         /// <param name="top"> The number of values to return in the collection. Default is 10 and max is 10. </param>
-        /// <param name="filter"> The filter to apply on the operation. You can filter by communicationType and createdDate properties. CommunicationType supports Equals (&apos;eq&apos;) operator and createdDate supports Greater Than (&apos;gt&apos;) and Greater Than or Equals (&apos;ge&apos;) operators. You may combine the CommunicationType and CreatedDate filters by Logical And (&apos;and&apos;) operator. </param>
+        /// <param name="filter"> The filter to apply on the operation. You can filter by communicationType and createdDate properties. CommunicationType supports Equals ('eq') operator and createdDate supports Greater Than ('gt') and Greater Than or Equals ('ge') operators. You may combine the CommunicationType and CreatedDate filters by Logical And ('and') operator. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="supportTicketName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>

@@ -17,6 +17,10 @@ namespace Azure.AI.AnomalyDetector
     {
         internal static AnomalyState DeserializeAnomalyState(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             DateTimeOffset timestamp = default;
             Optional<AnomalyValue> value = default;
             Optional<IReadOnlyList<ErrorResponse>> errors = default;
@@ -31,7 +35,6 @@ namespace Azure.AI.AnomalyDetector
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     value = AnomalyValue.DeserializeAnomalyValue(property.Value);
@@ -41,7 +44,6 @@ namespace Azure.AI.AnomalyDetector
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ErrorResponse> array = new List<ErrorResponse>();
@@ -53,7 +55,7 @@ namespace Azure.AI.AnomalyDetector
                     continue;
                 }
             }
-            return new AnomalyState(timestamp, value, Optional.ToList(errors));
+            return new AnomalyState(timestamp, value.Value, Optional.ToList(errors));
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

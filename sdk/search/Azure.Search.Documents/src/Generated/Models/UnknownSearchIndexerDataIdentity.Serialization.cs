@@ -22,6 +22,10 @@ namespace Azure.Search.Documents.Models
 
         internal static UnknownSearchIndexerDataIdentity DeserializeUnknownSearchIndexerDataIdentity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string odataType = "Unknown";
             foreach (var property in element.EnumerateObject())
             {

@@ -5,10 +5,12 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> The UnknownProtectionIntent. </summary>
-    internal partial class UnknownProtectionIntent : ProtectionIntent
+    internal partial class UnknownProtectionIntent : BackupGenericProtectionIntent
     {
         /// <summary> Initializes a new instance of UnknownProtectionIntent. </summary>
         /// <param name="protectionIntentItemType"> backup protectionIntent type. </param>
@@ -17,7 +19,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="itemId"> ID of the item which is getting protected, In case of Azure Vm , it is ProtectedItemId. </param>
         /// <param name="policyId"> ID of the backup policy with which this item is backed up. </param>
         /// <param name="protectionState"> Backup state of this backup item. </param>
-        internal UnknownProtectionIntent(ProtectionIntentItemType protectionIntentItemType, BackupManagementType? backupManagementType, string sourceResourceId, string itemId, string policyId, ProtectionStatus? protectionState) : base(protectionIntentItemType, backupManagementType, sourceResourceId, itemId, policyId, protectionState)
+        internal UnknownProtectionIntent(ProtectionIntentItemType protectionIntentItemType, BackupManagementType? backupManagementType, ResourceIdentifier sourceResourceId, ResourceIdentifier itemId, ResourceIdentifier policyId, BackupProtectionStatus? protectionState) : base(protectionIntentItemType, backupManagementType, sourceResourceId, itemId, policyId, protectionState)
         {
             ProtectionIntentItemType = protectionIntentItemType;
         }

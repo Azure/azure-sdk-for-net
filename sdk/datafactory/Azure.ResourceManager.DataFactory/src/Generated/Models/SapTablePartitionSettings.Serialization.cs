@@ -5,9 +5,9 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -19,88 +19,72 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(PartitionColumnName))
             {
                 writer.WritePropertyName("partitionColumnName"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(PartitionColumnName);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(PartitionColumnName.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, PartitionColumnName);
             }
             if (Optional.IsDefined(PartitionUpperBound))
             {
                 writer.WritePropertyName("partitionUpperBound"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(PartitionUpperBound);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(PartitionUpperBound.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, PartitionUpperBound);
             }
             if (Optional.IsDefined(PartitionLowerBound))
             {
                 writer.WritePropertyName("partitionLowerBound"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(PartitionLowerBound);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(PartitionLowerBound.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, PartitionLowerBound);
             }
             if (Optional.IsDefined(MaxPartitionsNumber))
             {
                 writer.WritePropertyName("maxPartitionsNumber"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(MaxPartitionsNumber);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(MaxPartitionsNumber.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, MaxPartitionsNumber);
             }
             writer.WriteEndObject();
         }
 
         internal static SapTablePartitionSettings DeserializeSapTablePartitionSettings(JsonElement element)
         {
-            Optional<BinaryData> partitionColumnName = default;
-            Optional<BinaryData> partitionUpperBound = default;
-            Optional<BinaryData> partitionLowerBound = default;
-            Optional<BinaryData> maxPartitionsNumber = default;
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<DataFactoryElement<string>> partitionColumnName = default;
+            Optional<DataFactoryElement<string>> partitionUpperBound = default;
+            Optional<DataFactoryElement<string>> partitionLowerBound = default;
+            Optional<DataFactoryElement<int>> maxPartitionsNumber = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("partitionColumnName"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    partitionColumnName = BinaryData.FromString(property.Value.GetRawText());
+                    partitionColumnName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("partitionUpperBound"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    partitionUpperBound = BinaryData.FromString(property.Value.GetRawText());
+                    partitionUpperBound = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("partitionLowerBound"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    partitionLowerBound = BinaryData.FromString(property.Value.GetRawText());
+                    partitionLowerBound = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("maxPartitionsNumber"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    maxPartitionsNumber = BinaryData.FromString(property.Value.GetRawText());
+                    maxPartitionsNumber = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
                     continue;
                 }
             }

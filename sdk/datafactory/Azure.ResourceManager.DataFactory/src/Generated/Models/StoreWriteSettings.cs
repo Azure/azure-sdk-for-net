@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="copyBehavior"> The type of copy behavior for copy sink. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal StoreWriteSettings(string storeWriteSettingsType, BinaryData maxConcurrentConnections, BinaryData disableMetricsCollection, BinaryData copyBehavior, IDictionary<string, BinaryData> additionalProperties)
+        internal StoreWriteSettings(string storeWriteSettingsType, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, BinaryData copyBehavior, IDictionary<string, BinaryData> additionalProperties)
         {
             StoreWriteSettingsType = storeWriteSettingsType;
             MaxConcurrentConnections = maxConcurrentConnections;
@@ -41,68 +42,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> The write setting type. </summary>
         internal string StoreWriteSettingsType { get; set; }
-        /// <summary>
-        /// The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer).
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData MaxConcurrentConnections { get; set; }
-        /// <summary>
-        /// If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean).
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData DisableMetricsCollection { get; set; }
+        /// <summary> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </summary>
+        public DataFactoryElement<int> MaxConcurrentConnections { get; set; }
+        /// <summary> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </summary>
+        public DataFactoryElement<bool> DisableMetricsCollection { get; set; }
         /// <summary>
         /// The type of copy behavior for copy sink.
         /// <para>

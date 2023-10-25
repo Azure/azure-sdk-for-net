@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.Authorization.Models
     {
         internal static RoleDefinitionPermissionListResult DeserializeRoleDefinitionPermissionListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<RoleDefinitionPermission>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.Authorization.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<RoleDefinitionPermission> array = new List<RoleDefinitionPermission>();

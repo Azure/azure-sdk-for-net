@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal partial class WindowsVmGuestPatchAutomaticByPlatformSettings : IUtf8JsonSerializable
+    public partial class WindowsVmGuestPatchAutomaticByPlatformSettings : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,26 +20,44 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("rebootSetting"u8);
                 writer.WriteStringValue(RebootSetting.Value.ToString());
             }
+            if (Optional.IsDefined(BypassPlatformSafetyChecksOnUserSchedule))
+            {
+                writer.WritePropertyName("bypassPlatformSafetyChecksOnUserSchedule"u8);
+                writer.WriteBooleanValue(BypassPlatformSafetyChecksOnUserSchedule.Value);
+            }
             writer.WriteEndObject();
         }
 
         internal static WindowsVmGuestPatchAutomaticByPlatformSettings DeserializeWindowsVmGuestPatchAutomaticByPlatformSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<WindowsVmGuestPatchAutomaticByPlatformRebootSetting> rebootSetting = default;
+            Optional<bool> bypassPlatformSafetyChecksOnUserSchedule = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rebootSetting"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rebootSetting = new WindowsVmGuestPatchAutomaticByPlatformRebootSetting(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("bypassPlatformSafetyChecksOnUserSchedule"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    bypassPlatformSafetyChecksOnUserSchedule = property.Value.GetBoolean();
+                    continue;
+                }
             }
-            return new WindowsVmGuestPatchAutomaticByPlatformSettings(Optional.ToNullable(rebootSetting));
+            return new WindowsVmGuestPatchAutomaticByPlatformSettings(Optional.ToNullable(rebootSetting), Optional.ToNullable(bypassPlatformSafetyChecksOnUserSchedule));
         }
     }
 }

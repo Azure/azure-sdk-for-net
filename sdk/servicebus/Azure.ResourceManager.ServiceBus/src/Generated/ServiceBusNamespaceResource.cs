@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -102,7 +103,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <returns> Returns a <see cref="ServiceBusNetworkRuleSetResource" /> object. </returns>
         public virtual ServiceBusNetworkRuleSetResource GetServiceBusNetworkRuleSet()
         {
-            return new ServiceBusNetworkRuleSetResource(Client, new ResourceIdentifier(Id.ToString() + "/networkRuleSets/default"));
+            return new ServiceBusNetworkRuleSetResource(Client, Id.AppendChildResource("networkRuleSets", "default"));
         }
 
         /// <summary> Gets a collection of ServiceBusPrivateEndpointConnectionResources in the ServiceBusNamespace. </summary>
@@ -231,7 +232,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="configName"> The configuration name. Should always be &quot;$default&quot;. </param>
+        /// <param name="configName"> The configuration name. Should always be "$default". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         public virtual async Task<Response<MigrationConfigurationResource>> GetMigrationConfigurationAsync(MigrationConfigurationName configName, CancellationToken cancellationToken = default)
@@ -252,7 +253,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="configName"> The configuration name. Should always be &quot;$default&quot;. </param>
+        /// <param name="configName"> The configuration name. Should always be "$default". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
         public virtual Response<MigrationConfigurationResource> GetMigrationConfiguration(MigrationConfigurationName configName, CancellationToken cancellationToken = default)
@@ -552,7 +553,7 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary>
-        /// Updates a service namespace. Once created, this namespace&apos;s resource manifest is immutable. This operation is idempotent.
+        /// Updates a service namespace. Once created, this namespace's resource manifest is immutable. This operation is idempotent.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -586,7 +587,7 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary>
-        /// Updates a service namespace. Once created, this namespace&apos;s resource manifest is immutable. This operation is idempotent.
+        /// Updates a service namespace. Once created, this namespace's resource manifest is immutable. This operation is idempotent.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -637,7 +638,7 @@ namespace Azure.ResourceManager.ServiceBus
         public virtual AsyncPageable<ServiceBusPrivateLinkResource> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ServiceBusPrivateLinkResource.DeserializeServiceBusPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "ServiceBusNamespaceResource.GetPrivateLinkResources", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ServiceBusPrivateLinkResource.DeserializeServiceBusPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "ServiceBusNamespaceResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -658,7 +659,7 @@ namespace Azure.ResourceManager.ServiceBus
         public virtual Pageable<ServiceBusPrivateLinkResource> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, ServiceBusPrivateLinkResource.DeserializeServiceBusPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "ServiceBusNamespaceResource.GetPrivateLinkResources", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ServiceBusPrivateLinkResource.DeserializeServiceBusPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "ServiceBusNamespaceResource.GetPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>

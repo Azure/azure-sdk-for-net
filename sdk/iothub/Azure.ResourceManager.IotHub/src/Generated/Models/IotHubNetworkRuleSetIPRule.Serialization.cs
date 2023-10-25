@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.IotHub.Models
 
         internal static IotHubNetworkRuleSetIPRule DeserializeIotHubNetworkRuleSetIPRule(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string filterName = default;
             Optional<IotHubNetworkRuleIPAction> action = default;
             string ipMask = default;
@@ -43,7 +47,6 @@ namespace Azure.ResourceManager.IotHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     action = new IotHubNetworkRuleIPAction(property.Value.GetString());

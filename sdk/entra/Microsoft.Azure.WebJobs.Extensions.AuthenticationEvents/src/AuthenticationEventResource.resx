@@ -186,6 +186,9 @@
   <data name="Ex_No_Lock" xml:space="preserve">
     <value>Could not get exclusive lock to the resource.</value>
   </data>
+  <data name="Ex_Null_Action_Items" xml:space="preserve">
+    <value>Actions can not contain null items.</value>
+  </data>
   <data name="Ex_OpenApi_Missing" xml:space="preserve">
     <value>No associated open api document found for version.</value>
   </data>

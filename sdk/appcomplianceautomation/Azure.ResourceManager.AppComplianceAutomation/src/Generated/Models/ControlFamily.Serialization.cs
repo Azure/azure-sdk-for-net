@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     {
         internal static ControlFamily DeserializeControlFamily(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> familyName = default;
             Optional<ControlFamilyType> familyType = default;
             Optional<ControlFamilyStatus> familyStatus = default;
@@ -30,7 +34,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     familyType = new ControlFamilyType(property.Value.GetString());
@@ -40,7 +43,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     familyStatus = new ControlFamilyStatus(property.Value.GetString());
@@ -50,7 +52,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<Control> array = new List<Control>();

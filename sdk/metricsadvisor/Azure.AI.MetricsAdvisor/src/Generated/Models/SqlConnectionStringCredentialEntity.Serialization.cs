@@ -32,6 +32,10 @@ namespace Azure.AI.MetricsAdvisor.Administration
 
         internal static SqlConnectionStringCredentialEntity DeserializeSqlConnectionStringCredentialEntity(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             AzureSQLConnectionStringParam parameters = default;
             DataSourceCredentialKind dataSourceCredentialType = default;
             Optional<string> dataSourceCredentialId = default;

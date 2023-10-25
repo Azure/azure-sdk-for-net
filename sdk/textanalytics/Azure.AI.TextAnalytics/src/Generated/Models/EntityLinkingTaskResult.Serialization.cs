@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
@@ -14,6 +13,10 @@ namespace Azure.AI.TextAnalytics.Models
     {
         internal static EntityLinkingTaskResult DeserializeEntityLinkingTaskResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             EntityLinkingResult results = default;
             AnalyzeTextTaskResultsKind kind = default;
             foreach (var property in element.EnumerateObject())

@@ -68,6 +68,10 @@ namespace Azure.ResourceManager.OperationalInsights
 
         internal static StorageInsightData DeserializeStorageInsightData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ETag> eTag = default;
             Optional<IDictionary<string, string>> tags = default;
             ResourceIdentifier id = default;
@@ -84,7 +88,6 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     eTag = new ETag(property.Value.GetString());
@@ -94,7 +97,6 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -124,7 +126,6 @@ namespace Azure.ResourceManager.OperationalInsights
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -143,7 +144,6 @@ namespace Azure.ResourceManager.OperationalInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -158,7 +158,6 @@ namespace Azure.ResourceManager.OperationalInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<string> array = new List<string>();
@@ -173,7 +172,6 @@ namespace Azure.ResourceManager.OperationalInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             storageAccount = OperationalInsightsStorageAccount.DeserializeOperationalInsightsStorageAccount(property0.Value);
@@ -183,7 +181,6 @@ namespace Azure.ResourceManager.OperationalInsights
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             status = StorageInsightStatus.DeserializeStorageInsightStatus(property0.Value);

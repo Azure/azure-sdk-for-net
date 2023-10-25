@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Reservations.Models
         }
 
         /// <summary> Initializes a new instance of ReservationRefundPolicyResultProperty. </summary>
-        /// <param name="consumedRefundsTotal"></param>
-        /// <param name="maxRefundLimit"></param>
+        /// <param name="consumedRefundsTotal"> Pricing information containing the amount and the currency code. </param>
+        /// <param name="maxRefundLimit"> Pricing information containing the amount and the currency code. </param>
         /// <param name="policyErrors"> Refund Policy errors. </param>
         internal ReservationRefundPolicyResultProperty(PurchasePrice consumedRefundsTotal, PurchasePrice maxRefundLimit, IReadOnlyList<ReservationRefundPolicyError> policyErrors)
         {
@@ -30,9 +30,9 @@ namespace Azure.ResourceManager.Reservations.Models
             PolicyErrors = policyErrors;
         }
 
-        /// <summary> Gets the consumed refunds total. </summary>
+        /// <summary> Pricing information containing the amount and the currency code. </summary>
         public PurchasePrice ConsumedRefundsTotal { get; }
-        /// <summary> Gets the max refund limit. </summary>
+        /// <summary> Pricing information containing the amount and the currency code. </summary>
         public PurchasePrice MaxRefundLimit { get; }
         /// <summary> Refund Policy errors. </summary>
         public IReadOnlyList<ReservationRefundPolicyError> PolicyErrors { get; }

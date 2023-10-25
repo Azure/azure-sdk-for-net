@@ -18,6 +18,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static IotHubDeviceTelemetryEventData DeserializeIotHubDeviceTelemetryEventData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<object> body = default;
             Optional<IReadOnlyDictionary<string, string>> properties = default;
             Optional<IReadOnlyDictionary<string, string>> systemProperties = default;
@@ -27,7 +31,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     body = property.Value.GetObject();
@@ -37,7 +40,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -52,7 +54,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();

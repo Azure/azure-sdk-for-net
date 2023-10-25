@@ -41,6 +41,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         internal static ContainerRegistryTokenCertificate DeserializeContainerRegistryTokenCertificate(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ContainerRegistryTokenCertificateName> name = default;
             Optional<DateTimeOffset> expiry = default;
             Optional<string> thumbprint = default;
@@ -51,7 +55,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     name = new ContainerRegistryTokenCertificateName(property.Value.GetString());
@@ -61,7 +64,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     expiry = property.Value.GetDateTimeOffset("O");

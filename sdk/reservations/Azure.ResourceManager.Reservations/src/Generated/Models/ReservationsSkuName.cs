@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    /// <summary> The ReservationsSkuName. </summary>
+    /// <summary> The name of sku. </summary>
     internal partial class ReservationsSkuName
     {
         /// <summary> Initializes a new instance of ReservationsSkuName. </summary>

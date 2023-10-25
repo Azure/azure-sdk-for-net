@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="displayName"> The display name for alert rule template. </param>
         /// <param name="requiredDataConnectors"> The required data connectors for this template. </param>
         /// <param name="status"> The alert rule template status. </param>
-        /// <param name="displayNamesFilter"> the alerts&apos; displayNames on which the cases will be generated. </param>
-        /// <param name="displayNamesExcludeFilter"> the alerts&apos; displayNames on which the cases will not be generated. </param>
-        /// <param name="productFilter"> The alerts&apos; productName on which the cases will be generated. </param>
-        /// <param name="severitiesFilter"> the alerts&apos; severities on which the cases will be generated. </param>
+        /// <param name="displayNamesFilter"> the alerts' displayNames on which the cases will be generated. </param>
+        /// <param name="displayNamesExcludeFilter"> the alerts' displayNames on which the cases will not be generated. </param>
+        /// <param name="productFilter"> The alerts' productName on which the cases will be generated. </param>
+        /// <param name="severitiesFilter"> the alerts' severities on which the cases will be generated. </param>
         internal MicrosoftSecurityIncidentCreationAlertRuleTemplate(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertRuleKind kind, int? alertRulesCreatedByTemplateCount, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, string description, string displayName, IList<AlertRuleTemplateDataSource> requiredDataConnectors, SecurityInsightsAlertRuleTemplateStatus? status, IList<string> displayNamesFilter, IList<string> displayNamesExcludeFilter, MicrosoftSecurityProductName? productFilter, IList<SecurityInsightsAlertSeverity> severitiesFilter) : base(id, name, resourceType, systemData, kind)
         {
             AlertRulesCreatedByTemplateCount = alertRulesCreatedByTemplateCount;
@@ -73,13 +73,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public IList<AlertRuleTemplateDataSource> RequiredDataConnectors { get; }
         /// <summary> The alert rule template status. </summary>
         public SecurityInsightsAlertRuleTemplateStatus? Status { get; set; }
-        /// <summary> the alerts&apos; displayNames on which the cases will be generated. </summary>
+        /// <summary> the alerts' displayNames on which the cases will be generated. </summary>
         public IList<string> DisplayNamesFilter { get; }
-        /// <summary> the alerts&apos; displayNames on which the cases will not be generated. </summary>
+        /// <summary> the alerts' displayNames on which the cases will not be generated. </summary>
         public IList<string> DisplayNamesExcludeFilter { get; }
-        /// <summary> The alerts&apos; productName on which the cases will be generated. </summary>
+        /// <summary> The alerts' productName on which the cases will be generated. </summary>
         public MicrosoftSecurityProductName? ProductFilter { get; set; }
-        /// <summary> the alerts&apos; severities on which the cases will be generated. </summary>
+        /// <summary> the alerts' severities on which the cases will be generated. </summary>
         public IList<SecurityInsightsAlertSeverity> SeveritiesFilter { get; }
     }
 }

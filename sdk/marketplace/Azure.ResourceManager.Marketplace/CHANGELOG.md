@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,35 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0 (2023-09-18)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2022-03' to 'package-2023-01-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/a54263176acce91199a19333d6c4717367a3317e/specification/marketplace/resource-manager/readme.md
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.28.0 to 1.35.0
+- Upgraded Azure.ResourceManager from 1.4.0 to 1.7.0
+
+## 1.1.0-beta.1 (2023-05-30)
+
+### Features Added
+
+- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.32.0.
+- Upgraded dependent Azure.ResourceManager to 1.6.0.
+
+## 1.0.1 (2023-02-17)
+
+### Other Changes
+
+- Upgraded dependent `Azure.Core` to `1.28.0`.
+- Upgraded dependent `Azure.ResourceManager` to `1.4.0`.
 
 ## 1.0.0 (2022-09-28)
 

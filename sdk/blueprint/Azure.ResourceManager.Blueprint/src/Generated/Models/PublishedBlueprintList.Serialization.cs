@@ -16,6 +16,10 @@ namespace Azure.ResourceManager.Blueprint.Models
     {
         internal static PublishedBlueprintList DeserializePublishedBlueprintList(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<PublishedBlueprintData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -24,7 +28,6 @@ namespace Azure.ResourceManager.Blueprint.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<PublishedBlueprintData> array = new List<PublishedBlueprintData>();

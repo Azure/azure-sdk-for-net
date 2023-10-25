@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.NetApp.Tests
     public class NetAppAccountTests: NetAppTestBase
     {
         private const string namePrefix = "testNetAppNetSDKmgmt";
+        public static new AzureLocation DefaultLocation = " eastus2";
 
         public NetAppAccountTests(bool isAsync) : base(isAsync)
         {
@@ -42,16 +43,15 @@ namespace Azure.ResourceManager.NetApp.Tests
             }
         }
 
-        [Test]
         [RecordedTest]
         public async Task NetAppAccountGetOperations()
         {
             ArmRestApiCollection operationCollection = DefaultSubscription.GetArmRestApis("Microsoft.NetApp");
             List<ArmRestApi> apiList = await operationCollection.GetAllAsync().ToEnumerableAsync();
+            await LiveDelay(200);
             Assert.IsTrue(apiList.Count() > 1);
         }
 
-        [Test]
         [RecordedTest]
         public async Task CreateDeleteNetAppAccount()
         {
@@ -82,7 +82,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(404, exception.Status);
         }
 
-        [Test]
         [RecordedTest]
         public async Task CreateDeleteNetAppAccountWithActiveDirectory()
         {
@@ -114,7 +113,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(404, exception.Status);
         }
 
-        [Test]
         [RecordedTest]
         public async Task UpdateNetAppAccountWithPut()
         {
@@ -137,7 +135,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             account2.Data.Tags.Should().Contain(keyValue);
         }
 
-        [Test]
         [RecordedTest]
         public async Task UpdateNetAppAccount()
         {
@@ -145,8 +142,8 @@ namespace Azure.ResourceManager.NetApp.Tests
             _resourceGroup = await CreateResourceGroupAsync();
             string accountName = await CreateValidAccountNameAsync(_accountNamePrefix, _resourceGroup, DefaultLocation);
             NetAppAccountCollection netAppAccountCollection = _resourceGroup.GetNetAppAccounts();
-            NetAppAccountResource account1 = (await netAppAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, GetDefaultNetAppAccountParameters())).Value;
-            VerifyNetAppAccountProperties(account1, true);
+            NetAppAccountResource account1 = (await netAppAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, GetDefaultNetAppAccountParameters(location:DefaultLocation))).Value;
+            VerifyNetAppAccountProperties(account1, true, location:DefaultLocation);
 
             //update
 
@@ -170,7 +167,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             //Assert.NotNull(account1.Data.Encryption);
         }
 
-        [Test]
         [RecordedTest]
         public async Task GetAllNetAppAccountsByResourceGroup()
         {
@@ -199,9 +195,9 @@ namespace Azure.ResourceManager.NetApp.Tests
             VerifyNetAppAccountProperties(account4, true);
         }
 
-        [Test]
+        [Ignore("ARM issue with nextLink ignore temporarly")]
         [RecordedTest]
-        public async Task GetAllNetAppAccountsBySubscriptionResourceGroup()
+        public async Task GetAllNetAppAccountsBySubscription()
         {
             //create 2 resource groups and 2 NetApp accounts
             _resourceGroup = await CreateResourceGroupAsync();

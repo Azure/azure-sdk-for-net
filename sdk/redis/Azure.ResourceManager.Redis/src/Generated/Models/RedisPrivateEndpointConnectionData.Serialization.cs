@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.Redis
 
         internal static RedisPrivateEndpointConnectionData DeserializeRedisPrivateEndpointConnectionData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -64,7 +68,6 @@ namespace Azure.ResourceManager.Redis
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -83,7 +86,6 @@ namespace Azure.ResourceManager.Redis
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             privateEndpoint = JsonSerializer.Deserialize<SubResource>(property0.Value.GetRawText());
@@ -93,7 +95,6 @@ namespace Azure.ResourceManager.Redis
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             privateLinkServiceConnectionState = RedisPrivateLinkServiceConnectionState.DeserializeRedisPrivateLinkServiceConnectionState(property0.Value);
@@ -103,7 +104,6 @@ namespace Azure.ResourceManager.Redis
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new RedisPrivateEndpointConnectionProvisioningState(property0.Value.GetString());

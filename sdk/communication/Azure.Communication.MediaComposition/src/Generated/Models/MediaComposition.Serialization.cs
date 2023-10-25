@@ -59,6 +59,10 @@ namespace Azure.Communication.MediaComposition
 
         internal static MediaComposition DeserializeMediaComposition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> id = default;
             Optional<MediaCompositionLayout> layout = default;
             Optional<IDictionary<string, MediaInput>> inputs = default;
@@ -75,7 +79,6 @@ namespace Azure.Communication.MediaComposition
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     layout = MediaCompositionLayout.DeserializeMediaCompositionLayout(property.Value);
@@ -85,7 +88,6 @@ namespace Azure.Communication.MediaComposition
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, MediaInput> dictionary = new Dictionary<string, MediaInput>();
@@ -100,7 +102,6 @@ namespace Azure.Communication.MediaComposition
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, MediaOutput> dictionary = new Dictionary<string, MediaOutput>();
@@ -115,7 +116,6 @@ namespace Azure.Communication.MediaComposition
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     streamState = CompositionStreamState.DeserializeCompositionStreamState(property.Value);

@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.SecurityCenter
 
         internal static SecurityContactData DeserializeSecurityContactData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -74,7 +78,6 @@ namespace Azure.ResourceManager.SecurityCenter
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -103,7 +106,6 @@ namespace Azure.ResourceManager.SecurityCenter
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             alertNotifications = SecurityContactPropertiesAlertNotifications.DeserializeSecurityContactPropertiesAlertNotifications(property0.Value);
@@ -113,7 +115,6 @@ namespace Azure.ResourceManager.SecurityCenter
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             notificationsByRole = SecurityContactPropertiesNotificationsByRole.DeserializeSecurityContactPropertiesNotificationsByRole(property0.Value);

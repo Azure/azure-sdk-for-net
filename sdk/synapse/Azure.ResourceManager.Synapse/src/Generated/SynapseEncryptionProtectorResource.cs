@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get workspace managed sql server&apos;s encryption protector.
+        /// Get workspace managed sql server's encryption protector.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Get workspace managed sql server&apos;s encryption protector.
+        /// Get workspace managed sql server's encryption protector.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Updates workspace managed sql server&apos;s encryption protector.
+        /// Updates workspace managed sql server's encryption protector.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Updates workspace managed sql server&apos;s encryption protector.
+        /// Updates workspace managed sql server's encryption protector.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Revalidates workspace managed sql server&apos;s existing encryption protector.
+        /// Revalidates workspace managed sql server's existing encryption protector.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
-        /// Revalidates workspace managed sql server&apos;s existing encryption protector.
+        /// Revalidates workspace managed sql server's existing encryption protector.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

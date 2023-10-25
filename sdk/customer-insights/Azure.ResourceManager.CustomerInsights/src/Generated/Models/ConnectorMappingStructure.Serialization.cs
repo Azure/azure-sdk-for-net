@@ -34,6 +34,10 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         internal static ConnectorMappingStructure DeserializeConnectorMappingStructure(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string propertyName = default;
             string columnName = default;
             Optional<string> customFormatSpecifier = default;
@@ -59,7 +63,6 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     isEncrypted = property.Value.GetBoolean();

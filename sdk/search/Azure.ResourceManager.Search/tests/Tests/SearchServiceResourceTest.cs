@@ -273,5 +273,68 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             Assert.IsFalse(result.Data.Tags.ContainsKey("key1"));
             Assert.IsTrue(result.Data.Tags.ContainsKey("key2"));
         }
+
+        [Test]
+        public async Task DisableAndEnableLocalAuthAsync()
+        {
+            await setResourceGroup();
+            var name = Recording.GenerateAssetName("search");
+            var data = new SearchServiceData(DefaultLocation)
+            {
+                SkuName = SearchSkuName.Basic,
+                PartitionCount = 1,
+                ReplicaCount = 1,
+                HostingMode = SearchServiceHostingMode.Default,
+                IsLocalAuthDisabled = true
+            };
+            SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
+            var result = (await SearchResource.GetAsync()).Value;
+            Assert.NotNull(result);
+            Assert.IsTrue(result.Data.IsLocalAuthDisabled);
+
+            data.IsLocalAuthDisabled = false;
+            SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
+            result = (await SearchResource.GetAsync()).Value;
+            Assert.NotNull(result);
+            Assert.IsFalse(result.Data.IsLocalAuthDisabled);
+
+            data.AuthOptions = new SearchAadAuthDataPlaneAuthOptions
+            {
+                ApiKeyOnly = BinaryData.FromObjectAsJson(new { })
+            };
+            SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
+            result = (await SearchResource.GetAsync()).Value;
+            Assert.NotNull(result);
+            Assert.IsFalse(result.Data.IsLocalAuthDisabled);
+            Assert.IsNotNull(result.Data.AuthOptions);
+            Assert.IsNull(result.Data.AuthOptions.AadOrApiKey);
+            Assert.IsNotNull(result.Data.AuthOptions.ApiKeyOnly);
+
+            data.AuthOptions = new SearchAadAuthDataPlaneAuthOptions
+            {
+                AadOrApiKey = new DataPlaneAadOrApiKeyAuthOption(SearchAadAuthFailureMode.Http401WithBearerChallenge)
+            };
+            SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
+            result = (await SearchResource.GetAsync()).Value;
+            Assert.NotNull(result);
+            Assert.IsFalse(result.Data.IsLocalAuthDisabled);
+            Assert.IsNotNull(result.Data.AuthOptions);
+            Assert.IsNull(result.Data.AuthOptions.ApiKeyOnly);
+            Assert.IsNotNull(result.Data.AuthOptions.AadOrApiKey);
+            Assert.AreEqual(SearchAadAuthFailureMode.Http401WithBearerChallenge, result.Data.AuthOptions.AadOrApiKey.AadAuthFailureMode);
+
+            data.AuthOptions = new SearchAadAuthDataPlaneAuthOptions
+            {
+                AadOrApiKey = new DataPlaneAadOrApiKeyAuthOption(SearchAadAuthFailureMode.Http403)
+            };
+            SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
+            result = (await SearchResource.GetAsync()).Value;
+            Assert.NotNull(result);
+            Assert.IsFalse(result.Data.IsLocalAuthDisabled);
+            Assert.IsNotNull(result.Data.AuthOptions);
+            Assert.IsNull(result.Data.AuthOptions.ApiKeyOnly);
+            Assert.IsNotNull(result.Data.AuthOptions.AadOrApiKey);
+            Assert.AreEqual(SearchAadAuthFailureMode.Http403, result.Data.AuthOptions.AadOrApiKey.AadAuthFailureMode);
+        }
     }
 }

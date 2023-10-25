@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.IotHub.Models
     {
         internal static IotHubEndpointHealthInfo DeserializeIotHubEndpointHealthInfo(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> endpointId = default;
             Optional<IotHubEndpointHealthStatus> healthStatus = default;
             Optional<string> lastKnownError = default;
@@ -32,7 +36,6 @@ namespace Azure.ResourceManager.IotHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     healthStatus = new IotHubEndpointHealthStatus(property.Value.GetString());
@@ -47,7 +50,6 @@ namespace Azure.ResourceManager.IotHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastKnownErrorTime = property.Value.GetDateTimeOffset("R");
@@ -57,7 +59,6 @@ namespace Azure.ResourceManager.IotHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastSuccessfulSendAttemptTime = property.Value.GetDateTimeOffset("R");
@@ -67,7 +68,6 @@ namespace Azure.ResourceManager.IotHub.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     lastSendAttemptTime = property.Value.GetDateTimeOffset("R");

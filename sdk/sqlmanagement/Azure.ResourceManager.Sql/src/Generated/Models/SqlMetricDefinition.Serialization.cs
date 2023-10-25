@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -16,9 +15,13 @@ namespace Azure.ResourceManager.Sql.Models
     {
         internal static SqlMetricDefinition DeserializeSqlMetricDefinition(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<SqlMetricName> name = default;
             Optional<SqlMetricPrimaryAggregationType> primaryAggregationType = default;
-            Optional<Uri> resourceUri = default;
+            Optional<string> resourceUri = default;
             Optional<SqlMetricDefinitionUnitType> unit = default;
             Optional<IReadOnlyList<SqlMetricAvailability>> metricAvailabilities = default;
             foreach (var property in element.EnumerateObject())
@@ -27,7 +30,6 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     name = SqlMetricName.DeserializeSqlMetricName(property.Value);
@@ -37,7 +39,6 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     primaryAggregationType = new SqlMetricPrimaryAggregationType(property.Value.GetString());
@@ -45,19 +46,13 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (property.NameEquals("resourceUri"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        resourceUri = null;
-                        continue;
-                    }
-                    resourceUri = new Uri(property.Value.GetString());
+                    resourceUri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("unit"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     unit = new SqlMetricDefinitionUnitType(property.Value.GetString());
@@ -67,7 +62,6 @@ namespace Azure.ResourceManager.Sql.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<SqlMetricAvailability> array = new List<SqlMetricAvailability>();

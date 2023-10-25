@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     {
         internal static DevTestLabGenerateUploadUriResult DeserializeDevTestLabGenerateUploadUriResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<Uri> uploadUri = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -22,7 +26,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        uploadUri = null;
                         continue;
                     }
                     uploadUri = new Uri(property.Value.GetString());

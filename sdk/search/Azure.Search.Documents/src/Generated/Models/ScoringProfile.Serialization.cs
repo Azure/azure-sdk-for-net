@@ -57,6 +57,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         internal static ScoringProfile DeserializeScoringProfile(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string name = default;
             Optional<TextWeights> text = default;
             Optional<IList<ScoringFunction>> functions = default;
@@ -82,7 +86,6 @@ namespace Azure.Search.Documents.Indexes.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ScoringFunction> array = new List<ScoringFunction>();

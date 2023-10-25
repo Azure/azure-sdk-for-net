@@ -124,7 +124,7 @@ namespace Azure.Data.Tables
                         throw ex;
                     }
                 default:
-                    throw ClientDiagnostics.CreateRequestFailedException(message.Response);
+                    throw new RequestFailedException(message.Response);
             }
         }
 

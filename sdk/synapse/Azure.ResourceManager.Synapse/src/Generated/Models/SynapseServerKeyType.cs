@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    /// <summary> The encryption protector type like &apos;ServiceManaged&apos;, &apos;AzureKeyVault&apos;. </summary>
+    /// <summary> The encryption protector type like 'ServiceManaged', 'AzureKeyVault'. </summary>
     public readonly partial struct SynapseServerKeyType : IEquatable<SynapseServerKeyType>
     {
         private readonly string _value;

@@ -26,10 +26,11 @@ namespace Azure.Storage.Files.DataLake.Models
         /// <param name="encryptionScope"> The name of the encryption scope under which the blob is encrypted. </param>
         /// <param name="creationTime"></param>
         /// <param name="expiryTime"></param>
+        /// <param name="encryptionContext"></param>
         /// <param name="contentLength"></param>
         /// <param name="isDirectory"></param>
         /// <param name="etag"></param>
-        internal Path(string name, DateTimeOffset? lastModified, string owner, string group, string permissions, string encryptionScope, string creationTime, string expiryTime, string contentLength, string isDirectory, string etag)
+        internal Path(string name, DateTimeOffset? lastModified, string owner, string group, string permissions, string encryptionScope, string creationTime, string expiryTime, string encryptionContext, string contentLength, string isDirectory, string etag)
         {
             Name = name;
             LastModified = lastModified;
@@ -39,6 +40,7 @@ namespace Azure.Storage.Files.DataLake.Models
             EncryptionScope = encryptionScope;
             CreationTime = creationTime;
             ExpiryTime = expiryTime;
+            EncryptionContext = encryptionContext;
             ContentLength = contentLength;
             IsDirectory = isDirectory;
             Etag = etag;
@@ -60,6 +62,8 @@ namespace Azure.Storage.Files.DataLake.Models
         public string CreationTime { get; }
         /// <summary> Gets the expiry time. </summary>
         public string ExpiryTime { get; }
+        /// <summary> Gets the encryption context. </summary>
+        public string EncryptionContext { get; }
         /// <summary> Gets the content length. </summary>
         public string ContentLength { get; }
         /// <summary> Gets the is directory. </summary>

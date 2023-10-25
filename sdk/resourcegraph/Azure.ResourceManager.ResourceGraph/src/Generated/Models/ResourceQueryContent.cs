@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
 
         /// <summary> Azure subscriptions against which to execute the query. </summary>
         public IList<string> Subscriptions { get; }
-        /// <summary> Azure management groups against which to execute the query. Example: [ &apos;mg1&apos;, &apos;mg2&apos; ]. </summary>
+        /// <summary> Azure management groups against which to execute the query. Example: [ 'mg1', 'mg2' ]. </summary>
         public IList<string> ManagementGroups { get; }
         /// <summary> The resources query. </summary>
         public string Query { get; }

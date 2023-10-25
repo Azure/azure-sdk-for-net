@@ -29,6 +29,10 @@ namespace Azure.ResourceManager.AppService
 
         internal static DeletedSiteData DeserializeDeletedSiteData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> kind = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -68,7 +72,6 @@ namespace Azure.ResourceManager.AppService
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -87,7 +90,6 @@ namespace Azure.ResourceManager.AppService
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             deletedSiteId = property0.Value.GetInt32();

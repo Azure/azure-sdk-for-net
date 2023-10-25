@@ -79,7 +79,10 @@ namespace Azure.ResourceManager.DataFactory
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
@@ -87,6 +90,10 @@ namespace Azure.ResourceManager.DataFactory
 
         internal static DataFactoryData DeserializeDataFactoryData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<ManagedServiceIdentity> identity = default;
             Optional<ETag> eTag = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -98,11 +105,11 @@ namespace Azure.ResourceManager.DataFactory
             Optional<string> provisioningState = default;
             Optional<DateTimeOffset> createTime = default;
             Optional<string> version = default;
-            Optional<FactoryPurviewConfiguration> purviewConfiguration = default;
+            Optional<DataFactoryPurviewConfiguration> purviewConfiguration = default;
             Optional<FactoryRepoConfiguration> repoConfiguration = default;
-            Optional<IDictionary<string, FactoryGlobalParameterSpecification>> globalParameters = default;
-            Optional<FactoryEncryptionConfiguration> encryption = default;
-            Optional<FactoryPublicNetworkAccess> publicNetworkAccess = default;
+            Optional<IDictionary<string, DataFactoryGlobalParameterProperties>> globalParameters = default;
+            Optional<DataFactoryEncryptionConfiguration> encryption = default;
+            Optional<DataFactoryPublicNetworkAccess> publicNetworkAccess = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +118,6 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
@@ -122,7 +128,6 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     eTag = new ETag(property.Value.GetString());
@@ -132,7 +137,6 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -167,7 +171,6 @@ namespace Azure.ResourceManager.DataFactory
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -191,7 +194,6 @@ namespace Azure.ResourceManager.DataFactory
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             createTime = property0.Value.GetDateTimeOffset("O");
@@ -206,17 +208,15 @@ namespace Azure.ResourceManager.DataFactory
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            purviewConfiguration = FactoryPurviewConfiguration.DeserializeFactoryPurviewConfiguration(property0.Value);
+                            purviewConfiguration = DataFactoryPurviewConfiguration.DeserializeDataFactoryPurviewConfiguration(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("repoConfiguration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             repoConfiguration = FactoryRepoConfiguration.DeserializeFactoryRepoConfiguration(property0.Value);
@@ -226,13 +226,12 @@ namespace Azure.ResourceManager.DataFactory
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            Dictionary<string, FactoryGlobalParameterSpecification> dictionary = new Dictionary<string, FactoryGlobalParameterSpecification>();
+                            Dictionary<string, DataFactoryGlobalParameterProperties> dictionary = new Dictionary<string, DataFactoryGlobalParameterProperties>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, FactoryGlobalParameterSpecification.DeserializeFactoryGlobalParameterSpecification(property1.Value));
+                                dictionary.Add(property1.Name, DataFactoryGlobalParameterProperties.DeserializeDataFactoryGlobalParameterProperties(property1.Value));
                             }
                             globalParameters = dictionary;
                             continue;
@@ -241,20 +240,18 @@ namespace Azure.ResourceManager.DataFactory
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            encryption = FactoryEncryptionConfiguration.DeserializeFactoryEncryptionConfiguration(property0.Value);
+                            encryption = DataFactoryEncryptionConfiguration.DeserializeDataFactoryEncryptionConfiguration(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccess"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicNetworkAccess = new FactoryPublicNetworkAccess(property0.Value.GetString());
+                            publicNetworkAccess = new DataFactoryPublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
                     }

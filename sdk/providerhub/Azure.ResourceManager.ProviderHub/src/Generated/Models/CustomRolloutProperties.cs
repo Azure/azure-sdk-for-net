@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of CustomRolloutProperties. </summary>
         /// <param name="specification"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="specification"/> is null. </exception>
-        public CustomRolloutProperties(CustomRolloutPropertiesSpecification specification)
+        public CustomRolloutProperties(CustomRolloutSpecification specification)
         {
             Argument.AssertNotNull(specification, nameof(specification));
 
@@ -24,21 +24,21 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of CustomRolloutProperties. </summary>
-        /// <param name="provisioningState"> The provisioned state of the resource. </param>
+        /// <param name="provisioningState"></param>
         /// <param name="specification"></param>
         /// <param name="status"></param>
-        internal CustomRolloutProperties(ProvisioningState? provisioningState, CustomRolloutPropertiesSpecification specification, CustomRolloutPropertiesStatus status)
+        internal CustomRolloutProperties(ProviderHubProvisioningState? provisioningState, CustomRolloutSpecification specification, CustomRolloutStatus status)
         {
             ProvisioningState = provisioningState;
             Specification = specification;
             Status = status;
         }
 
-        /// <summary> The provisioned state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; set; }
+        /// <summary> Gets or sets the provisioning state. </summary>
+        public ProviderHubProvisioningState? ProvisioningState { get; set; }
         /// <summary> Gets or sets the specification. </summary>
-        public CustomRolloutPropertiesSpecification Specification { get; set; }
+        public CustomRolloutSpecification Specification { get; set; }
         /// <summary> Gets or sets the status. </summary>
-        public CustomRolloutPropertiesStatus Status { get; set; }
+        public CustomRolloutStatus Status { get; set; }
     }
 }

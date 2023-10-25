@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     {
         internal static ClusterCodeVersionsListResult DeserializeClusterCodeVersionsListResult(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IReadOnlyList<ClusterCodeVersionsResult>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
@@ -23,7 +27,6 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     List<ClusterCodeVersionsResult> array = new List<ClusterCodeVersionsResult>();

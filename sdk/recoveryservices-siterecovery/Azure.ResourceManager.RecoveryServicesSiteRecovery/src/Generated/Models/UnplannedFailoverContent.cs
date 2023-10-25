@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of UnplannedFailoverContent. </summary>
         /// <param name="properties"> Unplanned failover input properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public UnplannedFailoverContent(UnplannedFailoverInputProperties properties)
+        public UnplannedFailoverContent(UnplannedFailoverProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
@@ -24,6 +24,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Unplanned failover input properties. </summary>
-        public UnplannedFailoverInputProperties Properties { get; }
+        public UnplannedFailoverProperties Properties { get; }
     }
 }

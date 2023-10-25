@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         }
 
         /// <summary> Initializes a new instance of ComplianceResult. </summary>
-        /// <param name="complianceName"> The name of the compliance. e.g. &quot;M365&quot;. </param>
+        /// <param name="complianceName"> The name of the compliance. e.g. "M365". </param>
         /// <param name="categories"> List of categories. </param>
         internal ComplianceResult(string complianceName, IReadOnlyList<Category> categories)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             Categories = categories;
         }
 
-        /// <summary> The name of the compliance. e.g. &quot;M365&quot;. </summary>
+        /// <summary> The name of the compliance. e.g. "M365". </summary>
         public string ComplianceName { get; }
         /// <summary> List of categories. </summary>
         public IReadOnlyList<Category> Categories { get; }

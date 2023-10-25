@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Media.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListsStreamingPolicies()
         {
-            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2022-08-01/examples/streaming-policies-list.json
+            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/streaming-policies-list.json
             // this example is just showing the usage of "StreamingPolicies_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Media.Samples
             // this example assumes you already have this MediaServicesAccountResource created on azure
             // for more information of creating MediaServicesAccountResource, please refer to the document of MediaServicesAccountResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
             ResourceIdentifier mediaServicesAccountResourceId = MediaServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             MediaServicesAccountResource mediaServicesAccount = client.GetMediaServicesAccountResource(mediaServicesAccountResourceId);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Media.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetAStreamingPolicyByName()
         {
-            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2022-08-01/examples/streaming-policy-get-by-name.json
+            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/streaming-policy-get-by-name.json
             // this example is just showing the usage of "StreamingPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Media.Samples
             // this example assumes you already have this MediaServicesAccountResource created on azure
             // for more information of creating MediaServicesAccountResource, please refer to the document of MediaServicesAccountResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
             ResourceIdentifier mediaServicesAccountResourceId = MediaServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             MediaServicesAccountResource mediaServicesAccount = client.GetMediaServicesAccountResource(mediaServicesAccountResourceId);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Media.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetAStreamingPolicyByName()
         {
-            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2022-08-01/examples/streaming-policy-get-by-name.json
+            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/streaming-policy-get-by-name.json
             // this example is just showing the usage of "StreamingPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Media.Samples
             // this example assumes you already have this MediaServicesAccountResource created on azure
             // for more information of creating MediaServicesAccountResource, please refer to the document of MediaServicesAccountResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
             ResourceIdentifier mediaServicesAccountResourceId = MediaServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             MediaServicesAccountResource mediaServicesAccount = client.GetMediaServicesAccountResource(mediaServicesAccountResourceId);
@@ -121,12 +121,55 @@ namespace Azure.ResourceManager.Media.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
+        // Get a Streaming Policy by name
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_GetAStreamingPolicyByName()
+        {
+            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/streaming-policy-get-by-name.json
+            // this example is just showing the usage of "StreamingPolicies_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MediaServicesAccountResource created on azure
+            // for more information of creating MediaServicesAccountResource, please refer to the document of MediaServicesAccountResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "contosorg";
+            string accountName = "contosomedia";
+            ResourceIdentifier mediaServicesAccountResourceId = MediaServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            MediaServicesAccountResource mediaServicesAccount = client.GetMediaServicesAccountResource(mediaServicesAccountResourceId);
+
+            // get the collection of this StreamingPolicyResource
+            StreamingPolicyCollection collection = mediaServicesAccount.GetStreamingPolicies();
+
+            // invoke the operation
+            string streamingPolicyName = "clearStreamingPolicy";
+            NullableResponse<StreamingPolicyResource> response = await collection.GetIfExistsAsync(streamingPolicyName);
+            StreamingPolicyResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                StreamingPolicyData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
         // Creates a Streaming Policy with ClearKey encryption in commonEncryptionCbcs.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreatesAStreamingPolicyWithClearKeyEncryptionInCommonEncryptionCbcs()
         {
-            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2022-08-01/examples/streaming-policies-create-commonEncryptionCbcs-clearKeyEncryption.json
+            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/streaming-policies-create-commonEncryptionCbcs-clearKeyEncryption.json
             // this example is just showing the usage of "StreamingPolicies_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -137,7 +180,7 @@ namespace Azure.ResourceManager.Media.Samples
             // this example assumes you already have this MediaServicesAccountResource created on azure
             // for more information of creating MediaServicesAccountResource, please refer to the document of MediaServicesAccountResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
             ResourceIdentifier mediaServicesAccountResourceId = MediaServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             MediaServicesAccountResource mediaServicesAccount = client.GetMediaServicesAccountResource(mediaServicesAccountResourceId);
@@ -178,7 +221,7 @@ namespace Azure.ResourceManager.Media.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreatesAStreamingPolicyWithClearKeyEncryptionInCommonEncryptionCenc()
         {
-            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2022-08-01/examples/streaming-policies-create-commonEncryptionCenc-clearKeyEncryption.json
+            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/streaming-policies-create-commonEncryptionCenc-clearKeyEncryption.json
             // this example is just showing the usage of "StreamingPolicies_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -189,7 +232,7 @@ namespace Azure.ResourceManager.Media.Samples
             // this example assumes you already have this MediaServicesAccountResource created on azure
             // for more information of creating MediaServicesAccountResource, please refer to the document of MediaServicesAccountResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
             ResourceIdentifier mediaServicesAccountResourceId = MediaServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             MediaServicesAccountResource mediaServicesAccount = client.GetMediaServicesAccountResource(mediaServicesAccountResourceId);
@@ -243,7 +286,7 @@ Value = "hev1",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreatesAStreamingPolicyWithClearStreaming()
         {
-            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2022-08-01/examples/streaming-policies-create-clear.json
+            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/streaming-policies-create-clear.json
             // this example is just showing the usage of "StreamingPolicies_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -254,7 +297,7 @@ Value = "hev1",
             // this example assumes you already have this MediaServicesAccountResource created on azure
             // for more information of creating MediaServicesAccountResource, please refer to the document of MediaServicesAccountResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
             ResourceIdentifier mediaServicesAccountResourceId = MediaServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             MediaServicesAccountResource mediaServicesAccount = client.GetMediaServicesAccountResource(mediaServicesAccountResourceId);
@@ -263,7 +306,7 @@ Value = "hev1",
             StreamingPolicyCollection collection = mediaServicesAccount.GetStreamingPolicies();
 
             // invoke the operation
-            string streamingPolicyName = "UserCreatedClearStreamingPolicy";
+            string streamingPolicyName = "clearStreamingPolicy";
             StreamingPolicyData data = new StreamingPolicyData()
             {
                 NoEncryptionEnabledProtocols = new MediaEnabledProtocols(true, true, true, true),
@@ -283,7 +326,7 @@ Value = "hev1",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreatesAStreamingPolicyWithCommonEncryptionCbcsOnly()
         {
-            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2022-08-01/examples/streaming-policies-create-commonEncryptionCbcs-only.json
+            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/streaming-policies-create-commonEncryptionCbcs-only.json
             // this example is just showing the usage of "StreamingPolicies_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -294,7 +337,7 @@ Value = "hev1",
             // this example assumes you already have this MediaServicesAccountResource created on azure
             // for more information of creating MediaServicesAccountResource, please refer to the document of MediaServicesAccountResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
             ResourceIdentifier mediaServicesAccountResourceId = MediaServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             MediaServicesAccountResource mediaServicesAccount = client.GetMediaServicesAccountResource(mediaServicesAccountResourceId);
@@ -341,7 +384,7 @@ Value = "hev1",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreatesAStreamingPolicyWithCommonEncryptionCencOnly()
         {
-            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2022-08-01/examples/streaming-policies-create-commonEncryptionCenc-only.json
+            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/streaming-policies-create-commonEncryptionCenc-only.json
             // this example is just showing the usage of "StreamingPolicies_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -352,7 +395,7 @@ Value = "hev1",
             // this example assumes you already have this MediaServicesAccountResource created on azure
             // for more information of creating MediaServicesAccountResource, please refer to the document of MediaServicesAccountResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
             ResourceIdentifier mediaServicesAccountResourceId = MediaServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             MediaServicesAccountResource mediaServicesAccount = client.GetMediaServicesAccountResource(mediaServicesAccountResourceId);
@@ -414,7 +457,7 @@ Value = "hev1",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreatesAStreamingPolicyWithEnvelopeEncryptionOnly()
         {
-            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2022-08-01/examples/streaming-policies-create-envelopeEncryption-only.json
+            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/streaming-policies-create-envelopeEncryption-only.json
             // this example is just showing the usage of "StreamingPolicies_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -425,7 +468,7 @@ Value = "hev1",
             // this example assumes you already have this MediaServicesAccountResource created on azure
             // for more information of creating MediaServicesAccountResource, please refer to the document of MediaServicesAccountResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
             ResourceIdentifier mediaServicesAccountResourceId = MediaServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             MediaServicesAccountResource mediaServicesAccount = client.GetMediaServicesAccountResource(mediaServicesAccountResourceId);
@@ -466,7 +509,7 @@ Value = "hev1",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreatesAStreamingPolicyWithSecureStreaming()
         {
-            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2022-08-01/examples/streaming-policies-create-secure-streaming.json
+            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Metadata/stable/2023-01-01/examples/streaming-policies-create-secure-streaming.json
             // this example is just showing the usage of "StreamingPolicies_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -477,7 +520,7 @@ Value = "hev1",
             // this example assumes you already have this MediaServicesAccountResource created on azure
             // for more information of creating MediaServicesAccountResource, please refer to the document of MediaServicesAccountResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "contoso";
+            string resourceGroupName = "contosorg";
             string accountName = "contosomedia";
             ResourceIdentifier mediaServicesAccountResourceId = MediaServicesAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             MediaServicesAccountResource mediaServicesAccount = client.GetMediaServicesAccountResource(mediaServicesAccountResourceId);

@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Resources
             return message;
         }
 
-        /// <summary> This operation allows adding a name to the list of predefined tag names for the given subscription. A tag name can have a maximum of 512 characters and is case-insensitive. Tag names cannot have the following prefixes which are reserved for Azure use: &apos;microsoft&apos;, &apos;azure&apos;, &apos;windows&apos;. </summary>
+        /// <summary> This operation allows adding a name to the list of predefined tag names for the given subscription. A tag name can have a maximum of 512 characters and is case-insensitive. Tag names cannot have the following prefixes which are reserved for Azure use: 'microsoft', 'azure', 'windows'. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="tagName"> The name of the tag to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> This operation allows adding a name to the list of predefined tag names for the given subscription. A tag name can have a maximum of 512 characters and is case-insensitive. Tag names cannot have the following prefixes which are reserved for Azure use: &apos;microsoft&apos;, &apos;azure&apos;, &apos;windows&apos;. </summary>
+        /// <summary> This operation allows adding a name to the list of predefined tag names for the given subscription. A tag name can have a maximum of 512 characters and is case-insensitive. Tag names cannot have the following prefixes which are reserved for Azure use: 'microsoft', 'azure', 'windows'. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="tagName"> The name of the tag to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.Resources
             return message;
         }
 
-        /// <summary> This operation allows replacing, merging or selectively deleting tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags at the end of the operation. The &apos;replace&apos; option replaces the entire set of existing tags with a new set. The &apos;merge&apos; option allows adding tags with new names and updating the values of tags with existing names. The &apos;delete&apos; option allows selectively deleting tags based on given names or name/value pairs. </summary>
+        /// <summary> This operation allows replacing, merging or selectively deleting tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags at the end of the operation. The 'replace' option replaces the entire set of existing tags with a new set. The 'merge' option allows adding tags with new names and updating the values of tags with existing names. The 'delete' option allows selectively deleting tags based on given names or name/value pairs. </summary>
         /// <param name="scope"> The resource scope. </param>
         /// <param name="patch"> The TagResourcePatch to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.Resources
             }
         }
 
-        /// <summary> This operation allows replacing, merging or selectively deleting tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags at the end of the operation. The &apos;replace&apos; option replaces the entire set of existing tags with a new set. The &apos;merge&apos; option allows adding tags with new names and updating the values of tags with existing names. The &apos;delete&apos; option allows selectively deleting tags based on given names or name/value pairs. </summary>
+        /// <summary> This operation allows replacing, merging or selectively deleting tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags at the end of the operation. The 'replace' option replaces the entire set of existing tags with a new set. The 'merge' option allows adding tags with new names and updating the values of tags with existing names. The 'delete' option allows selectively deleting tags based on given names or name/value pairs. </summary>
         /// <param name="scope"> The resource scope. </param>
         /// <param name="patch"> The TagResourcePatch to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

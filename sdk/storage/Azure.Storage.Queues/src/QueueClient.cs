@@ -234,7 +234,13 @@ namespace Azure.Storage.Queues
         /// </param>
         /// <seealso href="https://docs.microsoft.com/azure/storage/common/storage-sas-overview">Storage SAS Token Overview</seealso>
         public QueueClient(Uri queueUri, QueueClientOptions options = default)
-            : this(queueUri, (HttpPipelinePolicy)null, options, null)
+            : this(
+                  queueUri,
+                  (HttpPipelinePolicy)null,
+                  options,
+                  sharedKeyCredential: null,
+                  sasCredential: null,
+                  tokenCredential: null)
         {
         }
 
@@ -256,7 +262,13 @@ namespace Azure.Storage.Queues
         /// every request.
         /// </param>
         public QueueClient(Uri queueUri, StorageSharedKeyCredential credential, QueueClientOptions options = default)
-            : this(queueUri, credential.AsPolicy(), options, credential)
+            : this(
+                  queueUri,
+                  credential.AsPolicy(),
+                  options,
+                  sharedKeyCredential: credential,
+                  sasCredential: null,
+                  tokenCredential: null)
         {
         }
 
@@ -282,7 +294,13 @@ namespace Azure.Storage.Queues
         /// This constructor should only be used when shared access signature needs to be updated during lifespan of this client.
         /// </remarks>
         public QueueClient(Uri queueUri, AzureSasCredential credential, QueueClientOptions options = default)
-            : this(queueUri, credential.AsPolicy<QueueUriBuilder>(queueUri), options, null)
+            : this(
+                  queueUri,
+                  credential.AsPolicy<QueueUriBuilder>(queueUri),
+                  options,
+                  sharedKeyCredential: null,
+                  sasCredential: credential,
+                  tokenCredential: null)
         {
         }
 
@@ -304,7 +322,15 @@ namespace Azure.Storage.Queues
         /// every request.
         /// </param>
         public QueueClient(Uri queueUri, TokenCredential credential, QueueClientOptions options = default)
-            : this(queueUri, credential.AsPolicy(options), options, null)
+            : this(
+                  queueUri,
+                  credential.AsPolicy(
+                    string.IsNullOrEmpty(options?.Audience?.ToString()) ? QueueAudience.PublicAudience.CreateDefaultScope() : options.Audience.Value.CreateDefaultScope(),
+                    options),
+                  options,
+                  sharedKeyCredential: null,
+                  sasCredential: null,
+                  tokenCredential: credential)
         {
             Errors.VerifyHttpsTokenAuth(queueUri);
         }
@@ -326,14 +352,22 @@ namespace Azure.Storage.Queues
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
-        /// <param name="storageSharedKeyCredential">
+        /// <param name="sharedKeyCredential">
         /// The shared key credential used to sign requests.
+        /// </param>
+        /// <param name="sasCredential">
+        /// The SAS credential used to sign requests.
+        /// </param>
+        /// <param name="tokenCredential">
+        /// The token credential used to sign requests.
         /// </param>
         internal QueueClient(
             Uri queueUri,
             HttpPipelinePolicy authentication,
             QueueClientOptions options,
-            StorageSharedKeyCredential storageSharedKeyCredential)
+            StorageSharedKeyCredential sharedKeyCredential,
+            AzureSasCredential sasCredential,
+            TokenCredential tokenCredential)
         {
             Argument.AssertNotNull(queueUri, nameof(queueUri));
             _uri = queueUri;
@@ -341,7 +375,9 @@ namespace Azure.Storage.Queues
             options ??= new QueueClientOptions();
             _clientConfiguration = new QueueClientConfiguration(
                 pipeline: options.Build(authentication),
-                sharedKeyCredential: storageSharedKeyCredential,
+                sharedKeyCredential: sharedKeyCredential,
+                sasCredential: sasCredential,
+                tokenCredential: tokenCredential,
                 clientDiagnostics: new ClientDiagnostics(options),
                 version: options.Version,
                 clientSideEncryption: QueueClientSideEncryptionOptions.CloneFrom(options._clientSideEncryptionOptions),
@@ -3094,6 +3130,7 @@ namespace Azure.Storage.Queues
         /// <remarks>
         /// A <see cref="Exception"/> will be thrown if a failure occurs.
         /// </remarks>
+        [CallerShouldAudit(Reason = "https://aka.ms/azsdk/callershouldaudit/storage-queues")]
         public virtual Uri GenerateSasUri(QueueSasPermissions permissions, DateTimeOffset expiresOn)
             => GenerateSasUri(new QueueSasBuilder(permissions, expiresOn) { QueueName = Name });
 
@@ -3115,6 +3152,7 @@ namespace Azure.Storage.Queues
         /// <remarks>
         /// A <see cref="Exception"/> will be thrown if a failure occurs.
         /// </remarks>
+        [CallerShouldAudit(Reason = "https://aka.ms/azsdk/callershouldaudit/storage-queues")]
         public virtual Uri GenerateSasUri(
             QueueSasBuilder builder)
         {

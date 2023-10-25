@@ -45,6 +45,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         internal static CSharpFunctionBinding DeserializeCSharpFunctionBinding(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string type = default;
             Optional<string> dllPath = default;
             Optional<string> @class = default;
@@ -85,7 +89,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             updateMode = new StreamingJobFunctionUpdateMode(property0.Value.GetString());

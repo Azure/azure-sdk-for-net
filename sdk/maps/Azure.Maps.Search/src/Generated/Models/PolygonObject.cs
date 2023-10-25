@@ -19,7 +19,7 @@ namespace Azure.Maps.Search.Models
 
         /// <summary> Initializes a new instance of PolygonObject. </summary>
         /// <param name="providerId"> ID of the returned entity. </param>
-        /// <param name="geometryData"> Geometry data in GeoJSON format. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946) for details. Present only if &quot;error&quot; is not present. </param>
+        /// <param name="geometryData"> Geometry data in GeoJSON format. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946) for details. Present only if "error" is not present. </param>
         internal PolygonObject(string providerId, GeoObject geometryData)
         {
             ProviderId = providerId;

@@ -4,4 +4,4 @@ extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: quantum
-    TimeoutInMinutes: 10
+    TestTimeoutInMinutes: 10

@@ -36,6 +36,10 @@ namespace Azure.ResourceManager.StorageMover.Models
 
         internal static NfsMountEndpointProperties DeserializeNfsMountEndpointProperties(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             string host = default;
             Optional<NfsVersion> nfsVersion = default;
             string export = default;
@@ -53,7 +57,6 @@ namespace Azure.ResourceManager.StorageMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     nfsVersion = new NfsVersion(property.Value.GetString());
@@ -78,7 +81,6 @@ namespace Azure.ResourceManager.StorageMover.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     provisioningState = new StorageMoverProvisioningState(property.Value.GetString());

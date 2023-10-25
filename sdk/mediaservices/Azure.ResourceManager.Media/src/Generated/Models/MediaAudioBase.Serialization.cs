@@ -42,6 +42,10 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static MediaAudioBase DeserializeMediaAudioBase(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             if (element.TryGetProperty("@odata.type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
@@ -61,7 +65,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     channels = property.Value.GetInt32();
@@ -71,7 +74,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     samplingRate = property.Value.GetInt32();
@@ -81,7 +83,6 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     bitrate = property.Value.GetInt32();

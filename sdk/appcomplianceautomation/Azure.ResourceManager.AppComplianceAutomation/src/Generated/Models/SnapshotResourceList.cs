@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <param name="value"> List of the snapshots. </param>
         /// <param name="nextLink">
         /// The URL the client should use to fetch the next page (per server side paging).
-        /// It&apos;s null for now, added for future use.
+        /// It's null for now, added for future use.
         /// </param>
         internal SnapshotResourceList(IReadOnlyList<SnapshotResourceData> value, string nextLink)
         {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public IReadOnlyList<SnapshotResourceData> Value { get; }
         /// <summary>
         /// The URL the client should use to fetch the next page (per server side paging).
-        /// It&apos;s null for now, added for future use.
+        /// It's null for now, added for future use.
         /// </summary>
         public string NextLink { get; }
     }

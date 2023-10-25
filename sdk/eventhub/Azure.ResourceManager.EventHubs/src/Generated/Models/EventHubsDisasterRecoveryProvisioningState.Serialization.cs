@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         public static EventHubsDisasterRecoveryProvisioningState ToEventHubsDisasterRecoveryProvisioningState(this string value)
         {
-            if (string.Equals(value, "Accepted", StringComparison.InvariantCultureIgnoreCase)) return EventHubsDisasterRecoveryProvisioningState.Accepted;
-            if (string.Equals(value, "Succeeded", StringComparison.InvariantCultureIgnoreCase)) return EventHubsDisasterRecoveryProvisioningState.Succeeded;
-            if (string.Equals(value, "Failed", StringComparison.InvariantCultureIgnoreCase)) return EventHubsDisasterRecoveryProvisioningState.Failed;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Accepted")) return EventHubsDisasterRecoveryProvisioningState.Accepted;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Succeeded")) return EventHubsDisasterRecoveryProvisioningState.Succeeded;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Failed")) return EventHubsDisasterRecoveryProvisioningState.Failed;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown EventHubsDisasterRecoveryProvisioningState value.");
         }
     }

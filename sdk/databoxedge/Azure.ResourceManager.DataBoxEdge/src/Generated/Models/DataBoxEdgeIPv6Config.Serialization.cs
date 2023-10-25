@@ -14,6 +14,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         internal static DataBoxEdgeIPv6Config DeserializeDataBoxEdgeIPv6Config(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> ipAddress = default;
             Optional<int> prefixLength = default;
             Optional<string> gateway = default;
@@ -28,7 +32,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     prefixLength = property.Value.GetInt32();

@@ -4,13 +4,15 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 azure-arm: true
-generate-model-factory: false
 library-name: Resources
 namespace: Azure.ResourceManager.Resources
 title: ResourceManagementClient
 tag: package-resources-2022-04
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 model-namespace: true
 public-clients: false
@@ -67,7 +69,7 @@ format-by-name-rules:
 keep-plural-enums:
   - ScriptCleanupOptions
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -89,6 +91,9 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Urls: Uris
+
+models-to-treat-empty-string-as-null:
+  - ArmApplicationPackageSupportUris
 
 directive:
   - remove-operation: checkResourceName

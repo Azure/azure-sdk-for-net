@@ -35,6 +35,10 @@ namespace Azure.ResourceManager.DeviceUpdate
 
         internal static PrivateEndpointConnectionProxyData DeserializePrivateEndpointConnectionProxyData(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<string> eTag = default;
             Optional<RemotePrivateEndpoint> remotePrivateEndpoint = default;
             Optional<string> status = default;
@@ -54,7 +58,6 @@ namespace Azure.ResourceManager.DeviceUpdate
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     remotePrivateEndpoint = RemotePrivateEndpoint.DeserializeRemotePrivateEndpoint(property.Value);
@@ -84,7 +87,6 @@ namespace Azure.ResourceManager.DeviceUpdate
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
@@ -103,7 +105,6 @@ namespace Azure.ResourceManager.DeviceUpdate
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             provisioningState = new PrivateEndpointConnectionProxyProvisioningState(property0.Value.GetString());

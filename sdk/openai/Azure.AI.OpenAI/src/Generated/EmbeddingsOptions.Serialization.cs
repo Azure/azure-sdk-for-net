@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -21,59 +20,19 @@ namespace Azure.AI.OpenAI
                 writer.WritePropertyName("user"u8);
                 writer.WriteStringValue(User);
             }
-            if (Optional.IsDefined(InputType))
-            {
-                writer.WritePropertyName("input_type"u8);
-                writer.WriteStringValue(InputType);
-            }
-            if (Optional.IsDefined(Model))
+            if (Optional.IsDefined(InternalNonAzureModelName))
             {
                 writer.WritePropertyName("model"u8);
-                writer.WriteStringValue(Model);
+                writer.WriteStringValue(InternalNonAzureModelName);
             }
             writer.WritePropertyName("input"u8);
-            writer.WriteStringValue(Input);
-            writer.WriteEndObject();
-        }
-
-        internal static EmbeddingsOptions DeserializeEmbeddingsOptions(JsonElement element)
-        {
-            Optional<string> user = default;
-            Optional<string> inputType = default;
-            Optional<string> model = default;
-            string input = default;
-            foreach (var property in element.EnumerateObject())
+            writer.WriteStartArray();
+            foreach (var item in Input)
             {
-                if (property.NameEquals("user"u8))
-                {
-                    user = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("input_type"u8))
-                {
-                    inputType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("model"u8))
-                {
-                    model = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("input"u8))
-                {
-                    input = property.Value.GetString();
-                    continue;
-                }
+                writer.WriteStringValue(item);
             }
-            return new EmbeddingsOptions(user, inputType, model, input);
-        }
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static EmbeddingsOptions FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializeEmbeddingsOptions(document.RootElement);
+            writer.WriteEndArray();
+            writer.WriteEndObject();
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>

@@ -65,6 +65,17 @@
     },
     {
       "Key": {
+        "Type": "bool?",
+        "Name": "EnableAutomaticUpgrade",
+        "SummaryComment": "Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available.",
+        "RemarksComment": null,
+        "BoundAccess": "read",
+        "UnboundAccess": "read,write"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
         "Type": "object",
         "Name": "Settings",
         "SummaryComment": "JSON formatted public settings for the extension.",

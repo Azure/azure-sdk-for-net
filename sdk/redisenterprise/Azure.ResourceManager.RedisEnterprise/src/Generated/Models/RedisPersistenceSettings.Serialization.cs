@@ -40,6 +40,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         internal static RedisPersistenceSettings DeserializeRedisPersistenceSettings(JsonElement element)
         {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<bool> aofEnabled = default;
             Optional<bool> rdbEnabled = default;
             Optional<PersistenceSettingAofFrequency> aofFrequency = default;
@@ -50,7 +54,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     aofEnabled = property.Value.GetBoolean();
@@ -60,7 +63,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rdbEnabled = property.Value.GetBoolean();
@@ -70,7 +72,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     aofFrequency = new PersistenceSettingAofFrequency(property.Value.GetString());
@@ -80,7 +81,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     rdbFrequency = new PersistenceSettingRdbFrequency(property.Value.GetString());
