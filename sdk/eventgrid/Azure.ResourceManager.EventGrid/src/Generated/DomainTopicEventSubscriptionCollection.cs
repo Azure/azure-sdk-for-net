@@ -327,6 +327,80 @@ namespace Azure.ResourceManager.EventGrid
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{topicName}/eventSubscriptions/{eventSubscriptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DomainTopicEventSubscriptions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="eventSubscriptionName"> Name of the event subscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> is null. </exception>
+        public virtual async Task<NullableResponse<DomainTopicEventSubscriptionResource>> GetIfExistsAsync(string eventSubscriptionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
+
+            using var scope = _domainTopicEventSubscriptionClientDiagnostics.CreateScope("DomainTopicEventSubscriptionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _domainTopicEventSubscriptionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, eventSubscriptionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DomainTopicEventSubscriptionResource>(response.GetRawResponse());
+                return Response.FromValue(new DomainTopicEventSubscriptionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{topicName}/eventSubscriptions/{eventSubscriptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DomainTopicEventSubscriptions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="eventSubscriptionName"> Name of the event subscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> is null. </exception>
+        public virtual NullableResponse<DomainTopicEventSubscriptionResource> GetIfExists(string eventSubscriptionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
+
+            using var scope = _domainTopicEventSubscriptionClientDiagnostics.CreateScope("DomainTopicEventSubscriptionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _domainTopicEventSubscriptionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, eventSubscriptionName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DomainTopicEventSubscriptionResource>(response.GetRawResponse());
+                return Response.FromValue(new DomainTopicEventSubscriptionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<DomainTopicEventSubscriptionResource> IEnumerable<DomainTopicEventSubscriptionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

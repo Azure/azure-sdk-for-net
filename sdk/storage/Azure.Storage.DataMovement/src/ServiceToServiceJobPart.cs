@@ -23,7 +23,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Creating job part based on a single transfer job
         /// </summary>
-        private ServiceToServiceJobPart(ServiceToServiceTransferJob job, int partNumber, bool isFinalPart)
+        private ServiceToServiceJobPart(ServiceToServiceTransferJob job, int partNumber)
             : base(dataTransfer: job._dataTransfer,
                   partNumber: partNumber,
                   sourceResource: job._sourceResource,
@@ -35,7 +35,6 @@ namespace Azure.Storage.DataMovement
                   checkpointer: job._checkpointer,
                   progressTracker: job._progressTracker,
                   arrayPool: job.UploadArrayPool,
-                  isFinalPart: isFinalPart,
                   jobPartEventHandler: job.GetJobPartStatus(),
                   statusEventHandler: job.TransferStatusEventHandler,
                   failedEventHandler: job.TransferFailedEventHandler,
@@ -54,8 +53,7 @@ namespace Azure.Storage.DataMovement
             int partNumber,
             StorageResourceItem sourceResource,
             StorageResourceItem destinationResource,
-            bool isFinalPart,
-            DataTransferStatus jobPartStatus = DataTransferStatus.Queued,
+            DataTransferStatus jobPartStatus = default,
             long? length = default)
             : base(dataTransfer: job._dataTransfer,
                   partNumber: partNumber,
@@ -68,7 +66,6 @@ namespace Azure.Storage.DataMovement
                   checkpointer: job._checkpointer,
                   progressTracker: job._progressTracker,
                   arrayPool: job.UploadArrayPool,
-                  isFinalPart: isFinalPart,
                   jobPartEventHandler: job.GetJobPartStatus(),
                   statusEventHandler: job.TransferStatusEventHandler,
                   failedEventHandler: job.TransferFailedEventHandler,
@@ -88,15 +85,11 @@ namespace Azure.Storage.DataMovement
 
         public static async Task<ServiceToServiceJobPart> CreateJobPartAsync(
             ServiceToServiceTransferJob job,
-            int partNumber,
-            bool isFinalPart)
+            int partNumber)
         {
-            // Create Job Part file as we're intializing the job part
-            ServiceToServiceJobPart part = new ServiceToServiceJobPart(
-                job: job,
-                partNumber: partNumber,
-                isFinalPart: isFinalPart);
-            await part.AddJobPartToCheckpointerAsync(1, isFinalPart).ConfigureAwait(false); // For now we only store 1 chunk
+            // Create Job Part file as we're initializing the job part
+            ServiceToServiceJobPart part = new ServiceToServiceJobPart(job, partNumber);
+            await part.AddJobPartToCheckpointerAsync(1).ConfigureAwait(false); // For now we only store 1 chunk
             return part;
         }
 
@@ -105,30 +98,28 @@ namespace Azure.Storage.DataMovement
             int partNumber,
             StorageResourceItem sourceResource,
             StorageResourceItem destinationResource,
-            bool isFinalPart,
             DataTransferStatus jobPartStatus = default,
             long? length = default,
             bool partPlanFileExists = false)
         {
-            // Create Job Part file as we're intializing the job part
+            // Create Job Part file as we're initializing the job part
             ServiceToServiceJobPart part = new ServiceToServiceJobPart(
                 job: job,
                 partNumber: partNumber,
                 jobPartStatus: jobPartStatus,
                 sourceResource: sourceResource,
                 destinationResource: destinationResource,
-                isFinalPart: isFinalPart,
                 length: length);
             if (!partPlanFileExists)
             {
-                await part.AddJobPartToCheckpointerAsync(1, isFinalPart).ConfigureAwait(false); // For now we only store 1 chunk
+                await part.AddJobPartToCheckpointerAsync(1).ConfigureAwait(false); // For now we only store 1 chunk
             }
             return part;
         }
 
         public override async Task ProcessPartToChunkAsync()
         {
-            await OnTransferStatusChanged(DataTransferStatus.InProgress).ConfigureAwait(false);
+            await OnTransferStateChangedAsync(DataTransferState.InProgress).ConfigureAwait(false);
 
             // Attempt to get the length, it's possible the file could
             // not be accessible (or does not exist).
@@ -193,7 +184,7 @@ namespace Azure.Storage.DataMovement
             }
             else
             {
-                await CheckAndUpdateCancellationStatusAsync().ConfigureAwait(false);
+                await CheckAndUpdateCancellationStateAsync().ConfigureAwait(false);
             }
         }
 
@@ -211,11 +202,17 @@ namespace Azure.Storage.DataMovement
                     cancellationToken: _cancellationToken).ConfigureAwait(false);
 
                 ReportBytesWritten(completeLength);
-                await OnTransferStatusChanged(DataTransferStatus.Completed).ConfigureAwait(false);
+                await OnTransferStateChangedAsync(DataTransferState.Completed).ConfigureAwait(false);
             }
             catch (RequestFailedException exception)
                 when (_createMode == StorageResourceCreationPreference.SkipIfExists
                  && exception.ErrorCode == "BlobAlreadyExists")
+            {
+                await InvokeSkippedArg().ConfigureAwait(false);
+            }
+            catch (InvalidOperationException ex)
+            when (_createMode == StorageResourceCreationPreference.SkipIfExists
+                && ex.Message.Contains("Cannot overwrite file."))
             {
                 await InvokeSkippedArg().ConfigureAwait(false);
             }
@@ -307,7 +304,7 @@ namespace Azure.Storage.DataMovement
                 await DisposeHandlers().ConfigureAwait(false);
 
                 // Set completion status to completed
-                await OnTransferStatusChanged(DataTransferStatus.Completed).ConfigureAwait(false);
+                await OnTransferStateChangedAsync(DataTransferState.Completed).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

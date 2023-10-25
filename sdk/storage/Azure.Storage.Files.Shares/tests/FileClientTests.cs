@@ -9,6 +9,7 @@ using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Files.Shares.Specialized;
 using Azure.Storage.Sas;
@@ -107,6 +108,123 @@ namespace Azure.Storage.Files.Shares.Tests
             TestHelper.AssertExpectedException<ArgumentException>(
                 () => new ShareFileClient(uri, new AzureSasCredential(sas)),
                 e => e.Message.Contains($"You cannot use {nameof(AzureSasCredential)} when the resource URI also contains a Shared Access Signature"));
+        }
+
+                [RecordedTest]
+        public async Task Ctor_DefaultAudience()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareDirectoryClient directoryClient = test.Share.GetDirectoryClient(GetNewDirectoryName());
+            await directoryClient.CreateIfNotExistsAsync();
+            ShareFileClient fileClient = directoryClient.GetFileClient(GetNewFileName());
+            await fileClient.CreateAsync(Constants.KB);
+
+            // Act - Create new blob client with the OAuth Credential and Audience
+            ShareClientOptions options = GetOptionsWithAudience(ShareAudience.DefaultAudience);
+
+            ShareUriBuilder uriBuilder = new ShareUriBuilder(new Uri(Tenants.TestConfigOAuth.FileServiceEndpoint))
+            {
+                ShareName = test.Share.Name,
+                DirectoryOrFilePath = fileClient.Path
+            };
+
+            ShareFileClient aadFileClient = InstrumentClient(new ShareFileClient(
+                uriBuilder.ToUri(),
+                Tenants.GetOAuthCredential(),
+                options));
+
+            // Assert
+            bool exists = await aadFileClient.ExistsAsync();
+            Assert.IsNotNull(exists);
+        }
+
+        [RecordedTest]
+        public async Task Ctor_CustomAudience()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareDirectoryClient directoryClient = test.Share.GetDirectoryClient(GetNewDirectoryName());
+            await directoryClient.CreateIfNotExistsAsync();
+            ShareFileClient fileClient = directoryClient.GetFileClient(GetNewFileName());
+            await fileClient.CreateAsync(Constants.KB);
+
+            // Act - Create new blob client with the OAuth Credential and Audience
+            ShareClientOptions options = GetOptionsWithAudience(new ShareAudience($"https://{test.Share.AccountName}.file.core.windows.net/"));
+
+            ShareUriBuilder uriBuilder = new ShareUriBuilder(new Uri(Tenants.TestConfigOAuth.FileServiceEndpoint))
+            {
+                ShareName = test.Share.Name,
+                DirectoryOrFilePath = fileClient.Path
+            };
+
+            ShareFileClient aadFileClient = InstrumentClient(new ShareFileClient(
+                uriBuilder.ToUri(),
+                Tenants.GetOAuthCredential(),
+                options));
+
+            // Assert
+            bool exists = await aadFileClient.ExistsAsync();
+            Assert.IsNotNull(exists);
+        }
+
+        [RecordedTest]
+        public async Task Ctor_StorageAccountAudience()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareDirectoryClient directoryClient = test.Share.GetDirectoryClient(GetNewDirectoryName());
+            await directoryClient.CreateIfNotExistsAsync();
+            ShareFileClient fileClient = directoryClient.GetFileClient(GetNewFileName());
+            await fileClient.CreateAsync(Constants.KB);
+
+            // Act - Create new blob client with the OAuth Credential and Audience
+            ShareClientOptions options = GetOptionsWithAudience(ShareAudience.CreateShareServiceAccountAudience(test.Share.AccountName));
+
+            ShareUriBuilder uriBuilder = new ShareUriBuilder(new Uri(Tenants.TestConfigOAuth.FileServiceEndpoint))
+            {
+                ShareName = test.Share.Name,
+                DirectoryOrFilePath = fileClient.Path
+            };
+
+            ShareFileClient aadFileClient = InstrumentClient(new ShareFileClient(
+                uriBuilder.ToUri(),
+                Tenants.GetOAuthCredential(),
+                options));
+
+            // Assert
+            bool exists = await aadFileClient.ExistsAsync();
+            Assert.IsNotNull(exists);
+        }
+
+        [RecordedTest]
+        public async Task Ctor_AudienceError()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareDirectoryClient directoryClient = test.Share.GetDirectoryClient(GetNewDirectoryName());
+            await directoryClient.CreateIfNotExistsAsync();
+            ShareFileClient fileClient = directoryClient.GetFileClient(GetNewFileName());
+            await fileClient.CreateAsync(Constants.KB);
+
+            // Act - Create new blob client with the OAuth Credential and Audience
+            ShareClientOptions options = GetOptionsWithAudience(new ShareAudience("https://badaudience.blob.core.windows.net"));
+
+            ShareUriBuilder uriBuilder = new ShareUriBuilder(new Uri(Tenants.TestConfigOAuth.FileServiceEndpoint))
+            {
+                ShareName = test.Share.Name,
+                DirectoryOrFilePath = fileClient.Path
+            };
+
+            ShareFileClient aadFileClient = InstrumentClient(new ShareFileClient(
+                uriBuilder.ToUri(),
+                new MockCredential(),
+                options));
+
+            // Assert
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                aadFileClient.ExistsAsync(),
+                e => Assert.AreEqual("InvalidAuthenticationInfo", e.ErrorCode));
         }
 
         [RecordedTest]
@@ -3213,14 +3331,22 @@ namespace Azure.Storage.Files.Shares.Tests
             }
         }
 
+        [RecordedTest]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
         public async Task UploadRangeAsync_OAuth()
         {
             var data = GetRandomBuffer(Constants.KB);
 
-            await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync(
-                SharesClientBuilder.GetServiceClient_OAuth());
-            ShareFileClient file = test.File;
+            string shareName = GetNewShareName();
+            ShareServiceClient sharedKeyServiceClient = SharesClientBuilder.GetServiceClient_OAuthAccount_SharedKey();
+            await using DisposingShare sharedKeyShare = await GetTestShareAsync(sharedKeyServiceClient, shareName);
+            ShareServiceClient oauthServiceClient = SharesClientBuilder.GetServiceClient_OAuth();
+
+            string directoryName = GetNewDirectoryName();
+            ShareDirectoryClient directory = InstrumentClient(oauthServiceClient.GetShareClient(shareName).GetDirectoryClient(directoryName));
+            await directory.CreateAsync();
+
+            ShareFileClient file = await directory.CreateFileAsync(GetNewFileName(), Constants.MB);
 
             using (var stream = new MemoryStream(data))
             {
@@ -4284,6 +4410,70 @@ namespace Azure.Storage.Files.Shares.Tests
                         sourceRange: sourceRange),
                     e => Assert.AreEqual(e.ErrorCode, "CannotVerifyCopySource"));
             }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2021_04_10)]
+        public async Task UploadRangeFromUriAsync_OAuth()
+        {
+            string shareName = GetNewShareName();
+            ShareServiceClient sharedKeyServiceClient = SharesClientBuilder.GetServiceClient_OAuthAccount_SharedKey();
+            await using DisposingShare sharedKeyShare = await GetTestShareAsync(sharedKeyServiceClient, shareName);
+            ShareServiceClient oauthServiceClient = SharesClientBuilder.GetServiceClient_OAuth();
+            ShareClient oauthShareClient = InstrumentClient(oauthServiceClient.GetShareClient(shareName));
+
+            // Arrange
+            var directoryName = GetNewDirectoryName();
+            var directory = InstrumentClient(oauthShareClient.GetDirectoryClient(directoryName));
+            await directory.CreateIfNotExistsAsync();
+
+            var fileName = GetNewFileName();
+            var data = GetRandomBuffer(Constants.KB);
+            var sourceFile = InstrumentClient(directory.GetFileClient(fileName));
+            await sourceFile.CreateAsync(maxSize: 1024);
+            using (var stream = new MemoryStream(data))
+            {
+                await sourceFile.UploadRangeAsync(new HttpRange(0, 1024), stream);
+            }
+
+            var destFile = directory.GetFileClient("destFile");
+            await destFile.CreateAsync(maxSize: 1024);
+            var destRange = new HttpRange(256, 256);
+            var sourceRange = new HttpRange(512, 256);
+
+            var sasFile = InstrumentClient(
+                GetServiceClient_FileServiceSasShare(shareName)
+                .GetShareClient(shareName)
+                .GetDirectoryClient(directoryName)
+                .GetFileClient(fileName));
+
+            // Act
+            Response<ShareFileUploadInfo> response = await destFile.UploadRangeFromUriAsync(
+                sourceUri: sasFile.Uri,
+                range: destRange,
+                sourceRange: sourceRange);
+
+            // Assert
+            // Ensure that we grab the whole ETag value from the service without removing the quotes
+            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+
+            // Ensure the contents of the source and destination Files after the UploadRangeFromUri call
+            var sourceDownloadResponse = await sourceFile.DownloadAsync(new ShareFileDownloadOptions
+            {
+                Range = sourceRange
+            });
+            var destDownloadResponse = await destFile.DownloadAsync(new ShareFileDownloadOptions
+            {
+                Range = destRange
+            });
+
+            var sourceStream = new MemoryStream();
+            await sourceDownloadResponse.Value.Content.CopyToAsync(sourceStream);
+
+            var destStream = new MemoryStream();
+            await destDownloadResponse.Value.Content.CopyToAsync(destStream);
+
+            TestHelper.AssertSequenceEqual(sourceStream.ToArray(), destStream.ToArray());
         }
 
         [RecordedTest]

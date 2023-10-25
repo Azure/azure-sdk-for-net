@@ -12,37 +12,39 @@ namespace Azure.Storage.DataMovement.Tests
     internal class MockStorageResource : StorageResourceItem
     {
         private readonly Stream _readStream;
-        private readonly Uri _uri = new Uri("https://example.com");
+        private readonly Uri _uri;
+
+        public override Uri Uri => _uri;
+
+        public override string ProviderId => "mock";
 
         protected internal override string ResourceId => "Mock";
 
         protected internal override DataTransferOrder TransferType => DataTransferOrder.Sequential;
 
-        private readonly long _maxChunkSize;
-        protected internal override long MaxChunkSize => _maxChunkSize;
-
-        public override Uri Uri => _uri;
+        protected internal override long MaxChunkSize { get; }
 
         protected internal override long? Length { get; }
 
-        private MockStorageResource(long? length, bool conProduceUri, long maxChunkSize)
+        private MockStorageResource(long? length, long maxChunkSize, Uri uri = default)
         {
             Length = length;
+            MaxChunkSize = maxChunkSize;
             if (length.HasValue)
             {
                 _readStream = new RepeatingStream((int)(1234567 % length.Value), length.Value, revealsLength: true);
             }
-            _maxChunkSize = maxChunkSize;
+            _uri = uri ?? new Uri("https://example.com");
         }
 
-        public static MockStorageResource MakeSourceResource(long length, bool canProduceUri, long? maxChunkSize = default)
+        public static MockStorageResource MakeSourceResource(long length, long? maxChunkSize = default, Uri uri = default)
         {
-            return new MockStorageResource(length, canProduceUri, maxChunkSize ?? 1024);
+            return new MockStorageResource(length, maxChunkSize ?? 1024, uri);
         }
 
-        public static MockStorageResource MakeDestinationResource(bool canProduceUri, long? maxChunkSize = default)
+        public static MockStorageResource MakeDestinationResource(long? maxChunkSize = default, Uri uri = default)
         {
-            return new MockStorageResource(default, canProduceUri, maxChunkSize ?? 1024);
+            return new MockStorageResource(default, maxChunkSize ?? 1024, uri);
         }
 
         protected internal override Task CompleteTransferAsync(bool overwrite, CancellationToken cancellationToken = default)
@@ -83,6 +85,16 @@ namespace Azure.Storage.DataMovement.Tests
         {
             _readStream.Position = 0;
             return Task.FromResult(new StorageResourceReadStreamResult(_readStream));
+        }
+
+        protected internal override StorageResourceCheckpointData GetSourceCheckpointData()
+        {
+            return new MockResourceCheckpointData();
+        }
+
+        protected internal override StorageResourceCheckpointData GetDestinationCheckpointData()
+        {
+            return new MockResourceCheckpointData();
         }
 
         protected internal override async Task CopyFromStreamAsync(Stream stream, long streamLength, bool overwrite, long completeLength, StorageResourceWriteToOffsetOptions options = null, CancellationToken cancellationToken = default)

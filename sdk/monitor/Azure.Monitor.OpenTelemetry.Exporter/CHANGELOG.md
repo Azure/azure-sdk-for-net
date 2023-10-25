@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.15 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -10,8 +10,25 @@
 
 ### Other Changes
 
+## 1.0.0 (2023-09-20)
+
+### Bugs Fixed
+
+* Fixed an issue during network failures which prevented the exporter to store
+the telemetry offline for retrying at a later time.
+([#38832](https://github.com/Azure/azure-sdk-for-net/pull/38832))
+
+* Fixed an issue where `OriginalFormat` persisted in TraceTelemetry properties
+  with IncludeFormattedMessage enabled in OpenTelemetry LoggerProvider. This fix
+  prevents data duplication in message fields and properties.
+  ([#39308](https://github.com/Azure/azure-sdk-for-net/pull/39308))
+
+### Other Changes
+
 * Update OpenTelemetry dependencies
   ([#38430](https://github.com/Azure/azure-sdk-for-net/pull/38430))
+  ([#38568](https://github.com/Azure/azure-sdk-for-net/pull/38568))
+  - OpenTelemetry 1.6.0
   - OpenTelemetry.PersistentStorage.FileSystem 1.0.0
 
 ## 1.0.0-beta.14 (2023-08-09)

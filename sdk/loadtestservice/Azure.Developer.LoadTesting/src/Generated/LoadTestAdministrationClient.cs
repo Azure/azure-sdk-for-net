@@ -294,7 +294,6 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='UploadTestFileAsync(string,string,RequestContent,string,RequestContext)']/*" />
         internal virtual async Task<Response> UploadTestFileAsync(string testId, string fileName, RequestContent content, string fileType = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
@@ -334,7 +333,6 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testId"/> or <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='UploadTestFile(string,string,RequestContent,string,RequestContext)']/*" />
         internal virtual Response UploadTestFile(string testId, string fileName, RequestContent content, string fileType = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));

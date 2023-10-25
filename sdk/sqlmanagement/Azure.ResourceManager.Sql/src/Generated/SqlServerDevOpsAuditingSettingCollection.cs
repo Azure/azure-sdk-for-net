@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/devOpsAuditingSettings/{devOpsAuditingSettingsName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServerDevOpsAuditSettings_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="devOpsAuditingSettingsName"> The name of the devops audit settings. This should always be Default. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="devOpsAuditingSettingsName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="devOpsAuditingSettingsName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SqlServerDevOpsAuditingSettingResource>> GetIfExistsAsync(string devOpsAuditingSettingsName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(devOpsAuditingSettingsName, nameof(devOpsAuditingSettingsName));
+
+            using var scope = _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsClientDiagnostics.CreateScope("SqlServerDevOpsAuditingSettingCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, devOpsAuditingSettingsName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SqlServerDevOpsAuditingSettingResource>(response.GetRawResponse());
+                return Response.FromValue(new SqlServerDevOpsAuditingSettingResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/devOpsAuditingSettings/{devOpsAuditingSettingsName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServerDevOpsAuditSettings_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="devOpsAuditingSettingsName"> The name of the devops audit settings. This should always be Default. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="devOpsAuditingSettingsName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="devOpsAuditingSettingsName"/> is null. </exception>
+        public virtual NullableResponse<SqlServerDevOpsAuditingSettingResource> GetIfExists(string devOpsAuditingSettingsName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(devOpsAuditingSettingsName, nameof(devOpsAuditingSettingsName));
+
+            using var scope = _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsClientDiagnostics.CreateScope("SqlServerDevOpsAuditingSettingCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _sqlServerDevOpsAuditingSettingServerDevOpsAuditSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, devOpsAuditingSettingsName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SqlServerDevOpsAuditingSettingResource>(response.GetRawResponse());
+                return Response.FromValue(new SqlServerDevOpsAuditingSettingResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<SqlServerDevOpsAuditingSettingResource> IEnumerable<SqlServerDevOpsAuditingSettingResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

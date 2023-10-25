@@ -18,6 +18,11 @@ namespace Azure.ResourceManager.ElasticSan
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                JsonSerializer.Serialize(writer, Identity);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ProtocolType))
@@ -29,6 +34,11 @@ namespace Azure.ResourceManager.ElasticSan
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteStringValue(Encryption.Value.ToString());
+            }
+            if (Optional.IsDefined(EncryptionProperties))
+            {
+                writer.WritePropertyName("encryptionProperties"u8);
+                writer.WriteObjectValue(EncryptionProperties);
             }
             if (Optional.IsDefined(NetworkAcls))
             {
@@ -45,6 +55,7 @@ namespace Azure.ResourceManager.ElasticSan
             {
                 return null;
             }
+            Optional<ManagedServiceIdentity> identity = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -52,10 +63,20 @@ namespace Azure.ResourceManager.ElasticSan
             Optional<ElasticSanProvisioningState> provisioningState = default;
             Optional<StorageTargetType> protocolType = default;
             Optional<ElasticSanEncryptionType> encryption = default;
+            Optional<Models.EncryptionProperties> encryptionProperties = default;
             Optional<NetworkRuleSet> networkAcls = default;
             Optional<IReadOnlyList<ElasticSanPrivateEndpointConnectionData>> privateEndpointConnections = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -116,6 +137,15 @@ namespace Azure.ResourceManager.ElasticSan
                             encryption = new ElasticSanEncryptionType(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("encryptionProperties"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            encryptionProperties = Models.EncryptionProperties.DeserializeEncryptionProperties(property0.Value);
+                            continue;
+                        }
                         if (property0.NameEquals("networkAcls"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -143,7 +173,7 @@ namespace Azure.ResourceManager.ElasticSan
                     continue;
                 }
             }
-            return new ElasticSanVolumeGroupData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(protocolType), Optional.ToNullable(encryption), networkAcls.Value, Optional.ToList(privateEndpointConnections));
+            return new ElasticSanVolumeGroupData(id, name, type, systemData.Value, identity, Optional.ToNullable(provisioningState), Optional.ToNullable(protocolType), Optional.ToNullable(encryption), encryptionProperties.Value, networkAcls.Value, Optional.ToList(privateEndpointConnections));
         }
     }
 }

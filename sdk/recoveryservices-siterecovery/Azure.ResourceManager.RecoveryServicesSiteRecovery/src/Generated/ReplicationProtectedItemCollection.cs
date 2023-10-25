@@ -324,6 +324,80 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationProtectedItems/{replicatedProtectedItemName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationProtectedItems_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="replicatedProtectedItemName"> Replication protected item name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="replicatedProtectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="replicatedProtectedItemName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ReplicationProtectedItemResource>> GetIfExistsAsync(string replicatedProtectedItemName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(replicatedProtectedItemName, nameof(replicatedProtectedItemName));
+
+            using var scope = _replicationProtectedItemClientDiagnostics.CreateScope("ReplicationProtectedItemCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _replicationProtectedItemRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, replicatedProtectedItemName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ReplicationProtectedItemResource>(response.GetRawResponse());
+                return Response.FromValue(new ReplicationProtectedItemResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationProtectionContainers/{protectionContainerName}/replicationProtectedItems/{replicatedProtectedItemName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationProtectedItems_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="replicatedProtectedItemName"> Replication protected item name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="replicatedProtectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="replicatedProtectedItemName"/> is null. </exception>
+        public virtual NullableResponse<ReplicationProtectedItemResource> GetIfExists(string replicatedProtectedItemName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(replicatedProtectedItemName, nameof(replicatedProtectedItemName));
+
+            using var scope = _replicationProtectedItemClientDiagnostics.CreateScope("ReplicationProtectedItemCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _replicationProtectedItemRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, replicatedProtectedItemName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ReplicationProtectedItemResource>(response.GetRawResponse());
+                return Response.FromValue(new ReplicationProtectedItemResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<ReplicationProtectedItemResource> IEnumerable<ReplicationProtectedItemResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

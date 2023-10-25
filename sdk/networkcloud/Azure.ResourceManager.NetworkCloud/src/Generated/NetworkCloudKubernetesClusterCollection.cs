@@ -324,6 +324,80 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/kubernetesClusters/{kubernetesClusterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KubernetesClusters_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="kubernetesClusterName"> The name of the Kubernetes cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="kubernetesClusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="kubernetesClusterName"/> is null. </exception>
+        public virtual async Task<NullableResponse<NetworkCloudKubernetesClusterResource>> GetIfExistsAsync(string kubernetesClusterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(kubernetesClusterName, nameof(kubernetesClusterName));
+
+            using var scope = _networkCloudKubernetesClusterKubernetesClustersClientDiagnostics.CreateScope("NetworkCloudKubernetesClusterCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _networkCloudKubernetesClusterKubernetesClustersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, kubernetesClusterName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkCloudKubernetesClusterResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkCloudKubernetesClusterResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/kubernetesClusters/{kubernetesClusterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>KubernetesClusters_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="kubernetesClusterName"> The name of the Kubernetes cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="kubernetesClusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="kubernetesClusterName"/> is null. </exception>
+        public virtual NullableResponse<NetworkCloudKubernetesClusterResource> GetIfExists(string kubernetesClusterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(kubernetesClusterName, nameof(kubernetesClusterName));
+
+            using var scope = _networkCloudKubernetesClusterKubernetesClustersClientDiagnostics.CreateScope("NetworkCloudKubernetesClusterCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _networkCloudKubernetesClusterKubernetesClustersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, kubernetesClusterName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkCloudKubernetesClusterResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkCloudKubernetesClusterResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<NetworkCloudKubernetesClusterResource> IEnumerable<NetworkCloudKubernetesClusterResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

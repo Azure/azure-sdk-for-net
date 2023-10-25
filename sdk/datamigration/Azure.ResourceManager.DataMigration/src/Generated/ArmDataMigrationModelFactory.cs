@@ -290,8 +290,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
         /// Database Migration Resource properties.
-        /// Please note <see cref="DatabaseMigrationProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DatabaseMigrationSqlDBProperties"/>, <see cref="DatabaseMigrationSqlVmProperties"/> and <see cref="DatabaseMigrationSqlMIProperties"/>.
+        /// Please note <see cref="Models.DatabaseMigrationProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.DatabaseMigrationSqlDBProperties"/>, <see cref="Models.DatabaseMigrationSqlVmProperties"/> and <see cref="Models.DatabaseMigrationSqlMIProperties"/>.
         /// </param>
         /// <returns> A new <see cref="Models.DatabaseMigration"/> instance for mocking. </returns>
         public static DatabaseMigration DatabaseMigration(ResourceIdentifier id = null, string name = null, Core.ResourceType resourceType = default, SystemData systemData = null, DatabaseMigrationProperties properties = null)
@@ -485,8 +485,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="etag"> HTTP strong entity tag value. This is ignored if submitted. </param>
         /// <param name="properties">
         /// Custom task properties
-        /// Please note <see cref="ProjectTaskProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ConnectToMongoDBTaskProperties"/>, <see cref="ConnectToSourceMySqlTaskProperties"/>, <see cref="ConnectToSourceOracleSyncTaskProperties"/>, <see cref="ConnectToSourcePostgreSqlSyncTaskProperties"/>, <see cref="ConnectToSourceSqlServerTaskProperties"/>, <see cref="ConnectToSourceSqlServerSyncTaskProperties"/>, <see cref="ConnectToTargetAzureDBForMySqlTaskProperties"/>, <see cref="ConnectToTargetAzureDBForPostgreSqlSyncTaskProperties"/>, <see cref="ConnectToTargetSqlMITaskProperties"/>, <see cref="ConnectToTargetSqlMISyncTaskProperties"/>, <see cref="ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskProperties"/>, <see cref="ConnectToTargetSqlDBTaskProperties"/>, <see cref="ConnectToTargetSqlDBSyncTaskProperties"/>, <see cref="GetTdeCertificatesSqlTaskProperties"/>, <see cref="GetUserTablesSqlSyncTaskProperties"/>, <see cref="GetUserTablesSqlTaskProperties"/>, <see cref="GetUserTablesMySqlTaskProperties"/>, <see cref="GetUserTablesOracleTaskProperties"/>, <see cref="GetUserTablesPostgreSqlTaskProperties"/>, <see cref="MigrateMongoDBTaskProperties"/>, <see cref="MigrateMySqlAzureDBForMySqlOfflineTaskProperties"/>, <see cref="MigrateMySqlAzureDBForMySqlSyncTaskProperties"/>, <see cref="MigrateOracleAzureDBForPostgreSqlSyncTaskProperties"/>, <see cref="MigratePostgreSqlAzureDBForPostgreSqlSyncTaskProperties"/>, <see cref="MigrateSqlServerSqlDBSyncTaskProperties"/>, <see cref="MigrateSqlServerSqlMITaskProperties"/>, <see cref="MigrateSqlServerSqlMISyncTaskProperties"/>, <see cref="MigrateSqlServerSqlDBTaskProperties"/>, <see cref="MigrateSsisTaskProperties"/>, <see cref="MigrateSchemaSqlServerSqlDBTaskProperties"/>, <see cref="CheckOciDriverTaskProperties"/>, <see cref="InstallOciDriverTaskProperties"/>, <see cref="UploadOciDriverTaskProperties"/>, <see cref="ValidateMongoDBTaskProperties"/>, <see cref="ValidateOracleAzureDBForPostgreSqlSyncTaskProperties"/>, <see cref="ValidateMigrationInputSqlServerSqlMITaskProperties"/>, <see cref="ValidateMigrationInputSqlServerSqlMISyncTaskProperties"/> and <see cref="ValidateMigrationInputSqlServerSqlDBSyncTaskProperties"/>.
+        /// Please note <see cref="Models.ProjectTaskProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.ConnectToMongoDBTaskProperties"/>, <see cref="Models.ConnectToSourceMySqlTaskProperties"/>, <see cref="Models.ConnectToSourceOracleSyncTaskProperties"/>, <see cref="Models.ConnectToSourcePostgreSqlSyncTaskProperties"/>, <see cref="Models.ConnectToSourceSqlServerTaskProperties"/>, <see cref="Models.ConnectToSourceSqlServerSyncTaskProperties"/>, <see cref="Models.ConnectToTargetAzureDBForMySqlTaskProperties"/>, <see cref="Models.ConnectToTargetAzureDBForPostgreSqlSyncTaskProperties"/>, <see cref="Models.ConnectToTargetSqlMITaskProperties"/>, <see cref="Models.ConnectToTargetSqlMISyncTaskProperties"/>, <see cref="Models.ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskProperties"/>, <see cref="Models.ConnectToTargetSqlDBTaskProperties"/>, <see cref="Models.ConnectToTargetSqlDBSyncTaskProperties"/>, <see cref="Models.GetTdeCertificatesSqlTaskProperties"/>, <see cref="Models.GetUserTablesSqlSyncTaskProperties"/>, <see cref="Models.GetUserTablesSqlTaskProperties"/>, <see cref="Models.GetUserTablesMySqlTaskProperties"/>, <see cref="Models.GetUserTablesOracleTaskProperties"/>, <see cref="Models.GetUserTablesPostgreSqlTaskProperties"/>, <see cref="Models.MigrateMongoDBTaskProperties"/>, <see cref="Models.MigrateMySqlAzureDBForMySqlOfflineTaskProperties"/>, <see cref="Models.MigrateMySqlAzureDBForMySqlSyncTaskProperties"/>, <see cref="Models.MigrateOracleAzureDBForPostgreSqlSyncTaskProperties"/>, <see cref="Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskProperties"/>, <see cref="Models.MigrateSqlServerSqlDBSyncTaskProperties"/>, <see cref="Models.MigrateSqlServerSqlMITaskProperties"/>, <see cref="Models.MigrateSqlServerSqlMISyncTaskProperties"/>, <see cref="Models.MigrateSqlServerSqlDBTaskProperties"/>, <see cref="Models.MigrateSsisTaskProperties"/>, <see cref="Models.MigrateSchemaSqlServerSqlDBTaskProperties"/>, <see cref="Models.CheckOciDriverTaskProperties"/>, <see cref="Models.InstallOciDriverTaskProperties"/>, <see cref="Models.UploadOciDriverTaskProperties"/>, <see cref="Models.ValidateMongoDBTaskProperties"/>, <see cref="Models.ValidateOracleAzureDBForPostgreSqlSyncTaskProperties"/>, <see cref="Models.ValidateMigrationInputSqlServerSqlMITaskProperties"/>, <see cref="Models.ValidateMigrationInputSqlServerSqlMISyncTaskProperties"/> and <see cref="Models.ValidateMigrationInputSqlServerSqlDBSyncTaskProperties"/>.
         /// </param>
         /// <returns> A new <see cref="DataMigration.ProjectTaskData"/> instance for mocking. </returns>
         public static ProjectTaskData ProjectTaskData(ResourceIdentifier id = null, string name = null, Core.ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, ProjectTaskProperties properties = null)
@@ -500,8 +500,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/> and <see cref="MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <returns> A new <see cref="Models.ProjectTaskProperties"/> instance for mocking. </returns>
@@ -959,15 +959,15 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/> and <see cref="MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
         /// <param name="output">
         /// Task output. This is ignored if submitted.
-        /// Please note <see cref="MigrateSchemaSqlServerSqlDBTaskOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel"/>, <see cref="MigrateSchemaSqlTaskOutputError"/>, <see cref="MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel"/> and <see cref="MigrateSchemaSqlServerSqlDBTaskOutputError"/>.
+        /// Please note <see cref="Models.MigrateSchemaSqlServerSqlDBTaskOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel"/>, <see cref="Models.MigrateSchemaSqlTaskOutputError"/>, <see cref="Models.MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel"/> and <see cref="Models.MigrateSchemaSqlServerSqlDBTaskOutputError"/>.
         /// </param>
         /// <param name="createdOn"> DateTime in UTC when the task was created. </param>
         /// <param name="taskId"> Task id. </param>
@@ -2258,8 +2258,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/> and <see cref="MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="inputServerVersion"> Input for the service task to check for OCI drivers. </param>
@@ -2280,8 +2280,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/> and <see cref="MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="inputDriverShare"> Input for the service task to upload an OCI driver. </param>
@@ -2302,8 +2302,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/> and <see cref="MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="inputDriverPackageName"> Input for the service task to install an OCI driver. </param>
@@ -2324,8 +2324,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/> and <see cref="MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Describes a connection to a MongoDB data source. </param>
@@ -2346,15 +2346,15 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/> and <see cref="MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
         /// <param name="output">
         /// Task output. This is ignored if submitted.
-        /// Please note <see cref="ConnectToSourceSqlServerTaskOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ConnectToSourceSqlServerTaskOutputAgentJobLevel"/>, <see cref="ConnectToSourceSqlServerTaskOutputDatabaseLevel"/>, <see cref="ConnectToSourceSqlServerTaskOutputLoginLevel"/> and <see cref="ConnectToSourceSqlServerTaskOutputTaskLevel"/>.
+        /// Please note <see cref="Models.ConnectToSourceSqlServerTaskOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.ConnectToSourceSqlServerTaskOutputAgentJobLevel"/>, <see cref="Models.ConnectToSourceSqlServerTaskOutputDatabaseLevel"/>, <see cref="Models.ConnectToSourceSqlServerTaskOutputLoginLevel"/> and <see cref="Models.ConnectToSourceSqlServerTaskOutputTaskLevel"/>.
         /// </param>
         /// <param name="taskId"> Task id. </param>
         /// <returns> A new <see cref="Models.ConnectToSourceSqlServerTaskProperties"/> instance for mocking. </returns>
@@ -2373,15 +2373,15 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/> and <see cref="MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
         /// <param name="output">
         /// Task output. This is ignored if submitted.
-        /// Please note <see cref="ConnectToSourceSqlServerTaskOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ConnectToSourceSqlServerTaskOutputAgentJobLevel"/>, <see cref="ConnectToSourceSqlServerTaskOutputDatabaseLevel"/>, <see cref="ConnectToSourceSqlServerTaskOutputLoginLevel"/> and <see cref="ConnectToSourceSqlServerTaskOutputTaskLevel"/>.
+        /// Please note <see cref="Models.ConnectToSourceSqlServerTaskOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.ConnectToSourceSqlServerTaskOutputAgentJobLevel"/>, <see cref="Models.ConnectToSourceSqlServerTaskOutputDatabaseLevel"/>, <see cref="Models.ConnectToSourceSqlServerTaskOutputLoginLevel"/> and <see cref="Models.ConnectToSourceSqlServerTaskOutputTaskLevel"/>.
         /// </param>
         /// <returns> A new <see cref="Models.ConnectToSourceSqlServerSyncTaskProperties"/> instance for mocking. </returns>
         public static ConnectToSourceSqlServerSyncTaskProperties ConnectToSourceSqlServerSyncTaskProperties(IEnumerable<ODataError> errors = null, TaskState? state = null, IEnumerable<CommandProperties> commands = null, IDictionary<string, string> clientData = null, ConnectToSourceSqlServerTaskInput input = null, IEnumerable<ConnectToSourceSqlServerTaskOutput> output = null)
@@ -2399,8 +2399,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/> and <see cref="MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="inputSourceConnectionInfo"> Task input. </param>
@@ -2421,8 +2421,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/> and <see cref="MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
@@ -2471,8 +2471,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/> and <see cref="MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="inputSourceConnectionInfo"> Task input. </param>
@@ -2493,8 +2493,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/> and <see cref="MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
@@ -2516,8 +2516,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/> and <see cref="MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
@@ -2538,8 +2538,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/> and <see cref="MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
@@ -2560,8 +2560,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/> and <see cref="MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="inputTargetConnectionInfo"> Task input. </param>
@@ -2582,8 +2582,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/> and <see cref="MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
@@ -2605,8 +2605,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/> and <see cref="MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
@@ -2627,8 +2627,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/> and <see cref="MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
@@ -2649,8 +2649,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/> and <see cref="MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
@@ -2671,8 +2671,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/> and <see cref="MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
@@ -2693,8 +2693,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/> and <see cref="MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
@@ -2715,8 +2715,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/> and <see cref="MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
@@ -2737,8 +2737,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/> and <see cref="MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
@@ -2759,14 +2759,14 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/> and <see cref="MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Describes how a MongoDB data migration should be performed. </param>
         /// <param name="output">
-        /// Please note <see cref="MongoDBProgress"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MongoDBDatabaseProgress"/>, <see cref="MongoDBMigrationProgress"/> and <see cref="MongoDBCollectionProgress"/>.
+        /// Please note <see cref="Models.MongoDBProgress"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MongoDBDatabaseProgress"/>, <see cref="Models.MongoDBMigrationProgress"/> and <see cref="Models.MongoDBCollectionProgress"/>.
         /// </param>
         /// <returns> A new <see cref="Models.MigrateMongoDBTaskProperties"/> instance for mocking. </returns>
         public static MigrateMongoDBTaskProperties MigrateMongoDBTaskProperties(IEnumerable<ODataError> errors = null, TaskState? state = null, IEnumerable<CommandProperties> commands = null, IDictionary<string, string> clientData = null, MongoDBMigrationSettings input = null, IEnumerable<MongoDBProgress> output = null)
@@ -2784,15 +2784,15 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/> and <see cref="MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
         /// <param name="output">
         /// Task output. This is ignored if submitted.
-        /// Please note <see cref="MigrateSqlServerSqlMITaskOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateSqlServerSqlMITaskOutputAgentJobLevel"/>, <see cref="MigrateSqlServerSqlMITaskOutputDatabaseLevel"/>, <see cref="MigrateSqlServerSqlMITaskOutputError"/>, <see cref="MigrateSqlServerSqlMITaskOutputLoginLevel"/> and <see cref="MigrateSqlServerSqlMITaskOutputMigrationLevel"/>.
+        /// Please note <see cref="Models.MigrateSqlServerSqlMITaskOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MigrateSqlServerSqlMITaskOutputAgentJobLevel"/>, <see cref="Models.MigrateSqlServerSqlMITaskOutputDatabaseLevel"/>, <see cref="Models.MigrateSqlServerSqlMITaskOutputError"/>, <see cref="Models.MigrateSqlServerSqlMITaskOutputLoginLevel"/> and <see cref="Models.MigrateSqlServerSqlMITaskOutputMigrationLevel"/>.
         /// </param>
         /// <param name="taskId"> task id. </param>
         /// <param name="createdOn"> DateTime in UTC when the task was created. </param>
@@ -2814,15 +2814,15 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/> and <see cref="MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
         /// <param name="output">
         /// Task output. This is ignored if submitted.
-        /// Please note <see cref="MigrateSqlServerSqlMISyncTaskOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel"/>, <see cref="MigrateSqlServerSqlMISyncTaskOutputError"/> and <see cref="MigrateSqlServerSqlMISyncTaskOutputMigrationLevel"/>.
+        /// Please note <see cref="Models.MigrateSqlServerSqlMISyncTaskOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel"/>, <see cref="Models.MigrateSqlServerSqlMISyncTaskOutputError"/> and <see cref="Models.MigrateSqlServerSqlMISyncTaskOutputMigrationLevel"/>.
         /// </param>
         /// <param name="createdOn"> DateTime in UTC when the task was created. </param>
         /// <returns> A new <see cref="Models.MigrateSqlServerSqlMISyncTaskProperties"/> instance for mocking. </returns>
@@ -2841,15 +2841,15 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/> and <see cref="MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
         /// <param name="output">
         /// Task output. This is ignored if submitted.
-        /// Please note <see cref="MigrateSqlServerSqlDBTaskOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateSqlServerSqlDBTaskOutputDatabaseLevel"/>, <see cref="MigrateSqlServerSqlDBTaskOutputError"/>, <see cref="MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult"/>, <see cref="MigrateSqlServerSqlDBTaskOutputMigrationLevel"/>, <see cref="MigrateSqlServerSqlDBTaskOutputValidationResult"/> and <see cref="MigrateSqlServerSqlDBTaskOutputTableLevel"/>.
+        /// Please note <see cref="Models.MigrateSqlServerSqlDBTaskOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MigrateSqlServerSqlDBTaskOutputDatabaseLevel"/>, <see cref="Models.MigrateSqlServerSqlDBTaskOutputError"/>, <see cref="Models.MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult"/>, <see cref="Models.MigrateSqlServerSqlDBTaskOutputMigrationLevel"/>, <see cref="Models.MigrateSqlServerSqlDBTaskOutputValidationResult"/> and <see cref="Models.MigrateSqlServerSqlDBTaskOutputTableLevel"/>.
         /// </param>
         /// <param name="taskId"> task id. </param>
         /// <param name="isCloneable"> whether the task can be cloned or not. </param>
@@ -2870,15 +2870,15 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/> and <see cref="MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
         /// <param name="output">
         /// Task output. This is ignored if submitted.
-        /// Please note <see cref="MigrateSqlServerSqlDBSyncTaskOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateSqlServerSqlDBSyncTaskOutputDatabaseError"/>, <see cref="MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel"/>, <see cref="MigrateSqlServerSqlDBSyncTaskOutputError"/>, <see cref="MigrateSqlServerSqlDBSyncTaskOutputMigrationLevel"/> and <see cref="MigrateSqlServerSqlDBSyncTaskOutputTableLevel"/>.
+        /// Please note <see cref="Models.MigrateSqlServerSqlDBSyncTaskOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MigrateSqlServerSqlDBSyncTaskOutputDatabaseError"/>, <see cref="Models.MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel"/>, <see cref="Models.MigrateSqlServerSqlDBSyncTaskOutputError"/>, <see cref="Models.MigrateSqlServerSqlDBSyncTaskOutputMigrationLevel"/> and <see cref="Models.MigrateSqlServerSqlDBSyncTaskOutputTableLevel"/>.
         /// </param>
         /// <returns> A new <see cref="Models.MigrateSqlServerSqlDBSyncTaskProperties"/> instance for mocking. </returns>
         public static MigrateSqlServerSqlDBSyncTaskProperties MigrateSqlServerSqlDBSyncTaskProperties(IEnumerable<ODataError> errors = null, TaskState? state = null, IEnumerable<CommandProperties> commands = null, IDictionary<string, string> clientData = null, MigrateSqlServerSqlDBSyncTaskInput input = null, IEnumerable<MigrateSqlServerSqlDBSyncTaskOutput> output = null)
@@ -2896,15 +2896,15 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/> and <see cref="MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
         /// <param name="output">
         /// Task output. This is ignored if submitted.
-        /// Please note <see cref="MigrateMySqlAzureDBForMySqlSyncTaskOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseError"/>, <see cref="MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel"/>, <see cref="MigrateMySqlAzureDBForMySqlSyncTaskOutputError"/>, <see cref="MigrateMySqlAzureDBForMySqlSyncTaskOutputMigrationLevel"/> and <see cref="MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel"/>.
+        /// Please note <see cref="Models.MigrateMySqlAzureDBForMySqlSyncTaskOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseError"/>, <see cref="Models.MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel"/>, <see cref="Models.MigrateMySqlAzureDBForMySqlSyncTaskOutputError"/>, <see cref="Models.MigrateMySqlAzureDBForMySqlSyncTaskOutputMigrationLevel"/> and <see cref="Models.MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel"/>.
         /// </param>
         /// <returns> A new <see cref="Models.MigrateMySqlAzureDBForMySqlSyncTaskProperties"/> instance for mocking. </returns>
         public static MigrateMySqlAzureDBForMySqlSyncTaskProperties MigrateMySqlAzureDBForMySqlSyncTaskProperties(IEnumerable<ODataError> errors = null, TaskState? state = null, IEnumerable<CommandProperties> commands = null, IDictionary<string, string> clientData = null, MigrateMySqlAzureDBForMySqlSyncTaskInput input = null, IEnumerable<MigrateMySqlAzureDBForMySqlSyncTaskOutput> output = null)
@@ -2922,15 +2922,15 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/> and <see cref="MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
         /// <param name="output">
         /// Task output. This is ignored if submitted.
-        /// Please note <see cref="MigrateMySqlAzureDBForMySqlOfflineTaskOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel"/>, <see cref="MigrateMySqlAzureDBForMySqlOfflineTaskOutputError"/>, <see cref="MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel"/> and <see cref="MigrateMySqlAzureDBForMySqlOfflineTaskOutputTableLevel"/>.
+        /// Please note <see cref="Models.MigrateMySqlAzureDBForMySqlOfflineTaskOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel"/>, <see cref="Models.MigrateMySqlAzureDBForMySqlOfflineTaskOutputError"/>, <see cref="Models.MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel"/> and <see cref="Models.MigrateMySqlAzureDBForMySqlOfflineTaskOutputTableLevel"/>.
         /// </param>
         /// <param name="isCloneable"> whether the task can be cloned or not. </param>
         /// <param name="taskId"> Task id. </param>
@@ -2959,15 +2959,15 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/> and <see cref="MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
         /// <param name="output">
         /// Task output. This is ignored if submitted.
-        /// Please note <see cref="MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError"/>, <see cref="MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseLevel"/>, <see cref="MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError"/>, <see cref="MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel"/> and <see cref="MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputTableLevel"/>.
+        /// Please note <see cref="Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError"/>, <see cref="Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseLevel"/>, <see cref="Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError"/>, <see cref="Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel"/> and <see cref="Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputTableLevel"/>.
         /// </param>
         /// <param name="taskId"> task id. </param>
         /// <param name="createdOn"> DateTime in UTC when the task was created. </param>
@@ -2988,15 +2988,15 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/> and <see cref="MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
         /// <param name="output">
         /// Task output. This is ignored if submitted.
-        /// Please note <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseError"/>, <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel"/>, <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskOutputError"/>, <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskOutputMigrationLevel"/> and <see cref="MigrateOracleAzureDBPostgreSqlSyncTaskOutputTableLevel"/>.
+        /// Please note <see cref="Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseError"/>, <see cref="Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel"/>, <see cref="Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutputError"/>, <see cref="Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutputMigrationLevel"/> and <see cref="Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutputTableLevel"/>.
         /// </param>
         /// <returns> A new <see cref="Models.MigrateOracleAzureDBForPostgreSqlSyncTaskProperties"/> instance for mocking. </returns>
         public static MigrateOracleAzureDBForPostgreSqlSyncTaskProperties MigrateOracleAzureDBForPostgreSqlSyncTaskProperties(IEnumerable<ODataError> errors = null, TaskState? state = null, IEnumerable<CommandProperties> commands = null, IDictionary<string, string> clientData = null, MigrateOracleAzureDBPostgreSqlSyncTaskInput input = null, IEnumerable<MigrateOracleAzureDBPostgreSqlSyncTaskOutput> output = null)
@@ -3014,8 +3014,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/> and <see cref="MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
@@ -3048,8 +3048,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/> and <see cref="MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
@@ -3108,8 +3108,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/> and <see cref="MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
@@ -3142,8 +3142,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/> and <see cref="MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Describes how a MongoDB data migration should be performed. </param>
@@ -3164,8 +3164,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/> and <see cref="MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Input for the task that migrates Oracle databases to Azure Database for PostgreSQL for online migrations. </param>
@@ -3186,8 +3186,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/> and <see cref="MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
@@ -3208,15 +3208,15 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
         /// <param name="commands">
         /// Array of command properties.
-        /// Please note <see cref="CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/> and <see cref="MongoDBRestartCommand"/>.
+        /// Please note <see cref="Models.CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MigrateMISyncCompleteCommandProperties"/>, <see cref="Models.MigrateSyncCompleteCommandProperties"/>, <see cref="Models.MongoDBCancelCommand"/>, <see cref="Models.MongoDBFinishCommand"/> and <see cref="Models.MongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>
         /// <param name="output">
         /// Task output. This is ignored if submitted.
-        /// Please note <see cref="MigrateSsisTaskOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateSsisTaskOutputMigrationLevel"/> and <see cref="MigrateSsisTaskOutputProjectLevel"/>.
+        /// Please note <see cref="Models.MigrateSsisTaskOutput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.MigrateSsisTaskOutputMigrationLevel"/> and <see cref="Models.MigrateSsisTaskOutputProjectLevel"/>.
         /// </param>
         /// <returns> A new <see cref="Models.MigrateSsisTaskProperties"/> instance for mocking. </returns>
         public static MigrateSsisTaskProperties MigrateSsisTaskProperties(IEnumerable<ODataError> errors = null, TaskState? state = null, IEnumerable<CommandProperties> commands = null, IDictionary<string, string> clientData = null, MigrateSsisTaskInput input = null, IEnumerable<MigrateSsisTaskOutput> output = null)

@@ -327,6 +327,80 @@ namespace Azure.ResourceManager.Media
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Transforms_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="transformName"> The Transform name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="transformName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="transformName"/> is null. </exception>
+        public virtual async Task<NullableResponse<MediaTransformResource>> GetIfExistsAsync(string transformName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
+
+            using var scope = _mediaTransformTransformsClientDiagnostics.CreateScope("MediaTransformCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _mediaTransformTransformsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, transformName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<MediaTransformResource>(response.GetRawResponse());
+                return Response.FromValue(new MediaTransformResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/transforms/{transformName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Transforms_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="transformName"> The Transform name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="transformName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="transformName"/> is null. </exception>
+        public virtual NullableResponse<MediaTransformResource> GetIfExists(string transformName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(transformName, nameof(transformName));
+
+            using var scope = _mediaTransformTransformsClientDiagnostics.CreateScope("MediaTransformCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _mediaTransformTransformsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, transformName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<MediaTransformResource>(response.GetRawResponse());
+                return Response.FromValue(new MediaTransformResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<MediaTransformResource> IEnumerable<MediaTransformResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

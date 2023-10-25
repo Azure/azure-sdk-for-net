@@ -5,32 +5,26 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
-using Azure.Storage.DataMovement;
 
 namespace Azure.Storage.DataMovement.Blobs
 {
     /// <summary>
     /// The AppendBlobStorageResource class.
     /// </summary>
-    public class AppendBlobStorageResource : StorageResourceItem
+    internal class AppendBlobStorageResource : StorageResourceItemInternal
     {
         internal AppendBlobClient BlobClient { get; set; }
         internal AppendBlobStorageResourceOptions _options;
         internal long? _length;
         internal ETag? _etagDownloadLock = default;
 
-        /// <summary>
-        /// The identifier for the type of storage resource.
-        /// </summary>
         protected override string ResourceId => "AppendBlob";
 
-        /// <summary>
-        /// Gets the Uri of the Storage Resource
-        /// </summary>
         public override Uri Uri => BlobClient.Uri;
+
+        public override string ProviderId => "blob";
 
         /// <summary>
         /// Defines the recommended Transfer Type for the storage resource.
@@ -287,6 +281,22 @@ namespace Azure.Storage.DataMovement.Blobs
         protected override async Task<bool> DeleteIfExistsAsync(CancellationToken cancellationToken = default)
         {
             return await BlobClient.DeleteIfExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+        }
+
+        protected override StorageResourceCheckpointData GetSourceCheckpointData()
+        {
+            return new BlobSourceCheckpointData(BlobType.Append);
+        }
+
+        protected override StorageResourceCheckpointData GetDestinationCheckpointData()
+        {
+            return new BlobDestinationCheckpointData(
+                BlobType.Append,
+                _options?.HttpHeaders,
+                _options?.AccessTier,
+                _options?.Metadata,
+                _options?.Tags,
+                default); // TODO: Update when we support encryption scopes
         }
 
         private void GrabEtag(Response response)

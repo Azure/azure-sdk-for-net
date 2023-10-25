@@ -88,8 +88,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties">
         /// The service resource properties.
-        /// Please note <see cref="ManagedServiceProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="StatefulServiceProperties"/> and <see cref="StatelessServiceProperties"/>.
+        /// Please note <see cref="Models.ManagedServiceProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.StatefulServiceProperties"/> and <see cref="Models.StatelessServiceProperties"/>.
         /// </param>
         /// <returns> A new <see cref="ServiceFabricManagedClusters.ServiceFabricManagedServiceData"/> instance for mocking. </returns>
         public static ServiceFabricManagedServiceData ServiceFabricManagedServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceProperties properties = null)

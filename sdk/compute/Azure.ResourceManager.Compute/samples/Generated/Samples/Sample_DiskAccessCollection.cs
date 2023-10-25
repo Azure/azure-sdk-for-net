@@ -118,6 +118,48 @@ namespace Azure.ResourceManager.Compute.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
+        // Get information about a disk access resource with private endpoints.
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_GetInformationAboutADiskAccessResourceWithPrivateEndpoints()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2023-04-02/examples/diskAccessExamples/DiskAccess_Get_WithPrivateEndpoints.json
+            // this example is just showing the usage of "DiskAccesses_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this DiskAccessResource
+            DiskAccessCollection collection = resourceGroupResource.GetDiskAccesses();
+
+            // invoke the operation
+            string diskAccessName = "myDiskAccess";
+            NullableResponse<DiskAccessResource> response = await collection.GetIfExistsAsync(diskAccessName);
+            DiskAccessResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                DiskAccessData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
         // Get information about a disk access resource.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
@@ -180,6 +222,48 @@ namespace Azure.ResourceManager.Compute.Samples
             bool result = await collection.ExistsAsync(diskAccessName);
 
             Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // Get information about a disk access resource.
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_GetInformationAboutADiskAccessResource()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2023-04-02/examples/diskAccessExamples/DiskAccess_Get.json
+            // this example is just showing the usage of "DiskAccesses_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this DiskAccessResource
+            DiskAccessCollection collection = resourceGroupResource.GetDiskAccesses();
+
+            // invoke the operation
+            string diskAccessName = "myDiskAccess";
+            NullableResponse<DiskAccessResource> response = await collection.GetIfExistsAsync(diskAccessName);
+            DiskAccessResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                DiskAccessData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
 
         // List all disk access resources in a resource group.

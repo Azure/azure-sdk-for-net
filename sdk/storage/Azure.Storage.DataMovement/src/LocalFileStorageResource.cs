@@ -12,19 +12,15 @@ namespace Azure.Storage.DataMovement
     /// <summary>
     /// Local File Storage Resource
     /// </summary>
-    public class LocalFileStorageResource : StorageResourceItem
+    internal class LocalFileStorageResource : StorageResourceItem
     {
         private Uri _uri;
 
-        /// <summary>
-        /// The identifier for the type of storage resource.
-        /// </summary>
         protected internal override string ResourceId => "LocalFile";
 
-        /// <summary>
-        /// Gets the Uri of the resource.
-        /// </summary>
         public override Uri Uri => _uri;
+
+        public override string ProviderId => "local";
 
         /// <summary>
         /// Defines the recommended Transfer Type of the resource
@@ -61,11 +57,12 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Intenral Constructor for uri
+        /// Internal Constructor for uri
         /// </summary>
         /// <param name="uri"></param>
         internal LocalFileStorageResource(Uri uri)
         {
+            Argument.AssertNotNull(uri, nameof(uri));
             Argument.AssertNotNullOrWhiteSpace(uri.AbsoluteUri, nameof(uri));
             _uri = uri;
         }
@@ -277,6 +274,16 @@ namespace Azure.Storage.DataMovement
                 return Task.FromResult(true);
             }
             return Task.FromResult(false);
+        }
+
+        protected internal override StorageResourceCheckpointData GetSourceCheckpointData()
+        {
+            return new LocalSourceCheckpointData();
+        }
+
+        protected internal override StorageResourceCheckpointData GetDestinationCheckpointData()
+        {
+            return new LocalDestinationCheckpointData();
         }
     }
 }

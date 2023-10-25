@@ -604,8 +604,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
         /// Properties of the certificate resource payload.
-        /// Please note <see cref="AppPlatformCertificateProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AppPlatformContentCertificateProperties"/> and <see cref="AppPlatformKeyVaultCertificateProperties"/>.
+        /// Please note <see cref="Models.AppPlatformCertificateProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Models.AppPlatformContentCertificateProperties"/> and <see cref="Models.AppPlatformKeyVaultCertificateProperties"/>.
         /// </param>
         /// <returns> A new <see cref="AppPlatform.AppPlatformCertificateData"/> instance for mocking. </returns>
         public static AppPlatformCertificateData AppPlatformCertificateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppPlatformCertificateProperties properties = null)

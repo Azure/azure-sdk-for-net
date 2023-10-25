@@ -265,5 +265,79 @@ namespace Azure.ResourceManager.SelfHelp
                 throw;
             }
         }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Help/diagnostics/{diagnosticsResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Diagnostics_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="diagnosticsResourceName"> Unique resource name for insight resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsResourceName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SelfHelpDiagnosticResource>> GetIfExistsAsync(string diagnosticsResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(diagnosticsResourceName, nameof(diagnosticsResourceName));
+
+            using var scope = _selfHelpDiagnosticDiagnosticsClientDiagnostics.CreateScope("SelfHelpDiagnosticCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _selfHelpDiagnosticDiagnosticsRestClient.GetAsync(Id, diagnosticsResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SelfHelpDiagnosticResource>(response.GetRawResponse());
+                return Response.FromValue(new SelfHelpDiagnosticResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Help/diagnostics/{diagnosticsResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Diagnostics_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="diagnosticsResourceName"> Unique resource name for insight resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsResourceName"/> is null. </exception>
+        public virtual NullableResponse<SelfHelpDiagnosticResource> GetIfExists(string diagnosticsResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(diagnosticsResourceName, nameof(diagnosticsResourceName));
+
+            using var scope = _selfHelpDiagnosticDiagnosticsClientDiagnostics.CreateScope("SelfHelpDiagnosticCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _selfHelpDiagnosticDiagnosticsRestClient.Get(Id, diagnosticsResourceName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SelfHelpDiagnosticResource>(response.GetRawResponse());
+                return Response.FromValue(new SelfHelpDiagnosticResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

@@ -330,6 +330,82 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Servers_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="expand"> The child resources to include in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SqlServerResource>> GetIfExistsAsync(string serverName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+
+            using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServerCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _sqlServerServersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, serverName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SqlServerResource>(response.GetRawResponse());
+                return Response.FromValue(new SqlServerResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Servers_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="expand"> The child resources to include in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
+        public virtual NullableResponse<SqlServerResource> GetIfExists(string serverName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+
+            using var scope = _sqlServerServersClientDiagnostics.CreateScope("SqlServerCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _sqlServerServersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, serverName, expand, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SqlServerResource>(response.GetRawResponse());
+                return Response.FromValue(new SqlServerResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<SqlServerResource> IEnumerable<SqlServerResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

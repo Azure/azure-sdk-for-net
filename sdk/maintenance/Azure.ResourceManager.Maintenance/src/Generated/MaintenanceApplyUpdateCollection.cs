@@ -312,5 +312,91 @@ namespace Azure.ResourceManager.Maintenance
                 throw;
             }
         }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/applyUpdates/{applyUpdateName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplyUpdates_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="providerName"> Resource provider name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="resourceName"> Resource identifier. </param>
+        /// <param name="applyUpdateName"> applyUpdate Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="applyUpdateName"/> is null. </exception>
+        public virtual async Task<NullableResponse<MaintenanceApplyUpdateResource>> GetIfExistsAsync(string providerName, string resourceType, string resourceName, string applyUpdateName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(applyUpdateName, nameof(applyUpdateName));
+
+            using var scope = _maintenanceApplyUpdateApplyUpdatesClientDiagnostics.CreateScope("MaintenanceApplyUpdateCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _maintenanceApplyUpdateApplyUpdatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceType, resourceName, applyUpdateName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<MaintenanceApplyUpdateResource>(response.GetRawResponse());
+                return Response.FromValue(new MaintenanceApplyUpdateResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/applyUpdates/{applyUpdateName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplyUpdates_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="providerName"> Resource provider name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="resourceName"> Resource identifier. </param>
+        /// <param name="applyUpdateName"> applyUpdate Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="applyUpdateName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="applyUpdateName"/> is null. </exception>
+        public virtual NullableResponse<MaintenanceApplyUpdateResource> GetIfExists(string providerName, string resourceType, string resourceName, string applyUpdateName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
+            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(applyUpdateName, nameof(applyUpdateName));
+
+            using var scope = _maintenanceApplyUpdateApplyUpdatesClientDiagnostics.CreateScope("MaintenanceApplyUpdateCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _maintenanceApplyUpdateApplyUpdatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, providerName, resourceType, resourceName, applyUpdateName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<MaintenanceApplyUpdateResource>(response.GetRawResponse());
+                return Response.FromValue(new MaintenanceApplyUpdateResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

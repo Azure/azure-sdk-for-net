@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/flowLogs/{flowLogName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FlowLogs_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="flowLogName"> The name of the flow log resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="flowLogName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="flowLogName"/> is null. </exception>
+        public virtual async Task<NullableResponse<FlowLogResource>> GetIfExistsAsync(string flowLogName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(flowLogName, nameof(flowLogName));
+
+            using var scope = _flowLogClientDiagnostics.CreateScope("FlowLogCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _flowLogRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, flowLogName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<FlowLogResource>(response.GetRawResponse());
+                return Response.FromValue(new FlowLogResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/flowLogs/{flowLogName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FlowLogs_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="flowLogName"> The name of the flow log resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="flowLogName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="flowLogName"/> is null. </exception>
+        public virtual NullableResponse<FlowLogResource> GetIfExists(string flowLogName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(flowLogName, nameof(flowLogName));
+
+            using var scope = _flowLogClientDiagnostics.CreateScope("FlowLogCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _flowLogRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, flowLogName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<FlowLogResource>(response.GetRawResponse());
+                return Response.FromValue(new FlowLogResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<FlowLogResource> IEnumerable<FlowLogResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

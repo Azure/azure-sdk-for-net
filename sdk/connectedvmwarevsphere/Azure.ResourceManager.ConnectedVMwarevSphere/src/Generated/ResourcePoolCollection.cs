@@ -324,6 +324,80 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/resourcePools/{resourcePoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourcePools_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourcePoolName"> Name of the resourcePool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourcePoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourcePoolName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ResourcePoolResource>> GetIfExistsAsync(string resourcePoolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourcePoolName, nameof(resourcePoolName));
+
+            using var scope = _resourcePoolClientDiagnostics.CreateScope("ResourcePoolCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _resourcePoolRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourcePoolName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ResourcePoolResource>(response.GetRawResponse());
+                return Response.FromValue(new ResourcePoolResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/resourcePools/{resourcePoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourcePools_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourcePoolName"> Name of the resourcePool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourcePoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourcePoolName"/> is null. </exception>
+        public virtual NullableResponse<ResourcePoolResource> GetIfExists(string resourcePoolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourcePoolName, nameof(resourcePoolName));
+
+            using var scope = _resourcePoolClientDiagnostics.CreateScope("ResourcePoolCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _resourcePoolRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourcePoolName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ResourcePoolResource>(response.GetRawResponse());
+                return Response.FromValue(new ResourcePoolResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<ResourcePoolResource> IEnumerable<ResourcePoolResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

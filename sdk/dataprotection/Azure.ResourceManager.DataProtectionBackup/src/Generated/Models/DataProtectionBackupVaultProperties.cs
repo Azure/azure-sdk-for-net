@@ -34,7 +34,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="storageSettings"> Storage Settings. </param>
         /// <param name="isVaultProtectedByResourceGuard"> Is vault protected by resource guard. </param>
         /// <param name="featureSettings"> Feature Settings. </param>
-        internal DataProtectionBackupVaultProperties(MonitoringSettings monitoringSettings, DataProtectionBackupProvisioningState? provisioningState, BackupVaultResourceMoveState? resourceMoveState, BackupVaultResourceMoveDetails resourceMoveDetails, BackupVaultSecuritySettings securitySettings, IList<DataProtectionBackupStorageSetting> storageSettings, bool? isVaultProtectedByResourceGuard, FeatureSettings featureSettings)
+        /// <param name="secureScore"> Secure Score of Backup Vault. </param>
+        internal DataProtectionBackupVaultProperties(MonitoringSettings monitoringSettings, DataProtectionBackupProvisioningState? provisioningState, BackupVaultResourceMoveState? resourceMoveState, BackupVaultResourceMoveDetails resourceMoveDetails, BackupVaultSecuritySettings securitySettings, IList<DataProtectionBackupStorageSetting> storageSettings, bool? isVaultProtectedByResourceGuard, BackupVaultFeatureSettings featureSettings, BackupVaultSecureScoreLevel? secureScore)
         {
             MonitoringSettings = monitoringSettings;
             ProvisioningState = provisioningState;
@@ -44,6 +45,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             StorageSettings = storageSettings;
             IsVaultProtectedByResourceGuard = isVaultProtectedByResourceGuard;
             FeatureSettings = featureSettings;
+            SecureScore = secureScore;
         }
 
         /// <summary> Monitoring Settings. </summary>
@@ -71,17 +73,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <summary> Storage Settings. </summary>
         public IList<DataProtectionBackupStorageSetting> StorageSettings { get; }
         /// <summary> Feature Settings. </summary>
-        internal FeatureSettings FeatureSettings { get; set; }
-        /// <summary> CrossSubscriptionRestore state. </summary>
-        public DataProtectionBackupCrossSubscriptionRestoreState? CrossSubscriptionRestoreState
-        {
-            get => FeatureSettings is null ? default : FeatureSettings.CrossSubscriptionRestoreState;
-            set
-            {
-                if (FeatureSettings is null)
-                    FeatureSettings = new FeatureSettings();
-                FeatureSettings.CrossSubscriptionRestoreState = value;
-            }
-        }
+        public BackupVaultFeatureSettings FeatureSettings { get; set; }
+        /// <summary> Secure Score of Backup Vault. </summary>
+        public BackupVaultSecureScoreLevel? SecureScore { get; }
     }
 }

@@ -325,6 +325,80 @@ namespace Azure.ResourceManager.LabServices
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labPlans/{labPlanName}/images/{imageName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Images_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="imageName"> The image name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
+        public virtual async Task<NullableResponse<LabVirtualMachineImageResource>> GetIfExistsAsync(string imageName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
+
+            using var scope = _labVirtualMachineImageImagesClientDiagnostics.CreateScope("LabVirtualMachineImageCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _labVirtualMachineImageImagesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<LabVirtualMachineImageResource>(response.GetRawResponse());
+                return Response.FromValue(new LabVirtualMachineImageResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labPlans/{labPlanName}/images/{imageName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Images_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="imageName"> The image name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="imageName"/> is null. </exception>
+        public virtual NullableResponse<LabVirtualMachineImageResource> GetIfExists(string imageName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(imageName, nameof(imageName));
+
+            using var scope = _labVirtualMachineImageImagesClientDiagnostics.CreateScope("LabVirtualMachineImageCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _labVirtualMachineImageImagesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, imageName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<LabVirtualMachineImageResource>(response.GetRawResponse());
+                return Response.FromValue(new LabVirtualMachineImageResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<LabVirtualMachineImageResource> IEnumerable<LabVirtualMachineImageResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
