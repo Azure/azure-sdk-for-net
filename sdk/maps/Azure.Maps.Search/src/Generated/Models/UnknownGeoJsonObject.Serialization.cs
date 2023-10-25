@@ -6,20 +6,11 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
-    internal partial class UnknownGeoJsonObject : IUtf8JsonSerializable
+    internal partial class UnknownGeoJsonObject
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToSerialString());
-            writer.WriteEndObject();
-        }
-
         internal static UnknownGeoJsonObject DeserializeUnknownGeoJsonObject(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)

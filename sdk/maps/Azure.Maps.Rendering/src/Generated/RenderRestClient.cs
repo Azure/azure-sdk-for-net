@@ -116,13 +116,12 @@ namespace Azure.Maps.Rendering
 
             using var message = CreateGetMapTileRequest(tilesetId, tileIndex, timeStamp, tileSize, language, localizedMapView);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new RenderGetMapTileHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
                     {
                         var value = message.ExtractResponseContent();
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -164,13 +163,12 @@ namespace Azure.Maps.Rendering
 
             using var message = CreateGetMapTileRequest(tilesetId, tileIndex, timeStamp, tileSize, language, localizedMapView);
             _pipeline.Send(message, cancellationToken);
-            var headers = new RenderGetMapTileHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
                     {
                         var value = message.ExtractResponseContent();
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -380,13 +378,12 @@ namespace Azure.Maps.Rendering
 
             using var message = CreateGetMapStateTileRequest(statesetId, tileIndex);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new RenderGetMapStateTileHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
                     {
                         var value = message.ExtractResponseContent();
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -415,13 +412,12 @@ namespace Azure.Maps.Rendering
 
             using var message = CreateGetMapStateTileRequest(statesetId, tileIndex);
             _pipeline.Send(message, cancellationToken);
-            var headers = new RenderGetMapStateTileHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
                     {
                         var value = message.ExtractResponseContent();
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -850,13 +846,12 @@ namespace Azure.Maps.Rendering
         {
             using var message = CreateGetMapStaticImageRequest(format, layer, style, zoom, center, boundingBoxPrivate, height, width, language, localizedMapView, pins, path);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new RenderGetMapStaticImageHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
                     {
                         var value = message.ExtractResponseContent();
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -1137,20 +1132,19 @@ namespace Azure.Maps.Rendering
         {
             using var message = CreateGetMapStaticImageRequest(format, layer, style, zoom, center, boundingBoxPrivate, height, width, language, localizedMapView, pins, path);
             _pipeline.Send(message, cancellationToken);
-            var headers = new RenderGetMapStaticImageHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
                     {
                         var value = message.ExtractResponseContent();
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateGetCopyrightFromBoundingBoxRequest(ResponseFormat format, BoundingBox boundingBox, IncludeText? includeText)
+        internal HttpMessage CreateGetCopyrightFromBoundingBoxRequest(BoundingBox boundingBox, ResponseFormat format, IncludeText? includeText)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1160,11 +1154,11 @@ namespace Azure.Maps.Rendering
             uri.AppendPath("/map/copyright/bounding/", false);
             uri.AppendPath(format.ToString(), true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (boundingBox?.SouthWest != null && Optional.IsCollectionDefined(boundingBox?.SouthWest))
+            if (boundingBox.SouthWest != null && Optional.IsCollectionDefined(boundingBox.SouthWest))
             {
                 uri.AppendQueryDelimited("mincoordinates", boundingBox.SouthWest, ",", true);
             }
-            if (boundingBox?.NorthEast != null && Optional.IsCollectionDefined(boundingBox?.NorthEast))
+            if (boundingBox.NorthEast != null && Optional.IsCollectionDefined(boundingBox.NorthEast))
             {
                 uri.AppendQueryDelimited("maxcoordinates", boundingBox.NorthEast, ",", true);
             }
@@ -1186,19 +1180,19 @@ namespace Azure.Maps.Rendering
         ///
         /// Returns copyright information for a given bounding box. Bounding-box requests should specify the minimum and maximum longitude and latitude (EPSG-3857) coordinates
         /// </summary>
-        /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
         /// <param name="boundingBox"> Parameter group. </param>
+        /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
         /// <param name="includeText"> Yes/no value to exclude textual data from response. Only images and country/region names will be in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="boundingBox"/> is null. </exception>
-        public async Task<Response<RenderCopyright>> GetCopyrightFromBoundingBoxAsync(ResponseFormat format, BoundingBox boundingBox, IncludeText? includeText = null, CancellationToken cancellationToken = default)
+        public async Task<Response<RenderCopyright>> GetCopyrightFromBoundingBoxAsync(BoundingBox boundingBox, ResponseFormat format, IncludeText? includeText = null, CancellationToken cancellationToken = default)
         {
             if (boundingBox == null)
             {
                 throw new ArgumentNullException(nameof(boundingBox));
             }
 
-            using var message = CreateGetCopyrightFromBoundingBoxRequest(format, boundingBox, includeText);
+            using var message = CreateGetCopyrightFromBoundingBoxRequest(boundingBox, format, includeText);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1219,19 +1213,19 @@ namespace Azure.Maps.Rendering
         ///
         /// Returns copyright information for a given bounding box. Bounding-box requests should specify the minimum and maximum longitude and latitude (EPSG-3857) coordinates
         /// </summary>
-        /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
         /// <param name="boundingBox"> Parameter group. </param>
+        /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
         /// <param name="includeText"> Yes/no value to exclude textual data from response. Only images and country/region names will be in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="boundingBox"/> is null. </exception>
-        public Response<RenderCopyright> GetCopyrightFromBoundingBox(ResponseFormat format, BoundingBox boundingBox, IncludeText? includeText = null, CancellationToken cancellationToken = default)
+        public Response<RenderCopyright> GetCopyrightFromBoundingBox(BoundingBox boundingBox, ResponseFormat format, IncludeText? includeText = null, CancellationToken cancellationToken = default)
         {
             if (boundingBox == null)
             {
                 throw new ArgumentNullException(nameof(boundingBox));
             }
 
-            using var message = CreateGetCopyrightFromBoundingBoxRequest(format, boundingBox, includeText);
+            using var message = CreateGetCopyrightFromBoundingBoxRequest(boundingBox, format, includeText);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1247,7 +1241,7 @@ namespace Azure.Maps.Rendering
             }
         }
 
-        internal HttpMessage CreateGetCopyrightForTileRequest(ResponseFormat format, MapTileIndex tileIndex, IncludeText? includeText)
+        internal HttpMessage CreateGetCopyrightForTileRequest(MapTileIndex tileIndex, ResponseFormat format, IncludeText? includeText)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1279,19 +1273,19 @@ namespace Azure.Maps.Rendering
         /// Copyrights API is designed to serve copyright information for Render Tile  service. In addition to basic copyright for the whole map, API is serving  specific groups of copyrights for some countries/regions.
         /// Returns the copyright information for a given tile. To obtain the copyright information for a particular tile, the request should specify the tile's zoom level and x and y coordinates (see: Zoom Levels and Tile Grid).
         /// </summary>
-        /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
         /// <param name="tileIndex"> Parameter group. </param>
+        /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
         /// <param name="includeText"> Yes/no value to exclude textual data from response. Only images and country/region names will be in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tileIndex"/> is null. </exception>
-        public async Task<Response<RenderCopyright>> GetCopyrightForTileAsync(ResponseFormat format, MapTileIndex tileIndex, IncludeText? includeText = null, CancellationToken cancellationToken = default)
+        public async Task<Response<RenderCopyright>> GetCopyrightForTileAsync(MapTileIndex tileIndex, ResponseFormat format, IncludeText? includeText = null, CancellationToken cancellationToken = default)
         {
             if (tileIndex == null)
             {
                 throw new ArgumentNullException(nameof(tileIndex));
             }
 
-            using var message = CreateGetCopyrightForTileRequest(format, tileIndex, includeText);
+            using var message = CreateGetCopyrightForTileRequest(tileIndex, format, includeText);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1313,19 +1307,19 @@ namespace Azure.Maps.Rendering
         /// Copyrights API is designed to serve copyright information for Render Tile  service. In addition to basic copyright for the whole map, API is serving  specific groups of copyrights for some countries/regions.
         /// Returns the copyright information for a given tile. To obtain the copyright information for a particular tile, the request should specify the tile's zoom level and x and y coordinates (see: Zoom Levels and Tile Grid).
         /// </summary>
-        /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
         /// <param name="tileIndex"> Parameter group. </param>
+        /// <param name="format"> Desired format of the response. Value can be either _json_ or _xml_. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
         /// <param name="includeText"> Yes/no value to exclude textual data from response. Only images and country/region names will be in response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tileIndex"/> is null. </exception>
-        public Response<RenderCopyright> GetCopyrightForTile(ResponseFormat format, MapTileIndex tileIndex, IncludeText? includeText = null, CancellationToken cancellationToken = default)
+        public Response<RenderCopyright> GetCopyrightForTile(MapTileIndex tileIndex, ResponseFormat format, IncludeText? includeText = null, CancellationToken cancellationToken = default)
         {
             if (tileIndex == null)
             {
                 throw new ArgumentNullException(nameof(tileIndex));
             }
 
-            using var message = CreateGetCopyrightForTileRequest(format, tileIndex, includeText);
+            using var message = CreateGetCopyrightForTileRequest(tileIndex, format, includeText);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
