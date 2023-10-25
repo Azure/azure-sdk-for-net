@@ -24,7 +24,10 @@ namespace Azure.Monitor.Query.Tests
             return InstrumentClient(new MetricsQueryClient(
                 TestEnvironment.MetricsEndpoint,
                 TestEnvironment.Credential,
-                InstrumentClientOptions(new MetricsQueryClientOptions())
+                InstrumentClientOptions(new MetricsQueryClientOptions()
+                {
+                    Audience = TestEnvironment.GetAudience()
+                })
             ));
         }
 
