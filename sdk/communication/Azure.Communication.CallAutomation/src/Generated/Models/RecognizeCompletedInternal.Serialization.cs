@@ -105,7 +105,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new RecognizeCompletedInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value, recognitionType, collectTonesResult.Value, dtmfResult.Value, choiceResult.Value, speechResult.Value);
+            return new RecognizeCompletedInternal(recognitionType, collectTonesResult.Value, dtmfResult.Value, choiceResult.Value, speechResult.Value);
         }
     }
 }

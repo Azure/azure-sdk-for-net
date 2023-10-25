@@ -55,7 +55,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new ContinuousDtmfRecognitionToneFailed(callConnectionId.Value, serverCallId.Value, correlationId.Value, resultInformation.Value, operationContext.Value);
+            return new ContinuousDtmfRecognitionToneFailed();
         }
     }
 }

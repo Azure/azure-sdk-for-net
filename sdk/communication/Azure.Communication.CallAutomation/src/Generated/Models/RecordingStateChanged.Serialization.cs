@@ -66,7 +66,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new RecordingStateChanged(callConnectionId.Value, serverCallId.Value, correlationId.Value, recordingId.Value, state, Optional.ToNullable(startDateTime));
+            return new RecordingStateChanged(recordingId.Value, state, Optional.ToNullable(startDateTime));
         }
     }
 }

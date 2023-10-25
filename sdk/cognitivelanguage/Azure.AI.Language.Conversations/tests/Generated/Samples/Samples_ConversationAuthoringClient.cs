@@ -1610,7 +1610,7 @@ namespace Azure.AI.Language.Conversations.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetModelEvaluationResults("<projectName>", "<trainedModelLabel>"))
+            foreach (BinaryData item in client.GetModelEvaluationResults("<projectName>", "<trainedModelLabel>", "Utf16CodeUnit"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("text").ToString());
@@ -1634,7 +1634,7 @@ namespace Azure.AI.Language.Conversations.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
-            await foreach (BinaryData item in client.GetModelEvaluationResultsAsync("<projectName>", "<trainedModelLabel>"))
+            await foreach (BinaryData item in client.GetModelEvaluationResultsAsync("<projectName>", "<trainedModelLabel>", "Utf16CodeUnit"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("text").ToString());
@@ -1658,7 +1658,7 @@ namespace Azure.AI.Language.Conversations.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetModelEvaluationResults("<projectName>", "<trainedModelLabel>", stringIndexType: "Utf16CodeUnit"))
+            foreach (BinaryData item in client.GetModelEvaluationResults("<projectName>", "<trainedModelLabel>", "Utf16CodeUnit"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("text").ToString());
@@ -1682,7 +1682,7 @@ namespace Azure.AI.Language.Conversations.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
-            await foreach (BinaryData item in client.GetModelEvaluationResultsAsync("<projectName>", "<trainedModelLabel>", stringIndexType: "Utf16CodeUnit"))
+            await foreach (BinaryData item in client.GetModelEvaluationResultsAsync("<projectName>", "<trainedModelLabel>", "Utf16CodeUnit"))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("text").ToString());
@@ -2146,7 +2146,7 @@ namespace Azure.AI.Language.Conversations.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
-            Operation<BinaryData> operation = client.ExportProject(WaitUntil.Completed, "<projectName>");
+            Operation<BinaryData> operation = client.ExportProject(WaitUntil.Completed, "<projectName>", "Utf16CodeUnit");
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -2164,7 +2164,7 @@ namespace Azure.AI.Language.Conversations.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
-            Operation<BinaryData> operation = await client.ExportProjectAsync(WaitUntil.Completed, "<projectName>");
+            Operation<BinaryData> operation = await client.ExportProjectAsync(WaitUntil.Completed, "<projectName>", "Utf16CodeUnit");
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -2182,7 +2182,7 @@ namespace Azure.AI.Language.Conversations.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
-            Operation<BinaryData> operation = client.ExportProject(WaitUntil.Completed, "<projectName>", exportedProjectFormat: "Conversation", assetKind: "<assetKind>", stringIndexType: "Utf16CodeUnit", trainedModelLabel: "<trainedModelLabel>");
+            Operation<BinaryData> operation = client.ExportProject(WaitUntil.Completed, "<projectName>", "Utf16CodeUnit", exportedProjectFormat: "Conversation", assetKind: "<assetKind>", trainedModelLabel: "<trainedModelLabel>");
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
@@ -2218,7 +2218,7 @@ namespace Azure.AI.Language.Conversations.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);
 
-            Operation<BinaryData> operation = await client.ExportProjectAsync(WaitUntil.Completed, "<projectName>", exportedProjectFormat: "Conversation", assetKind: "<assetKind>", stringIndexType: "Utf16CodeUnit", trainedModelLabel: "<trainedModelLabel>");
+            Operation<BinaryData> operation = await client.ExportProjectAsync(WaitUntil.Completed, "<projectName>", "Utf16CodeUnit", exportedProjectFormat: "Conversation", assetKind: "<assetKind>", trainedModelLabel: "<trainedModelLabel>");
             BinaryData responseData = operation.Value;
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;

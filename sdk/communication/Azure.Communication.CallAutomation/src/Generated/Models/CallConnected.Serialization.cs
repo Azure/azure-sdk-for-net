@@ -45,7 +45,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new CallConnected(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value);
+            return new CallConnected();
         }
     }
 }

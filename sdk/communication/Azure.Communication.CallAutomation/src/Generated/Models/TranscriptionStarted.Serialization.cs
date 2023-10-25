@@ -65,7 +65,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new TranscriptionStarted(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value, transcriptionUpdateResult.Value);
+            return new TranscriptionStarted(transcriptionUpdateResult.Value);
         }
     }
 }

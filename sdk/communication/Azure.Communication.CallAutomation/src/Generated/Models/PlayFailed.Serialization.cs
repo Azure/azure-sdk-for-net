@@ -55,7 +55,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new PlayFailed(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value);
+            return new PlayFailed();
         }
     }
 }

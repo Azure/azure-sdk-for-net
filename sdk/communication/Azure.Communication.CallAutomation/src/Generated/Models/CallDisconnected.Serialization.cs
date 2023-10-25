@@ -45,7 +45,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new CallDisconnected(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value);
+            return new CallDisconnected();
         }
     }
 }
