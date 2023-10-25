@@ -651,9 +651,9 @@ namespace Azure.Communication.CallAutomation
     }
     public partial class MuteParticipantOptions
     {
-        public MuteParticipantOptions(Azure.Communication.CommunicationIdentifier targetParticipants) { }
+        public MuteParticipantOptions(Azure.Communication.CommunicationIdentifier targetParticipant) { }
         public string OperationContext { get { throw null; } set { } }
-        public Azure.Communication.CommunicationIdentifier TargetParticipants { get { throw null; } }
+        public Azure.Communication.CommunicationIdentifier TargetParticipant { get { throw null; } }
     }
     public partial class MuteParticipantResult
     {

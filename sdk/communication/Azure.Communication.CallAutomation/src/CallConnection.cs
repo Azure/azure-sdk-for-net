@@ -664,7 +664,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                MuteParticipantRequestInternal request = new(new List<CommunicationIdentifierModel>() { CommunicationIdentifierSerializer.Serialize(options.TargetParticipants) })
+                MuteParticipantRequestInternal request = new(new List<CommunicationIdentifierModel>() { CommunicationIdentifierSerializer.Serialize(options.TargetParticipant) })
                 {
                     OperationContext = options.OperationContext
                 };
@@ -727,7 +727,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                MuteParticipantRequestInternal request = new(new List<CommunicationIdentifierModel>() { CommunicationIdentifierSerializer.Serialize(options.TargetParticipants) })
+                MuteParticipantRequestInternal request = new(new List<CommunicationIdentifierModel>() { CommunicationIdentifierSerializer.Serialize(options.TargetParticipant) })
                 {
                     OperationContext = options.OperationContext
                 };

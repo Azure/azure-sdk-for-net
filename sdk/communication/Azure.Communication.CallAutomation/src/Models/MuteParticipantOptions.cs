@@ -14,9 +14,9 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Creates a new MuteParticipantOptions object.
         /// </summary>
-        public MuteParticipantOptions(CommunicationIdentifier targetParticipants)
+        public MuteParticipantOptions(CommunicationIdentifier targetParticipant)
         {
-            TargetParticipants = targetParticipants;
+            TargetParticipant = targetParticipant;
         }
 
         /// <summary>
@@ -24,7 +24,7 @@ namespace Azure.Communication.CallAutomation
         /// Only one participant is currently supported.
         /// Only ACS Users are currently supported.
         /// </summary>
-        public CommunicationIdentifier TargetParticipants { get; }
+        public CommunicationIdentifier TargetParticipant { get; }
 
         /// <summary>
         /// The operation context.
