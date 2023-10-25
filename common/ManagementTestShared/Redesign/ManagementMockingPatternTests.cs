@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.TestFramework
             var parameters = method.GetParameters();
             var extendedType = parameters[0].ParameterType;
 
-            var mockingExtensionTypeName = GetMockingExtensionTypeName(rpNamespace, rpName, extendedType);
+            var mockingExtensionTypeName = GetMockableResourceTypeName(rpNamespace, rpName, extendedType.Name);
 
             var mockingExtensionType = assembly.GetType(mockingExtensionTypeName);
             Assert.IsNotNull(mockingExtensionType, $"The mocking extension class {mockingExtensionTypeName} must exist");
@@ -126,17 +126,8 @@ namespace Azure.ResourceManager.TestFramework
 
         private const string ResourceSuffix = "Resource";
 
-        private static string GetMockingExtensionTypeName(string rpNamespace, string rpName, Type extendedType)
-        {
-            var extendedResourceName = extendedType.Name;
-            // trim resource suffix
-            if (extendedResourceName.EndsWith(ResourceSuffix))
-            {
-                extendedResourceName = extendedResourceName.Substring(0, extendedResourceName.Length - ResourceSuffix.Length);
-            }
-
-            return $"{rpNamespace}.Mocking.{rpName}{extendedResourceName}MockingExtension";
-        }
+        private static string GetMockableResourceTypeName(string rpNamespace, string rpName, string extendedResourceName)
+            => $"{rpNamespace}.Mocking.Mockable{rpName}{extendedResourceName}";
 
         private static void ValidateMocking(Type extendedType, Type mockingExtensionType, MethodInfo extensionMethod, MethodInfo methodOnExtension)
         {
