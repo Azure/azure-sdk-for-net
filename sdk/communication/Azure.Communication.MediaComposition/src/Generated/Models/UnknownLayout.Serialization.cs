@@ -11,31 +11,8 @@ using Azure.Core;
 
 namespace Azure.Communication.MediaComposition
 {
-    internal partial class UnknownLayout : IUtf8JsonSerializable
+    internal partial class UnknownLayout
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
-            if (Optional.IsDefined(Resolution))
-            {
-                writer.WritePropertyName("resolution"u8);
-                writer.WriteObjectValue(Resolution);
-            }
-            if (Optional.IsDefined(PlaceholderImageUri))
-            {
-                writer.WritePropertyName("placeholderImageUri"u8);
-                writer.WriteStringValue(PlaceholderImageUri);
-            }
-            if (Optional.IsDefined(ScalingMode))
-            {
-                writer.WritePropertyName("scalingMode"u8);
-                writer.WriteStringValue(ScalingMode.Value.ToString());
-            }
-            writer.WriteEndObject();
-        }
-
         internal static UnknownLayout DeserializeUnknownLayout(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)

@@ -10,21 +10,8 @@ using Azure.Core;
 
 namespace Azure.Communication.MediaComposition
 {
-    internal partial class UnknownMediaInput : IUtf8JsonSerializable
+    internal partial class UnknownMediaInput
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
-            if (Optional.IsDefined(PlaceholderImageUri))
-            {
-                writer.WritePropertyName("placeholderImageUri"u8);
-                writer.WriteStringValue(PlaceholderImageUri);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static UnknownMediaInput DeserializeUnknownMediaInput(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)

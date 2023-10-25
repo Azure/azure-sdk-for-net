@@ -11,41 +11,8 @@ using Azure.Core;
 
 namespace Azure.Communication.MediaComposition
 {
-    internal partial class UnknownInputGroup : IUtf8JsonSerializable
+    internal partial class UnknownInputGroup
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
-            if (Optional.IsDefined(Position))
-            {
-                writer.WritePropertyName("position"u8);
-                writer.WriteObjectValue(Position);
-            }
-            if (Optional.IsDefined(Width))
-            {
-                writer.WritePropertyName("width"u8);
-                writer.WriteStringValue(Width);
-            }
-            if (Optional.IsDefined(Height))
-            {
-                writer.WritePropertyName("height"u8);
-                writer.WriteStringValue(Height);
-            }
-            if (Optional.IsDefined(Layer))
-            {
-                writer.WritePropertyName("layer"u8);
-                writer.WriteStringValue(Layer);
-            }
-            if (Optional.IsDefined(ScalingMode))
-            {
-                writer.WritePropertyName("scalingMode"u8);
-                writer.WriteStringValue(ScalingMode.Value.ToString());
-            }
-            writer.WriteEndObject();
-        }
-
         internal static UnknownInputGroup DeserializeUnknownInputGroup(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
