@@ -5,11 +5,9 @@
 
 #nullable disable
 
-using Azure.Messaging.EventGrid.SystemEvents;
-
-namespace Azure.Messaging.EventGrid.Models
+namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> The UnknownMediaJobOutput. </summary>
+    /// <summary> Unknown version of MediaJobOutput. </summary>
     internal partial class UnknownMediaJobOutput : MediaJobOutput
     {
         /// <summary> Initializes a new instance of UnknownMediaJobOutput. </summary>

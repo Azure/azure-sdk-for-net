@@ -232,6 +232,9 @@ namespace Azure.Developer.DevCenter.Samples
             Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("location").ToString());
             Console.WriteLine(result.GetProperty("osType").ToString());
             Console.WriteLine(result.GetProperty("user").ToString());
@@ -270,6 +273,9 @@ namespace Azure.Developer.DevCenter.Samples
             Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("location").ToString());
             Console.WriteLine(result.GetProperty("osType").ToString());
             Console.WriteLine(result.GetProperty("user").ToString());
@@ -756,6 +762,9 @@ namespace Azure.Developer.DevCenter.Samples
                 Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
                 Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
                 Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
                 Console.WriteLine(result.GetProperty("location").ToString());
                 Console.WriteLine(result.GetProperty("osType").ToString());
                 Console.WriteLine(result.GetProperty("user").ToString());
@@ -795,6 +804,9 @@ namespace Azure.Developer.DevCenter.Samples
                 Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
                 Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
                 Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
                 Console.WriteLine(result.GetProperty("location").ToString());
                 Console.WriteLine(result.GetProperty("osType").ToString());
                 Console.WriteLine(result.GetProperty("user").ToString());
@@ -864,6 +876,9 @@ namespace Azure.Developer.DevCenter.Samples
                 Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
                 Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
                 Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
                 Console.WriteLine(result.GetProperty("location").ToString());
                 Console.WriteLine(result.GetProperty("osType").ToString());
                 Console.WriteLine(result.GetProperty("user").ToString());
@@ -903,6 +918,9 @@ namespace Azure.Developer.DevCenter.Samples
                 Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
                 Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
                 Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
                 Console.WriteLine(result.GetProperty("location").ToString());
                 Console.WriteLine(result.GetProperty("osType").ToString());
                 Console.WriteLine(result.GetProperty("user").ToString());
@@ -972,6 +990,9 @@ namespace Azure.Developer.DevCenter.Samples
                 Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
                 Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
                 Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
                 Console.WriteLine(result.GetProperty("location").ToString());
                 Console.WriteLine(result.GetProperty("osType").ToString());
                 Console.WriteLine(result.GetProperty("user").ToString());
@@ -1011,6 +1032,9 @@ namespace Azure.Developer.DevCenter.Samples
                 Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
                 Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
                 Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
                 Console.WriteLine(result.GetProperty("location").ToString());
                 Console.WriteLine(result.GetProperty("osType").ToString());
                 Console.WriteLine(result.GetProperty("user").ToString());
@@ -1153,6 +1177,9 @@ namespace Azure.Developer.DevCenter.Samples
                 Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
                 Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
                 Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
             }
         }
 
@@ -1177,6 +1204,9 @@ namespace Azure.Developer.DevCenter.Samples
                 Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
                 Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
                 Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
             }
         }
 
@@ -1246,6 +1276,9 @@ namespace Azure.Developer.DevCenter.Samples
             Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("location").ToString());
             Console.WriteLine(result.GetProperty("osType").ToString());
             Console.WriteLine(result.GetProperty("user").ToString());
@@ -1290,6 +1323,9 @@ namespace Azure.Developer.DevCenter.Samples
             Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
             Console.WriteLine(result.GetProperty("location").ToString());
             Console.WriteLine(result.GetProperty("osType").ToString());
             Console.WriteLine(result.GetProperty("user").ToString());

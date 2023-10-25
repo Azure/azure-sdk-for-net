@@ -2745,11 +2745,11 @@ namespace Azure.IoT.DeviceUpdate
             uri.AppendPath("/deviceUpdate/", false);
             uri.AppendPath(_instanceId, false);
             uri.AppendPath("/management/devices", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (filter != null)
             {
                 uri.AppendQuery("filter", filter, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -2840,11 +2840,11 @@ namespace Azure.IoT.DeviceUpdate
             uri.AppendPath("/deviceUpdate/", false);
             uri.AppendPath(_instanceId, false);
             uri.AppendPath("/management/groups", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (orderBy != null)
             {
                 uri.AppendQuery("orderby", orderBy, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -3043,11 +3043,11 @@ namespace Azure.IoT.DeviceUpdate
             uri.AppendPath("/management/groups/", false);
             uri.AppendPath(groupId, true);
             uri.AppendPath("/deviceClassSubgroups", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (filter != null)
             {
                 uri.AppendQuery("filter", filter, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -3290,11 +3290,11 @@ namespace Azure.IoT.DeviceUpdate
             uri.AppendPath("/deployments/", false);
             uri.AppendPath(deploymentId, true);
             uri.AppendPath("/devicestates", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (filter != null)
             {
                 uri.AppendQuery("filter", filter, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -3333,6 +3333,7 @@ namespace Azure.IoT.DeviceUpdate
             uri.AppendPath("/deviceUpdate/", false);
             uri.AppendPath(_instanceId, false);
             uri.AppendPath("/management/operations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (filter != null)
             {
                 uri.AppendQuery("filter", filter, true);
@@ -3341,7 +3342,6 @@ namespace Azure.IoT.DeviceUpdate
             {
                 uri.AppendQuery("top", top.Value, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -3432,8 +3432,8 @@ namespace Azure.IoT.DeviceUpdate
             uri.AppendPath("/deviceUpdate/", false);
             uri.AppendPath(_instanceId, false);
             uri.AppendPath("/management/deviceDiagnostics/deviceHealth", false);
-            uri.AppendQuery("filter", filter, true);
             uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("filter", filter, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

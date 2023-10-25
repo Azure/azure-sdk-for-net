@@ -1803,8 +1803,8 @@ namespace Azure.Developer.DevCenter
             uri.AppendPath("/actions/", false);
             uri.AppendPath(actionName, true);
             uri.AppendPath(":delay", false);
-            uri.AppendQuery("until", until, "O", true);
             uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("until", until, "O", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1824,8 +1824,8 @@ namespace Azure.Developer.DevCenter
             uri.AppendPath("/devboxes/", false);
             uri.AppendPath(devBoxName, true);
             uri.AppendPath("/actions:delay", false);
-            uri.AppendQuery("until", until, "O", true);
             uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("until", until, "O", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
