@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Core;
 using Azure.ResourceManager.Maintenance.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
@@ -45,7 +44,7 @@ namespace Azure.ResourceManager.Maintenance.Tests
         {
             string resourceName = Recording.GenerateAssetName("maintenance-config-");
 
-            DateTime startOn = DateTime.UtcNow.AddMinutes(12);
+            DateTimeOffset startOn = Recording.UtcNow.AddMinutes(12);
             MaintenanceConfigurationResource config = await CreateMaintenanceConfiguration(resourceName, startOn);
             Assert.IsNotEmpty(config.Data.Id);
 
@@ -58,16 +57,14 @@ namespace Azure.ResourceManager.Maintenance.Tests
             string applyUpdateName = $"{startOn:yyyyMMddHHmm00}";
 
             // wait 3 minutes
-            await Delay(3 * 60 * 1000);
+            await Delay(3 * 60 * 1000, playbackDelayMilliseconds: 0);
 
             // cancel the maintenance
-            Console.WriteLine($"starton = {startOn}");
             bool retry;
             do
             {
                 try
                 {
-                    Console.WriteLine($"[{DateTime.UtcNow}] Trying...");
                     retry = false;
                     ArmOperation<MaintenanceApplyUpdateResource> lro = await _configCollection.CreateOrUpdateAsync(WaitUntil.Completed, providerName, resourceType, resourceName, applyUpdateName, data);
                     MaintenanceApplyUpdateResource result = lro.Value;
@@ -79,7 +76,6 @@ namespace Azure.ResourceManager.Maintenance.Tests
                 {
                     if (ex.Status == 404)
                     {
-                        Console.WriteLine($"[{DateTime.UtcNow}] Got 404. Waiting...");
                         retry = true;
                         await Delay(30 * 1000);
                     }
@@ -96,7 +92,7 @@ namespace Azure.ResourceManager.Maintenance.Tests
             }
         }
 
-        private async Task<MaintenanceConfigurationResource> CreateMaintenanceConfiguration(string resourceName, DateTime startOn)
+        private async Task<MaintenanceConfigurationResource> CreateMaintenanceConfiguration(string resourceName, DateTimeOffset startOn)
         {
             MaintenanceConfigurationData data = new MaintenanceConfigurationData(Location)
             {
@@ -105,7 +101,7 @@ namespace Azure.ResourceManager.Maintenance.Tests
                 Visibility = MaintenanceConfigurationVisibility.Custom,
                 StartOn = startOn,
                 ExpireOn = DateTimeOffset.Parse("9999-12-31 00:00"),
-                Duration = TimeSpan.Parse("03:00"),
+                Duration = TimeSpan.Parse("02:00"),
                 TimeZone = "UTC",
                 RecurEvery = "Day",
                 InstallPatches = new MaintenancePatchConfiguration(MaintenanceRebootOption.Always,
