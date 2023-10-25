@@ -84,7 +84,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(CustomizableObservations);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(CustomizableObservations.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(CustomizableObservations))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsDefined(Frequency))
