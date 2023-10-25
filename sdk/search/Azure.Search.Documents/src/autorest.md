@@ -230,13 +230,31 @@ directive:
   transform: $["x-ms-client-name"] = "HnswAlgorithmConfiguration";
 ```
 
-### Rename `SearchIndex.SemanticSettings` to `SearchIndex.SemanticSearch`
+### Rename `SemanticSettings` to `SemanticSearch`
+
+```yaml
+directive:
+  - from: searchservice.json
+    where: $.definitions.SemanticSettings
+    transform: $["x-ms-client-name"] = "SemanticSearch";
+```
+
+### Rename `SearchIndex.semanticSettings` to `SearchIndex.SemanticSearch`
 
 ```yaml
 directive:
   - from: searchservice.json
     where: $.definitions.SearchIndex.properties.semantic
     transform: $["x-ms-client-name"] = "SemanticSearch";
+```
+
+### Rename `SemanticSettings.defaultConfiguration` to `SemanticSettings.DefaultConfigurationName`
+
+```yaml
+directive:
+  - from: searchservice.json
+    where: $.definitions.SemanticSettings.properties.defaultConfiguration
+    transform: $["x-ms-client-name"] = "DefaultConfigurationName";
 ```
 
 ### Rename `PIIDetectionSkill.maskingCharacter` to `PIIDetectionSkill.mask`

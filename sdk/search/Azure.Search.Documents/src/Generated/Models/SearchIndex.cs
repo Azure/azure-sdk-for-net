@@ -51,7 +51,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="semanticSearch"> Defines parameters for a search index that influence semantic capabilities. </param>
         /// <param name="vectorSearch"> Contains configuration options related to vector search. </param>
         /// <param name="etag"> The ETag of the index. </param>
-        internal SearchIndex(string name, IList<SearchField> fields, IList<ScoringProfile> scoringProfiles, string defaultScoringProfile, CorsOptions corsOptions, IList<SearchSuggester> suggesters, IList<LexicalAnalyzer> analyzers, IList<LexicalTokenizer> tokenizers, IList<TokenFilter> tokenFilters, IList<CharFilter> charFilters, SearchResourceEncryptionKey encryptionKey, SimilarityAlgorithm similarity, SemanticSettings semanticSearch, VectorSearch vectorSearch, string etag)
+        internal SearchIndex(string name, IList<SearchField> fields, IList<ScoringProfile> scoringProfiles, string defaultScoringProfile, CorsOptions corsOptions, IList<SearchSuggester> suggesters, IList<LexicalAnalyzer> analyzers, IList<LexicalTokenizer> tokenizers, IList<TokenFilter> tokenFilters, IList<CharFilter> charFilters, SearchResourceEncryptionKey encryptionKey, SimilarityAlgorithm similarity, SemanticSearch semanticSearch, VectorSearch vectorSearch, string etag)
         {
             Name = name;
             _fields = fields;
@@ -82,7 +82,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// </summary>
         public SimilarityAlgorithm Similarity { get; set; }
         /// <summary> Defines parameters for a search index that influence semantic capabilities. </summary>
-        public SemanticSettings SemanticSearch { get; set; }
+        public SemanticSearch SemanticSearch { get; set; }
         /// <summary> Contains configuration options related to vector search. </summary>
         public VectorSearch VectorSearch { get; set; }
     }

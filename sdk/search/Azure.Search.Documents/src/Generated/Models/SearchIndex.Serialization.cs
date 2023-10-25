@@ -169,7 +169,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Optional<IList<CharFilter>> charFilters = default;
             Optional<SearchResourceEncryptionKey> encryptionKey = default;
             Optional<SimilarityAlgorithm> similarity = default;
-            Optional<SemanticSettings> semantic = default;
+            Optional<SemanticSearch> semantic = default;
             Optional<VectorSearch> vectorSearch = default;
             Optional<string> odataEtag = default;
             foreach (var property in element.EnumerateObject())
@@ -314,7 +314,7 @@ namespace Azure.Search.Documents.Indexes.Models
                         semantic = null;
                         continue;
                     }
-                    semantic = SemanticSettings.DeserializeSemanticSettings(property.Value);
+                    semantic = SemanticSearch.DeserializeSemanticSearch(property.Value);
                     continue;
                 }
                 if (property.NameEquals("vectorSearch"u8))

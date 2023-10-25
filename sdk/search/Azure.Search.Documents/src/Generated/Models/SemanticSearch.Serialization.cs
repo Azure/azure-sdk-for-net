@@ -11,15 +11,15 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class SemanticSettings : IUtf8JsonSerializable
+    public partial class SemanticSearch : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(DefaultConfiguration))
+            if (Optional.IsDefined(DefaultConfigurationName))
             {
                 writer.WritePropertyName("defaultConfiguration"u8);
-                writer.WriteStringValue(DefaultConfiguration);
+                writer.WriteStringValue(DefaultConfigurationName);
             }
             if (Optional.IsCollectionDefined(Configurations))
             {
@@ -34,7 +34,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteEndObject();
         }
 
-        internal static SemanticSettings DeserializeSemanticSettings(JsonElement element)
+        internal static SemanticSearch DeserializeSemanticSearch(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -64,7 +64,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SemanticSettings(defaultConfiguration.Value, Optional.ToList(configurations));
+            return new SemanticSearch(defaultConfiguration.Value, Optional.ToList(configurations));
         }
     }
 }
