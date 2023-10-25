@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <returns> An object representing collection of DataBoxEdgeStorageContainerResources and their operations over a DataBoxEdgeStorageContainerResource. </returns>
         public virtual DataBoxEdgeStorageContainerCollection GetDataBoxEdgeStorageContainers()
         {
-            return GetCachedClient(Client => new DataBoxEdgeStorageContainerCollection(Client, Id));
+            return GetCachedClient(client => new DataBoxEdgeStorageContainerCollection(client, Id));
         }
 
         /// <summary>
@@ -108,8 +108,8 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </summary>
         /// <param name="containerName"> The container Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataBoxEdgeStorageContainerResource>> GetDataBoxEdgeStorageContainerAsync(string containerName, CancellationToken cancellationToken = default)
         {
@@ -131,8 +131,8 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// </summary>
         /// <param name="containerName"> The container Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="containerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataBoxEdgeStorageContainerResource> GetDataBoxEdgeStorageContainer(string containerName, CancellationToken cancellationToken = default)
         {
