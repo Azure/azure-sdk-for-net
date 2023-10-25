@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Private Link support for DesktopVirtualization Management Client, more information can be found [here](https://docs.microsoft.com/azure/virtual-desktop/private-link-service).
+- Private Link support for DesktopVirtualization Management Client, more information can be found [here](https://learn.microsoft.com/en-us/azure/private-link/private-link-overview).
 
 ### Breaking Changes
 
