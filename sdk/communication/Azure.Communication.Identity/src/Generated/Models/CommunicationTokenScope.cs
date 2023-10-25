@@ -26,7 +26,7 @@ namespace Azure.Communication.Identity
         private const string VoIPValue = "voip";
         private const string ChatJoinValue = "chat.join";
         private const string ChatJoinLimitedValue = "chat.join.limited";
-        private const string VoipJoinValue = "voip.join";
+        private const string VoIPJoinValue = "voip.join";
 
         /// <summary> Use this for full access to Chat APIs. </summary>
         public static CommunicationTokenScope Chat { get; } = new CommunicationTokenScope(ChatValue);
@@ -34,8 +34,6 @@ namespace Azure.Communication.Identity
         public static CommunicationTokenScope ChatJoin { get; } = new CommunicationTokenScope(ChatJoinValue);
         /// <summary> A more limited version of chat.join that doesn't allow to add or remove participants. Use this scope when the token bearer is not fully trusted, for example in guest scenarios. </summary>
         public static CommunicationTokenScope ChatJoinLimited { get; } = new CommunicationTokenScope(ChatJoinLimitedValue);
-        /// <summary> Access to Calling APIs but without the authorization to start new calls. </summary>
-        public static CommunicationTokenScope VoipJoin { get; } = new CommunicationTokenScope(VoipJoinValue);
         /// <summary> Determines if two <see cref="CommunicationTokenScope"/> values are the same. </summary>
         public static bool operator ==(CommunicationTokenScope left, CommunicationTokenScope right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CommunicationTokenScope"/> values are not the same. </summary>

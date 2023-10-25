@@ -45,7 +45,7 @@ namespace Azure.Communication.Identity
         public static Azure.Communication.Identity.CommunicationTokenScope ChatJoin { get { throw null; } }
         public static Azure.Communication.Identity.CommunicationTokenScope ChatJoinLimited { get { throw null; } }
         public static Azure.Communication.Identity.CommunicationTokenScope VoIP { get { throw null; } }
-        public static Azure.Communication.Identity.CommunicationTokenScope VoipJoin { get { throw null; } }
+        public static Azure.Communication.Identity.CommunicationTokenScope VoIPJoin { get { throw null; } }
         public bool Equals(Azure.Communication.Identity.CommunicationTokenScope other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
