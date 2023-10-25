@@ -464,7 +464,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
-            Response response = client.GetSystemRulesetsForDataSource("None", null);
+            Response response = client.GetSystemRulesetsForDataSource("None");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -478,7 +478,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
-            Response response = await client.GetSystemRulesetsForDataSourceAsync("None", null);
+            Response response = await client.GetSystemRulesetsForDataSourceAsync("None");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -492,7 +492,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
-            Response response = client.GetSystemRulesetsForDataSource("None", null);
+            Response response = client.GetSystemRulesetsForDataSource("None");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
@@ -511,7 +511,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
-            Response response = await client.GetSystemRulesetsForDataSourceAsync("None", null);
+            Response response = await client.GetSystemRulesetsForDataSourceAsync("None");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
