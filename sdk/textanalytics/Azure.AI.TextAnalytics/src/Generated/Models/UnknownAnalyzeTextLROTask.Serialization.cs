@@ -10,21 +10,8 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class UnknownAnalyzeTextLROTask : IUtf8JsonSerializable
+    internal partial class UnknownAnalyzeTextLROTask
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
-            if (Optional.IsDefined(TaskName))
-            {
-                writer.WritePropertyName("taskName"u8);
-                writer.WriteStringValue(TaskName);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static UnknownAnalyzeTextLROTask DeserializeUnknownAnalyzeTextLROTask(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)

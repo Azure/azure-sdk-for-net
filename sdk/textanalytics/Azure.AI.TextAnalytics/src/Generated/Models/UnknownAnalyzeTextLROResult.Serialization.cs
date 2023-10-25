@@ -12,25 +12,8 @@ using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    internal partial class UnknownAnalyzeTextLROResult : IUtf8JsonSerializable
+    internal partial class UnknownAnalyzeTextLROResult
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
-            if (Optional.IsDefined(TaskName))
-            {
-                writer.WritePropertyName("taskName"u8);
-                writer.WriteStringValue(TaskName);
-            }
-            writer.WritePropertyName("lastUpdateDateTime"u8);
-            writer.WriteStringValue(LastUpdateDateTime, "O");
-            writer.WritePropertyName("status"u8);
-            writer.WriteStringValue(Status.ToString());
-            writer.WriteEndObject();
-        }
-
         internal static UnknownAnalyzeTextLROResult DeserializeUnknownAnalyzeTextLROResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)

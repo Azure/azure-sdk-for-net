@@ -10,7 +10,7 @@ using Azure.AI.TextAnalytics;
 
 namespace Azure.AI.TextAnalytics.Models
 {
-    /// <summary> The UnknownAnalyzeTextLROResult. </summary>
+    /// <summary> Unknown version of AnalyzeTextLROResult. </summary>
     internal partial class UnknownAnalyzeTextLROResult : AnalyzeTextLROResult
     {
         /// <summary> Initializes a new instance of UnknownAnalyzeTextLROResult. </summary>

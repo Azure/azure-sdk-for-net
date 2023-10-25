@@ -10,21 +10,8 @@ using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
-    internal partial class UnknownVariable : IUtf8JsonSerializable
+    internal partial class UnknownVariable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
-            if (Optional.IsDefined(Filter))
-            {
-                writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue(Filter);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static UnknownVariable DeserializeUnknownVariable(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
