@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.HybridNetwork
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/networkFunctionDefinitionGroups/{networkFunctionDefinitionGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkFunctionDefinitionGroups_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="networkFunctionDefinitionGroupName"> The name of the network function definition group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkFunctionDefinitionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionDefinitionGroupName"/> is null. </exception>
+        public virtual async Task<NullableResponse<NetworkFunctionDefinitionGroupResource>> GetIfExistsAsync(string networkFunctionDefinitionGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionGroupName, nameof(networkFunctionDefinitionGroupName));
+
+            using var scope = _networkFunctionDefinitionGroupClientDiagnostics.CreateScope("NetworkFunctionDefinitionGroupCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _networkFunctionDefinitionGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkFunctionDefinitionGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkFunctionDefinitionGroupResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkFunctionDefinitionGroupResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/networkFunctionDefinitionGroups/{networkFunctionDefinitionGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkFunctionDefinitionGroups_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="networkFunctionDefinitionGroupName"> The name of the network function definition group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkFunctionDefinitionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionDefinitionGroupName"/> is null. </exception>
+        public virtual NullableResponse<NetworkFunctionDefinitionGroupResource> GetIfExists(string networkFunctionDefinitionGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkFunctionDefinitionGroupName, nameof(networkFunctionDefinitionGroupName));
+
+            using var scope = _networkFunctionDefinitionGroupClientDiagnostics.CreateScope("NetworkFunctionDefinitionGroupCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _networkFunctionDefinitionGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkFunctionDefinitionGroupName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkFunctionDefinitionGroupResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkFunctionDefinitionGroupResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<NetworkFunctionDefinitionGroupResource> IEnumerable<NetworkFunctionDefinitionGroupResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

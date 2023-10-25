@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             Optional<ArtifactStoreType> storeType = default;
             Optional<ArtifactReplicationStrategy> replicationStrategy = default;
             Optional<ArtifactStorePropertiesFormatManagedResourceGroupConfiguration> managedResourceGroupConfiguration = default;
-            Optional<string> storageResourceId = default;
+            Optional<ResourceIdentifier> storageResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -84,7 +84,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 if (property.NameEquals("storageResourceId"u8))
                 {
-                    storageResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storageResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="status"> The status of the component resource. </param>
         /// <param name="resources"> The resource related to the component resource. </param>
         /// <param name="nextExpectedUpdateOn"> The next expected update of deployment status. </param>
-        internal DeploymentStatusProperties(Status? status, Resources resources, DateTimeOffset? nextExpectedUpdateOn)
+        internal DeploymentStatusProperties(ComponentStatus? status, ComponentKubernetesResources resources, DateTimeOffset? nextExpectedUpdateOn)
         {
             Status = status;
             Resources = resources;
@@ -29,9 +29,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> The status of the component resource. </summary>
-        public Status? Status { get; }
+        public ComponentStatus? Status { get; }
         /// <summary> The resource related to the component resource. </summary>
-        public Resources Resources { get; }
+        public ComponentKubernetesResources Resources { get; }
         /// <summary> The next expected update of deployment status. </summary>
         public DateTimeOffset? NextExpectedUpdateOn { get; }
     }

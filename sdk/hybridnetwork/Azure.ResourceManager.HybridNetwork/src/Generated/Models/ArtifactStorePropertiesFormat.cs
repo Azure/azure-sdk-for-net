@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> Artifact store properties. </summary>
@@ -21,7 +23,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="replicationStrategy"> The replication strategy. </param>
         /// <param name="managedResourceGroupConfiguration"></param>
         /// <param name="storageResourceId"> The created storage resource id. </param>
-        internal ArtifactStorePropertiesFormat(ProvisioningState? provisioningState, ArtifactStoreType? storeType, ArtifactReplicationStrategy? replicationStrategy, ArtifactStorePropertiesFormatManagedResourceGroupConfiguration managedResourceGroupConfiguration, string storageResourceId)
+        internal ArtifactStorePropertiesFormat(ProvisioningState? provisioningState, ArtifactStoreType? storeType, ArtifactReplicationStrategy? replicationStrategy, ArtifactStorePropertiesFormatManagedResourceGroupConfiguration managedResourceGroupConfiguration, ResourceIdentifier storageResourceId)
         {
             ProvisioningState = provisioningState;
             StoreType = storeType;
@@ -39,6 +41,6 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <summary> Gets or sets the managed resource group configuration. </summary>
         public ArtifactStorePropertiesFormatManagedResourceGroupConfiguration ManagedResourceGroupConfiguration { get; set; }
         /// <summary> The created storage resource id. </summary>
-        public string StorageResourceId { get; }
+        public ResourceIdentifier StorageResourceId { get; }
     }
 }

@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <summary> Initializes a new instance of Deployment. </summary>
         /// <param name="name"> The name of the deployment. </param>
         /// <param name="namespace"> The namespace of the deployment. </param>
-        /// <param name="desired"> Desired number of pods. </param>
-        /// <param name="ready"> Number of ready pods. </param>
-        /// <param name="upToDate"> Number of upto date pods. </param>
-        /// <param name="available"> Number of available pods. </param>
+        /// <param name="desiredNumberOfPods"> Desired number of pods. </param>
+        /// <param name="readyNumberOfPods"> Number of ready pods. </param>
+        /// <param name="upToDateNumberOfPods"> Number of upto date pods. </param>
+        /// <param name="availableNumberOfPods"> Number of available pods. </param>
         /// <param name="createdOn"> Creation Time of deployment. </param>
-        internal Deployment(string name, string @namespace, int? desired, int? ready, int? upToDate, int? available, DateTimeOffset? createdOn)
+        internal Deployment(string name, string @namespace, int? desiredNumberOfPods, int? readyNumberOfPods, int? upToDateNumberOfPods, int? availableNumberOfPods, DateTimeOffset? createdOn)
         {
             Name = name;
             Namespace = @namespace;
-            Desired = desired;
-            Ready = ready;
-            UpToDate = upToDate;
-            Available = available;
+            DesiredNumberOfPods = desiredNumberOfPods;
+            ReadyNumberOfPods = readyNumberOfPods;
+            UpToDateNumberOfPods = upToDateNumberOfPods;
+            AvailableNumberOfPods = availableNumberOfPods;
             CreatedOn = createdOn;
         }
 
@@ -41,13 +41,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <summary> The namespace of the deployment. </summary>
         public string Namespace { get; }
         /// <summary> Desired number of pods. </summary>
-        public int? Desired { get; }
+        public int? DesiredNumberOfPods { get; }
         /// <summary> Number of ready pods. </summary>
-        public int? Ready { get; }
+        public int? ReadyNumberOfPods { get; }
         /// <summary> Number of upto date pods. </summary>
-        public int? UpToDate { get; }
+        public int? UpToDateNumberOfPods { get; }
         /// <summary> Number of available pods. </summary>
-        public int? Available { get; }
+        public int? AvailableNumberOfPods { get; }
         /// <summary> Creation Time of deployment. </summary>
         public DateTimeOffset? CreatedOn { get; }
     }

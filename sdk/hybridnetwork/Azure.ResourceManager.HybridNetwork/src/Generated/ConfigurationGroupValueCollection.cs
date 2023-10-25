@@ -324,6 +324,80 @@ namespace Azure.ResourceManager.HybridNetwork
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/configurationGroupValues/{configurationGroupValueName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationGroupValues_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="configurationGroupValueName"> The name of the configuration group value. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="configurationGroupValueName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationGroupValueName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ConfigurationGroupValueResource>> GetIfExistsAsync(string configurationGroupValueName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationGroupValueName, nameof(configurationGroupValueName));
+
+            using var scope = _configurationGroupValueClientDiagnostics.CreateScope("ConfigurationGroupValueCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _configurationGroupValueRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, configurationGroupValueName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ConfigurationGroupValueResource>(response.GetRawResponse());
+                return Response.FromValue(new ConfigurationGroupValueResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/configurationGroupValues/{configurationGroupValueName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationGroupValues_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="configurationGroupValueName"> The name of the configuration group value. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="configurationGroupValueName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationGroupValueName"/> is null. </exception>
+        public virtual NullableResponse<ConfigurationGroupValueResource> GetIfExists(string configurationGroupValueName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationGroupValueName, nameof(configurationGroupValueName));
+
+            using var scope = _configurationGroupValueClientDiagnostics.CreateScope("ConfigurationGroupValueCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _configurationGroupValueRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, configurationGroupValueName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ConfigurationGroupValueResource>(response.GetRawResponse());
+                return Response.FromValue(new ConfigurationGroupValueResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<ConfigurationGroupValueResource> IEnumerable<ConfigurationGroupValueResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

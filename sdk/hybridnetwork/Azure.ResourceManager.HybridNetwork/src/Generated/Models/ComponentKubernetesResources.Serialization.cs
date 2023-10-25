@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    public partial class Resources
+    public partial class ComponentKubernetesResources
     {
-        internal static Resources DeserializeResources(JsonElement element)
+        internal static ComponentKubernetesResources DeserializeComponentKubernetesResources(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     continue;
                 }
             }
-            return new Resources(Optional.ToList(deployments), Optional.ToList(pods), Optional.ToList(replicaSets), Optional.ToList(statefulSets), Optional.ToList(daemonSets));
+            return new ComponentKubernetesResources(Optional.ToList(deployments), Optional.ToList(pods), Optional.ToList(replicaSets), Optional.ToList(statefulSets), Optional.ToList(daemonSets));
         }
     }
 }

@@ -324,6 +324,80 @@ namespace Azure.ResourceManager.HybridNetwork
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/networkFunctions/{networkFunctionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkFunctions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="networkFunctionName"> The name of the network function resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkFunctionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionName"/> is null. </exception>
+        public virtual async Task<NullableResponse<NetworkFunctionResource>> GetIfExistsAsync(string networkFunctionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkFunctionName, nameof(networkFunctionName));
+
+            using var scope = _networkFunctionClientDiagnostics.CreateScope("NetworkFunctionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _networkFunctionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkFunctionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkFunctionResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkFunctionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/networkFunctions/{networkFunctionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkFunctions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="networkFunctionName"> The name of the network function resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkFunctionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionName"/> is null. </exception>
+        public virtual NullableResponse<NetworkFunctionResource> GetIfExists(string networkFunctionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkFunctionName, nameof(networkFunctionName));
+
+            using var scope = _networkFunctionClientDiagnostics.CreateScope("NetworkFunctionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _networkFunctionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkFunctionName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkFunctionResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkFunctionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<NetworkFunctionResource> IEnumerable<NetworkFunctionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

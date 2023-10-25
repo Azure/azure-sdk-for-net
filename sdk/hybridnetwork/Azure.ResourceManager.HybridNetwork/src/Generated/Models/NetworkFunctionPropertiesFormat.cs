@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="allowSoftwareUpdate"> Indicates if software updates are allowed during deployment. </param>
         /// <param name="configurationType"> The value which indicates if NF  values are secrets. </param>
         /// <param name="roleOverrideValues"> The role configuration override values from the user. </param>
-        internal NetworkFunctionPropertiesFormat(ProvisioningState? provisioningState, string publisherName, PublisherScope? publisherScope, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersion, string networkFunctionDefinitionOfferingLocation, DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference, NfviType? nfviType, string nfviId, bool? allowSoftwareUpdate, NetworkFunctionConfigurationType configurationType, IList<string> roleOverrideValues)
+        internal NetworkFunctionPropertiesFormat(ProvisioningState? provisioningState, string publisherName, PublisherScope? publisherScope, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersion, string networkFunctionDefinitionOfferingLocation, DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference, NfviType? nfviType, ResourceIdentifier nfviId, bool? allowSoftwareUpdate, NetworkFunctionConfigurationType configurationType, IList<string> roleOverrideValues)
         {
             ProvisioningState = provisioningState;
             PublisherName = publisherName;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <summary> The nfvi type for the network function. </summary>
         public NfviType? NfviType { get; set; }
         /// <summary> The nfviId for the network function. </summary>
-        public string NfviId { get; set; }
+        public ResourceIdentifier NfviId { get; set; }
         /// <summary> Indicates if software updates are allowed during deployment. </summary>
         public bool? AllowSoftwareUpdate { get; set; }
         /// <summary> The value which indicates if NF  values are secrets. </summary>

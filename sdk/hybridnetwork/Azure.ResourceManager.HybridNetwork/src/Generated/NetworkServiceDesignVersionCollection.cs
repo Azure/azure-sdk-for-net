@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.HybridNetwork
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/networkServiceDesignGroups/{networkServiceDesignGroupName}/networkServiceDesignVersions/{networkServiceDesignVersionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkServiceDesignVersions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="networkServiceDesignVersionName"> The name of the network service design version. The name should conform to the SemVer 2.0.0 specification: https://semver.org/spec/v2.0.0.html. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkServiceDesignVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkServiceDesignVersionName"/> is null. </exception>
+        public virtual async Task<NullableResponse<NetworkServiceDesignVersionResource>> GetIfExistsAsync(string networkServiceDesignVersionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkServiceDesignVersionName, nameof(networkServiceDesignVersionName));
+
+            using var scope = _networkServiceDesignVersionClientDiagnostics.CreateScope("NetworkServiceDesignVersionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _networkServiceDesignVersionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkServiceDesignVersionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkServiceDesignVersionResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkServiceDesignVersionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/networkServiceDesignGroups/{networkServiceDesignGroupName}/networkServiceDesignVersions/{networkServiceDesignVersionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkServiceDesignVersions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="networkServiceDesignVersionName"> The name of the network service design version. The name should conform to the SemVer 2.0.0 specification: https://semver.org/spec/v2.0.0.html. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkServiceDesignVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkServiceDesignVersionName"/> is null. </exception>
+        public virtual NullableResponse<NetworkServiceDesignVersionResource> GetIfExists(string networkServiceDesignVersionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkServiceDesignVersionName, nameof(networkServiceDesignVersionName));
+
+            using var scope = _networkServiceDesignVersionClientDiagnostics.CreateScope("NetworkServiceDesignVersionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _networkServiceDesignVersionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, networkServiceDesignVersionName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkServiceDesignVersionResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkServiceDesignVersionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<NetworkServiceDesignVersionResource> IEnumerable<NetworkServiceDesignVersionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

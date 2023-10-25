@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.HybridNetwork
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}/artifactManifests/{artifactManifestName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ArtifactManifests_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="artifactManifestName"> The name of the artifact manifest. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="artifactManifestName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="artifactManifestName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ArtifactManifestResource>> GetIfExistsAsync(string artifactManifestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(artifactManifestName, nameof(artifactManifestName));
+
+            using var scope = _artifactManifestClientDiagnostics.CreateScope("ArtifactManifestCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _artifactManifestRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactManifestName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ArtifactManifestResource>(response.GetRawResponse());
+                return Response.FromValue(new ArtifactManifestResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}/artifactManifests/{artifactManifestName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ArtifactManifests_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="artifactManifestName"> The name of the artifact manifest. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="artifactManifestName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="artifactManifestName"/> is null. </exception>
+        public virtual NullableResponse<ArtifactManifestResource> GetIfExists(string artifactManifestName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(artifactManifestName, nameof(artifactManifestName));
+
+            using var scope = _artifactManifestClientDiagnostics.CreateScope("ArtifactManifestCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _artifactManifestRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, artifactManifestName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ArtifactManifestResource>(response.GetRawResponse());
+                return Response.FromValue(new ArtifactManifestResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<ArtifactManifestResource> IEnumerable<ArtifactManifestResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

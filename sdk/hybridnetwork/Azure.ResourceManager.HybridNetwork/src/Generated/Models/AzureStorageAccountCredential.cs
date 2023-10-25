@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="storageAccountId"> The storage account Id. </param>
         /// <param name="containerCredentials"> The containers that could be accessed using the current credential. </param>
         /// <param name="expiry"> The UTC time when credential will expire. </param>
-        internal AzureStorageAccountCredential(CredentialType credentialType, string storageAccountId, IReadOnlyList<AzureStorageAccountContainerCredential> containerCredentials, DateTimeOffset? expiry) : base(credentialType)
+        internal AzureStorageAccountCredential(CredentialType credentialType, ResourceIdentifier storageAccountId, IReadOnlyList<AzureStorageAccountContainerCredential> containerCredentials, DateTimeOffset? expiry) : base(credentialType)
         {
             StorageAccountId = storageAccountId;
             ContainerCredentials = containerCredentials;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> The storage account Id. </summary>
-        public string StorageAccountId { get; }
+        public ResourceIdentifier StorageAccountId { get; }
         /// <summary> The containers that could be accessed using the current credential. </summary>
         public IReadOnlyList<AzureStorageAccountContainerCredential> ContainerCredentials { get; }
         /// <summary> The UTC time when credential will expire. </summary>

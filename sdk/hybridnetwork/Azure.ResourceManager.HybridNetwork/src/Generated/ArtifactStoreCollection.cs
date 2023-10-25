@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.HybridNetwork
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ArtifactStores_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="artifactStoreName"> The name of the artifact store. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="artifactStoreName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="artifactStoreName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ArtifactStoreResource>> GetIfExistsAsync(string artifactStoreName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(artifactStoreName, nameof(artifactStoreName));
+
+            using var scope = _artifactStoreClientDiagnostics.CreateScope("ArtifactStoreCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _artifactStoreRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, artifactStoreName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ArtifactStoreResource>(response.GetRawResponse());
+                return Response.FromValue(new ArtifactStoreResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/artifactStores/{artifactStoreName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ArtifactStores_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="artifactStoreName"> The name of the artifact store. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="artifactStoreName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="artifactStoreName"/> is null. </exception>
+        public virtual NullableResponse<ArtifactStoreResource> GetIfExists(string artifactStoreName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(artifactStoreName, nameof(artifactStoreName));
+
+            using var scope = _artifactStoreClientDiagnostics.CreateScope("ArtifactStoreCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _artifactStoreRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, artifactStoreName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ArtifactStoreResource>(response.GetRawResponse());
+                return Response.FromValue(new ArtifactStoreResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<ArtifactStoreResource> IEnumerable<ArtifactStoreResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();

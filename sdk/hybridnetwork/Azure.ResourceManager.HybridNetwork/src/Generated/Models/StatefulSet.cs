@@ -20,15 +20,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <summary> Initializes a new instance of StatefulSet. </summary>
         /// <param name="name"> The name of the statefulset. </param>
         /// <param name="namespace"> The namespace of the statefulset. </param>
-        /// <param name="desired"> Desired number of pods. </param>
-        /// <param name="ready"> Number of ready pods. </param>
+        /// <param name="desiredNumberOfPods"> Desired number of pods. </param>
+        /// <param name="readyNumberOfPods"> Number of ready pods. </param>
         /// <param name="createdOn"> Creation Time of statefulset. </param>
-        internal StatefulSet(string name, string @namespace, int? desired, int? ready, DateTimeOffset? createdOn)
+        internal StatefulSet(string name, string @namespace, int? desiredNumberOfPods, int? readyNumberOfPods, DateTimeOffset? createdOn)
         {
             Name = name;
             Namespace = @namespace;
-            Desired = desired;
-            Ready = ready;
+            DesiredNumberOfPods = desiredNumberOfPods;
+            ReadyNumberOfPods = readyNumberOfPods;
             CreatedOn = createdOn;
         }
 
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <summary> The namespace of the statefulset. </summary>
         public string Namespace { get; }
         /// <summary> Desired number of pods. </summary>
-        public int? Desired { get; }
+        public int? DesiredNumberOfPods { get; }
         /// <summary> Number of ready pods. </summary>
-        public int? Ready { get; }
+        public int? ReadyNumberOfPods { get; }
         /// <summary> Creation Time of statefulset. </summary>
         public DateTimeOffset? CreatedOn { get; }
     }

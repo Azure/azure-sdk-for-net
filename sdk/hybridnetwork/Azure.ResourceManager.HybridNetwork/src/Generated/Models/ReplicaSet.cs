@@ -20,17 +20,17 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <summary> Initializes a new instance of ReplicaSet. </summary>
         /// <param name="name"> The name of the replicaSet. </param>
         /// <param name="namespace"> The namespace of the replicaSet. </param>
-        /// <param name="desired"> Desired number of pods. </param>
-        /// <param name="ready"> Number of ready pods. </param>
-        /// <param name="current"> Number of current pods. </param>
+        /// <param name="desiredNumberOfPods"> Desired number of pods. </param>
+        /// <param name="readyNumberOfPods"> Number of ready pods. </param>
+        /// <param name="currentNumberOfPods"> Number of current pods. </param>
         /// <param name="createdOn"> Creation Time of replicaSet. </param>
-        internal ReplicaSet(string name, string @namespace, int? desired, int? ready, int? current, DateTimeOffset? createdOn)
+        internal ReplicaSet(string name, string @namespace, int? desiredNumberOfPods, int? readyNumberOfPods, int? currentNumberOfPods, DateTimeOffset? createdOn)
         {
             Name = name;
             Namespace = @namespace;
-            Desired = desired;
-            Ready = ready;
-            Current = current;
+            DesiredNumberOfPods = desiredNumberOfPods;
+            ReadyNumberOfPods = readyNumberOfPods;
+            CurrentNumberOfPods = currentNumberOfPods;
             CreatedOn = createdOn;
         }
 
@@ -39,11 +39,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <summary> The namespace of the replicaSet. </summary>
         public string Namespace { get; }
         /// <summary> Desired number of pods. </summary>
-        public int? Desired { get; }
+        public int? DesiredNumberOfPods { get; }
         /// <summary> Number of ready pods. </summary>
-        public int? Ready { get; }
+        public int? ReadyNumberOfPods { get; }
         /// <summary> Number of current pods. </summary>
-        public int? Current { get; }
+        public int? CurrentNumberOfPods { get; }
         /// <summary> Creation Time of replicaSet. </summary>
         public DateTimeOffset? CreatedOn { get; }
     }

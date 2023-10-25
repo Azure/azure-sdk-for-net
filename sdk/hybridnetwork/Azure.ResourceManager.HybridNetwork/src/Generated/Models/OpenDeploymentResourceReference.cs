@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> Non secret deployment resource id reference. </summary>
@@ -19,13 +21,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <summary> Initializes a new instance of OpenDeploymentResourceReference. </summary>
         /// <param name="idType"> The resource reference arm id type. </param>
         /// <param name="id"> Resource ID. </param>
-        internal OpenDeploymentResourceReference(IdType idType, string id) : base(idType)
+        internal OpenDeploymentResourceReference(IdType idType, ResourceIdentifier id) : base(idType)
         {
             Id = id;
             IdType = idType;
         }
 
         /// <summary> Resource ID. </summary>
-        public string Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
     }
 }

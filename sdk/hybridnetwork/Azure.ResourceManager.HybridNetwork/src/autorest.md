@@ -52,4 +52,42 @@ acronym-mapping:
   URI: Uri
   Etag: ETag|etag
 
+rename-mapping:
+  Resources: ComponentKubernetesResources
+  Status: ComponentStatus
+  DaemonSet.desired: DesiredNumberOfPods
+  DaemonSet.ready: ReadyNumberOfPods
+  DaemonSet.current: CurrentNumberOfPods
+  DaemonSet.upToDate: UpToDateNumberOfPods
+  DaemonSet.available: AvailableNumberOfPods
+  Deployment.desired: DesiredNumberOfPods
+  Deployment.ready: ReadyNumberOfPods
+  Deployment.current: CurrentNumberOfPods
+  Deployment.upToDate: UpToDateNumberOfPods
+  Deployment.available: AvailableNumberOfPods
+  Pod.desired: DesiredNumberOfContainers
+  Pod.ready: ReadyNumberOfContainers
+  ReplicaSet.desired: DesiredNumberOfPods
+  ReplicaSet.ready: ReadyNumberOfPods
+  ReplicaSet.current: CurrentNumberOfPods
+  StatefulSet.desired: DesiredNumberOfPods
+  StatefulSet.ready: ReadyNumberOfPods
+
+directive:
+- from: publisher.json
+  where: $.definitions.ArtifactStorePropertiesFormat.properties.storageResourceId
+  transform: $["x-ms-format"] = "arm-id";
+- from: common.json
+  where: $.definitions.AzureStorageAccountCredential.properties.storageAccountId
+  transform: $["x-ms-format"] = "arm-id";
+- from: common.json
+  where: $.definitions.SecretDeploymentResourceReference.properties.id
+  transform: $["x-ms-format"] = "arm-id";
+- from: common.json
+  where: $.definitions.OpenDeploymentResourceReference.properties.id
+  transform: $["x-ms-format"] = "arm-id";
+- from: networkFunction.json
+  where: $.definitions.NetworkFunctionPropertiesFormat.properties.nfviId
+  transform: $["x-ms-format"] = "arm-id";
+
 ```

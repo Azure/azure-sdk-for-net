@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> The resources of the network function component. </summary>
-    public partial class Resources
+    public partial class ComponentKubernetesResources
     {
-        /// <summary> Initializes a new instance of Resources. </summary>
-        internal Resources()
+        /// <summary> Initializes a new instance of ComponentKubernetesResources. </summary>
+        internal ComponentKubernetesResources()
         {
             Deployments = new ChangeTrackingList<Deployment>();
             Pods = new ChangeTrackingList<Pod>();
@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             DaemonSets = new ChangeTrackingList<DaemonSet>();
         }
 
-        /// <summary> Initializes a new instance of Resources. </summary>
+        /// <summary> Initializes a new instance of ComponentKubernetesResources. </summary>
         /// <param name="deployments"> Deployments that are related to component resource. </param>
         /// <param name="pods"> Pods related to component resource. </param>
         /// <param name="replicaSets"> Replica sets related to component resource. </param>
         /// <param name="statefulSets"> Stateful sets related to component resource. </param>
         /// <param name="daemonSets"> Daemonsets related to component resource. </param>
-        internal Resources(IReadOnlyList<Deployment> deployments, IReadOnlyList<Pod> pods, IReadOnlyList<ReplicaSet> replicaSets, IReadOnlyList<StatefulSet> statefulSets, IReadOnlyList<DaemonSet> daemonSets)
+        internal ComponentKubernetesResources(IReadOnlyList<Deployment> deployments, IReadOnlyList<Pod> pods, IReadOnlyList<ReplicaSet> replicaSets, IReadOnlyList<StatefulSet> statefulSets, IReadOnlyList<DaemonSet> daemonSets)
         {
             Deployments = deployments;
             Pods = pods;

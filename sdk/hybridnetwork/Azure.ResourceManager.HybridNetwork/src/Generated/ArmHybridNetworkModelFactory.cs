@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="configurationType"> The value which indicates if NF  values are secrets. </param>
         /// <param name="roleOverrideValues"> The role configuration override values from the user. </param>
         /// <returns> A new <see cref="Models.NetworkFunctionPropertiesFormat"/> instance for mocking. </returns>
-        public static NetworkFunctionPropertiesFormat NetworkFunctionPropertiesFormat(ProvisioningState? provisioningState = null, string publisherName = null, PublisherScope? publisherScope = null, string networkFunctionDefinitionGroupName = null, string networkFunctionDefinitionVersion = null, string networkFunctionDefinitionOfferingLocation = null, DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference = null, NfviType? nfviType = null, string nfviId = null, bool? allowSoftwareUpdate = null, string configurationType = "Unknown", IEnumerable<string> roleOverrideValues = null)
+        public static NetworkFunctionPropertiesFormat NetworkFunctionPropertiesFormat(ProvisioningState? provisioningState = null, string publisherName = null, PublisherScope? publisherScope = null, string networkFunctionDefinitionGroupName = null, string networkFunctionDefinitionVersion = null, string networkFunctionDefinitionOfferingLocation = null, DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference = null, NfviType? nfviType = null, ResourceIdentifier nfviId = null, bool? allowSoftwareUpdate = null, string configurationType = "Unknown", IEnumerable<string> roleOverrideValues = null)
         {
             roleOverrideValues ??= new List<string>();
 
@@ -158,19 +158,19 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="resources"> The resource related to the component resource. </param>
         /// <param name="nextExpectedUpdateOn"> The next expected update of deployment status. </param>
         /// <returns> A new <see cref="Models.DeploymentStatusProperties"/> instance for mocking. </returns>
-        public static DeploymentStatusProperties DeploymentStatusProperties(Status? status = null, Resources resources = null, DateTimeOffset? nextExpectedUpdateOn = null)
+        public static DeploymentStatusProperties DeploymentStatusProperties(ComponentStatus? status = null, ComponentKubernetesResources resources = null, DateTimeOffset? nextExpectedUpdateOn = null)
         {
             return new DeploymentStatusProperties(status, resources, nextExpectedUpdateOn);
         }
 
-        /// <summary> Initializes a new instance of Resources. </summary>
+        /// <summary> Initializes a new instance of ComponentKubernetesResources. </summary>
         /// <param name="deployments"> Deployments that are related to component resource. </param>
         /// <param name="pods"> Pods related to component resource. </param>
         /// <param name="replicaSets"> Replica sets related to component resource. </param>
         /// <param name="statefulSets"> Stateful sets related to component resource. </param>
         /// <param name="daemonSets"> Daemonsets related to component resource. </param>
-        /// <returns> A new <see cref="Models.Resources"/> instance for mocking. </returns>
-        public static Resources Resources(IEnumerable<Deployment> deployments = null, IEnumerable<Pod> pods = null, IEnumerable<ReplicaSet> replicaSets = null, IEnumerable<StatefulSet> statefulSets = null, IEnumerable<DaemonSet> daemonSets = null)
+        /// <returns> A new <see cref="Models.ComponentKubernetesResources"/> instance for mocking. </returns>
+        public static ComponentKubernetesResources ComponentKubernetesResources(IEnumerable<Deployment> deployments = null, IEnumerable<Pod> pods = null, IEnumerable<ReplicaSet> replicaSets = null, IEnumerable<StatefulSet> statefulSets = null, IEnumerable<DaemonSet> daemonSets = null)
         {
             deployments ??= new List<Deployment>();
             pods ??= new List<Pod>();
@@ -178,37 +178,37 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             statefulSets ??= new List<StatefulSet>();
             daemonSets ??= new List<DaemonSet>();
 
-            return new Resources(deployments?.ToList(), pods?.ToList(), replicaSets?.ToList(), statefulSets?.ToList(), daemonSets?.ToList());
+            return new ComponentKubernetesResources(deployments?.ToList(), pods?.ToList(), replicaSets?.ToList(), statefulSets?.ToList(), daemonSets?.ToList());
         }
 
         /// <summary> Initializes a new instance of Deployment. </summary>
         /// <param name="name"> The name of the deployment. </param>
         /// <param name="namespace"> The namespace of the deployment. </param>
-        /// <param name="desired"> Desired number of pods. </param>
-        /// <param name="ready"> Number of ready pods. </param>
-        /// <param name="upToDate"> Number of upto date pods. </param>
-        /// <param name="available"> Number of available pods. </param>
+        /// <param name="desiredNumberOfPods"> Desired number of pods. </param>
+        /// <param name="readyNumberOfPods"> Number of ready pods. </param>
+        /// <param name="upToDateNumberOfPods"> Number of upto date pods. </param>
+        /// <param name="availableNumberOfPods"> Number of available pods. </param>
         /// <param name="createdOn"> Creation Time of deployment. </param>
         /// <returns> A new <see cref="Models.Deployment"/> instance for mocking. </returns>
-        public static Deployment Deployment(string name = null, string @namespace = null, int? desired = null, int? ready = null, int? upToDate = null, int? available = null, DateTimeOffset? createdOn = null)
+        public static Deployment Deployment(string name = null, string @namespace = null, int? desiredNumberOfPods = null, int? readyNumberOfPods = null, int? upToDateNumberOfPods = null, int? availableNumberOfPods = null, DateTimeOffset? createdOn = null)
         {
-            return new Deployment(name, @namespace, desired, ready, upToDate, available, createdOn);
+            return new Deployment(name, @namespace, desiredNumberOfPods, readyNumberOfPods, upToDateNumberOfPods, availableNumberOfPods, createdOn);
         }
 
         /// <summary> Initializes a new instance of Pod. </summary>
         /// <param name="name"> The name of the Pod. </param>
         /// <param name="namespace"> The namespace of the Pod. </param>
-        /// <param name="desired"> Desired number of containers. </param>
-        /// <param name="ready"> Number of ready containers. </param>
+        /// <param name="desiredNumberOfContainers"> Desired number of containers. </param>
+        /// <param name="readyNumberOfContainers"> Number of ready containers. </param>
         /// <param name="status"> The status of a pod. </param>
         /// <param name="createdOn"> Creation Time of Pod. </param>
         /// <param name="events"> Last 5 Pod events. </param>
         /// <returns> A new <see cref="Models.Pod"/> instance for mocking. </returns>
-        public static Pod Pod(string name = null, string @namespace = null, int? desired = null, int? ready = null, PodStatus? status = null, DateTimeOffset? createdOn = null, IEnumerable<PodEvent> events = null)
+        public static Pod Pod(string name = null, string @namespace = null, int? desiredNumberOfContainers = null, int? readyNumberOfContainers = null, PodStatus? status = null, DateTimeOffset? createdOn = null, IEnumerable<PodEvent> events = null)
         {
             events ??= new List<PodEvent>();
 
-            return new Pod(name, @namespace, desired, ready, status, createdOn, events?.ToList());
+            return new Pod(name, @namespace, desiredNumberOfContainers, readyNumberOfContainers, status, createdOn, events?.ToList());
         }
 
         /// <summary> Initializes a new instance of PodEvent. </summary>
@@ -225,41 +225,41 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <summary> Initializes a new instance of ReplicaSet. </summary>
         /// <param name="name"> The name of the replicaSet. </param>
         /// <param name="namespace"> The namespace of the replicaSet. </param>
-        /// <param name="desired"> Desired number of pods. </param>
-        /// <param name="ready"> Number of ready pods. </param>
-        /// <param name="current"> Number of current pods. </param>
+        /// <param name="desiredNumberOfPods"> Desired number of pods. </param>
+        /// <param name="readyNumberOfPods"> Number of ready pods. </param>
+        /// <param name="currentNumberOfPods"> Number of current pods. </param>
         /// <param name="createdOn"> Creation Time of replicaSet. </param>
         /// <returns> A new <see cref="Models.ReplicaSet"/> instance for mocking. </returns>
-        public static ReplicaSet ReplicaSet(string name = null, string @namespace = null, int? desired = null, int? ready = null, int? current = null, DateTimeOffset? createdOn = null)
+        public static ReplicaSet ReplicaSet(string name = null, string @namespace = null, int? desiredNumberOfPods = null, int? readyNumberOfPods = null, int? currentNumberOfPods = null, DateTimeOffset? createdOn = null)
         {
-            return new ReplicaSet(name, @namespace, desired, ready, current, createdOn);
+            return new ReplicaSet(name, @namespace, desiredNumberOfPods, readyNumberOfPods, currentNumberOfPods, createdOn);
         }
 
         /// <summary> Initializes a new instance of StatefulSet. </summary>
         /// <param name="name"> The name of the statefulset. </param>
         /// <param name="namespace"> The namespace of the statefulset. </param>
-        /// <param name="desired"> Desired number of pods. </param>
-        /// <param name="ready"> Number of ready pods. </param>
+        /// <param name="desiredNumberOfPods"> Desired number of pods. </param>
+        /// <param name="readyNumberOfPods"> Number of ready pods. </param>
         /// <param name="createdOn"> Creation Time of statefulset. </param>
         /// <returns> A new <see cref="Models.StatefulSet"/> instance for mocking. </returns>
-        public static StatefulSet StatefulSet(string name = null, string @namespace = null, int? desired = null, int? ready = null, DateTimeOffset? createdOn = null)
+        public static StatefulSet StatefulSet(string name = null, string @namespace = null, int? desiredNumberOfPods = null, int? readyNumberOfPods = null, DateTimeOffset? createdOn = null)
         {
-            return new StatefulSet(name, @namespace, desired, ready, createdOn);
+            return new StatefulSet(name, @namespace, desiredNumberOfPods, readyNumberOfPods, createdOn);
         }
 
         /// <summary> Initializes a new instance of DaemonSet. </summary>
         /// <param name="name"> The name of the daemonSet. </param>
         /// <param name="namespace"> The namespace of the daemonSet. </param>
-        /// <param name="desired"> Desired number of pods. </param>
-        /// <param name="current"> Current number of pods. </param>
-        /// <param name="ready"> Number of Ready pods. </param>
-        /// <param name="upToDate"> Number of  upto date pods. </param>
-        /// <param name="available"> Number of available pods. </param>
+        /// <param name="desiredNumberOfPods"> Desired number of pods. </param>
+        /// <param name="currentNumberOfPods"> Current number of pods. </param>
+        /// <param name="readyNumberOfPods"> Number of Ready pods. </param>
+        /// <param name="upToDateNumberOfPods"> Number of  upto date pods. </param>
+        /// <param name="availableNumberOfPods"> Number of available pods. </param>
         /// <param name="createdOn"> Creation Time of daemonSet. </param>
         /// <returns> A new <see cref="Models.DaemonSet"/> instance for mocking. </returns>
-        public static DaemonSet DaemonSet(string name = null, string @namespace = null, int? desired = null, int? current = null, int? ready = null, int? upToDate = null, int? available = null, DateTimeOffset? createdOn = null)
+        public static DaemonSet DaemonSet(string name = null, string @namespace = null, int? desiredNumberOfPods = null, int? currentNumberOfPods = null, int? readyNumberOfPods = null, int? upToDateNumberOfPods = null, int? availableNumberOfPods = null, DateTimeOffset? createdOn = null)
         {
-            return new DaemonSet(name, @namespace, desired, current, ready, upToDate, available, createdOn);
+            return new DaemonSet(name, @namespace, desiredNumberOfPods, currentNumberOfPods, readyNumberOfPods, upToDateNumberOfPods, availableNumberOfPods, createdOn);
         }
 
         /// <summary> Initializes a new instance of NetworkFunctionDefinitionGroupData. </summary>
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="managedResourceGroupConfiguration"></param>
         /// <param name="storageResourceId"> The created storage resource id. </param>
         /// <returns> A new <see cref="Models.ArtifactStorePropertiesFormat"/> instance for mocking. </returns>
-        public static ArtifactStorePropertiesFormat ArtifactStorePropertiesFormat(ProvisioningState? provisioningState = null, ArtifactStoreType? storeType = null, ArtifactReplicationStrategy? replicationStrategy = null, ArtifactStorePropertiesFormatManagedResourceGroupConfiguration managedResourceGroupConfiguration = null, string storageResourceId = null)
+        public static ArtifactStorePropertiesFormat ArtifactStorePropertiesFormat(ProvisioningState? provisioningState = null, ArtifactStoreType? storeType = null, ArtifactReplicationStrategy? replicationStrategy = null, ArtifactStorePropertiesFormatManagedResourceGroupConfiguration managedResourceGroupConfiguration = null, ResourceIdentifier storageResourceId = null)
         {
             return new ArtifactStorePropertiesFormat(provisioningState, storeType, replicationStrategy, managedResourceGroupConfiguration, storageResourceId);
         }
@@ -601,7 +601,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="containerCredentials"> The containers that could be accessed using the current credential. </param>
         /// <param name="expiry"> The UTC time when credential will expire. </param>
         /// <returns> A new <see cref="Models.AzureStorageAccountCredential"/> instance for mocking. </returns>
-        public static AzureStorageAccountCredential AzureStorageAccountCredential(string storageAccountId = null, IEnumerable<AzureStorageAccountContainerCredential> containerCredentials = null, DateTimeOffset? expiry = null)
+        public static AzureStorageAccountCredential AzureStorageAccountCredential(ResourceIdentifier storageAccountId = null, IEnumerable<AzureStorageAccountContainerCredential> containerCredentials = null, DateTimeOffset? expiry = null)
         {
             containerCredentials ??= new List<AzureStorageAccountContainerCredential>();
 
@@ -671,7 +671,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="roleOverrideValues"> The role configuration override values from the user. </param>
         /// <param name="secretDeploymentValues"> The JSON-serialized secret deployment values from the user. This contains secrets like passwords,keys etc. </param>
         /// <returns> A new <see cref="Models.NetworkFunctionValueWithSecrets"/> instance for mocking. </returns>
-        public static NetworkFunctionValueWithSecrets NetworkFunctionValueWithSecrets(ProvisioningState? provisioningState = null, string publisherName = null, PublisherScope? publisherScope = null, string networkFunctionDefinitionGroupName = null, string networkFunctionDefinitionVersion = null, string networkFunctionDefinitionOfferingLocation = null, DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference = null, NfviType? nfviType = null, string nfviId = null, bool? allowSoftwareUpdate = null, IEnumerable<string> roleOverrideValues = null, string secretDeploymentValues = null)
+        public static NetworkFunctionValueWithSecrets NetworkFunctionValueWithSecrets(ProvisioningState? provisioningState = null, string publisherName = null, PublisherScope? publisherScope = null, string networkFunctionDefinitionGroupName = null, string networkFunctionDefinitionVersion = null, string networkFunctionDefinitionOfferingLocation = null, DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference = null, NfviType? nfviType = null, ResourceIdentifier nfviId = null, bool? allowSoftwareUpdate = null, IEnumerable<string> roleOverrideValues = null, string secretDeploymentValues = null)
         {
             roleOverrideValues ??= new List<string>();
 
@@ -696,7 +696,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="roleOverrideValues"> The role configuration override values from the user. </param>
         /// <param name="deploymentValues"> The JSON-serialized deployment values from the user. </param>
         /// <returns> A new <see cref="Models.NetworkFunctionValueWithoutSecrets"/> instance for mocking. </returns>
-        public static NetworkFunctionValueWithoutSecrets NetworkFunctionValueWithoutSecrets(ProvisioningState? provisioningState = null, string publisherName = null, PublisherScope? publisherScope = null, string networkFunctionDefinitionGroupName = null, string networkFunctionDefinitionVersion = null, string networkFunctionDefinitionOfferingLocation = null, DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference = null, NfviType? nfviType = null, string nfviId = null, bool? allowSoftwareUpdate = null, IEnumerable<string> roleOverrideValues = null, string deploymentValues = null)
+        public static NetworkFunctionValueWithoutSecrets NetworkFunctionValueWithoutSecrets(ProvisioningState? provisioningState = null, string publisherName = null, PublisherScope? publisherScope = null, string networkFunctionDefinitionGroupName = null, string networkFunctionDefinitionVersion = null, string networkFunctionDefinitionOfferingLocation = null, DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference = null, NfviType? nfviType = null, ResourceIdentifier nfviId = null, bool? allowSoftwareUpdate = null, IEnumerable<string> roleOverrideValues = null, string deploymentValues = null)
         {
             roleOverrideValues ??= new List<string>();
 

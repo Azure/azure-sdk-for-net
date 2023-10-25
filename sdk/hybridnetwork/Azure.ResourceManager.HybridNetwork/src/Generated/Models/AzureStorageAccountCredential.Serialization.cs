@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<string> storageAccountId = default;
+            Optional<ResourceIdentifier> storageAccountId = default;
             Optional<IReadOnlyList<AzureStorageAccountContainerCredential>> containerCredentials = default;
             Optional<DateTimeOffset> expiry = default;
             CredentialType credentialType = default;
@@ -28,7 +28,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 if (property.NameEquals("storageAccountId"u8))
                 {
-                    storageAccountId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storageAccountId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("containerCredentials"u8))

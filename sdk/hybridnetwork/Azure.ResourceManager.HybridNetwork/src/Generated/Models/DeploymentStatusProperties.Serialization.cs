@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<Status> status = default;
-            Optional<Resources> resources = default;
+            Optional<ComponentStatus> status = default;
+            Optional<ComponentKubernetesResources> resources = default;
             Optional<DateTimeOffset> nextExpectedUpdateAt = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    status = new Status(property.Value.GetString());
+                    status = new ComponentStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("resources"u8))
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    resources = Resources.DeserializeResources(property.Value);
+                    resources = ComponentKubernetesResources.DeserializeComponentKubernetesResources(property.Value);
                     continue;
                 }
                 if (property.NameEquals("nextExpectedUpdateAt"u8))

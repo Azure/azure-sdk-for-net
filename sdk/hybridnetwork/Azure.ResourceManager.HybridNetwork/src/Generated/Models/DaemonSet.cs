@@ -20,21 +20,21 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <summary> Initializes a new instance of DaemonSet. </summary>
         /// <param name="name"> The name of the daemonSet. </param>
         /// <param name="namespace"> The namespace of the daemonSet. </param>
-        /// <param name="desired"> Desired number of pods. </param>
-        /// <param name="current"> Current number of pods. </param>
-        /// <param name="ready"> Number of Ready pods. </param>
-        /// <param name="upToDate"> Number of  upto date pods. </param>
-        /// <param name="available"> Number of available pods. </param>
+        /// <param name="desiredNumberOfPods"> Desired number of pods. </param>
+        /// <param name="currentNumberOfPods"> Current number of pods. </param>
+        /// <param name="readyNumberOfPods"> Number of Ready pods. </param>
+        /// <param name="upToDateNumberOfPods"> Number of  upto date pods. </param>
+        /// <param name="availableNumberOfPods"> Number of available pods. </param>
         /// <param name="createdOn"> Creation Time of daemonSet. </param>
-        internal DaemonSet(string name, string @namespace, int? desired, int? current, int? ready, int? upToDate, int? available, DateTimeOffset? createdOn)
+        internal DaemonSet(string name, string @namespace, int? desiredNumberOfPods, int? currentNumberOfPods, int? readyNumberOfPods, int? upToDateNumberOfPods, int? availableNumberOfPods, DateTimeOffset? createdOn)
         {
             Name = name;
             Namespace = @namespace;
-            Desired = desired;
-            Current = current;
-            Ready = ready;
-            UpToDate = upToDate;
-            Available = available;
+            DesiredNumberOfPods = desiredNumberOfPods;
+            CurrentNumberOfPods = currentNumberOfPods;
+            ReadyNumberOfPods = readyNumberOfPods;
+            UpToDateNumberOfPods = upToDateNumberOfPods;
+            AvailableNumberOfPods = availableNumberOfPods;
             CreatedOn = createdOn;
         }
 
@@ -43,15 +43,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <summary> The namespace of the daemonSet. </summary>
         public string Namespace { get; }
         /// <summary> Desired number of pods. </summary>
-        public int? Desired { get; }
+        public int? DesiredNumberOfPods { get; }
         /// <summary> Current number of pods. </summary>
-        public int? Current { get; }
+        public int? CurrentNumberOfPods { get; }
         /// <summary> Number of Ready pods. </summary>
-        public int? Ready { get; }
+        public int? ReadyNumberOfPods { get; }
         /// <summary> Number of  upto date pods. </summary>
-        public int? UpToDate { get; }
+        public int? UpToDateNumberOfPods { get; }
         /// <summary> Number of available pods. </summary>
-        public int? Available { get; }
+        public int? AvailableNumberOfPods { get; }
         /// <summary> Creation Time of daemonSet. </summary>
         public DateTimeOffset? CreatedOn { get; }
     }

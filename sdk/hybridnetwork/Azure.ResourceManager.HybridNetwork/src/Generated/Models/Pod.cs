@@ -23,17 +23,17 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <summary> Initializes a new instance of Pod. </summary>
         /// <param name="name"> The name of the Pod. </param>
         /// <param name="namespace"> The namespace of the Pod. </param>
-        /// <param name="desired"> Desired number of containers. </param>
-        /// <param name="ready"> Number of ready containers. </param>
+        /// <param name="desiredNumberOfContainers"> Desired number of containers. </param>
+        /// <param name="readyNumberOfContainers"> Number of ready containers. </param>
         /// <param name="status"> The status of a pod. </param>
         /// <param name="createdOn"> Creation Time of Pod. </param>
         /// <param name="events"> Last 5 Pod events. </param>
-        internal Pod(string name, string @namespace, int? desired, int? ready, PodStatus? status, DateTimeOffset? createdOn, IReadOnlyList<PodEvent> events)
+        internal Pod(string name, string @namespace, int? desiredNumberOfContainers, int? readyNumberOfContainers, PodStatus? status, DateTimeOffset? createdOn, IReadOnlyList<PodEvent> events)
         {
             Name = name;
             Namespace = @namespace;
-            Desired = desired;
-            Ready = ready;
+            DesiredNumberOfContainers = desiredNumberOfContainers;
+            ReadyNumberOfContainers = readyNumberOfContainers;
             Status = status;
             CreatedOn = createdOn;
             Events = events;
@@ -44,9 +44,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <summary> The namespace of the Pod. </summary>
         public string Namespace { get; }
         /// <summary> Desired number of containers. </summary>
-        public int? Desired { get; }
+        public int? DesiredNumberOfContainers { get; }
         /// <summary> Number of ready containers. </summary>
-        public int? Ready { get; }
+        public int? ReadyNumberOfContainers { get; }
         /// <summary> The status of a pod. </summary>
         public PodStatus? Status { get; }
         /// <summary> Creation Time of Pod. </summary>

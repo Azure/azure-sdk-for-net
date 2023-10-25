@@ -323,6 +323,80 @@ namespace Azure.ResourceManager.HybridNetwork
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/networkServiceDesignGroups/{networkServiceDesignGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkServiceDesignGroups_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="networkServiceDesignGroupName"> The name of the network service design group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkServiceDesignGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkServiceDesignGroupName"/> is null. </exception>
+        public virtual async Task<NullableResponse<NetworkServiceDesignGroupResource>> GetIfExistsAsync(string networkServiceDesignGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkServiceDesignGroupName, nameof(networkServiceDesignGroupName));
+
+            using var scope = _networkServiceDesignGroupClientDiagnostics.CreateScope("NetworkServiceDesignGroupCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _networkServiceDesignGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkServiceDesignGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkServiceDesignGroupResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkServiceDesignGroupResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/networkServiceDesignGroups/{networkServiceDesignGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkServiceDesignGroups_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="networkServiceDesignGroupName"> The name of the network service design group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkServiceDesignGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkServiceDesignGroupName"/> is null. </exception>
+        public virtual NullableResponse<NetworkServiceDesignGroupResource> GetIfExists(string networkServiceDesignGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkServiceDesignGroupName, nameof(networkServiceDesignGroupName));
+
+            using var scope = _networkServiceDesignGroupClientDiagnostics.CreateScope("NetworkServiceDesignGroupCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _networkServiceDesignGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, networkServiceDesignGroupName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkServiceDesignGroupResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkServiceDesignGroupResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<NetworkServiceDesignGroupResource> IEnumerable<NetworkServiceDesignGroupResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
