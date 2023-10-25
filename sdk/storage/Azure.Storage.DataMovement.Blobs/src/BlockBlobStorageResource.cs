@@ -325,12 +325,12 @@ namespace Azure.Storage.DataMovement.Blobs
             return await BlobClient.DeleteIfExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
-        public override StorageResourceCheckpointData GetSourceCheckpointData()
+        protected override StorageResourceCheckpointData GetSourceCheckpointData()
         {
             return new BlobSourceCheckpointData(BlobType.Block);
         }
 
-        public override StorageResourceCheckpointData GetDestinationCheckpointData()
+        protected override StorageResourceCheckpointData GetDestinationCheckpointData()
         {
             return new BlobDestinationCheckpointData(
                 BlobType.Block,

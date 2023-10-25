@@ -197,17 +197,17 @@ namespace Azure.Storage.DataMovement.JobPlan
 
             // ParentSourcePath offset/length
             byte[] parentSourcePathBytes = Encoding.UTF8.GetBytes(ParentSourcePath);
-            JobPlanExtensions.WriteVariableLengthFieldInfo(writer, parentSourcePathBytes.Length, ref currentVariableLengthIndex);
+            writer.WriteVariableLengthFieldInfo(parentSourcePathBytes.Length, ref currentVariableLengthIndex);
 
             // ParentDestinationPath offset/length
             byte[] parentDestinationPathBytes = Encoding.UTF8.GetBytes(ParentDestinationPath);
-            JobPlanExtensions.WriteVariableLengthFieldInfo(writer, parentDestinationPathBytes.Length, ref currentVariableLengthIndex);
+            writer.WriteVariableLengthFieldInfo(parentDestinationPathBytes.Length, ref currentVariableLengthIndex);
 
             // SourceCheckpointData offset/length
-            JobPlanExtensions.WriteVariableLengthFieldInfo(writer, _sourceCheckpointData.Length, ref currentVariableLengthIndex);
+            writer.WriteVariableLengthFieldInfo(_sourceCheckpointData.Length, ref currentVariableLengthIndex);
 
             // DestinationCheckpointData offset/length
-            JobPlanExtensions.WriteVariableLengthFieldInfo(writer, _destinationCheckpointData.Length, ref currentVariableLengthIndex);
+            writer.WriteVariableLengthFieldInfo(_destinationCheckpointData.Length, ref currentVariableLengthIndex);
 
             // ParentSourcePath
             writer.Write(parentSourcePathBytes);
