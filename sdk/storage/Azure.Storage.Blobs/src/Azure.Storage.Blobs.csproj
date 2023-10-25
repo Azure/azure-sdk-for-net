@@ -35,12 +35,13 @@
     <Compile Include="$(AzureCoreSharedSources)AuthorizationChallengeParser.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="SharedCore" />
     <Compile Include="$(AzureCoreSharedSources)AzureSasCredentialSynchronousPolicy.cs" LinkBase="SharedCore" />
-    <Compile Include="$(AzureCoreSharedSources)RetriableStream.cs" LinkBase="SharedCore" />
+    <Compile Include="$(AzureCoreSharedSources)CallerShouldAuditAttribute.cs" LinkBase="SharedCore" />
     <Compile Include="$(AzureCoreSharedSources)CancellationHelper.cs" LinkBase="SharedCore" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="SharedCore" />
     <Compile Include="$(AzureCoreSharedSources)ForwardsClientCallsAttribute.cs" LinkBase="SharedCore" />
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" LinkBase="SharedCore" />
     <Compile Include="$(AzureCoreSharedSources)NoBodyResponseOfT.cs" LinkBase="SharedCore" />
+    <Compile Include="$(AzureCoreSharedSources)RetriableStream.cs" LinkBase="SharedCore" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureStorageSharedSources)ClientsideEncryption\*.cs" LinkBase="Shared" />
