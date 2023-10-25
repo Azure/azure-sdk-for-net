@@ -16,7 +16,6 @@ using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Moq;
 using NUnit.Framework;
-using NUnit.Framework.Constraints;
 
 namespace Azure.Messaging.EventHubs.Tests
 {
@@ -474,7 +473,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                            new Dictionary<string, string>
                                            {
                                                {BlobMetadataKey.OwnerIdentifier, Guid.NewGuid().ToString()},
-                                               {BlobMetadataKey.Offset, long.MinValue.ToString()},
+                                               {BlobMetadataKey.Offset, ""},
                                                {BlobMetadataKey.SequenceNumber, long.MinValue.ToString()}
                                            })
             };
@@ -580,9 +579,9 @@ namespace Azure.Messaging.EventHubs.Tests
                                            BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag)),
                                            "snapshot",
                                            new Dictionary<string, string> {
-                                               {BlobMetadataKey.OwnerIdentifier, Guid.NewGuid().ToString()},
-                                               {BlobMetadataKey.SequenceNumber, sequenceNumber.ToString() },
-                                               {BlobMetadataKey.ClientIdentifier, Identifier }
+                                               { BlobMetadataKey.OwnerIdentifier, Guid.NewGuid().ToString() },
+                                               { BlobMetadataKey.SequenceNumber, sequenceNumber.ToString() },
+                                               { BlobMetadataKey.ClientIdentifier, Identifier }
                                            })
             };
 

@@ -355,7 +355,7 @@ namespace Azure.Messaging.EventHubs
         /// <remarks>
         ///   <para>The container associated with the <paramref name="checkpointStore" /> is expected to exist; the <see cref="EventProcessorClient" />
         ///   does not assume the ability to manage the storage account and is safe to run with only read/write permission for blobs in the container.  It is
-        ///   recommended that this container be unique to the Event Hub and consumer group used by the processor and that it not conain other blobs.</para>
+        ///   recommended that this container be unique to the Event Hub and consumer group used by the processor and that it not contain other blobs.</para>
         ///
         ///   <para>If the connection string is copied from the Event Hubs namespace, it will likely not contain the name of the desired Event Hub,
         ///   which is needed.  In this case, the name can be added manually by adding ";EntityPath=[[ EVENT HUB NAME ]]" to the end of the
@@ -385,7 +385,7 @@ namespace Azure.Messaging.EventHubs
         /// <remarks>
         ///   <para>The container associated with the <paramref name="checkpointStore" /> is expected to exist; the <see cref="EventProcessorClient" />
         ///   does not assume the ability to manage the storage account and is safe to run with only read/write permission for blobs in the container.  It is
-        ///   recommended that this container be unique to the Event Hub and consumer group used by the processor and that it not conain other blobs.</para>
+        ///   recommended that this container be unique to the Event Hub and consumer group used by the processor and that it not contain other blobs.</para>
         ///
         ///   <para>If the connection string is copied from the Event Hubs namespace, it will likely not contain the name of the desired Event Hub,
         ///   which is needed.  In this case, the name can be added manually by adding ";EntityPath=[[ EVENT HUB NAME ]]" to the end of the
@@ -416,7 +416,7 @@ namespace Azure.Messaging.EventHubs
         /// <remarks>
         ///   <para>The container associated with the <paramref name="checkpointStore" /> is expected to exist; the <see cref="EventProcessorClient" />
         ///   does not assume the ability to manage the storage account and is safe to run with only read/write permission for blobs in the container.  It is
-        ///   recommended that this container be unique to the Event Hub and consumer group used by the processor and that it not conain other blobs.</para>
+        ///   recommended that this container be unique to the Event Hub and consumer group used by the processor and that it not contain other blobs.</para>
         ///
         ///   <para>If the connection string is copied from the Event Hub itself, it will contain the name of the desired Event Hub,
         ///   and can be used directly without passing the <paramref name="eventHubName" />.  The name of the Event Hub should be
@@ -522,7 +522,7 @@ namespace Azure.Messaging.EventHubs
         /// <remarks>
         ///   The container associated with the <paramref name="checkpointStore" /> is expected to exist; the <see cref="EventProcessorClient" />
         ///   does not assume the ability to manage the storage account and is safe to run with only read/write permission for blobs in the container.  It is
-        ///   recommended that this container be unique to the Event Hub and consumer group used by the processor and that it not conain other blobs.
+        ///   recommended that this container be unique to the Event Hub and consumer group used by the processor and that it not contain other blobs.
         /// </remarks>
         ///
         public EventProcessorClient(BlobContainerClient checkpointStore,
@@ -558,7 +558,7 @@ namespace Azure.Messaging.EventHubs
         /// <remarks>
         ///   The container associated with the <paramref name="checkpointStore" /> is expected to exist; the <see cref="EventProcessorClient" />
         ///   does not assume the ability to manage the storage account and is safe to run with only read/write permission for blobs in the container.  It is
-        ///   recommended that this container be unique to the Event Hub and consumer group used by the processor and that it not conain other blobs.
+        ///   recommended that this container be unique to the Event Hub and consumer group used by the processor and that it not contain other blobs.
         /// </remarks>
         ///
         public EventProcessorClient(BlobContainerClient checkpointStore,
@@ -898,14 +898,11 @@ namespace Azure.Messaging.EventHubs
 
             Argument.AssertNotNull(partitionId, nameof(partitionId));
 
-            // The default values for both sequence number and offset are long.MinValue to provide backwards compatibility. Ensure that at least one non-default value was provided.
+            // The default value for sequence number is long.MinValue to provide backwards compatibility. Ensure that if one was not provided, an offset was provided.
             if (checkpointStartingPosition.SequenceNumber == long.MinValue)
             {
-                Argument.AssertInRange(checkpointStartingPosition.Offset, long.MinValue + 1, long.MaxValue, nameof(checkpointStartingPosition.Offset));
-            }
-            else
-            {
-                Argument.AssertInRange(checkpointStartingPosition.SequenceNumber, long.MinValue + 1, long.MaxValue, nameof(checkpointStartingPosition.SequenceNumber));
+                Argument.AssertNotNull(checkpointStartingPosition.Offset, nameof(checkpointStartingPosition.Offset));
+                Argument.AssertInRange(checkpointStartingPosition.Offset.Value, long.MinValue + 1, long.MaxValue, nameof(checkpointStartingPosition.Offset));
             }
 
             Logger.UpdateCheckpointStart(partitionId, Identifier, EventHubName, ConsumerGroup);

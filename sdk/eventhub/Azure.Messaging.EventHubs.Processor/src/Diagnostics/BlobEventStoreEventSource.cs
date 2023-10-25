@@ -601,7 +601,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         }
 
         /// <summary>
-        ///   Writes an event with 6 string arguments and a value type argument into a stack allocated
+        ///   Writes an event with 5 string arguments and a value type argument into a stack allocated
         ///   <see cref="EventSource.EventData"/> struct to avoid the parameter array allocation on the WriteEvent methods.
         /// </summary>
         ///
@@ -655,7 +655,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         }
 
         /// <summary>
-        ///   Writes an event with 6 string arguments and two value type argument into a stack allocated
+        ///   Writes an event with 5 string arguments and two value type arguments into a stack allocated
         ///   <see cref="EventSource.EventData"/> struct to avoid the parameter array allocation on the WriteEvent methods.
         /// </summary>
         ///
@@ -686,7 +686,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
             fixed (char* arg4Ptr = arg4)
             fixed (char* arg5Ptr = arg5)
             {
-                var eventPayload = stackalloc EventData[8];
+                var eventPayload = stackalloc EventData[7];
 
                 eventPayload[0].Size = (arg1.Length + 1) * sizeof(char);
                 eventPayload[0].DataPointer = (IntPtr)arg1Ptr;
@@ -714,7 +714,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         }
 
         /// <summary>
-        ///   Writes an event with 6 string arguments and a value type argument into a stack allocated
+        ///   Writes an event with 6 string arguments and two value type arguments into a stack allocated
         ///   <see cref="EventSource.EventData"/> struct to avoid the parameter array allocation on the WriteEvent methods.
         /// </summary>
         ///

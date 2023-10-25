@@ -16,10 +16,10 @@ namespace Azure.Messaging.EventHubs.Processor
     public struct CheckpointPosition : IEquatable<CheckpointPosition>
     {
         /// <summary>
-        ///   If provided, this indicates that a processor should begin reading from the next event in the stream. If not provided, <see cref="CheckpointPosition.Offset"/> will be set to long.MinValue.
+        ///   If provided, this indicates that a processor should begin reading from the next event in the stream.
         /// </summary>
         ///
-        public long Offset { get; }
+        public long? Offset { get; }
 
         /// <summary>
         ///   The sequence number to associate with the checkpoint. If no offset is present, this indicates that a processor should begin reading from the next event in the stream.
@@ -34,7 +34,7 @@ namespace Azure.Messaging.EventHubs.Processor
         /// <param name="sequenceNumber">The sequence number to associate with the checkpoint. If no offset is present, this indicates that a processor should begin reading from the next event in the stream.</param>
         /// <param name="offset">An offset to associate with the checkpoint. If provided, this indicates that a processor should begin reading from the next event in the stream. If not provided, <see cref="CheckpointPosition.Offset"/> will be set to long.MinValue.</param>
         ///
-        public CheckpointPosition(long sequenceNumber, long offset = long.MinValue)
+        public CheckpointPosition(long sequenceNumber, long? offset = null)
         {
             Offset = offset;
             SequenceNumber = sequenceNumber;

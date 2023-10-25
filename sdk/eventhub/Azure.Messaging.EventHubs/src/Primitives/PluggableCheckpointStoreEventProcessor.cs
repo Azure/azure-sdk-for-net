@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -227,7 +226,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                       long offset,
                                                       long? sequenceNumber,
                                                       CancellationToken cancellationToken) =>
-            _checkpointStore.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partitionId, Identifier, new CheckpointPosition(sequenceNumber ?? long.MinValue, offset), cancellationToken);
+            _checkpointStore.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partitionId, offset, sequenceNumber, cancellationToken);
 
         /// <summary>
         ///   Creates or updates a checkpoint for a specific partition, identifying a position in the partition's event stream

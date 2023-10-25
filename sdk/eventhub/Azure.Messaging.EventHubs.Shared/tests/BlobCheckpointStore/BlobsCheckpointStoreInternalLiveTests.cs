@@ -11,7 +11,6 @@ using Azure.Messaging.EventHubs.Primitives;
 using Azure.Messaging.EventHubs.Processor;
 using Azure.Storage.Blobs;
 using NUnit.Framework;
-using NUnit.Framework.Constraints;
 
 namespace Azure.Messaging.EventHubs.Tests
 {

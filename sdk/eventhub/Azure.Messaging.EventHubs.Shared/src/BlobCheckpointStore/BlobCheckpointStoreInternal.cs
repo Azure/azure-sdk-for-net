@@ -375,21 +375,17 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                          CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            UpdateCheckpointStart(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, checkpointStartingPosition.SequenceNumber, checkpointStartingPosition.Offset);
+            UpdateCheckpointStart(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, checkpointStartingPosition.SequenceNumber, checkpointStartingPosition.Offset ?? long.MinValue);
 
             var blobName = string.Format(CultureInfo.InvariantCulture, CheckpointPrefix + partitionId, fullyQualifiedNamespace.ToLowerInvariant(), eventHubName.ToLowerInvariant(), consumerGroup.ToLowerInvariant());
             var blobClient = ContainerClient.GetBlobClient(blobName);
 
             var metadata = new Dictionary<string, string>()
             {
-                { BlobMetadataKey.Offset, checkpointStartingPosition.Offset.ToString() },
+                { BlobMetadataKey.Offset, (checkpointStartingPosition.Offset ?? long.MinValue).ToString(CultureInfo.InvariantCulture) },
                 { BlobMetadataKey.SequenceNumber, (checkpointStartingPosition.SequenceNumber).ToString(CultureInfo.InvariantCulture) },
+                { BlobMetadataKey.ClientIdentifier, clientIdentifier ?? string.Empty }
             };
-
-            if (!string.IsNullOrEmpty(clientIdentifier))
-            {
-                metadata.Add(BlobMetadataKey.ClientIdentifier, clientIdentifier);
-            }
 
             try
             {
@@ -409,17 +405,17 @@ namespace Azure.Messaging.EventHubs.Primitives
             }
             catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerNotFound)
             {
-                UpdateCheckpointError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, checkpointStartingPosition.SequenceNumber, checkpointStartingPosition.Offset, ex);
+                UpdateCheckpointError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, checkpointStartingPosition.SequenceNumber, checkpointStartingPosition.Offset ?? long.MinValue, ex);
                 throw new RequestFailedException(BlobsResourceDoesNotExist, ex);
             }
             catch (Exception ex)
             {
-                UpdateCheckpointError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, checkpointStartingPosition.SequenceNumber, checkpointStartingPosition.Offset, ex);
+                UpdateCheckpointError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, checkpointStartingPosition.SequenceNumber, checkpointStartingPosition.Offset ?? long.MinValue, ex);
                 throw;
             }
             finally
             {
-                UpdateCheckpointComplete(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, checkpointStartingPosition.SequenceNumber, checkpointStartingPosition.Offset);
+                UpdateCheckpointComplete(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, checkpointStartingPosition.SequenceNumber, checkpointStartingPosition.Offset ?? long.MinValue);
             }
         }
 
@@ -451,7 +447,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             if (metadata.TryGetValue(BlobMetadataKey.Offset, out var str) && long.TryParse(str, NumberStyles.Integer, CultureInfo.InvariantCulture, out var result))
             {
                 offset = result;
-                if (offset != long.MinValue)
+                if (offset != long.MinValue) // This means no value was passed.
                 {
                     startingPosition = EventPosition.FromOffset(result, false);
                 }
@@ -459,7 +455,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             if (metadata.TryGetValue(BlobMetadataKey.SequenceNumber, out str) && long.TryParse(str, NumberStyles.Integer, CultureInfo.InvariantCulture, out result))
             {
                 sequenceNumber = result;
-                if (sequenceNumber != long.MinValue)
+                if (sequenceNumber != long.MinValue) // This means no value was passed.
                 {
                     startingPosition ??= EventPosition.FromSequenceNumber(result, false);
                 }
