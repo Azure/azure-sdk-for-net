@@ -2090,23 +2090,23 @@ namespace Azure.Search.Documents.Indexes.Models
         public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> SourceFields { get { throw null; } }
     }
-    public partial class SemanicPrioritizedFields
-    {
-        public SemanicPrioritizedFields() { }
-        public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.SemanticField> ContentFields { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.SemanticField> KeywordFields { get { throw null; } }
-        public Azure.Search.Documents.Indexes.Models.SemanticField TitleField { get { throw null; } set { } }
-    }
     public partial class SemanticConfiguration
     {
-        public SemanticConfiguration(string name, Azure.Search.Documents.Indexes.Models.SemanicPrioritizedFields prioritizedFields) { }
+        public SemanticConfiguration(string name, Azure.Search.Documents.Indexes.Models.SemanticPrioritizedFields prioritizedFields) { }
         public string Name { get { throw null; } set { } }
-        public Azure.Search.Documents.Indexes.Models.SemanicPrioritizedFields PrioritizedFields { get { throw null; } set { } }
+        public Azure.Search.Documents.Indexes.Models.SemanticPrioritizedFields PrioritizedFields { get { throw null; } set { } }
     }
     public partial class SemanticField
     {
         public SemanticField(string fieldName) { }
         public string FieldName { get { throw null; } set { } }
+    }
+    public partial class SemanticPrioritizedFields
+    {
+        public SemanticPrioritizedFields() { }
+        public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.SemanticField> ContentFields { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.SemanticField> KeywordFields { get { throw null; } }
+        public Azure.Search.Documents.Indexes.Models.SemanticField TitleField { get { throw null; } set { } }
     }
     public partial class SemanticSettings
     {

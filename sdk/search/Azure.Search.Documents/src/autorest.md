@@ -154,7 +154,7 @@ directive:
 directive:
 - from: searchservice.json
   where: $.definitions.PrioritizedFields
-  transform: $["x-ms-client-name"] = "SemanicPrioritizedFields";
+  transform: $["x-ms-client-name"] = "SemanticPrioritizedFields";
 ```
 
 ### Rename `SemanticErrorHandling` to `SemanticErrorMode`
