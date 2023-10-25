@@ -7,8 +7,8 @@ receiver. The correct strategy to use will depend on the specific scenario.
 
 ## Storing the Entire `ServiceBusReceivedMessage`
 
-If it is necessary to store the entire message and then rehydrate it in another process, the following can be done
-to accomplish this. First we can get the raw AMQP message bytes and lock token as shown.
+If it is necessary to store the entire message and then rehydrate it in another process, use the following strategy.
+First we can get the raw AMQP message bytes and lock token as shown below:
 *Note: The lock token is not
 actually part of the AMQP message so it needs to stored separately from the AMQP bytes.*
 
