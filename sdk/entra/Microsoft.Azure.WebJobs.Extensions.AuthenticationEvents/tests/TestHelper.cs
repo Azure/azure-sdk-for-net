@@ -208,7 +208,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         /// <returns>A newly create AuthenticationEventTriggerAttribute</returns>
         public static AuthenticationEventsTriggerAttribute CreateAuthenticationEventTriggerAttribute(string tenantId, string audienceAppId)
         {
-
             return new AuthenticationEventsTriggerAttribute()
             {
                 TenantId = tenantId,
@@ -288,7 +287,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         {
             if (IsJson(expected))
             {
-                /// Todo: replace with JsonNode when deepequal equivalent is available. 
                 var jExpected = JToken.Parse(expected);
                 var jActual = JToken.Parse(actual);
 
