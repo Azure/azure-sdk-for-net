@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Support.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableSupportSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _supportTicketClientDiagnostics;
-        private SupportTicketsRestOperations _supportTicketRestClient;
+        private ClientDiagnostics _subscriptionSupportTicketSupportTicketsClientDiagnostics;
+        private SupportTicketsRestOperations _subscriptionSupportTicketSupportTicketsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableSupportSubscriptionResource"/> class for mocking. </summary>
         protected MockableSupportSubscriptionResource()
@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.Support.Mocking
         {
         }
 
-        private ClientDiagnostics SupportTicketClientDiagnostics => _supportTicketClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Support", SupportTicketResource.ResourceType.Namespace, Diagnostics);
-        private SupportTicketsRestOperations SupportTicketRestClient => _supportTicketRestClient ??= new SupportTicketsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SupportTicketResource.ResourceType));
+        private ClientDiagnostics SubscriptionSupportTicketSupportTicketsClientDiagnostics => _subscriptionSupportTicketSupportTicketsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Support", SubscriptionSupportTicketResource.ResourceType.Namespace, Diagnostics);
+        private SupportTicketsRestOperations SubscriptionSupportTicketSupportTicketsRestClient => _subscriptionSupportTicketSupportTicketsRestClient ??= new SupportTicketsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SubscriptionSupportTicketResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -44,11 +44,11 @@ namespace Azure.ResourceManager.Support.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of SupportTicketResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of SupportTicketResources and their operations over a SupportTicketResource. </returns>
-        public virtual SupportTicketCollection GetSupportTickets()
+        /// <summary> Gets a collection of SubscriptionSupportTicketResources in the SubscriptionResource. </summary>
+        /// <returns> An object representing collection of SubscriptionSupportTicketResources and their operations over a SubscriptionSupportTicketResource. </returns>
+        public virtual SubscriptionSupportTicketCollection GetSubscriptionSupportTickets()
         {
-            return GetCachedClient(client => new SupportTicketCollection(client, Id));
+            return GetCachedClient(client => new SubscriptionSupportTicketCollection(client, Id));
         }
 
         /// <summary>
@@ -69,9 +69,9 @@ namespace Azure.ResourceManager.Support.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="supportTicketName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SupportTicketResource>> GetSupportTicketAsync(string supportTicketName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SubscriptionSupportTicketResource>> GetSubscriptionSupportTicketAsync(string supportTicketName, CancellationToken cancellationToken = default)
         {
-            return await GetSupportTickets().GetAsync(supportTicketName, cancellationToken).ConfigureAwait(false);
+            return await GetSubscriptionSupportTickets().GetAsync(supportTicketName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -92,9 +92,62 @@ namespace Azure.ResourceManager.Support.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="supportTicketName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SupportTicketResource> GetSupportTicket(string supportTicketName, CancellationToken cancellationToken = default)
+        public virtual Response<SubscriptionSupportTicketResource> GetSubscriptionSupportTicket(string supportTicketName, CancellationToken cancellationToken = default)
         {
-            return GetSupportTickets().Get(supportTicketName, cancellationToken);
+            return GetSubscriptionSupportTickets().Get(supportTicketName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SubscriptionFileWorkspaceResources in the SubscriptionResource. </summary>
+        /// <returns> An object representing collection of SubscriptionFileWorkspaceResources and their operations over a SubscriptionFileWorkspaceResource. </returns>
+        public virtual SubscriptionFileWorkspaceCollection GetSubscriptionFileWorkspaces()
+        {
+            return GetCachedClient(client => new SubscriptionFileWorkspaceCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets details for a specific file workspace in an Azure subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FileWorkspaces_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="fileWorkspaceName"> File Workspace Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileWorkspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SubscriptionFileWorkspaceResource>> GetSubscriptionFileWorkspaceAsync(string fileWorkspaceName, CancellationToken cancellationToken = default)
+        {
+            return await GetSubscriptionFileWorkspaces().GetAsync(fileWorkspaceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets details for a specific file workspace in an Azure subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FileWorkspaces_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="fileWorkspaceName"> File Workspace Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileWorkspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileWorkspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SubscriptionFileWorkspaceResource> GetSubscriptionFileWorkspace(string fileWorkspaceName, CancellationToken cancellationToken = default)
+        {
+            return GetSubscriptionFileWorkspaces().Get(fileWorkspaceName, cancellationToken);
         }
 
         /// <summary>
@@ -117,11 +170,11 @@ namespace Azure.ResourceManager.Support.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = SupportTicketClientDiagnostics.CreateScope("MockableSupportSubscriptionResource.CheckSupportTicketNameAvailability");
+            using var scope = SubscriptionSupportTicketSupportTicketsClientDiagnostics.CreateScope("MockableSupportSubscriptionResource.CheckSupportTicketNameAvailability");
             scope.Start();
             try
             {
-                var response = await SupportTicketRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
+                var response = await SubscriptionSupportTicketSupportTicketsRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -151,11 +204,11 @@ namespace Azure.ResourceManager.Support.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = SupportTicketClientDiagnostics.CreateScope("MockableSupportSubscriptionResource.CheckSupportTicketNameAvailability");
+            using var scope = SubscriptionSupportTicketSupportTicketsClientDiagnostics.CreateScope("MockableSupportSubscriptionResource.CheckSupportTicketNameAvailability");
             scope.Start();
             try
             {
-                var response = SupportTicketRestClient.CheckNameAvailability(Id.SubscriptionId, content, cancellationToken);
+                var response = SubscriptionSupportTicketSupportTicketsRestClient.CheckNameAvailability(Id.SubscriptionId, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

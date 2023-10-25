@@ -5,8 +5,10 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Support.Models;
 
 namespace Azure.ResourceManager.Support
 {
@@ -19,6 +21,7 @@ namespace Azure.ResourceManager.Support
         /// <summary> Initializes a new instance of ProblemClassificationData. </summary>
         internal ProblemClassificationData()
         {
+            SecondaryConsentEnabled = new ChangeTrackingList<SecondaryConsentEnabled>();
         }
 
         /// <summary> Initializes a new instance of ProblemClassificationData. </summary>
@@ -27,12 +30,16 @@ namespace Azure.ResourceManager.Support
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="displayName"> Localized name of problem classification. </param>
-        internal ProblemClassificationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName) : base(id, name, resourceType, systemData)
+        /// <param name="secondaryConsentEnabled"> This property indicates whether secondary consent is present for problem classification. </param>
+        internal ProblemClassificationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, IReadOnlyList<SecondaryConsentEnabled> secondaryConsentEnabled) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
+            SecondaryConsentEnabled = secondaryConsentEnabled;
         }
 
         /// <summary> Localized name of problem classification. </summary>
         public string DisplayName { get; }
+        /// <summary> This property indicates whether secondary consent is present for problem classification. </summary>
+        public IReadOnlyList<SecondaryConsentEnabled> SecondaryConsentEnabled { get; }
     }
 }
