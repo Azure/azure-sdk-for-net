@@ -7,29 +7,11 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    internal partial class UnknownProcessorNodeBase : IUtf8JsonSerializable
+    internal partial class UnknownProcessorNodeBase
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("@type"u8);
-            writer.WriteStringValue(Type);
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
-            writer.WritePropertyName("inputs"u8);
-            writer.WriteStartArray();
-            foreach (var item in Inputs)
-            {
-                writer.WriteObjectValue(item);
-            }
-            writer.WriteEndArray();
-            writer.WriteEndObject();
-        }
-
         internal static UnknownProcessorNodeBase DeserializeUnknownProcessorNodeBase(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)

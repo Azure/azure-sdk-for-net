@@ -6,22 +6,11 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    internal partial class UnknownNamedLineBase : IUtf8JsonSerializable
+    internal partial class UnknownNamedLineBase
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("@type"u8);
-            writer.WriteStringValue(Type);
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
-            writer.WriteEndObject();
-        }
-
         internal static UnknownNamedLineBase DeserializeUnknownNamedLineBase(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)

@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <param name="storageMoverName"> The name of the Storage Mover resource. </param>
         /// <param name="projectName"> The name of the Project resource. </param>
         /// <param name="jobDefinitionName"> The name of the Job Definition resource. </param>
-        /// <param name="data"> The JobDefinition to use. </param>
+        /// <param name="data"> The JobDefinitionData to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageMoverName"/>, <paramref name="projectName"/>, <paramref name="jobDefinitionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageMoverName"/>, <paramref name="projectName"/> or <paramref name="jobDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <param name="storageMoverName"> The name of the Storage Mover resource. </param>
         /// <param name="projectName"> The name of the Project resource. </param>
         /// <param name="jobDefinitionName"> The name of the Job Definition resource. </param>
-        /// <param name="data"> The JobDefinition to use. </param>
+        /// <param name="data"> The JobDefinitionData to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageMoverName"/>, <paramref name="projectName"/>, <paramref name="jobDefinitionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageMoverName"/>, <paramref name="projectName"/> or <paramref name="jobDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
