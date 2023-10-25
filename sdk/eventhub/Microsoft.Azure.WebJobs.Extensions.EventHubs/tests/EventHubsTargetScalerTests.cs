@@ -77,12 +77,12 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
         [Test]
         // Using default concurrency of 10.
-        [TestCase(10, 10, null, 1)]
-        [TestCase(20, 10, null, 2)]
-        [TestCase(30, 10, null, 3)]
-        [TestCase(60, 10, null, 10)]
-        [TestCase(70, 10, null, 10)]
-        [TestCase(150, 10, null, 10)]
+        [TestCase(10, 10, 10, 1)]
+        [TestCase(20, 10, 10, 2)]
+        [TestCase(30, 10, 10, 3)]
+        [TestCase(60, 10, 10, 10)]
+        [TestCase(70, 10, 10, 10)]
+        [TestCase(150, 10, 10, 10)]
         [TestCase(2147483650, 1, 1, 1)] // Testing eventCount > int.MaxInt is 2147483647
         [TestCase(21474836500, 1000, 1, 1000)] // Testing eventCount > int.MaxInt is 2147483647, with concurrency 1 to force overflow
         public void GetScaleResultInternal_ReturnsExpected(long eventCount, int partitionCount, int? concurrency, int expectedTargetWorkerCount)
