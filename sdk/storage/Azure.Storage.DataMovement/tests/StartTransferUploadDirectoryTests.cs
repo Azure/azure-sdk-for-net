@@ -61,6 +61,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Set transfer options
             options ??= new DataTransferOptions();
+            destinationPrefix ??= GetNewBlobDirectoryName();
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
 
             transferManagerOptions ??= new TransferManagerOptions()
