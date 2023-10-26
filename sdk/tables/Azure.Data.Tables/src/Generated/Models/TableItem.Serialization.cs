@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 
 namespace Azure.Data.Tables.Models
@@ -46,6 +47,14 @@ namespace Azure.Data.Tables.Models
                 }
             }
             return new TableItem(tableName.Value, odataType.Value, odataId.Value, odataEditLink.Value);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TableItem FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTableItem(document.RootElement);
         }
     }
 }

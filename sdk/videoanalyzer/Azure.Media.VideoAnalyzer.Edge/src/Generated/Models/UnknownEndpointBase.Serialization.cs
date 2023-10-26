@@ -10,23 +10,8 @@ using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    internal partial class UnknownEndpointBase : IUtf8JsonSerializable
+    internal partial class UnknownEndpointBase
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("@type"u8);
-            writer.WriteStringValue(Type);
-            if (Optional.IsDefined(Credentials))
-            {
-                writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials);
-            }
-            writer.WritePropertyName("url"u8);
-            writer.WriteStringValue(Url);
-            writer.WriteEndObject();
-        }
-
         internal static UnknownEndpointBase DeserializeUnknownEndpointBase(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
