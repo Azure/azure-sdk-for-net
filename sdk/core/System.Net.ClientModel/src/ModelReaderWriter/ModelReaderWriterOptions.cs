@@ -21,6 +21,11 @@ namespace System.Net.ClientModel.Core
         /// </summary>
         public static readonly ModelReaderWriterOptions DefaultWireOptions = _singletonMap[ModelReaderWriterFormat.Wire];
 
+        /// <summary>
+        /// Default options for writing models into the JSON format.
+        /// </summary>
+        public static readonly ModelReaderWriterOptions DefaultJsonOptions = _singletonMap[ModelReaderWriterFormat.Json];
+
         public static ModelReaderWriterOptions GetOptions(ModelReaderWriterFormat format)
             => _singletonMap.TryGetValue(format, out ModelReaderWriterOptions? options) ? options! : new ModelReaderWriterOptions(format);
 

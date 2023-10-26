@@ -3,6 +3,8 @@
 
 using NUnit.Framework;
 using OpenAI;
+using System.Net.ClientModel.Core;
+using System.Threading;
 
 namespace System.Net.ClientModel.Tests;
 
@@ -30,5 +32,17 @@ public class OpenAIClientTests
         Choice choice = result.Value.Choices[0];
 
         Assert.IsTrue(choice.Text.StartsWith("\n\nLife is"));
+    }
+
+    [Test]
+    public void ModelFactory()
+    {
+        Completions model = ModelReaderWriter.Create<Completions>(new
+        {
+            Choices = new object[] {
+               new { Text = "Good!" }
+            }
+        });
+        Assert.AreEqual(model.Choices[0].Text, "Good!");
     }
 }

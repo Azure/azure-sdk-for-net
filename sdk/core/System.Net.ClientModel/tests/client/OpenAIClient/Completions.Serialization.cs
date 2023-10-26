@@ -7,16 +7,24 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Net.ClientModel;
 using System.Net.ClientModel.Core;
 using System.Net.ClientModel.Internal;
 using System.Text.Json;
 
 namespace OpenAI;
 
-public partial class Completions
+public partial class Completions : IJsonModel<Completions>
 {
-    internal static Completions DeserializeCompletions(JsonElement element)
+    // needed for deserialization
+    private Completions() { }
+
+    internal static Completions DeserializeCompletions(JsonElement element, ModelReaderWriterOptions options)
     {
+        bool wire = options.Format == ModelReaderWriterFormat.Wire;
+        if (options.Format != ModelReaderWriterFormat.Json) throw new ArgumentOutOfRangeException(nameof(options.Format));
+
         if (element.ValueKind == JsonValueKind.Null)
         {
             return null;
@@ -28,17 +36,17 @@ public partial class Completions
         CompletionsUsage usage = default;
         foreach (var property in element.EnumerateObject())
         {
-            if (property.NameEquals("id"u8))
+            if (property.NameEquals(wire?"id"u8:"Id"u8))
             {
                 id = property.Value.GetString();
                 continue;
             }
-            if (property.NameEquals("created"u8))
+            if (property.NameEquals(wire?"created"u8:"Created"u8))
             {
                 created = DateTimeOffset.FromUnixTimeSeconds(property.Value.GetInt64());
                 continue;
             }
-            if (property.NameEquals("prompt_annotations"u8))
+            if (property.NameEquals(wire?"prompt_annotations"u8:"PromptFilterResults"u8))
             {
                 if (property.Value.ValueKind == JsonValueKind.Null)
                 {
@@ -52,17 +60,17 @@ public partial class Completions
                 promptAnnotations = array;
                 continue;
             }
-            if (property.NameEquals("choices"u8))
+            if (property.NameEquals(wire?"choices"u8:"Choices"u8))
             {
                 List<Choice> array = new List<Choice>();
                 foreach (var item in property.Value.EnumerateArray())
                 {
-                    array.Add(Choice.DeserializeChoice(item));
+                    array.Add(Choice.DeserializeChoice(item, options));
                 }
                 choices = array;
                 continue;
             }
-            if (property.NameEquals("usage"u8))
+            if (property.NameEquals(wire?"usage"u8:"Usage"u8))
             {
                 usage = CompletionsUsage.DeserializeCompletionsUsage(property.Value);
                 continue;
@@ -76,7 +84,47 @@ public partial class Completions
     internal static Completions FromResponse(PipelineResponse response)
     {
         using var document = JsonDocument.Parse(response.Content);
-        return DeserializeCompletions(document.RootElement);
+        return DeserializeCompletions(document.RootElement, ModelReaderWriterOptions.DefaultWireOptions);
+    }
+
+    Completions IJsonModel<Completions>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+    {
+        using var json = JsonDocument.ParseValue(ref reader);
+        return DeserializeCompletions(json.RootElement, options);
+    }
+
+    Completions IModel<Completions>.Read(BinaryData data, ModelReaderWriterOptions options)
+    {
+        using var json = JsonDocument.Parse(data.ToMemory());
+        return DeserializeCompletions(json.RootElement, options);
+    }
+
+    void IJsonModel<Completions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+    {
+        bool wire = options.Format == ModelReaderWriterFormat.Wire;
+        if (options.Format != ModelReaderWriterFormat.Json) throw new ArgumentOutOfRangeException(nameof(options.Format));
+
+        ModelSerializerHelper.ValidateFormat<Completions>(this, options.Format);
+
+        writer.WriteStartObject();
+        writer.WriteString(wire?"id"u8:"Id"u8, this.Id);
+        writer.WriteString(wire?"created"u8:"Created"u8, this.Created);
+        if (this.Choices.Count > 0)
+        {
+            writer.WriteStartArray(wire?"choices"u8:"Choices"u8);
+            foreach(Choice choice in this.Choices)
+            {
+                choice.Write(writer, options);
+            }
+            writer.WriteEndArray();
+        }
+
+        writer.WriteEndObject();
+    }
+
+    BinaryData IModel<Completions>.Write(ModelReaderWriterOptions options)
+    {
+        return ModelReaderWriter.WriteCore(this, options);
     }
 }
 

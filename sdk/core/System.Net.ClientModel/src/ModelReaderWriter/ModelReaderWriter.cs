@@ -4,6 +4,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Net.ClientModel.Core;
 using System.Net.ClientModel.Internal;
+using System.Text.Json;
 
 namespace System.Net.ClientModel.Core
 {
@@ -12,6 +13,21 @@ namespace System.Net.ClientModel.Core
     /// </summary>
     public static class ModelReaderWriter
     {
+        /// <summary>
+        /// Creates an instance of a model from an instance of an anonymous type.
+        /// </summary>
+        /// <typeparam name="T">The type of the model to create.</typeparam>
+        /// <param name="jsonSerializable">An instance of an anonymous type representing the model</param>
+        /// <returns>A <typeparamref name="T"/> instance.</returns>
+        public static T? Create<T>(object jsonSerializable) where T : IJsonModel<T>
+        {
+            BinaryData json = BinaryData.FromObjectAsJson(jsonSerializable);
+            var reader = new Utf8JsonReader(json);
+            IJsonModel<T> instance = (T)Activator.CreateInstance(typeof(T), true)!;
+            T? read = instance.Read(ref reader, ModelReaderWriterOptions.DefaultJsonOptions);
+            return read;
+        }
+
         /// <summary>
         /// Converts the value of a model into a <see cref="BinaryData"/>.
         /// </summary>

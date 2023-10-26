@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Net.ClientModel;
 using System.Net.ClientModel.Core;
 using System.Net.ClientModel.Internal;
 using System.Text.Json;
@@ -13,8 +15,11 @@ namespace OpenAI;
 
 public partial class Choice
     {
-        internal static Choice DeserializeChoice(JsonElement element)
+        internal static Choice DeserializeChoice(JsonElement element, ModelReaderWriterOptions options)
         {
+            bool wire = options.Format == ModelReaderWriterFormat.Wire;
+            if (options.Format != ModelReaderWriterFormat.Json) throw new ArgumentOutOfRangeException(nameof(options.Format));
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,17 +31,17 @@ public partial class Choice
             CompletionsFinishReason? finishReason = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("text"u8))
+                if (property.NameEquals(wire?"text"u8:"Text"u8))
                 {
                     text = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("index"u8))
+                if (property.NameEquals(wire?"index"u8:"Index"u8))
                 {
                     index = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("content_filter_results"u8))
+                if (property.NameEquals(wire?"content_filter_results"u8:"ContentFilterResults"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -45,7 +50,7 @@ public partial class Choice
                     contentFilterResults = ContentFilterResults.DeserializeContentFilterResults(property.Value);
                     continue;
                 }
-                if (property.NameEquals("logprobs"u8))
+                if (property.NameEquals(wire?"logprobs"u8:"LogProbabilityModel"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -55,7 +60,7 @@ public partial class Choice
                     logprobs = CompletionsLogProbabilityModel.DeserializeCompletionsLogProbabilityModel(property.Value);
                     continue;
                 }
-                if (property.NameEquals("finish_reason"u8))
+                if (property.NameEquals(wire?"finish_reason"u8:"FinishReason"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -74,7 +79,17 @@ public partial class Choice
         internal static Choice FromResponse(PipelineResponse response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeChoice(document.RootElement);
+            return DeserializeChoice(document.RootElement, ModelReaderWriterOptions.DefaultWireOptions);
+        }
+
+        internal void Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            bool wire = options.Format == ModelReaderWriterFormat.Wire;
+            if (options.Format != ModelReaderWriterFormat.Json) throw new ArgumentOutOfRangeException(nameof(options.Format));
+
+            writer.WriteStartObject();
+            writer.WriteString(wire?"text"u8:"Text"u8, this.Text);
+            writer.WriteEndObject();
         }
     }
 
