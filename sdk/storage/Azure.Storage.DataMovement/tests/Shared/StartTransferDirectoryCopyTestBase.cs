@@ -647,7 +647,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        //[LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
+        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/33082
         public async Task StartTransfer_AwaitCompletion()
         {
             // Arrange
