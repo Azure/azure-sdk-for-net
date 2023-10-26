@@ -60,7 +60,7 @@ In order to rehydrate the message in another process using the lock token, we wo
 `ServiceBusReceivedMessage` other than `LockToken` will have default values.*
 
 ```C# Snippet:ServiceBusReadReceivedMessageLockToken
-ServiceBusReceivedMessage rehydratedMessage = ServiceBusModelFactory.ServiceBusReceivedMessage(lockTokenGuid: new Guid(lockTokenBytes.Span));
+ServiceBusReceivedMessage rehydratedMessage = ServiceBusModelFactory.ServiceBusReceivedMessage(lockTokenGuid: new Guid(lockTokenBytes.ToArray()));
 
 var client2 = new ServiceBusClient(connectionString);
 ServiceBusReceiver receiver2 = client2.CreateReceiver(queueName);
