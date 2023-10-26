@@ -117,12 +117,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
                 return false;
             }
 
-            // try parsing input to json object
-            using (var jsonDoc = JsonDocument.Parse(input))
-            {
-                return jsonDoc != null;
-            }
-        }
+			// try parsing input to json object
+			using var _ = JsonDocument.Parse(input);
+			return true;
+		}
 
         internal static AuthenticationEventAction GetEventActionForActionType(string actionType)
         {
