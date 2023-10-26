@@ -1,12 +1,15 @@
 # Release History
 
-## 1.2.0 (2023-10-25)
+## 1.2.0 (2023-10-26)
 
 ### Features Added
 
-- Private Link support for DesktopVirtualization Management Client, more information can be found [here](https://learn.microsoft.com/en-us/azure/private-link/private-link-overview).
+- Private Link support for DesktopVirtualization, more information can be found [here](https://learn.microsoft.com/en-us/azure/private-link/private-link-overview).
+- Scaling Plan Personal Schedules Added.
 
 ### Breaking Changes
+
+- Scaling Parameter "rampDownCapacityThresholdPct" minimum value changed from 0 to 1.
 
 ### Bugs Fixed
 
