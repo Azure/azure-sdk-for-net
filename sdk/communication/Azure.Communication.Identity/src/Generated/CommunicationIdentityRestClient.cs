@@ -12,7 +12,6 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Communication.Identity.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -53,20 +52,28 @@ namespace Azure.Communication.Identity
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            CommunicationIdentityCreateRequest communicationIdentityCreateRequest = new CommunicationIdentityCreateRequest()
+            if (createTokenWithScopes == null || !createTokenWithScopes.Any())
             {
-                ExpiresInMinutes = expiresInMinutes
-            };
-            if (createTokenWithScopes != null)
-            {
-                foreach (var value in createTokenWithScopes)
-                {
-                    communicationIdentityCreateRequest.CreateTokenWithScopes.Add(value);
-                }
+                createTokenWithScopes = new ChangeTrackingList<CommunicationTokenScope>();
             }
-            var model = communicationIdentityCreateRequest;
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteStartObject();
+            if (Optional.IsCollectionDefined(createTokenWithScopes))
+            {
+                content.JsonWriter.WritePropertyName("createTokenWithScopes"u8);
+                content.JsonWriter.WriteStartArray();
+                foreach (var item in createTokenWithScopes)
+                {
+                    content.JsonWriter.WriteStringValue(item.ToString());
+                }
+                content.JsonWriter.WriteEndArray();
+            }
+            if (Optional.IsDefined(expiresInMinutes))
+            {
+                content.JsonWriter.WritePropertyName("expiresInMinutes"u8);
+                content.JsonWriter.WriteNumberValue(expiresInMinutes.Value);
+            }
+            content.JsonWriter.WriteEndObject();
             request.Content = content;
             return message;
         }
@@ -246,9 +253,15 @@ namespace Azure.Communication.Identity
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new TeamsUserExchangeTokenRequest(token, appId, userId);
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteStartObject();
+            content.JsonWriter.WritePropertyName("token"u8);
+            content.JsonWriter.WriteStringValue(token);
+            content.JsonWriter.WritePropertyName("appId"u8);
+            content.JsonWriter.WriteStringValue(appId);
+            content.JsonWriter.WritePropertyName("userId"u8);
+            content.JsonWriter.WriteStringValue(userId);
+            content.JsonWriter.WriteEndObject();
             request.Content = content;
             return message;
         }
@@ -341,12 +354,21 @@ namespace Azure.Communication.Identity
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new CommunicationIdentityAccessTokenRequest(scopes.ToList())
-            {
-                ExpiresInMinutes = expiresInMinutes
-            };
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteStartObject();
+            content.JsonWriter.WritePropertyName("scopes"u8);
+            content.JsonWriter.WriteStartArray();
+            foreach (var item in scopes)
+            {
+                content.JsonWriter.WriteStringValue(item.ToString());
+            }
+            content.JsonWriter.WriteEndArray();
+            if (Optional.IsDefined(expiresInMinutes))
+            {
+                content.JsonWriter.WritePropertyName("expiresInMinutes"u8);
+                content.JsonWriter.WriteNumberValue(expiresInMinutes.Value);
+            }
+            content.JsonWriter.WriteEndObject();
             request.Content = content;
             return message;
         }
