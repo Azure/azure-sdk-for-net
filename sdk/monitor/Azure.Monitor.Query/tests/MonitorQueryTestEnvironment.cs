@@ -39,7 +39,7 @@ namespace Azure.Monitor.Query.Tests
                     return MetricsQueryAudience.AzurePublicCloud.ToString();
             }
 
-            if (authorityHost == AzureAuthorityHosts.AzureChina)
+            else if (authorityHost == AzureAuthorityHosts.AzureChina)
             {
                 if (AzureAuthorityHosts.AzureChina.ToString() == LogsQueryAudience.AzureChina)
                     return LogsQueryAudience.AzurePublicCloud.ToString();
@@ -47,7 +47,7 @@ namespace Azure.Monitor.Query.Tests
                     return MetricsQueryAudience.AzureChina.ToString();
             }
 
-            if (authorityHost == AzureAuthorityHosts.AzureGovernment)
+            else if (authorityHost == AzureAuthorityHosts.AzureGovernment)
             {
                 if (AzureAuthorityHosts.AzureGovernment.ToString() == LogsQueryAudience.AzureGovernment)
                     return LogsQueryAudience.AzureGovernment.ToString();
