@@ -10,6 +10,11 @@ This release updates the Azure DevCenter library to use the 2023-04-01 GA API.
  - `DeploymentEnvironmentsClient` now works with "environment definitions" instead of "catalog items"
  - Creating a new environment requires passing `environmentDefinitionName` instead of `catalogItemName`
  - Creating a new environment requires passing an additional parameter `catalogName`
+ - `DevCenterClientOptions` renamed to `AzureDeveloperDevCenterClientOptions`
+ - No more default parameters in the clients. `userId`, `filter`, `maxCount`, `hibernate` and `context` parameters need to be specified in the methods.   
+ - `GetAction` renamed to `GetDevBoxAction`
+ - `GetActions` renamed to `GetDevBoxActions`
+
 
 ## 1.0.0-beta.2 (2023-02-07)
 This release updates the Azure DevCenter library to use the 2022-11-11-preview API.
