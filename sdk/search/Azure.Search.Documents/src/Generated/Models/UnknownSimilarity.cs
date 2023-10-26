@@ -5,11 +5,9 @@
 
 #nullable disable
 
-using Azure.Search.Documents.Indexes.Models;
-
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> The UnknownSimilarity. </summary>
+    /// <summary> Unknown version of Similarity. </summary>
     internal partial class UnknownSimilarity : SimilarityAlgorithm
     {
         /// <summary> Initializes a new instance of UnknownSimilarity. </summary>

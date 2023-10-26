@@ -5,11 +5,9 @@
 
 #nullable disable
 
-using Azure.Search.Documents.Indexes.Models;
-
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> The UnknownTokenFilter. </summary>
+    /// <summary> Unknown version of TokenFilter. </summary>
     internal partial class UnknownTokenFilter : TokenFilter
     {
         /// <summary> Initializes a new instance of UnknownTokenFilter. </summary>

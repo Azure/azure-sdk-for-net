@@ -6,23 +6,11 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
-using Azure.Search.Documents.Indexes.Models;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    internal partial class UnknownVectorSearchAlgorithmConfiguration : IUtf8JsonSerializable
+    internal partial class UnknownVectorSearchAlgorithmConfiguration
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
-            writer.WriteEndObject();
-        }
-
         internal static UnknownVectorSearchAlgorithmConfiguration DeserializeUnknownVectorSearchAlgorithmConfiguration(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
