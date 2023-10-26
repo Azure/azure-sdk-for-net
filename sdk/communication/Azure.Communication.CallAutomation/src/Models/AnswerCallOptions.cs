@@ -32,9 +32,9 @@ namespace Azure.Communication.CallAutomation
         public Uri CallbackUri { get; }
 
         /// <summary>
-        /// The CallIntelligenceOptions to provide resources such as Azure Cognitive Services
+        /// The endpoint URL of the Azure Cognitive Services resource attached
         /// </summary>
-        public CallIntelligenceOptions CallIntelligenceOptions { get; set; }
+        public Uri CognitiveServicesEndpoint { get; set; }
 
         /// <summary>
         /// The identifier of the call automation entity which answers the call.

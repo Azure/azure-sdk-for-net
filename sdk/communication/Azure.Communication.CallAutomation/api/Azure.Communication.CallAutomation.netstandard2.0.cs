@@ -48,7 +48,7 @@ namespace Azure.Communication.CallAutomation
         public AnswerCallOptions(string incomingCallContext, System.Uri callbackUri) { }
         public Azure.Communication.CommunicationUserIdentifier AnsweredBy { get { throw null; } set { } }
         public System.Uri CallbackUri { get { throw null; } }
-        public Azure.Communication.CallAutomation.CallIntelligenceOptions CallIntelligenceOptions { get { throw null; } set { } }
+        public System.Uri CognitiveServicesEndpoint { get { throw null; } set { } }
         public string IncomingCallContext { get { throw null; } }
         public string OperationContext { get { throw null; } set { } }
     }
@@ -208,11 +208,6 @@ namespace Azure.Communication.CallAutomation
     {
         internal CallDisconnected() { }
         public static Azure.Communication.CallAutomation.CallDisconnected Deserialize(string content) { throw null; }
-    }
-    public partial class CallIntelligenceOptions
-    {
-        public CallIntelligenceOptions(System.Uri cognitiveServicesEndpoint) { }
-        public System.Uri CognitiveServicesEndpoint { get { throw null; } set { } }
     }
     public partial class CallInvite
     {
@@ -528,8 +523,8 @@ namespace Azure.Communication.CallAutomation
     {
         public CreateCallOptions(Azure.Communication.CallAutomation.CallInvite callInvite, System.Uri callbackUri) { }
         public System.Uri CallbackUri { get { throw null; } }
-        public Azure.Communication.CallAutomation.CallIntelligenceOptions CallIntelligenceOptions { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.CallInvite CallInvite { get { throw null; } }
+        public System.Uri CognitiveServicesEndpoint { get { throw null; } set { } }
         public string OperationContext { get { throw null; } set { } }
     }
     public partial class CreateCallResult
@@ -544,7 +539,7 @@ namespace Azure.Communication.CallAutomation
     {
         public CreateGroupCallOptions(System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> targets, System.Uri callbackUri) { }
         public System.Uri CallbackUri { get { throw null; } }
-        public Azure.Communication.CallAutomation.CallIntelligenceOptions CallIntelligenceOptions { get { throw null; } set { } }
+        public System.Uri CognitiveServicesEndpoint { get { throw null; } set { } }
         public string OperationContext { get { throw null; } set { } }
         public Azure.Communication.PhoneNumberIdentifier SourceCallerIdNumber { get { throw null; } set { } }
         public string SourceDisplayName { get { throw null; } set { } }

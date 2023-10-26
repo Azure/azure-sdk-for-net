@@ -200,7 +200,7 @@ namespace Azure.Communication.CallAutomation
             AnswerCallRequestInternal request = new AnswerCallRequestInternal(options.IncomingCallContext, options.CallbackUri.AbsoluteUri);
 
             // Add CallIntelligenceOptions such as custom cognitive service domain name
-            request.CognitiveServicesEndpoint = options.CallIntelligenceOptions?.CognitiveServicesEndpoint?.AbsoluteUri;
+            request.CognitiveServicesEndpoint = options.CognitiveServicesEndpoint?.AbsoluteUri;
 
             request.AnsweredBy = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id);
             request.OperationContext = options.OperationContext;
@@ -562,7 +562,7 @@ namespace Azure.Communication.CallAutomation
             };
 
             // Add CallIntelligenceOptions such as custom cognitive service domain name
-            request.CognitiveServicesEndpoint = options.CallIntelligenceOptions?.CognitiveServicesEndpoint?.AbsoluteUri;
+            request.CognitiveServicesEndpoint = options.CognitiveServicesEndpoint?.AbsoluteUri;
 
             request.OperationContext = options.OperationContext;
             return request;
@@ -582,7 +582,7 @@ namespace Azure.Communication.CallAutomation
             };
 
             // Add CallIntelligenceOptions such as custom cognitive service domain name
-            request.CognitiveServicesEndpoint = options.CallIntelligenceOptions?.CognitiveServicesEndpoint?.AbsoluteUri;
+            request.CognitiveServicesEndpoint = options.CognitiveServicesEndpoint?.AbsoluteUri;
 
             request.OperationContext = options.OperationContext;
             return request;
