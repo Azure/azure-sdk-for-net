@@ -28,11 +28,6 @@ namespace Azure.AI.FormRecognizer.Training
                 }
                 if (property.NameEquals("accuracy"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        accuracy = null;
-                        continue;
-                    }
                     accuracy = property.Value.GetSingle();
                     continue;
                 }
