@@ -3,9 +3,9 @@
 The message settlement APIs on the `ServiceBusReceiver` require passing in the
 `ServiceBusReceivedMessage`. This can be limiting for scenarios in which the message needs to be persisted and then
 settled across process boundaries. There are two strategies that can be used for settling a message with a different
-receiver. The correct strategy to use will depend on the specific scenario.
+receiver. The recommended strategy depends on the specific application scenario.
 
-## Storing the Entire `ServiceBusReceivedMessage`
+## Storing the entire `ServiceBusReceivedMessage`
 
 If it is necessary to store the entire message and then rehydrate it in another process, use the following strategy.
 First we can get the raw AMQP message bytes and lock token as shown below:  
@@ -36,10 +36,10 @@ ServiceBusReceiver receiver2 = client2.CreateReceiver(queueName);
 await receiver2.CompleteMessageAsync(rehydratedMessage);
 ```
 
-## Storing Only the Lock Token
+## Storing only the lock token
 
-If the entire message is not needed when settling the message in a different process, you can simply store off the
-lock token. In the example below, we store off the lock token with the GUID bytes. You can also simply store a
+If the entire message is not needed when settling the message in a different process, you can simply preserve the
+lock token. In the example below, we store off the lock token using its GUID bytes. You can also simply store a
 string if that is easier for your scenario.
 
 ```C# Snippet:ServiceBusWriteReceivedMessageLockToken
@@ -53,7 +53,6 @@ ServiceBusReceiver receiver1 = client1.CreateReceiver(queueName);
 ServiceBusReceivedMessage receivedMessage = await receiver1.ReceiveMessageAsync();
 ReadOnlyMemory<byte> lockTokenBytes = Guid.Parse(receivedMessage.LockToken).ToByteArray();
 ```
-
 
 In order to rehydrate the message in another process using the lock token, we would do the following:  
 *Note: Because we only stored the lock token, when we rehydrate the message all of the properties of the
