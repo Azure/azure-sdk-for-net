@@ -10,23 +10,8 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class UnknownDataSourceCredential : IUtf8JsonSerializable
+    internal partial class UnknownDataSourceCredential
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("dataSourceCredentialType"u8);
-            writer.WriteStringValue(CredentialKind.ToString());
-            writer.WritePropertyName("dataSourceCredentialName"u8);
-            writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("dataSourceCredentialDescription"u8);
-                writer.WriteStringValue(Description);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static UnknownDataSourceCredential DeserializeUnknownDataSourceCredential(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
