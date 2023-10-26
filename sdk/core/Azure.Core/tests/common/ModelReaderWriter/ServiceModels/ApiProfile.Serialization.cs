@@ -11,7 +11,7 @@ using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core.Tests.Common;
 
-namespace Azure.Core.Tests.ResourceManager.Resources.Models
+namespace Azure.Core.Tests.Models.ResourceManager.Resources
 {
     public partial class ApiProfile : IUtf8JsonSerializable, IJsonModel<ApiProfile>
     {

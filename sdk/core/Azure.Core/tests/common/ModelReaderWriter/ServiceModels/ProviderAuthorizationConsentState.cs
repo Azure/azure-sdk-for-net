@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Core.Tests.ResourceManager.Resources.Models
+namespace Azure.Core.Tests.Models.ResourceManager.Resources
 {
     /// <summary> The provider authorization consent state. </summary>
     public readonly partial struct ProviderAuthorizationConsentState : IEquatable<ProviderAuthorizationConsentState>

@@ -5,13 +5,15 @@ using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Configs;
 using System.IO;
 using System.Net.ClientModel.Core;
+using System.Net.ClientModel.Tests.Client.Models;
 using System.Reflection;
 using System.Text.Json;
 
 namespace System.Net.ClientModel.Tests.Internal.Perf
 {
     [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
-    public abstract class JsonModelBenchmark<T> where T : class, IJsonModel<T>
+    public abstract class JsonModelBenchmark<T>
+        where T : class, IJsonModel<T>
     {
         private string _json;
         protected T _model;
@@ -38,6 +40,17 @@ namespace System.Net.ClientModel.Tests.Internal.Perf
         public string Write_JsonSerializer()
         {
             return JsonSerializer.Serialize(_model);
+        }
+
+        [Benchmark]
+        [BenchmarkCategory("JsonSerializer")]
+        public string Write_JsonSerializer_SourceGenerated()
+        {
+#if NET6_0_OR_GREATER
+            return JsonSerializer.Serialize(_model, _model.GetType(), SourceGenerationContext.Default);
+#else
+            return Write_JsonSerializer();
+#endif
         }
 
         [Benchmark]
@@ -87,6 +100,18 @@ namespace System.Net.ClientModel.Tests.Internal.Perf
         {
             using var stream = new MemoryStream();
             return JsonSerializer.Deserialize(_jsonSerializerResult, _model.GetType());
+        }
+
+        [Benchmark]
+        [BenchmarkCategory("JsonSerializer")]
+        public object Read_JsonSerializer_SourceGeneration()
+        {
+#if NET6_0_OR_GREATER
+            using var stream = new MemoryStream();
+            return JsonSerializer.Deserialize(_jsonSerializerResult, _model.GetType(), SourceGenerationContext.Default);
+#else
+            return Read_JsonSerializer();
+#endif
         }
 
         [Benchmark]

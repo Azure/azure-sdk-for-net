@@ -6,7 +6,7 @@ using System.IO;
 using System.Net.ClientModel.Core;
 using System.Net.ClientModel.Tests.Client;
 using System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
-using System.Net.ClientModel.Tests.Client.ResourceManager.Resources;
+using System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources;
 using System.Reflection;
 using System.Text.Json;
 using System.Threading;

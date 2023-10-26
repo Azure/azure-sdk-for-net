@@ -11,11 +11,9 @@ using System.Net.ClientModel;
 using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core.Tests.Common;
-using Azure.Core.Tests.ResourceManager.Compute.Models;
-using Azure.Core.Tests.ResourceManager.Models;
-using Azure.Core.Tests.ResourceManager.Resources.Models;
+using Azure.Core.Tests.Models.ResourceManager.Resources;
 
-namespace Azure.Core.Tests.ResourceManager.Compute
+namespace Azure.Core.Tests.Models.ResourceManager.Compute
 {
     public partial class AvailabilitySetData : IUtf8JsonSerializable, IJsonModel<AvailabilitySetData>
     {

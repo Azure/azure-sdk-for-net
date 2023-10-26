@@ -6,9 +6,8 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core.Tests.ResourceManager.Resources.Models;
 
-namespace Azure.Core.Tests.ResourceManager.Resources
+namespace Azure.Core.Tests.Models.ResourceManager.Resources
 {
     /// <summary>
     /// A class representing the ResourceProvider data model.

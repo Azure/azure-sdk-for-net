@@ -9,7 +9,7 @@ using System.Globalization;
 using System.Net.ClientModel.Core;
 using System.Text.Json;
 
-namespace System.Net.ClientModel.Tests.Client.ResourceManager.Compute.Models
+namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Compute
 {
     public partial class InstanceViewStatus : IJsonModel<InstanceViewStatus>
     {

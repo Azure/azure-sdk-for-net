@@ -35,10 +35,6 @@
     <PackageReference Include="System.Memory.Data" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\System.Net.ClientModel\src\System.Net.ClientModel.csproj" />
-  </ItemGroup>
-
   <!-- Keep System.Diagnostics.DiagnosticSource 4.6.0 for netcoreapp2.1 support. -->
   <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.1' ">
     <PackageReference Include="System.Diagnostics.DiagnosticSource" VersionOverride="4.6.0" />

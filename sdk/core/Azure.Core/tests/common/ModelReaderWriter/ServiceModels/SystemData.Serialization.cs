@@ -13,7 +13,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core.Tests.Common;
 
-namespace Azure.Core.Tests.ResourceManager.Models
+namespace Azure.Core.Tests.Models.ResourceManager
 {
     [JsonConverter(typeof(SystemDataConverter))]
     public partial class SystemData : IUtf8JsonSerializable, IJsonModel<SystemData>

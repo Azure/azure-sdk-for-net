@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 
-namespace System.Net.ClientModel.Tests.Client.ResourceManager.Resources.Models
+namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
 {
     /// <summary> The provider extended location. </summary>
     public partial class ProviderExtendedLocation

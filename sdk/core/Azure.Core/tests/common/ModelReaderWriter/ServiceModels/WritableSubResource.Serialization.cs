@@ -8,7 +8,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core.Tests.Common;
 
-namespace Azure.Core.Tests.ResourceManager.Resources.Models
+namespace Azure.Core.Tests.Models.ResourceManager.Resources
 {
     /// <summary>
     /// A class representing a sub-resource that contains only the ID.

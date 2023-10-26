@@ -12,7 +12,7 @@ using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core.Tests.Common;
 
-namespace Azure.Core.Tests.ResourceManager.Compute.Models
+namespace Azure.Core.Tests.Models.ResourceManager.Compute
 {
     public partial class ComputeSku : IUtf8JsonSerializable, IJsonModel<ComputeSku>
     {

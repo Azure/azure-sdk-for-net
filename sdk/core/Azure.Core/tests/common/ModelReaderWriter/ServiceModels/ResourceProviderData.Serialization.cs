@@ -11,9 +11,8 @@ using System.Net.ClientModel;
 using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core.Tests.Common;
-using Azure.Core.Tests.ResourceManager.Resources.Models;
 
-namespace Azure.Core.Tests.ResourceManager.Resources
+namespace Azure.Core.Tests.Models.ResourceManager.Resources
 {
     public partial class ResourceProviderData : IUtf8JsonSerializable, IJsonModel<ResourceProviderData>
     {

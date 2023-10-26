@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Text.Json;
-using System.Net.ClientModel.Tests.Client.ResourceManager.Compute;
+using System.Net.ClientModel.Tests.Client.Models.ResourceManager.Compute;
 
 namespace System.Net.ClientModel.Tests.Internal.Perf
 {

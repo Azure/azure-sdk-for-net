@@ -5,7 +5,7 @@ using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace System.Net.ClientModel.Tests.Client.ResourceManager.Resources.Models
+namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
 {
     /// <summary>
     /// A class representing a sub-resource that contains only the ID.

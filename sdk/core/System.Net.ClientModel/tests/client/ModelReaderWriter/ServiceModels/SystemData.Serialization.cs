@@ -10,7 +10,7 @@ using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace System.Net.ClientModel.Tests.Client.ResourceManager.Models
+namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager
 {
     [JsonConverter(typeof(SystemDataConverter))]
     public partial class SystemData : IJsonModel<SystemData>

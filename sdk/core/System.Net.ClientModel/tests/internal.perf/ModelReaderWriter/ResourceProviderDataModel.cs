@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using BenchmarkDotNet.Attributes;
-using System.Net.ClientModel.Tests.Client.ResourceManager.Resources;
+using System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources;
 using System.Text.Json;
 
 namespace System.Net.ClientModel.Tests.Internal.Perf
