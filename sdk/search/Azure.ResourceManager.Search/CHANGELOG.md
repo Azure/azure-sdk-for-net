@@ -1,8 +1,11 @@
 # Release History
 
-## 1.2.0-beta.2 (Unreleased)
+## 1.2.0 (2023-11-01)
 
 ### Features Added
+
+- Added support for '2023-11-01' management plane API version.
+- Enable the [semantic search](https://learn.microsoft.com/azure/search/semantic-search-overview) feature
 
 ### Breaking Changes
 
