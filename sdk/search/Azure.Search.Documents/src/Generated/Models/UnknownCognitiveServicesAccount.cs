@@ -5,11 +5,9 @@
 
 #nullable disable
 
-using Azure.Search.Documents.Indexes.Models;
-
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> The UnknownCognitiveServicesAccount. </summary>
+    /// <summary> Unknown version of CognitiveServicesAccount. </summary>
     internal partial class UnknownCognitiveServicesAccount : CognitiveServicesAccount
     {
         /// <summary> Initializes a new instance of UnknownCognitiveServicesAccount. </summary>

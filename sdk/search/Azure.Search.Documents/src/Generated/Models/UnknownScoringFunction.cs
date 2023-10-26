@@ -5,11 +5,9 @@
 
 #nullable disable
 
-using Azure.Search.Documents.Indexes.Models;
-
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> The UnknownScoringFunction. </summary>
+    /// <summary> Unknown version of ScoringFunction. </summary>
     internal partial class UnknownScoringFunction : ScoringFunction
     {
         /// <summary> Initializes a new instance of UnknownScoringFunction. </summary>

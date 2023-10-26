@@ -5,11 +5,9 @@
 
 #nullable disable
 
-using Azure.Search.Documents.Indexes.Models;
-
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> The UnknownVectorSearchVectorizer. </summary>
+    /// <summary> Unknown version of VectorSearchVectorizer. </summary>
     internal partial class UnknownVectorSearchVectorizer : VectorSearchVectorizer
     {
         /// <summary> Initializes a new instance of UnknownVectorSearchVectorizer. </summary>

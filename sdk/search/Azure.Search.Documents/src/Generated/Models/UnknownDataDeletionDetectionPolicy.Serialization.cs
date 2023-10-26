@@ -6,20 +6,11 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    internal partial class UnknownDataDeletionDetectionPolicy : IUtf8JsonSerializable
+    internal partial class UnknownDataDeletionDetectionPolicy
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("@odata.type"u8);
-            writer.WriteStringValue(ODataType);
-            writer.WriteEndObject();
-        }
-
         internal static UnknownDataDeletionDetectionPolicy DeserializeUnknownDataDeletionDetectionPolicy(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)

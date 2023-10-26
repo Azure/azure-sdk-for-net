@@ -6,20 +6,11 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    internal partial class UnknownSimilarity : IUtf8JsonSerializable
+    internal partial class UnknownSimilarity
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("@odata.type"u8);
-            writer.WriteStringValue(ODataType);
-            writer.WriteEndObject();
-        }
-
         internal static UnknownSimilarity DeserializeUnknownSimilarity(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
