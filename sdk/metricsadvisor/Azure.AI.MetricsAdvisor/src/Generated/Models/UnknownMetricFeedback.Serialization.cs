@@ -12,20 +12,8 @@ using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
-    internal partial class UnknownMetricFeedback : IUtf8JsonSerializable
+    internal partial class UnknownMetricFeedback
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("feedbackType"u8);
-            writer.WriteStringValue(FeedbackKind.ToString());
-            writer.WritePropertyName("metricId"u8);
-            writer.WriteStringValue(MetricId);
-            writer.WritePropertyName("dimensionFilter"u8);
-            writer.WriteObjectValue(DimensionFilter);
-            writer.WriteEndObject();
-        }
-
         internal static UnknownMetricFeedback DeserializeUnknownMetricFeedback(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
