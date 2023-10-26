@@ -54,5 +54,5 @@ public static partial class ArmMobileNetworkModelFactory
     /// <param name="userPlaneAccessInterface"> The user plane interface on the access network. For 5G networks, this is the N3 interface. For 4G networks, this is the S1-U interface. </param>
     /// <returns> A new <see cref="MobileNetwork.PacketCoreDataPlaneData"/> instance for mocking. </returns>
     public static PacketCoreDataPlaneData PacketCoreDataPlaneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MobileNetworkProvisioningState? provisioningState, MobileNetworkInterfaceProperties userPlaneAccessInterface)
-    => PacketCoreDataPlaneData(ResourceIdentifier id, string name, ResourceType resourceType = default, SystemData systemData, IDictionary<string, string> tags, AzureLocation location = default, MobileNetworkProvisioningState ? provisioningState , MobileNetworkInterfaceProperties userPlaneAccessInterface, IEnumerable<string> userPlaneAccessVirtualIPv4Addresses = default)
+    => PacketCoreDataPlaneData(id, name, resourceType, systemData, tags, location, provisioningState, userPlaneAccessInterface, userPlaneAccessVirtualIPv4Addresses = default)
 }
