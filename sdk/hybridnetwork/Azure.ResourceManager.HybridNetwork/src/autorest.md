@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: HybridNetwork
 namespace: Azure.ResourceManager.HybridNetwork
-require: https://github.com/swatika/azure-rest-api-specs/blob/fe9a8b95fc145b3c5675e9a873f2a09a4ae47dab/specification/hybridnetwork/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/eccca594dd50892ada8220fe7b1587c12cc5c871/specification/hybridnetwork/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
