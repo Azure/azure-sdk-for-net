@@ -435,6 +435,7 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendQuery("extensionId", extensionId, true);
             uri.AppendQuery("weatherDataType", weatherDataType, true);
             uri.AppendQuery("granularity", granularity, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (startDateTime != null)
             {
                 uri.AppendQuery("startDateTime", startDateTime.Value, "O", true);
@@ -451,7 +452,6 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 uri.AppendQuery("skipToken", skipToken, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

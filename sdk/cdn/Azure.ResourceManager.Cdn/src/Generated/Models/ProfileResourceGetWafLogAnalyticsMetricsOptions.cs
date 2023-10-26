@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.Cdn.Models
     public partial class ProfileResourceGetWafLogAnalyticsMetricsOptions
     {
         /// <summary> Initializes a new instance of ProfileResourceGetWafLogAnalyticsMetricsOptions. </summary>
-        /// <param name="metrics"> The ArrayOfWafMetric to use. </param>
-        /// <param name="dateTimeBegin"> The DateTime to use. </param>
-        /// <param name="dateTimeEnd"> The DateTime to use. </param>
+        /// <param name="metrics"> The IEnumerable{WafMetric} to use. </param>
+        /// <param name="dateTimeBegin"> The DateTimeOffset to use. </param>
+        /// <param name="dateTimeEnd"> The DateTimeOffset to use. </param>
         /// <param name="granularity"> The WafGranularity to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> is null. </exception>
         public ProfileResourceGetWafLogAnalyticsMetricsOptions(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, WafGranularity granularity)
@@ -34,19 +34,19 @@ namespace Azure.ResourceManager.Cdn.Models
             RuleTypes = new ChangeTrackingList<WafRuleType>();
         }
 
-        /// <summary> The ArrayOfWafMetric to use. </summary>
+        /// <summary> The IEnumerable{WafMetric} to use. </summary>
         public IList<WafMetric> Metrics { get; }
-        /// <summary> The DateTime to use. </summary>
+        /// <summary> The DateTimeOffset to use. </summary>
         public DateTimeOffset DateTimeBegin { get; }
-        /// <summary> The DateTime to use. </summary>
+        /// <summary> The DateTimeOffset to use. </summary>
         public DateTimeOffset DateTimeEnd { get; }
         /// <summary> The WafGranularity to use. </summary>
         public WafGranularity Granularity { get; }
-        /// <summary> The ArrayOfWafAction to use. </summary>
+        /// <summary> The IEnumerable{WafAction} to use. </summary>
         public IList<WafAction> Actions { get; }
-        /// <summary> The ArrayOfWafRankingGroupBy to use. </summary>
+        /// <summary> The IEnumerable{WafRankingGroupBy} to use. </summary>
         public IList<WafRankingGroupBy> GroupBy { get; }
-        /// <summary> The ArrayOfWafRuleType to use. </summary>
+        /// <summary> The IEnumerable{WafRuleType} to use. </summary>
         public IList<WafRuleType> RuleTypes { get; }
     }
 }
