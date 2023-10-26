@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace System.Net.ClientModel.Core;
 
-public class MessagePipeline : Pipeline<PipelineMessage>
+public class MessagePipeline
 {
     private readonly ReadOnlyMemory<PipelinePolicy<PipelineMessage>> _policies;
     private readonly PipelineTransport<PipelineMessage> _transport;
@@ -106,16 +106,18 @@ public class MessagePipeline : Pipeline<PipelineMessage>
         return new MessagePipeline(pipeline);
     }
 
-    public override PipelineMessage CreateMessage()
+    // Note: nothing validates this API shape, or that Azure.Core.HttpPipeline has the same
+    // API shape.  This becomes something a human must track if we wanted to add a base class later.
+    public PipelineMessage CreateMessage()
         => _transport.CreateMessage();
 
-    public override void Send(PipelineMessage message)
+    public void Send(PipelineMessage message)
     {
         IPipelineEnumerator enumerator = new MessagePipelineExecutor(message, _policies);
         enumerator.ProcessNext();
     }
 
-    public override async ValueTask SendAsync(PipelineMessage message)
+    public async ValueTask SendAsync(PipelineMessage message)
     {
         IPipelineEnumerator enumerator = new MessagePipelineExecutor(message, _policies);
         await enumerator.ProcessNextAsync().ConfigureAwait(false);
