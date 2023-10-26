@@ -35,21 +35,22 @@ namespace Azure.Search.Documents.Models
                 {
                     StringBuilder queryAnswerStringValue = new(AnswerType.Value.ToString());
 
-                    int tokens = 0;
-                    char NextToken() => tokens++ == 0 ? '|' : ',';
-
-                    if (Count.HasValue)
+                    if (Count.HasValue && Threshold.HasValue)
                     {
-                        queryAnswerStringValue.Append(NextToken()).Append($"{QueryAnswerCountRaw}{Count.Value}");
-                        tokens = 1;
+                        return queryAnswerStringValue.Append($"|{QueryAnswerCountRaw}{Count.Value},{QueryAnswerThresholdRaw}{Threshold.Value}").ToString();
                     }
-
-                    if (Threshold.HasValue)
+                    else if (Count.HasValue)
                     {
-                        queryAnswerStringValue.Append(NextToken()).Append($"{QueryAnswerThresholdRaw}{Threshold.Value}");
+                        return queryAnswerStringValue.Append($"|{QueryAnswerCountRaw}{Count.Value}").ToString();
                     }
-
-                    return queryAnswerStringValue.ToString();
+                    else if (Threshold.HasValue)
+                    {
+                        return queryAnswerStringValue.Append($"|{QueryAnswerThresholdRaw}{Threshold.Value}").ToString();
+                    }
+                    else
+                    {
+                        return queryAnswerStringValue.ToString();
+                    }
                 }
 
                 return null;

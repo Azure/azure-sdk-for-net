@@ -14,14 +14,18 @@ namespace Azure.Search.Documents.Indexes.Models
         /// Initializes a new instance of the <see cref="SimpleField"/> class.
         /// </summary>
         /// <param name="name">The name of the field, which must be unique within the index or parent field.</param>
+        /// <param name="vectorSearchDimensions">The dimensionality of the vector field.</param>
+        /// <param name="vectorSearchProfileName">The name of the vector search profile that specifies the algorithm to use when searching the vector field.</param>
         /// <exception cref="ArgumentException"><paramref name="name"/> is an empty string.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="name"/> is null.</exception>
-        public VectorSearchField(string name) : base(name, SearchFieldDataType.Collection(SearchFieldDataType.Single))
+        public VectorSearchField(string name, int vectorSearchDimensions, string vectorSearchProfileName) : base(name, SearchFieldDataType.Collection(SearchFieldDataType.Single))
         {
+            VectorSearchDimensions = vectorSearchDimensions;
+            VectorSearchProfileName = vectorSearchProfileName;
         }
 
         /// <summary> The dimensionality of the vector field. </summary>
-        public int? VectorSearchDimensions { get; set; }
+        public int VectorSearchDimensions { get; set; }
 
         /// <summary> The name of the vector search profile that specifies the algorithm to use when searching the vector field. </summary>
         public string VectorSearchProfileName { get; set; }

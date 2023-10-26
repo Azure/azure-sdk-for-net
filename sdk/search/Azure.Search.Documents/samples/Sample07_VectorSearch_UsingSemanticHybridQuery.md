@@ -21,9 +21,9 @@ SearchIndex searchIndex = new(indexName)
         new SimpleField("HotelId", SearchFieldDataType.String) { IsKey = true, IsFilterable = true, IsSortable = true, IsFacetable = true },
         new SearchableField("HotelName") { IsFilterable = true, IsSortable = true },
         new SearchableField("Description") { IsFilterable = true },
-        new VectorSearchField("DescriptionVector") { VectorSearchDimensions = modelDimensions, VectorSearchProfileName = vectorSearchProfileName },
+        new VectorSearchField("DescriptionVector", modelDimensions, vectorSearchProfileName),
         new SearchableField("Category") { IsFilterable = true, IsSortable = true, IsFacetable = true },
-        new VectorSearchField("CategoryVector") { VectorSearchDimensions = modelDimensions, VectorSearchProfileName = vectorSearchProfileName },
+        new VectorSearchField("CategoryVector", modelDimensions, vectorSearchProfileName),
     },
     VectorSearch = new()
     {

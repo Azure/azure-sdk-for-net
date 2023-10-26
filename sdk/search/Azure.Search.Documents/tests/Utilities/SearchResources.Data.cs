@@ -39,7 +39,7 @@ namespace Azure.Search.Documents.Tests
                     new SearchableField("hotelName") { IsFilterable = true, IsSortable = true },
                     new SearchableField("description") { AnalyzerName = LexicalAnalyzerName.EnLucene },
                     new SearchableField("descriptionFr") { AnalyzerName = LexicalAnalyzerName.FrLucene },
-                    new VectorSearchField("descriptionVector") { VectorSearchDimensions = 1536, VectorSearchProfileName = "my-vector-profile" },
+                    new VectorSearchField("descriptionVector", 1536, "my-vector-profile"),
                     new SearchableField("category") { IsFilterable = true, IsSortable = true, IsFacetable = true },
                     new SearchableField("tags", collection: true) { IsFilterable = true, IsFacetable = true },
                     new SimpleField("parkingIncluded", SearchFieldDataType.Boolean) { IsFilterable = true, IsSortable = true, IsFacetable = true },

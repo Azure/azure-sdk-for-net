@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Indexes
         /// <summary>
         /// The dimensionality of the vector field.
         /// </summary>
-        public int VectorSearchDimensions { get; set; } = 0;
+        public int VectorSearchDimensions { get; set; }
 
         /// <summary>
         /// The name of the vector search algorithm configuration that specifies the algorithm and optional parameters for searching the vector field.
@@ -34,16 +34,8 @@ namespace Azure.Search.Documents.Indexes
         {
             field.IsSearchable = true;
             field.IsHidden = IsHidden;
-
-            if (VectorSearchDimensions != 0)
-            {
-                field.VectorSearchDimensions = VectorSearchDimensions;
-            }
-
-            if (VectorSearchProfileName != null)
-            {
-                field.VectorSearchProfileName = VectorSearchProfileName;
-            }
+            field.VectorSearchDimensions = VectorSearchDimensions;
+            field.VectorSearchProfileName = VectorSearchProfileName;
         }
     }
 }

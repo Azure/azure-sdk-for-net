@@ -193,11 +193,7 @@ namespace Azure.Search.Documents.Tests
             SearchIndex createdIndex = await indexClient.GetIndexAsync(indexName);
 
             // Add vector
-            var vectorField = new VectorSearchField("descriptionVector")
-            {
-                VectorSearchDimensions = 1536,
-                VectorSearchProfileName = "my-vector-profile"
-            };
+            var vectorField = new VectorSearchField("descriptionVector", 1536, "my-vector-profile");
             createdIndex.Fields.Add(vectorField);
 
             createdIndex.VectorSearch = new()
