@@ -19,18 +19,7 @@ namespace Azure.Communication.JobRouter
     public partial class WeightedAllocationQueueSelectorAttachment : QueueSelectorAttachment
     {
         /// <summary> Initializes a new instance of WeightedAllocationQueueSelectorAttachment. </summary>
-        /// <param name="allocations"> A collection of percentage based weighted allocations. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="allocations"/> is null. </exception>
-        internal WeightedAllocationQueueSelectorAttachment(IEnumerable<QueueWeightedAllocation> allocations)
-        {
-            Argument.AssertNotNull(allocations, nameof(allocations));
-
-            Kind = "weighted-allocation-queue-selector";
-            Allocations = allocations.ToList();
-        }
-
-        /// <summary> Initializes a new instance of WeightedAllocationQueueSelectorAttachment. </summary>
-        /// <param name="kind"> Discriminator. </param>
+        /// <param name="kind"> The type discriminator describing a sub-type of QueueSelectorAttachment. </param>
         /// <param name="allocations"> A collection of percentage based weighted allocations. </param>
         internal WeightedAllocationQueueSelectorAttachment(string kind, IReadOnlyList<QueueWeightedAllocation> allocations) : base(kind)
         {

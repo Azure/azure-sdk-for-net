@@ -20,7 +20,7 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
         private ConcurrentDictionary<string, Stack<Task>> _testCleanupTasks;
         private const string URIDomainRegEx = @"https://([^/?]+)";
 
-        public RouterLiveTestBase(bool isAsync, RecordedTestMode? mode = RecordedTestMode.Playback) : base(isAsync, mode)
+        public RouterLiveTestBase(bool isAsync, RecordedTestMode? mode = RecordedTestMode.Playback) : base(isAsync, RecordedTestMode.Record)
         {
             _testCleanupTasks = new ConcurrentDictionary<string, Stack<Task>>();
             JsonPathSanitizers.Add("$..token");
@@ -108,7 +108,7 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
                 {
                     Name = classificationPolicyName,
                     FallbackQueueId = createQueueResponse.Value.Id,
-                    QueueSelectors =
+                    QueueSelectorAttachments =
                     {
                         new StaticQueueSelectorAttachment(new RouterQueueSelector("Id", LabelOperator.Equal, new LabelValue(createQueueResponse.Value.Id)))
                     }
@@ -186,16 +186,16 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
         }
 
         protected void AssertRegisteredWorkerIsValid(Response<RouterWorker> routerWorkerResponse, string workerId,
-            IDictionary<string, RouterQueueAssignment?> queueAssignments, int? totalCapacity,
+            IList<string> queues, int? capacity,
             IDictionary<string, LabelValue?>? workerLabels = default,
-            IDictionary<string, ChannelConfiguration?>? channelConfigList = default,
+            IList<RouterChannel>? channelsList = default,
             IDictionary<string, LabelValue?>? workerTags = default)
         {
             var response = routerWorkerResponse.Value;
 
             Assert.AreEqual(workerId, response.Id);
-            Assert.AreEqual(queueAssignments.Count(), response.QueueAssignments.Count);
-            Assert.AreEqual(totalCapacity, response.TotalCapacity);
+            Assert.AreEqual(queues.Count(), response.Queues.Count);
+            Assert.AreEqual(capacity, response.Capacity);
 
             if (workerLabels != default)
             {
@@ -210,9 +210,9 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
                 Assert.AreEqual(tags, response.Tags);
             }
 
-            if (channelConfigList != default)
+            if (channelsList != default)
             {
-                Assert.AreEqual(channelConfigList.Count, response.ChannelConfigurations.Count);
+                Assert.AreEqual(channelsList.Count, response.Channels.Count);
             }
         }
 

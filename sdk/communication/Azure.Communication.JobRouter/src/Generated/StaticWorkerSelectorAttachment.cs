@@ -14,21 +14,7 @@ namespace Azure.Communication.JobRouter
     public partial class StaticWorkerSelectorAttachment : WorkerSelectorAttachment
     {
         /// <summary> Initializes a new instance of StaticWorkerSelectorAttachment. </summary>
-        /// <param name="workerSelector">
-        /// Describes a condition that must be met against a set of labels for worker
-        /// selection
-        /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workerSelector"/> is null. </exception>
-        internal StaticWorkerSelectorAttachment(RouterWorkerSelector workerSelector)
-        {
-            Argument.AssertNotNull(workerSelector, nameof(workerSelector));
-
-            Kind = "static";
-            WorkerSelector = workerSelector;
-        }
-
-        /// <summary> Initializes a new instance of StaticWorkerSelectorAttachment. </summary>
-        /// <param name="kind"> Discriminator. </param>
+        /// <param name="kind"> The type discriminator describing a sub-type of WorkerSelectorAttachment. </param>
         /// <param name="workerSelector">
         /// Describes a condition that must be met against a set of labels for worker
         /// selection

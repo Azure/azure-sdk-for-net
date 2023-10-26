@@ -19,7 +19,8 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public PassThroughQueueSelectorAttachment(string key, LabelOperator labelOperator): this("pass-through", key, labelOperator)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
+            Argument.AssertNotNull(labelOperator, nameof(labelOperator));
         }
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)

@@ -7,13 +7,18 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    [CodeGenModel("DistributionPolicy")]
-    [CodeGenSuppress("DistributionPolicy")]
+    // [CodeGenModel("DistributionPolicy")]
+    // [CodeGenSuppress("DistributionPolicy")]
     public partial class DistributionPolicy : IUtf8JsonSerializable
     {
         /// <summary> Initializes a new instance of DistributionPolicy. </summary>
-        internal DistributionPolicy()
+        /// <param name="distributionPolicyId"> Id of the policy. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="distributionPolicyId"/> is null. </exception>
+        public DistributionPolicy(string distributionPolicyId)
         {
+            Argument.AssertNotNullOrWhiteSpace(distributionPolicyId, nameof(distributionPolicyId));
+
+            Id = distributionPolicyId;
         }
 
         /// <summary> Initializes a new instance of DistributionPolicy. </summary>
@@ -42,14 +47,14 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> (Optional) The name of the distribution policy. </summary>
-        public string Name { get; internal set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Abstract base class for defining a distribution mode
         /// Please note <see cref="DistributionMode"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="BestWorkerMode"/>, <see cref="LongestIdleMode"/> and <see cref="RoundRobinMode"/>.
         /// </summary>
-        public DistributionMode Mode { get; internal set; }
+        public DistributionMode Mode { get; set; }
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
