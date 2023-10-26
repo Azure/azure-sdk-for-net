@@ -171,29 +171,39 @@ namespace Azure.Storage.DataMovement
                     ? current.Uri.GetPath()
                     : current.Uri.GetPath().Substring(containerUriPath.Length + 1);
 
-                if (!existingSources.Contains(sourceName))
+                if (current.IsContainer)
                 {
-                    // Because AsyncEnumerable doesn't let us know which storage resource is the last resource
-                    // we only yield return when we know this is not the last storage resource to be listed
-                    // from the container.
-                    StreamToUriJobPart part;
-                    try
+                    // Create sub-container
+                    StorageResourceContainer subContainer =
+                        _destinationResourceContainer.GetChildStorageResourceContainer(sourceName);
+                    await subContainer.CreateIfNotExistsAsync().ConfigureAwait(false);
+                }
+                else
+                {
+                    if (!existingSources.Contains(sourceName))
                     {
-                        part = await StreamToUriJobPart.CreateJobPartAsync(
-                            job: this,
-                            partNumber: partNumber,
-                            sourceResource: (StorageResourceItem)current,
-                            destinationResource: _destinationResourceContainer.GetStorageResourceReference(sourceName))
-                            .ConfigureAwait(false);
-                        AppendJobPart(part);
+                        // Because AsyncEnumerable doesn't let us know which storage resource is the last resource
+                        // we only yield return when we know this is not the last storage resource to be listed
+                        // from the container.
+                        StreamToUriJobPart part;
+                        try
+                        {
+                            part = await StreamToUriJobPart.CreateJobPartAsync(
+                                job: this,
+                                partNumber: partNumber,
+                                sourceResource: (StorageResourceItem)current,
+                                destinationResource: _destinationResourceContainer.GetStorageResourceReference(sourceName))
+                                .ConfigureAwait(false);
+                            AppendJobPart(part);
+                        }
+                        catch (Exception ex)
+                        {
+                            await InvokeFailedArgAsync(ex).ConfigureAwait(false);
+                            yield break;
+                        }
+                        yield return part;
+                        partNumber++;
                     }
-                    catch (Exception ex)
-                    {
-                        await InvokeFailedArgAsync(ex).ConfigureAwait(false);
-                        yield break;
-                    }
-                    yield return part;
-                    partNumber++;
                 }
             }
         }
