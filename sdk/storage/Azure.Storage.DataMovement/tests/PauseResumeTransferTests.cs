@@ -1097,6 +1097,79 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationContainer: destinationContainer.Container);
         }
 
+        [Ignore("Likely to fail in pipelines and takes a while to run.")]
+        [Test, Pairwise]
+        [LiveOnly]
+        public async Task ResumeTransferAsync_Directory_Large(
+            [Values(TransferDirection.Upload, TransferDirection.Download, TransferDirection.Copy)] TransferDirection transferType,
+            [Values(100)] int blobCount,
+            [Values(0, 500, 2000)] int delayInMs)
+        {
+            // This test is not really meant to run in a pipeline and may fail locally
+            // depending on timing. Its more meant as a starting place to attempt testing
+            // pause/resume in different states of the transfer. You may also find adding
+            // delays in certain parts of the code while testing can help get more
+            // consistent results.
+
+            // Arrange
+            using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
+            using DisposingLocalDirectory sourceDirectory = DisposingLocalDirectory.GetTestDirectory();
+            using DisposingLocalDirectory destinationDirectory = DisposingLocalDirectory.GetTestDirectory();
+            await using DisposingContainer sourceContainer = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            await using DisposingContainer destinationContainer = await GetTestContainerAsync();
+
+            BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
+            LocalFilesStorageResourceProvider localProvider = new();
+            TransferManagerOptions options = new TransferManagerOptions()
+            {
+                CheckpointerOptions = new TransferCheckpointStoreOptions(checkpointerDirectory.DirectoryPath),
+                ErrorHandling = DataTransferErrorMode.ContinueOnFailure,
+                ResumeProviders = new() { blobProvider, localProvider },
+            };
+            TransferManager transferManager = new TransferManager(options);
+            long size = Constants.MB;
+
+            (StorageResource sResource, StorageResource dResource) = await CreateStorageResourceContainersAsync(
+                transferType: transferType,
+                size: size,
+                transferCount: blobCount,
+                sourceDirectoryPath: sourceDirectory.DirectoryPath,
+                destinationDirectoryPath: destinationDirectory.DirectoryPath,
+                sourceContainer: sourceContainer.Container,
+                destinationContainer: destinationContainer.Container,
+                blobProvider: blobProvider,
+                localProvider: localProvider);
+
+            // Start transfer
+            DataTransfer transfer = await transferManager.StartTransferAsync(sResource, dResource);
+
+            // Sleep before pausing
+            await Task.Delay(delayInMs);
+
+            // Pause Transfer
+            CancellationTokenSource pauseCancellation = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            await transferManager.PauseTransferIfRunningAsync(transfer.Id, pauseCancellation.Token);
+            Assert.AreEqual(DataTransferState.Paused, transfer.TransferStatus.State);
+
+            // Resume Transfer
+            DataTransfer resumeTransfer = await transferManager.ResumeTransferAsync(transfer.Id);
+
+            CancellationTokenSource waitTransferCompletion = new CancellationTokenSource(TimeSpan.FromSeconds(600));
+            await resumeTransfer.WaitForCompletionAsync(waitTransferCompletion.Token);
+
+            // Assert
+            Assert.AreEqual(DataTransferState.Completed, resumeTransfer.TransferStatus.State);
+            Assert.IsTrue(resumeTransfer.HasCompleted);
+
+            // Verify transfer
+            await AssertDirectorySourceAndDestinationAsync(
+                transferType: transferType,
+                sourceResource: sResource as StorageResourceContainer,
+                destinationResource: dResource as StorageResourceContainer,
+                sourceContainer: sourceContainer.Container,
+                destinationContainer: destinationContainer.Container);
+        }
+
         [Test]
         public async Task PauseAllTriggersCorrectPauses()
         {
