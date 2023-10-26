@@ -7,8 +7,8 @@ azure-arm: true
 csharp: true
 library-name: AppContainers
 namespace: Azure.ResourceManager.AppContainers
-require: https://github.com/Azure/azure-rest-api-specs/blob/ad997e99eccc15b7ab4cd66ae3f1f9534a1e2628/specification/app/resource-manager/readme.md
-# tag: package-2023-05
+require: https://github.com/Azure/azure-rest-api-specs/blob/32a0be25f8a7610997b1df65fe7cb9dcabe6f9aa/specification/app/resource-manager/readme.md
+# tag: package-2023-08
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -256,4 +256,7 @@ directive:
   - from: CommonDefinitions.json
     where: $.definitions.ServiceBind.properties.serviceId
     transform: $['x-ms-format'] = 'arm-id'
+
+list-exception:
+- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/jobs/{jobName}/detectorProperties/{apiName}
 ```

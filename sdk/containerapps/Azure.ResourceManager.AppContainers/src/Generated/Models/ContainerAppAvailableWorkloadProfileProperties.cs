@@ -20,13 +20,15 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="applicability"> indicates whether the profile is default for the location. </param>
         /// <param name="cores"> Number of cores in CPU. </param>
         /// <param name="memoryInGiB"> Memory in GiB. </param>
+        /// <param name="gpus"> Number of GPUs. </param>
         /// <param name="displayName"> The everyday name of the workload profile. </param>
-        internal ContainerAppAvailableWorkloadProfileProperties(string category, ContainerAppAvailableWorkloadProfileApplicability? applicability, int? cores, int? memoryInGiB, string displayName)
+        internal ContainerAppAvailableWorkloadProfileProperties(string category, ContainerAppAvailableWorkloadProfileApplicability? applicability, int? cores, int? memoryInGiB, int? gpus, string displayName)
         {
             Category = category;
             Applicability = applicability;
             Cores = cores;
             MemoryInGiB = memoryInGiB;
+            Gpus = gpus;
             DisplayName = displayName;
         }
 
@@ -38,6 +40,8 @@ namespace Azure.ResourceManager.AppContainers.Models
         public int? Cores { get; set; }
         /// <summary> Memory in GiB. </summary>
         public int? MemoryInGiB { get; set; }
+        /// <summary> Number of GPUs. </summary>
+        public int? Gpus { get; set; }
         /// <summary> The everyday name of the workload profile. </summary>
         public string DisplayName { get; set; }
     }

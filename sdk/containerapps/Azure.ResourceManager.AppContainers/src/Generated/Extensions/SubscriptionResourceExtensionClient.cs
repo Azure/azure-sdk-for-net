@@ -5,7 +5,9 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
@@ -22,14 +24,20 @@ namespace Azure.ResourceManager.AppContainers
         private AvailableWorkloadProfilesRestOperations _availableWorkloadProfilesRestClient;
         private ClientDiagnostics _billingMetersClientDiagnostics;
         private BillingMetersRestOperations _billingMetersRestClient;
+        private ClientDiagnostics _builderResourceBuildersClientDiagnostics;
+        private BuildersRestOperations _builderResourceBuildersRestClient;
         private ClientDiagnostics _containerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics;
         private ConnectedEnvironmentsRestOperations _containerAppConnectedEnvironmentConnectedEnvironmentsRestClient;
         private ClientDiagnostics _containerAppClientDiagnostics;
         private ContainerAppsRestOperations _containerAppRestClient;
-        private ClientDiagnostics _containerAppJobJobsClientDiagnostics;
-        private JobsRestOperations _containerAppJobJobsRestClient;
+        private ClientDiagnostics _jobClientDiagnostics;
+        private JobsRestOperations _jobRestClient;
+        private ClientDiagnostics _containerAppJobExecutionClientDiagnostics;
+        private ContainerAppsAPIRestOperations _containerAppJobExecutionRestClient;
         private ClientDiagnostics _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics;
         private ManagedEnvironmentsRestOperations _containerAppManagedEnvironmentManagedEnvironmentsRestClient;
+        private ClientDiagnostics _usagesClientDiagnostics;
+        private UsagesRestOperations _usagesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -47,14 +55,20 @@ namespace Azure.ResourceManager.AppContainers
         private AvailableWorkloadProfilesRestOperations AvailableWorkloadProfilesRestClient => _availableWorkloadProfilesRestClient ??= new AvailableWorkloadProfilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics BillingMetersClientDiagnostics => _billingMetersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private BillingMetersRestOperations BillingMetersRestClient => _billingMetersRestClient ??= new BillingMetersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics BuilderResourceBuildersClientDiagnostics => _builderResourceBuildersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers", BuilderResource.ResourceType.Namespace, Diagnostics);
+        private BuildersRestOperations BuilderResourceBuildersRestClient => _builderResourceBuildersRestClient ??= new BuildersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(BuilderResource.ResourceType));
         private ClientDiagnostics ContainerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics => _containerAppConnectedEnvironmentConnectedEnvironmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppConnectedEnvironmentResource.ResourceType.Namespace, Diagnostics);
         private ConnectedEnvironmentsRestOperations ContainerAppConnectedEnvironmentConnectedEnvironmentsRestClient => _containerAppConnectedEnvironmentConnectedEnvironmentsRestClient ??= new ConnectedEnvironmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ContainerAppConnectedEnvironmentResource.ResourceType));
         private ClientDiagnostics ContainerAppClientDiagnostics => _containerAppClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppResource.ResourceType.Namespace, Diagnostics);
         private ContainerAppsRestOperations ContainerAppRestClient => _containerAppRestClient ??= new ContainerAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ContainerAppResource.ResourceType));
-        private ClientDiagnostics ContainerAppJobJobsClientDiagnostics => _containerAppJobJobsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppJobResource.ResourceType.Namespace, Diagnostics);
-        private JobsRestOperations ContainerAppJobJobsRestClient => _containerAppJobJobsRestClient ??= new JobsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ContainerAppJobResource.ResourceType));
+        private ClientDiagnostics JobClientDiagnostics => _jobClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers", JobResource.ResourceType.Namespace, Diagnostics);
+        private JobsRestOperations JobRestClient => _jobRestClient ??= new JobsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(JobResource.ResourceType));
+        private ClientDiagnostics ContainerAppJobExecutionClientDiagnostics => _containerAppJobExecutionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppJobExecutionResource.ResourceType.Namespace, Diagnostics);
+        private ContainerAppsAPIRestOperations ContainerAppJobExecutionRestClient => _containerAppJobExecutionRestClient ??= new ContainerAppsAPIRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ContainerAppJobExecutionResource.ResourceType));
         private ClientDiagnostics ContainerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics => _containerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppManagedEnvironmentResource.ResourceType.Namespace, Diagnostics);
         private ManagedEnvironmentsRestOperations ContainerAppManagedEnvironmentManagedEnvironmentsRestClient => _containerAppManagedEnvironmentManagedEnvironmentsRestClient ??= new ManagedEnvironmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ContainerAppManagedEnvironmentResource.ResourceType));
+        private ClientDiagnostics UsagesClientDiagnostics => _usagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private UsagesRestOperations UsagesRestClient => _usagesRestClient ??= new UsagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -150,6 +164,50 @@ namespace Azure.ResourceManager.AppContainers
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BillingMetersRestClient.CreateGetRequest(Id.SubscriptionId, location);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ContainerAppBillingMeter.DeserializeContainerAppBillingMeter, BillingMetersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetBillingMeters", "value", null, cancellationToken);
+        }
+
+        /// <summary>
+        /// List BuilderResource resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/builders</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Builders_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="BuilderResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BuilderResource> GetBuilderResourcesAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => BuilderResourceBuildersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BuilderResourceBuildersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new BuilderResource(Client, BuilderResourceData.DeserializeBuilderResourceData(e)), BuilderResourceBuildersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetBuilderResources", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List BuilderResource resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/builders</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Builders_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="BuilderResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BuilderResource> GetBuilderResources(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => BuilderResourceBuildersRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BuilderResourceBuildersRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new BuilderResource(Client, BuilderResourceData.DeserializeBuilderResourceData(e)), BuilderResourceBuildersClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetBuilderResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -254,12 +312,12 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerAppJobResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ContainerAppJobResource> GetContainerAppJobsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="JobResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<JobResource> GetJobsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerAppJobJobsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerAppJobJobsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerAppJobResource(Client, ContainerAppJobData.DeserializeContainerAppJobData(e)), ContainerAppJobJobsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetContainerAppJobs", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => JobRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => JobRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new JobResource(Client, ContainerAppJobData.DeserializeContainerAppJobData(e)), JobClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetJobs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -276,12 +334,72 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerAppJobResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ContainerAppJobResource> GetContainerAppJobs(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="JobResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<JobResource> GetJobs(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerAppJobJobsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerAppJobJobsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerAppJobResource(Client, ContainerAppJobData.DeserializeContainerAppJobData(e)), ContainerAppJobJobsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetContainerAppJobs", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => JobRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => JobRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new JobResource(Client, ContainerAppJobData.DeserializeContainerAppJobData(e)), JobClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetJobs", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Get the verification id of a subscription used for verifying custom domains
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/getCustomDomainVerificationId</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GetCustomDomainVerificationId</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<string>> GetCustomDomainVerificationIdAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = ContainerAppJobExecutionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCustomDomainVerificationId");
+            scope.Start();
+            try
+            {
+                var response = await ContainerAppJobExecutionRestClient.GetCustomDomainVerificationIdAsync(Id.SubscriptionId, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the verification id of a subscription used for verifying custom domains
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/getCustomDomainVerificationId</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GetCustomDomainVerificationId</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<string> GetCustomDomainVerificationId(CancellationToken cancellationToken = default)
+        {
+            using var scope = ContainerAppJobExecutionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetCustomDomainVerificationId");
+            scope.Start();
+            try
+            {
+                var response = ContainerAppJobExecutionRestClient.GetCustomDomainVerificationId(Id.SubscriptionId, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -326,6 +444,52 @@ namespace Azure.ResourceManager.AppContainers
             HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerAppManagedEnvironmentManagedEnvironmentsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerAppManagedEnvironmentManagedEnvironmentsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerAppManagedEnvironmentResource(Client, ContainerAppManagedEnvironmentData.DeserializeContainerAppManagedEnvironmentData(e)), ContainerAppManagedEnvironmentManagedEnvironmentsClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetContainerAppManagedEnvironments", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets, for the specified location, the current resource usage information as well as the limits under the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Usages_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location for which resource usage is queried. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="AppContainersUsage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppContainersUsage> GetUsagesAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AppContainersUsage.DeserializeAppContainersUsage, UsagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetUsages", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets, for the specified location, the current resource usage information as well as the limits under the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.App/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Usages_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location for which resource usage is queried. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AppContainersUsage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppContainersUsage> GetUsages(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AppContainersUsage.DeserializeAppContainersUsage, UsagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetUsages", "value", "nextLink", cancellationToken);
         }
     }
 }

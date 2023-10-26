@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_GetAContainerAppsJobExecutions()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2023-05-01/examples/Job_Executions_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2023-08-01-preview/examples/Job_Executions_Get.json
             // this example is just showing the usage of "JobsExecutions_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,16 +30,16 @@ namespace Azure.ResourceManager.AppContainers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ContainerAppJobResource created on azure
-            // for more information of creating ContainerAppJobResource, please refer to the document of ContainerAppJobResource
+            // this example assumes you already have this JobResource created on azure
+            // for more information of creating JobResource, please refer to the document of JobResource
             string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
             string resourceGroupName = "rg";
             string jobName = "testcontainerAppsJob0";
-            ResourceIdentifier containerAppJobResourceId = ContainerAppJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
-            ContainerAppJobResource containerAppJob = client.GetContainerAppJobResource(containerAppJobResourceId);
+            ResourceIdentifier jobResourceId = JobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
+            JobResource job = client.GetJobResource(jobResourceId);
 
             // get the collection of this ContainerAppJobExecutionResource
-            ContainerAppJobExecutionCollection collection = containerAppJob.GetContainerAppJobExecutions();
+            ContainerAppJobExecutionCollection collection = job.GetContainerAppJobExecutions();
 
             // invoke the operation and iterate over the result
             await foreach (ContainerAppJobExecutionResource item in collection.GetAllAsync())
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetASingleJobExecution()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2023-05-01/examples/Job_Execution_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2023-08-01-preview/examples/Job_Execution_Get.json
             // this example is just showing the usage of "JobExecution" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -67,16 +67,16 @@ namespace Azure.ResourceManager.AppContainers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ContainerAppJobResource created on azure
-            // for more information of creating ContainerAppJobResource, please refer to the document of ContainerAppJobResource
+            // this example assumes you already have this JobResource created on azure
+            // for more information of creating JobResource, please refer to the document of JobResource
             string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
             string resourceGroupName = "rg";
             string jobName = "testcontainerAppsJob0";
-            ResourceIdentifier containerAppJobResourceId = ContainerAppJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
-            ContainerAppJobResource containerAppJob = client.GetContainerAppJobResource(containerAppJobResourceId);
+            ResourceIdentifier jobResourceId = JobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
+            JobResource job = client.GetJobResource(jobResourceId);
 
             // get the collection of this ContainerAppJobExecutionResource
-            ContainerAppJobExecutionCollection collection = containerAppJob.GetContainerAppJobExecutions();
+            ContainerAppJobExecutionCollection collection = job.GetContainerAppJobExecutions();
 
             // invoke the operation
             string jobExecutionName = "jobExecution1";
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetASingleJobExecution()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2023-05-01/examples/Job_Execution_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2023-08-01-preview/examples/Job_Execution_Get.json
             // this example is just showing the usage of "JobExecution" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -102,16 +102,16 @@ namespace Azure.ResourceManager.AppContainers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ContainerAppJobResource created on azure
-            // for more information of creating ContainerAppJobResource, please refer to the document of ContainerAppJobResource
+            // this example assumes you already have this JobResource created on azure
+            // for more information of creating JobResource, please refer to the document of JobResource
             string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
             string resourceGroupName = "rg";
             string jobName = "testcontainerAppsJob0";
-            ResourceIdentifier containerAppJobResourceId = ContainerAppJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
-            ContainerAppJobResource containerAppJob = client.GetContainerAppJobResource(containerAppJobResourceId);
+            ResourceIdentifier jobResourceId = JobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
+            JobResource job = client.GetJobResource(jobResourceId);
 
             // get the collection of this ContainerAppJobExecutionResource
-            ContainerAppJobExecutionCollection collection = containerAppJob.GetContainerAppJobExecutions();
+            ContainerAppJobExecutionCollection collection = job.GetContainerAppJobExecutions();
 
             // invoke the operation
             string jobExecutionName = "jobExecution1";
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_GetASingleJobExecution()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2023-05-01/examples/Job_Execution_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2023-08-01-preview/examples/Job_Execution_Get.json
             // this example is just showing the usage of "JobExecution" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -133,16 +133,16 @@ namespace Azure.ResourceManager.AppContainers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ContainerAppJobResource created on azure
-            // for more information of creating ContainerAppJobResource, please refer to the document of ContainerAppJobResource
+            // this example assumes you already have this JobResource created on azure
+            // for more information of creating JobResource, please refer to the document of JobResource
             string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
             string resourceGroupName = "rg";
             string jobName = "testcontainerAppsJob0";
-            ResourceIdentifier containerAppJobResourceId = ContainerAppJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
-            ContainerAppJobResource containerAppJob = client.GetContainerAppJobResource(containerAppJobResourceId);
+            ResourceIdentifier jobResourceId = JobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
+            JobResource job = client.GetJobResource(jobResourceId);
 
             // get the collection of this ContainerAppJobExecutionResource
-            ContainerAppJobExecutionCollection collection = containerAppJob.GetContainerAppJobExecutions();
+            ContainerAppJobExecutionCollection collection = job.GetContainerAppJobExecutions();
 
             // invoke the operation
             string jobExecutionName = "jobExecution1";

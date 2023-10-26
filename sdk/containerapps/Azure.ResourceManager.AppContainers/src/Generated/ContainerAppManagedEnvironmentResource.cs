@@ -39,6 +39,8 @@ namespace Azure.ResourceManager.AppContainers
         private readonly ManagedEnvironmentsRestOperations _containerAppManagedEnvironmentManagedEnvironmentsRestClient;
         private readonly ClientDiagnostics _namespacesClientDiagnostics;
         private readonly NamespacesRestOperations _namespacesRestClient;
+        private readonly ClientDiagnostics _managedEnvironmentUsagesClientDiagnostics;
+        private readonly ManagedEnvironmentUsagesRestOperations _managedEnvironmentUsagesRestClient;
         private readonly ContainerAppManagedEnvironmentData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ContainerAppManagedEnvironmentResource"/> class for mocking. </summary>
@@ -65,6 +67,8 @@ namespace Azure.ResourceManager.AppContainers
             _containerAppManagedEnvironmentManagedEnvironmentsRestClient = new ManagedEnvironmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppManagedEnvironmentManagedEnvironmentsApiVersion);
             _namespacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _namespacesRestClient = new NamespacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _managedEnvironmentUsagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _managedEnvironmentUsagesRestClient = new ManagedEnvironmentUsagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -311,6 +315,59 @@ namespace Azure.ResourceManager.AppContainers
         public virtual Response<ContainerAppManagedCertificateResource> GetContainerAppManagedCertificate(string managedCertificateName, CancellationToken cancellationToken = default)
         {
             return GetContainerAppManagedCertificates().Get(managedCertificateName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DaprSubscriptionResources in the ContainerAppManagedEnvironment. </summary>
+        /// <returns> An object representing collection of DaprSubscriptionResources and their operations over a DaprSubscriptionResource. </returns>
+        public virtual DaprSubscriptionCollection GetDaprSubscriptions()
+        {
+            return GetCachedClient(Client => new DaprSubscriptionCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Get a dapr subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprSubscriptions/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DaprSubscriptions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> Name of the Dapr subscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DaprSubscriptionResource>> GetDaprSubscriptionAsync(string name, CancellationToken cancellationToken = default)
+        {
+            return await GetDaprSubscriptions().GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a dapr subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/daprSubscriptions/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DaprSubscriptions_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> Name of the Dapr subscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DaprSubscriptionResource> GetDaprSubscription(string name, CancellationToken cancellationToken = default)
+        {
+            return GetDaprSubscriptions().Get(name, cancellationToken);
         }
 
         /// <summary> Gets a collection of ContainerAppManagedEnvironmentStorageResources in the ContainerAppManagedEnvironment. </summary>
@@ -744,6 +801,50 @@ namespace Azure.ResourceManager.AppContainers
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Gets the current usage information as well as the limits for environment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedEnvironmentUsages_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="AppContainersUsage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppContainersUsage> GetManagedEnvironmentUsagesAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedEnvironmentUsagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedEnvironmentUsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AppContainersUsage.DeserializeAppContainersUsage, _managedEnvironmentUsagesClientDiagnostics, Pipeline, "ContainerAppManagedEnvironmentResource.GetManagedEnvironmentUsages", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the current usage information as well as the limits for environment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/managedEnvironments/{environmentName}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagedEnvironmentUsages_List</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AppContainersUsage" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppContainersUsage> GetManagedEnvironmentUsages(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managedEnvironmentUsagesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managedEnvironmentUsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AppContainersUsage.DeserializeAppContainersUsage, _managedEnvironmentUsagesClientDiagnostics, Pipeline, "ContainerAppManagedEnvironmentResource.GetManagedEnvironmentUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

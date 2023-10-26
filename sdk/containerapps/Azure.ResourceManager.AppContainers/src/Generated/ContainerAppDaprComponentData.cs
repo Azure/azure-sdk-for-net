@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.AppContainers
             Secrets = new ChangeTrackingList<ContainerAppWritableSecret>();
             Metadata = new ChangeTrackingList<ContainerAppDaprMetadata>();
             Scopes = new ChangeTrackingList<string>();
+            ServiceComponentBind = new ChangeTrackingList<DaprComponentServiceBinding>();
         }
 
         /// <summary> Initializes a new instance of ContainerAppDaprComponentData. </summary>
@@ -39,7 +40,8 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="secretStoreComponent"> Name of a Dapr component to retrieve component secrets from. </param>
         /// <param name="metadata"> Component metadata. </param>
         /// <param name="scopes"> Names of container apps that can use this Dapr component. </param>
-        internal ContainerAppDaprComponentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string componentType, string version, bool? ignoreErrors, string initTimeout, IList<ContainerAppWritableSecret> secrets, string secretStoreComponent, IList<ContainerAppDaprMetadata> metadata, IList<string> scopes) : base(id, name, resourceType, systemData)
+        /// <param name="serviceComponentBind"> List of container app services that are bound to the Dapr component. </param>
+        internal ContainerAppDaprComponentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string componentType, string version, bool? ignoreErrors, string initTimeout, IList<ContainerAppWritableSecret> secrets, string secretStoreComponent, IList<ContainerAppDaprMetadata> metadata, IList<string> scopes, IList<DaprComponentServiceBinding> serviceComponentBind) : base(id, name, resourceType, systemData)
         {
             ComponentType = componentType;
             Version = version;
@@ -49,6 +51,7 @@ namespace Azure.ResourceManager.AppContainers
             SecretStoreComponent = secretStoreComponent;
             Metadata = metadata;
             Scopes = scopes;
+            ServiceComponentBind = serviceComponentBind;
         }
 
         /// <summary> Component type. </summary>
@@ -67,5 +70,7 @@ namespace Azure.ResourceManager.AppContainers
         public IList<ContainerAppDaprMetadata> Metadata { get; }
         /// <summary> Names of container apps that can use this Dapr component. </summary>
         public IList<string> Scopes { get; }
+        /// <summary> List of container app services that are bound to the Dapr component. </summary>
+        public IList<DaprComponentServiceBinding> ServiceComponentBind { get; }
     }
 }

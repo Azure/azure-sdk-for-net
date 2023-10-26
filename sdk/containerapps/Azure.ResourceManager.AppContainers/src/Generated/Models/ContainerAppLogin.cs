@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Initializes a new instance of ContainerAppLogin. </summary>
         /// <param name="routes"> The routes that specify the endpoints used for login and logout requests. </param>
+        /// <param name="tokenStore"> The configuration settings of the token store. </param>
         /// <param name="preserveUrlFragmentsForLogins"> &lt;code&gt;true&lt;/code&gt; if the fragments from the request are preserved after the login request is made; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="allowedExternalRedirectUrls">
         /// External URLs that can be redirected to as part of logging in or logging out of the app. Note that the query string part of the URL is ignored.
@@ -29,9 +30,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// </param>
         /// <param name="cookieExpiration"> The configuration settings of the session cookie's expiration. </param>
         /// <param name="nonce"> The configuration settings of the nonce used in the login flow. </param>
-        internal ContainerAppLogin(LoginRoutes routes, bool? preserveUrlFragmentsForLogins, IList<string> allowedExternalRedirectUrls, ContainerAppCookieExpiration cookieExpiration, ContainerAppLoginNonce nonce)
+        internal ContainerAppLogin(LoginRoutes routes, TokenStore tokenStore, bool? preserveUrlFragmentsForLogins, IList<string> allowedExternalRedirectUrls, ContainerAppCookieExpiration cookieExpiration, ContainerAppLoginNonce nonce)
         {
             Routes = routes;
+            TokenStore = tokenStore;
             PreserveUrlFragmentsForLogins = preserveUrlFragmentsForLogins;
             AllowedExternalRedirectUrls = allowedExternalRedirectUrls;
             CookieExpiration = cookieExpiration;
@@ -52,6 +54,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
         }
 
+        /// <summary> The configuration settings of the token store. </summary>
+        public TokenStore TokenStore { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the fragments from the request are preserved after the login request is made; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? PreserveUrlFragmentsForLogins { get; set; }
         /// <summary>

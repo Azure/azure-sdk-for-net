@@ -1,0 +1,13 @@
+MSBuild version 17.6.10+2679cf5a9 for .NET
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+Attempting to cancel the build...
+C:\Users\chenghuiyu\.nuget\packages\microsoft.azure.autorest.csharp\3.0.0-beta.20231025.1\buildMultiTargeting\Microsoft.Azure.AutoRest.CSharp.targets(54,5): warning MSB5021: Terminating the task executable "cmd" and its child processes because the build was canceled. [C:\code\azure-sdk-for-net\sdk\containerapps\Azure.ResourceManager.AppContainers\src\Azure.ResourceManager.AppContainers.csproj]
+
+Build FAILED.
+
+C:\Users\chenghuiyu\.nuget\packages\microsoft.azure.autorest.csharp\3.0.0-beta.20231025.1\buildMultiTargeting\Microsoft.Azure.AutoRest.CSharp.targets(54,5): warning MSB5021: Terminating the task executable "cmd" and its child processes because the build was canceled. [C:\code\azure-sdk-for-net\sdk\containerapps\Azure.ResourceManager.AppContainers\src\Azure.ResourceManager.AppContainers.csproj]
+    1 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:00.97

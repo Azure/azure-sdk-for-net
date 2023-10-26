@@ -21,6 +21,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("routes"u8);
                 writer.WriteObjectValue(Routes);
             }
+            if (Optional.IsDefined(TokenStore))
+            {
+                writer.WritePropertyName("tokenStore"u8);
+                writer.WriteObjectValue(TokenStore);
+            }
             if (Optional.IsDefined(PreserveUrlFragmentsForLogins))
             {
                 writer.WritePropertyName("preserveUrlFragmentsForLogins"u8);
@@ -56,6 +61,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 return null;
             }
             Optional<LoginRoutes> routes = default;
+            Optional<TokenStore> tokenStore = default;
             Optional<bool> preserveUrlFragmentsForLogins = default;
             Optional<IList<string>> allowedExternalRedirectUrls = default;
             Optional<ContainerAppCookieExpiration> cookieExpiration = default;
@@ -69,6 +75,15 @@ namespace Azure.ResourceManager.AppContainers.Models
                         continue;
                     }
                     routes = LoginRoutes.DeserializeLoginRoutes(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("tokenStore"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tokenStore = TokenStore.DeserializeTokenStore(property.Value);
                     continue;
                 }
                 if (property.NameEquals("preserveUrlFragmentsForLogins"u8))
@@ -113,7 +128,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     continue;
                 }
             }
-            return new ContainerAppLogin(routes.Value, Optional.ToNullable(preserveUrlFragmentsForLogins), Optional.ToList(allowedExternalRedirectUrls), cookieExpiration.Value, nonce.Value);
+            return new ContainerAppLogin(routes.Value, tokenStore.Value, Optional.ToNullable(preserveUrlFragmentsForLogins), Optional.ToList(allowedExternalRedirectUrls), cookieExpiration.Value, nonce.Value);
         }
     }
 }

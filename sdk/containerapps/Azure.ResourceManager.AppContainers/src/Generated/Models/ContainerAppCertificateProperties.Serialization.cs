@@ -27,6 +27,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("value"u8);
                 writer.WriteBase64StringValue(Value, "D");
             }
+            if (Optional.IsDefined(CertificateType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(CertificateType.Value.ToString());
+            }
             writer.WriteEndObject();
         }
 
@@ -47,6 +52,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<string> thumbprint = default;
             Optional<bool> valid = default;
             Optional<string> publicKeyHash = default;
+            Optional<CertificateType> type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -133,8 +139,17 @@ namespace Azure.ResourceManager.AppContainers.Models
                     publicKeyHash = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("type"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    type = new CertificateType(property.Value.GetString());
+                    continue;
+                }
             }
-            return new ContainerAppCertificateProperties(Optional.ToNullable(provisioningState), password.Value, subjectName.Value, Optional.ToList(subjectAlternativeNames), value.Value, issuer.Value, Optional.ToNullable(issueDate), Optional.ToNullable(expirationDate), thumbprint.Value, Optional.ToNullable(valid), publicKeyHash.Value);
+            return new ContainerAppCertificateProperties(Optional.ToNullable(provisioningState), password.Value, subjectName.Value, Optional.ToList(subjectAlternativeNames), value.Value, issuer.Value, Optional.ToNullable(issueDate), Optional.ToNullable(expirationDate), thumbprint.Value, Optional.ToNullable(valid), publicKeyHash.Value, Optional.ToNullable(type));
         }
     }
 }

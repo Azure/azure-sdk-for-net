@@ -90,6 +90,59 @@ namespace Azure.ResourceManager.AppContainers
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of AppResiliencyResources in the ContainerApp. </summary>
+        /// <returns> An object representing collection of AppResiliencyResources and their operations over a AppResiliencyResource. </returns>
+        public virtual AppResiliencyCollection GetAppResiliencies()
+        {
+            return GetCachedClient(Client => new AppResiliencyCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Get an application's resiliency policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{appName}/resiliencyPolicies/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppResiliency_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> Name of the resiliency policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AppResiliencyResource>> GetAppResiliencyAsync(string name, CancellationToken cancellationToken = default)
+        {
+            return await GetAppResiliencies().GetAsync(name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get an application's resiliency policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{appName}/resiliencyPolicies/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppResiliency_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> Name of the resiliency policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<AppResiliencyResource> GetAppResiliency(string name, CancellationToken cancellationToken = default)
+        {
+            return GetAppResiliencies().Get(name, cancellationToken);
+        }
+
         /// <summary> Gets a collection of ContainerAppAuthConfigResources in the ContainerApp. </summary>
         /// <returns> An object representing collection of ContainerAppAuthConfigResources and their operations over a ContainerAppAuthConfigResource. </returns>
         public virtual ContainerAppAuthConfigCollection GetContainerAppAuthConfigs()

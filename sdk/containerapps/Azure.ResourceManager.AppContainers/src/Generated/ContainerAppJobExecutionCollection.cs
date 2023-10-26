@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.AppContainers
 {
     /// <summary>
     /// A class representing a collection of <see cref="ContainerAppJobExecutionResource" /> and their operations.
-    /// Each <see cref="ContainerAppJobExecutionResource" /> in the collection will belong to the same instance of <see cref="ContainerAppJobResource" />.
-    /// To get a <see cref="ContainerAppJobExecutionCollection" /> instance call the GetContainerAppJobExecutions method from an instance of <see cref="ContainerAppJobResource" />.
+    /// Each <see cref="ContainerAppJobExecutionResource" /> in the collection will belong to the same instance of <see cref="JobResource" />.
+    /// To get a <see cref="ContainerAppJobExecutionCollection" /> instance call the GetContainerAppJobExecutions method from an instance of <see cref="JobResource" />.
     /// </summary>
     public partial class ContainerAppJobExecutionCollection : ArmCollection, IEnumerable<ContainerAppJobExecutionResource>, IAsyncEnumerable<ContainerAppJobExecutionResource>
     {
@@ -54,8 +54,8 @@ namespace Azure.ResourceManager.AppContainers
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ContainerAppJobResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ContainerAppJobResource.ResourceType), nameof(id));
+            if (id.ResourceType != JobResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, JobResource.ResourceType), nameof(id));
         }
 
         /// <summary>

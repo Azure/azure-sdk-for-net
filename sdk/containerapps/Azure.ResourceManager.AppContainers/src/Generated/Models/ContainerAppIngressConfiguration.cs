@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Traffic = new ChangeTrackingList<ContainerAppRevisionTrafficWeight>();
             CustomDomains = new ChangeTrackingList<ContainerAppCustomDomain>();
             IPSecurityRestrictions = new ChangeTrackingList<ContainerAppIPSecurityRestrictionRule>();
+            AdditionalPortMappings = new ChangeTrackingList<IngressPortMapping>();
         }
 
         /// <summary> Initializes a new instance of ContainerAppIngressConfiguration. </summary>
@@ -34,7 +35,8 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="stickySessions"> Sticky Sessions for Single Revision Mode. </param>
         /// <param name="clientCertificateMode"> Client certificate mode for mTLS authentication. Ignore indicates server drops client certificate on forwarding. Accept indicates server forwards client certificate but does not require a client certificate. Require indicates server requires a client certificate. </param>
         /// <param name="corsPolicy"> CORS policy for container app. </param>
-        internal ContainerAppIngressConfiguration(string fqdn, bool? external, int? targetPort, int? exposedPort, ContainerAppIngressTransportMethod? transport, IList<ContainerAppRevisionTrafficWeight> traffic, IList<ContainerAppCustomDomain> customDomains, bool? allowInsecure, IList<ContainerAppIPSecurityRestrictionRule> ipSecurityRestrictions, IngressStickySessions stickySessions, ContainerAppIngressClientCertificateMode? clientCertificateMode, ContainerAppCorsPolicy corsPolicy)
+        /// <param name="additionalPortMappings"> Settings to expose additional ports on container app. </param>
+        internal ContainerAppIngressConfiguration(string fqdn, bool? external, int? targetPort, int? exposedPort, ContainerAppIngressTransportMethod? transport, IList<ContainerAppRevisionTrafficWeight> traffic, IList<ContainerAppCustomDomain> customDomains, bool? allowInsecure, IList<ContainerAppIPSecurityRestrictionRule> ipSecurityRestrictions, IngressStickySessions stickySessions, ContainerAppIngressClientCertificateMode? clientCertificateMode, ContainerAppCorsPolicy corsPolicy, IList<IngressPortMapping> additionalPortMappings)
         {
             Fqdn = fqdn;
             External = external;
@@ -48,6 +50,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             StickySessions = stickySessions;
             ClientCertificateMode = clientCertificateMode;
             CorsPolicy = corsPolicy;
+            AdditionalPortMappings = additionalPortMappings;
         }
 
         /// <summary> Hostname. </summary>
@@ -86,5 +89,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         public ContainerAppIngressClientCertificateMode? ClientCertificateMode { get; set; }
         /// <summary> CORS policy for container app. </summary>
         public ContainerAppCorsPolicy CorsPolicy { get; set; }
+        /// <summary> Settings to expose additional ports on container app. </summary>
+        public IList<IngressPortMapping> AdditionalPortMappings { get; }
     }
 }

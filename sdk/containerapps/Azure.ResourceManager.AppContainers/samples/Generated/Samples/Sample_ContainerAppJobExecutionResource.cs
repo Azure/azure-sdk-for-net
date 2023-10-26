@@ -12,6 +12,7 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.AppContainers;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppContainers.Samples
 {
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task StopExecutionJob_TerminateAContainerAppsJob()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2023-05-01/examples/Job_Stop_Execution.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2023-08-01-preview/examples/Job_Stop_Execution.json
             // this example is just showing the usage of "Jobs_StopExecution" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetASingleJobExecution()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2023-05-01/examples/Job_Execution_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2023-08-01-preview/examples/Job_Execution_Get.json
             // this example is just showing the usage of "JobExecution" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -75,6 +76,31 @@ namespace Azure.ResourceManager.AppContainers.Samples
             ContainerAppJobExecutionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // List all operations
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetCustomDomainVerificationId_ListAllOperations()
+        {
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2023-08-01-preview/examples/Subscriptions_GetCustomDomainVerificationId.json
+            // this example is just showing the usage of "GetCustomDomainVerificationId" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "d27c3573-f76e-4b26-b871-0ccd2203d08c";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation
+            string result = await subscriptionResource.GetCustomDomainVerificationIdAsync();
+
+            Console.WriteLine($"Succeeded: {result}");
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -25,6 +26,22 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
+            if (Optional.IsDefined(ClientType))
+            {
+                writer.WritePropertyName("clientType"u8);
+                writer.WriteStringValue(ClientType);
+            }
+            if (Optional.IsCollectionDefined(CustomizedKeys))
+            {
+                writer.WritePropertyName("customizedKeys"u8);
+                writer.WriteStartObject();
+                foreach (var item in CustomizedKeys)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
             writer.WriteEndObject();
         }
 
@@ -36,6 +53,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             Optional<ResourceIdentifier> serviceId = default;
             Optional<string> name = default;
+            Optional<string> clientType = default;
+            Optional<IDictionary<string, string>> customizedKeys = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serviceId"u8))
@@ -52,8 +71,27 @@ namespace Azure.ResourceManager.AppContainers.Models
                     name = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("clientType"u8))
+                {
+                    clientType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("customizedKeys"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    customizedKeys = dictionary;
+                    continue;
+                }
             }
-            return new ContainerAppServiceBind(serviceId.Value, name.Value);
+            return new ContainerAppServiceBind(serviceId.Value, name.Value, clientType.Value, Optional.ToDictionary(customizedKeys));
         }
     }
 }

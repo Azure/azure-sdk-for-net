@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListDaprComponents()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2023-05-01/examples/DaprComponents_List.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2023-08-01-preview/examples/DaprComponents_List.json
             // this example is just showing the usage of "DaprComponents_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetDaprComponentWithSecretStoreComponent()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2023-05-01/examples/DaprComponents_Get_SecretStoreComponent.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2023-08-01-preview/examples/DaprComponents_Get_SecretStoreComponent.json
             // this example is just showing the usage of "DaprComponents_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetDaprComponentWithSecretStoreComponent()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2023-05-01/examples/DaprComponents_Get_SecretStoreComponent.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2023-08-01-preview/examples/DaprComponents_Get_SecretStoreComponent.json
             // this example is just showing the usage of "DaprComponents_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_GetDaprComponentWithSecretStoreComponent()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2023-05-01/examples/DaprComponents_Get_SecretStoreComponent.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2023-08-01-preview/examples/DaprComponents_Get_SecretStoreComponent.json
             // this example is just showing the usage of "DaprComponents_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetDaprComponentWithSecrets()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2023-05-01/examples/DaprComponents_Get_Secrets.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2023-08-01-preview/examples/DaprComponents_Get_Secrets.json
             // this example is just showing the usage of "DaprComponents_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetDaprComponentWithSecrets()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2023-05-01/examples/DaprComponents_Get_Secrets.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2023-08-01-preview/examples/DaprComponents_Get_Secrets.json
             // this example is just showing the usage of "DaprComponents_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_GetDaprComponentWithSecrets()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2023-05-01/examples/DaprComponents_Get_Secrets.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2023-08-01-preview/examples/DaprComponents_Get_Secrets.json
             // this example is just showing the usage of "DaprComponents_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateOrUpdateDaprComponentWithSecretStoreComponent()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2023-05-01/examples/DaprComponents_CreateOrUpdate_SecretStoreComponent.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2023-08-01-preview/examples/DaprComponents_CreateOrUpdate_SecretStoreComponent.json
             // this example is just showing the usage of "DaprComponents_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -330,6 +330,19 @@ SecretRef = "masterkey",
 {
 "container-app-1","container-app-2"
 },
+                ServiceComponentBind =
+{
+new DaprComponentServiceBinding()
+{
+Name = "statestore",
+ServiceId = "/subscriptions/9f7371f1-b593-4c3c-84e2-9167806ad358/resourceGroups/ca-syn2-group/providers/Microsoft.App/containerapps/cappredis",
+Metadata = new DaprServiceBindMetadata()
+{
+Name = "daprcomponentBind",
+Value = "redis-bind",
+},
+}
+},
             };
             ArmOperation<ContainerAppManagedEnvironmentDaprComponentResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, componentName, data);
             ContainerAppManagedEnvironmentDaprComponentResource result = lro.Value;
@@ -346,7 +359,7 @@ SecretRef = "masterkey",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateOrUpdateDaprComponentWithSecrets()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2023-05-01/examples/DaprComponents_CreateOrUpdate_Secrets.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2023-08-01-preview/examples/DaprComponents_CreateOrUpdate_Secrets.json
             // this example is just showing the usage of "DaprComponents_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -404,6 +417,19 @@ SecretRef = "masterkey",
                 Scopes =
 {
 "container-app-1","container-app-2"
+},
+                ServiceComponentBind =
+{
+new DaprComponentServiceBinding()
+{
+Name = "statestore",
+ServiceId = "/subscriptions/9f7371f1-b593-4c3c-84e2-9167806ad358/resourceGroups/ca-syn2-group/providers/Microsoft.App/containerapps/cappredis",
+Metadata = new DaprServiceBindMetadata()
+{
+Name = "daprcomponentBind",
+Value = "redis-bind",
+},
+}
 },
             };
             ArmOperation<ContainerAppManagedEnvironmentDaprComponentResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, componentName, data);

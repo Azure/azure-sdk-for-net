@@ -31,6 +31,13 @@ namespace Azure.ResourceManager.AppContainers
             return apiVersion;
         }
 
+        /// <summary> Gets a collection of BuilderResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of BuilderResources and their operations over a BuilderResource. </returns>
+        public virtual BuilderResourceCollection GetBuilderResources()
+        {
+            return GetCachedClient(Client => new BuilderResourceCollection(Client, Id));
+        }
+
         /// <summary> Gets a collection of ContainerAppConnectedEnvironmentResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of ContainerAppConnectedEnvironmentResources and their operations over a ContainerAppConnectedEnvironmentResource. </returns>
         public virtual ContainerAppConnectedEnvironmentCollection GetContainerAppConnectedEnvironments()
@@ -52,11 +59,11 @@ namespace Azure.ResourceManager.AppContainers
             return GetCachedClient(Client => new ContainerAppManagedEnvironmentCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of ContainerAppJobResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ContainerAppJobResources and their operations over a ContainerAppJobResource. </returns>
-        public virtual ContainerAppJobCollection GetContainerAppJobs()
+        /// <summary> Gets a collection of JobResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of JobResources and their operations over a JobResource. </returns>
+        public virtual JobCollection GetJobs()
         {
-            return GetCachedClient(Client => new ContainerAppJobCollection(Client, Id));
+            return GetCachedClient(Client => new JobCollection(Client, Id));
         }
     }
 }

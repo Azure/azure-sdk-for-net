@@ -18,6 +18,11 @@ namespace Azure.ResourceManager.AppContainers
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(ExtendedLocation))
+            {
+                writer.WritePropertyName("extendedLocation"u8);
+                writer.WriteObjectValue(ExtendedLocation);
+            }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
@@ -69,6 +74,7 @@ namespace Azure.ResourceManager.AppContainers
             {
                 return null;
             }
+            Optional<ContainerAppExtendedLocation> extendedLocation = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -85,6 +91,15 @@ namespace Azure.ResourceManager.AppContainers
             Optional<string> eventStreamEndpoint = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("extendedLocation"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    extendedLocation = ContainerAppExtendedLocation.DeserializeContainerAppExtendedLocation(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("identity"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -207,7 +222,7 @@ namespace Azure.ResourceManager.AppContainers
                     continue;
                 }
             }
-            return new ContainerAppJobData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, Optional.ToNullable(provisioningState), environmentId.Value, workloadProfileName.Value, configuration.Value, template.Value, Optional.ToList(outboundIPAddresses), eventStreamEndpoint.Value);
+            return new ContainerAppJobData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation.Value, identity, Optional.ToNullable(provisioningState), environmentId.Value, workloadProfileName.Value, configuration.Value, template.Value, Optional.ToList(outboundIPAddresses), eventStreamEndpoint.Value);
         }
     }
 }

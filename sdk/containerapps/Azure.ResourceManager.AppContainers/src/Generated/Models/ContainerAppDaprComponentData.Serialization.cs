@@ -75,6 +75,16 @@ namespace Azure.ResourceManager.AppContainers
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(ServiceComponentBind))
+            {
+                writer.WritePropertyName("serviceComponentBind"u8);
+                writer.WriteStartArray();
+                foreach (var item in ServiceComponentBind)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -97,6 +107,7 @@ namespace Azure.ResourceManager.AppContainers
             Optional<string> secretStoreComponent = default;
             Optional<IList<ContainerAppDaprMetadata>> metadata = default;
             Optional<IList<string>> scopes = default;
+            Optional<IList<DaprComponentServiceBinding>> serviceComponentBind = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -203,11 +214,25 @@ namespace Azure.ResourceManager.AppContainers
                             scopes = array;
                             continue;
                         }
+                        if (property0.NameEquals("serviceComponentBind"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<DaprComponentServiceBinding> array = new List<DaprComponentServiceBinding>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(DaprComponentServiceBinding.DeserializeDaprComponentServiceBinding(item));
+                            }
+                            serviceComponentBind = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ContainerAppDaprComponentData(id, name, type, systemData.Value, componentType.Value, version.Value, Optional.ToNullable(ignoreErrors), initTimeout.Value, Optional.ToList(secrets), secretStoreComponent.Value, Optional.ToList(metadata), Optional.ToList(scopes));
+            return new ContainerAppDaprComponentData(id, name, type, systemData.Value, componentType.Value, version.Value, Optional.ToNullable(ignoreErrors), initTimeout.Value, Optional.ToList(secrets), secretStoreComponent.Value, Optional.ToList(metadata), Optional.ToList(scopes), Optional.ToList(serviceComponentBind));
         }
     }
 }

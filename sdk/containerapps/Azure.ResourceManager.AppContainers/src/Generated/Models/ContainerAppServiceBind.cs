@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
@@ -15,20 +16,29 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of ContainerAppServiceBind. </summary>
         public ContainerAppServiceBind()
         {
+            CustomizedKeys = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of ContainerAppServiceBind. </summary>
         /// <param name="serviceId"> Resource id of the target service. </param>
         /// <param name="name"> Name of the service bind. </param>
-        internal ContainerAppServiceBind(ResourceIdentifier serviceId, string name)
+        /// <param name="clientType"> Type of the client to be used to connect to the service. </param>
+        /// <param name="customizedKeys"> Customized keys for customizing injected values to the app. </param>
+        internal ContainerAppServiceBind(ResourceIdentifier serviceId, string name, string clientType, IDictionary<string, string> customizedKeys)
         {
             ServiceId = serviceId;
             Name = name;
+            ClientType = clientType;
+            CustomizedKeys = customizedKeys;
         }
 
         /// <summary> Resource id of the target service. </summary>
         public ResourceIdentifier ServiceId { get; set; }
         /// <summary> Name of the service bind. </summary>
         public string Name { get; set; }
+        /// <summary> Type of the client to be used to connect to the service. </summary>
+        public string ClientType { get; set; }
+        /// <summary> Customized keys for customizing injected values to the app. </summary>
+        public IDictionary<string, string> CustomizedKeys { get; }
     }
 }

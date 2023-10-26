@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("memoryGiB"u8);
                 writer.WriteNumberValue(MemoryInGiB.Value);
             }
+            if (Optional.IsDefined(Gpus))
+            {
+                writer.WritePropertyName("gpus"u8);
+                writer.WriteNumberValue(Gpus.Value);
+            }
             if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
@@ -53,6 +58,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<ContainerAppAvailableWorkloadProfileApplicability> applicability = default;
             Optional<int> cores = default;
             Optional<int> memoryGiB = default;
+            Optional<int> gpus = default;
             Optional<string> displayName = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -88,13 +94,22 @@ namespace Azure.ResourceManager.AppContainers.Models
                     memoryGiB = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("gpus"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    gpus = property.Value.GetInt32();
+                    continue;
+                }
                 if (property.NameEquals("displayName"u8))
                 {
                     displayName = property.Value.GetString();
                     continue;
                 }
             }
-            return new ContainerAppAvailableWorkloadProfileProperties(category.Value, Optional.ToNullable(applicability), Optional.ToNullable(cores), Optional.ToNullable(memoryGiB), displayName.Value);
+            return new ContainerAppAvailableWorkloadProfileProperties(category.Value, Optional.ToNullable(applicability), Optional.ToNullable(cores), Optional.ToNullable(memoryGiB), Optional.ToNullable(gpus), displayName.Value);
         }
     }
 }

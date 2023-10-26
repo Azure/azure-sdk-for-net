@@ -32,7 +32,8 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="thumbprint"> Certificate thumbprint. </param>
         /// <param name="isValid"> Is the certificate valid?. </param>
         /// <param name="publicKeyHash"> Public key hash. </param>
-        internal ContainerAppCertificateProperties(ContainerAppCertificateProvisioningState? provisioningState, string password, string subjectName, IReadOnlyList<string> subjectAlternativeNames, byte[] value, string issuer, DateTimeOffset? issueOn, DateTimeOffset? expireOn, string thumbprint, bool? isValid, string publicKeyHash)
+        /// <param name="certificateType"> The type of the certificate. Allowed values are `ServerSSLCertificate` and `ImagePullTrustedCA`. </param>
+        internal ContainerAppCertificateProperties(ContainerAppCertificateProvisioningState? provisioningState, string password, string subjectName, IReadOnlyList<string> subjectAlternativeNames, byte[] value, string issuer, DateTimeOffset? issueOn, DateTimeOffset? expireOn, string thumbprint, bool? isValid, string publicKeyHash, CertificateType? certificateType)
         {
             ProvisioningState = provisioningState;
             Password = password;
@@ -45,6 +46,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Thumbprint = thumbprint;
             IsValid = isValid;
             PublicKeyHash = publicKeyHash;
+            CertificateType = certificateType;
         }
 
         /// <summary> Provisioning state of the certificate. </summary>
@@ -69,5 +71,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         public bool? IsValid { get; }
         /// <summary> Public key hash. </summary>
         public string PublicKeyHash { get; }
+        /// <summary> The type of the certificate. Allowed values are `ServerSSLCertificate` and `ImagePullTrustedCA`. </summary>
+        public CertificateType? CertificateType { get; set; }
     }
 }

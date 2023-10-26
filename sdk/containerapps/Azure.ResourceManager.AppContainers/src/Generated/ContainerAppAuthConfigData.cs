@@ -32,13 +32,15 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="identityProviders"> The configuration settings of each of the identity providers used to configure ContainerApp Service Authentication/Authorization. </param>
         /// <param name="login"> The configuration settings of the login flow of users using ContainerApp Service Authentication/Authorization. </param>
         /// <param name="httpSettings"> The configuration settings of the HTTP requests for authentication and authorization requests made against ContainerApp Service Authentication/Authorization. </param>
-        internal ContainerAppAuthConfigData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContainerAppAuthPlatform platform, ContainerAppGlobalValidation globalValidation, ContainerAppIdentityProvidersConfiguration identityProviders, ContainerAppLogin login, ContainerAppHttpSettings httpSettings) : base(id, name, resourceType, systemData)
+        /// <param name="encryptionSettings"> The configuration settings of the secrets references of encryption key and signing key for ContainerApp Service Authentication/Authorization. </param>
+        internal ContainerAppAuthConfigData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContainerAppAuthPlatform platform, ContainerAppGlobalValidation globalValidation, ContainerAppIdentityProvidersConfiguration identityProviders, ContainerAppLogin login, ContainerAppHttpSettings httpSettings, EncryptionSettings encryptionSettings) : base(id, name, resourceType, systemData)
         {
             Platform = platform;
             GlobalValidation = globalValidation;
             IdentityProviders = identityProviders;
             Login = login;
             HttpSettings = httpSettings;
+            EncryptionSettings = encryptionSettings;
         }
 
         /// <summary> The configuration settings of the platform of ContainerApp Service Authentication/Authorization. </summary>
@@ -51,5 +53,7 @@ namespace Azure.ResourceManager.AppContainers
         public ContainerAppLogin Login { get; set; }
         /// <summary> The configuration settings of the HTTP requests for authentication and authorization requests made against ContainerApp Service Authentication/Authorization. </summary>
         public ContainerAppHttpSettings HttpSettings { get; set; }
+        /// <summary> The configuration settings of the secrets references of encryption key and signing key for ContainerApp Service Authentication/Authorization. </summary>
+        public EncryptionSettings EncryptionSettings { get; set; }
     }
 }

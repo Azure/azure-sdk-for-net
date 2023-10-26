@@ -46,6 +46,8 @@ namespace Azure.ResourceManager.AppContainers
         /// app logs to a destination. Currently only "log-analytics" is
         /// supported
         /// </param>
+        /// <param name="appInsightsConfiguration"> Environment level Application Insights configuration. </param>
+        /// <param name="openTelemetryConfiguration"> Environment Open Telemetry configuration. </param>
         /// <param name="isZoneRedundant"> Whether or not this Managed Environment is zone-redundant. </param>
         /// <param name="customDomainConfiguration"> Custom domain configuration for the environment. </param>
         /// <param name="eventStreamEndpoint"> The endpoint of the eventstream of the Environment. </param>
@@ -54,7 +56,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="daprConfiguration"> The configuration of Dapr component. </param>
         /// <param name="infrastructureResourceGroup"> Name of the platform-managed resource group created for the Managed Environment to host infrastructure resources. If a subnet ID is provided, this resource group will be created in the same subscription as the subnet. </param>
         /// <param name="peerAuthentication"> Peer authentication settings for the Managed Environment. </param>
-        internal ContainerAppManagedEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, ContainerAppEnvironmentProvisioningState? provisioningState, string daprAIInstrumentationKey, string daprAIConnectionString, ContainerAppVnetConfiguration vnetConfiguration, string deploymentErrors, string defaultDomain, IPAddress staticIP, ContainerAppLogsConfiguration appLogsConfiguration, bool? isZoneRedundant, ContainerAppCustomDomainConfiguration customDomainConfiguration, string eventStreamEndpoint, IList<ContainerAppWorkloadProfile> workloadProfiles, KedaConfiguration kedaConfiguration, DaprConfiguration daprConfiguration, string infrastructureResourceGroup, ManagedEnvironmentPropertiesPeerAuthentication peerAuthentication) : base(id, name, resourceType, systemData, tags, location)
+        internal ContainerAppManagedEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, ContainerAppEnvironmentProvisioningState? provisioningState, string daprAIInstrumentationKey, string daprAIConnectionString, ContainerAppVnetConfiguration vnetConfiguration, string deploymentErrors, string defaultDomain, IPAddress staticIP, ContainerAppLogsConfiguration appLogsConfiguration, AppInsightsConfiguration appInsightsConfiguration, OpenTelemetryConfiguration openTelemetryConfiguration, bool? isZoneRedundant, ContainerAppCustomDomainConfiguration customDomainConfiguration, string eventStreamEndpoint, IList<ContainerAppWorkloadProfile> workloadProfiles, KedaConfiguration kedaConfiguration, DaprConfiguration daprConfiguration, string infrastructureResourceGroup, ManagedEnvironmentPropertiesPeerAuthentication peerAuthentication) : base(id, name, resourceType, systemData, tags, location)
         {
             Kind = kind;
             ProvisioningState = provisioningState;
@@ -65,6 +67,8 @@ namespace Azure.ResourceManager.AppContainers
             DefaultDomain = defaultDomain;
             StaticIP = staticIP;
             AppLogsConfiguration = appLogsConfiguration;
+            AppInsightsConfiguration = appInsightsConfiguration;
+            OpenTelemetryConfiguration = openTelemetryConfiguration;
             IsZoneRedundant = isZoneRedundant;
             CustomDomainConfiguration = customDomainConfiguration;
             EventStreamEndpoint = eventStreamEndpoint;
@@ -97,6 +101,22 @@ namespace Azure.ResourceManager.AppContainers
         /// supported
         /// </summary>
         public ContainerAppLogsConfiguration AppLogsConfiguration { get; set; }
+        /// <summary> Environment level Application Insights configuration. </summary>
+        internal AppInsightsConfiguration AppInsightsConfiguration { get; set; }
+        /// <summary> Application Insights connection string. </summary>
+        public string AppInsightsConnectionString
+        {
+            get => AppInsightsConfiguration is null ? default : AppInsightsConfiguration.ConnectionString;
+            set
+            {
+                if (AppInsightsConfiguration is null)
+                    AppInsightsConfiguration = new AppInsightsConfiguration();
+                AppInsightsConfiguration.ConnectionString = value;
+            }
+        }
+
+        /// <summary> Environment Open Telemetry configuration. </summary>
+        public OpenTelemetryConfiguration OpenTelemetryConfiguration { get; set; }
         /// <summary> Whether or not this Managed Environment is zone-redundant. </summary>
         public bool? IsZoneRedundant { get; set; }
         /// <summary> Custom domain configuration for the environment. </summary>

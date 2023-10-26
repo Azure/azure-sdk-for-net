@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("httpSettings"u8);
                 writer.WriteObjectValue(HttpSettings);
             }
+            if (Optional.IsDefined(EncryptionSettings))
+            {
+                writer.WritePropertyName("encryptionSettings"u8);
+                writer.WriteObjectValue(EncryptionSettings);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -63,6 +68,7 @@ namespace Azure.ResourceManager.AppContainers
             Optional<ContainerAppIdentityProvidersConfiguration> identityProviders = default;
             Optional<ContainerAppLogin> login = default;
             Optional<ContainerAppHttpSettings> httpSettings = default;
+            Optional<EncryptionSettings> encryptionSettings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -143,11 +149,20 @@ namespace Azure.ResourceManager.AppContainers
                             httpSettings = ContainerAppHttpSettings.DeserializeContainerAppHttpSettings(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("encryptionSettings"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            encryptionSettings = EncryptionSettings.DeserializeEncryptionSettings(property0.Value);
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ContainerAppAuthConfigData(id, name, type, systemData.Value, platform.Value, globalValidation.Value, identityProviders.Value, login.Value, httpSettings.Value);
+            return new ContainerAppAuthConfigData(id, name, type, systemData.Value, platform.Value, globalValidation.Value, identityProviders.Value, login.Value, httpSettings.Value, encryptionSettings.Value);
         }
     }
 }

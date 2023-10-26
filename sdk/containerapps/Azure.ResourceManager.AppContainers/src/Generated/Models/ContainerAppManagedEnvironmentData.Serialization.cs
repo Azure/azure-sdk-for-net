@@ -59,6 +59,16 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WritePropertyName("appLogsConfiguration"u8);
                 writer.WriteObjectValue(AppLogsConfiguration);
             }
+            if (Optional.IsDefined(AppInsightsConfiguration))
+            {
+                writer.WritePropertyName("appInsightsConfiguration"u8);
+                writer.WriteObjectValue(AppInsightsConfiguration);
+            }
+            if (Optional.IsDefined(OpenTelemetryConfiguration))
+            {
+                writer.WritePropertyName("openTelemetryConfiguration"u8);
+                writer.WriteObjectValue(OpenTelemetryConfiguration);
+            }
             if (Optional.IsDefined(IsZoneRedundant))
             {
                 writer.WritePropertyName("zoneRedundant"u8);
@@ -124,6 +134,8 @@ namespace Azure.ResourceManager.AppContainers
             Optional<string> defaultDomain = default;
             Optional<IPAddress> staticIP = default;
             Optional<ContainerAppLogsConfiguration> appLogsConfiguration = default;
+            Optional<AppInsightsConfiguration> appInsightsConfiguration = default;
+            Optional<OpenTelemetryConfiguration> openTelemetryConfiguration = default;
             Optional<bool> zoneRedundant = default;
             Optional<ContainerAppCustomDomainConfiguration> customDomainConfiguration = default;
             Optional<string> eventStreamEndpoint = default;
@@ -247,6 +259,24 @@ namespace Azure.ResourceManager.AppContainers
                             appLogsConfiguration = ContainerAppLogsConfiguration.DeserializeContainerAppLogsConfiguration(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("appInsightsConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            appInsightsConfiguration = AppInsightsConfiguration.DeserializeAppInsightsConfiguration(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("openTelemetryConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            openTelemetryConfiguration = OpenTelemetryConfiguration.DeserializeOpenTelemetryConfiguration(property0.Value);
+                            continue;
+                        }
                         if (property0.NameEquals("zoneRedundant"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -320,7 +350,7 @@ namespace Azure.ResourceManager.AppContainers
                     continue;
                 }
             }
-            return new ContainerAppManagedEnvironmentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, kind.Value, Optional.ToNullable(provisioningState), daprAIInstrumentationKey.Value, daprAIConnectionString.Value, vnetConfiguration.Value, deploymentErrors.Value, defaultDomain.Value, staticIP.Value, appLogsConfiguration.Value, Optional.ToNullable(zoneRedundant), customDomainConfiguration.Value, eventStreamEndpoint.Value, Optional.ToList(workloadProfiles), kedaConfiguration.Value, daprConfiguration.Value, infrastructureResourceGroup.Value, peerAuthentication.Value);
+            return new ContainerAppManagedEnvironmentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, kind.Value, Optional.ToNullable(provisioningState), daprAIInstrumentationKey.Value, daprAIConnectionString.Value, vnetConfiguration.Value, deploymentErrors.Value, defaultDomain.Value, staticIP.Value, appLogsConfiguration.Value, appInsightsConfiguration.Value, openTelemetryConfiguration.Value, Optional.ToNullable(zoneRedundant), customDomainConfiguration.Value, eventStreamEndpoint.Value, Optional.ToList(workloadProfiles), kedaConfiguration.Value, daprConfiguration.Value, infrastructureResourceGroup.Value, peerAuthentication.Value);
         }
     }
 }

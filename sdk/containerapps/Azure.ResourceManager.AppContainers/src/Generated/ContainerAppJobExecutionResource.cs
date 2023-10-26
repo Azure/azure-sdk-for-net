@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppContainers
     /// A Class representing a ContainerAppJobExecution along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ContainerAppJobExecutionResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetContainerAppJobExecutionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ContainerAppJobResource" /> using the GetContainerAppJobExecution method.
+    /// Otherwise you can get one from its parent resource <see cref="JobResource" /> using the GetContainerAppJobExecution method.
     /// </summary>
     public partial class ContainerAppJobExecutionResource : ArmResource
     {
@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.AppContainers
 
         private readonly ClientDiagnostics _containerAppJobExecutionClientDiagnostics;
         private readonly ContainerAppsAPIRestOperations _containerAppJobExecutionRestClient;
-        private readonly ClientDiagnostics _containerAppJobJobsClientDiagnostics;
-        private readonly JobsRestOperations _containerAppJobJobsRestClient;
+        private readonly ClientDiagnostics _jobsClientDiagnostics;
+        private readonly JobsRestOperations _jobsRestClient;
         private readonly ContainerAppJobExecutionData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ContainerAppJobExecutionResource"/> class for mocking. </summary>
@@ -59,9 +59,8 @@ namespace Azure.ResourceManager.AppContainers
             _containerAppJobExecutionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string containerAppJobExecutionApiVersion);
             _containerAppJobExecutionRestClient = new ContainerAppsAPIRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppJobExecutionApiVersion);
-            _containerAppJobJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppJobResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ContainerAppJobResource.ResourceType, out string containerAppJobJobsApiVersion);
-            _containerAppJobJobsRestClient = new JobsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppJobJobsApiVersion);
+            _jobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _jobsRestClient = new JobsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -172,12 +171,12 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> StopExecutionJobAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _containerAppJobJobsClientDiagnostics.CreateScope("ContainerAppJobExecutionResource.StopExecutionJob");
+            using var scope = _jobsClientDiagnostics.CreateScope("ContainerAppJobExecutionResource.StopExecutionJob");
             scope.Start();
             try
             {
-                var response = await _containerAppJobJobsRestClient.StopExecutionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AppContainersArmOperation(_containerAppJobJobsClientDiagnostics, Pipeline, _containerAppJobJobsRestClient.CreateStopExecutionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _jobsRestClient.StopExecutionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new AppContainersArmOperation(_jobsClientDiagnostics, Pipeline, _jobsRestClient.CreateStopExecutionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -206,12 +205,12 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation StopExecutionJob(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _containerAppJobJobsClientDiagnostics.CreateScope("ContainerAppJobExecutionResource.StopExecutionJob");
+            using var scope = _jobsClientDiagnostics.CreateScope("ContainerAppJobExecutionResource.StopExecutionJob");
             scope.Start();
             try
             {
-                var response = _containerAppJobJobsRestClient.StopExecution(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new AppContainersArmOperation(_containerAppJobJobsClientDiagnostics, Pipeline, _containerAppJobJobsRestClient.CreateStopExecutionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _jobsRestClient.StopExecution(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new AppContainersArmOperation(_jobsClientDiagnostics, Pipeline, _jobsRestClient.CreateStopExecutionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
