@@ -11,41 +11,8 @@ using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    internal partial class UnknownTrigger : IUtf8JsonSerializable
+    internal partial class UnknownTrigger
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsCollectionDefined(Annotations))
-            {
-                writer.WritePropertyName("annotations"u8);
-                writer.WriteStartArray();
-                foreach (var item in Annotations)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            foreach (var item in AdditionalProperties)
-            {
-                writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static UnknownTrigger DeserializeUnknownTrigger(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)

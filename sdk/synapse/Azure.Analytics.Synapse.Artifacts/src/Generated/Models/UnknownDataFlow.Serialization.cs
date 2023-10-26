@@ -11,41 +11,8 @@ using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    internal partial class UnknownDataFlow : IUtf8JsonSerializable
+    internal partial class UnknownDataFlow
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsCollectionDefined(Annotations))
-            {
-                writer.WritePropertyName("annotations"u8);
-                writer.WriteStartArray();
-                foreach (var item in Annotations)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Folder))
-            {
-                writer.WritePropertyName("folder"u8);
-                writer.WriteObjectValue(Folder);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static UnknownDataFlow DeserializeUnknownDataFlow(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)

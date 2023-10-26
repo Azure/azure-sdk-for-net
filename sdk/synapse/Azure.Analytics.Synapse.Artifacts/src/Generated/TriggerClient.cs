@@ -66,6 +66,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="ifNoneMatch"> ETag of the trigger entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public virtual async Task<Response<TriggerResource>> GetTriggerAsync(string triggerName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("TriggerClient.GetTrigger");
@@ -85,6 +86,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="ifNoneMatch"> ETag of the trigger entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public virtual Response<TriggerResource> GetTrigger(string triggerName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("TriggerClient.GetTrigger");
@@ -103,6 +105,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Get a trigger's event subscription status. </summary>
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public virtual async Task<Response<TriggerSubscriptionOperationStatus>> GetEventSubscriptionStatusAsync(string triggerName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("TriggerClient.GetEventSubscriptionStatus");
@@ -121,6 +124,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Get a trigger's event subscription status. </summary>
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
         public virtual Response<TriggerSubscriptionOperationStatus> GetEventSubscriptionStatus(string triggerName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("TriggerClient.GetEventSubscriptionStatus");

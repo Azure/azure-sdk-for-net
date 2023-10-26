@@ -11,26 +11,8 @@ using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    internal partial class UnknownIntegrationRuntime : IUtf8JsonSerializable
+    internal partial class UnknownIntegrationRuntime
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            foreach (var item in AdditionalProperties)
-            {
-                writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static UnknownIntegrationRuntime DeserializeUnknownIntegrationRuntime(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)

@@ -6,20 +6,11 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    internal partial class UnknownSecretBase : IUtf8JsonSerializable
+    internal partial class UnknownSecretBase
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
-            writer.WriteEndObject();
-        }
-
         internal static UnknownSecretBase DeserializeUnknownSecretBase(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)

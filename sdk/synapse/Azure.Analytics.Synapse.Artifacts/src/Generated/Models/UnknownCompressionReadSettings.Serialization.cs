@@ -11,21 +11,8 @@ using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    internal partial class UnknownCompressionReadSettings : IUtf8JsonSerializable
+    internal partial class UnknownCompressionReadSettings
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
-            foreach (var item in AdditionalProperties)
-            {
-                writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static UnknownCompressionReadSettings DeserializeUnknownCompressionReadSettings(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)

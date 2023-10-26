@@ -11,31 +11,8 @@ using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    internal partial class UnknownDatasetStorageFormat : IUtf8JsonSerializable
+    internal partial class UnknownDatasetStorageFormat
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
-            if (Optional.IsDefined(Serializer))
-            {
-                writer.WritePropertyName("serializer"u8);
-                writer.WriteObjectValue(Serializer);
-            }
-            if (Optional.IsDefined(Deserializer))
-            {
-                writer.WritePropertyName("deserializer"u8);
-                writer.WriteObjectValue(Deserializer);
-            }
-            foreach (var item in AdditionalProperties)
-            {
-                writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static UnknownDatasetStorageFormat DeserializeUnknownDatasetStorageFormat(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)

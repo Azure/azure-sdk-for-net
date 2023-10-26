@@ -6,20 +6,11 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    internal partial class UnknownLinkedIntegrationRuntimeType : IUtf8JsonSerializable
+    internal partial class UnknownLinkedIntegrationRuntimeType
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("authorizationType"u8);
-            writer.WriteStringValue(AuthorizationType);
-            writer.WriteEndObject();
-        }
-
         internal static UnknownLinkedIntegrationRuntimeType DeserializeUnknownLinkedIntegrationRuntimeType(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)

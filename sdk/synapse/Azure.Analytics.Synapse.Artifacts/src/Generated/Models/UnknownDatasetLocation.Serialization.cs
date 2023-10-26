@@ -11,31 +11,8 @@ using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
-    internal partial class UnknownDatasetLocation : IUtf8JsonSerializable
+    internal partial class UnknownDatasetLocation
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
-            if (Optional.IsDefined(FolderPath))
-            {
-                writer.WritePropertyName("folderPath"u8);
-                writer.WriteObjectValue(FolderPath);
-            }
-            if (Optional.IsDefined(FileName))
-            {
-                writer.WritePropertyName("fileName"u8);
-                writer.WriteObjectValue(FileName);
-            }
-            foreach (var item in AdditionalProperties)
-            {
-                writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static UnknownDatasetLocation DeserializeUnknownDatasetLocation(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
