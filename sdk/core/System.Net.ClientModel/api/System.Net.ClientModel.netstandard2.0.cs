@@ -135,6 +135,7 @@ namespace System.Net.ClientModel.Core
     }
     public static partial class ModelReaderWriter
     {
+        public static T? Create<T>(object jsonSerializable) where T : System.Net.ClientModel.Core.IJsonModel<T> { throw null; }
         public static object? Read(System.BinaryData data, System.Type returnType, System.Net.ClientModel.Core.ModelReaderWriterFormat format) { throw null; }
         public static object? Read(System.BinaryData data, System.Type returnType, System.Net.ClientModel.Core.ModelReaderWriterOptions? options = null) { throw null; }
         public static T? Read<T>(System.BinaryData data, System.Net.ClientModel.Core.ModelReaderWriterFormat format) where T : System.Net.ClientModel.Core.IModel<T> { throw null; }
@@ -165,6 +166,7 @@ namespace System.Net.ClientModel.Core
     }
     public partial class ModelReaderWriterOptions
     {
+        public static readonly System.Net.ClientModel.Core.ModelReaderWriterOptions DefaultJsonOptions;
         public static readonly System.Net.ClientModel.Core.ModelReaderWriterOptions DefaultWireOptions;
         public ModelReaderWriterOptions() { }
         public ModelReaderWriterOptions(System.Net.ClientModel.Core.ModelReaderWriterFormat format) { }
