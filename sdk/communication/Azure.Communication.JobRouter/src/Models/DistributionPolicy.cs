@@ -7,8 +7,6 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    // [CodeGenModel("DistributionPolicy")]
-    // [CodeGenSuppress("DistributionPolicy")]
     public partial class DistributionPolicy : IUtf8JsonSerializable
     {
         /// <summary> Initializes a new instance of DistributionPolicy. </summary>

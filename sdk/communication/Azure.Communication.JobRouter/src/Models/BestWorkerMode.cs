@@ -8,7 +8,6 @@ using Azure.Core;
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Jobs are distributed to the worker with the strongest abilities available. </summary>
-    // [CodeGenModel("BestWorkerMode")]
     public partial class BestWorkerMode : IUtf8JsonSerializable
     {
         #region Default scoring rule
