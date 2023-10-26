@@ -67,7 +67,7 @@ namespace Azure.Identity
         /// Creates an instance of the EnvironmentCredential class and reads client secret details from environment variables.
         /// If the expected environment variables are not found at this time, the GetToken method will return the default <see cref="AccessToken"/> when invoked.
         /// </summary>
-        /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
+        /// <param name="options">Options that allow to configure the management of the requests sent to Microsoft Entra ID.</param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public EnvironmentCredential(TokenCredentialOptions options)
             : this(CredentialPipeline.GetInstance(options), options)
@@ -77,7 +77,7 @@ namespace Azure.Identity
         /// Creates an instance of the EnvironmentCredential class and reads client secret details from environment variables.
         /// If the expected environment variables are not found at this time, the GetToken method will return the default <see cref="AccessToken"/> when invoked.
         /// </summary>
-        /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
+        /// <param name="options">Options that allow to configure the management of the requests sent to Microsoft Entra ID.</param>
         public EnvironmentCredential(EnvironmentCredentialOptions options)
             : this(CredentialPipeline.GetInstance(options), options)
         { }
