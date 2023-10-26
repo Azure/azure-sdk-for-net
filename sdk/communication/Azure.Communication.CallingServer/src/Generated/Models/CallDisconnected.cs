@@ -20,19 +20,13 @@ namespace Azure.Communication.CallingServer
         /// <param name="version"> Used to determine the version of the event. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
         /// <param name="resultInformation"> Contains the resulting SIP code/sub-code and message from NGC services. </param>
-        /// <param name="callConnectionId"> Call connection ID. </param>
-        /// <param name="serverCallId"> Server call ID. </param>
-        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="publicEventType"> The public event namespace used as the "type" property in the CloudEvent. </param>
-        internal CallDisconnected(string eventSource, string version, string operationContext, ResultInformation resultInformation, string callConnectionId, string serverCallId, string correlationId, string publicEventType)
+        internal CallDisconnected(string eventSource, string version, string operationContext, ResultInformation resultInformation, string publicEventType)
         {
             EventSource = eventSource;
             Version = version;
             OperationContext = operationContext;
             ResultInformation = resultInformation;
-            CallConnectionId = callConnectionId;
-            ServerCallId = serverCallId;
-            CorrelationId = correlationId;
             PublicEventType = publicEventType;
         }
 
