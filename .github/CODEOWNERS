@@ -688,7 +688,7 @@
 /sdk/resourcegraph/Microsoft.Azure.Management.ResourceGraph/       @chiragg4u
 
 # ServiceLabel: %Resource Health %Service Attention
-#/<NotInRepo>/                                                     @stephbaron
+/sdk/resourcehealth/Azure.ResourceManager.ResourceHealth           @stephbaron @abhayohri
 
 # ServiceLabel: %Scheduler %Service Attention
 /sdk/scheduler/Microsoft.Azure.Management.Scheduler/               @derek1ee
