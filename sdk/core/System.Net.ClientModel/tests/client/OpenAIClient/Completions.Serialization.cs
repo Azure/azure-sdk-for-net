@@ -104,8 +104,6 @@ public partial class Completions : IJsonModel<Completions>
         bool wire = options.Format == ModelReaderWriterFormat.Wire;
         if (options.Format != ModelReaderWriterFormat.Json) throw new ArgumentOutOfRangeException(nameof(options.Format));
 
-        ModelSerializerHelper.ValidateFormat<Completions>(this, options.Format);
-
         writer.WriteStartObject();
         writer.WriteString(wire?"id"u8:"Id"u8, this.Id);
         writer.WriteString(wire?"created"u8:"Created"u8, this.Created);
