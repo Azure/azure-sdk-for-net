@@ -13,7 +13,7 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
 
         protected override string WirePayload => "{\"id\":5,\"extra\":\"stuff\"}";
 
-        protected override Func<ModelAsStruct, PipelineContent> ToPipelineContent => model => model;
+        protected override Func<ModelAsStruct, PipelineMessageContent> ToPipelineContent => model => model;
 
         protected override Func<Result?, ModelAsStruct> FromResult => response => (ModelAsStruct)response;
 

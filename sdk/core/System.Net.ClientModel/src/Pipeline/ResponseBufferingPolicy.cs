@@ -6,7 +6,7 @@ using System.Net.ClientModel.Internal;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace System.Net.ClientModel.Core.Pipeline;
+namespace System.Net.ClientModel.Core;
 
 /// <summary>
 /// Pipeline policy to buffer response content or add a timeout to response content managed by the client
@@ -84,7 +84,7 @@ public class ResponseBufferingPolicy : PipelinePolicy<PipelineMessage>
             return;
         }
 
-        PipelineContent? responseContent = message.Response.Content;
+        PipelineMessageContent? responseContent = message.Response.Content;
         if (responseContent is null || responseContent.IsBuffered)
         {
             return;
@@ -94,7 +94,7 @@ public class ResponseBufferingPolicy : PipelinePolicy<PipelineMessage>
         // token being passed), then register callback to dispose the content stream on cancellation.
         if (invocationNetworkTimeout != Timeout.InfiniteTimeSpan || oldToken.CanBeCanceled)
         {
-            Action<object?> callback = content => ((PipelineContent?)content)?.Dispose();
+            Action<object?> callback = content => ((PipelineMessageContent?)content)?.Dispose();
             cts.Token.Register(callback, responseContent);
         }
 
@@ -119,7 +119,7 @@ public class ResponseBufferingPolicy : PipelinePolicy<PipelineMessage>
 
             responseContent.Dispose();
             bufferedStream.Position = 0;
-            PipelineContent bufferedContent = PipelineContent.CreateContent(bufferedStream);
+            PipelineMessageContent bufferedContent = PipelineMessageContent.CreateContent(bufferedStream);
             message.Response.Content = bufferedContent;
         }
         // We dispose stream on timeout or user cancellation so catch and check if cancellation token was cancelled

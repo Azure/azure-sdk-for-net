@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Net.ClientModel;
 using System.Net.ClientModel.Core;
-using System.Net.ClientModel.Core.Pipeline;
 using Azure.Core;
 using Azure.Core.Pipeline;
 

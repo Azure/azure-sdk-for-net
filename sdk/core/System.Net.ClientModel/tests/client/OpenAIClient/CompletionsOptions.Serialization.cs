@@ -109,10 +109,10 @@ public partial class CompletionsOptions : IUtf8JsonContentWriteable
     }
 
     /// <summary> Convert to a message content that can be used on a request. </summary>
-    internal virtual PipelineContent ToRequestContent()
+    internal virtual PipelineMessageContent ToRequestContent()
     {
         using Utf8JsonContentWriter writer = new();
         writer.Write(this);
-        return PipelineContent.CreateContent(writer.WrittenContent);
+        return PipelineMessageContent.CreateContent(writer.WrittenContent);
     }
 }

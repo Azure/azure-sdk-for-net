@@ -6,9 +6,9 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 
-namespace System.Net.ClientModel.Core.Pipeline;
+namespace System.Net.ClientModel.Core;
 
-internal class MessageResponseHeaders : MessageHeaders
+internal class MessageResponseHeaders : PipelineMessageHeaders
 {
     private readonly HttpResponseMessage _httpResponse;
     private readonly HttpContent _httpResponseContent;

@@ -27,7 +27,7 @@ namespace System.Net.ClientModel.Tests.Internal.ModelReaderWriterTests
         [Test]
         public void ThrowsIfUnsupportedFormat()
         {
-            ModelX? model = ClientModel.ModelReaderWriter.Read<ModelX>(BinaryData.FromString(File.ReadAllText(TestData.GetLocation("ModelX/ModelX.json"))));
+            ModelX? model = ModelReaderWriter.Read<ModelX>(BinaryData.FromString(File.ReadAllText(TestData.GetLocation("ModelX/ModelX.json"))));
             Assert.IsNotNull(model);
             ModelWriter writer = new ModelWriter(model!, new ModelReaderWriterOptions("x"));
             Assert.Throws<FormatException>(() => writer.ToBinaryData());

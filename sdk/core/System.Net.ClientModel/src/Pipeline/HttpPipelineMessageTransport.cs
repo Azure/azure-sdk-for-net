@@ -7,7 +7,7 @@ using System.Net.ClientModel.Internal;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace System.Net.ClientModel.Core.Pipeline;
+namespace System.Net.ClientModel.Core;
 
 // Introduces the dependency on System.Net.Http;
 
@@ -151,7 +151,7 @@ public partial class HttpPipelineMessageTransport : PipelineTransport<PipelineMe
         }
         catch (HttpRequestException e)
         {
-            throw new MessageFailedException(e.Message, e);
+            throw new PipelineRequestException(e.Message, e);
         }
 
         // This extensibility point lets derived types do the following:
@@ -168,7 +168,7 @@ public partial class HttpPipelineMessageTransport : PipelineTransport<PipelineMe
         // Consider which is preferred as part of holistic extensibility-point review.
         if (contentStream is not null)
         {
-            message.Response.Content = PipelineContent.CreateContent(contentStream);
+            message.Response.Content = PipelineMessageContent.CreateContent(contentStream);
         }
 
         message.Response.IsError = message.ResponseClassifier.IsErrorResponse(message);

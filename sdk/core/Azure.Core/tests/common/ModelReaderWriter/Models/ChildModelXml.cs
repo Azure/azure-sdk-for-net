@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net.ClientModel;
 using System.Net.ClientModel.Core;
 using System.Net.ClientModel.Internal;
 using System.Text.Json;
@@ -98,7 +97,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         ChildModelXml IModel<ChildModelXml>.Read(BinaryData data, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             if (options.Format == ModelReaderWriterFormat.Json)
             {
@@ -113,7 +112,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         BinaryData IModel<ChildModelXml>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             if (options.Format == ModelReaderWriterFormat.Json)
             {
@@ -152,14 +151,14 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         void IJsonModel<ChildModelXml>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             Serialize(writer, options);
         }
 
         ChildModelXml IJsonModel<ChildModelXml>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeChildModelXml(doc.RootElement, options);

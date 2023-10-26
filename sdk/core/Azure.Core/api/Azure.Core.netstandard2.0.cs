@@ -220,7 +220,7 @@ namespace Azure
         public override void Apply(System.Net.ClientModel.Core.PipelineMessage message) { }
         public static implicit operator Azure.RequestContext (Azure.ErrorOptions options) { throw null; }
     }
-    public partial class RequestFailedException : System.Net.ClientModel.MessageFailedException, System.Runtime.Serialization.ISerializable
+    public partial class RequestFailedException : System.Net.ClientModel.PipelineRequestException, System.Runtime.Serialization.ISerializable
     {
         public RequestFailedException(Azure.Response response) : base (default(System.Net.ClientModel.Core.PipelineResponse)) { }
         public RequestFailedException(Azure.Response response, System.Exception? innerException) : base (default(System.Net.ClientModel.Core.PipelineResponse)) { }
@@ -533,7 +533,7 @@ namespace Azure.Core
         protected internal abstract bool TryGetHeader(string name, out string? value);
         protected internal abstract bool TryGetHeaderValues(string name, out System.Collections.Generic.IEnumerable<string>? values);
     }
-    public abstract partial class RequestContent : System.Net.ClientModel.Core.PipelineContent
+    public abstract partial class RequestContent : System.Net.ClientModel.Core.PipelineMessageContent
     {
         protected RequestContent() { }
         public static Azure.Core.RequestContent Create(Azure.Core.Serialization.DynamicData content) { throw null; }
@@ -542,8 +542,8 @@ namespace Azure.Core
         public static Azure.Core.RequestContent Create(byte[] bytes) { throw null; }
         public static Azure.Core.RequestContent Create(byte[] bytes, int index, int length) { throw null; }
         public static Azure.Core.RequestContent Create(System.IO.Stream stream) { throw null; }
-        public static Azure.Core.RequestContent Create(System.Net.ClientModel.Core.IJsonModel<object> model, System.Net.ClientModel.ModelReaderWriterOptions? options = null) { throw null; }
-        public static Azure.Core.RequestContent Create(System.Net.ClientModel.Core.IModel<object> model, System.Net.ClientModel.ModelReaderWriterOptions? options = null) { throw null; }
+        public static Azure.Core.RequestContent Create(System.Net.ClientModel.Core.IJsonModel<object> model, System.Net.ClientModel.Core.ModelReaderWriterOptions? options = null) { throw null; }
+        public static Azure.Core.RequestContent Create(System.Net.ClientModel.Core.IModel<object> model, System.Net.ClientModel.Core.ModelReaderWriterOptions? options = null) { throw null; }
         public static Azure.Core.RequestContent Create(object serializable) { throw null; }
         public static Azure.Core.RequestContent Create(object serializable, Azure.Core.Serialization.JsonPropertyNames propertyNameFormat, string dateTimeFormat = "o") { throw null; }
         public static Azure.Core.RequestContent Create(object serializable, Azure.Core.Serialization.ObjectSerializer? serializer) { throw null; }
@@ -983,7 +983,7 @@ namespace Azure.Core.Pipeline
         public override void Process(Azure.Core.HttpMessage message) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message) { throw null; }
     }
-    public partial class HttpPipeline : System.Net.ClientModel.Core.Pipeline.Pipeline<Azure.Core.HttpMessage>
+    public partial class HttpPipeline : System.Net.ClientModel.Core.Pipeline<Azure.Core.HttpMessage>
     {
         public HttpPipeline(Azure.Core.Pipeline.HttpPipelineTransport transport, Azure.Core.Pipeline.HttpPipelinePolicy[]? policies = null, Azure.Core.ResponseClassifier? responseClassifier = null) { }
         public Azure.Core.ResponseClassifier ResponseClassifier { get { throw null; } }
@@ -1033,7 +1033,7 @@ namespace Azure.Core.Pipeline
         public override void Process(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(Azure.Core.HttpMessage message, System.ReadOnlyMemory<Azure.Core.Pipeline.HttpPipelinePolicy> pipeline) { throw null; }
     }
-    public abstract partial class HttpPipelineTransport : System.Net.ClientModel.Core.Pipeline.HttpPipelineMessageTransport
+    public abstract partial class HttpPipelineTransport : System.Net.ClientModel.Core.HttpPipelineMessageTransport
     {
         public HttpPipelineTransport() { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

@@ -3,7 +3,6 @@
 
 using System;
 using System.IO;
-using System.Net.ClientModel;
 using System.Net.ClientModel.Core;
 using System.Text;
 using System.Text.Json;
@@ -27,11 +26,11 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
 
         public override BinaryData Write(T model, ModelReaderWriterOptions options)
         {
-            return System.Net.ClientModel.ModelReaderWriter.Write(model, options);
+            return ModelReaderWriter.Write(model, options);
         }
         public override object Read(string payload, object model, ModelReaderWriterOptions options)
         {
-            return System.Net.ClientModel.ModelReaderWriter.Read<T>(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
+            return ModelReaderWriter.Read<T>(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
         }
     }
 
@@ -42,11 +41,11 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
 
         public override BinaryData Write(T model, ModelReaderWriterOptions options)
         {
-            return System.Net.ClientModel.ModelReaderWriter.Write(model, options.Format);
+            return ModelReaderWriter.Write(model, options.Format);
         }
         public override object Read(string payload, object model, ModelReaderWriterOptions options)
         {
-            return System.Net.ClientModel.ModelReaderWriter.Read<T>(new BinaryData(Encoding.UTF8.GetBytes(payload)), options.Format);
+            return ModelReaderWriter.Read<T>(new BinaryData(Encoding.UTF8.GetBytes(payload)), options.Format);
         }
     }
 
@@ -57,12 +56,12 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
 
         public override BinaryData Write(T model, ModelReaderWriterOptions options)
         {
-            return System.Net.ClientModel.ModelReaderWriter.Write((object)model, options);
+            return ModelReaderWriter.Write((object)model, options);
         }
 
         public override object Read(string payload, object model, ModelReaderWriterOptions options)
         {
-            return System.Net.ClientModel.ModelReaderWriter.Read(new BinaryData(Encoding.UTF8.GetBytes(payload)), typeof(T), options);
+            return ModelReaderWriter.Read(new BinaryData(Encoding.UTF8.GetBytes(payload)), typeof(T), options);
         }
     }
 
@@ -132,7 +131,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
 
         public override BinaryData Write(T model, ModelReaderWriterOptions options)
         {
-            return System.Net.ClientModel.ModelReaderWriter.WriteCore(model, options);
+            return ModelReaderWriter.WriteCore(model, options);
         }
 
         public override object Read(string payload, object model, ModelReaderWriterOptions options)
@@ -148,7 +147,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
 
         public override BinaryData Write(T model, ModelReaderWriterOptions options)
         {
-            return System.Net.ClientModel.ModelReaderWriter.WriteCore((IJsonModel<object>)model, options);
+            return ModelReaderWriter.WriteCore((IJsonModel<object>)model, options);
         }
 
         public override object Read(string payload, object model, ModelReaderWriterOptions options)
@@ -192,7 +191,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
 
         public override BinaryData Write(T model, ModelReaderWriterOptions options)
         {
-            return System.Net.ClientModel.ModelReaderWriter.WriteCore((IJsonModel<object>)model, options);
+            return ModelReaderWriter.WriteCore((IJsonModel<object>)model, options);
         }
 
         public override object Read(string payload, object model, ModelReaderWriterOptions options)

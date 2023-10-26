@@ -7,7 +7,6 @@
 
 using System;
 using System.Globalization;
-using System.Net.ClientModel;
 using System.Net.ClientModel.Core;
 using System.Net.ClientModel.Internal;
 using System.Text.Json;
@@ -166,7 +165,7 @@ namespace Azure.Core.Tests.ResourceManager.Compute.Models
 
         BinaryData IModel<InstanceViewStatus>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             return ModelReaderWriter.WriteCore(this, options);
         }

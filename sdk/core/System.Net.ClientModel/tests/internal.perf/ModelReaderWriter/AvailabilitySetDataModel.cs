@@ -14,7 +14,7 @@ namespace System.Net.ClientModel.Tests.Internal.Perf
 
         protected override void Write(Utf8JsonWriter writer) => _model.Serialize(writer);
 
-        protected override PipelineContent CastToPipelineContent() => _model;
+        protected override PipelineMessageContent CastToPipelineContent() => _model;
 
         protected override AvailabilitySetData CastFromResponse() => (AvailabilitySetData)_result;
 

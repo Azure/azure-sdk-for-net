@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net.ClientModel;
 using System.Net.ClientModel.Core;
 using System.Net.ClientModel.Internal;
 using System.Text;
@@ -84,7 +83,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
                 writer.WriteValue(ReadOnlyProperty);
                 writer.WriteEndElement();
             }
-            var childModelXml = System.Net.ClientModel.ModelReaderWriter.Write(ChildModelXml, options);
+            var childModelXml = ModelReaderWriter.Write(ChildModelXml, options);
             var bytes = childModelXml.ToArray();
             int start = bytes.AsSpan(1).IndexOf((byte)'>') + 2;
             var chars = Encoding.UTF8.GetChars(bytes, start, bytes.Length - start);
@@ -136,18 +135,18 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
                 BinaryData data = stream.Position > int.MaxValue
                     ? BinaryData.FromStream(stream)
                     : new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
-                childModelXml = System.Net.ClientModel.ModelReaderWriter.Read<ChildModelXml>(data, options);
+                childModelXml = ModelReaderWriter.Read<ChildModelXml>(data, options);
             }
             return new ModelXmlCrossLibrary(key, value, readonlyProperty, childModelXml);
         }
 
         BinaryData IModel<ModelXmlCrossLibrary>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             if (options.Format == ModelReaderWriterFormat.Json)
             {
-                return System.Net.ClientModel.ModelReaderWriter.WriteCore(this, options);
+                return ModelReaderWriter.WriteCore(this, options);
             }
             else
             {
@@ -196,7 +195,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
                 }
                 if (property.NameEquals("childTag"u8))
                 {
-                    childModelXml = System.Net.ClientModel.ModelReaderWriter.Read<ChildModelXml>(BinaryData.FromString(property.Value.GetRawText()), options);// ChildModelXml.DeserializeChildModelXml(property.Value, options);
+                    childModelXml = ModelReaderWriter.Read<ChildModelXml>(BinaryData.FromString(property.Value.GetRawText()), options);// ChildModelXml.DeserializeChildModelXml(property.Value, options);
                     continue;
                 }
             }
@@ -205,7 +204,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         ModelXmlCrossLibrary IModel<ModelXmlCrossLibrary>.Read(BinaryData data, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             if (options.Format == ModelReaderWriterFormat.Json)
             {
@@ -220,7 +219,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         void IJsonModel<ModelXmlCrossLibrary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             if (options.Format != ModelReaderWriterFormat.Json)
                 throw new InvalidOperationException($"Must use '{ModelReaderWriterFormat.Json}' format when calling the {nameof(IJsonModel<ModelXmlCrossLibrary>)} interface");
@@ -229,7 +228,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         ModelXmlCrossLibrary IJsonModel<ModelXmlCrossLibrary>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             if (options.Format != ModelReaderWriterFormat.Json)
                 throw new InvalidOperationException($"Must use '{ModelReaderWriterFormat.Json}' format when calling the {nameof(IJsonModel<ModelXmlCrossLibrary>)} interface");

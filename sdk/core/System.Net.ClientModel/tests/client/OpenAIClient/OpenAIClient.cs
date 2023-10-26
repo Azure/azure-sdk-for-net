@@ -4,7 +4,6 @@
 using System;
 using System.Net.ClientModel;
 using System.Net.ClientModel.Core;
-using System.Net.ClientModel.Core.Pipeline;
 using System.Net.ClientModel.Internal;
 using System.Text;
 using System.Threading;
@@ -41,7 +40,7 @@ public class OpenAIClient
         Completions completions = Completions.FromResponse(response);
         return Result.FromValue(completions, response);
     }
-    public virtual Result GetCompletions(string deploymentId, PipelineContent content, RequestOptions context = null)
+    public virtual Result GetCompletions(string deploymentId, PipelineMessageContent content, RequestOptions context = null)
     {
         ClientUtilities.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
         ClientUtilities.AssertNotNull(content, nameof(content));
@@ -62,7 +61,7 @@ public class OpenAIClient
         }
     }
 
-    internal PipelineMessage CreateGetCompletionsRequest(string deploymentId, PipelineContent content, RequestOptions options)
+    internal PipelineMessage CreateGetCompletionsRequest(string deploymentId, PipelineMessageContent content, RequestOptions options)
     {
         PipelineMessage message = _pipeline.CreateMessage();
         options.Apply(message);

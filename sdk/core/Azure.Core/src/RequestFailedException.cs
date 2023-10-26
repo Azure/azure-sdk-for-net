@@ -20,7 +20,7 @@ namespace Azure
     /// An exception thrown when service request fails.
     /// </summary>
     [Serializable]
-    public class RequestFailedException : MessageFailedException, ISerializable
+    public class RequestFailedException : PipelineRequestException, ISerializable
     {
         private const string DefaultMessage = "Service request failed.";
 
@@ -89,7 +89,7 @@ namespace Azure
 
             public override int Status => _status;
 
-            public override PipelineContent? Content
+            public override PipelineMessageContent? Content
             {
                 get => throw new NotSupportedException();
                 protected set => throw new NotSupportedException();
@@ -97,7 +97,7 @@ namespace Azure
 
             public override string ReasonPhrase => throw new NotSupportedException();
 
-            public override MessageHeaders Headers => throw new NotSupportedException();
+            public override PipelineMessageHeaders Headers => throw new NotSupportedException();
 
             public override void Dispose() => throw new NotSupportedException();
         }

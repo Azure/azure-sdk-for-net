@@ -7,9 +7,9 @@ namespace System.Net.ClientModel.Tests.Internal.Perf
 {
     public abstract class ModelJsonContentBenchmark<T> : RequestContentBenchmark<IJsonModel<T>> where T : class, IJsonModel<T>
     {
-        protected override PipelineContent CreatePipelineContent()
+        protected override PipelineMessageContent CreatePipelineContent()
         {
-            return PipelineContent.CreateContent(_model);
+            return PipelineMessageContent.CreateContent(_model);
         }
     }
 }

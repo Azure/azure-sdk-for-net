@@ -35,14 +35,14 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
         void IUtf8JsonContentWriteable.Write(Utf8JsonWriter writer) => ((IJsonModel<ModelX>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
 
-        public static implicit operator PipelineContent(ModelX modelX)
+        public static implicit operator PipelineMessageContent(ModelX modelX)
         {
             if (modelX == null)
             {
                 return null;
             }
 
-            return PipelineContent.CreateContent(modelX, ModelReaderWriterOptions.DefaultWireOptions);
+            return PipelineMessageContent.CreateContent(modelX, ModelReaderWriterOptions.DefaultWireOptions);
         }
 
         public static explicit operator ModelX(Result result)
@@ -55,7 +55,7 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
         void IJsonModel<ModelX>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             Serialize(writer, options);
         }
@@ -182,7 +182,7 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
         ModelX IModel<ModelX>.Read(BinaryData data, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             return DeserializeModelX(JsonDocument.Parse(data.ToString()).RootElement, options);
         }
@@ -195,7 +195,7 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
         ModelX IJsonModel<ModelX>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeModelX(doc.RootElement, options);
@@ -203,7 +203,7 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
         BinaryData IModel<ModelX>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             return ModelReaderWriter.WriteCore(this, options);
         }
