@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Net.ClientModel;
 using System.Net.ClientModel.Core;
 using System.Net.ClientModel.Internal;
 using System.Text.Json;
@@ -123,7 +122,7 @@ namespace Azure.Core.Tests.ResourceManager.Resources.Models
 
         BinaryData IModel<ResourceTypeAliasPattern>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             return ModelReaderWriter.WriteCore(this, options);
         }

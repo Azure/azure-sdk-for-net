@@ -3,7 +3,6 @@
 
 using System;
 using System.IO;
-using System.Net.ClientModel;
 using System.Net.ClientModel.Core;
 using System.Xml;
 using System.Xml.Linq;

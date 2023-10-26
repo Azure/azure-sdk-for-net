@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net.ClientModel;
 using System.Net.ClientModel.Core;
 using System.Net.ClientModel.Internal;
 using System.Text.Json;
@@ -132,7 +131,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         BinaryData IModel<ModelXml>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             if (options.Format == ModelReaderWriterFormat.Json)
             {
@@ -194,7 +193,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         ModelXml IModel<ModelXml>.Read(BinaryData data, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             if (options.Format == ModelReaderWriterFormat.Json)
             {
@@ -209,7 +208,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         void IJsonModel<ModelXml>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             if (options.Format != ModelReaderWriterFormat.Json)
                 throw new InvalidOperationException($"Must use '{ModelReaderWriterFormat.Json}' format when calling the {nameof(IJsonModel<ModelXml>)} interface");
@@ -218,7 +217,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         ModelXml IJsonModel<ModelXml>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             if (options.Format != ModelReaderWriterFormat.Json)
                 throw new InvalidOperationException($"Must use '{ModelReaderWriterFormat.Json}' format when calling the {nameof(IJsonModel<ModelXml>)} interface");

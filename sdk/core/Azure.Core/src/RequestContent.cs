@@ -5,7 +5,6 @@ using System;
 using System.Buffers;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Net.ClientModel;
 using System.Net.ClientModel.Core;
 using System.Text;
 using System.Text.Json;
@@ -19,7 +18,7 @@ namespace Azure.Core
     /// <summary>
     /// Represents the content sent as part of the <see cref="Request"/>.
     /// </summary>
-    public abstract class RequestContent : PipelineContent
+    public abstract class RequestContent : PipelineMessageContent
     {
         internal const string SerializationRequiresUnreferencedCode = "This method uses reflection-based serialization which is incompatible with trimming. Try using one of the 'Create' overloads that doesn't wrap a serialized version of an object.";
         private static readonly Encoding s_UTF8NoBomEncoding = new UTF8Encoding(false);
@@ -161,8 +160,8 @@ namespace Azure.Core
 
         private sealed class PipelineContentContent : RequestContent
         {
-            private readonly PipelineContent _content;
-            public PipelineContentContent(PipelineContent content)
+            private readonly PipelineMessageContent _content;
+            public PipelineContentContent(PipelineMessageContent content)
             {
                 _content = content;
             }

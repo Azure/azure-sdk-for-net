@@ -3,7 +3,7 @@
 
 using System.Threading.Tasks;
 
-namespace System.Net.ClientModel.Core.Pipeline;
+namespace System.Net.ClientModel.Core;
 
 public abstract class PipelinePolicy<TMessage> where TMessage : PipelineMessage
 {

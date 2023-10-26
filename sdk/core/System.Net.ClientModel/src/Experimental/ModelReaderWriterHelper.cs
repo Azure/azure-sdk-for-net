@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 
 namespace System.Net.ClientModel.Internal
 {
-    public static class ModelSerializerHelper
+    public static class ModelReaderWriterHelper
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void ValidateFormat<T>(IModel<T> model, ModelReaderWriterFormat format)

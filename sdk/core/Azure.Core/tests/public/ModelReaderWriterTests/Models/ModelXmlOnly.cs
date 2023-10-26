@@ -3,7 +3,6 @@
 
 using System;
 using System.IO;
-using System.Net.ClientModel;
 using System.Net.ClientModel.Core;
 using System.Net.ClientModel.Internal;
 using System.Xml;
@@ -113,7 +112,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         BinaryData IModel<ModelXmlOnly>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             using MemoryStream stream = new MemoryStream();
             using XmlWriter writer = XmlWriter.Create(stream);
@@ -131,7 +130,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         ModelXmlOnly IModel<ModelXmlOnly>.Read(BinaryData data, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             return DeserializeModelXmlOnly(XElement.Load(data.ToStream()), options);
         }

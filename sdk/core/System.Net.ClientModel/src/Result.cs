@@ -11,11 +11,11 @@ public abstract class Result
     public abstract PipelineResponse GetRawResponse();
 
     public static Result FromResponse(PipelineResponse response)
-        => new SimpleResult(response);
+        => new NoModelResult(response);
 
     public static Result<T> FromValue<T>(T value, PipelineResponse response)
     {
-        // Null values are required to go through NullableResult<T>
+        // Null values are required to use NullableResult<T>
         if (value is null)
         {
             throw new ArgumentException("Result<T> contract guarantees that Result<T>.Value is non-null.  Please call Result.FromNullableValue instead.", nameof(value));
@@ -23,7 +23,7 @@ public abstract class Result
 
         ClientUtilities.AssertNotNull(response, nameof(response));
 
-        return new ValueResult<T>(value, response);
+        return new Result<T>(value, response);
     }
 
     public static NullableResult<T> FromNullableValue<T>(T? value, PipelineResponse response)
@@ -33,20 +33,13 @@ public abstract class Result
         return new NullableResult<T>(value, response);
     }
 
-    internal class SimpleResult : Result
+    private class NoModelResult : Result
     {
         public readonly PipelineResponse _response;
 
-        public SimpleResult(PipelineResponse response)
+        public NoModelResult(PipelineResponse response)
             => _response = response;
 
         public override PipelineResponse GetRawResponse() => _response;
-    }
-
-    private class ValueResult<T> : Result<T>
-    {
-        public ValueResult(T value, PipelineResponse response) : base(value, response)
-        {
-        }
     }
 }

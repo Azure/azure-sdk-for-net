@@ -133,7 +133,7 @@ namespace System.Net.ClientModel.Core
                 }
             }
 
-            /// <inheritdoc cref="PipelineContent.TryComputeLength(out long)"/>
+            /// <inheritdoc cref="PipelineMessageContent.TryComputeLength(out long)"/>
             public bool TryComputeLength(out long length)
             {
                 length = 0;
@@ -144,7 +144,7 @@ namespace System.Net.ClientModel.Core
                 return true;
             }
 
-            /// <inheritdoc cref="PipelineContent.WriteTo(Stream, CancellationToken)"/>
+            /// <inheritdoc cref="PipelineMessageContent.WriteTo(Stream, CancellationToken)"/>
             public void CopyTo(Stream stream, CancellationToken cancellation)
             {
                 for (int i = 0; i < _count; i++)
@@ -154,7 +154,7 @@ namespace System.Net.ClientModel.Core
                 }
             }
 
-            /// <inheritdoc cref="PipelineContent.WriteToAsync(Stream, CancellationToken)"/>
+            /// <inheritdoc cref="PipelineMessageContent.WriteToAsync(Stream, CancellationToken)"/>
             public async Task CopyToAsync(Stream stream, CancellationToken cancellation)
             {
                 for (int i = 0; i < _count; i++)

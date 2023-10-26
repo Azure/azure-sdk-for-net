@@ -11,7 +11,7 @@ using System.Net.ClientModel.Internal;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace System.Net.ClientModel.Core.Pipeline;
+namespace System.Net.ClientModel.Core;
 
 // This adds the Http dependency, and some implementation
 
@@ -20,7 +20,7 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
     private const string AuthorizationHeaderName = "Authorization";
 
     private Uri? _uri;
-    private PipelineContent? _content;
+    private PipelineMessageContent? _content;
 
     private readonly MessageRequestHeaders _headers;
 
@@ -45,7 +45,7 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
         set => _uri = value;
     }
 
-    public override PipelineContent? Content
+    public override PipelineMessageContent? Content
     {
         get => _content;
         set => _content = value;
@@ -57,7 +57,7 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
         set;
     }
 
-    public override MessageHeaders Headers => _headers;
+    public override PipelineMessageHeaders Headers => _headers;
 
     // PATCH value needed for compat with pre-net5.0 TFMs
     private static readonly HttpMethod _patchMethod = new HttpMethod("PATCH");
@@ -131,10 +131,10 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
 
     private sealed class PipelineContentAdapter : HttpContent
     {
-        private readonly PipelineContent _content;
+        private readonly PipelineMessageContent _content;
         private readonly CancellationToken _cancellationToken;
 
-        public PipelineContentAdapter(PipelineContent content, CancellationToken cancellationToken)
+        public PipelineContentAdapter(PipelineMessageContent content, CancellationToken cancellationToken)
         {
             ClientUtilities.AssertNotNull(content, nameof(content));
 

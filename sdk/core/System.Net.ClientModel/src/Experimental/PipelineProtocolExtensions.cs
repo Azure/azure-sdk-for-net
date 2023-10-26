@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Net.ClientModel.Core;
-using System.Net.ClientModel.Core.Pipeline;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -24,7 +23,7 @@ public static class PipelineProtocolExtensions
             return message.Response;
         }
 
-        throw new MessageFailedException(message.Response);
+        throw new PipelineRequestException(message.Response);
     }
 
     public static PipelineResponse ProcessMessage(this MessagePipeline pipeline, PipelineMessage message, RequestOptions requestContext, CancellationToken cancellationToken = default)
@@ -41,7 +40,7 @@ public static class PipelineProtocolExtensions
             return message.Response;
         }
 
-        throw new MessageFailedException(message.Response);
+        throw new PipelineRequestException(message.Response);
     }
 
     public static async ValueTask<NullableResult<bool>> ProcessHeadAsBoolMessageAsync(this MessagePipeline pipeline, PipelineMessage message, TelemetrySource clientDiagnostics, RequestOptions requestContext)
@@ -54,7 +53,7 @@ public static class PipelineProtocolExtensions
             case >= 400 and < 500:
                 return Result.FromValue(false, response);
             default:
-                return new ErrorResult<bool>(response, new MessageFailedException(response));
+                return new ErrorResult<bool>(response, new PipelineRequestException(response));
         }
     }
 
@@ -68,16 +67,16 @@ public static class PipelineProtocolExtensions
             case >= 400 and < 500:
                 return Result.FromValue(false, response);
             default:
-                return new ErrorResult<bool>(response, new MessageFailedException(response));
+                return new ErrorResult<bool>(response, new PipelineRequestException(response));
         }
     }
 
     internal class ErrorResult<T> : NullableResult<T>
     {
         private readonly PipelineResponse _response;
-        private readonly MessageFailedException _exception;
+        private readonly PipelineRequestException _exception;
 
-        public ErrorResult(PipelineResponse response, MessageFailedException exception)
+        public ErrorResult(PipelineResponse response, PipelineRequestException exception)
             : base(default, response)
         {
             _response = response;

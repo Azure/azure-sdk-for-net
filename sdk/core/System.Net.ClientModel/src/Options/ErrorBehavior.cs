@@ -1,9 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-
-namespace System.Net.ClientModel
+namespace System.Net.ClientModel.Core
 {
     /// <summary>
     /// ResultErrorOptions controls the behavior of an operation when an unexpected response status code is received.

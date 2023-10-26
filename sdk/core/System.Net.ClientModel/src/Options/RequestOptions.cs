@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Net.ClientModel.Core;
-using System.Net.ClientModel.Core.Pipeline;
 using System.Threading;
 
 namespace System.Net.ClientModel;

@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Net.ClientModel.Core;
 using System.Net.ClientModel.Internal;
 
-namespace System.Net.ClientModel
+namespace System.Net.ClientModel.Core
 {
     /// <summary>
     /// Provides functionality to read and write <see cref="IModel{T}"/> and <see cref="IJsonModel{T}"/>.

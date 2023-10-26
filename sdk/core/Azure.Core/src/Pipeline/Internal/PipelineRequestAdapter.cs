@@ -26,7 +26,7 @@ namespace Azure.Core
             set => _request.Uri.Reset(value);
         }
 
-        public override PipelineContent? Content
+        public override PipelineMessageContent? Content
         {
             get => _request.Content;
             set
@@ -42,7 +42,7 @@ namespace Azure.Core
         }
 
         // TODO: implement this, will need a new adapter for headers
-        public override MessageHeaders Headers => throw new NotSupportedException();
+        public override PipelineMessageHeaders Headers => throw new NotSupportedException();
 
         public override void Dispose()
         {

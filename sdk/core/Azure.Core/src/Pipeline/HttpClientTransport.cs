@@ -4,13 +4,12 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.IO;
 using System.Net;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
-using System.Net.ClientModel;
-using System.Net.ClientModel.Core;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -73,7 +72,7 @@ namespace Azure.Core.Pipeline
             {
                 base.Process(message);
             }
-            catch (MessageFailedException e)
+            catch (PipelineRequestException e)
             {
                 if (message.HasResponse)
                 {
@@ -93,7 +92,7 @@ namespace Azure.Core.Pipeline
             {
                 await base.ProcessAsync(message).ConfigureAwait(false);
             }
-            catch (MessageFailedException e)
+            catch (PipelineRequestException e)
             {
                 if (message.HasResponse)
                 {

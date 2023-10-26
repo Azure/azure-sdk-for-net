@@ -4,7 +4,7 @@
 using System.Net.ClientModel.Internal;
 using System.Threading.Tasks;
 
-namespace System.Net.ClientModel.Core.Pipeline;
+namespace System.Net.ClientModel.Core;
 
 public class KeyCredentialPolicy : PipelinePolicy<PipelineMessage>
 {

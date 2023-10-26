@@ -30,7 +30,7 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
         protected abstract void CompareModels(T model, T model2, ModelReaderWriterFormat format);
         protected abstract string JsonPayload { get; }
         protected abstract string WirePayload { get; }
-        protected abstract Func<T?, PipelineContent> ToPipelineContent { get; }
+        protected abstract Func<T?, PipelineMessageContent> ToPipelineContent { get; }
         protected abstract Func<Result?, T> FromResult { get; }
 
         [TestCase("J")]
@@ -144,11 +144,11 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
         public void ThrowsIfUnknownFormat()
         {
             ModelReaderWriterOptions options = new ModelReaderWriterOptions("x");
-            Assert.Throws<FormatException>(() => ClientModel.ModelReaderWriter.Write(ModelInstance, options));
-            Assert.Throws<FormatException>(() => ClientModel.ModelReaderWriter.Read<T>(new BinaryData("x"), options));
+            Assert.Throws<FormatException>(() => ModelReaderWriter.Write(ModelInstance, options));
+            Assert.Throws<FormatException>(() => ModelReaderWriter.Read<T>(new BinaryData("x"), options));
 
-            Assert.Throws<FormatException>(() => ClientModel.ModelReaderWriter.Write((IModel<object>)ModelInstance, options));
-            Assert.Throws<FormatException>(() => ClientModel.ModelReaderWriter.Read(new BinaryData("x"), typeof(T), options));
+            Assert.Throws<FormatException>(() => ModelReaderWriter.Write((IModel<object>)ModelInstance, options));
+            Assert.Throws<FormatException>(() => ModelReaderWriter.Read(new BinaryData("x"), typeof(T), options));
             if (ModelInstance is IJsonModel<T> jsonModel)
             {
                 Assert.Throws<FormatException>(() => jsonModel.Write(new Utf8JsonWriter(new MemoryStream()), options));
@@ -211,13 +211,13 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
             if (typeof(T).IsClass)
             {
                 T? model = default;
-                PipelineContent content = ToPipelineContent(model);
+                PipelineMessageContent content = ToPipelineContent(model);
                 Assert.IsNull(content);
             }
             else
             {
                 T? model = default;
-                PipelineContent content = ToPipelineContent(model);
+                PipelineMessageContent content = ToPipelineContent(model);
                 Assert.IsNotNull(content);
             }
 

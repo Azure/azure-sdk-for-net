@@ -5,10 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Net.Http;
 using System.Net.ClientModel.Core;
-using System.Net.ClientModel.Core.Pipeline;
 using System.Net.ClientModel.Internal;
+using System.Net.Http;
 
 namespace Azure.Core.Pipeline
 {
@@ -43,7 +42,7 @@ namespace Azure.Core.Pipeline
             {
                 ClientUtilities.AssertNotNull(stream, nameof(stream));
 
-                Content = PipelineContent.CreateContent(stream);
+                Content = PipelineMessageContent.CreateContent(stream);
             }
         }
 

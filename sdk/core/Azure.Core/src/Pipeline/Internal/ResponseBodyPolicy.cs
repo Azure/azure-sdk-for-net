@@ -3,7 +3,7 @@
 
 using System;
 using System.IO;
-using System.Net.ClientModel.Core.Pipeline;
+using System.Net.ClientModel.Core;
 using System.Threading;
 using System.Threading.Tasks;
 
