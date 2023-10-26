@@ -48,7 +48,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         {
             BlobDestinationCheckpointData data = CreateDefault();
 
-            Assert.AreEqual(DataMovementBlobConstants.DestinationJobPartHeader.SchemaVersion, data.Version);
+            Assert.AreEqual(DataMovementBlobConstants.DestinationCheckpointData.SchemaVersion, data.Version);
             Assert.AreEqual(DefaultBlobType, data.BlobType);
             Assert.AreEqual(DefaultContentType, data.ContentHeaders.ContentType);
             Assert.AreEqual(DefaultContentEncoding, data.ContentHeaders.ContentEncoding);
@@ -67,7 +67,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlobDestinationCheckpointData data = CreateDefault();
 
             string samplePath = Path.Combine("Resources", "BlobDestinationCheckpointData.1.bin");
-            using (MemoryStream dataStream = new MemoryStream(DataMovementBlobConstants.DestinationJobPartHeader.VariableLengthStartIndex))
+            using (MemoryStream dataStream = new MemoryStream(DataMovementBlobConstants.DestinationCheckpointData.VariableLengthStartIndex))
             using (FileStream fileStream = File.OpenRead(samplePath))
             {
                 data.Serialize(dataStream);
@@ -85,11 +85,11 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         {
             BlobDestinationCheckpointData data = CreateDefault();
 
-            using (Stream stream = new MemoryStream(DataMovementBlobConstants.DestinationJobPartHeader.VariableLengthStartIndex))
+            using (Stream stream = new MemoryStream(DataMovementBlobConstants.DestinationCheckpointData.VariableLengthStartIndex))
             {
                 data.Serialize(stream);
                 stream.Position = 0;
-                DeserializeAndVerify(stream, DataMovementBlobConstants.DestinationJobPartHeader.SchemaVersion);
+                DeserializeAndVerify(stream, DataMovementBlobConstants.DestinationCheckpointData.SchemaVersion);
             }
         }
 

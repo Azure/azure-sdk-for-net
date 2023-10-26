@@ -27,7 +27,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Configuration);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Configuration.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(Configuration))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();

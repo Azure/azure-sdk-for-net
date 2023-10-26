@@ -52,16 +52,16 @@ namespace Azure.Identity
         internal bool _isChainedCredential;
 
         /// <summary>
-        /// Create an instance of CliCredential class.
+        /// Create an instance of <see cref="AzureCliCredential"/> class.
         /// </summary>
         public AzureCliCredential()
             : this(CredentialPipeline.GetInstance(null), default)
         { }
 
         /// <summary>
-        /// Create an instance of CliCredential class.
+        /// Create an instance of <see cref="AzureCliCredential"/> class.
         /// </summary>
-        /// <param name="options"> The Azure Active Directory tenant (directory) Id of the service principal. </param>
+        /// <param name="options"> The Microsoft Entra tenant (directory) ID of the service principal. </param>
         public AzureCliCredential(AzureCliCredentialOptions options)
             : this(CredentialPipeline.GetInstance(null), default, options)
         { }

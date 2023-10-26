@@ -9,8 +9,23 @@ using Azure.Storage.DataMovement.JobPlan;
 
 namespace Azure.Storage.DataMovement
 {
-    internal partial class CheckpointerExtensions
+    internal static partial class CheckpointerExtensions
     {
+        internal static TransferCheckpointer GetCheckpointer(this TransferCheckpointStoreOptions options)
+        {
+            if (!string.IsNullOrEmpty(options?.CheckpointerPath))
+            {
+                return new LocalTransferCheckpointer(options.CheckpointerPath);
+            }
+            else
+            {
+                // Default TransferCheckpointer
+                return new LocalTransferCheckpointer(default);
+            }
+        }
+
+        internal static bool IsLocalResource(this StorageResource resource) => resource.Uri.IsFile;
+
         internal static async Task<DataTransferStatus> GetJobStatusAsync(
             this TransferCheckpointer checkpointer,
             string transferId,
@@ -54,25 +69,15 @@ namespace Azure.Storage.DataMovement
                 header = JobPlanHeader.Deserialize(stream);
             }
 
-            string sourceTypeId = default;
-            string destinationTypeId = default;
-            // Only need to get type ids for single transfers
-            if (!header.IsContainer)
-            {
-                (sourceTypeId, destinationTypeId) = await checkpointer.GetResourceIdsAsync(
-                    transferId,
-                    cancellationToken).ConfigureAwait(false);
-            }
-
             return new DataTransferProperties
             {
                 TransferId = transferId,
-                SourceTypeId = sourceTypeId,
                 SourceUri = new Uri(header.ParentSourcePath),
                 SourceProviderId = header.SourceProviderId,
-                DestinationTypeId = destinationTypeId,
+                SourceCheckpointData = header.SourceCheckpointData,
                 DestinationUri = new Uri(header.ParentDestinationPath),
                 DestinationProviderId = header.DestinationProviderId,
+                DestinationCheckpointData = header.DestinationCheckpointData,
                 IsContainer = header.IsContainer,
             };
         }

@@ -6,25 +6,14 @@ using System;
 namespace Azure.Storage.DataMovement
 {
     /// <summary>
-    /// Storage Resource Item properties returned by <see cref="TransferManager.GetTransfersAsync(DataTransferStatus[])"/>
+    /// Properties of a transfer that can be used for resuming.
     /// </summary>
     public class DataTransferProperties
     {
         /// <summary>
-        /// Contains the checkpointer information to rehydrate the StorageResource from.
-        /// </summary>
-        public virtual TransferCheckpointStoreOptions Checkpointer { get; internal set; }
-
-        /// <summary>
         /// Contains the transfer ID which to rehydrate the StorageResource from.
         /// </summary>
         public virtual string TransferId { get; internal set; }
-
-        /// <summary>
-        /// Contains the type id for the source resource to use during rehydration.
-        /// Will be null if <see cref="IsContainer"/> is true.
-        /// </summary>
-        public virtual string SourceTypeId { get; internal set; }
 
         /// <summary>
         /// Contains the Source uri of the Storage Resource.
@@ -37,10 +26,9 @@ namespace Azure.Storage.DataMovement
         public virtual string SourceProviderId { get; internal set; }
 
         /// <summary>
-        /// Contains the type id for the destination resource to use during rehydration.
-        /// Will be null if <see cref="IsContainer"/> is true.
+        /// The additional checkpoint data specific to the source resource.
         /// </summary>
-        public virtual string DestinationTypeId { get; internal set; }
+        public virtual byte[] SourceCheckpointData { get; internal set; }
 
         /// <summary>
         /// Contains the Destination uri of the Storage Resource.
@@ -51,6 +39,11 @@ namespace Azure.Storage.DataMovement
         /// A string ID for the destination resource provider that should be used for rehydration.
         /// </summary>
         public virtual string DestinationProviderId { get; internal set; }
+
+        /// <summary>
+        /// The additional checkpoint data specific to the destination resource.
+        /// </summary>
+        public virtual byte[] DestinationCheckpointData { get; internal set; }
 
         /// <summary>
         /// Defines whether or not this was a container transfer, in order to rehydrate the StorageResource.
