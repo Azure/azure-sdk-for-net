@@ -105,7 +105,7 @@ namespace Azure.Storage.DataMovement
             internal const string SchemaVersion_b3 = "b3";
             internal const string SchemaVersion = SchemaVersion_b3; // TODO: remove b for beta
 
-            // Job Plan file extension. e.g. the file extension will look like {transferid}--{jobpartNumber}.steV{schemaVersion}
+            // Job Plan file extension. e.g. the file extension will look like {transferid}.{jobpartNumber}.ndmpart
             internal const string FileExtension = ".ndmpart";
             internal const int JobPartLength = 5;
             internal const int IdSize = 36; // Size of a guid with hyphens
@@ -128,6 +128,9 @@ namespace Azure.Storage.DataMovement
             internal const int MetadataStrNumBytes = MetadataStrMaxLength * 2;
             internal const int BlobTagsStrMaxLength = 4096;
             internal const int BlobTagsStrNumBytes = BlobTagsStrMaxLength * 2;
+
+            internal const int TypeIdMaxStrLength = 10;
+            internal const int TypeIdNumBytes = TypeIdMaxStrLength * 2;
 
             /// <summary>Index: 0</summary>
             internal const int VersionIndex = 0; // Index: 0
@@ -269,6 +272,22 @@ namespace Azure.Storage.DataMovement
             /// Size of the JobPart Header: 49029
             /// </summary>
             internal const int JobPartHeaderSizeInBytes = AtomicPartStatusHasSkippedIndex + OneByte;
+
+            internal const int VersionIndex2 = 0;
+            internal const int TransferIdIndex2 = VersionIndex2 + VersionStrNumBytes;
+            internal const int PartNumberIndex2 = TransferIdIndex2 + GuidSizeInBytes;
+            internal const int CreateTimeIndex = PartNumberIndex2 + LongSizeInBytes;
+            internal const int SourceTypeIdIndex = CreateTimeIndex + LongSizeInBytes;
+            internal const int DestinationTypeIdIndex = SourceTypeIdIndex + TypeIdNumBytes;
+            internal const int SourcePathOffsetIndex = DestinationTypeIdIndex + TypeIdNumBytes;
+            internal const int SourcePathLengthIndex2 = SourcePathOffsetIndex + IntSizeInBytes;
+            internal const int DestinationPathOffsetIndex = SourcePathLengthIndex2 + IntSizeInBytes;
+            internal const int DestinationPathLengthIndex2 = DestinationPathOffsetIndex + IntSizeInBytes;
+            internal const int OverwriteIndex = DestinationPathLengthIndex2 + IntSizeInBytes;
+            internal const int ChunkSizeIndex = OverwriteIndex + OneByte;
+            internal const int PriorityIndex2 = ChunkSizeIndex + LongSizeInBytes;
+            internal const int JobPartStatusIndex = PriorityIndex2 + OneByte;
+            internal const int VariableLengthStartIndex = JobPartStatusIndex + IntSizeInBytes;
         }
 
         internal static class ErrorCode
