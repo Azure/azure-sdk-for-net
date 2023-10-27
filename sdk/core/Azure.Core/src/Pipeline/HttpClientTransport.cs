@@ -29,6 +29,8 @@ namespace Azure.Core.Pipeline
         // TODO: move these tests into System.Rest? - can we make it private when we do?
         internal HttpClient Client { get; }
 
+        private HttpPipelineMessageTransport _transport;
+
         /// <summary>
         /// Creates a new <see cref="HttpClientTransport"/> instance using default configuration.
         /// </summary>
@@ -48,9 +50,10 @@ namespace Azure.Core.Pipeline
         /// Creates a new instance of <see cref="HttpClientTransport"/> using the provided client instance.
         /// </summary>
         /// <param name="client">The instance of <see cref="HttpClient"/> to use.</param>
-        public HttpClientTransport(HttpClient client) : base(client)
+        public HttpClientTransport(HttpClient client)
         {
             Client = client;
+            _transport = new HttpPipelineMessageTransport(client);
         }
 
         /// <summary>
@@ -70,7 +73,7 @@ namespace Azure.Core.Pipeline
         {
             try
             {
-                base.Process(message);
+                _transport.Process(message);
             }
             catch (MessageRequestException e)
             {
@@ -90,7 +93,7 @@ namespace Azure.Core.Pipeline
         {
             try
             {
-                await base.ProcessAsync(message).ConfigureAwait(false);
+                await _transport.ProcessAsync(message).ConfigureAwait(false);
             }
             catch (MessageRequestException e)
             {
@@ -106,7 +109,7 @@ namespace Azure.Core.Pipeline
         }
 
         /// <inheritdoc />
-        protected override void OnSendingRequest(PipelineMessage message, HttpRequestMessage httpRequest)
+        protected void OnSendingRequest(PipelineMessage message, HttpRequestMessage httpRequest)
         {
             if (message is not HttpMessage httpMessage)
             {
@@ -119,7 +122,7 @@ namespace Azure.Core.Pipeline
         }
 
         /// <inheritdoc />
-        protected override void OnReceivedResponse(PipelineMessage message, HttpResponseMessage httpResponse)
+        protected void OnReceivedResponse(PipelineMessage message, HttpResponseMessage httpResponse)
         {
             if (message is not HttpMessage httpMessage)
             {
@@ -246,7 +249,7 @@ namespace Azure.Core.Pipeline
         /// <summary>
         /// Disposes the underlying <see cref="HttpClient"/>.
         /// </summary>
-        public override void Dispose()
+        public void Dispose()
         {
             if (this != Shared)
             {
