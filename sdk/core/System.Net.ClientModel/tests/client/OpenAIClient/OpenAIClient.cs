@@ -25,7 +25,7 @@ public class OpenAIClient
 
         _telemetry = new TelemetrySource(options, true);
         _credential = credential;
-        _pipeline = MessagePipeline.Create(options, new KeyCredentialPolicy(_credential, "Authorization", "Bearer"));
+        _pipeline = MessagePipeline.Create(options, new KeyCredentialAuthenticationPolicy(_credential, "Authorization", "Bearer"));
         _endpoint = endpoint;
     }
 

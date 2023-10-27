@@ -102,9 +102,9 @@ namespace System.Net.ClientModel.Core
         bool ProcessNext();
         System.Threading.Tasks.ValueTask<bool> ProcessNextAsync();
     }
-    public partial class KeyCredentialPolicy : System.Net.ClientModel.Core.PipelinePolicy<System.Net.ClientModel.Core.PipelineMessage>
+    public partial class KeyCredentialAuthenticationPolicy : System.Net.ClientModel.Core.PipelinePolicy<System.Net.ClientModel.Core.PipelineMessage>
     {
-        public KeyCredentialPolicy(System.Net.ClientModel.KeyCredential credential, string name, string? prefix = null) { }
+        public KeyCredentialAuthenticationPolicy(System.Net.ClientModel.KeyCredential credential, string name, string? prefix = null) { }
         public override void Process(System.Net.ClientModel.Core.PipelineMessage message, System.Net.ClientModel.Core.IPipelineEnumerator pipeline) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(System.Net.ClientModel.Core.PipelineMessage message, System.Net.ClientModel.Core.IPipelineEnumerator pipeline) { throw null; }
     }
