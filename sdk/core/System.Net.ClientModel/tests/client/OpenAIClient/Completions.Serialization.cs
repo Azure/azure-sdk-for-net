@@ -23,7 +23,7 @@ public partial class Completions : IJsonModel<Completions>
     internal static Completions DeserializeCompletions(JsonElement element, ModelReaderWriterOptions options)
     {
         bool wire = options.Format == ModelReaderWriterFormat.Wire;
-        if (options.Format != ModelReaderWriterFormat.Json) throw new ArgumentOutOfRangeException(nameof(options.Format));
+        if (!wire && options.Format != ModelReaderWriterFormat.Json) throw new ArgumentOutOfRangeException(nameof(options.Format));
 
         if (element.ValueKind == JsonValueKind.Null)
         {
@@ -102,7 +102,7 @@ public partial class Completions : IJsonModel<Completions>
     void IJsonModel<Completions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
     {
         bool wire = options.Format == ModelReaderWriterFormat.Wire;
-        if (options.Format != ModelReaderWriterFormat.Json) throw new ArgumentOutOfRangeException(nameof(options.Format));
+        if (!wire && options.Format != ModelReaderWriterFormat.Json) throw new ArgumentOutOfRangeException(nameof(options.Format));
 
         writer.WriteStartObject();
         writer.WriteString(wire?"id"u8:"Id"u8, this.Id);

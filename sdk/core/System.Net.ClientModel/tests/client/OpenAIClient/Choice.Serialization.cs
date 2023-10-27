@@ -18,7 +18,7 @@ public partial class Choice
         internal static Choice DeserializeChoice(JsonElement element, ModelReaderWriterOptions options)
         {
             bool wire = options.Format == ModelReaderWriterFormat.Wire;
-            if (options.Format != ModelReaderWriterFormat.Json) throw new ArgumentOutOfRangeException(nameof(options.Format));
+            if (!wire && options.Format != ModelReaderWriterFormat.Json) throw new ArgumentOutOfRangeException(nameof(options.Format));
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -85,7 +85,7 @@ public partial class Choice
         internal void Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             bool wire = options.Format == ModelReaderWriterFormat.Wire;
-            if (options.Format != ModelReaderWriterFormat.Json) throw new ArgumentOutOfRangeException(nameof(options.Format));
+            if (!wire && options.Format != ModelReaderWriterFormat.Json) throw new ArgumentOutOfRangeException(nameof(options.Format));
 
             writer.WriteStartObject();
             writer.WriteString(wire?"text"u8:"Text"u8, this.Text);
