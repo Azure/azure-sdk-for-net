@@ -29,7 +29,7 @@ namespace Azure.Core.Pipeline
         // TODO: move these tests into System.Rest? - can we make it private when we do?
         internal HttpClient Client { get; }
 
-        private HttpPipelineMessageTransport _transport;
+        private HttpClientPipelineTransport _transport;
 
         /// <summary>
         /// Creates a new <see cref="HttpClientTransport"/> instance using default configuration.
@@ -53,7 +53,7 @@ namespace Azure.Core.Pipeline
         public HttpClientTransport(HttpClient client)
         {
             Client = client;
-            _transport = new HttpPipelineMessageTransport(client);
+            _transport = new HttpClientPipelineTransport(client);
         }
 
         /// <summary>

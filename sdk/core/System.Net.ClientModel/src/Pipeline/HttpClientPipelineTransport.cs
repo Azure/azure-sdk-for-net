@@ -11,25 +11,25 @@ namespace System.Net.ClientModel.Core;
 
 // Introduces the dependency on System.Net.Http;
 
-public class HttpPipelineMessageTransport : PipelineTransport, IDisposable
+public class HttpClientPipelineTransport : PipelineTransport, IDisposable
 {
     /// <summary>
-    /// A shared instance of <see cref="HttpPipelineMessageTransport"/> with default parameters.
+    /// A shared instance of <see cref="HttpClientPipelineTransport"/> with default parameters.
     /// </summary>
-    internal static readonly HttpPipelineMessageTransport Shared = new();
+    internal static readonly HttpClientPipelineTransport Shared = new();
 
     private readonly bool _ownsClient;
     private readonly HttpClient _httpClient;
 
     private bool _disposed;
 
-    public HttpPipelineMessageTransport() : this(CreateDefaultClient())
+    public HttpClientPipelineTransport() : this(CreateDefaultClient())
     {
         // We will dispose the httpClient.
         _ownsClient = true;
     }
 
-    public HttpPipelineMessageTransport(HttpClient client)
+    public HttpClientPipelineTransport(HttpClient client)
     {
         ClientUtilities.AssertNotNull(client, nameof(client));
 

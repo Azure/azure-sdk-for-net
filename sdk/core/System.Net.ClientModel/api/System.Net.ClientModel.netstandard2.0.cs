@@ -54,10 +54,10 @@ namespace System.Net.ClientModel.Core
         Default = 0,
         NoThrow = 1,
     }
-    public partial class HttpPipelineMessageTransport : System.Net.ClientModel.Core.PipelineTransport, System.IDisposable
+    public partial class HttpClientPipelineTransport : System.Net.ClientModel.Core.PipelineTransport, System.IDisposable
     {
-        public HttpPipelineMessageTransport() { }
-        public HttpPipelineMessageTransport(System.Net.Http.HttpClient client) { }
+        public HttpClientPipelineTransport() { }
+        public HttpClientPipelineTransport(System.Net.Http.HttpClient client) { }
         public override System.Net.ClientModel.Core.PipelineMessage CreateMessage() { throw null; }
         public virtual void Dispose() { }
         protected virtual void Dispose(bool disposing) { }
