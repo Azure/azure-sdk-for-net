@@ -23,6 +23,10 @@ namespace Azure.ResourceManager.Search.Mocking
     {
         private ClientDiagnostics _searchServiceServicesClientDiagnostics;
         private ServicesRestOperations _searchServiceServicesRestClient;
+        private ClientDiagnostics _usagesClientDiagnostics;
+        private UsagesRestOperations _usagesRestClient;
+        private ClientDiagnostics _defaultClientDiagnostics;
+        private SearchManagementRestOperations _defaultRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableSearchSubscriptionResource"/> class for mocking. </summary>
         protected MockableSearchSubscriptionResource()
@@ -38,6 +42,10 @@ namespace Azure.ResourceManager.Search.Mocking
 
         private ClientDiagnostics SearchServiceServicesClientDiagnostics => _searchServiceServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Search", SearchServiceResource.ResourceType.Namespace, Diagnostics);
         private ServicesRestOperations SearchServiceServicesRestClient => _searchServiceServicesRestClient ??= new ServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SearchServiceResource.ResourceType));
+        private ClientDiagnostics UsagesClientDiagnostics => _usagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Search", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private UsagesRestOperations UsagesRestClient => _usagesRestClient ??= new UsagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics DefaultClientDiagnostics => _defaultClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Search", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private SearchManagementRestOperations DefaultRestClient => _defaultRestClient ??= new SearchManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -152,6 +160,120 @@ namespace Azure.ResourceManager.Search.Mocking
             try
             {
                 var response = SearchServiceServicesRestClient.CheckNameAvailability(Id.SubscriptionId, content, searchManagementRequestOptions, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets a list of all Search quota usages in the given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Search/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Usages_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The unique location name for a Microsoft Azure geographic region. </param>
+        /// <param name="searchManagementRequestOptions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="QuotaUsageResult" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<QuotaUsageResult> GetUsagesBySubscriptionAsync(AzureLocation location, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, location, searchManagementRequestOptions);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, location, searchManagementRequestOptions);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, QuotaUsageResult.DeserializeQuotaUsageResult, UsagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetUsagesBySubscription", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a list of all Search quota usages in the given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Search/locations/{location}/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Usages_ListBySubscription</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The unique location name for a Microsoft Azure geographic region. </param>
+        /// <param name="searchManagementRequestOptions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="QuotaUsageResult" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<QuotaUsageResult> GetUsagesBySubscription(AzureLocation location, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, location, searchManagementRequestOptions);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, location, searchManagementRequestOptions);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, QuotaUsageResult.DeserializeQuotaUsageResult, UsagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetUsagesBySubscription", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the quota usage for a search sku in the given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Search/locations/{location}/usages/{skuName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>UsageBySubscriptionSku</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The unique location name for a Microsoft Azure geographic region. </param>
+        /// <param name="skuName"> The unique search service sku name supported by Azure Cognitive Search. </param>
+        /// <param name="searchManagementRequestOptions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<QuotaUsageResult>> UsageBySubscriptionSkuAsync(AzureLocation location, string skuName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.UsageBySubscriptionSku");
+            scope.Start();
+            try
+            {
+                var response = await DefaultRestClient.UsageBySubscriptionSkuAsync(Id.SubscriptionId, location, skuName, searchManagementRequestOptions, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the quota usage for a search sku in the given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Search/locations/{location}/usages/{skuName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>UsageBySubscriptionSku</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The unique location name for a Microsoft Azure geographic region. </param>
+        /// <param name="skuName"> The unique search service sku name supported by Azure Cognitive Search. </param>
+        /// <param name="searchManagementRequestOptions"> Parameter group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<QuotaUsageResult> UsageBySubscriptionSku(AzureLocation location, string skuName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.UsageBySubscriptionSku");
+            scope.Start();
+            try
+            {
+                var response = DefaultRestClient.UsageBySubscriptionSku(Id.SubscriptionId, location, skuName, searchManagementRequestOptions, cancellationToken);
                 return response;
             }
             catch (Exception e)
