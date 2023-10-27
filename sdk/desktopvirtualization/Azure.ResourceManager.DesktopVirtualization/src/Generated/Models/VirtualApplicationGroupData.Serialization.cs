@@ -73,6 +73,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
             writer.WriteStringValue(HostPoolId);
             writer.WritePropertyName("applicationGroupType"u8);
             writer.WriteStringValue(ApplicationGroupType.ToString());
+            if (Optional.IsDefined(ShowInFeed))
+            {
+                writer.WritePropertyName("showInFeed"u8);
+                writer.WriteBooleanValue(ShowInFeed.Value);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -102,6 +107,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             Optional<ResourceIdentifier> workspaceArmPath = default;
             VirtualApplicationGroupType applicationGroupType = default;
             Optional<bool> cloudPCResource = default;
+            Optional<bool> showInFeed = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("managedBy"u8))
@@ -250,11 +256,20 @@ namespace Azure.ResourceManager.DesktopVirtualization
                             cloudPCResource = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("showInFeed"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            showInFeed = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new VirtualApplicationGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, objectId.Value, description.Value, friendlyName.Value, hostPoolArmPath, workspaceArmPath.Value, applicationGroupType, Optional.ToNullable(cloudPCResource), managedBy.Value, kind.Value, Optional.ToNullable(etag), identity, sku.Value, plan);
+            return new VirtualApplicationGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, objectId.Value, description.Value, friendlyName.Value, hostPoolArmPath, workspaceArmPath.Value, applicationGroupType, Optional.ToNullable(cloudPCResource), Optional.ToNullable(showInFeed), managedBy.Value, kind.Value, Optional.ToNullable(etag), identity, sku.Value, plan);
         }
     }
 }

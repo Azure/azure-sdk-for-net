@@ -51,6 +51,38 @@ namespace Azure.ResourceManager.DesktopVirtualization
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="WorkspacePrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkspacePrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="WorkspacePrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDesktopVirtualizationArmClient.GetWorkspacePrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="WorkspacePrivateEndpointConnectionResource" /> object. </returns>
+        public static WorkspacePrivateEndpointConnectionResource GetWorkspacePrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return GetMockableDesktopVirtualizationArmClient(client).GetWorkspacePrivateEndpointConnectionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="HostPoolPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HostPoolPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="HostPoolPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDesktopVirtualizationArmClient.GetHostPoolPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="HostPoolPrivateEndpointConnectionResource" /> object. </returns>
+        public static HostPoolPrivateEndpointConnectionResource GetHostPoolPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return GetMockableDesktopVirtualizationArmClient(client).GetHostPoolPrivateEndpointConnectionResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="ScalingPlanResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ScalingPlanResource.CreateResourceIdentifier" /> to create a <see cref="ScalingPlanResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -80,6 +112,22 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public static ScalingPlanPooledScheduleResource GetScalingPlanPooledScheduleResource(this ArmClient client, ResourceIdentifier id)
         {
             return GetMockableDesktopVirtualizationArmClient(client).GetScalingPlanPooledScheduleResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ScalingPlanPersonalScheduleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ScalingPlanPersonalScheduleResource.CreateResourceIdentifier" /> to create a <see cref="ScalingPlanPersonalScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDesktopVirtualizationArmClient.GetScalingPlanPersonalScheduleResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ScalingPlanPersonalScheduleResource" /> object. </returns>
+        public static ScalingPlanPersonalScheduleResource GetScalingPlanPersonalScheduleResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return GetMockableDesktopVirtualizationArmClient(client).GetScalingPlanPersonalScheduleResource(id);
         }
 
         /// <summary>

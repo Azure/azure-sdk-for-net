@@ -49,6 +49,30 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="WorkspacePrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="WorkspacePrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="WorkspacePrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="WorkspacePrivateEndpointConnectionResource" /> object. </returns>
+        public virtual WorkspacePrivateEndpointConnectionResource GetWorkspacePrivateEndpointConnectionResource(ResourceIdentifier id)
+        {
+            WorkspacePrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new WorkspacePrivateEndpointConnectionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="HostPoolPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HostPoolPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="HostPoolPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="HostPoolPrivateEndpointConnectionResource" /> object. </returns>
+        public virtual HostPoolPrivateEndpointConnectionResource GetHostPoolPrivateEndpointConnectionResource(ResourceIdentifier id)
+        {
+            HostPoolPrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new HostPoolPrivateEndpointConnectionResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="ScalingPlanResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ScalingPlanResource.CreateResourceIdentifier" /> to create a <see cref="ScalingPlanResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
@@ -70,6 +94,18 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         {
             ScalingPlanPooledScheduleResource.ValidateResourceId(id);
             return new ScalingPlanPooledScheduleResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ScalingPlanPersonalScheduleResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ScalingPlanPersonalScheduleResource.CreateResourceIdentifier" /> to create a <see cref="ScalingPlanPersonalScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ScalingPlanPersonalScheduleResource" /> object. </returns>
+        public virtual ScalingPlanPersonalScheduleResource GetScalingPlanPersonalScheduleResource(ResourceIdentifier id)
+        {
+            ScalingPlanPersonalScheduleResource.ValidateResourceId(id);
+            return new ScalingPlanPersonalScheduleResource(Client, id);
         }
 
         /// <summary>
