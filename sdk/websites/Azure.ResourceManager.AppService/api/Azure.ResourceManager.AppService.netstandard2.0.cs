@@ -4532,9 +4532,9 @@ namespace Azure.ResourceManager.AppService
 }
 namespace Azure.ResourceManager.AppService.Mocking
 {
-    public partial class AppServiceArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableAppServiceArmClient : Azure.ResourceManager.ArmResource
     {
-        protected AppServiceArmClientMockingExtension() { }
+        protected MockableAppServiceArmClient() { }
         public virtual Azure.ResourceManager.AppService.AppCertificateResource GetAppCertificateResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AppService.AppServiceCertificateOrderResource GetAppServiceCertificateOrderResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AppService.AppServiceCertificateResource GetAppServiceCertificateResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -4649,9 +4649,9 @@ namespace Azure.ResourceManager.AppService.Mocking
         public virtual Azure.ResourceManager.AppService.WebSiteTriggeredwebJobResource GetWebSiteTriggeredwebJobResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AppService.WebSiteWebJobResource GetWebSiteWebJobResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class AppServiceResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableAppServiceResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected AppServiceResourceGroupMockingExtension() { }
+        protected MockableAppServiceResourceGroupResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.AppService.ResourceHealthMetadataData> GetAllResourceHealthMetadataData(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.ResourceHealthMetadataData> GetAllResourceHealthMetadataDataAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.AppCertificateResource> GetAppCertificate(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -4681,9 +4681,9 @@ namespace Azure.ResourceManager.AppService.Mocking
         public virtual Azure.Response<Azure.ResourceManager.AppService.Models.AppServiceValidateResult> Validate(Azure.ResourceManager.AppService.Models.AppServiceValidateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.AppServiceValidateResult>> ValidateAsync(Azure.ResourceManager.AppService.Models.AppServiceValidateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class AppServiceSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableAppServiceSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected AppServiceSubscriptionMockingExtension() { }
+        protected MockableAppServiceSubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.AppService.Models.DomainAvailabilityCheckResult> CheckAppServiceDomainRegistrationAvailability(Azure.ResourceManager.AppService.Models.AppServiceDomainNameIdentifier identifier, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.DomainAvailabilityCheckResult>> CheckAppServiceDomainRegistrationAvailabilityAsync(Azure.ResourceManager.AppService.Models.AppServiceDomainNameIdentifier identifier, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.Models.ResourceNameAvailability> CheckAppServiceNameAvailability(Azure.ResourceManager.AppService.Models.ResourceNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -4747,9 +4747,9 @@ namespace Azure.ResourceManager.AppService.Mocking
         public virtual Azure.Response<Azure.ResourceManager.AppService.Models.VirtualNetworkValidationFailureDetails> VerifyHostingEnvironmentVnet(Azure.ResourceManager.AppService.Models.AppServiceVirtualNetworkValidationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.VirtualNetworkValidationFailureDetails>> VerifyHostingEnvironmentVnetAsync(Azure.ResourceManager.AppService.Models.AppServiceVirtualNetworkValidationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class AppServiceTenantMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableAppServiceTenantResource : Azure.ResourceManager.ArmResource
     {
-        protected AppServiceTenantMockingExtension() { }
+        protected MockableAppServiceTenantResource() { }
         public virtual Azure.Response<Azure.ResourceManager.AppService.AppServiceSourceControlResource> GetAppServiceSourceControl(string sourceControlType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.AppServiceSourceControlResource>> GetAppServiceSourceControlAsync(string sourceControlType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.AppService.AppServiceSourceControlCollection GetAppServiceSourceControls() { throw null; }

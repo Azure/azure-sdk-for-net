@@ -1321,54 +1321,6 @@ namespace Azure.ResourceManager.AppService.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WebSiteSlotTriggeredWebJobResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WebSiteSlotTriggeredWebJobResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteSlotTriggeredWebJobResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebSiteSlotTriggeredWebJobResource" /> object. </returns>
-        public virtual WebSiteSlotTriggeredWebJobResource GetWebSiteSlotTriggeredWebJobResource(ResourceIdentifier id)
-        {
-            WebSiteSlotTriggeredWebJobResource.ValidateResourceId(id);
-            return new WebSiteSlotTriggeredWebJobResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="WebSiteTriggeredwebJobResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WebSiteTriggeredwebJobResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteTriggeredwebJobResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebSiteTriggeredwebJobResource" /> object. </returns>
-        public virtual WebSiteTriggeredwebJobResource GetWebSiteTriggeredwebJobResource(ResourceIdentifier id)
-        {
-            WebSiteTriggeredwebJobResource.ValidateResourceId(id);
-            return new WebSiteTriggeredwebJobResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="WebSiteSlotTriggeredWebJobHistoryResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WebSiteSlotTriggeredWebJobHistoryResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteSlotTriggeredWebJobHistoryResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebSiteSlotTriggeredWebJobHistoryResource" /> object. </returns>
-        public virtual WebSiteSlotTriggeredWebJobHistoryResource GetWebSiteSlotTriggeredWebJobHistoryResource(ResourceIdentifier id)
-        {
-            WebSiteSlotTriggeredWebJobHistoryResource.ValidateResourceId(id);
-            return new WebSiteSlotTriggeredWebJobHistoryResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="WebSiteTriggeredWebJobHistoryResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WebSiteTriggeredWebJobHistoryResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteTriggeredWebJobHistoryResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="WebSiteTriggeredWebJobHistoryResource" /> object. </returns>
-        public virtual WebSiteTriggeredWebJobHistoryResource GetWebSiteTriggeredWebJobHistoryResource(ResourceIdentifier id)
-        {
-            WebSiteTriggeredWebJobHistoryResource.ValidateResourceId(id);
-            return new WebSiteTriggeredWebJobHistoryResource(Client, id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="WebSiteSlotWebJobResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="WebSiteSlotWebJobResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteSlotWebJobResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
