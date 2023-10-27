@@ -3,7 +3,7 @@ parameters:
 
 steps:
   - pwsh: |
-      New-Item -Path "${{ parameters.rootFolder }}/proxylogs/ -ItemType Directory
+      New-Item -Path "${{ parameters.rootFolder }}/proxylogs/" -ItemType Directory
       Copy-Item -Path "${{ parameters.rootFolder }}/test-proxy.log" -Destination "${{ parameters.rootFolder }}/proxylogs/proxy.log"
       Copy-Item -Path "${{ parameters.rootFolder }}/test-proxy-err.log" -Destination "${{ parameters.rootFolder }}/proxylogs/proxy-err.log"
     displayName: Copy Log File
