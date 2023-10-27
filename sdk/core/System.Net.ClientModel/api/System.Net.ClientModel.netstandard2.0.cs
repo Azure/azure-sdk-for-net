@@ -6,13 +6,6 @@ namespace System.Net.ClientModel
         public bool TryGetKey(out string key) { throw null; }
         public void Update(string key) { }
     }
-    public partial class MessageRequestException : System.Exception
-    {
-        public MessageRequestException(System.Net.ClientModel.Core.PipelineResponse response) { }
-        protected MessageRequestException(System.Net.ClientModel.Core.PipelineResponse response, string message, System.Exception? innerException) { }
-        protected MessageRequestException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
-        public int Status { get { throw null; } }
-    }
     public partial class NullableResult<T> : System.Net.ClientModel.Result
     {
         internal NullableResult() { }
@@ -44,6 +37,13 @@ namespace System.Net.ClientModel
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool HasValue { get { throw null; } }
         public override T Value { get { throw null; } }
+    }
+    public partial class UnsuccessfulRequestException : System.Exception
+    {
+        public UnsuccessfulRequestException(System.Net.ClientModel.Core.PipelineResponse response) { }
+        protected UnsuccessfulRequestException(System.Net.ClientModel.Core.PipelineResponse response, string message, System.Exception? innerException) { }
+        protected UnsuccessfulRequestException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
+        public int Status { get { throw null; } }
     }
 }
 namespace System.Net.ClientModel.Core
