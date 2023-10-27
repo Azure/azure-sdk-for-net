@@ -256,10 +256,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             }
             catch (Exception)
             {
-				throw new RequestValidationException(AuthenticationEventResource.Ex_Invalid_JsonPayload);
-			}
+                throw new RequestValidationException(AuthenticationEventResource.Ex_Invalid_JsonPayload);
+            }
 
-			return AuthenticationEventMetadataLoader.GetEventMetadata(body);
+            return AuthenticationEventMetadataLoader.GetEventMetadata(body);
         }
         #endregion
 
