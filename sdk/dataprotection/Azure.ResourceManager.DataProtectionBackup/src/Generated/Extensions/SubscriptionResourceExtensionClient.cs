@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The String to use. </param>
+        /// <param name="location"> The AzureLocation to use. </param>
         /// <param name="content"> Feature support request object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<BackupFeatureValidationResultBase>> CheckDataProtectionBackupFeatureSupportAsync(AzureLocation location, BackupFeatureValidationContentBase content, CancellationToken cancellationToken = default)
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The String to use. </param>
+        /// <param name="location"> The AzureLocation to use. </param>
         /// <param name="content"> Feature support request object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<BackupFeatureValidationResultBase> CheckDataProtectionBackupFeatureSupport(AzureLocation location, BackupFeatureValidationContentBase content, CancellationToken cancellationToken = default)
