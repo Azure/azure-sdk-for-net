@@ -198,6 +198,11 @@
 
   <!--TODO: end-->
 
+  <!-- *********** Files needed for Authentication ************** -->
+  <ItemGroup Condition="'$(IncludeAuthenticationSharedSource)' == 'true'">
+    <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared" />
+  </ItemGroup>
+
   <!-- *********** Files needed for LRO ************* -->
   <ItemGroup Condition="'$(IncludeOperationsSharedSource)' == 'true'">
     <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="Shared/Core" />

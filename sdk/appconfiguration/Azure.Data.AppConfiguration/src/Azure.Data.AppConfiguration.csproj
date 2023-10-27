@@ -10,6 +10,7 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);3021;</NoWarn>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <IncludeAuthenticationSharedSource>true</IncludeAuthenticationSharedSource>
   </PropertyGroup>
 
   <ItemGroup>
@@ -25,6 +26,5 @@
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)NoBodyResponseOfT.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared" />
   </ItemGroup>
 </Project>

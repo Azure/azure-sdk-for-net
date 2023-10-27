@@ -16,12 +16,12 @@
     <!-- These are still firing but not valid -->
     <NoWarn>$(NoWarn);AZC0007;AZC0004;AZC0001</NoWarn>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <IncludeAuthenticationSharedSource>true</IncludeAuthenticationSharedSource>
   </PropertyGroup>
 
   <!-- Pull in Shared Source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)AzureEventSource.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)SyncAsyncEventHandlerExtensions.cs" LinkBase="Shared" />

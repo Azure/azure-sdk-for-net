@@ -8,6 +8,7 @@
     <NoWarn>$(NoWarn);AZC0001;AZC0012;AZC0007;AZC0006</NoWarn>
     <DefineConstants>$(DefineConstants);EXPERIMENTAL</DefineConstants>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <IncludeAuthenticationSharedSource>true</IncludeAuthenticationSharedSource>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,7 +19,6 @@
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
   </ItemGroup>
 

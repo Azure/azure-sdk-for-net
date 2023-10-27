@@ -9,6 +9,7 @@
     <NoWarn>$(NoWarn);AZC0001;AZC0012;CA1835</NoWarn>
     <AzureMapsSharedSources>$(RepoRoot)/sdk/maps/Azure.Maps.Common/src/</AzureMapsSharedSources>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+    <IncludeAuthenticationSharedSource>true</IncludeAuthenticationSharedSource>
   </PropertyGroup>
 
   <ItemGroup>
@@ -18,7 +19,6 @@
 
   <!-- Shared source from Azure.Core -->
   <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" Link="Shared%(RecursiveDir)%(Filename)%(Extension)" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
   </ItemGroup>
