@@ -233,10 +233,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             {
                 throw new ResponseValidationException($"{AuthenticationEventResource.Ex_Invalid_Return}: {ex.Message}", ex.InnerException);
             }
-            catch (Exception)
-            {
-				throw new ResponseValidationException(AuthenticationEventResource.Ex_Invalid_Return);
-			}
 
             return new AuthenticationEventJsonElement(result);
         }

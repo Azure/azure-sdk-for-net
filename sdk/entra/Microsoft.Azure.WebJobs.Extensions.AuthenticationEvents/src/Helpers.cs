@@ -112,7 +112,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         {
             if (string.IsNullOrEmpty(input))
             {
-                throw new Exception();
+                throw new JsonException(AuthenticationEventResource.Ex_Empty_Json);
             }
 
             // try parsing input to json object
