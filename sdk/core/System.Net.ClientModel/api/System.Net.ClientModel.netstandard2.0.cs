@@ -108,14 +108,14 @@ namespace System.Net.ClientModel.Core
         public override void Process(System.Net.ClientModel.Core.PipelineMessage message, System.Net.ClientModel.Core.IPipelineEnumerator pipeline) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(System.Net.ClientModel.Core.PipelineMessage message, System.Net.ClientModel.Core.IPipelineEnumerator pipeline) { throw null; }
     }
-    public partial class MessagePipeline : System.Net.ClientModel.Core.Pipeline<System.Net.ClientModel.Core.PipelineMessage>
+    public partial class MessagePipeline
     {
         public MessagePipeline(System.Net.ClientModel.Core.PipelineTransport<System.Net.ClientModel.Core.PipelineMessage> transport, System.ReadOnlyMemory<System.Net.ClientModel.Core.PipelinePolicy<System.Net.ClientModel.Core.PipelineMessage>> policies) { }
         public static System.Net.ClientModel.Core.MessagePipeline Create(System.Net.ClientModel.Core.PipelineOptions options, params System.Net.ClientModel.Core.PipelinePolicy<System.Net.ClientModel.Core.PipelineMessage>[] perTryPolicies) { throw null; }
         public static System.Net.ClientModel.Core.MessagePipeline Create(System.Net.ClientModel.Core.PipelineOptions options, System.ReadOnlySpan<System.Net.ClientModel.Core.PipelinePolicy<System.Net.ClientModel.Core.PipelineMessage>> perCallPolicies, System.ReadOnlySpan<System.Net.ClientModel.Core.PipelinePolicy<System.Net.ClientModel.Core.PipelineMessage>> perTryPolicies) { throw null; }
-        public override System.Net.ClientModel.Core.PipelineMessage CreateMessage() { throw null; }
-        public override void Send(System.Net.ClientModel.Core.PipelineMessage message) { }
-        public override System.Threading.Tasks.ValueTask SendAsync(System.Net.ClientModel.Core.PipelineMessage message) { throw null; }
+        public System.Net.ClientModel.Core.PipelineMessage CreateMessage() { throw null; }
+        public void Send(System.Net.ClientModel.Core.PipelineMessage message) { }
+        public System.Threading.Tasks.ValueTask SendAsync(System.Net.ClientModel.Core.PipelineMessage message) { throw null; }
     }
     public partial class ModelJsonConverter : System.Text.Json.Serialization.JsonConverter<System.Net.ClientModel.Core.IJsonModel<object>>
     {
@@ -262,13 +262,6 @@ namespace System.Net.ClientModel.Core
         public override void Process(TMessage message, System.Net.ClientModel.Core.IPipelineEnumerator pipeline) { }
         public abstract System.Threading.Tasks.ValueTask ProcessAsync(TMessage message);
         public override System.Threading.Tasks.ValueTask ProcessAsync(TMessage message, System.Net.ClientModel.Core.IPipelineEnumerator pipeline) { throw null; }
-    }
-    public abstract partial class Pipeline<TMessage> where TMessage : System.Net.ClientModel.Core.PipelineMessage
-    {
-        protected Pipeline() { }
-        public abstract TMessage CreateMessage();
-        public abstract void Send(TMessage message);
-        public abstract System.Threading.Tasks.ValueTask SendAsync(TMessage message);
     }
     public partial class ResponseBufferingPolicy : System.Net.ClientModel.Core.PipelinePolicy<System.Net.ClientModel.Core.PipelineMessage>
     {
