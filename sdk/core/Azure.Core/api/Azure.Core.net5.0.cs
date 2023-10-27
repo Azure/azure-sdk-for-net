@@ -678,7 +678,7 @@ namespace Azure.Core
         protected ResponseClassificationHandler() { }
         public abstract bool TryClassify(Azure.Core.HttpMessage message, out bool isError);
     }
-    public partial class ResponseClassifier : System.Net.ClientModel.Core.ResponseErrorClassifier
+    public partial class ResponseClassifier : System.Net.ClientModel.Core.MessageClassifier
     {
         public ResponseClassifier() { }
         public virtual bool IsErrorResponse(Azure.Core.HttpMessage message) { throw null; }

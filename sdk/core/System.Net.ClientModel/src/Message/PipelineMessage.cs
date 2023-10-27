@@ -49,8 +49,8 @@ public class PipelineMessage : IDisposable
     public void SetProperty(Type type, object value) =>
         _propertyBag.Set((ulong)type.TypeHandle.Value, value);
 
-    private ResponseErrorClassifier _responseClassifier = RequestOptions.DefaultResponseClassifier;
-    public virtual ResponseErrorClassifier ResponseClassifier
+    private MessageClassifier _responseClassifier = RequestOptions.DefaultResponseClassifier;
+    public virtual MessageClassifier ResponseClassifier
     {
         get => _responseClassifier;
         set => _responseClassifier = value;

@@ -25,9 +25,9 @@ namespace System.Net.ClientModel
         public RequestOptions() { }
         public virtual System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
         public static System.Threading.CancellationToken DefaultCancellationToken { get { throw null; } set { } }
-        public static System.Net.ClientModel.Core.ResponseErrorClassifier DefaultResponseClassifier { get { throw null; } set { } }
+        public static System.Net.ClientModel.Core.MessageClassifier DefaultResponseClassifier { get { throw null; } set { } }
         public virtual System.Net.ClientModel.Core.ErrorBehavior ErrorBehavior { get { throw null; } set { } }
-        public virtual System.Net.ClientModel.Core.ResponseErrorClassifier ResponseClassifier { get { throw null; } set { } }
+        public virtual System.Net.ClientModel.Core.MessageClassifier ResponseClassifier { get { throw null; } set { } }
         public virtual void Apply(System.Net.ClientModel.Core.PipelineMessage message) { }
     }
     public abstract partial class Result
@@ -127,6 +127,11 @@ namespace System.Net.ClientModel.Core
         public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken);
         public abstract System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken);
     }
+    public partial class MessageClassifier
+    {
+        protected internal MessageClassifier() { }
+        public virtual bool IsErrorResponse(System.Net.ClientModel.Core.PipelineMessage message) { throw null; }
+    }
     public abstract partial class MessageHeaders
     {
         protected MessageHeaders() { }
@@ -211,7 +216,7 @@ namespace System.Net.ClientModel.Core
         public bool HasResponse { get { throw null; } }
         public virtual System.Net.ClientModel.Core.PipelineRequest Request { get { throw null; } }
         public virtual System.Net.ClientModel.Core.PipelineResponse Response { get { throw null; } protected internal set { } }
-        public virtual System.Net.ClientModel.Core.ResponseErrorClassifier ResponseClassifier { get { throw null; } set { } }
+        public virtual System.Net.ClientModel.Core.MessageClassifier ResponseClassifier { get { throw null; } set { } }
         public virtual void Dispose() { }
         protected virtual void Dispose(bool disposing) { }
         public void SetProperty(System.Type type, object value) { }
@@ -275,14 +280,9 @@ namespace System.Net.ClientModel.Core
         public static bool TryGetBufferResponse(System.Net.ClientModel.Core.PipelineMessage message, out bool bufferResponse) { throw null; }
         public static bool TryGetNetworkTimeout(System.Net.ClientModel.Core.PipelineMessage message, out System.TimeSpan networkTimeout) { throw null; }
     }
-    public partial class ResponseErrorClassifier
+    public partial class ResponseStatusClassifier : System.Net.ClientModel.Core.MessageClassifier
     {
-        protected internal ResponseErrorClassifier() { }
-        public virtual bool IsErrorResponse(System.Net.ClientModel.Core.PipelineMessage message) { throw null; }
-    }
-    public partial class StatusErrorClassifier : System.Net.ClientModel.Core.ResponseErrorClassifier
-    {
-        public StatusErrorClassifier(System.ReadOnlySpan<ushort> successStatusCodes) { }
+        public ResponseStatusClassifier(System.ReadOnlySpan<ushort> successStatusCodes) { }
         public override bool IsErrorResponse(System.Net.ClientModel.Core.PipelineMessage message) { throw null; }
     }
     public partial class TelemetrySource
