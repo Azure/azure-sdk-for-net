@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         /// <summary> Initializes a new instance of StorageProfileUpdate. </summary>
         public StorageProfileUpdate()
         {
-            Disks = new ChangeTrackingList<VirtualDiskUpdate>();
+            Disks = new ChangeTrackingList<VMwareVirtualDiskUpdate>();
         }
 
         /// <summary> Gets or sets the list of virtual disks associated with the virtual machine. </summary>
-        public IList<VirtualDiskUpdate> Disks { get; }
+        public IList<VMwareVirtualDiskUpdate> Disks { get; }
     }
 }

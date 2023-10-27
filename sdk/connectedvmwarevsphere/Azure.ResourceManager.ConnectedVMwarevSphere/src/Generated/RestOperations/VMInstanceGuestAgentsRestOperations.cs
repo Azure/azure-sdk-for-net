@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCreateRequest(string resourceUri, GuestAgentData data)
+        internal HttpMessage CreateCreateRequest(string resourceUri, VmInstanceGuestAgentData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="data"/> is null. </exception>
-        public async Task<Response> CreateAsync(string resourceUri, GuestAgentData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string resourceUri, VmInstanceGuestAgentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNull(data, nameof(data));
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="data"/> is null. </exception>
-        public Response Create(string resourceUri, GuestAgentData data, CancellationToken cancellationToken = default)
+        public Response Create(string resourceUri, VmInstanceGuestAgentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNull(data, nameof(data));
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the Hybrid Compute machine resource to be extended. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
-        public async Task<Response<GuestAgentData>> GetAsync(string resourceUri, CancellationToken cancellationToken = default)
+        public async Task<Response<VmInstanceGuestAgentData>> GetAsync(string resourceUri, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
@@ -133,13 +133,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             {
                 case 200:
                     {
-                        GuestAgentData value = default;
+                        VmInstanceGuestAgentData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = GuestAgentData.DeserializeGuestAgentData(document.RootElement);
+                        value = VmInstanceGuestAgentData.DeserializeVmInstanceGuestAgentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((GuestAgentData)null, message.Response);
+                    return Response.FromValue((VmInstanceGuestAgentData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the Hybrid Compute machine resource to be extended. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
-        public Response<GuestAgentData> Get(string resourceUri, CancellationToken cancellationToken = default)
+        public Response<VmInstanceGuestAgentData> Get(string resourceUri, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
@@ -159,13 +159,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             {
                 case 200:
                     {
-                        GuestAgentData value = default;
+                        VmInstanceGuestAgentData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = GuestAgentData.DeserializeGuestAgentData(document.RootElement);
+                        value = VmInstanceGuestAgentData.DeserializeVmInstanceGuestAgentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((GuestAgentData)null, message.Response);
+                    return Response.FromValue((VmInstanceGuestAgentData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the Hybrid Compute machine resource to be extended. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
-        public async Task<Response<GuestAgentList>> ListAsync(string resourceUri, CancellationToken cancellationToken = default)
+        public async Task<Response<VmInstanceGuestAgentListResult>> ListAsync(string resourceUri, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
@@ -259,9 +259,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             {
                 case 200:
                     {
-                        GuestAgentList value = default;
+                        VmInstanceGuestAgentListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = GuestAgentList.DeserializeGuestAgentList(document.RootElement);
+                        value = VmInstanceGuestAgentListResult.DeserializeVmInstanceGuestAgentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the Hybrid Compute machine resource to be extended. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
-        public Response<GuestAgentList> List(string resourceUri, CancellationToken cancellationToken = default)
+        public Response<VmInstanceGuestAgentListResult> List(string resourceUri, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
@@ -283,9 +283,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             {
                 case 200:
                     {
-                        GuestAgentList value = default;
+                        VmInstanceGuestAgentListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = GuestAgentList.DeserializeGuestAgentList(document.RootElement);
+                        value = VmInstanceGuestAgentListResult.DeserializeVmInstanceGuestAgentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the Hybrid Compute machine resource to be extended. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceUri"/> is null. </exception>
-        public async Task<Response<GuestAgentList>> ListNextPageAsync(string nextLink, string resourceUri, CancellationToken cancellationToken = default)
+        public async Task<Response<VmInstanceGuestAgentListResult>> ListNextPageAsync(string nextLink, string resourceUri, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
@@ -323,9 +323,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             {
                 case 200:
                     {
-                        GuestAgentList value = default;
+                        VmInstanceGuestAgentListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = GuestAgentList.DeserializeGuestAgentList(document.RootElement);
+                        value = VmInstanceGuestAgentListResult.DeserializeVmInstanceGuestAgentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the Hybrid Compute machine resource to be extended. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceUri"/> is null. </exception>
-        public Response<GuestAgentList> ListNextPage(string nextLink, string resourceUri, CancellationToken cancellationToken = default)
+        public Response<VmInstanceGuestAgentListResult> ListNextPage(string nextLink, string resourceUri, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
@@ -349,9 +349,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             {
                 case 200:
                     {
-                        GuestAgentList value = default;
+                        VmInstanceGuestAgentListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = GuestAgentList.DeserializeGuestAgentList(document.RootElement);
+                        value = VmInstanceGuestAgentListResult.DeserializeVmInstanceGuestAgentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
