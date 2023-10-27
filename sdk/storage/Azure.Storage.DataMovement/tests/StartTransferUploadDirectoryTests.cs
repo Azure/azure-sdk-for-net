@@ -28,15 +28,12 @@ namespace Azure.Storage.DataMovement.Tests
 
         private List<string> GetTestDirectoryTree(string parentDirectoryPath)
         {
-            string subDirectory1 = CreateRandomDirectory(parentDirectoryPath);
-            string subDirectory2 = CreateRandomDirectory(parentDirectoryPath);
-
             return new List<string>()
             {
                 GetNewBlobName(),
                 GetNewBlobName(),
-                Path.Combine(subDirectory1, GetNewBlobName()),
-                Path.Combine(subDirectory2, GetNewBlobName()),
+                Path.Combine(GetNewBlobDirectoryName(), GetNewBlobName()),
+                Path.Combine(GetNewBlobDirectoryName(), GetNewBlobName()),
             };
         }
 
@@ -52,6 +49,18 @@ namespace Azure.Storage.DataMovement.Tests
                 {
                     return;
                 }
+
+                // Check if the parent subdirectory is already created,
+                // if not create it before making the file
+                string fullPath = Path.Combine(directoryPath, filePath);
+                string subDirectory = Path.GetDirectoryName(fullPath);
+
+                if (!Directory.Exists(subDirectory))
+                {
+                    Directory.CreateDirectory(subDirectory);
+                }
+
+                // Check if it's a directory or not
                 using FileStream fs = File.OpenWrite(Path.Combine(directoryPath, filePath));
                 using Stream data = await CreateLimitedMemoryStream(size);
                 await data.CopyToAsync(fs, bufferSize: 4 * Constants.KB, cancellationToken);
@@ -216,8 +225,8 @@ namespace Azure.Storage.DataMovement.Tests
             string localDirectory = CreateRandomDirectory(testDirectory.DirectoryPath);
             await using DisposingContainer test = await GetTestContainerAsync();
 
-            string folder1 = CreateRandomDirectory(localDirectory);
-            string folder2 = CreateRandomDirectory(localDirectory);
+            string folder1 = GetNewBlobDirectoryName();
+            string folder2 = GetNewBlobDirectoryName();
             List<string> files = new()
             {
                 GetNewBlobName(),
@@ -325,7 +334,6 @@ namespace Azure.Storage.DataMovement.Tests
             };
             foreach (string dir in Enumerable.Range(0, 3).Select(_ => GetNewBlobName()))
             {
-                CreateRandomDirectory(localDirectory, dir);
                 foreach (string blob in Enumerable.Range(0, 3).Select(_ => GetNewBlobName()))
                 {
                     files.Add($"{dir}/{blob}");
@@ -364,7 +372,7 @@ namespace Azure.Storage.DataMovement.Tests
             string subfolderName = localDirectory;
             for (int i = 0; i < level; i++)
             {
-                subfolderName = CreateRandomDirectory(subfolderName);
+                subfolderName = Path.Combine(subfolderName, GetNewBlobDirectoryName());
                 files.Add(Path.Combine(subfolderName, GetNewBlobName()));
             }
 
