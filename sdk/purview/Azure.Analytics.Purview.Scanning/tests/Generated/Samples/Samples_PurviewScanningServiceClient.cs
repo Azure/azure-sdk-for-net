@@ -88,7 +88,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.CreateOrUpdateKeyVaultReference("<keyVaultName>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -103,7 +103,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.CreateOrUpdateKeyVaultReferenceAsync("<keyVaultName>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -118,7 +118,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 properties = new
                 {
@@ -143,7 +143,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 properties = new
                 {
@@ -296,7 +296,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
-            RequestContent content = null;
+            using RequestContent content = null;
             Response response = client.CreateOrUpdateScanRuleset("<scanRulesetName>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -311,7 +311,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
-            RequestContent content = null;
+            using RequestContent content = null;
             Response response = await client.CreateOrUpdateScanRulesetAsync("<scanRulesetName>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -326,7 +326,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 properties = new
                 {
@@ -362,7 +362,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewScanningServiceClient client = new PurviewScanningServiceClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 properties = new
                 {

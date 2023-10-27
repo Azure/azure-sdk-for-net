@@ -29,6 +29,8 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </summary>
         public override Uri Uri => _uri;
 
+        public override string ProviderId => "blob";
+
         /// <summary>
         /// The constructor to create an instance of the BlobStorageResourceContainer.
         /// </summary>
@@ -125,6 +127,23 @@ namespace Azure.Storage.DataMovement.Blobs
                     blobItem.Properties.BlobType.HasValue ? blobItem.Properties.BlobType.Value : BlobType.Block,
                     blobItem.Properties.ETag);
             }
+        }
+
+        protected override StorageResourceCheckpointData GetSourceCheckpointData()
+        {
+            // Source blob type does not matter for container
+            return new BlobSourceCheckpointData(BlobType.Block);
+        }
+
+        protected override StorageResourceCheckpointData GetDestinationCheckpointData()
+        {
+            return new BlobDestinationCheckpointData(
+                _options?.BlobType ?? BlobType.Block,
+                _options?.BlobOptions?.HttpHeaders,
+                _options?.BlobOptions?.AccessTier,
+                _options?.BlobOptions?.Metadata,
+                _options?.BlobOptions?.Tags,
+                default); // TODO: Update when we support encryption scopes
         }
 
         private string ApplyOptionalPrefix(string path)

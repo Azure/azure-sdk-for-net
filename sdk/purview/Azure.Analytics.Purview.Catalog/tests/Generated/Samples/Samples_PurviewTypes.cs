@@ -2831,7 +2831,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.CreateTypeDefinitions(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -2846,7 +2846,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.CreateTypeDefinitionsAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -2861,7 +2861,7 @@ namespace Azure.Analytics.Purview.Catalog.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 businessMetadataDefs = new object[]
             {
@@ -3520,7 +3520,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 businessMetadataDefs = new object[]
             {
@@ -4179,7 +4179,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.UpdateAtlasTypeDefinitions(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -4194,7 +4194,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.UpdateAtlasTypeDefinitionsAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -4209,7 +4209,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 businessMetadataDefs = new object[]
             {
@@ -4868,7 +4868,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 businessMetadataDefs = new object[]
             {
@@ -5527,7 +5527,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.DeleteTypeDefinitions(content);
 
             Console.WriteLine(response.Status);
@@ -5541,7 +5541,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.DeleteTypeDefinitionsAsync(content);
 
             Console.WriteLine(response.Status);
@@ -5555,7 +5555,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 businessMetadataDefs = new object[]
             {
@@ -5881,7 +5881,7 @@ lastModifiedTS = "<lastModifiedTS>",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 businessMetadataDefs = new object[]
             {

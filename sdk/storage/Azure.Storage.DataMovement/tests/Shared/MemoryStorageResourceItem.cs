@@ -14,6 +14,8 @@ namespace Azure.Storage.DataMovement.Tests
 
         public override Uri Uri { get; }
 
+        public override string ProviderId => "mock";
+
         protected internal override string ResourceId => "MemoryBuffer";
 
         protected internal override DataTransferOrder TransferType => DataTransferOrder.Unordered;
@@ -66,14 +68,14 @@ namespace Azure.Storage.DataMovement.Tests
             throw new NotImplementedException();
         }
 
-        protected internal override StorageResourceCheckpointData GetDestinationCheckpointData()
-        {
-            throw new NotImplementedException();
-        }
-
         protected internal override Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken token = default)
         {
             return Task.FromResult(new StorageResourceProperties(default, default, Buffer.Length, default));
+        }
+
+        protected internal override StorageResourceCheckpointData GetDestinationCheckpointData()
+        {
+            throw new NotImplementedException();
         }
 
         protected internal override StorageResourceCheckpointData GetSourceCheckpointData()

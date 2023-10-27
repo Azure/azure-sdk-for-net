@@ -17,19 +17,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)NoValueResponseOfT.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)ForwardsClientCallsAttribute.cs" LinkBase="Shared" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)Multipart\*.*" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AuthorizationChallengeParser.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureSasCredentialSynchronousPolicy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)CallerShouldAuditAttribute.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)DictionaryHeaders.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)ForwardsClientCallsAttribute.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)NoValueResponseOfT.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)RequestRequestContent.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)TypeBinder.cs" LinkBase="Shared" />
   </ItemGroup>

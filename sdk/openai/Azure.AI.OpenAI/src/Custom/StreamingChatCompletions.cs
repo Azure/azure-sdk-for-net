@@ -177,6 +177,7 @@ namespace Azure.AI.OpenAI
             ChatCompletions baseChatCompletions = null,
             List<StreamingChatChoice> streamingChatChoices = null)
         {
+            _baseChatCompletions = new List<ChatCompletions>();
             _baseChatCompletions.Add(baseChatCompletions);
             _streamingChatChoices = streamingChatChoices;
             _streamingTaskComplete = true;
