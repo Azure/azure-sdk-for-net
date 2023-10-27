@@ -999,18 +999,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new ManagedIdentity(principalId, tenantId, type);
         }
 
-        /// <summary> Initializes a new instance of ManagedIdentityCredentialResource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="type"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="etag"> Resource Etag. </param>
-        /// <param name="properties"> Managed Identity Credential properties. </param>
-        /// <returns> A new <see cref="Models.ManagedIdentityCredentialResource"/> instance for mocking. </returns>
-        public static ManagedIdentityCredentialResource ManagedIdentityCredentialResource(string id = null, string name = null, string type = null, string etag = null, ManagedIdentityCredential properties = null)
-        {
-            return new ManagedIdentityCredentialResource(id, name, type, etag, properties);
-        }
-
         /// <summary> Initializes a new instance of WorkspaceIdentity. </summary>
         /// <param name="type"> The identity type. Currently the only supported type is 'SystemAssigned'. </param>
         /// <param name="principalId"> The principal id of the identity. </param>

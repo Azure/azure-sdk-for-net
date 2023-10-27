@@ -774,7 +774,7 @@
 
 # ServiceLabel: %Synapse %Service Attention
 # PRLabel: %Synapse
-/sdk/synapse/                                                      @wonner @yanjungao718 @annelo-msft
+/sdk/synapse/                                                      @wonner @yanjungao718 @annelo-msft @kevinzz6
 
 # PRLabel: %Tables
 /sdk/tables/                                                       @christothes
