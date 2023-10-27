@@ -7,7 +7,6 @@
 
 using System;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -109,7 +108,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             scope.Start();
             try
             {
-                var response = await _kubernetesClusterExtensionExtensionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _kubernetesClusterExtensionExtensionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new KubernetesClusterExtensionResource(Client, response.Value), response.GetRawResponse());
@@ -141,7 +140,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             scope.Start();
             try
             {
-                var response = _kubernetesClusterExtensionExtensionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _kubernetesClusterExtensionExtensionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new KubernetesClusterExtensionResource(Client, response.Value), response.GetRawResponse());
@@ -175,8 +174,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             scope.Start();
             try
             {
-                var response = await _kubernetesClusterExtensionExtensionsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, forceDelete, cancellationToken).ConfigureAwait(false);
-                var operation = new KubernetesConfigurationArmOperation(_kubernetesClusterExtensionExtensionsClientDiagnostics, Pipeline, _kubernetesClusterExtensionExtensionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, forceDelete).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _kubernetesClusterExtensionExtensionsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, forceDelete, cancellationToken).ConfigureAwait(false);
+                var operation = new KubernetesConfigurationArmOperation(_kubernetesClusterExtensionExtensionsClientDiagnostics, Pipeline, _kubernetesClusterExtensionExtensionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, forceDelete).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -210,8 +209,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             scope.Start();
             try
             {
-                var response = _kubernetesClusterExtensionExtensionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, forceDelete, cancellationToken);
-                var operation = new KubernetesConfigurationArmOperation(_kubernetesClusterExtensionExtensionsClientDiagnostics, Pipeline, _kubernetesClusterExtensionExtensionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, forceDelete).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _kubernetesClusterExtensionExtensionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, forceDelete, cancellationToken);
+                var operation = new KubernetesConfigurationArmOperation(_kubernetesClusterExtensionExtensionsClientDiagnostics, Pipeline, _kubernetesClusterExtensionExtensionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, forceDelete).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -248,8 +247,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             scope.Start();
             try
             {
-                var response = await _kubernetesClusterExtensionExtensionsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new KubernetesConfigurationArmOperation<KubernetesClusterExtensionResource>(new KubernetesClusterExtensionOperationSource(Client), _kubernetesClusterExtensionExtensionsClientDiagnostics, Pipeline, _kubernetesClusterExtensionExtensionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _kubernetesClusterExtensionExtensionsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                var operation = new KubernetesConfigurationArmOperation<KubernetesClusterExtensionResource>(new KubernetesClusterExtensionOperationSource(Client), _kubernetesClusterExtensionExtensionsClientDiagnostics, Pipeline, _kubernetesClusterExtensionExtensionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -286,8 +285,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             scope.Start();
             try
             {
-                var response = _kubernetesClusterExtensionExtensionsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new KubernetesConfigurationArmOperation<KubernetesClusterExtensionResource>(new KubernetesClusterExtensionOperationSource(Client), _kubernetesClusterExtensionExtensionsClientDiagnostics, Pipeline, _kubernetesClusterExtensionExtensionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _kubernetesClusterExtensionExtensionsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, patch, cancellationToken);
+                var operation = new KubernetesConfigurationArmOperation<KubernetesClusterExtensionResource>(new KubernetesClusterExtensionOperationSource(Client), _kubernetesClusterExtensionExtensionsClientDiagnostics, Pipeline, _kubernetesClusterExtensionExtensionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
