@@ -7,35 +7,35 @@ namespace System.Net.ClientModel.Core;
 
 public class MessagePipeline
 {
-    private readonly ReadOnlyMemory<PipelinePolicy<PipelineMessage>> _policies;
-    private readonly PipelineTransport<PipelineMessage> _transport;
+    private readonly ReadOnlyMemory<PipelinePolicy> _policies;
+    private readonly PipelineTransport _transport;
 
     public MessagePipeline(
-        PipelineTransport<PipelineMessage> transport,
-        ReadOnlyMemory<PipelinePolicy<PipelineMessage>> policies)
+        PipelineTransport transport,
+        ReadOnlyMemory<PipelinePolicy> policies)
     {
         _transport = transport;
-        var larger = new PipelinePolicy<PipelineMessage>[policies.Length + 1];
+        var larger = new PipelinePolicy[policies.Length + 1];
         policies.Span.CopyTo(larger);
         larger[policies.Length] = transport;
         _policies = larger;
     }
 
-    private MessagePipeline(ReadOnlyMemory<PipelinePolicy<PipelineMessage>> policies)
+    private MessagePipeline(ReadOnlyMemory<PipelinePolicy> policies)
     {
-        _transport = (PipelineTransport<PipelineMessage>)policies.Span[policies.Length - 1];
+        _transport = (PipelineTransport)policies.Span[policies.Length - 1];
         _policies = policies;
     }
 
     public static MessagePipeline Create(
         PipelineOptions options,
-        params PipelinePolicy<PipelineMessage>[] perTryPolicies)
-        => Create(options, perTryPolicies, ReadOnlySpan<PipelinePolicy<PipelineMessage>>.Empty);
+        params PipelinePolicy[] perTryPolicies)
+        => Create(options, perTryPolicies, ReadOnlySpan<PipelinePolicy>.Empty);
 
     public static MessagePipeline Create(
         PipelineOptions options,
-        ReadOnlySpan<PipelinePolicy<PipelineMessage>> perCallPolicies,
-        ReadOnlySpan<PipelinePolicy<PipelineMessage>> perTryPolicies)
+        ReadOnlySpan<PipelinePolicy> perCallPolicies,
+        ReadOnlySpan<PipelinePolicy> perTryPolicies)
     {
         int pipelineLength = perCallPolicies.Length + perTryPolicies.Length;
 
@@ -55,8 +55,8 @@ public class MessagePipeline
         pipelineLength++; // for response buffering policy
         pipelineLength++; // for transport
 
-        PipelinePolicy<PipelineMessage>[] pipeline
-            = new PipelinePolicy<PipelineMessage>[pipelineLength];
+        PipelinePolicy[] pipeline
+            = new PipelinePolicy[pipelineLength];
 
         int index = 0;
 
@@ -126,11 +126,11 @@ public class MessagePipeline
     private struct MessagePipelineExecutor : IPipelineEnumerator
     {
         private PipelineMessage _message;
-        private ReadOnlyMemory<PipelinePolicy<PipelineMessage>> _policies;
+        private ReadOnlyMemory<PipelinePolicy> _policies;
 
         public MessagePipelineExecutor(
             PipelineMessage message,
-            ReadOnlyMemory<PipelinePolicy<PipelineMessage>> policies )
+            ReadOnlyMemory<PipelinePolicy> policies )
         {
             _message = message;
             _policies = policies;

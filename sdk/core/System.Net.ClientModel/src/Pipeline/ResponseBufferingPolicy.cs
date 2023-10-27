@@ -11,7 +11,7 @@ namespace System.Net.ClientModel.Core;
 /// <summary>
 /// Pipeline policy to buffer response content or add a timeout to response content managed by the client
 /// </summary>
-public class ResponseBufferingPolicy : PipelinePolicy<PipelineMessage>
+public class ResponseBufferingPolicy : PipelinePolicy
 {
     // Same value as Stream.CopyTo uses by default
     private const int DefaultCopyBufferSize = 81920;

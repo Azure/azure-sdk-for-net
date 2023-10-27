@@ -6,36 +6,35 @@ using System.Threading.Tasks;
 
 namespace System.Net.ClientModel.Core;
 
-public abstract class PipelineTransport<TMessage> : PipelinePolicy<TMessage>
-    where TMessage : PipelineMessage
+public abstract class PipelineTransport : PipelinePolicy
 {
     /// <summary>
     /// TBD: needed for inheritdoc.
     /// </summary>
     /// <param name="message"></param>
-    public abstract void Process(TMessage message);
+    public abstract void Process(PipelineMessage message);
 
     /// <summary>
     /// TBD: needed for inheritdoc.
     /// </summary>
     /// <param name="message"></param>
-    public abstract ValueTask ProcessAsync(TMessage message);
+    public abstract ValueTask ProcessAsync(PipelineMessage message);
 
     /// <summary>
     /// TBD: needed for inheritdoc.
     /// </summary>
-    public abstract TMessage CreateMessage();
+    public abstract PipelineMessage CreateMessage();
 
     // These methods from PipelinePolicy just say "you've reached the end
     // of the line", i.e. they stop the invocation of the policy chain.
-    public override void Process(TMessage message, IPipelineEnumerator pipeline)
+    public override void Process(PipelineMessage message, IPipelineEnumerator pipeline)
     {
         Debug.Assert(pipeline.Length == 0);
 
         Process(message);
     }
 
-    public override async ValueTask ProcessAsync(TMessage message, IPipelineEnumerator pipeline)
+    public override async ValueTask ProcessAsync(PipelineMessage message, IPipelineEnumerator pipeline)
     {
         Debug.Assert(pipeline.Length == 0);
 

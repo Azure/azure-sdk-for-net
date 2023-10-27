@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace System.Net.ClientModel.Core;
 
-public class KeyCredentialAuthenticationPolicy : PipelinePolicy<PipelineMessage>
+public class KeyCredentialAuthenticationPolicy : PipelinePolicy
 {
     private readonly string _name;
     private readonly KeyCredential _credential;

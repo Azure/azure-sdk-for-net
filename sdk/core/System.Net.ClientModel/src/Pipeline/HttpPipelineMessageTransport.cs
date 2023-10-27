@@ -11,7 +11,7 @@ namespace System.Net.ClientModel.Core;
 
 // Introduces the dependency on System.Net.Http;
 
-public partial class HttpPipelineMessageTransport : PipelineTransport<PipelineMessage>, IDisposable
+public partial class HttpPipelineMessageTransport : PipelineTransport, IDisposable
 {
     /// <summary>
     /// A shared instance of <see cref="HttpPipelineMessageTransport"/> with default parameters.

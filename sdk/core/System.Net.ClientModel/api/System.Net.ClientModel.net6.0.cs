@@ -54,7 +54,7 @@ namespace System.Net.ClientModel.Core
         Default = 0,
         NoThrow = 1,
     }
-    public partial class HttpPipelineMessageTransport : System.Net.ClientModel.Core.PipelineTransport<System.Net.ClientModel.Core.PipelineMessage>, System.IDisposable
+    public partial class HttpPipelineMessageTransport : System.Net.ClientModel.Core.PipelineTransport, System.IDisposable
     {
         public HttpPipelineMessageTransport() { }
         public HttpPipelineMessageTransport(System.Net.Http.HttpClient client) { }
@@ -102,7 +102,7 @@ namespace System.Net.ClientModel.Core
         bool ProcessNext();
         System.Threading.Tasks.ValueTask<bool> ProcessNextAsync();
     }
-    public partial class KeyCredentialAuthenticationPolicy : System.Net.ClientModel.Core.PipelinePolicy<System.Net.ClientModel.Core.PipelineMessage>
+    public partial class KeyCredentialAuthenticationPolicy : System.Net.ClientModel.Core.PipelinePolicy
     {
         public KeyCredentialAuthenticationPolicy(System.Net.ClientModel.KeyCredential credential, string name, string? prefix = null) { }
         public override void Process(System.Net.ClientModel.Core.PipelineMessage message, System.Net.ClientModel.Core.IPipelineEnumerator pipeline) { }
@@ -146,9 +146,9 @@ namespace System.Net.ClientModel.Core
     }
     public partial class MessagePipeline
     {
-        public MessagePipeline(System.Net.ClientModel.Core.PipelineTransport<System.Net.ClientModel.Core.PipelineMessage> transport, System.ReadOnlyMemory<System.Net.ClientModel.Core.PipelinePolicy<System.Net.ClientModel.Core.PipelineMessage>> policies) { }
-        public static System.Net.ClientModel.Core.MessagePipeline Create(System.Net.ClientModel.Core.PipelineOptions options, params System.Net.ClientModel.Core.PipelinePolicy<System.Net.ClientModel.Core.PipelineMessage>[] perTryPolicies) { throw null; }
-        public static System.Net.ClientModel.Core.MessagePipeline Create(System.Net.ClientModel.Core.PipelineOptions options, System.ReadOnlySpan<System.Net.ClientModel.Core.PipelinePolicy<System.Net.ClientModel.Core.PipelineMessage>> perCallPolicies, System.ReadOnlySpan<System.Net.ClientModel.Core.PipelinePolicy<System.Net.ClientModel.Core.PipelineMessage>> perTryPolicies) { throw null; }
+        public MessagePipeline(System.Net.ClientModel.Core.PipelineTransport transport, System.ReadOnlyMemory<System.Net.ClientModel.Core.PipelinePolicy> policies) { }
+        public static System.Net.ClientModel.Core.MessagePipeline Create(System.Net.ClientModel.Core.PipelineOptions options, params System.Net.ClientModel.Core.PipelinePolicy[] perTryPolicies) { throw null; }
+        public static System.Net.ClientModel.Core.MessagePipeline Create(System.Net.ClientModel.Core.PipelineOptions options, System.ReadOnlySpan<System.Net.ClientModel.Core.PipelinePolicy> perCallPolicies, System.ReadOnlySpan<System.Net.ClientModel.Core.PipelinePolicy> perTryPolicies) { throw null; }
         public System.Net.ClientModel.Core.PipelineMessage CreateMessage() { throw null; }
         public void Send(System.Net.ClientModel.Core.PipelineMessage message) { }
         public System.Threading.Tasks.ValueTask SendAsync(System.Net.ClientModel.Core.PipelineMessage message) { throw null; }
@@ -225,22 +225,22 @@ namespace System.Net.ClientModel.Core
     public partial class PipelineOptions
     {
         public PipelineOptions() { }
-        public static System.Net.ClientModel.Core.PipelinePolicy<System.Net.ClientModel.Core.PipelineMessage>? DefaultLoggingPolicy { get { throw null; } set { } }
+        public static System.Net.ClientModel.Core.PipelinePolicy? DefaultLoggingPolicy { get { throw null; } set { } }
         public static System.TimeSpan DefaultNetworkTimeout { get { throw null; } set { } }
-        public static System.Net.ClientModel.Core.PipelinePolicy<System.Net.ClientModel.Core.PipelineMessage>? DefaultRetryPolicy { get { throw null; } set { } }
-        public static System.Net.ClientModel.Core.PipelineTransport<System.Net.ClientModel.Core.PipelineMessage>? DefaultTransport { get { throw null; } set { } }
-        public System.Net.ClientModel.Core.PipelinePolicy<System.Net.ClientModel.Core.PipelineMessage>? LoggingPolicy { get { throw null; } set { } }
+        public static System.Net.ClientModel.Core.PipelinePolicy? DefaultRetryPolicy { get { throw null; } set { } }
+        public static System.Net.ClientModel.Core.PipelineTransport? DefaultTransport { get { throw null; } set { } }
+        public System.Net.ClientModel.Core.PipelinePolicy? LoggingPolicy { get { throw null; } set { } }
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
-        public System.Net.ClientModel.Core.PipelinePolicy<System.Net.ClientModel.Core.PipelineMessage>[]? PerCallPolicies { get { throw null; } set { } }
-        public System.Net.ClientModel.Core.PipelinePolicy<System.Net.ClientModel.Core.PipelineMessage>[]? PerTryPolicies { get { throw null; } set { } }
-        public System.Net.ClientModel.Core.PipelinePolicy<System.Net.ClientModel.Core.PipelineMessage>? RetryPolicy { get { throw null; } set { } }
-        public System.Net.ClientModel.Core.PipelineTransport<System.Net.ClientModel.Core.PipelineMessage>? Transport { get { throw null; } set { } }
+        public System.Net.ClientModel.Core.PipelinePolicy[]? PerCallPolicies { get { throw null; } set { } }
+        public System.Net.ClientModel.Core.PipelinePolicy[]? PerTryPolicies { get { throw null; } set { } }
+        public System.Net.ClientModel.Core.PipelinePolicy? RetryPolicy { get { throw null; } set { } }
+        public System.Net.ClientModel.Core.PipelineTransport? Transport { get { throw null; } set { } }
     }
-    public abstract partial class PipelinePolicy<TMessage> where TMessage : System.Net.ClientModel.Core.PipelineMessage
+    public abstract partial class PipelinePolicy
     {
         protected PipelinePolicy() { }
-        public abstract void Process(TMessage message, System.Net.ClientModel.Core.IPipelineEnumerator pipeline);
-        public abstract System.Threading.Tasks.ValueTask ProcessAsync(TMessage message, System.Net.ClientModel.Core.IPipelineEnumerator pipeline);
+        public abstract void Process(System.Net.ClientModel.Core.PipelineMessage message, System.Net.ClientModel.Core.IPipelineEnumerator pipeline);
+        public abstract System.Threading.Tasks.ValueTask ProcessAsync(System.Net.ClientModel.Core.PipelineMessage message, System.Net.ClientModel.Core.IPipelineEnumerator pipeline);
     }
     public abstract partial class PipelineRequest : System.IDisposable
     {
@@ -261,16 +261,16 @@ namespace System.Net.ClientModel.Core
         public abstract int Status { get; }
         public abstract void Dispose();
     }
-    public abstract partial class PipelineTransport<TMessage> : System.Net.ClientModel.Core.PipelinePolicy<TMessage> where TMessage : System.Net.ClientModel.Core.PipelineMessage
+    public abstract partial class PipelineTransport : System.Net.ClientModel.Core.PipelinePolicy
     {
         protected PipelineTransport() { }
-        public abstract TMessage CreateMessage();
-        public abstract void Process(TMessage message);
-        public override void Process(TMessage message, System.Net.ClientModel.Core.IPipelineEnumerator pipeline) { }
-        public abstract System.Threading.Tasks.ValueTask ProcessAsync(TMessage message);
-        public override System.Threading.Tasks.ValueTask ProcessAsync(TMessage message, System.Net.ClientModel.Core.IPipelineEnumerator pipeline) { throw null; }
+        public abstract System.Net.ClientModel.Core.PipelineMessage CreateMessage();
+        public abstract void Process(System.Net.ClientModel.Core.PipelineMessage message);
+        public override void Process(System.Net.ClientModel.Core.PipelineMessage message, System.Net.ClientModel.Core.IPipelineEnumerator pipeline) { }
+        public abstract System.Threading.Tasks.ValueTask ProcessAsync(System.Net.ClientModel.Core.PipelineMessage message);
+        public override System.Threading.Tasks.ValueTask ProcessAsync(System.Net.ClientModel.Core.PipelineMessage message, System.Net.ClientModel.Core.IPipelineEnumerator pipeline) { throw null; }
     }
-    public partial class ResponseBufferingPolicy : System.Net.ClientModel.Core.PipelinePolicy<System.Net.ClientModel.Core.PipelineMessage>
+    public partial class ResponseBufferingPolicy : System.Net.ClientModel.Core.PipelinePolicy
     {
         public ResponseBufferingPolicy(System.TimeSpan networkTimeout) { }
         public override void Process(System.Net.ClientModel.Core.PipelineMessage message, System.Net.ClientModel.Core.IPipelineEnumerator pipeline) { }
