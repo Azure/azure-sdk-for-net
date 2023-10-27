@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <returns> An object representing collection of HealthcareApisIotFhirDestinationResources and their operations over a HealthcareApisIotFhirDestinationResource. </returns>
         public virtual HealthcareApisIotFhirDestinationCollection GetHealthcareApisIotFhirDestinations()
         {
-            return GetCachedClient(Client => new HealthcareApisIotFhirDestinationCollection(Client, Id));
+            return GetCachedClient(client => new HealthcareApisIotFhirDestinationCollection(client, Id));
         }
 
         /// <summary>
@@ -110,8 +110,8 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </summary>
         /// <param name="fhirDestinationName"> The name of IoT Connector FHIR destination resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fhirDestinationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fhirDestinationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fhirDestinationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<HealthcareApisIotFhirDestinationResource>> GetHealthcareApisIotFhirDestinationAsync(string fhirDestinationName, CancellationToken cancellationToken = default)
         {
@@ -133,8 +133,8 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </summary>
         /// <param name="fhirDestinationName"> The name of IoT Connector FHIR destination resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fhirDestinationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fhirDestinationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fhirDestinationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<HealthcareApisIotFhirDestinationResource> GetHealthcareApisIotFhirDestination(string fhirDestinationName, CancellationToken cancellationToken = default)
         {

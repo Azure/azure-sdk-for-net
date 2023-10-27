@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> An object representing collection of AttachedNetworkConnectionResources and their operations over a AttachedNetworkConnectionResource. </returns>
         public virtual AttachedNetworkConnectionCollection GetAttachedNetworkConnections()
         {
-            return GetCachedClient(Client => new AttachedNetworkConnectionCollection(Client, Id));
+            return GetCachedClient(client => new AttachedNetworkConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -117,8 +117,8 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="attachedNetworkConnectionName"> The name of the attached NetworkConnection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="attachedNetworkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="attachedNetworkConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="attachedNetworkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AttachedNetworkConnectionResource>> GetAttachedNetworkConnectionAsync(string attachedNetworkConnectionName, CancellationToken cancellationToken = default)
         {
@@ -140,8 +140,8 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="attachedNetworkConnectionName"> The name of the attached NetworkConnection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="attachedNetworkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="attachedNetworkConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="attachedNetworkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AttachedNetworkConnectionResource> GetAttachedNetworkConnection(string attachedNetworkConnectionName, CancellationToken cancellationToken = default)
         {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> An object representing collection of DevCenterGalleryResources and their operations over a DevCenterGalleryResource. </returns>
         public virtual DevCenterGalleryCollection GetDevCenterGalleries()
         {
-            return GetCachedClient(Client => new DevCenterGalleryCollection(Client, Id));
+            return GetCachedClient(client => new DevCenterGalleryCollection(client, Id));
         }
 
         /// <summary>
@@ -170,8 +170,8 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="galleryName"> The name of the gallery. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DevCenterGalleryResource>> GetDevCenterGalleryAsync(string galleryName, CancellationToken cancellationToken = default)
         {
@@ -193,8 +193,8 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="galleryName"> The name of the gallery. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DevCenterGalleryResource> GetDevCenterGallery(string galleryName, CancellationToken cancellationToken = default)
         {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> An object representing collection of DevCenterCatalogResources and their operations over a DevCenterCatalogResource. </returns>
         public virtual DevCenterCatalogCollection GetDevCenterCatalogs()
         {
-            return GetCachedClient(Client => new DevCenterCatalogCollection(Client, Id));
+            return GetCachedClient(client => new DevCenterCatalogCollection(client, Id));
         }
 
         /// <summary>
@@ -223,8 +223,8 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="catalogName"> The name of the Catalog. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DevCenterCatalogResource>> GetDevCenterCatalogAsync(string catalogName, CancellationToken cancellationToken = default)
         {
@@ -246,8 +246,8 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="catalogName"> The name of the Catalog. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="catalogName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="catalogName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DevCenterCatalogResource> GetDevCenterCatalog(string catalogName, CancellationToken cancellationToken = default)
         {
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> An object representing collection of DevCenterEnvironmentTypeResources and their operations over a DevCenterEnvironmentTypeResource. </returns>
         public virtual DevCenterEnvironmentTypeCollection GetDevCenterEnvironmentTypes()
         {
-            return GetCachedClient(Client => new DevCenterEnvironmentTypeCollection(Client, Id));
+            return GetCachedClient(client => new DevCenterEnvironmentTypeCollection(client, Id));
         }
 
         /// <summary>
@@ -276,8 +276,8 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="environmentTypeName"> The name of the environment type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="environmentTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentTypeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="environmentTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DevCenterEnvironmentTypeResource>> GetDevCenterEnvironmentTypeAsync(string environmentTypeName, CancellationToken cancellationToken = default)
         {
@@ -299,8 +299,8 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="environmentTypeName"> The name of the environment type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="environmentTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentTypeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="environmentTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DevCenterEnvironmentTypeResource> GetDevCenterEnvironmentType(string environmentTypeName, CancellationToken cancellationToken = default)
         {
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> An object representing collection of DevBoxDefinitionResources and their operations over a DevBoxDefinitionResource. </returns>
         public virtual DevBoxDefinitionCollection GetDevBoxDefinitions()
         {
-            return GetCachedClient(Client => new DevBoxDefinitionCollection(Client, Id));
+            return GetCachedClient(client => new DevBoxDefinitionCollection(client, Id));
         }
 
         /// <summary>
@@ -329,8 +329,8 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="devBoxDefinitionName"> The name of the Dev Box definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="devBoxDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="devBoxDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="devBoxDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DevBoxDefinitionResource>> GetDevBoxDefinitionAsync(string devBoxDefinitionName, CancellationToken cancellationToken = default)
         {
@@ -352,8 +352,8 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="devBoxDefinitionName"> The name of the Dev Box definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="devBoxDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="devBoxDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="devBoxDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DevBoxDefinitionResource> GetDevBoxDefinition(string devBoxDefinitionName, CancellationToken cancellationToken = default)
         {
