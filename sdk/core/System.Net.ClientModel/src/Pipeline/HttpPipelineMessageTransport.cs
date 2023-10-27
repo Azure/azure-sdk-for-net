@@ -151,7 +151,7 @@ public partial class HttpPipelineMessageTransport : PipelineTransport<PipelineMe
         }
         catch (HttpRequestException e)
         {
-            throw new PipelineRequestException(e.Message, e);
+            throw new MessageRequestException(e.Message, e);
         }
 
         // This extensibility point lets derived types do the following:

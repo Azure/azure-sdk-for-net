@@ -6,19 +6,19 @@ namespace System.Net.ClientModel
         public bool TryGetKey(out string key) { throw null; }
         public void Update(string key) { }
     }
+    public partial class MessageRequestException : System.Exception
+    {
+        public MessageRequestException(System.Net.ClientModel.Core.PipelineResponse response) { }
+        protected MessageRequestException(System.Net.ClientModel.Core.PipelineResponse response, string message, System.Exception? innerException) { }
+        protected MessageRequestException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
+        public int Status { get { throw null; } }
+    }
     public partial class NullableResult<T> : System.Net.ClientModel.Result
     {
         internal NullableResult() { }
         public virtual bool HasValue { get { throw null; } }
         public virtual T? Value { get { throw null; } }
         public override System.Net.ClientModel.Core.PipelineResponse GetRawResponse() { throw null; }
-    }
-    public partial class PipelineRequestException : System.Exception
-    {
-        public PipelineRequestException(System.Net.ClientModel.Core.PipelineResponse response) { }
-        protected PipelineRequestException(System.Net.ClientModel.Core.PipelineResponse response, string message, System.Exception? innerException) { }
-        protected PipelineRequestException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
-        public int Status { get { throw null; } }
     }
     public partial class RequestOptions : System.Net.ClientModel.Core.PipelineOptions
     {

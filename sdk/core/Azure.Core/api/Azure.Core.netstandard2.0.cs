@@ -220,7 +220,7 @@ namespace Azure
         public override void Apply(System.Net.ClientModel.Core.PipelineMessage message) { }
         public static implicit operator Azure.RequestContext (Azure.ErrorOptions options) { throw null; }
     }
-    public partial class RequestFailedException : System.Net.ClientModel.PipelineRequestException, System.Runtime.Serialization.ISerializable
+    public partial class RequestFailedException : System.Net.ClientModel.MessageRequestException, System.Runtime.Serialization.ISerializable
     {
         public RequestFailedException(Azure.Response response) : base (default(System.Net.ClientModel.Core.PipelineResponse)) { }
         public RequestFailedException(Azure.Response response, System.Exception? innerException) : base (default(System.Net.ClientModel.Core.PipelineResponse)) { }

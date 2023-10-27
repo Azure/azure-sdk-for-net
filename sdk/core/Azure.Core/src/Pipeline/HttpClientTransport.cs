@@ -72,7 +72,7 @@ namespace Azure.Core.Pipeline
             {
                 base.Process(message);
             }
-            catch (PipelineRequestException e)
+            catch (MessageRequestException e)
             {
                 if (message.HasResponse)
                 {
@@ -92,7 +92,7 @@ namespace Azure.Core.Pipeline
             {
                 await base.ProcessAsync(message).ConfigureAwait(false);
             }
-            catch (PipelineRequestException e)
+            catch (MessageRequestException e)
             {
                 if (message.HasResponse)
                 {
