@@ -15,6 +15,13 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         public override int Length => 0;
 
+        public ShareFileSourceCheckpointData()
+        {
+            Version = DataMovementShareConstants.DestinationCheckpointData.SchemaVersion;
+        }
+
+        internal void SerializeInternal(Stream stream) => Serialize(stream);
+
         protected override void Serialize(Stream stream)
         {
             Argument.AssertNotNull(stream, nameof(stream));

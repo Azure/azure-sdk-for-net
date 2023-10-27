@@ -23,8 +23,9 @@
     <Compile Include="$(AzureStorageSharedTestSources)\**\*.cs" LinkBase="Shared\Storage" />
     <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Files.Shares\tests\DisposingShare.cs" LinkBase="Shared\Storage" />
     <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Files.Shares\tests\ShareClientTestFixtureAttribute.cs" LinkBase="Shared\Storage" />
-    <Compile Remove="$(AzureStorageSharedTestSources)\AzuriteFixture.cs"/>
-    <Compile Remove="$(AzureStorageSharedTestSources)\AzuriteNUnitFixture.cs"/>
+    <Compile Include="$(AzureStorageSharedTestSources)\DataProvider.cs" LinkBase="Shared\Storage" />
+    <Compile Remove="$(AzureStorageSharedTestSources)\AzuriteFixture.cs" />
+    <Compile Remove="$(AzureStorageSharedTestSources)\AzuriteNUnitFixture.cs" />
     <Compile Remove="$(AzureStorageSharedTestSources)\ClientSideEncryptionTestExtensions.cs" />
     <Compile Remove="$(AzureStorageSharedTestSources)\StorageTestBase.SasVersion.cs" />
     <Compile Remove="$(AzureStorageSharedTestSources)\TransferValidationTestBase.cs" />
