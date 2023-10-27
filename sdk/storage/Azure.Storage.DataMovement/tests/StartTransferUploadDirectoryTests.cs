@@ -26,6 +26,17 @@ namespace Azure.Storage.DataMovement.Tests
             : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         { }
 
+        private List<string> GetTestDirectoryTree(string parentDirectoryPath)
+        {
+            return new List<string>()
+            {
+                GetNewBlobName(),
+                GetNewBlobName(),
+                Path.Combine(GetNewBlobDirectoryName(), GetNewBlobName()),
+                Path.Combine(GetNewBlobDirectoryName(), GetNewBlobName()),
+            };
+        }
+
         #region Directory Block Blob
         private async Task SetupDirectory(
             string directoryPath,
@@ -38,7 +49,19 @@ namespace Azure.Storage.DataMovement.Tests
                 {
                     return;
                 }
-                using FileStream fs = File.OpenWrite(Path.Combine(directoryPath, filePath));
+
+                // Check if the parent subdirectory is already created,
+                // if not create it before making the file
+                string fullPath = Path.Combine(directoryPath, filePath);
+                string subDirectory = Path.GetDirectoryName(fullPath);
+
+                if (!Directory.Exists(subDirectory))
+                {
+                    Directory.CreateDirectory(subDirectory);
+                }
+
+                // Check if it's a directory or not
+                using FileStream fs = File.OpenWrite(fullPath);
                 using Stream data = await CreateLimitedMemoryStream(size);
                 await data.CopyToAsync(fs, bufferSize: 4 * Constants.KB, cancellationToken);
             }
@@ -61,6 +84,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Set transfer options
             options ??= new DataTransferOptions();
+            destinationPrefix ??= GetNewBlobDirectoryName();
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
 
             transferManagerOptions ??= new TransferManagerOptions()
@@ -99,13 +123,7 @@ namespace Azure.Storage.DataMovement.Tests
             string localDirectory = CreateRandomDirectory(testDirectory.DirectoryPath);
             await using DisposingContainer test = await GetTestContainerAsync();
 
-            List<string> files = new()
-            {
-                GetNewBlobName(),
-                GetNewBlobName(),
-                $"{GetNewBlobName()}/{GetNewBlobName()}",
-                $"{GetNewBlobName()}/{GetNewBlobName()}",
-            };
+            List<string> files = GetTestDirectoryTree(localDirectory);
 
             CancellationToken cancellationToken = TestHelper.GetTimeoutToken(waitTimeInSec);
             await SetupDirectory(
@@ -170,13 +188,7 @@ namespace Azure.Storage.DataMovement.Tests
             string localDirectory = CreateRandomDirectory(testDirectory.DirectoryPath);
             await using DisposingContainer test = await GetTestContainerAsync();
 
-            List<string> files = new()
-            {
-                GetNewBlobName(),
-                GetNewBlobName(),
-                $"{GetNewBlobName()}/{GetNewBlobName()}",
-                $"{GetNewBlobName()}/{GetNewBlobName()}",
-            };
+            List<string> files = GetTestDirectoryTree(localDirectory);
 
             CancellationToken cancellationToken = TestHelper.GetTimeoutToken(waitTimeInSec);
             await SetupDirectory(
@@ -213,8 +225,8 @@ namespace Azure.Storage.DataMovement.Tests
             string localDirectory = CreateRandomDirectory(testDirectory.DirectoryPath);
             await using DisposingContainer test = await GetTestContainerAsync();
 
-            string folder1 = GetNewBlobName();
-            string folder2 = GetNewBlobName();
+            string folder1 = GetNewBlobDirectoryName();
+            string folder2 = GetNewBlobDirectoryName();
             List<string> files = new()
             {
                 GetNewBlobName(),
@@ -357,14 +369,14 @@ namespace Azure.Storage.DataMovement.Tests
 
             List<string> files = new List<string>();
 
-            string subfolderName = localDirectory;
+            string subfolderName = "";
             for (int i = 0; i < level; i++)
             {
-                subfolderName = Path.Combine(subfolderName, GetNewBlobName());
+                subfolderName = Path.Combine(subfolderName, $"folder{i}");
                 files.Add(Path.Combine(subfolderName, GetNewBlobName()));
             }
 
-            CancellationToken cancellationToken = TestHelper.GetTimeoutToken(10);
+            CancellationToken cancellationToken = TestHelper.GetTimeoutToken(30);
             await SetupDirectory(
                 localDirectory,
                 files.Select(name => (name, (long)Constants.KB)).ToList(),
@@ -403,7 +415,7 @@ namespace Azure.Storage.DataMovement.Tests
             await UploadBlobDirectoryAndVerify(
                 localDirectory,
                 test.Container,
-                expectedTransfers: 0,
+                expectedTransfers: 6,
                 destinationPrefix: dirName,
                 cancellationToken: TestHelper.GetTimeoutToken(10));
         }
@@ -422,13 +434,7 @@ namespace Azure.Storage.DataMovement.Tests
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
             string localDirectory = CreateRandomDirectory(testDirectory.DirectoryPath);
 
-            List<string> files = new()
-            {
-                GetNewBlobName(),
-                GetNewBlobName(),
-                $"{GetNewBlobName()}/{GetNewBlobName()}",
-                $"{GetNewBlobName()}/{GetNewBlobName()}",
-            };
+            List<string> files = GetTestDirectoryTree(localDirectory);
 
             DataTransferOptions options = new DataTransferOptions()
             {
@@ -461,13 +467,7 @@ namespace Azure.Storage.DataMovement.Tests
             string localDirectory = CreateRandomDirectory(testDirectory.DirectoryPath);
             string dirName = GetNewBlobName();
 
-            List<string> files = new()
-            {
-                GetNewBlobName(),
-                GetNewBlobName(),
-                $"{GetNewBlobName()}/{GetNewBlobName()}",
-                $"{GetNewBlobName()}/{GetNewBlobName()}",
-            };
+            List<string> files = GetTestDirectoryTree(localDirectory);
 
             DataTransferOptions options = new DataTransferOptions()
             {
