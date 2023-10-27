@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.Support
     public partial class ProblemClassificationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ProblemClassificationResource"/> instance. </summary>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="problemClassificationName"> The problemClassificationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string serviceName, string problemClassificationName)
         {
             var resourceId = $"/providers/Microsoft.Support/services/{serviceName}/problemClassifications/{problemClassificationName}";
