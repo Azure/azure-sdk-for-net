@@ -28,6 +28,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     public partial class BackupProtectedItemResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="BackupProtectedItemResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="vaultName"> The vaultName. </param>
+        /// <param name="fabricName"> The fabricName. </param>
+        /// <param name="containerName"> The containerName. </param>
+        /// <param name="protectedItemName"> The protectedItemName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName, string fabricName, string containerName, string protectedItemName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}";
