@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.BotService
     public partial class BotConnectionSettingResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="BotConnectionSettingResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        /// <param name="connectionName"> The connectionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string connectionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BotService/botServices/{resourceName}/connections/{connectionName}";
