@@ -9,7 +9,7 @@ public abstract class PipelineResponse : IDisposable
 
     public abstract string ReasonPhrase {  get; }
 
-    public abstract PipelineMessageHeaders Headers { get; }
+    public abstract MessageHeaders Headers { get; }
 
     public abstract MessageBody? Content { get; protected internal set; }
 

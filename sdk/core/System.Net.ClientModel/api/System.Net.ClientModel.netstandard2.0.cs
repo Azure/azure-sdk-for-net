@@ -70,7 +70,7 @@ namespace System.Net.ClientModel.Core
     {
         protected internal HttpPipelineRequest() { }
         public override System.Net.ClientModel.Core.MessageBody? Content { get { throw null; } set { } }
-        public override System.Net.ClientModel.Core.PipelineMessageHeaders Headers { get { throw null; } }
+        public override System.Net.ClientModel.Core.MessageHeaders Headers { get { throw null; } }
         public override string Method { get { throw null; } set { } }
         public override System.Uri Uri { get { throw null; } set { } }
         public override void Dispose() { }
@@ -80,7 +80,7 @@ namespace System.Net.ClientModel.Core
     {
         protected internal HttpPipelineResponse(System.Net.Http.HttpResponseMessage httpResponse) { }
         public override System.Net.ClientModel.Core.MessageBody? Content { get { throw null; } protected internal set { } }
-        public override System.Net.ClientModel.Core.PipelineMessageHeaders Headers { get { throw null; } }
+        public override System.Net.ClientModel.Core.MessageHeaders Headers { get { throw null; } }
         public override string ReasonPhrase { get { throw null; } }
         public override int Status { get { throw null; } }
         public override void Dispose() { }
@@ -126,6 +126,18 @@ namespace System.Net.ClientModel.Core
         public abstract bool TryComputeLength(out long length);
         public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken);
         public abstract System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken);
+    }
+    public abstract partial class MessageHeaders
+    {
+        protected MessageHeaders() { }
+        public abstract int Count { get; }
+        public abstract void Add(string name, string value);
+        public abstract bool Remove(string name);
+        public abstract void Set(string name, string value);
+        public abstract bool TryGetHeaders(out System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, System.Collections.Generic.IEnumerable<string>>> headers);
+        public abstract bool TryGetHeaders(out System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>> headers);
+        public abstract bool TryGetValue(string name, out string? value);
+        public abstract bool TryGetValues(string name, out System.Collections.Generic.IEnumerable<string>? values);
     }
     public partial class MessagePipeline
     {
@@ -203,18 +215,6 @@ namespace System.Net.ClientModel.Core
         public void SetProperty(System.Type type, object value) { }
         public bool TryGetProperty(System.Type type, out object? value) { throw null; }
     }
-    public abstract partial class PipelineMessageHeaders
-    {
-        protected PipelineMessageHeaders() { }
-        public abstract int Count { get; }
-        public abstract void Add(string name, string value);
-        public abstract bool Remove(string name);
-        public abstract void Set(string name, string value);
-        public abstract bool TryGetHeaders(out System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, System.Collections.Generic.IEnumerable<string>>> headers);
-        public abstract bool TryGetHeaders(out System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>> headers);
-        public abstract bool TryGetValue(string name, out string? value);
-        public abstract bool TryGetValues(string name, out System.Collections.Generic.IEnumerable<string>? values);
-    }
     public partial class PipelineOptions
     {
         public PipelineOptions() { }
@@ -239,7 +239,7 @@ namespace System.Net.ClientModel.Core
     {
         protected PipelineRequest() { }
         public abstract System.Net.ClientModel.Core.MessageBody? Content { get; set; }
-        public abstract System.Net.ClientModel.Core.PipelineMessageHeaders Headers { get; }
+        public abstract System.Net.ClientModel.Core.MessageHeaders Headers { get; }
         public abstract string Method { get; set; }
         public abstract System.Uri Uri { get; set; }
         public abstract void Dispose();
@@ -248,7 +248,7 @@ namespace System.Net.ClientModel.Core
     {
         protected PipelineResponse() { }
         public abstract System.Net.ClientModel.Core.MessageBody? Content { get; protected internal set; }
-        public abstract System.Net.ClientModel.Core.PipelineMessageHeaders Headers { get; }
+        public abstract System.Net.ClientModel.Core.MessageHeaders Headers { get; }
         public bool IsError { get { throw null; } }
         public abstract string ReasonPhrase { get; }
         public abstract int Status { get; }

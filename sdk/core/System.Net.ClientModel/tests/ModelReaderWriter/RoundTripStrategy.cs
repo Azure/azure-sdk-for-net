@@ -246,7 +246,7 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
 
             public override string ReasonPhrase => throw new NotImplementedException();
 
-            public override PipelineMessageHeaders Headers => throw new NotImplementedException();
+            public override MessageHeaders Headers => throw new NotImplementedException();
 
             public override MessageBody? Content { get; protected set; }
 
