@@ -21,15 +21,16 @@ namespace Azure.Storage.DataMovement.Tests
         internal static readonly DateTimeOffset DefaultStartTime
             = new DateTimeOffset(2023, 03, 13, 15, 24, 6, default);
         internal const string DefaultSourceProviderId = "test";
-        internal const string DefaultSourceResourceId = "LocalFile";
+        internal const string DefaultSourceTypeId = "LocalFile";
         internal const string DefaultSourcePath = "C:/sample-source";
         internal const string DefaultWebSourcePath = "https://example.com/source";
         internal const string DefaultSourceQuery = "sourcequery";
         internal const string DefaultDestinationProviderId = "test";
-        internal const string DefaultDestinationResourceId = "LocalFile";
+        internal const string DefaultDestinationTypeId = "BlockBlob";
         internal const string DefaultDestinationPath = "C:/sample-destination";
         internal const string DefaultWebDestinationPath = "https://example.com/destination";
         internal const string DefaultDestinationQuery = "destquery";
+        internal const long DefaultChunkSize = 4 * MB;
         internal const byte DefaultPriority = 0;
         internal static readonly DateTimeOffset DefaultTtlAfterCompletion = DateTimeOffset.MaxValue;
         internal const JobPlanOperation DefaultJobPlanOperation = JobPlanOperation.Upload;
@@ -59,10 +60,10 @@ namespace Azure.Storage.DataMovement.Tests
             DateTimeOffset startTime = default,
             string transferId = DefaultTransferId,
             long partNumber = DefaultPartNumber,
-            string sourceResourceId = DefaultSourceResourceId,
+            string sourceResourceId = DefaultSourceTypeId,
             string sourcePath = DefaultSourcePath,
             string sourceExtraQuery = DefaultSourceQuery,
-            string destinationResourceId = DefaultDestinationResourceId,
+            string destinationResourceId = DefaultDestinationTypeId,
             string destinationPath = DefaultDestinationPath,
             string destinationExtraQuery = DefaultDestinationQuery,
             bool isFinalPart = false,
@@ -170,6 +171,41 @@ namespace Azure.Storage.DataMovement.Tests
                 rehydratePriorityType: rehydratePriorityType,
                 atomicJobStatus: atomicJobStatus,
                 atomicPartStatus: atomicPartStatus);
+        }
+
+        internal static JobPartPlanHeader2 CreateDefaultJobPartHeader2(
+            string version = DataMovementConstants.JobPartPlanFile.SchemaVersion,
+            string transferId = DefaultTransferId,
+            long partNumber = DefaultPartNumber,
+            DateTimeOffset createTime = default,
+            string sourceTypeId = DefaultSourceTypeId,
+            string destinationTypeId = DefaultDestinationTypeId,
+            string sourcePath = DefaultSourcePath,
+            string destinationPath = DefaultDestinationPath,
+            bool overwrite = false,
+            long chunkSize = DefaultChunkSize,
+            byte priority = DefaultPriority,
+            DataTransferStatus jobPartStatus = default)
+        {
+            if (createTime == default)
+            {
+                createTime = DefaultCreateTime;
+            }
+            jobPartStatus ??= DefaultPartStatus;
+
+            return new JobPartPlanHeader2(
+                version,
+                transferId,
+                partNumber,
+                createTime,
+                sourceTypeId,
+                destinationTypeId,
+                sourcePath,
+                destinationPath,
+                overwrite,
+                chunkSize,
+                priority,
+                jobPartStatus);
         }
 
         internal static async Task AssertJobPlanHeaderAsync(JobPartPlanHeader header, Stream stream)

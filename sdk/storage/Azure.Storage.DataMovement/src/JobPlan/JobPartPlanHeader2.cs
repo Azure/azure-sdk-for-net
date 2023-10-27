@@ -36,14 +36,14 @@ namespace Azure.Storage.DataMovement.JobPlan
         public string SourceTypeId;
 
         /// <summary>
-        /// The source path.
-        /// </summary>
-        public string SourcePath;
-
-        /// <summary>
         /// A string identifier for the destination resource.
         /// </summary>
         public string DestinationTypeId;
+
+        /// <summary>
+        /// The source path.
+        /// </summary>
+        public string SourcePath;
 
         /// <summary>
         /// The destination path.
