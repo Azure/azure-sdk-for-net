@@ -961,7 +961,7 @@ foreach (BinaryData item in client.GetWorkflows(null))
 }
 ]]></code></example>
     </member>
-    <member name="GetWorkflowRunsAsync(string,string,IEnumerable{string},IEnumerable{string},int?,RequestContext)">
+    <member name="GetWorkflowRunsAsync(string,string,IEnumerable{Status},IEnumerable{string},int?,RequestContext)">
       <example>
 This sample shows how to call GetWorkflowRunsAsync and parse the result.
 <code><![CDATA[
@@ -987,7 +987,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-await foreach (BinaryData item in client.GetWorkflowRunsAsync("1d", "status desc", new string[] { "InProgress" }, new string[] { "<workflowIds>" }, 1234, null))
+await foreach (BinaryData item in client.GetWorkflowRunsAsync("1d", "status desc", new Status[] { Status.InProgress }, new string[] { "<workflowIds>" }, 1234, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
@@ -1004,7 +1004,7 @@ await foreach (BinaryData item in client.GetWorkflowRunsAsync("1d", "status desc
 }
 ]]></code></example>
     </member>
-    <member name="GetWorkflowRuns(string,string,IEnumerable{string},IEnumerable{string},int?,RequestContext)">
+    <member name="GetWorkflowRuns(string,string,IEnumerable{Status},IEnumerable{string},int?,RequestContext)">
       <example>
 This sample shows how to call GetWorkflowRuns and parse the result.
 <code><![CDATA[
@@ -1030,7 +1030,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-foreach (BinaryData item in client.GetWorkflowRuns("1d", "status desc", new string[] { "InProgress" }, new string[] { "<workflowIds>" }, 1234, null))
+foreach (BinaryData item in client.GetWorkflowRuns("1d", "status desc", new Status[] { Status.InProgress }, new string[] { "<workflowIds>" }, 1234, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
@@ -1047,7 +1047,7 @@ foreach (BinaryData item in client.GetWorkflowRuns("1d", "status desc", new stri
 }
 ]]></code></example>
     </member>
-    <member name="GetWorkflowTasksAsync(string,IEnumerable{string},string,int?,string,IEnumerable{string},IEnumerable{string},string,RequestContext)">
+    <member name="GetWorkflowTasksAsync(string,IEnumerable{string},string,int?,string,IEnumerable{TaskType},IEnumerable{Status},string,RequestContext)">
       <example>
 This sample shows how to call GetWorkflowTasksAsync and parse the result.
 <code><![CDATA[
@@ -1075,7 +1075,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-await foreach (BinaryData item in client.GetWorkflowTasksAsync("<viewMode>", new string[] { "<workflowIds>" }, "1d", 1234, "status desc", new string[] { "Approval" }, new string[] { "InProgress" }, "<workflowNameKeyword>", null))
+await foreach (BinaryData item in client.GetWorkflowTasksAsync("<viewMode>", new string[] { "<workflowIds>" }, "1d", 1234, "status desc", new TaskType[] { TaskType.Approval }, new Status[] { Status.InProgress }, "<workflowNameKeyword>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("type").ToString());
@@ -1100,7 +1100,7 @@ await foreach (BinaryData item in client.GetWorkflowTasksAsync("<viewMode>", new
 }
 ]]></code></example>
     </member>
-    <member name="GetWorkflowTasks(string,IEnumerable{string},string,int?,string,IEnumerable{string},IEnumerable{string},string,RequestContext)">
+    <member name="GetWorkflowTasks(string,IEnumerable{string},string,int?,string,IEnumerable{TaskType},IEnumerable{Status},string,RequestContext)">
       <example>
 This sample shows how to call GetWorkflowTasks and parse the result.
 <code><![CDATA[
@@ -1128,7 +1128,7 @@ Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
 PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-foreach (BinaryData item in client.GetWorkflowTasks("<viewMode>", new string[] { "<workflowIds>" }, "1d", 1234, "status desc", new string[] { "Approval" }, new string[] { "InProgress" }, "<workflowNameKeyword>", null))
+foreach (BinaryData item in client.GetWorkflowTasks("<viewMode>", new string[] { "<workflowIds>" }, "1d", 1234, "status desc", new TaskType[] { TaskType.Approval }, new Status[] { Status.InProgress }, "<workflowNameKeyword>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("type").ToString());
