@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> The list of schedules to be applied on the computes. </summary>
         internal ComputeSchedules Schedules { get; set; }
         /// <summary> The list of compute start stop schedules to be applied. </summary>
-        public IReadOnlyList<MachineLearningComputeStartStopSchedule> SchedulesComputeStartStop
+        public IList<MachineLearningComputeStartStopSchedule> SchedulesComputeStartStop
         {
             get
             {

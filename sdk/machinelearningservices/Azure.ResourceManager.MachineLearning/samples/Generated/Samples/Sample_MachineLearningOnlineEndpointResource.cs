@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             {
                 Identity = new MachineLearningPartialManagedServiceIdentity()
                 {
-                    ManagedServiceIdentityType = "SystemAssigned",
+                    ManagedServiceIdentityType = ManagedServiceIdentityType.SystemAssigned,
                     UserAssignedIdentities =
 {
 ["string"] = BinaryData.FromObjectAsJson(new Dictionary<string, object>()

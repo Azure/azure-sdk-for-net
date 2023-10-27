@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -20,7 +19,7 @@ namespace Azure.Maps.Geolocation
                 return null;
             }
             Optional<CountryRegion> countryRegion = default;
-            Optional<IPAddress> ipAddress = default;
+            Optional<string> ipAddress = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("countryRegion"u8))
@@ -34,11 +33,7 @@ namespace Azure.Maps.Geolocation
                 }
                 if (property.NameEquals("ipAddress"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    ipAddress = IPAddress.Parse(property.Value.GetString());
+                    ipAddress = property.Value.GetString();
                     continue;
                 }
             }

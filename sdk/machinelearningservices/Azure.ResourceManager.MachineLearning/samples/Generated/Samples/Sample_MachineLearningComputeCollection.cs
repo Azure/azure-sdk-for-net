@@ -842,6 +842,21 @@ Target = "/home/testuser/",
                         },
                         ComputeInstanceAuthorizationType = MachineLearningComputeInstanceAuthorizationType.Personal,
                         PersonalComputeInstanceAssignedUser = new MachineLearningComputeInstanceAssignedUser("00000000-0000-0000-0000-000000000000", Guid.Parse("00000000-0000-0000-0000-000000000000")),
+                        SchedulesComputeStartStop =
+{
+new MachineLearningComputeStartStopSchedule()
+{
+Status = MachineLearningScheduleStatus.Enabled,
+Action = MachineLearningComputePowerAction.Stop,
+TriggerType = MachineLearningTriggerType.Cron,
+CronSchedule = new ComputeStartStopCronSchedule()
+{
+StartTime = "2021-04-23T01:30:00",
+TimeZone = "Pacific Standard Time",
+Expression = "0 18 * * *",
+},
+}
+},
                     },
                 },
             };

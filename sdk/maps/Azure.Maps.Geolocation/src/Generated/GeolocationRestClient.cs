@@ -41,7 +41,7 @@ namespace Azure.Maps.Geolocation
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
-        internal HttpMessage CreateGetLocationRequest(JsonFormat format, string ipAddress)
+        internal HttpMessage CreateGetLocationRequest(string ipAddress, JsonFormat format)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -67,18 +67,18 @@ namespace Azure.Maps.Geolocation
         ///
         /// This service will return the ISO country code for the provided IP address. Developers can use this information  to block or alter certain content based on geographical locations where the application is being viewed from.
         /// </summary>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
         /// <param name="ipAddress"> The IP address. Both IPv4 and IPv6 are allowed. </param>
+        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipAddress"/> is null. </exception>
-        public async Task<Response<CountryRegionResult>> GetLocationAsync(JsonFormat format, string ipAddress, CancellationToken cancellationToken = default)
+        public async Task<Response<CountryRegionResult>> GetLocationAsync(string ipAddress, JsonFormat format, CancellationToken cancellationToken = default)
         {
             if (ipAddress == null)
             {
                 throw new ArgumentNullException(nameof(ipAddress));
             }
 
-            using var message = CreateGetLocationRequest(format, ipAddress);
+            using var message = CreateGetLocationRequest(ipAddress, format);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -100,18 +100,18 @@ namespace Azure.Maps.Geolocation
         ///
         /// This service will return the ISO country code for the provided IP address. Developers can use this information  to block or alter certain content based on geographical locations where the application is being viewed from.
         /// </summary>
-        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
         /// <param name="ipAddress"> The IP address. Both IPv4 and IPv6 are allowed. </param>
+        /// <param name="format"> Desired format of the response. Only `json` format is supported. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipAddress"/> is null. </exception>
-        public Response<CountryRegionResult> GetLocation(JsonFormat format, string ipAddress, CancellationToken cancellationToken = default)
+        public Response<CountryRegionResult> GetLocation(string ipAddress, JsonFormat format, CancellationToken cancellationToken = default)
         {
             if (ipAddress == null)
             {
                 throw new ArgumentNullException(nameof(ipAddress));
             }
 
-            using var message = CreateGetLocationRequest(format, ipAddress);
+            using var message = CreateGetLocationRequest(ipAddress, format);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

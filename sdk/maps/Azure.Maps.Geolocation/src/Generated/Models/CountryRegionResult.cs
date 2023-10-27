@@ -5,12 +5,18 @@
 
 #nullable disable
 
-using System.Net;
-
 namespace Azure.Maps.Geolocation
 {
     /// <summary> This object is returned from a successful call to IP Address to country/region API. </summary>
     public partial class CountryRegionResult
     {
+        /// <summary> Initializes a new instance of CountryRegionResult. </summary>
+        /// <param name="countryRegion"> The object containing the country/region information. </param>
+        /// <param name="ipAddress"> The IP Address of the request. </param>
+        internal CountryRegionResult(CountryRegion countryRegion, string ipAddress)
+        {
+            CountryRegion = countryRegion;
+            IpAddress = ipAddress;
+        }
     }
 }
