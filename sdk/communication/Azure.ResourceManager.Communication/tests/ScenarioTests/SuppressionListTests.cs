@@ -10,6 +10,7 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Communication.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
+using static Azure.Core.HttpHeader;
 
 namespace Azure.ResourceManager.Communication.Tests
 {
@@ -22,7 +23,6 @@ namespace Azure.ResourceManager.Communication.Tests
         private ResourceIdentifier _resourceGroupIdentifier;
         private string _communicationServiceName;
         private string _emailServiceName;
-        private string _domainResourceName;
         private string _location;
         private string _dataLocation;
 
@@ -44,18 +44,13 @@ namespace Azure.ResourceManager.Communication.Tests
             _location = ResourceLocation;
             _dataLocation = ResourceDataLocation;
 
-            _communicationServiceName = SessionRecording.GenerateAssetName("sl-sdk-test-");
+            _communicationServiceName = SessionRecording.GenerateAssetName("acssdktest-");
             _communicationService = await CreateDefaultCommunicationServices(_communicationServiceName, rg);
 
-            _emailServiceName = SessionRecording.GenerateAssetName("sl-sdk-test-");
+            _emailServiceName = SessionRecording.GenerateAssetName("acssdktest-");
             _emailService = await CreateDefaultEmailServices(_emailServiceName, rg);
 
-            _domainResourceName = SessionRecording.GenerateAssetName("sl-sdk-test-") + ".com";
-            _domainResource = await CreateDefaultDomain(_domainResourceName, _emailService);
-
-            var patch = new CommunicationServiceResourcePatch();
-            patch.LinkedDomains.Add(_domainResource.Id);
-            await _communicationService.UpdateAsync(patch);
+            _domainResource = await CreateAzureManagedDomain(_emailService);
 
             await StopSessionRecordingAsync();
         }
@@ -67,7 +62,11 @@ namespace Azure.ResourceManager.Communication.Tests
 
             _resourceGroup = await ArmClient.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
             _emailService = await _resourceGroup.GetEmailServiceResourceAsync(_emailServiceName);
-            _domainResource = await _emailService.GetCommunicationDomainResourceAsync(_domainResourceName);
+            _domainResource = await _emailService.GetCommunicationDomainResourceAsync("AzureManagedDomain");
+
+            //var patch = new CommunicationServiceResourcePatch();
+            //patch.LinkedDomains.Add(_domainResource.Id.ToString());
+            //await _communicationService.UpdateAsync(patch);
         }
 
         [TearDown]
@@ -83,93 +82,130 @@ namespace Azure.ResourceManager.Communication.Tests
         }
 
         [Test]
-        public async Task Exists()
-        {
-            string username = Recording.GenerateAssetName("un-");
-            string displayName = Recording.GenerateAssetName("dn ");
-            var collection = _domainResource.GetSenderUsernameResources();
-            await CreateDefaultSenderUsernameResource(username, displayName, _domainResource);
-            bool exists = await collection.ExistsAsync(username);
-            Assert.IsTrue(exists);
-        }
-
-        [Test]
         public async Task CreateOrUpdate()
         {
-            string username = Recording.GenerateAssetName("un-");
-            string displayName = Recording.GenerateAssetName("dn ");
+            var listName = "donotreply";
+            var suppressionList = await CreateDefaultSuppressionListResource(_domainResource, listName);
 
-            var senderUsername = await CreateDefaultSenderUsernameResource(username, displayName, _domainResource);
-
-            Assert.IsNotNull(senderUsername);
-            Assert.AreEqual(username, senderUsername.Data.Username);
-            Assert.AreEqual(displayName, senderUsername.Data.DisplayName);
+            Assert.IsNotNull(suppressionList);
+            Assert.AreEqual(listName, suppressionList.Data.ListName);
         }
-
-        // todo: follow up on update bug. Updating a record with the same name results in 400 error a username already exists.
-
-        //[Test]
-        //public async Task Update()
-        //{
-        //    string username = Recording.GenerateAssetName("un-");
-        //    // string updatedUsername = Recording.GenerateAssetName("updated-un-");
-        //    string displayName = Recording.GenerateAssetName("dn ");
-        //    string updatedDisplayName = Recording.GenerateAssetName("updated dn ");
-
-        //    var senderUsername1 = await CreateDefaultSenderUsernameResource(username, displayName, _domainResource);
-        //    var patch = new SenderUsernameResourceData()
-        //    {
-        //        Username = senderUsername1.Data.Username,
-        //        DisplayName = updatedDisplayName
-        //    };
-        //    var senderUsername2 = (await senderUsername1.UpdateAsync(WaitUntil.Completed, patch)).Value;
-
-        //    Assert.IsNotNull(senderUsername2);
-        //    Assert.AreEqual(senderUsername1.Data.Name, senderUsername2.Data.Name);
-        //    Assert.AreNotEqual(senderUsername1.Data.Username, senderUsername2.Data.Username);
-        //    Assert.AreNotEqual(senderUsername1.Data.DisplayName, senderUsername2.Data.DisplayName);
-        //}
 
         [Test]
         public async Task Delete()
         {
-            string username = Recording.GenerateAssetName("un-");
-            string displayName = Recording.GenerateAssetName("dn ");
+            var listName = "listToDelete";
+            var suppressionList = await CreateDefaultSuppressionListResource(_domainResource, listName);
+            var collection = _domainResource.GetSuppressionListResources();
 
-            var collection = _domainResource.GetSenderUsernameResources();
-            var senderUsername = await CreateDefaultSenderUsernameResource(username, displayName, _domainResource);
-            await senderUsername.DeleteAsync(WaitUntil.Completed);
-            bool exists = await collection.ExistsAsync(username);
+            var exists = await collection.ExistsAsync(suppressionList.Id.Name);
+            Assert.IsTrue(exists);
+
+            await suppressionList.DeleteAsync(WaitUntil.Completed);
+
+            collection = _domainResource.GetSuppressionListResources();
+            exists = await collection.ExistsAsync(suppressionList.Id.Name);
             Assert.IsFalse(exists);
         }
 
         [Test]
         public async Task Get()
         {
-            string username = Recording.GenerateAssetName("un-");
-            string displayName = Recording.GenerateAssetName("dn ");
+            var listName = "donotreply";
+            var suppressionList = await CreateDefaultSuppressionListResource(_domainResource, listName);
+            var collection = _domainResource.GetSuppressionListResources();
+            var actualSuppressionList = await collection.GetAsync(suppressionList.Data.Name);
 
-            var collection = _domainResource.GetSenderUsernameResources();
-            await CreateDefaultSenderUsernameResource(username, displayName, _domainResource);
-
-            var actualSenderUsername = await collection.GetAsync(username);
-            Assert.IsNotNull(actualSenderUsername);
-            Assert.AreEqual(actualSenderUsername.Value.Data.Username, username);
-            Assert.AreEqual(actualSenderUsername.Value.Data.DisplayName, displayName);
+            Assert.IsNotNull(actualSuppressionList);
+            Assert.AreEqual(actualSuppressionList.Value.Data.ListName, listName);
         }
 
         [Test]
         public async Task GetAll()
         {
-            string username = Recording.GenerateAssetName("un-");
-            string displayName = Recording.GenerateAssetName("dn ");
+            var listNames = new string[] { "list1", "list2", "list3" };
+            var resourceNames = new Dictionary<string, string>();
 
-            await CreateDefaultSenderUsernameResource(username, displayName, _domainResource);
+            foreach (var listName in listNames)
+            {
+                var suppressionList = await CreateDefaultSuppressionListResource(_domainResource, listName);
+                resourceNames[suppressionList.Data.Name] = listName;
+            }
 
-            var list = await _domainResource.GetSenderUsernameResources().GetAllAsync().ToEnumerableAsync();
-            Assert.IsNotEmpty(list);
-            Assert.IsTrue(list.Any(s => s.HasData && s.Data.Username == username));
-            Assert.IsTrue(list.Any(s => s.HasData && s.Data.DisplayName == displayName));
+            var suppressionLists = await _domainResource.GetSuppressionListResources().GetAllAsync().ToEnumerableAsync();
+
+            Assert.IsNotNull(suppressionLists);
+            Assert.IsTrue(suppressionLists.Count() >= listNames.Length);
+
+            foreach (var resourceName in resourceNames)
+            {
+                var resource = suppressionLists.Where(s => s.Data.Name == resourceName.Key).FirstOrDefault();
+
+                Assert.IsNotNull(resource);
+                Assert.AreEqual(resource.Data.ListName, resourceName.Value);
+            }
+        }
+
+        [Test]
+        public async Task AddAddresses()
+        {
+            var listName = "addressList";
+            var suppressionList = await CreateDefaultSuppressionListResource(_domainResource, listName);
+
+            Assert.IsNotNull(suppressionList);
+
+            var addresses = new string[] { "user1@email.com", "user2@email.com", "user3@email.com" };
+            var resourceNames = new Dictionary<string, string>();
+
+            foreach (var address in addresses)
+            {
+                var resource = await CreateDefaultSuppressionListResource(_domainResource, address);
+                resourceNames[resource.Data.Name] = address;
+            }
+
+            var suppressionListAddresses = await suppressionList.GetSuppressionListAddressResources().GetAllAsync().ToEnumerableAsync();
+
+            Assert.IsNotNull(suppressionListAddresses);
+            Assert.IsTrue(suppressionListAddresses.Count() >= addresses.Length);
+
+            foreach (var resourceName in resourceNames)
+            {
+                var resource = suppressionListAddresses.Where(s => s.Data.Name == resourceName.Key).FirstOrDefault();
+
+                Assert.IsNotNull(resource);
+                Assert.AreEqual(resource.Data.Email, resourceName.Value);
+            }
+        }
+
+        [Test]
+        public async Task UpdateAddress()
+        {
+            var listName = "addressList";
+            var suppressionList = await CreateDefaultSuppressionListResource(_domainResource, listName);
+
+            Assert.IsNotNull(suppressionList);
+
+            var email = "superuser@email.com";
+            var created = await CreateDefaultSuppressionListAddressResource(suppressionList, email, "firstName", "lastName", "notes");
+
+            SuppressionListAddressResourceData data = new SuppressionListAddressResourceData
+            {
+                Email = created.Data.Email,
+                FirstName = $"updated+{created.Data.FirstName}",
+                LastName = $"updated+{created.Data.LastName}",
+                Notes = created.Data.Notes
+            };
+
+            var updated = await suppressionList
+                .GetSuppressionListAddressResources()
+                .CreateOrUpdateAsync(WaitUntil.Completed, created.Id.Name, data);
+
+            Assert.IsNotNull(updated);
+            Assert.AreEqual(created.Data.Id, updated.Value.Data.Id);
+            Assert.AreEqual(created.Data.Email, updated.Value.Data.Email);
+            Assert.AreNotEqual(created.Data.FirstName, updated.Value.Data.FirstName);
+            Assert.AreNotEqual(created.Data.LastName, updated.Value.Data.LastName);
+            Assert.AreEqual(created.Data.Notes, updated.Value.Data.Notes);
         }
     }
 }
