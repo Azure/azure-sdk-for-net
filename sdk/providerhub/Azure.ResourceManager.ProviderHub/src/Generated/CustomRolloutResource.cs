@@ -25,6 +25,9 @@ namespace Azure.ResourceManager.ProviderHub
     public partial class CustomRolloutResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CustomRolloutResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="providerNamespace"> The providerNamespace. </param>
+        /// <param name="rolloutName"> The rolloutName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string providerNamespace, string rolloutName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/customRollouts/{rolloutName}";
