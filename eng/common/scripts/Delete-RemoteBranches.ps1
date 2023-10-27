@@ -51,8 +51,8 @@ function Get-AllBranchesAndPullRequestInfo($owner, $repo) {
     --jq '.data.repository.refs.nodes[] | { name, commitUrl: .target.commitUrl, committedDate: .target.committedDate, pullRequests: .associatedPullRequests.nodes }' | ConvertFrom-Json
 
   if ($LASTEXITCODE) {
-    LogError "Failed to retireve branches for '$owner' and '$repo' running query '$query'"
-    exit 1
+    LogError "Failed to retrieve branches for '$owner' and '$repo' running query '$query'"
+    exit $LASTEXITCODE
   }
 
   return $all_branches
