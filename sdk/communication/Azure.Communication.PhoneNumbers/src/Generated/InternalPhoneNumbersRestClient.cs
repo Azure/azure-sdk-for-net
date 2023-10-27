@@ -330,12 +330,14 @@ namespace Azure.Communication.PhoneNumbers
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new PhoneNumberPurchaseRequest()
-            {
-                SearchId = searchId
-            };
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteStartObject();
+            if (Optional.IsDefined(searchId))
+            {
+                content.JsonWriter.WritePropertyName("searchId"u8);
+                content.JsonWriter.WriteStringValue(searchId);
+            }
+            content.JsonWriter.WriteEndObject();
             request.Content = content;
             return message;
         }
@@ -388,13 +390,19 @@ namespace Azure.Communication.PhoneNumbers
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/merge-patch+json");
-            var model = new PhoneNumberCapabilitiesRequest()
-            {
-                Calling = calling,
-                Sms = sms
-            };
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteStartObject();
+            if (Optional.IsDefined(calling))
+            {
+                content.JsonWriter.WritePropertyName("calling"u8);
+                content.JsonWriter.WriteStringValue(calling.Value.ToString());
+            }
+            if (Optional.IsDefined(sms))
+            {
+                content.JsonWriter.WritePropertyName("sms"u8);
+                content.JsonWriter.WriteStringValue(sms.Value.ToString());
+            }
+            content.JsonWriter.WriteEndObject();
             request.Content = content;
             return message;
         }
