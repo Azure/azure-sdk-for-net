@@ -151,6 +151,7 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendPath("/sensor-events", false);
             uri.AppendQuery("sensorId", sensorId, true);
             uri.AppendQuery("sensorPartnerId", sensorPartnerId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (startDateTime != null)
             {
                 uri.AppendQuery("startDateTime", startDateTime.Value, "O", true);
@@ -163,7 +164,6 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 uri.AppendQuery("excludeDuplicateEvents", excludeDuplicateEvents.Value, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
