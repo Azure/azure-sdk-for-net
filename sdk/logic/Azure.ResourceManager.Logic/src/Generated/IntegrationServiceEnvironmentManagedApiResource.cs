@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.Logic
     public partial class IntegrationServiceEnvironmentManagedApiResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="IntegrationServiceEnvironmentManagedApiResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroup"> The resourceGroup. </param>
+        /// <param name="integrationServiceEnvironmentName"> The integrationServiceEnvironmentName. </param>
+        /// <param name="apiName"> The apiName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroup, string integrationServiceEnvironmentName, string apiName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Logic/integrationServiceEnvironments/{integrationServiceEnvironmentName}/managedApis/{apiName}";
