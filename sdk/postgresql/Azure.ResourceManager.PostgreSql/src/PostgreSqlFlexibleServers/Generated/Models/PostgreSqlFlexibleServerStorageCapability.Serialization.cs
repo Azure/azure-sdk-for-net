@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            Optional<long> supportedIops = default;
+            Optional<int> supportedIops = default;
             Optional<long> storageSizeMb = default;
             Optional<string> defaultIopsTier = default;
             Optional<IReadOnlyList<PostgreSqlFlexibleServerStorageTierCapability>> supportedIopsTiers = default;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    supportedIops = property.Value.GetInt64();
+                    supportedIops = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("storageSizeMb"u8))

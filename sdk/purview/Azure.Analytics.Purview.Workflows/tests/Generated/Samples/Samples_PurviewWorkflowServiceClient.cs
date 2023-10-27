@@ -10,6 +10,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Analytics.Purview.Workflows;
+using Azure.Analytics.Purview.Workflows.Models;
 using Azure.Core;
 using Azure.Identity;
 using NUnit.Framework;
@@ -1100,7 +1101,7 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetWorkflowRuns("1d", "status desc", new string[] { "InProgress" }, new string[] { "<workflowIds>" }, 1234, null))
+            foreach (BinaryData item in client.GetWorkflowRuns("1d", "status desc", new Workflows.Models.Status[] { Workflows.Models.Status.InProgress }, new string[] { "<workflowIds>" }, 1234, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("id").ToString());
@@ -1125,7 +1126,7 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            await foreach (BinaryData item in client.GetWorkflowRunsAsync("1d", "status desc", new string[] { "InProgress" }, new string[] { "<workflowIds>" }, 1234, null))
+            await foreach (BinaryData item in client.GetWorkflowRunsAsync("1d", "status desc", new Workflows.Models.Status[] { Workflows.Models.Status.InProgress }, new string[] { "<workflowIds>" }, 1234, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("id").ToString());
@@ -1196,7 +1197,7 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetWorkflowTasks("<viewMode>", new string[] { "<workflowIds>" }, "1d", 1234, "status desc", new string[] { "Approval" }, new string[] { "InProgress" }, "<workflowNameKeyword>", null))
+            foreach (BinaryData item in client.GetWorkflowTasks("<viewMode>", new string[] { "<workflowIds>" }, "1d", 1234, "status desc", new Workflows.Models.TaskType[] { Workflows.Models.TaskType.Approval }, new Workflows.Models.Status[] { Workflows.Models.Status.InProgress }, "<workflowNameKeyword>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("type").ToString());
@@ -1229,7 +1230,7 @@ reassignTo = "73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a",
             TokenCredential credential = new DefaultAzureCredential();
             PurviewWorkflowServiceClient client = new PurviewWorkflowServiceClient(endpoint, credential);
 
-            await foreach (BinaryData item in client.GetWorkflowTasksAsync("<viewMode>", new string[] { "<workflowIds>" }, "1d", 1234, "status desc", new string[] { "Approval" }, new string[] { "InProgress" }, "<workflowNameKeyword>", null))
+            await foreach (BinaryData item in client.GetWorkflowTasksAsync("<viewMode>", new string[] { "<workflowIds>" }, "1d", 1234, "status desc", new Workflows.Models.TaskType[] { Workflows.Models.TaskType.Approval }, new Workflows.Models.Status[] { Workflows.Models.Status.InProgress }, "<workflowNameKeyword>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("type").ToString());

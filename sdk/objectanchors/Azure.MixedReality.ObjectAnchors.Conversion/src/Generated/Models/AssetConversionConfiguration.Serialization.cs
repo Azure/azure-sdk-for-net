@@ -87,7 +87,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             if (Optional.IsDefined(DisableDetectScaleUnits))
             {
                 writer.WritePropertyName("disableDetectScaleUnits"u8);
-                writer.WriteBooleanValue(DisableDetectScaleUnits);
+                writer.WriteBooleanValue(DisableDetectScaleUnits.Value);
             }
             if (Optional.IsDefined(SupportingPlaneWrapper))
             {
@@ -123,7 +123,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             Optional<Vector3> dimensions = default;
             Optional<Vector3> boundingBoxCenter = default;
             Vector3 gravity = default;
-            Optional<IReadOnlyList<int>> keyFrameIndexes = default;
+            Optional<IList<int>> keyFrameIndexes = default;
             Optional<IReadOnlyList<TrajectoryPose>> gtTrajectory = default;
             Optional<Quaternion> principalAxis = default;
             float scale = default;
@@ -234,7 +234,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                     continue;
                 }
             }
-            return new AssetConversionConfiguration(dimensions.Value, boundingBoxCenter.Value, gravity, Optional.ToList(keyFrameIndexes), Optional.ToList(gtTrajectory), principalAxis.Value, scale, disableDetectScaleUnits, supportingPlane.Value, Optional.ToList(testTrajectory));
+            return new AssetConversionConfiguration(dimensions.Value, boundingBoxCenter.Value, gravity, Optional.ToList(keyFrameIndexes), Optional.ToList(gtTrajectory), principalAxis.Value, scale, Optional.ToNullable(disableDetectScaleUnits), supportingPlane.Value, Optional.ToList(testTrajectory));
         }
     }
 }

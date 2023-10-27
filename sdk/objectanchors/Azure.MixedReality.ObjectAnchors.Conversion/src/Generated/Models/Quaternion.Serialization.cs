@@ -69,7 +69,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion.Models
                     continue;
                 }
             }
-            return new Quaternion(x, y, z, w, isIdentity);
+            return new Quaternion(x, y, z, w, Optional.ToNullable(isIdentity));
         }
     }
 }

@@ -140,7 +140,7 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
                     continue;
                 }
             }
-            return new AssetConversionProperties(clientErrorDetails.Value, serverErrorDetails.Value, errorCode, Optional.ToNullable(jobId), outputModelUri.Value, Optional.ToNullable(jobStatus), assetFileType.Value, inputAssetUri.Value, Optional.ToNullable(accountId), ingestionConfiguration.Value, scaledAssetDimensions.Value);
+            return new AssetConversionProperties(clientErrorDetails.Value, serverErrorDetails.Value, Optional.ToNullable(errorCode), Optional.ToNullable(jobId), outputModelUri.Value, Optional.ToNullable(jobStatus), assetFileType.Value, inputAssetUri.Value, Optional.ToNullable(accountId), ingestionConfiguration.Value, scaledAssetDimensions.Value);
         }
     }
 }

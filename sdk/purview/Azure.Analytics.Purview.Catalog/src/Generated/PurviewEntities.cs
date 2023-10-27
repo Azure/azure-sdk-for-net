@@ -3111,7 +3111,9 @@ namespace Azure.Analytics.Purview.Catalog
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "multipart/form-data");
-            request.Content = content;
+            var content0 = new MultipartFormDataContent();
+            content0.Add(content, null, null);
+            content0.ApplyToRequest(request);
             return message;
         }
 

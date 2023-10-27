@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="defaultIopsTier"> Default tier for IOPS. </param>
         /// <param name="supportedIopsTiers"> List of available options to upgrade the storage performance. </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerStorageCapability"/> instance for mocking. </returns>
-        public static PostgreSqlFlexibleServerStorageCapability PostgreSqlFlexibleServerStorageCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus = null, string reason = null, long? supportedIops = null, long? storageSizeInMB = null, string defaultIopsTier = null, IEnumerable<PostgreSqlFlexibleServerStorageTierCapability> supportedIopsTiers = null)
+        public static PostgreSqlFlexibleServerStorageCapability PostgreSqlFlexibleServerStorageCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus = null, string reason = null, int? supportedIops = null, long? storageSizeInMB = null, string defaultIopsTier = null, IEnumerable<PostgreSqlFlexibleServerStorageTierCapability> supportedIopsTiers = null)
         {
             supportedIopsTiers ??= new List<PostgreSqlFlexibleServerStorageTierCapability>();
 
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="name"> Name to represent Storage tier capability. </param>
         /// <param name="iops"> Supported IOPS for this storage tier. </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerStorageTierCapability"/> instance for mocking. </returns>
-        public static PostgreSqlFlexibleServerStorageTierCapability PostgreSqlFlexibleServerStorageTierCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus = null, string reason = null, string name = null, long? iops = null)
+        public static PostgreSqlFlexibleServerStorageTierCapability PostgreSqlFlexibleServerStorageTierCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus = null, string reason = null, string name = null, int? iops = null)
         {
             return new PostgreSqlFlexibleServerStorageTierCapability(capabilityStatus, reason, name, iops);
         }
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="supportedServerVersions"> Fast provisioning supported version. </param>
         /// <param name="serverCount"> Count of servers in cache matching the spec. </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerFastProvisioningEditionCapability"/> instance for mocking. </returns>
-        public static PostgreSqlFlexibleServerFastProvisioningEditionCapability PostgreSqlFlexibleServerFastProvisioningEditionCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus = null, string reason = null, string supportedTier = null, string supportedSku = null, long? supportedStorageGb = null, string supportedServerVersions = null, int? serverCount = null)
+        public static PostgreSqlFlexibleServerFastProvisioningEditionCapability PostgreSqlFlexibleServerFastProvisioningEditionCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus = null, string reason = null, string supportedTier = null, string supportedSku = null, int? supportedStorageGb = null, string supportedServerVersions = null, int? serverCount = null)
         {
             return new PostgreSqlFlexibleServerFastProvisioningEditionCapability(capabilityStatus, reason, supportedTier, supportedSku, supportedStorageGb, supportedServerVersions, serverCount);
         }

@@ -120,7 +120,7 @@ using RequestContent content = RequestContent.Create(new
         typeName = "<typeName>",
         lastModifiedTS = "<lastModifiedTS>",
     },
-    referredEntities = new { },
+    referredEntities = new{},
 });
 Response response = await client.CreateOrUpdateAsync(content);
 
@@ -309,7 +309,7 @@ using RequestContent content = RequestContent.Create(new
         typeName = "<typeName>",
         lastModifiedTS = "<lastModifiedTS>",
     },
-    referredEntities = new { },
+    referredEntities = new{},
 });
 Response response = client.CreateOrUpdate(content);
 
@@ -721,7 +721,7 @@ using RequestContent content = RequestContent.Create(new
             lastModifiedTS = "<lastModifiedTS>",
         }
     },
-    referredEntities = new { },
+    referredEntities = new{},
 });
 Response response = await client.CreateOrUpdateEntitiesAsync(content);
 
@@ -913,7 +913,7 @@ using RequestContent content = RequestContent.Create(new
             lastModifiedTS = "<lastModifiedTS>",
         }
     },
-    referredEntities = new { },
+    referredEntities = new{},
 });
 Response response = client.CreateOrUpdateEntities(content);
 
@@ -2582,7 +2582,7 @@ using RequestContent content = RequestContent.Create(new
         typeName = "<typeName>",
         lastModifiedTS = "<lastModifiedTS>",
     },
-    referredEntities = new { },
+    referredEntities = new{},
 });
 Response response = await client.PartialUpdateEntityByUniqueAttributesAsync("<typeName>", content, attrQualifiedName: "<attrQualifiedName>");
 
@@ -2771,7 +2771,7 @@ using RequestContent content = RequestContent.Create(new
         typeName = "<typeName>",
         lastModifiedTS = "<lastModifiedTS>",
     },
-    referredEntities = new { },
+    referredEntities = new{},
 });
 Response response = client.PartialUpdateEntityByUniqueAttributes("<typeName>", content, attrQualifiedName: "<attrQualifiedName>");
 

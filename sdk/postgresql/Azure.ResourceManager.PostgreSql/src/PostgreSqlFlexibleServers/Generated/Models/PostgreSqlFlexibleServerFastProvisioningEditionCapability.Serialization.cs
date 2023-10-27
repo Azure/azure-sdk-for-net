@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
             Optional<string> supportedTier = default;
             Optional<string> supportedSku = default;
-            Optional<long> supportedStorageGb = default;
+            Optional<int> supportedStorageGb = default;
             Optional<string> supportedServerVersions = default;
             Optional<int> serverCount = default;
             Optional<PostgreSqlFlexbileServerCapabilityStatus> status = default;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    supportedStorageGb = property.Value.GetInt64();
+                    supportedStorageGb = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("supportedServerVersions"u8))
