@@ -4,8 +4,8 @@
 
 ### Features Added
 
-- Private Link support for DesktopVirtualization, more information can be found [here](https://learn.microsoft.com/en-us/azure/private-link/private-link-overview).
-- Scaling Plan Personal Schedules Added.
+- Private Link Support
+- Scaling Plan Personal Schedules
 
 ### Breaking Changes
 
