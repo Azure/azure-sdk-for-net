@@ -11,8 +11,6 @@
 
 - Scaling Parameter "rampDownCapacityThresholdPct" minimum value changed from 0 to 1.
 
-### Bugs Fixed
-
 ### Other Changes
 
 - Upgraded API version to 2023-09-05
