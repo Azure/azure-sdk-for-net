@@ -40,7 +40,8 @@ public class OpenAIClient
         Completions completions = Completions.FromResponse(response);
         return Result.FromValue(completions, response);
     }
-    public virtual Result GetCompletions(string deploymentId, MessageBody content, RequestOptions context = null)
+
+    public virtual Result GetCompletions(string deploymentId, MessageBody content, RequestOptions options = null)
     {
         ClientUtilities.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
         ClientUtilities.AssertNotNull(content, nameof(content));
@@ -49,8 +50,12 @@ public class OpenAIClient
         scope.Start();
         try
         {
-            using PipelineMessage message = CreateGetCompletionsRequest(deploymentId, content, context);
-            PipelineResponse response = _pipeline.ProcessMessage(message, context);
+            using PipelineMessage message = CreateGetCompletionsRequest(deploymentId, content, options);
+
+            // TODO: per precedence rules, we should not override a customer-specified message classifier.
+            options.MessageClassifier = MessageClassifier200;
+
+            PipelineResponse response = _pipeline.ProcessMessage(message, options);
             Result result = Result.FromResponse(response);
             return result;
         }
@@ -65,17 +70,22 @@ public class OpenAIClient
     {
         PipelineMessage message = _pipeline.CreateMessage();
         options.Apply(message);
+
         PipelineRequest request = message.Request;
         request.Method = "POST";
-        UriBuilder uriBuilder = new UriBuilder(_endpoint.ToString());
-        StringBuilder path = new StringBuilder();
+
+        UriBuilder uriBuilder = new(_endpoint.ToString());
+        StringBuilder path = new();
         path.Append("v1");
         path.Append("/completions");
         uriBuilder.Path += path.ToString();
         request.Uri = uriBuilder.Uri;
+
         request.Headers.Set("Accept", "application/json");
         request.Headers.Set("Content-Type", "application/json");
+
         request.Content = content;
+
         return message;
     }
 
@@ -89,4 +99,7 @@ public class OpenAIClient
 
         return new RequestOptions() { CancellationToken = cancellationToken };
     }
+
+    private static MessageClassifier _messageClassifier200;
+    private static MessageClassifier MessageClassifier200 => _messageClassifier200 ??= new ResponseStatusClassifier(stackalloc ushort[] { 200 });
 }

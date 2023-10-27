@@ -49,11 +49,11 @@ public class PipelineMessage : IDisposable
     public void SetProperty(Type type, object value) =>
         _propertyBag.Set((ulong)type.TypeHandle.Value, value);
 
-    private MessageClassifier _responseClassifier = RequestOptions.DefaultResponseClassifier;
-    public virtual MessageClassifier ResponseClassifier
+    private MessageClassifier _messageClassifer = RequestOptions.DefaultMessageClassifier;
+    public virtual MessageClassifier MessageClassifier
     {
-        get => _responseClassifier;
-        set => _responseClassifier = value;
+        get => _messageClassifer;
+        set => _messageClassifer = value;
     }
 
     #endregion

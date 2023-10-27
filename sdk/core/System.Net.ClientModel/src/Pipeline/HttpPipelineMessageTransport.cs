@@ -171,7 +171,7 @@ public partial class HttpPipelineMessageTransport : PipelineTransport<PipelineMe
             message.Response.Content = MessageBody.CreateContent(contentStream);
         }
 
-        message.Response.IsError = message.ResponseClassifier.IsErrorResponse(message);
+        message.Response.IsError = message.MessageClassifier.IsErrorResponse(message);
     }
 
     /// <summary>

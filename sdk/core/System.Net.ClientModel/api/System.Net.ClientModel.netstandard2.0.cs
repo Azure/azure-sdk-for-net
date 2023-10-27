@@ -25,9 +25,9 @@ namespace System.Net.ClientModel
         public RequestOptions() { }
         public virtual System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
         public static System.Threading.CancellationToken DefaultCancellationToken { get { throw null; } set { } }
-        public static System.Net.ClientModel.Core.MessageClassifier DefaultResponseClassifier { get { throw null; } set { } }
+        public static System.Net.ClientModel.Core.MessageClassifier DefaultMessageClassifier { get { throw null; } set { } }
         public virtual System.Net.ClientModel.Core.ErrorBehavior ErrorBehavior { get { throw null; } set { } }
-        public virtual System.Net.ClientModel.Core.MessageClassifier ResponseClassifier { get { throw null; } set { } }
+        public virtual System.Net.ClientModel.Core.MessageClassifier MessageClassifier { get { throw null; } set { } }
         public virtual void Apply(System.Net.ClientModel.Core.PipelineMessage message) { }
     }
     public abstract partial class Result
@@ -212,9 +212,9 @@ namespace System.Net.ClientModel.Core
         protected internal PipelineMessage(System.Net.ClientModel.Core.PipelineRequest request) { }
         public virtual System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
         public bool HasResponse { get { throw null; } }
+        public virtual System.Net.ClientModel.Core.MessageClassifier MessageClassifier { get { throw null; } set { } }
         public virtual System.Net.ClientModel.Core.PipelineRequest Request { get { throw null; } }
         public virtual System.Net.ClientModel.Core.PipelineResponse Response { get { throw null; } protected internal set { } }
-        public virtual System.Net.ClientModel.Core.MessageClassifier ResponseClassifier { get { throw null; } set { } }
         public virtual void Dispose() { }
         protected virtual void Dispose(bool disposing) { }
         public void SetProperty(System.Type type, object value) { }

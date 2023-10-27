@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Net.ClientModel.Core;
 using Azure.Core.Pipeline;
@@ -73,10 +74,20 @@ namespace Azure.Core
         /// The <see cref="ResponseClassifier"/> instance to use for response classification during pipeline invocation.
         /// </summary>
         // TODO: revisit this per not shadowing anymore
-        public new ResponseClassifier ResponseClassifier
+        public ResponseClassifier ResponseClassifier
         {
-            get => (ResponseClassifier)base.ResponseClassifier;
-            set => base.ResponseClassifier = value;
+            get => (ResponseClassifier)base.MessageClassifier;
+            set => base.MessageClassifier = value;
+        }
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override MessageClassifier MessageClassifier
+        {
+            get => base.MessageClassifier;
+            set => base.MessageClassifier = value;
         }
 
         /// <summary>
