@@ -227,11 +227,11 @@ namespace Azure.AI.Translation.Text
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/languages", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (scope != null)
             {
                 uri.AppendQuery("scope", scope, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             if (clientTraceId != null)
@@ -264,6 +264,7 @@ namespace Azure.AI.Translation.Text
                     uri.AppendQuery("to", param, true);
                 }
             }
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (@from != null)
             {
                 uri.AppendQuery("from", @from, true);
@@ -308,7 +309,6 @@ namespace Azure.AI.Translation.Text
             {
                 uri.AppendQuery("allowFallback", allowFallback.Value, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             if (clientTraceId != null)
@@ -351,6 +351,7 @@ namespace Azure.AI.Translation.Text
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/breaksentence", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (language != null)
             {
                 uri.AppendQuery("language", language, true);
@@ -359,7 +360,6 @@ namespace Azure.AI.Translation.Text
             {
                 uri.AppendQuery("script", script, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             if (clientTraceId != null)

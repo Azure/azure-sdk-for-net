@@ -98,6 +98,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Get Integration Runtime. </summary>
         /// <param name="integrationRuntimeName"> The Integration Runtime name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="integrationRuntimeName"/> is null. </exception>
         public virtual async Task<Response<IntegrationRuntimeResource>> GetAsync(string integrationRuntimeName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("IntegrationRuntimesClient.Get");
@@ -116,6 +117,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Get Integration Runtime. </summary>
         /// <param name="integrationRuntimeName"> The Integration Runtime name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="integrationRuntimeName"/> is null. </exception>
         public virtual Response<IntegrationRuntimeResource> Get(string integrationRuntimeName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("IntegrationRuntimesClient.Get");

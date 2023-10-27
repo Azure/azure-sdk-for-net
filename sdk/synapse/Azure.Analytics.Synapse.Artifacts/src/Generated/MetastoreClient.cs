@@ -65,6 +65,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="id"> The name of the database to be created. The name can contain only alphanumeric characters and should not exceed 24 characters. </param>
         /// <param name="registerBody"> The body for the register request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="registerBody"/> is null. </exception>
         public virtual async Task<Response<MetastoreRegistrationResponse>> RegisterAsync(string id, MetastoreRegisterObject registerBody, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MetastoreClient.Register");
@@ -84,6 +85,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="id"> The name of the database to be created. The name can contain only alphanumeric characters and should not exceed 24 characters. </param>
         /// <param name="registerBody"> The body for the register request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="registerBody"/> is null. </exception>
         public virtual Response<MetastoreRegistrationResponse> Register(string id, MetastoreRegisterObject registerBody, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MetastoreClient.Register");
@@ -102,6 +104,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Gets status of the database. </summary>
         /// <param name="id"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public virtual async Task<Response<MetastoreRequestSuccessResponse>> GetDatabaseOperationsAsync(string id, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MetastoreClient.GetDatabaseOperations");
@@ -120,6 +123,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Gets status of the database. </summary>
         /// <param name="id"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public virtual Response<MetastoreRequestSuccessResponse> GetDatabaseOperations(string id, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MetastoreClient.GetDatabaseOperations");
@@ -139,6 +143,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="id"> The name of the database to be updated. </param>
         /// <param name="updateBody"> The body for the update request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="updateBody"/> is null. </exception>
         public virtual async Task<Response<MetastoreUpdationResponse>> UpdateAsync(string id, MetastoreUpdateObject updateBody, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MetastoreClient.Update");
@@ -158,6 +163,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="id"> The name of the database to be updated. </param>
         /// <param name="updateBody"> The body for the update request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="updateBody"/> is null. </exception>
         public virtual Response<MetastoreUpdationResponse> Update(string id, MetastoreUpdateObject updateBody, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MetastoreClient.Update");
@@ -176,6 +182,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Remove files in Syms. </summary>
         /// <param name="id"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public virtual async Task<Response> DeleteAsync(string id, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MetastoreClient.Delete");
@@ -194,6 +201,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Remove files in Syms. </summary>
         /// <param name="id"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public virtual Response Delete(string id, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("MetastoreClient.Delete");
