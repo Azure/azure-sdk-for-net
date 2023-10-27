@@ -285,20 +285,6 @@ namespace System.Net.ClientModel.Core
         public ResponseStatusClassifier(System.ReadOnlySpan<ushort> successStatusCodes) { }
         public override bool IsErrorResponse(System.Net.ClientModel.Core.PipelineMessage message) { throw null; }
     }
-    public partial class TelemetrySource
-    {
-        public TelemetrySource(System.Net.ClientModel.Core.PipelineOptions options, bool suppressNestedClientActivities = true) { }
-        public System.Net.ClientModel.Core.TelemetrySpan CreateSpan(string name) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct TelemetrySpan : System.IDisposable
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public void Dispose() { }
-        public void Failed(System.Exception exception) { }
-        public void Start() { }
-    }
 }
 namespace System.Net.ClientModel.Internal
 {
@@ -415,8 +401,8 @@ namespace System.Net.ClientModel.Internal
     }
     public static partial class PipelineProtocolExtensions
     {
-        public static System.Net.ClientModel.NullableResult<bool> ProcessHeadAsBoolMessage(this System.Net.ClientModel.Core.MessagePipeline pipeline, System.Net.ClientModel.Core.PipelineMessage message, System.Net.ClientModel.Core.TelemetrySource clientDiagnostics, System.Net.ClientModel.RequestOptions requestContext) { throw null; }
-        public static System.Threading.Tasks.ValueTask<System.Net.ClientModel.NullableResult<bool>> ProcessHeadAsBoolMessageAsync(this System.Net.ClientModel.Core.MessagePipeline pipeline, System.Net.ClientModel.Core.PipelineMessage message, System.Net.ClientModel.Core.TelemetrySource clientDiagnostics, System.Net.ClientModel.RequestOptions requestContext) { throw null; }
+        public static System.Net.ClientModel.NullableResult<bool> ProcessHeadAsBoolMessage(this System.Net.ClientModel.Core.MessagePipeline pipeline, System.Net.ClientModel.Core.PipelineMessage message, System.Net.ClientModel.RequestOptions requestContext) { throw null; }
+        public static System.Threading.Tasks.ValueTask<System.Net.ClientModel.NullableResult<bool>> ProcessHeadAsBoolMessageAsync(this System.Net.ClientModel.Core.MessagePipeline pipeline, System.Net.ClientModel.Core.PipelineMessage message, System.Net.ClientModel.RequestOptions requestContext) { throw null; }
         public static System.Net.ClientModel.Core.PipelineResponse ProcessMessage(this System.Net.ClientModel.Core.MessagePipeline pipeline, System.Net.ClientModel.Core.PipelineMessage message, System.Net.ClientModel.RequestOptions requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.ValueTask<System.Net.ClientModel.Core.PipelineResponse> ProcessMessageAsync(this System.Net.ClientModel.Core.MessagePipeline pipeline, System.Net.ClientModel.Core.PipelineMessage message, System.Net.ClientModel.RequestOptions requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

@@ -5,7 +5,8 @@ using System.Net.ClientModel.Internal;
 
 namespace System.Net.ClientModel.Core
 {
-    public readonly struct TelemetrySpan : IDisposable
+    // TODO: move into a separate folder
+    internal readonly struct TelemetrySpan : IDisposable
     {
         private readonly DiagnosticScope _scope;
 

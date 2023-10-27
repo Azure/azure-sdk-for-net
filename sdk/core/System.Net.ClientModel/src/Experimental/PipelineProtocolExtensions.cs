@@ -43,7 +43,7 @@ public static class PipelineProtocolExtensions
         throw new PipelineRequestException(message.Response);
     }
 
-    public static async ValueTask<NullableResult<bool>> ProcessHeadAsBoolMessageAsync(this MessagePipeline pipeline, PipelineMessage message, TelemetrySource clientDiagnostics, RequestOptions requestContext)
+    public static async ValueTask<NullableResult<bool>> ProcessHeadAsBoolMessageAsync(this MessagePipeline pipeline, PipelineMessage message, RequestOptions requestContext)
     {
         PipelineResponse response = await pipeline.ProcessMessageAsync(message, requestContext).ConfigureAwait(false);
         switch (response.Status)
@@ -57,7 +57,7 @@ public static class PipelineProtocolExtensions
         }
     }
 
-    public static NullableResult<bool> ProcessHeadAsBoolMessage(this MessagePipeline pipeline, PipelineMessage message, TelemetrySource clientDiagnostics, RequestOptions requestContext)
+    public static NullableResult<bool> ProcessHeadAsBoolMessage(this MessagePipeline pipeline, PipelineMessage message, RequestOptions requestContext)
     {
         PipelineResponse response = pipeline.ProcessMessage(message, requestContext);
         switch (response.Status)

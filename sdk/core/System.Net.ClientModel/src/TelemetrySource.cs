@@ -7,7 +7,7 @@ using System.Net.ClientModel.Internal;
 
 namespace System.Net.ClientModel.Core
 {
-    public class TelemetrySource
+    internal class TelemetrySource
     {
         private readonly DiagnosticScopeFactory _factory;
 

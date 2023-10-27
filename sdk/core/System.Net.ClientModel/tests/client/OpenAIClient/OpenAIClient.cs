@@ -15,7 +15,9 @@ public class OpenAIClient
     private readonly Uri _endpoint;
     private readonly KeyCredential _credential;
     private readonly MessagePipeline _pipeline;
-    private readonly TelemetrySource _telemetry;
+
+    // TODO: remove commented out lines when we feel more confident
+    //private readonly TelemetrySource _telemetry;
 
     public OpenAIClient(Uri endpoint, KeyCredential credential, OpenAIClientOptions options = default)
     {
@@ -23,7 +25,7 @@ public class OpenAIClient
         ClientUtilities.AssertNotNull(credential, nameof(credential));
         options ??= new OpenAIClientOptions();
 
-        _telemetry = new TelemetrySource(options, true);
+        //_telemetry = new TelemetrySource(options, true);
         _credential = credential;
         _pipeline = MessagePipeline.Create(options, new KeyCredentialAuthenticationPolicy(_credential, "Authorization", "Bearer"));
         _endpoint = endpoint;
@@ -46,10 +48,10 @@ public class OpenAIClient
         ClientUtilities.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
         ClientUtilities.AssertNotNull(content, nameof(content));
 
-        using var scope = _telemetry.CreateSpan("OpenAIClient.GetCompletions");
-        scope.Start();
-        try
-        {
+        //using var scope = _telemetry.CreateSpan("OpenAIClient.GetCompletions");
+        //scope.Start();
+        //try
+        //{
             using PipelineMessage message = CreateGetCompletionsRequest(deploymentId, content, options);
 
             // TODO: per precedence rules, we should not override a customer-specified message classifier.
@@ -58,12 +60,12 @@ public class OpenAIClient
             PipelineResponse response = _pipeline.ProcessMessage(message, options);
             Result result = Result.FromResponse(response);
             return result;
-        }
-        catch (Exception e)
-        {
-            scope.Failed(e);
-            throw;
-        }
+        //}
+        //catch (Exception e)
+        //{
+        //    scope.Failed(e);
+        //    throw;
+        //}
     }
 
     internal PipelineMessage CreateGetCompletionsRequest(string deploymentId, MessageBody content, RequestOptions options)
