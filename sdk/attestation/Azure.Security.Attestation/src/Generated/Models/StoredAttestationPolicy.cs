@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Security.Attestation
 {
     /// <summary> The StoredAttestationPolicy. </summary>

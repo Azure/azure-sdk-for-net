@@ -285,7 +285,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='GetStacFeatureAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetStacFeatureAsync(string collectionId, string featureId, RequestContext context)
+        public virtual async Task<Response> GetStacFeatureAsync(string collectionId, string featureId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(featureId, nameof(featureId));
@@ -322,7 +322,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='GetStacFeature(string,string,RequestContext)']/*" />
-        public virtual Response GetStacFeature(string collectionId, string featureId, RequestContext context)
+        public virtual Response GetStacFeature(string collectionId, string featureId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(featureId, nameof(featureId));
@@ -515,6 +515,7 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendQuery("partyId", partyId, true);
             uri.AppendQuery("boundaryId", boundaryId, true);
             uri.AppendQuery("source", source, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (startDateTime != null)
             {
                 uri.AppendQuery("startDateTime", startDateTime.Value, "O", true);
@@ -560,7 +561,6 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 uri.AppendQuery("skipToken", skipToken, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -623,6 +623,7 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendPath("/scenes/stac-collections/", false);
             uri.AppendPath(collectionId, true);
             uri.AppendPath(":search", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (maxpagesize != null)
             {
                 uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
@@ -631,7 +632,6 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 uri.AppendQuery("skip", skip.Value, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");

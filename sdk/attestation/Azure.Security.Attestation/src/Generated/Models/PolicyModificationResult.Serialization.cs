@@ -56,7 +56,7 @@ namespace Azure.Security.Attestation
                     continue;
                 }
             }
-            return new PolicyModificationResult(xMsPolicyResult, xMsPolicyTokenHash.Value, xMsPolicySigner.Value, xMsPolicy.Value);
+            return new PolicyModificationResult(Optional.ToNullable(xMsPolicyResult), xMsPolicyTokenHash.Value, xMsPolicySigner.Value, xMsPolicy.Value);
         }
 
         internal partial class PolicyModificationResultConverter : JsonConverter<PolicyModificationResult>

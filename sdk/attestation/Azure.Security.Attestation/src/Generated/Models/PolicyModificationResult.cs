@@ -15,7 +15,7 @@ namespace Azure.Security.Attestation
         /// <param name="basePolicyTokenHash"> The SHA256 hash of the policy object modified. </param>
         /// <param name="basePolicySigner"> The certificate used to sign the policy object, if specified. </param>
         /// <param name="basePolicy"> A JSON Web Token containing a StoredAttestationPolicy object with the attestation policy. </param>
-        internal PolicyModificationResult(PolicyModification policyResolution, string basePolicyTokenHash, JsonWebKey basePolicySigner, string basePolicy)
+        internal PolicyModificationResult(PolicyModification? policyResolution, string basePolicyTokenHash, JsonWebKey basePolicySigner, string basePolicy)
         {
             PolicyResolution = policyResolution;
             BasePolicyTokenHash = basePolicyTokenHash;
