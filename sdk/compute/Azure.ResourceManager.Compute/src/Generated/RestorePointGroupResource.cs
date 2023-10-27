@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An object representing collection of RestorePointResources and their operations over a RestorePointResource. </returns>
         public virtual RestorePointCollection GetRestorePoints()
         {
-            return GetCachedClient(Client => new RestorePointCollection(Client, Id));
+            return GetCachedClient(client => new RestorePointCollection(client, Id));
         }
 
         /// <summary>
@@ -112,8 +112,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="restorePointName"> The name of the restore point. </param>
         /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' retrieves information about the run-time state of a restore point. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<RestorePointResource>> GetRestorePointAsync(string restorePointName, RestorePointExpand? expand = null, CancellationToken cancellationToken = default)
         {
@@ -136,8 +136,8 @@ namespace Azure.ResourceManager.Compute
         /// <param name="restorePointName"> The name of the restore point. </param>
         /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' retrieves information about the run-time state of a restore point. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<RestorePointResource> GetRestorePoint(string restorePointName, RestorePointExpand? expand = null, CancellationToken cancellationToken = default)
         {
