@@ -1,9 +1,9 @@
 # Release History
 
-## 1.0.0-preview.19 (2023-10-30)
-- Fix runNotebook sessionId from int to string
-- Fix placeholder links causing 404s
-- Sync expression Support From DataFactory To Synapse
+## 1.0.0-preview.19 (2023-11-07)
+### Bugs Fixed
+- Fix Error when deserializing sessionId in JSON ([#38040](https://github.com/Azure/azure-sdk-for-net/issues/38040))
+- Fix placeholder links causing 404s ([#26143](https://github.com/Azure/azure-sdk-for-net/issues/26143))
 
 ## 1.0.0-preview.18 (2023-08-08)
 - Added `authenticationType`, `containerUri`, `sasUri` and `sasToken` properties to BlobService 
