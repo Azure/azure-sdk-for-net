@@ -64,6 +64,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Get KQL script by name. </summary>
         /// <param name="kqlScriptName"> KQL script name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="kqlScriptName"/> is null. </exception>
         public virtual async Task<Response<KqlScriptResource>> GetByNameAsync(string kqlScriptName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("KqlScriptClient.GetByName");
@@ -82,6 +83,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Get KQL script by name. </summary>
         /// <param name="kqlScriptName"> KQL script name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="kqlScriptName"/> is null. </exception>
         public virtual Response<KqlScriptResource> GetByName(string kqlScriptName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("KqlScriptClient.GetByName");

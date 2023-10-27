@@ -66,6 +66,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="sparkConfigurationName"> The spark Configuration name. </param>
         /// <param name="ifNoneMatch"> ETag of the sparkConfiguration entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sparkConfigurationName"/> is null. </exception>
         public virtual async Task<Response<SparkConfigurationResource>> GetSparkConfigurationAsync(string sparkConfigurationName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SparkConfigurationClient.GetSparkConfiguration");
@@ -85,6 +86,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="sparkConfigurationName"> The spark Configuration name. </param>
         /// <param name="ifNoneMatch"> ETag of the sparkConfiguration entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sparkConfigurationName"/> is null. </exception>
         public virtual Response<SparkConfigurationResource> GetSparkConfiguration(string sparkConfigurationName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SparkConfigurationClient.GetSparkConfiguration");

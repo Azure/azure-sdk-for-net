@@ -71,14 +71,11 @@ namespace Azure.ResourceManager.AppService.Samples
             ResourceIdentifier webSiteResourceId = WebSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
             WebSiteResource webSite = client.GetWebSiteResource(webSiteResourceId);
 
-            // invoke the operation and iterate over the result
+            // invoke the operation
             string operationId = "c291433b-53ad-4c49-8cae-0a293eae1c6d";
-            await foreach (WebAppNetworkTrace item in webSite.GetNetworkTraceOperationAsync(operationId))
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
+            object result = await webSite.GetNetworkTraceOperationAsync(operationId);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         // Start a new network trace operation for a site
@@ -189,14 +186,11 @@ namespace Azure.ResourceManager.AppService.Samples
             ResourceIdentifier webSiteResourceId = WebSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
             WebSiteResource webSite = client.GetWebSiteResource(webSiteResourceId);
 
-            // invoke the operation and iterate over the result
+            // invoke the operation
             string operationId = "c291433b-53ad-4c49-8cae-0a293eae1c6d";
-            await foreach (WebAppNetworkTrace item in webSite.GetNetworkTraceOperationV2Async(operationId))
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
+            object result = await webSite.GetNetworkTraceOperationV2Async(operationId);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         // Get NetworkTraces for a site

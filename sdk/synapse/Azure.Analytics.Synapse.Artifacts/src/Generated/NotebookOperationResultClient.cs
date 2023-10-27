@@ -63,6 +63,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Get notebook operation result. </summary>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         public virtual async Task<Response> GetAsync(string operationId, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("NotebookOperationResultClient.Get");
@@ -81,6 +82,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Get notebook operation result. </summary>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         public virtual Response Get(string operationId, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("NotebookOperationResultClient.Get");

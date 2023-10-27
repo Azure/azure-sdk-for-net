@@ -64,6 +64,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Get RunNotebook Status for run id. </summary>
         /// <param name="runId"> Notebook run id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         public virtual async Task<Response<RunNotebookResponse>> GetStatusAsync(string runId, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("RunNotebookClient.GetStatus");
@@ -82,6 +83,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Get RunNotebook Status for run id. </summary>
         /// <param name="runId"> Notebook run id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         public virtual Response<RunNotebookResponse> GetStatus(string runId, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("RunNotebookClient.GetStatus");
@@ -100,6 +102,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Cancel notebook run. </summary>
         /// <param name="runId"> Notebook run id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         public virtual async Task<Response<RunNotebookResponse>> CancelRunAsync(string runId, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("RunNotebookClient.CancelRun");
@@ -118,6 +121,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Cancel notebook run. </summary>
         /// <param name="runId"> Notebook run id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         public virtual Response<RunNotebookResponse> CancelRun(string runId, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("RunNotebookClient.CancelRun");
@@ -136,6 +140,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Get RunNotebook Snapshot for run id. </summary>
         /// <param name="runId"> Notebook run id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         public virtual async Task<Response<RunNotebookSnapshotResponse>> GetSnapshotAsync(string runId, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("RunNotebookClient.GetSnapshot");
@@ -154,6 +159,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Get RunNotebook Snapshot for run id. </summary>
         /// <param name="runId"> Notebook run id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         public virtual Response<RunNotebookSnapshotResponse> GetSnapshot(string runId, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("RunNotebookClient.GetSnapshot");
