@@ -20,7 +20,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
             writer.WritePropertyName("sentiment"u8);
-            writer.WriteStringValue(Sentiment);
+            writer.WriteStringValue(Sentiment.ToSerialString());
             writer.WritePropertyName("confidenceScores"u8);
             writer.WriteObjectValue(ConfidenceScores);
             writer.WritePropertyName("offset"u8);
@@ -53,12 +53,12 @@ namespace Azure.AI.TextAnalytics.Models
         internal static SentenceSentimentInternal DeserializeSentenceSentimentInternal(JsonElement element)
         {
             string text = default;
-            string sentiment = default;
+            SentenceSentimentValue sentiment = default;
             SentimentConfidenceScores confidenceScores = default;
             int offset = default;
             int length = default;
-            Optional<IReadOnlyList<SentenceTarget>> targets = default;
-            Optional<IReadOnlyList<SentenceAssessment>> assessments = default;
+            Optional<IList<SentenceTarget>> targets = default;
+            Optional<IList<SentenceAssessment>> assessments = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"u8))
@@ -68,7 +68,7 @@ namespace Azure.AI.TextAnalytics.Models
                 }
                 if (property.NameEquals("sentiment"u8))
                 {
-                    sentiment = property.Value.GetString();
+                    sentiment = property.Value.GetString().ToSentenceSentimentValue();
                     continue;
                 }
                 if (property.NameEquals("confidenceScores"u8))

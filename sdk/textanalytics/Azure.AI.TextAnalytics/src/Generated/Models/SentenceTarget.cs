@@ -22,10 +22,9 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="length"> The length of the target. </param>
         /// <param name="text"> The target text detected. </param>
         /// <param name="relations"> The array of either assessment or target objects which is related to the target. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sentiment"/>, <paramref name="confidenceScores"/>, <paramref name="text"/> or <paramref name="relations"/> is null. </exception>
-        public SentenceTarget(string sentiment, TargetConfidenceScoreLabel confidenceScores, int offset, int length, string text, IEnumerable<TargetRelation> relations)
+        /// <exception cref="ArgumentNullException"> <paramref name="confidenceScores"/>, <paramref name="text"/> or <paramref name="relations"/> is null. </exception>
+        public SentenceTarget(TokenSentimentValue sentiment, TargetConfidenceScoreLabel confidenceScores, int offset, int length, string text, IEnumerable<TargetRelation> relations)
         {
-            Argument.AssertNotNull(sentiment, nameof(sentiment));
             Argument.AssertNotNull(confidenceScores, nameof(confidenceScores));
             Argument.AssertNotNull(text, nameof(text));
             Argument.AssertNotNull(relations, nameof(relations));
@@ -45,7 +44,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="length"> The length of the target. </param>
         /// <param name="text"> The target text detected. </param>
         /// <param name="relations"> The array of either assessment or target objects which is related to the target. </param>
-        internal SentenceTarget(string sentiment, TargetConfidenceScoreLabel confidenceScores, int offset, int length, string text, IList<TargetRelation> relations)
+        internal SentenceTarget(TokenSentimentValue sentiment, TargetConfidenceScoreLabel confidenceScores, int offset, int length, string text, IList<TargetRelation> relations)
         {
             Sentiment = sentiment;
             ConfidenceScores = confidenceScores;

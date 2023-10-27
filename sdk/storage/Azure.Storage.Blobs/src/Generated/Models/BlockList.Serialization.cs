@@ -14,8 +14,8 @@ namespace Azure.Storage.Blobs.Models
     {
         internal static BlockList DeserializeBlockList(XElement element)
         {
-            IEnumerable<BlobBlock> committedBlocks = default;
-            IEnumerable<BlobBlock> uncommittedBlocks = default;
+            IReadOnlyList<BlobBlock> committedBlocks = default;
+            IReadOnlyList<BlobBlock> uncommittedBlocks = default;
             if (element.Element("CommittedBlocks") is XElement committedBlocksElement)
             {
                 var array = new List<BlobBlock>();

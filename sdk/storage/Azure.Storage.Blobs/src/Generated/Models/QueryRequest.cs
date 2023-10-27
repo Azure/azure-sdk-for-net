@@ -20,7 +20,7 @@ namespace Azure.Storage.Blobs.Models
         {
             Argument.AssertNotNull(expression, nameof(expression));
 
-            QueryType = "SQL";
+            QueryType = QueryRequestQueryType.SQL;
             Expression = expression;
         }
         /// <summary> Gets or sets the input serialization. </summary>

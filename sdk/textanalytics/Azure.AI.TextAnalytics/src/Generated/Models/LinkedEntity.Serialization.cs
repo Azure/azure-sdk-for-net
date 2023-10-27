@@ -48,7 +48,7 @@ namespace Azure.AI.TextAnalytics
         internal static LinkedEntity DeserializeLinkedEntity(JsonElement element)
         {
             string name = default;
-            IEnumerable<LinkedEntityMatch> matches = default;
+            IList<LinkedEntityMatch> matches = default;
             string language = default;
             Optional<string> id = default;
             Uri url = default;

@@ -20,10 +20,9 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="length"> The length of the assessment. </param>
         /// <param name="text"> The assessment text detected. </param>
         /// <param name="isNegated"> The indicator representing if the assessment is negated. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sentiment"/>, <paramref name="confidenceScores"/> or <paramref name="text"/> is null. </exception>
-        public SentenceAssessment(string sentiment, TargetConfidenceScoreLabel confidenceScores, int offset, int length, string text, bool isNegated)
+        /// <exception cref="ArgumentNullException"> <paramref name="confidenceScores"/> or <paramref name="text"/> is null. </exception>
+        public SentenceAssessment(TokenSentimentValue sentiment, TargetConfidenceScoreLabel confidenceScores, int offset, int length, string text, bool isNegated)
         {
-            Argument.AssertNotNull(sentiment, nameof(sentiment));
             Argument.AssertNotNull(confidenceScores, nameof(confidenceScores));
             Argument.AssertNotNull(text, nameof(text));
 

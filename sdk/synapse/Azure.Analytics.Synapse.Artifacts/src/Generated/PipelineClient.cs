@@ -67,6 +67,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="pipelineName"> The pipeline name. </param>
         /// <param name="ifNoneMatch"> ETag of the pipeline entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/> is null. </exception>
         public virtual async Task<Response<PipelineResource>> GetPipelineAsync(string pipelineName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PipelineClient.GetPipeline");
@@ -86,6 +87,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="pipelineName"> The pipeline name. </param>
         /// <param name="ifNoneMatch"> ETag of the pipeline entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/> is null. </exception>
         public virtual Response<PipelineResource> GetPipeline(string pipelineName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PipelineClient.GetPipeline");
@@ -108,6 +110,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="startActivityName"> In recovery mode, the rerun will start from this activity. If not specified, all activities will run. </param>
         /// <param name="parameters"> Parameters of the pipeline run. These parameters will be used only if the runId is not specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/> is null. </exception>
         public virtual async Task<Response<CreateRunResponse>> CreatePipelineRunAsync(string pipelineName, string referencePipelineRunId = null, bool? isRecovery = null, string startActivityName = null, IDictionary<string, object> parameters = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PipelineClient.CreatePipelineRun");
@@ -130,6 +133,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="startActivityName"> In recovery mode, the rerun will start from this activity. If not specified, all activities will run. </param>
         /// <param name="parameters"> Parameters of the pipeline run. These parameters will be used only if the runId is not specified. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/> is null. </exception>
         public virtual Response<CreateRunResponse> CreatePipelineRun(string pipelineName, string referencePipelineRunId = null, bool? isRecovery = null, string startActivityName = null, IDictionary<string, object> parameters = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PipelineClient.CreatePipelineRun");

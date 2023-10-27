@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Storage.Blobs.Models
 {

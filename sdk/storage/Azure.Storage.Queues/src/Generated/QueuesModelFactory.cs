@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 
 namespace Azure.Storage.Queues.Models
@@ -13,5 +12,15 @@ namespace Azure.Storage.Queues.Models
     /// <summary> Model factory for models. </summary>
     public static partial class QueuesModelFactory
     {
+        /// <summary> Initializes a new instance of QueueItem. </summary>
+        /// <param name="name"> The name of the Queue. </param>
+        /// <param name="metadata"> Dictionary of &lt;string&gt;. </param>
+        /// <returns> A new <see cref="Models.QueueItem"/> instance for mocking. </returns>
+        public static QueueItem QueueItem(string name = null, IReadOnlyDictionary<string, string> metadata = null)
+        {
+            metadata ??= new Dictionary<string, string>();
+
+            return new QueueItem(name, metadata);
+        }
     }
 }

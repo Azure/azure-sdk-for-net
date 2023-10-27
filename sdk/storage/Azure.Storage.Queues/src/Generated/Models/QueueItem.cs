@@ -28,7 +28,7 @@ namespace Azure.Storage.Queues.Models
         /// <summary> Initializes a new instance of QueueItem. </summary>
         /// <param name="name"> The name of the Queue. </param>
         /// <param name="metadata"> Dictionary of &lt;string&gt;. </param>
-        internal QueueItem(string name, IDictionary<string, string> metadata)
+        internal QueueItem(string name, IReadOnlyDictionary<string, string> metadata)
         {
             Name = name;
             Metadata = metadata;

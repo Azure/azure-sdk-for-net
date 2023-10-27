@@ -16,7 +16,7 @@ namespace Azure.Storage.Blobs.Models
         {
             writer.WriteStartElement(nameHint ?? "QueryRequest");
             writer.WriteStartElement("QueryType");
-            writer.WriteValue(QueryType);
+            writer.WriteValue(QueryType.ToString());
             writer.WriteEndElement();
             writer.WriteStartElement("Expression");
             writer.WriteValue(Expression);

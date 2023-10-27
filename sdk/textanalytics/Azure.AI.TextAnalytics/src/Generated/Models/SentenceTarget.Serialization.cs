@@ -17,7 +17,7 @@ namespace Azure.AI.TextAnalytics.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("sentiment"u8);
-            writer.WriteStringValue(Sentiment);
+            writer.WriteStringValue(Sentiment.ToSerialString());
             writer.WritePropertyName("confidenceScores"u8);
             writer.WriteObjectValue(ConfidenceScores);
             writer.WritePropertyName("offset"u8);
@@ -42,7 +42,7 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 return null;
             }
-            string sentiment = default;
+            TokenSentimentValue sentiment = default;
             TargetConfidenceScoreLabel confidenceScores = default;
             int offset = default;
             int length = default;
@@ -52,7 +52,7 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 if (property.NameEquals("sentiment"u8))
                 {
-                    sentiment = property.Value.GetString();
+                    sentiment = property.Value.GetString().ToTokenSentimentValue();
                     continue;
                 }
                 if (property.NameEquals("confidenceScores"u8))

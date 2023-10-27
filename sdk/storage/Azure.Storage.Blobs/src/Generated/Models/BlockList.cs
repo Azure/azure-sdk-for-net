@@ -23,7 +23,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary> Initializes a new instance of BlockList. </summary>
         /// <param name="committedBlocks"></param>
         /// <param name="uncommittedBlocks"></param>
-        internal BlockList(IEnumerable<BlobBlock> committedBlocks, IEnumerable<BlobBlock> uncommittedBlocks)
+        internal BlockList(IReadOnlyList<BlobBlock> committedBlocks, IReadOnlyList<BlobBlock> uncommittedBlocks)
         {
             CommittedBlocks = committedBlocks;
             UncommittedBlocks = uncommittedBlocks;

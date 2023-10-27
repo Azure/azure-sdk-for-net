@@ -170,11 +170,13 @@ namespace Azure.ResourceManager.WebPubSub.Samples
                 IsClientCertEnabled = false,
                 LiveTraceConfiguration = new LiveTraceConfiguration()
                 {
+                    Enabled = "false",
                     Categories =
 {
 new LiveTraceCategory()
 {
 Name = "ConnectivityLogs",
+Enabled = "true",
 }
 },
                 },
