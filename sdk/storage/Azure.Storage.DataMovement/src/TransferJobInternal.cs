@@ -403,10 +403,13 @@ namespace Azure.Storage.DataMovement
                 status: _dataTransfer.TransferStatus).ConfigureAwait(false);
         }
 
-        internal async Task OnEnumerationComplete()
+        /// <summary>
+        /// Called when enumeration is complete whether it finished successfully, failed, or was paused.
+        /// All resources may or may not have been enumerated.
+        /// </summary>
+        protected async Task OnEnumerationComplete()
         {
             _enumerationComplete = true;
-            await _checkpointer.OnEnumerationCompleteAsync(_dataTransfer.Id).ConfigureAwait(false);
 
             // If there were no job parts enumerated and we haven't already aborted/completed the job.
             if (_jobParts.Count == 0 &&
@@ -424,6 +427,14 @@ namespace Azure.Storage.DataMovement
                 }
             }
             await CheckAndUpdateStatusAsync().ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Called when all resources have been enumerated successfully.
+        /// </summary>
+        protected async Task OnAllResourcesEnumerated()
+        {
+            await _checkpointer.OnEnumerationCompleteAsync(_dataTransfer.Id).ConfigureAwait(false);
         }
 
         internal async Task CheckAndUpdateStatusAsync()
@@ -469,9 +480,9 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        internal List<string> GetJobPartSourceResourcePaths()
+        internal HashSet<Uri> GetJobPartSourceResourcePaths()
         {
-            return _jobParts.Select( x => x._sourceResource.Uri.GetPath() ).ToList();
+            return new HashSet<Uri>(_jobParts.Select(x => x._sourceResource.Uri));
         }
 
         internal void QueueJobPart()

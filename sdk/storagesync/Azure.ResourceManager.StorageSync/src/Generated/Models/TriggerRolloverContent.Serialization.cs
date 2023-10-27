@@ -21,7 +21,10 @@ namespace Azure.ResourceManager.StorageSync.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ServerCertificate);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ServerCertificate.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(ServerCertificate))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();

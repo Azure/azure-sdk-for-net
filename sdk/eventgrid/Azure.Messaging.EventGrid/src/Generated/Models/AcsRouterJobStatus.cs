@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Messaging.EventGrid.Models
+namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Router Job Received Job Status. </summary>
     public readonly partial struct AcsRouterJobStatus : IEquatable<AcsRouterJobStatus>

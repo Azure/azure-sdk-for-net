@@ -50,7 +50,10 @@ namespace Azure.ResourceManager.ApplicationInsights
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(TemplateData);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(TemplateData.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(TemplateData))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsCollectionDefined(Galleries))

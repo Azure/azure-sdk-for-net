@@ -480,7 +480,6 @@ Uri imageUri = imageGenerations.Value.Data[0].Url;
 
 ```C# Snippet:TranscribeAudio
 using Stream audioStreamFromFile = File.OpenRead("myAudioFile.mp3");
-BinaryData audioFileData = BinaryData.FromStream(audioStreamFromFile);
 
 var transcriptionOptions = new AudioTranscriptionOptions()
 {
@@ -502,7 +501,6 @@ Console.WriteLine(transcription.Text);
 
 ```C# Snippet:TranslateAudio
 using Stream audioStreamFromFile = File.OpenRead("mySpanishAudioFile.mp3");
-BinaryData audioFileData = BinaryData.FromStream(audioStreamFromFile);
 
 var translationOptions = new AudioTranslationOptions()
 {
