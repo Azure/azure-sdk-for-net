@@ -1,4 +1,15 @@
-public static partial class ArmMobileNetworkModelFactory
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Azure;
+using Azure.Core;
+using Azure.ResourceManager.MobileNetwork;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
+
+namespace Azure.ResourceManager.MobileNetwork.Models
+{
+    public static partial class ArmMobileNetworkModelFactory
 {
     /// <summary> Initializes a new instance of MobileNetworkPacketCaptureData. </summary>
     /// <param name="id"> The id. </param>
@@ -55,4 +66,5 @@ public static partial class ArmMobileNetworkModelFactory
     /// <returns> A new <see cref="MobileNetwork.PacketCoreDataPlaneData"/> instance for mocking. </returns>
     public static PacketCoreDataPlaneData PacketCoreDataPlaneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MobileNetworkProvisioningState? provisioningState, MobileNetworkInterfaceProperties userPlaneAccessInterface)
     => PacketCoreDataPlaneData(id, name, resourceType, systemData, tags, location, provisioningState, userPlaneAccessInterface, userPlaneAccessVirtualIPv4Addresses = default);
+}
 }
