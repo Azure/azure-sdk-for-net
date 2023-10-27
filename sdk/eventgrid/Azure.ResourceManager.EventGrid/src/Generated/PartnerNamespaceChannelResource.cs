@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.EventGrid
     public partial class PartnerNamespaceChannelResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PartnerNamespaceChannelResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="partnerNamespaceName"> The partnerNamespaceName. </param>
+        /// <param name="channelName"> The channelName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string partnerNamespaceName, string channelName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/partnerNamespaces/{partnerNamespaceName}/channels/{channelName}";

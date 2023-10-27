@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.HDInsight.Containers
     public partial class HDInsightClusterPoolResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="HDInsightClusterPoolResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="clusterPoolName"> The clusterPoolName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterPoolName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusterpools/{clusterPoolName}";
