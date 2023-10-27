@@ -358,7 +358,7 @@ namespace Azure.Containers.ContainerRegistry
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_url, false);
             uri.AppendPath("/", false);
-            uri.AppendRawNextLink(nextLink, false);
+            uri.AppendPath(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -418,7 +418,7 @@ namespace Azure.Containers.ContainerRegistry
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_url, false);
             uri.AppendPath("/", false);
-            uri.AppendRawNextLink(nextLink, false);
+            uri.AppendPath(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             if (contentRange != null)
@@ -502,7 +502,7 @@ namespace Azure.Containers.ContainerRegistry
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_url, false);
             uri.AppendPath("/", false);
-            uri.AppendRawNextLink(nextLink, false);
+            uri.AppendPath(nextLink, false);
             uri.AppendQuery("digest", digest, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -580,7 +580,7 @@ namespace Azure.Containers.ContainerRegistry
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_url, false);
             uri.AppendPath("/", false);
-            uri.AppendRawNextLink(nextLink, false);
+            uri.AppendPath(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

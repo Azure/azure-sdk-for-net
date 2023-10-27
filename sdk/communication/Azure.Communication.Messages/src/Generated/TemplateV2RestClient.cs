@@ -60,7 +60,7 @@ namespace Azure.Communication.Messages
 
         /// <summary> List all templates for given ACS channel. </summary>
         /// <param name="channelId"> The Guid to use. </param>
-        /// <param name="maxPageSize"> The Int32 to use. </param>
+        /// <param name="maxPageSize"> The int? to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<ListTemplatesResponse>> ListAsync(Guid channelId, int? maxPageSize = null, CancellationToken cancellationToken = default)
         {
@@ -82,7 +82,7 @@ namespace Azure.Communication.Messages
 
         /// <summary> List all templates for given ACS channel. </summary>
         /// <param name="channelId"> The Guid to use. </param>
-        /// <param name="maxPageSize"> The Int32 to use. </param>
+        /// <param name="maxPageSize"> The int? to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<ListTemplatesResponse> List(Guid channelId, int? maxPageSize = null, CancellationToken cancellationToken = default)
         {
@@ -118,7 +118,7 @@ namespace Azure.Communication.Messages
         /// <summary> List all templates for given ACS channel. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="channelId"> The Guid to use. </param>
-        /// <param name="maxPageSize"> The Int32 to use. </param>
+        /// <param name="maxPageSize"> The int? to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public async Task<Response<ListTemplatesResponse>> ListNextPageAsync(string nextLink, Guid channelId, int? maxPageSize = null, CancellationToken cancellationToken = default)
@@ -147,7 +147,7 @@ namespace Azure.Communication.Messages
         /// <summary> List all templates for given ACS channel. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="channelId"> The Guid to use. </param>
-        /// <param name="maxPageSize"> The Int32 to use. </param>
+        /// <param name="maxPageSize"> The int? to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
         public Response<ListTemplatesResponse> ListNextPage(string nextLink, Guid channelId, int? maxPageSize = null, CancellationToken cancellationToken = default)
