@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <returns> An object representing collection of AssociationResources and their operations over a AssociationResource. </returns>
         public virtual AssociationCollection GetAssociations()
         {
-            return GetCachedClient(Client => new AssociationCollection(Client, Id));
+            return GetCachedClient(client => new AssociationCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </summary>
         /// <param name="associationName"> Name of Association. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="associationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AssociationResource>> GetAssociationAsync(string associationName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +134,8 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </summary>
         /// <param name="associationName"> Name of Association. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="associationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="associationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AssociationResource> GetAssociation(string associationName, CancellationToken cancellationToken = default)
         {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <returns> An object representing collection of FrontendResources and their operations over a FrontendResource. </returns>
         public virtual FrontendCollection GetFrontends()
         {
-            return GetCachedClient(Client => new FrontendCollection(Client, Id));
+            return GetCachedClient(client => new FrontendCollection(client, Id));
         }
 
         /// <summary>
@@ -164,8 +164,8 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </summary>
         /// <param name="frontendName"> Frontends. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="frontendName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="frontendName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="frontendName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<FrontendResource>> GetFrontendAsync(string frontendName, CancellationToken cancellationToken = default)
         {
@@ -187,8 +187,8 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </summary>
         /// <param name="frontendName"> Frontends. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="frontendName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="frontendName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="frontendName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<FrontendResource> GetFrontend(string frontendName, CancellationToken cancellationToken = default)
         {

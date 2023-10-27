@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <returns> An object representing collection of BackupProtectedItemResources and their operations over a BackupProtectedItemResource. </returns>
         public virtual BackupProtectedItemCollection GetBackupProtectedItems()
         {
-            return GetCachedClient(Client => new BackupProtectedItemCollection(Client, Id));
+            return GetCachedClient(client => new BackupProtectedItemCollection(client, Id));
         }
 
         /// <summary>
@@ -118,8 +118,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="protectedItemName"> Backed up item name whose details are to be fetched. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="protectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="protectedItemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="protectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<BackupProtectedItemResource>> GetBackupProtectedItemAsync(string protectedItemName, string filter = null, CancellationToken cancellationToken = default)
         {
@@ -143,8 +143,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="protectedItemName"> Backed up item name whose details are to be fetched. </param>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="protectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="protectedItemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="protectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<BackupProtectedItemResource> GetBackupProtectedItem(string protectedItemName, string filter = null, CancellationToken cancellationToken = default)
         {

@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <returns> An object representing collection of GitHubOwnerResources and their operations over a GitHubOwnerResource. </returns>
         public virtual GitHubOwnerCollection GetGitHubOwners()
         {
-            return GetCachedClient(Client => new GitHubOwnerCollection(Client, Id));
+            return GetCachedClient(client => new GitHubOwnerCollection(client, Id));
         }
 
         /// <summary>
@@ -121,8 +121,8 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// </summary>
         /// <param name="gitHubOwnerName"> Name of the GitHub Owner. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="gitHubOwnerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gitHubOwnerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="gitHubOwnerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<GitHubOwnerResource>> GetGitHubOwnerAsync(string gitHubOwnerName, CancellationToken cancellationToken = default)
         {
@@ -144,8 +144,8 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// </summary>
         /// <param name="gitHubOwnerName"> Name of the GitHub Owner. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="gitHubOwnerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gitHubOwnerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="gitHubOwnerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<GitHubOwnerResource> GetGitHubOwner(string gitHubOwnerName, CancellationToken cancellationToken = default)
         {
