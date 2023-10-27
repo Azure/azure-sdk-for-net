@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An object representing collection of MongoDBCollectionResources and their operations over a MongoDBCollectionResource. </returns>
         public virtual MongoDBCollectionCollection GetMongoDBCollections()
         {
-            return GetCachedClient(Client => new MongoDBCollectionCollection(Client, Id));
+            return GetCachedClient(client => new MongoDBCollectionCollection(client, Id));
         }
 
         /// <summary>
@@ -117,8 +117,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="collectionName"> Cosmos DB collection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="collectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MongoDBCollectionResource>> GetMongoDBCollectionAsync(string collectionName, CancellationToken cancellationToken = default)
         {
@@ -140,8 +140,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="collectionName"> Cosmos DB collection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="collectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MongoDBCollectionResource> GetMongoDBCollection(string collectionName, CancellationToken cancellationToken = default)
         {

@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An object representing collection of CassandraClusterBackupResources and their operations over a CassandraClusterBackupResource. </returns>
         public virtual CassandraClusterBackupResourceCollection GetCassandraClusterBackupResources()
         {
-            return GetCachedClient(Client => new CassandraClusterBackupResourceCollection(Client, Id));
+            return GetCachedClient(client => new CassandraClusterBackupResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="backupId"> Id of a restorable backup of a Cassandra cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<CassandraClusterBackupResource>> GetCassandraClusterBackupResourceAsync(string backupId, CancellationToken cancellationToken = default)
         {
@@ -134,8 +134,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="backupId"> Id of a restorable backup of a Cassandra cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backupId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<CassandraClusterBackupResource> GetCassandraClusterBackupResource(string backupId, CancellationToken cancellationToken = default)
         {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An object representing collection of CassandraDataCenterResources and their operations over a CassandraDataCenterResource. </returns>
         public virtual CassandraDataCenterCollection GetCassandraDataCenters()
         {
-            return GetCachedClient(Client => new CassandraDataCenterCollection(Client, Id));
+            return GetCachedClient(client => new CassandraDataCenterCollection(client, Id));
         }
 
         /// <summary>
@@ -164,8 +164,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="dataCenterName"> Data center name in a managed Cassandra cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataCenterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataCenterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataCenterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<CassandraDataCenterResource>> GetCassandraDataCenterAsync(string dataCenterName, CancellationToken cancellationToken = default)
         {
@@ -187,8 +187,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="dataCenterName"> Data center name in a managed Cassandra cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataCenterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataCenterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataCenterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<CassandraDataCenterResource> GetCassandraDataCenter(string dataCenterName, CancellationToken cancellationToken = default)
         {
