@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Training
 {
@@ -18,15 +17,29 @@ namespace Azure.AI.FormRecognizer.Training
         /// <param name="status"> Status of the model. </param>
         /// <param name="trainingStartedOn"> Date and time (UTC) when the model was created. </param>
         /// <param name="trainingCompletedOn"> Date and time (UTC) when the status was last updated. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        internal CustomFormModelInfo(string modelId, CustomFormModelStatus status, DateTimeOffset trainingStartedOn, DateTimeOffset trainingCompletedOn)
+        internal CustomFormModelInfo(Guid modelId, CustomFormModelStatus status, DateTimeOffset trainingStartedOn, DateTimeOffset trainingCompletedOn)
         {
-            Argument.AssertNotNull(modelId, nameof(modelId));
-
             ModelId = modelId;
             Status = status;
             TrainingStartedOn = trainingStartedOn;
             TrainingCompletedOn = trainingCompletedOn;
+        }
+
+        /// <summary> Initializes a new instance of CustomFormModelInfo. </summary>
+        /// <param name="modelId"> Model identifier. </param>
+        /// <param name="status"> Status of the model. </param>
+        /// <param name="trainingStartedOn"> Date and time (UTC) when the model was created. </param>
+        /// <param name="trainingCompletedOn"> Date and time (UTC) when the status was last updated. </param>
+        /// <param name="modelName"> Optional user defined model name (max length: 1024). </param>
+        /// <param name="properties"> Optional model attributes. </param>
+        internal CustomFormModelInfo(Guid modelId, CustomFormModelStatus status, DateTimeOffset trainingStartedOn, DateTimeOffset trainingCompletedOn, string modelName, CustomFormModelProperties properties)
+        {
+            ModelId = modelId;
+            Status = status;
+            TrainingStartedOn = trainingStartedOn;
+            TrainingCompletedOn = trainingCompletedOn;
+            ModelName = modelName;
+            Properties = properties;
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Azure.AI.FormRecognizer.Training
             {
                 return null;
             }
-            string modelId = default;
+            Guid modelId = default;
             CustomFormModelStatus status = default;
             DateTimeOffset createdDateTime = default;
             DateTimeOffset lastUpdatedDateTime = default;
@@ -29,7 +29,7 @@ namespace Azure.AI.FormRecognizer.Training
             {
                 if (property.NameEquals("modelId"u8))
                 {
-                    modelId = property.Value.GetString();
+                    modelId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("status"u8))

@@ -26,10 +26,10 @@ namespace Azure.AI.FormRecognizer.Models
             Optional<TimeSpan> valueTime = default;
             Optional<string> valuePhoneNumber = default;
             Optional<float> valueNumber = default;
-            Optional<long> valueInteger = default;
+            Optional<int> valueInteger = default;
             Optional<IReadOnlyList<FieldValue_internal>> valueArray = default;
             Optional<IReadOnlyDictionary<string, FieldValue_internal>> valueObject = default;
-            Optional<SelectionMarkState> valueSelectionMark = default;
+            Optional<FieldValueSelectionMark> valueSelectionMark = default;
             Optional<string> valueCountryRegion = default;
             Optional<string> text = default;
             Optional<IReadOnlyList<float>> boundingBox = default;
@@ -86,7 +86,7 @@ namespace Azure.AI.FormRecognizer.Models
                     {
                         continue;
                     }
-                    valueInteger = property.Value.GetInt64();
+                    valueInteger = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("valueArray"u8))
@@ -123,7 +123,7 @@ namespace Azure.AI.FormRecognizer.Models
                     {
                         continue;
                     }
-                    valueSelectionMark = property.Value.GetString().ToSelectionMarkState();
+                    valueSelectionMark = new FieldValueSelectionMark(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("valueCountryRegion"u8))

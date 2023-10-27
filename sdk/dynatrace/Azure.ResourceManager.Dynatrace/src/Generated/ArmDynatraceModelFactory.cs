@@ -62,6 +62,19 @@ namespace Azure.ResourceManager.Dynatrace.Models
             return new DynatraceSingleSignOnProperties(singleSignOnState, enterpriseAppId, singleSignOnUri, aadDomains?.ToList(), provisioningState);
         }
 
+        /// <summary> Initializes a new instance of IdentityProperties. </summary>
+        /// <param name="tenantId"> The Active Directory tenant id of the principal. </param>
+        /// <param name="principalId"> The active directory identifier of this principal. </param>
+        /// <param name="managedIdentityType"> The type of managed identity assigned to this resource. </param>
+        /// <param name="userAssignedIdentities"> The identities assigned to this resource by the user. </param>
+        /// <returns> A new <see cref="Models.IdentityProperties"/> instance for mocking. </returns>
+        public static IdentityProperties IdentityProperties(Guid? tenantId = null, string principalId = null, ManagedIdentityType managedIdentityType = default, IDictionary<string, UserAssignedIdentity> userAssignedIdentities = null)
+        {
+            userAssignedIdentities ??= new Dictionary<string, UserAssignedIdentity>();
+
+            return new IdentityProperties(tenantId, principalId, managedIdentityType, userAssignedIdentities);
+        }
+
         /// <summary> Initializes a new instance of DynatraceTagRuleData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>

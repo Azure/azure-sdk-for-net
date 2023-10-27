@@ -22,7 +22,7 @@ namespace Azure.Messaging.EventGrid.Models
             if (Optional.IsDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
-                Data.WriteTo(writer);
+                writer.WriteObjectValue(Data);
             }
             if (Optional.IsDefined(DataBase64))
             {

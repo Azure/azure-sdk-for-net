@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             {
                 Identity = new DevTestLabManagedIdentity()
                 {
-                    ManagedIdentityType = "{identityType}",
+                    ManagedIdentityType = new ManagedIdentityType("{identityType}"),
                     PrincipalId = Guid.Parse("{identityPrincipalId}"),
                     TenantId = Guid.Parse("{identityTenantId}"),
                     ClientSecretUri = new Uri("{identityClientSecretUrl}"),

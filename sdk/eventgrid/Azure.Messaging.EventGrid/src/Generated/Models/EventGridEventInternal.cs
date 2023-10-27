@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.Models
@@ -21,11 +20,12 @@ namespace Azure.Messaging.EventGrid.Models
         /// <param name="eventType"> The type of the event that occurred. </param>
         /// <param name="eventTime"> The time (in UTC) the event was generated. </param>
         /// <param name="dataVersion"> The schema version of the data object. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="subject"/>, <paramref name="eventType"/> or <paramref name="dataVersion"/> is null. </exception>
-        public EventGridEventInternal(string id, string subject, JsonElement data, string eventType, DateTimeOffset eventTime, string dataVersion)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/>, <paramref name="subject"/>, <paramref name="data"/>, <paramref name="eventType"/> or <paramref name="dataVersion"/> is null. </exception>
+        public EventGridEventInternal(string id, string subject, object data, string eventType, DateTimeOffset eventTime, string dataVersion)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(subject, nameof(subject));
+            Argument.AssertNotNull(data, nameof(data));
             Argument.AssertNotNull(eventType, nameof(eventType));
             Argument.AssertNotNull(dataVersion, nameof(dataVersion));
 
@@ -46,7 +46,7 @@ namespace Azure.Messaging.EventGrid.Models
         /// <param name="eventTime"> The time (in UTC) the event was generated. </param>
         /// <param name="metadataVersion"> The schema version of the event metadata. </param>
         /// <param name="dataVersion"> The schema version of the data object. </param>
-        internal EventGridEventInternal(string id, string topic, string subject, JsonElement data, string eventType, DateTimeOffset eventTime, string metadataVersion, string dataVersion)
+        internal EventGridEventInternal(string id, string topic, string subject, object data, string eventType, DateTimeOffset eventTime, string metadataVersion, string dataVersion)
         {
             Id = id;
             Topic = topic;
