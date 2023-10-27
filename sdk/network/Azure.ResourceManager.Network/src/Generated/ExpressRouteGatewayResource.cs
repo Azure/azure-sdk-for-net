@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of ExpressRouteConnectionResources and their operations over a ExpressRouteConnectionResource. </returns>
         public virtual ExpressRouteConnectionCollection GetExpressRouteConnections()
         {
-            return GetCachedClient(Client => new ExpressRouteConnectionCollection(Client, Id));
+            return GetCachedClient(client => new ExpressRouteConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="connectionName"> The name of the ExpressRoute connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ExpressRouteConnectionResource>> GetExpressRouteConnectionAsync(string connectionName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +134,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="connectionName"> The name of the ExpressRoute connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ExpressRouteConnectionResource> GetExpressRouteConnection(string connectionName, CancellationToken cancellationToken = default)
         {

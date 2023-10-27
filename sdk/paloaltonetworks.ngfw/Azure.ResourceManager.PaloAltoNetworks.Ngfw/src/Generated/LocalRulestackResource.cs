@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <returns> An object representing collection of LocalRulestackCertificateObjectResources and their operations over a LocalRulestackCertificateObjectResource. </returns>
         public virtual LocalRulestackCertificateObjectCollection GetLocalRulestackCertificateObjects()
         {
-            return GetCachedClient(Client => new LocalRulestackCertificateObjectCollection(Client, Id));
+            return GetCachedClient(client => new LocalRulestackCertificateObjectCollection(client, Id));
         }
 
         /// <summary>
@@ -112,8 +112,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </summary>
         /// <param name="name"> certificate name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<LocalRulestackCertificateObjectResource>> GetLocalRulestackCertificateObjectAsync(string name, CancellationToken cancellationToken = default)
         {
@@ -135,8 +135,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </summary>
         /// <param name="name"> certificate name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<LocalRulestackCertificateObjectResource> GetLocalRulestackCertificateObject(string name, CancellationToken cancellationToken = default)
         {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <returns> An object representing collection of LocalRulestackFqdnResources and their operations over a LocalRulestackFqdnResource. </returns>
         public virtual LocalRulestackFqdnCollection GetLocalRulestackFqdns()
         {
-            return GetCachedClient(Client => new LocalRulestackFqdnCollection(Client, Id));
+            return GetCachedClient(client => new LocalRulestackFqdnCollection(client, Id));
         }
 
         /// <summary>
@@ -165,8 +165,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </summary>
         /// <param name="name"> fqdn list name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<LocalRulestackFqdnResource>> GetLocalRulestackFqdnAsync(string name, CancellationToken cancellationToken = default)
         {
@@ -188,8 +188,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </summary>
         /// <param name="name"> fqdn list name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<LocalRulestackFqdnResource> GetLocalRulestackFqdn(string name, CancellationToken cancellationToken = default)
         {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <returns> An object representing collection of LocalRulestackRuleResources and their operations over a LocalRulestackRuleResource. </returns>
         public virtual LocalRulestackRuleCollection GetLocalRulestackRules()
         {
-            return GetCachedClient(Client => new LocalRulestackRuleCollection(Client, Id));
+            return GetCachedClient(client => new LocalRulestackRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -218,8 +218,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </summary>
         /// <param name="priority"> Local Rule priority. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="priority"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<LocalRulestackRuleResource>> GetLocalRulestackRuleAsync(string priority, CancellationToken cancellationToken = default)
         {
@@ -241,8 +241,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </summary>
         /// <param name="priority"> Local Rule priority. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="priority"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<LocalRulestackRuleResource> GetLocalRulestackRule(string priority, CancellationToken cancellationToken = default)
         {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <returns> An object representing collection of LocalRulestackPrefixResources and their operations over a LocalRulestackPrefixResource. </returns>
         public virtual LocalRulestackPrefixCollection GetLocalRulestackPrefixes()
         {
-            return GetCachedClient(Client => new LocalRulestackPrefixCollection(Client, Id));
+            return GetCachedClient(client => new LocalRulestackPrefixCollection(client, Id));
         }
 
         /// <summary>
@@ -271,8 +271,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </summary>
         /// <param name="name"> Local Rule priority. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<LocalRulestackPrefixResource>> GetLocalRulestackPrefixAsync(string name, CancellationToken cancellationToken = default)
         {
@@ -294,8 +294,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </summary>
         /// <param name="name"> Local Rule priority. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<LocalRulestackPrefixResource> GetLocalRulestackPrefix(string name, CancellationToken cancellationToken = default)
         {
