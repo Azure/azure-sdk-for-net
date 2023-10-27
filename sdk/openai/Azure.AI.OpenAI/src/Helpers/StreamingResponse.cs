@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 
-namespace Azure;
+namespace Azure.AI.OpenAI;
 
 /// <summary>
 /// Represents an operation response with streaming content that can be deserialized and enumerated while the response
