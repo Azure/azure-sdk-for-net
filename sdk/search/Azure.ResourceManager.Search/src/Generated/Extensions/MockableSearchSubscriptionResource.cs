@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Search.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, location, searchManagementRequestOptions);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, location, searchManagementRequestOptions);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, QuotaUsageResult.DeserializeQuotaUsageResult, UsagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetUsagesBySubscription", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, QuotaUsageResult.DeserializeQuotaUsageResult, UsagesClientDiagnostics, Pipeline, "MockableSearchSubscriptionResource.GetUsagesBySubscription", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Search.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, location, searchManagementRequestOptions);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, location, searchManagementRequestOptions);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, QuotaUsageResult.DeserializeQuotaUsageResult, UsagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetUsagesBySubscription", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, QuotaUsageResult.DeserializeQuotaUsageResult, UsagesClientDiagnostics, Pipeline, "MockableSearchSubscriptionResource.GetUsagesBySubscription", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -234,9 +234,13 @@ namespace Azure.ResourceManager.Search.Mocking
         /// <param name="skuName"> The unique search service sku name supported by Azure Cognitive Search. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="skuName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
         public virtual async Task<Response<QuotaUsageResult>> UsageBySubscriptionSkuAsync(AzureLocation location, string skuName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.UsageBySubscriptionSku");
+            Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
+
+            using var scope = DefaultClientDiagnostics.CreateScope("MockableSearchSubscriptionResource.UsageBySubscriptionSku");
             scope.Start();
             try
             {
@@ -267,9 +271,13 @@ namespace Azure.ResourceManager.Search.Mocking
         /// <param name="skuName"> The unique search service sku name supported by Azure Cognitive Search. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="skuName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
         public virtual Response<QuotaUsageResult> UsageBySubscriptionSku(AzureLocation location, string skuName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.UsageBySubscriptionSku");
+            Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
+
+            using var scope = DefaultClientDiagnostics.CreateScope("MockableSearchSubscriptionResource.UsageBySubscriptionSku");
             scope.Start();
             try
             {

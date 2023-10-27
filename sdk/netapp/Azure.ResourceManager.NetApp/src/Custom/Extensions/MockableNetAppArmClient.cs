@@ -1,48 +1,41 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable disable
 
-using System;
 using System.ComponentModel;
-using System.Threading;
-using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.NetApp.Models;
-using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.NetApp
+namespace Azure.ResourceManager.NetApp.Mocking
 {
-    /// <summary> A class to add extension methods to Azure.ResourceManager.NetApp. </summary>
-    public static partial class NetAppExtensions
+    /// <summary> A class to add extension methods to ArmClient. </summary>
+    public partial class MockableNetAppArmClient : ArmResource
     {
         /// <summary>
         /// Gets an object representing a <see cref="NetAppAccountBackupResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NetAppAccountBackupResource.CreateResourceIdentifier" /> to create a <see cref="NetAppAccountBackupResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NetAppAccountBackupResource" /> object. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppAccountBackupResource GetNetAppAccountBackupResource(this ArmClient client, ResourceIdentifier id)
+        public virtual NetAppAccountBackupResource GetNetAppAccountBackupResource(ResourceIdentifier id)
         {
-            return GetMockableNetAppArmClient(client).GetNetAppAccountBackupResource(id);
+            NetAppAccountBackupResource.ValidateResourceId(id);
+            return new NetAppAccountBackupResource(Client, id);
         }
 
         /// <summary>
         /// Gets an object representing a <see cref="NetAppVolumeBackupResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NetAppVolumeBackupResource.CreateResourceIdentifier" /> to create a <see cref="NetAppVolumeBackupResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="NetAppVolumeBackupResource" /> object. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
 
-        public static NetAppVolumeBackupResource GetNetAppVolumeBackupResource(this ArmClient client, ResourceIdentifier id)
+        public virtual NetAppVolumeBackupResource GetNetAppVolumeBackupResource(ResourceIdentifier id)
         {
-            return GetMockableNetAppArmClient(client).GetNetAppVolumeBackupResource(id);
+                NetAppVolumeBackupResource.ValidateResourceId(id);
+                return new NetAppVolumeBackupResource(Client, id);
         }
     }
 }

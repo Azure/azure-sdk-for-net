@@ -5,12 +5,11 @@
 
 using System.ComponentModel;
 using System.Threading;
-using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.MachineLearning
+namespace Azure.ResourceManager.MachineLearning.Mocking
 {
-    /// <summary> A class to add extension methods to Azure.ResourceManager.MachineLearning. </summary>
-    public static partial class MachineLearningExtensions
+    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    public partial class MockableMachineLearningSubscriptionResource : ArmResource
     {
         /// <summary>
         /// Lists all the available machine learning workspaces under the specified subscription.
@@ -25,14 +24,13 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MachineLearningWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AsyncPageable<MachineLearningWorkspaceResource> GetMachineLearningWorkspacesAsync(this SubscriptionResource subscriptionResource, string skip, CancellationToken cancellationToken)
+        public virtual AsyncPageable<MachineLearningWorkspaceResource> GetMachineLearningWorkspacesAsync(string skip = null, CancellationToken cancellationToken = default)
         {
-            return GetMockableMachineLearningSubscriptionResource(subscriptionResource).GetMachineLearningWorkspacesAsync(skip, cancellationToken);
+            return GetMachineLearningWorkspacesAsync(skip, null, cancellationToken);
         }
 
         /// <summary>
@@ -48,14 +46,13 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MachineLearningWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static Pageable<MachineLearningWorkspaceResource> GetMachineLearningWorkspaces(this SubscriptionResource subscriptionResource, string skip, CancellationToken cancellationToken)
+        public virtual Pageable<MachineLearningWorkspaceResource> GetMachineLearningWorkspaces(string skip = null, CancellationToken cancellationToken = default)
         {
-            return GetMockableMachineLearningSubscriptionResource(subscriptionResource).GetMachineLearningWorkspaces(skip, cancellationToken);
+            return GetMachineLearningWorkspaces(skip, null, cancellationToken);
         }
     }
 }

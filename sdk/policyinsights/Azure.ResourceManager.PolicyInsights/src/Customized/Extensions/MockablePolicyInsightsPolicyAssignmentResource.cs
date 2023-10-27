@@ -13,7 +13,7 @@ using Azure.ResourceManager.PolicyInsights.Models;
 namespace Azure.ResourceManager.PolicyInsights.Mocking
 {
     /// <summary> A class to add extension methods to PolicyAssignmentResource. </summary>
-    public partial class PolicyInsightsPolicyAssignmentMockingExtension : ArmResource
+    public partial class MockablePolicyInsightsPolicyAssignmentResource : ArmResource
     {
         private ClientDiagnostics _policyEventsClientDiagnostics;
         private PolicyEventsRestOperations _policyEventsRestClient;
@@ -23,15 +23,15 @@ namespace Azure.ResourceManager.PolicyInsights.Mocking
         private static readonly ResourceType _subscription = new ResourceType("Microsoft.Resources/subscriptions");
         private static readonly ResourceType _resourceGroup = new ResourceType("Microsoft.Resources/resourceGroups");
 
-        /// <summary> Initializes a new instance of the <see cref="PolicyInsightsPolicyAssignmentMockingExtension"/> class for mocking. </summary>
-        protected PolicyInsightsPolicyAssignmentMockingExtension()
+        /// <summary> Initializes a new instance of the <see cref="MockablePolicyInsightsPolicyAssignmentResource"/> class for mocking. </summary>
+        protected MockablePolicyInsightsPolicyAssignmentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PolicyInsightsPolicyAssignmentMockingExtension"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockablePolicyInsightsPolicyAssignmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal PolicyInsightsPolicyAssignmentMockingExtension(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MockablePolicyInsightsPolicyAssignmentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 

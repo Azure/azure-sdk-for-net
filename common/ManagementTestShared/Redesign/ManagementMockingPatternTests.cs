@@ -124,8 +124,6 @@ namespace Azure.ResourceManager.TestFramework
             ValidateMocking(extendedType, mockingExtensionType, method, methodOnExtension);
         }
 
-        private const string ResourceSuffix = "Resource";
-
         private static string GetMockableResourceTypeName(string rpNamespace, string rpName, string extendedResourceName)
             => $"{rpNamespace}.Mocking.Mockable{rpName}{extendedResourceName}";
 

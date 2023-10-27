@@ -41,13 +41,9 @@ namespace Azure.ResourceManager.PolicyInsights
     [CodeGenSuppress("SummarizeForSubscriptionLevelPolicyAssignmentPolicyStatesAsync", typeof(SubscriptionResource), typeof(string), typeof(PolicyStateSummaryType), typeof(PolicyQuerySettings), typeof(CancellationToken))]
     public static partial class PolicyInsightsExtensions
     {
-        private static PolicyInsightsPolicyAssignmentMockingExtension GetPolicyInsightsPolicyAssignmentMockingExtension(ArmResource resource)
+        private static MockablePolicyInsightsPolicyAssignmentResource GetMockablePolicyInsightsPolicyAssignmentResource(ArmResource resource)
         {
-            return resource.GetCachedClient((client) =>
-            {
-                return new PolicyInsightsPolicyAssignmentMockingExtension(client, resource.Id);
-            }
-            );
+            return resource.GetCachedClient(client => new MockablePolicyInsightsPolicyAssignmentResource(client, resource.Id));
         }
 
         /// <summary>
@@ -70,7 +66,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> An async collection of <see cref="PolicySummary" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PolicySummary> SummarizePolicyStatesAsync(this PolicyAssignmentResource policyAssignmentResource, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetPolicyInsightsPolicyAssignmentMockingExtension(policyAssignmentResource).SummarizePolicyStatesAsync(policyStateSummaryType, policyQuerySettings, cancellationToken);
+            return GetMockablePolicyInsightsPolicyAssignmentResource(policyAssignmentResource).SummarizePolicyStatesAsync(policyStateSummaryType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -93,7 +89,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> A collection of <see cref="PolicySummary" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PolicySummary> SummarizePolicyStates(this PolicyAssignmentResource policyAssignmentResource, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetPolicyInsightsPolicyAssignmentMockingExtension(policyAssignmentResource).SummarizePolicyStates(policyStateSummaryType, policyQuerySettings, cancellationToken);
+            return GetMockablePolicyInsightsPolicyAssignmentResource(policyAssignmentResource).SummarizePolicyStates(policyStateSummaryType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -116,7 +112,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> An async collection of <see cref="PolicyState" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PolicyState> GetPolicyStateQueryResultsAsync(this PolicyAssignmentResource policyAssignmentResource, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetPolicyInsightsPolicyAssignmentMockingExtension(policyAssignmentResource).GetPolicyStateQueryResultsAsync(policyStateType, policyQuerySettings, cancellationToken);
+            return GetMockablePolicyInsightsPolicyAssignmentResource(policyAssignmentResource).GetPolicyStateQueryResultsAsync(policyStateType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -139,7 +135,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> A collection of <see cref="PolicyState" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PolicyState> GetPolicyStateQueryResults(this PolicyAssignmentResource policyAssignmentResource, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetPolicyInsightsPolicyAssignmentMockingExtension(policyAssignmentResource).GetPolicyStateQueryResults(policyStateType, policyQuerySettings, cancellationToken);
+            return GetMockablePolicyInsightsPolicyAssignmentResource(policyAssignmentResource).GetPolicyStateQueryResults(policyStateType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -162,7 +158,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> An async collection of <see cref="PolicyEvent" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PolicyEvent> GetPolicyEventQueryResultsAsync(this PolicyAssignmentResource policyAssignmentResource, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetPolicyInsightsPolicyAssignmentMockingExtension(policyAssignmentResource).GetPolicyEventQueryResultsAsync(policyEventType, policyQuerySettings, cancellationToken);
+            return GetMockablePolicyInsightsPolicyAssignmentResource(policyAssignmentResource).GetPolicyEventQueryResultsAsync(policyEventType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -185,16 +181,12 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> A collection of <see cref="PolicyEvent" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PolicyEvent> GetPolicyEventQueryResults(this PolicyAssignmentResource policyAssignmentResource, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetPolicyInsightsPolicyAssignmentMockingExtension(policyAssignmentResource).GetPolicyEventQueryResults(policyEventType, policyQuerySettings, cancellationToken);
+            return GetMockablePolicyInsightsPolicyAssignmentResource(policyAssignmentResource).GetPolicyEventQueryResults(policyEventType, policyQuerySettings, cancellationToken);
         }
 
-        private static PolicyInsightsSubscriptionPolicyDefinitionMockingExtension GetPolicyInsightsSubscriptionPolicyDefinitionMockingExtension(ArmResource resource)
+        private static MockablePolicyInsightsSubscriptionPolicyDefinitionResource GetMockablePolicyInsightsSubscriptionPolicyDefinitionResource(ArmResource resource)
         {
-            return resource.GetCachedClient((client) =>
-            {
-                return new PolicyInsightsSubscriptionPolicyDefinitionMockingExtension(client, resource.Id);
-            }
-            );
+            return resource.GetCachedClient(client => new MockablePolicyInsightsSubscriptionPolicyDefinitionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -217,7 +209,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> An async collection of <see cref="PolicySummary" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PolicySummary> SummarizePolicyStatesAsync(this SubscriptionPolicyDefinitionResource subscriptionPolicyDefinitionResource, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetPolicyInsightsSubscriptionPolicyDefinitionMockingExtension(subscriptionPolicyDefinitionResource).SummarizePolicyStatesAsync(policyStateSummaryType, policyQuerySettings, cancellationToken);
+            return GetMockablePolicyInsightsSubscriptionPolicyDefinitionResource(subscriptionPolicyDefinitionResource).SummarizePolicyStatesAsync(policyStateSummaryType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -240,7 +232,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> A collection of <see cref="PolicySummary" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PolicySummary> SummarizePolicyStates(this SubscriptionPolicyDefinitionResource subscriptionPolicyDefinitionResource, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetPolicyInsightsSubscriptionPolicyDefinitionMockingExtension(subscriptionPolicyDefinitionResource).SummarizePolicyStates(policyStateSummaryType, policyQuerySettings, cancellationToken);
+            return GetMockablePolicyInsightsSubscriptionPolicyDefinitionResource(subscriptionPolicyDefinitionResource).SummarizePolicyStates(policyStateSummaryType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -263,7 +255,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> An async collection of <see cref="PolicyState" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PolicyState> GetPolicyStateQueryResultsAsync(this SubscriptionPolicyDefinitionResource subscriptionPolicyDefinitionResource, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetPolicyInsightsSubscriptionPolicyDefinitionMockingExtension(subscriptionPolicyDefinitionResource).GetPolicyStateQueryResultsAsync(policyStateType, policyQuerySettings, cancellationToken);
+            return GetMockablePolicyInsightsSubscriptionPolicyDefinitionResource(subscriptionPolicyDefinitionResource).GetPolicyStateQueryResultsAsync(policyStateType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -286,7 +278,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> A collection of <see cref="PolicyState" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PolicyState> GetPolicyStateQueryResults(this SubscriptionPolicyDefinitionResource subscriptionPolicyDefinitionResource, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetPolicyInsightsSubscriptionPolicyDefinitionMockingExtension(subscriptionPolicyDefinitionResource).GetPolicyStateQueryResults(policyStateType, policyQuerySettings, cancellationToken);
+            return GetMockablePolicyInsightsSubscriptionPolicyDefinitionResource(subscriptionPolicyDefinitionResource).GetPolicyStateQueryResults(policyStateType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -309,7 +301,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> An async collection of <see cref="PolicyEvent" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PolicyEvent> GetPolicyEventQueryResultsAsync(this SubscriptionPolicyDefinitionResource subscriptionPolicyDefinitionResource, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetPolicyInsightsSubscriptionPolicyDefinitionMockingExtension(subscriptionPolicyDefinitionResource).GetPolicyEventQueryResultsAsync(policyEventType, policyQuerySettings, cancellationToken);
+            return GetMockablePolicyInsightsSubscriptionPolicyDefinitionResource(subscriptionPolicyDefinitionResource).GetPolicyEventQueryResultsAsync(policyEventType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -332,16 +324,12 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> A collection of <see cref="PolicyEvent" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PolicyEvent> GetPolicyEventQueryResults(this SubscriptionPolicyDefinitionResource subscriptionPolicyDefinitionResource, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetPolicyInsightsSubscriptionPolicyDefinitionMockingExtension(subscriptionPolicyDefinitionResource).GetPolicyEventQueryResults(policyEventType, policyQuerySettings, cancellationToken);
+            return GetMockablePolicyInsightsSubscriptionPolicyDefinitionResource(subscriptionPolicyDefinitionResource).GetPolicyEventQueryResults(policyEventType, policyQuerySettings, cancellationToken);
         }
 
-        private static PolicyInsightsSubscriptionPolicySetDefinitionMockingExtension GetPolicyInsightsSubscriptionPolicySetDefinitionMockingExtension(ArmResource resource)
+        private static MockablePolicyInsightsSubscriptionPolicySetDefinitionResource GetMockablePolicyInsightsSubscriptionPolicySetDefinitionResource(ArmResource resource)
         {
-            return resource.GetCachedClient((client) =>
-            {
-                return new PolicyInsightsSubscriptionPolicySetDefinitionMockingExtension(client, resource.Id);
-            }
-            );
+            return resource.GetCachedClient(client => new MockablePolicyInsightsSubscriptionPolicySetDefinitionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -364,7 +352,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> An async collection of <see cref="PolicySummary" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PolicySummary> SummarizePolicyStatesAsync(this SubscriptionPolicySetDefinitionResource subscriptionPolicySetDefinitionResource, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetPolicyInsightsSubscriptionPolicySetDefinitionMockingExtension(subscriptionPolicySetDefinitionResource).SummarizePolicyStatesAsync(policyStateSummaryType, policyQuerySettings, cancellationToken);
+            return GetMockablePolicyInsightsSubscriptionPolicySetDefinitionResource(subscriptionPolicySetDefinitionResource).SummarizePolicyStatesAsync(policyStateSummaryType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -387,7 +375,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> A collection of <see cref="PolicySummary" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PolicySummary> SummarizePolicyStates(this SubscriptionPolicySetDefinitionResource subscriptionPolicySetDefinitionResource, PolicyStateSummaryType policyStateSummaryType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetPolicyInsightsSubscriptionPolicySetDefinitionMockingExtension(subscriptionPolicySetDefinitionResource).SummarizePolicyStates(policyStateSummaryType, policyQuerySettings, cancellationToken);
+            return GetMockablePolicyInsightsSubscriptionPolicySetDefinitionResource(subscriptionPolicySetDefinitionResource).SummarizePolicyStates(policyStateSummaryType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -410,7 +398,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> An async collection of <see cref="PolicyState" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PolicyState> GetPolicyStateQueryResultsAsync(this SubscriptionPolicySetDefinitionResource subscriptionPolicySetDefinitionResource, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetPolicyInsightsSubscriptionPolicySetDefinitionMockingExtension(subscriptionPolicySetDefinitionResource).GetPolicyStateQueryResultsAsync(policyStateType, policyQuerySettings, cancellationToken);
+            return GetMockablePolicyInsightsSubscriptionPolicySetDefinitionResource(subscriptionPolicySetDefinitionResource).GetPolicyStateQueryResultsAsync(policyStateType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -433,7 +421,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> A collection of <see cref="PolicyState" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PolicyState> GetPolicyStateQueryResults(this SubscriptionPolicySetDefinitionResource subscriptionPolicySetDefinitionResource, PolicyStateType policyStateType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetPolicyInsightsSubscriptionPolicySetDefinitionMockingExtension(subscriptionPolicySetDefinitionResource).GetPolicyStateQueryResults(policyStateType, policyQuerySettings, cancellationToken);
+            return GetMockablePolicyInsightsSubscriptionPolicySetDefinitionResource(subscriptionPolicySetDefinitionResource).GetPolicyStateQueryResults(policyStateType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -456,7 +444,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> An async collection of <see cref="PolicyEvent" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PolicyEvent> GetPolicyEventQueryResultsAsync(this SubscriptionPolicySetDefinitionResource subscriptionPolicySetDefinitionResource, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetPolicyInsightsSubscriptionPolicySetDefinitionMockingExtension(subscriptionPolicySetDefinitionResource).GetPolicyEventQueryResultsAsync(policyEventType, policyQuerySettings, cancellationToken);
+            return GetMockablePolicyInsightsSubscriptionPolicySetDefinitionResource(subscriptionPolicySetDefinitionResource).GetPolicyEventQueryResultsAsync(policyEventType, policyQuerySettings, cancellationToken);
         }
 
         /// <summary>
@@ -479,7 +467,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <returns> A collection of <see cref="PolicyEvent" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PolicyEvent> GetPolicyEventQueryResults(this SubscriptionPolicySetDefinitionResource subscriptionPolicySetDefinitionResource, PolicyEventType policyEventType, PolicyQuerySettings policyQuerySettings = null, CancellationToken cancellationToken = default)
         {
-            return GetPolicyInsightsSubscriptionPolicySetDefinitionMockingExtension(subscriptionPolicySetDefinitionResource).GetPolicyEventQueryResults(policyEventType, policyQuerySettings, cancellationToken);
+            return GetMockablePolicyInsightsSubscriptionPolicySetDefinitionResource(subscriptionPolicySetDefinitionResource).GetPolicyEventQueryResults(policyEventType, policyQuerySettings, cancellationToken);
         }
     }
 }

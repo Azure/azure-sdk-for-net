@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.PolicyInsights.Tests.Mock
 
             #region mocking setup
             var clientMock = new Mock<ArmClient>();
-            var policyAssignmentExtensionMock = new Mock<PolicyInsightsPolicyAssignmentMockingExtension>();
+            var policyAssignmentExtensionMock = new Mock<MockablePolicyInsightsPolicyAssignmentResource>();
             var policyAssignmentResourceMock = new Mock<PolicyAssignmentResource>();
             var pageableResultMock = new Mock<AsyncPageable<PolicySummary>>();
             // set up Id
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.PolicyInsights.Tests.Mock
             var pageableResult = AsyncPageable<PolicySummary>.FromPages(new[] { Page<PolicySummary>.FromValues(summaryResult, null, null) });
             policyAssignmentExtensionMock.Setup(e => e.SummarizePolicyStatesAsync(PolicyStateSummaryType.Latest, querySettings, default)).Returns(pageableResult); // creating a pageable result is quite cumbersome
             // step 2: setup the extendee to return the result
-            policyAssignmentResourceMock.Setup(a => a.GetCachedClient(It.IsAny<Func<ArmClient, PolicyInsightsPolicyAssignmentMockingExtension>>())).Returns(policyAssignmentExtensionMock.Object);
+            policyAssignmentResourceMock.Setup(a => a.GetCachedClient(It.IsAny<Func<ArmClient, MockablePolicyInsightsPolicyAssignmentResource>>())).Returns(policyAssignmentExtensionMock.Object);
             #endregion
 
             var client = clientMock.Object;

@@ -104,6 +104,31 @@ namespace Azure.ResourceManager.NetworkAnalytics
         public static Azure.AsyncPageable<Azure.ResourceManager.NetworkAnalytics.DataProductsCatalogResource> GetDataProductsCatalogsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.NetworkAnalytics.Mocking
+{
+    public partial class MockableNetworkAnalyticsArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableNetworkAnalyticsArmClient() { }
+        public virtual Azure.ResourceManager.NetworkAnalytics.DataProductResource GetDataProductResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.NetworkAnalytics.DataProductsCatalogResource GetDataProductsCatalogResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableNetworkAnalyticsResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableNetworkAnalyticsResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.NetworkAnalytics.DataProductResource> GetDataProduct(string dataProductName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkAnalytics.DataProductResource>> GetDataProductAsync(string dataProductName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.NetworkAnalytics.DataProductCollection GetDataProducts() { throw null; }
+        public virtual Azure.ResourceManager.NetworkAnalytics.DataProductsCatalogResource GetDataProductsCatalog() { throw null; }
+    }
+    public partial class MockableNetworkAnalyticsSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableNetworkAnalyticsSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.NetworkAnalytics.DataProductResource> GetDataProducts(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkAnalytics.DataProductResource> GetDataProductsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.NetworkAnalytics.DataProductsCatalogResource> GetDataProductsCatalogs(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkAnalytics.DataProductsCatalogResource> GetDataProductsCatalogsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
     public partial class AccountSasContent

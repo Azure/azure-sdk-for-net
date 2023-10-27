@@ -273,6 +273,10 @@ namespace Azure.ResourceManager.Search
         /// <description>Usages_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSearchSubscriptionResource.GetUsagesBySubscription(AzureLocation,SearchManagementRequestOptions,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The unique location name for a Microsoft Azure geographic region. </param>
@@ -281,7 +285,7 @@ namespace Azure.ResourceManager.Search
         /// <returns> An async collection of <see cref="QuotaUsageResult" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<QuotaUsageResult> GetUsagesBySubscriptionAsync(this SubscriptionResource subscriptionResource, AzureLocation location, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUsagesBySubscriptionAsync(location, searchManagementRequestOptions, cancellationToken);
+            return GetMockableSearchSubscriptionResource(subscriptionResource).GetUsagesBySubscriptionAsync(location, searchManagementRequestOptions, cancellationToken);
         }
 
         /// <summary>
@@ -296,6 +300,10 @@ namespace Azure.ResourceManager.Search
         /// <description>Usages_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSearchSubscriptionResource.GetUsagesBySubscription(AzureLocation,SearchManagementRequestOptions,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The unique location name for a Microsoft Azure geographic region. </param>
@@ -304,7 +312,7 @@ namespace Azure.ResourceManager.Search
         /// <returns> A collection of <see cref="QuotaUsageResult" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<QuotaUsageResult> GetUsagesBySubscription(this SubscriptionResource subscriptionResource, AzureLocation location, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUsagesBySubscription(location, searchManagementRequestOptions, cancellationToken);
+            return GetMockableSearchSubscriptionResource(subscriptionResource).GetUsagesBySubscription(location, searchManagementRequestOptions, cancellationToken);
         }
 
         /// <summary>
@@ -319,6 +327,10 @@ namespace Azure.ResourceManager.Search
         /// <description>UsageBySubscriptionSku</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSearchSubscriptionResource.UsageBySubscriptionSku(AzureLocation,string,SearchManagementRequestOptions,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The unique location name for a Microsoft Azure geographic region. </param>
@@ -329,9 +341,7 @@ namespace Azure.ResourceManager.Search
         /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
         public static async Task<Response<QuotaUsageResult>> UsageBySubscriptionSkuAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string skuName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).UsageBySubscriptionSkuAsync(location, skuName, searchManagementRequestOptions, cancellationToken).ConfigureAwait(false);
+            return await GetMockableSearchSubscriptionResource(subscriptionResource).UsageBySubscriptionSkuAsync(location, skuName, searchManagementRequestOptions, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -346,6 +356,10 @@ namespace Azure.ResourceManager.Search
         /// <description>UsageBySubscriptionSku</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableSearchSubscriptionResource.UsageBySubscriptionSku(AzureLocation,string,SearchManagementRequestOptions,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The unique location name for a Microsoft Azure geographic region. </param>
@@ -356,9 +370,7 @@ namespace Azure.ResourceManager.Search
         /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
         public static Response<QuotaUsageResult> UsageBySubscriptionSku(this SubscriptionResource subscriptionResource, AzureLocation location, string skuName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(skuName, nameof(skuName));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).UsageBySubscriptionSku(location, skuName, searchManagementRequestOptions, cancellationToken);
+            return GetMockableSearchSubscriptionResource(subscriptionResource).UsageBySubscriptionSku(location, skuName, searchManagementRequestOptions, cancellationToken);
         }
     }
 }

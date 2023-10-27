@@ -11,26 +11,27 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.NetworkAnalytics;
 
-namespace Azure.ResourceManager.NetworkAnalytics
+namespace Azure.ResourceManager.NetworkAnalytics.Mocking
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class MockableNetworkAnalyticsSubscriptionResource : ArmResource
     {
         private ClientDiagnostics _dataProductClientDiagnostics;
         private DataProductsRestOperations _dataProductRestClient;
         private ClientDiagnostics _dataProductsCatalogClientDiagnostics;
         private DataProductsCatalogsRestOperations _dataProductsCatalogRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
-        protected SubscriptionResourceExtensionClient()
+        /// <summary> Initializes a new instance of the <see cref="MockableNetworkAnalyticsSubscriptionResource"/> class for mocking. </summary>
+        protected MockableNetworkAnalyticsSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableNetworkAnalyticsSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MockableNetworkAnalyticsSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataProductRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataProductRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataProductResource(Client, DataProductData.DeserializeDataProductData(e)), DataProductClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataProducts", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataProductResource(Client, DataProductData.DeserializeDataProductData(e)), DataProductClientDiagnostics, Pipeline, "MockableNetworkAnalyticsSubscriptionResource.GetDataProducts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataProductRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataProductRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataProductResource(Client, DataProductData.DeserializeDataProductData(e)), DataProductClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataProducts", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataProductResource(Client, DataProductData.DeserializeDataProductData(e)), DataProductClientDiagnostics, Pipeline, "MockableNetworkAnalyticsSubscriptionResource.GetDataProducts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataProductsCatalogRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataProductsCatalogRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataProductsCatalogResource(Client, DataProductsCatalogData.DeserializeDataProductsCatalogData(e)), DataProductsCatalogClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataProductsCatalogs", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new DataProductsCatalogResource(Client, DataProductsCatalogData.DeserializeDataProductsCatalogData(e)), DataProductsCatalogClientDiagnostics, Pipeline, "MockableNetworkAnalyticsSubscriptionResource.GetDataProductsCatalogs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataProductsCatalogRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataProductsCatalogRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataProductsCatalogResource(Client, DataProductsCatalogData.DeserializeDataProductsCatalogData(e)), DataProductsCatalogClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetDataProductsCatalogs", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new DataProductsCatalogResource(Client, DataProductsCatalogData.DeserializeDataProductsCatalogData(e)), DataProductsCatalogClientDiagnostics, Pipeline, "MockableNetworkAnalyticsSubscriptionResource.GetDataProductsCatalogs", "value", "nextLink", cancellationToken);
         }
     }
 }
