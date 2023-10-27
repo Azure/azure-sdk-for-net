@@ -343,6 +343,7 @@ namespace Azure.Verticals.AgriFood.Farming
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/oauth/tokens", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (authProviderIds != null && Optional.IsCollectionDefined(authProviderIds))
             {
                 foreach (var param in authProviderIds)
@@ -385,7 +386,6 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 uri.AppendQuery("skipToken", skipToken, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

@@ -1156,14 +1156,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="trainedModelLabel"> The trained model label. </param>
-        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. Set this to "Utf16CodeUnit" for .NET strings, which are encoded as UTF-16. Allowed values: "Utf16CodeUnit". </param>
+        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. Set this to "Utf16CodeUnit" for .NET strings, which are encoded as UTF-16. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. Allowed values: "Utf16CodeUnit". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="stringIndexType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetModelEvaluationResultsAsync(string,string,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetModelEvaluationResultsAsync(string projectName, string trainedModelLabel, string stringIndexType = "Utf16CodeUnit", RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetModelEvaluationResultsAsync(string projectName, string trainedModelLabel, string stringIndexType, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
@@ -1186,14 +1186,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="trainedModelLabel"> The trained model label. </param>
-        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. Set this to "Utf16CodeUnit" for .NET strings, which are encoded as UTF-16. Allowed values: "Utf16CodeUnit". </param>
+        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. Set this to "Utf16CodeUnit" for .NET strings, which are encoded as UTF-16. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. Allowed values: "Utf16CodeUnit". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="stringIndexType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='GetModelEvaluationResults(string,string,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetModelEvaluationResults(string projectName, string trainedModelLabel, string stringIndexType = "Utf16CodeUnit", RequestContext context = null)
+        public virtual Pageable<BinaryData> GetModelEvaluationResults(string projectName, string trainedModelLabel, string stringIndexType, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
@@ -1486,9 +1486,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. Set this to "Utf16CodeUnit" for .NET strings, which are encoded as UTF-16. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. Allowed values: "Utf16CodeUnit". </param>
         /// <param name="exportedProjectFormat"> The format of the exported project file to use. Allowed values: "Conversation" | "Luis". </param>
         /// <param name="assetKind"> Kind of asset to export. </param>
-        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. Set this to "Utf16CodeUnit" for .NET strings, which are encoded as UTF-16. Allowed values: "Utf16CodeUnit". </param>
         /// <param name="trainedModelLabel"> Trained model label to export. If the trainedModelLabel is null, the default behavior is to export the current working copy. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="stringIndexType"/> is null. </exception>
@@ -1496,7 +1496,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='ExportProjectAsync(WaitUntil,string,string,string,string,string,RequestContext)']/*" />
-        public virtual async Task<Operation<BinaryData>> ExportProjectAsync(WaitUntil waitUntil, string projectName, string exportedProjectFormat = null, string assetKind = null, string stringIndexType = "Utf16CodeUnit", string trainedModelLabel = null, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> ExportProjectAsync(WaitUntil waitUntil, string projectName, string stringIndexType, string exportedProjectFormat = null, string assetKind = null, string trainedModelLabel = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(stringIndexType, nameof(stringIndexType));
@@ -1505,7 +1505,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             scope.Start();
             try
             {
-                using HttpMessage message = CreateExportProjectRequest(projectName, exportedProjectFormat, assetKind, stringIndexType, trainedModelLabel, context);
+                using HttpMessage message = CreateExportProjectRequest(projectName, stringIndexType, exportedProjectFormat, assetKind, trainedModelLabel, context);
                 return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ConversationAuthoringClient.ExportProject", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1527,9 +1527,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. Set this to "Utf16CodeUnit" for .NET strings, which are encoded as UTF-16. The default value is AutoRest.CSharp.Output.Models.Types.EnumTypeValue. Allowed values: "Utf16CodeUnit". </param>
         /// <param name="exportedProjectFormat"> The format of the exported project file to use. Allowed values: "Conversation" | "Luis". </param>
         /// <param name="assetKind"> Kind of asset to export. </param>
-        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. Set this to "Utf16CodeUnit" for .NET strings, which are encoded as UTF-16. Allowed values: "Utf16CodeUnit". </param>
         /// <param name="trainedModelLabel"> Trained model label to export. If the trainedModelLabel is null, the default behavior is to export the current working copy. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="stringIndexType"/> is null. </exception>
@@ -1537,7 +1537,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
         /// <include file="Docs/ConversationAuthoringClient.xml" path="doc/members/member[@name='ExportProject(WaitUntil,string,string,string,string,string,RequestContext)']/*" />
-        public virtual Operation<BinaryData> ExportProject(WaitUntil waitUntil, string projectName, string exportedProjectFormat = null, string assetKind = null, string stringIndexType = "Utf16CodeUnit", string trainedModelLabel = null, RequestContext context = null)
+        public virtual Operation<BinaryData> ExportProject(WaitUntil waitUntil, string projectName, string stringIndexType, string exportedProjectFormat = null, string assetKind = null, string trainedModelLabel = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(stringIndexType, nameof(stringIndexType));
@@ -1546,7 +1546,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             scope.Start();
             try
             {
-                using HttpMessage message = CreateExportProjectRequest(projectName, exportedProjectFormat, assetKind, stringIndexType, trainedModelLabel, context);
+                using HttpMessage message = CreateExportProjectRequest(projectName, stringIndexType, exportedProjectFormat, assetKind, trainedModelLabel, context);
                 return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ConversationAuthoringClient.ExportProject", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
@@ -2159,7 +2159,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             return message;
         }
 
-        internal HttpMessage CreateExportProjectRequest(string projectName, string exportedProjectFormat, string assetKind, string stringIndexType, string trainedModelLabel, RequestContext context)
+        internal HttpMessage CreateExportProjectRequest(string projectName, string stringIndexType, string exportedProjectFormat, string assetKind, string trainedModelLabel, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
             var request = message.Request;
@@ -2170,6 +2170,8 @@ namespace Azure.AI.Language.Conversations.Authoring
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/:export", false);
+            uri.AppendQuery("stringIndexType", stringIndexType, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (exportedProjectFormat != null)
             {
                 uri.AppendQuery("format", exportedProjectFormat, true);
@@ -2178,12 +2180,10 @@ namespace Azure.AI.Language.Conversations.Authoring
             {
                 uri.AppendQuery("assetKind", assetKind, true);
             }
-            uri.AppendQuery("stringIndexType", stringIndexType, true);
             if (trainedModelLabel != null)
             {
                 uri.AppendQuery("trainedModelLabel", trainedModelLabel, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -2200,11 +2200,11 @@ namespace Azure.AI.Language.Conversations.Authoring
             uri.AppendPath("/authoring/analyze-conversations/projects/", false);
             uri.AppendPath(projectName, true);
             uri.AppendPath("/:import", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (exportedProjectFormat != null)
             {
                 uri.AppendQuery("format", exportedProjectFormat, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -2623,6 +2623,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             uri.Reset(_endpoint);
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/global/prebuilt-entities", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (language != null)
             {
                 uri.AppendQuery("language", language, true);
@@ -2631,7 +2632,6 @@ namespace Azure.AI.Language.Conversations.Authoring
             {
                 uri.AppendQuery("multilingual", multilingual.Value, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
