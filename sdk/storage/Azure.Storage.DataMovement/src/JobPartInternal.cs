@@ -455,7 +455,7 @@ namespace Azure.Storage.DataMovement
         /// <returns></returns>
         public async virtual Task AddJobPartToCheckpointerAsync(int chunksTotal)
         {
-            JobPartPlanHeader header = this.ToJobPartPlanHeader(jobStatus: JobPartStatus);
+            JobPartPlanHeader header = this.ToJobPartPlanHeader();
             using (Stream stream = new MemoryStream())
             {
                 header.Serialize(stream);

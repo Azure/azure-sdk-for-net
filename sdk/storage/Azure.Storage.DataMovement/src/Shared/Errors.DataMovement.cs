@@ -70,11 +70,14 @@ namespace Azure.Storage
         public static ArgumentException InvalidJobPartNumberFileName(string fileName)
             => new ArgumentException($"Invalid Job Part Plan File: The following Job Part Plan file contains an invalid Job Part Number, could not convert to a integer: {fileName}");
 
-        public static ArgumentException InvalidPlanFileElement(string elementName, int expectedSize, int actualSize)
-            => throw new ArgumentException($"Invalid Job Part Plan File: Attempt to set element, \"{elementName}\" failed.\n Expected size: {expectedSize}\n Actual Size: {actualSize}");
+        public static ArgumentException InvalidPartHeaderElementLength(string elementName, int expectedSize, int actualSize)
+            => new ArgumentException($"Invalid Job Part Plan File: Attempt to set element, \"{elementName}\" failed.\n Expected size: {expectedSize}\n Actual Size: {actualSize}");
+
+        public static ArgumentException InvalidPartHeaderElement(string elementName, string elementValue)
+            => new ArgumentException($"Invalid Job Part Plan File: Attempt to set element, \"{elementName}\" with value \"{elementValue}\" failed.");
 
         public static ArgumentException InvalidStringToDictionary(string elementName, string value)
-            => throw new ArgumentException($"Invalid Job Part Plan File: Attempt to set element, \"{elementName}\" failed.\n Expected format stored was invalid, \"{value}\"");
+            => new ArgumentException($"Invalid Job Part Plan File: Attempt to set element, \"{elementName}\" failed.\n Expected format stored was invalid, \"{value}\"");
 
         public static IOException LocalFileAlreadyExists(string pathName)
             => new IOException($"File path `{pathName}` already exists. Cannot overwrite file.");

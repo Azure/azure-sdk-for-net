@@ -12,23 +12,6 @@ namespace Azure.Storage.DataMovement
 {
     internal static partial class JobPlanExtensions
     {
-        internal static JobPartPlanHeader GetJobPartPlanHeader(this JobPartPlanFileName fileName)
-        {
-            JobPartPlanHeader result;
-            int bufferSize = DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes;
-
-            using MemoryMappedFile memoryMappedFile = MemoryMappedFile.CreateFromFile(fileName.ToString());
-            using (MemoryMappedViewStream stream = memoryMappedFile.CreateViewStream(0, bufferSize, MemoryMappedFileAccess.Read))
-            {
-                if (!stream.CanRead)
-                {
-                    throw Errors.CannotReadMmfStream(fileName.ToString());
-                }
-                result = JobPartPlanHeader.Deserialize(stream);
-            }
-            return result;
-        }
-
         internal static async Task<string> GetHeaderUShortValue(
             this TransferCheckpointer checkpointer,
             string transferId,

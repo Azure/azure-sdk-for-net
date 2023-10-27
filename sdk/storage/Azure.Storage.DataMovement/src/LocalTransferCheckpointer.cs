@@ -328,8 +328,8 @@ namespace Azure.Storage.DataMovement
             DataTransferStatus status,
             CancellationToken cancellationToken = default)
         {
-            long length = DataMovementConstants.OneByte * 3;
-            int offset = DataMovementConstants.JobPartPlanFile.AtomicPartStatusStateIndex;
+            long length = DataMovementConstants.IntSizeInBytes;
+            int offset = DataMovementConstants.JobPartPlanFile.JobPartStatusIndex;
 
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
 
@@ -340,27 +340,13 @@ namespace Azure.Storage.DataMovement
                     // Lock MMF
                     await file.WriteLock.WaitAsync(cancellationToken).ConfigureAwait(false);
 
-                    using (MemoryMappedFile mmf = MemoryMappedFile.CreateFromFile(
-                                path: file.FilePath,
-                                mode: FileMode.Open,
-                                mapName: null,
-                                capacity: DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes))
+                    using (MemoryMappedFile mmf = MemoryMappedFile.CreateFromFile(file.FilePath, FileMode.Open))
+                    using (MemoryMappedViewAccessor accessor = mmf.CreateViewAccessor(offset, length))
                     {
-                        using (MemoryMappedViewAccessor accessor = mmf.CreateViewAccessor(offset, length))
-                        {
-                            accessor.Write(
-                                position: 0,
-                                value: (byte)status.State);
-                            accessor.Write(
-                                position: 1,
-                                value: status.HasFailedItems);
-                            accessor.Write(
-                                position: 2,
-                                value: status.HasSkippedItems);
-                            // to flush to the underlying file that supports the mmf
-                            accessor.Flush();
-                        }
+                        accessor.Write(0, (int)status.ToJobPlanStatus());
+                        accessor.Flush();
                     }
+
                     // Release MMF
                     file.WriteLock.Release();
                 }

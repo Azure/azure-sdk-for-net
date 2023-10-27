@@ -18,7 +18,7 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         public void Ctor()
         {
-            JobPartPlanHeader2 header = CreateDefaultJobPartHeader2();
+            JobPartPlanHeader header = CreateDefaultJobPartHeader();
 
             Assert.AreEqual(DataMovementConstants.JobPartPlanFile.SchemaVersion, header.Version);
             Assert.AreEqual(DefaultTransferId, header.TransferId);
@@ -38,7 +38,7 @@ namespace Azure.Storage.DataMovement.Tests
         public void Serialize()
         {
             // Arrange
-            JobPartPlanHeader2 header = CreateDefaultJobPartHeader2();
+            JobPartPlanHeader header = CreateDefaultJobPartHeader();
             string samplePath = Path.Combine("Resources", "SampleJobPartPlanFile.b3.ndmpart");
 
             using (MemoryStream headerStream = new MemoryStream())
@@ -65,7 +65,7 @@ namespace Azure.Storage.DataMovement.Tests
         public void Serialize_Error()
         {
             // Arrange
-            JobPartPlanHeader2 header = CreateDefaultJobPartHeader2();
+            JobPartPlanHeader header = CreateDefaultJobPartHeader();
 
             // Act / Assert
             Assert.Catch<ArgumentNullException>(
@@ -76,7 +76,7 @@ namespace Azure.Storage.DataMovement.Tests
         [Test]
         public void Deserialize()
         {
-            JobPartPlanHeader2 header = CreateDefaultJobPartHeader2();
+            JobPartPlanHeader header = CreateDefaultJobPartHeader();
 
             using (Stream stream = new MemoryStream())
             {
@@ -132,14 +132,14 @@ namespace Azure.Storage.DataMovement.Tests
         {
             // Act / Assert
             Assert.Catch<ArgumentNullException>(
-                () => JobPartPlanHeader2.Deserialize(default));
+                () => JobPartPlanHeader.Deserialize(default));
         }
 
         private void DeserializeAndVerify(
            Stream stream,
            string schemaVersion)
         {
-            JobPartPlanHeader2 deserializedHeader = JobPartPlanHeader2.Deserialize(stream);
+            JobPartPlanHeader deserializedHeader = JobPartPlanHeader.Deserialize(stream);
 
             // Assert
             Assert.AreEqual(schemaVersion, deserializedHeader.Version);
