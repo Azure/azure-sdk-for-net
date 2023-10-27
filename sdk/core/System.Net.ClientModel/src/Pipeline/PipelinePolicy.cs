@@ -7,18 +7,7 @@ namespace System.Net.ClientModel.Core;
 
 public abstract class PipelinePolicy
 {
-    public abstract void Process(PipelineMessage message, IPipelineEnumerator pipeline);
+    public abstract void Process(PipelineMessage message, PipelineEnumerator pipeline);
 
-    public abstract ValueTask ProcessAsync(PipelineMessage message, IPipelineEnumerator pipeline);
-}
-
-// TODO: perf tradeoff between a struct you only ever call methods on through
-// the interface it implements vs. an abstract class you have to allocate every time?
-public interface IPipelineEnumerator
-{
-    int Length { get; }
-
-    bool ProcessNext();
-
-    ValueTask<bool> ProcessNextAsync();
+    public abstract ValueTask ProcessAsync(PipelineMessage message, PipelineEnumerator pipeline);
 }

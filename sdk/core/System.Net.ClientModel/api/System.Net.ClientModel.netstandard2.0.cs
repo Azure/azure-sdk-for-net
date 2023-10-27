@@ -96,17 +96,11 @@ namespace System.Net.ClientModel.Core
         T Read(System.BinaryData data, System.Net.ClientModel.Core.ModelReaderWriterOptions options);
         System.BinaryData Write(System.Net.ClientModel.Core.ModelReaderWriterOptions options);
     }
-    public partial interface IPipelineEnumerator
-    {
-        int Length { get; }
-        bool ProcessNext();
-        System.Threading.Tasks.ValueTask<bool> ProcessNextAsync();
-    }
     public partial class KeyCredentialAuthenticationPolicy : System.Net.ClientModel.Core.PipelinePolicy
     {
         public KeyCredentialAuthenticationPolicy(System.Net.ClientModel.KeyCredential credential, string header, string? keyPrefix = null) { }
-        public override void Process(System.Net.ClientModel.Core.PipelineMessage message, System.Net.ClientModel.Core.IPipelineEnumerator pipeline) { }
-        public override System.Threading.Tasks.ValueTask ProcessAsync(System.Net.ClientModel.Core.PipelineMessage message, System.Net.ClientModel.Core.IPipelineEnumerator pipeline) { throw null; }
+        public override void Process(System.Net.ClientModel.Core.PipelineMessage message, System.Net.ClientModel.Core.PipelineEnumerator pipeline) { }
+        public override System.Threading.Tasks.ValueTask ProcessAsync(System.Net.ClientModel.Core.PipelineMessage message, System.Net.ClientModel.Core.PipelineEnumerator pipeline) { throw null; }
     }
     public abstract partial class MessageBody : System.IDisposable
     {
@@ -207,6 +201,13 @@ namespace System.Net.ClientModel.Core
         public System.Net.ClientModel.Core.ModelReaderWriterFormat Format { get { throw null; } }
         public static System.Net.ClientModel.Core.ModelReaderWriterOptions GetOptions(System.Net.ClientModel.Core.ModelReaderWriterFormat format) { throw null; }
     }
+    public abstract partial class PipelineEnumerator
+    {
+        protected PipelineEnumerator() { }
+        public abstract int Length { get; }
+        public abstract bool ProcessNext();
+        public abstract System.Threading.Tasks.ValueTask<bool> ProcessNextAsync();
+    }
     public partial class PipelineMessage : System.IDisposable
     {
         protected internal PipelineMessage(System.Net.ClientModel.Core.PipelineRequest request) { }
@@ -237,8 +238,8 @@ namespace System.Net.ClientModel.Core
     public abstract partial class PipelinePolicy
     {
         protected PipelinePolicy() { }
-        public abstract void Process(System.Net.ClientModel.Core.PipelineMessage message, System.Net.ClientModel.Core.IPipelineEnumerator pipeline);
-        public abstract System.Threading.Tasks.ValueTask ProcessAsync(System.Net.ClientModel.Core.PipelineMessage message, System.Net.ClientModel.Core.IPipelineEnumerator pipeline);
+        public abstract void Process(System.Net.ClientModel.Core.PipelineMessage message, System.Net.ClientModel.Core.PipelineEnumerator pipeline);
+        public abstract System.Threading.Tasks.ValueTask ProcessAsync(System.Net.ClientModel.Core.PipelineMessage message, System.Net.ClientModel.Core.PipelineEnumerator pipeline);
     }
     public abstract partial class PipelineRequest : System.IDisposable
     {
@@ -264,15 +265,15 @@ namespace System.Net.ClientModel.Core
         protected PipelineTransport() { }
         public abstract System.Net.ClientModel.Core.PipelineMessage CreateMessage();
         public abstract void Process(System.Net.ClientModel.Core.PipelineMessage message);
-        public override void Process(System.Net.ClientModel.Core.PipelineMessage message, System.Net.ClientModel.Core.IPipelineEnumerator pipeline) { }
+        public override void Process(System.Net.ClientModel.Core.PipelineMessage message, System.Net.ClientModel.Core.PipelineEnumerator pipeline) { }
         public abstract System.Threading.Tasks.ValueTask ProcessAsync(System.Net.ClientModel.Core.PipelineMessage message);
-        public override System.Threading.Tasks.ValueTask ProcessAsync(System.Net.ClientModel.Core.PipelineMessage message, System.Net.ClientModel.Core.IPipelineEnumerator pipeline) { throw null; }
+        public override System.Threading.Tasks.ValueTask ProcessAsync(System.Net.ClientModel.Core.PipelineMessage message, System.Net.ClientModel.Core.PipelineEnumerator pipeline) { throw null; }
     }
     public partial class ResponseBufferingPolicy : System.Net.ClientModel.Core.PipelinePolicy
     {
         public ResponseBufferingPolicy(System.TimeSpan networkTimeout) { }
-        public override void Process(System.Net.ClientModel.Core.PipelineMessage message, System.Net.ClientModel.Core.IPipelineEnumerator pipeline) { }
-        public override System.Threading.Tasks.ValueTask ProcessAsync(System.Net.ClientModel.Core.PipelineMessage message, System.Net.ClientModel.Core.IPipelineEnumerator pipeline) { throw null; }
+        public override void Process(System.Net.ClientModel.Core.PipelineMessage message, System.Net.ClientModel.Core.PipelineEnumerator pipeline) { }
+        public override System.Threading.Tasks.ValueTask ProcessAsync(System.Net.ClientModel.Core.PipelineMessage message, System.Net.ClientModel.Core.PipelineEnumerator pipeline) { throw null; }
         public static void SetBufferResponse(System.Net.ClientModel.Core.PipelineMessage message, bool bufferResponse) { }
         public static void SetNetworkTimeout(System.Net.ClientModel.Core.PipelineMessage message, System.TimeSpan networkTimeout) { }
         public static bool TryGetBufferResponse(System.Net.ClientModel.Core.PipelineMessage message, out bool bufferResponse) { throw null; }

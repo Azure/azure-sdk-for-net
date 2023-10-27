@@ -113,19 +113,19 @@ public class MessagePipeline
 
     public void Send(PipelineMessage message)
     {
-        IPipelineEnumerator enumerator = new MessagePipelineExecutor(message, _policies);
+        PipelineEnumerator enumerator = new MessagePipelineExecutor(message, _policies);
         enumerator.ProcessNext();
     }
 
     public async ValueTask SendAsync(PipelineMessage message)
     {
-        IPipelineEnumerator enumerator = new MessagePipelineExecutor(message, _policies);
+        PipelineEnumerator enumerator = new MessagePipelineExecutor(message, _policies);
         await enumerator.ProcessNextAsync().ConfigureAwait(false);
     }
 
-    private struct MessagePipelineExecutor : IPipelineEnumerator
+    private class MessagePipelineExecutor : PipelineEnumerator
     {
-        private PipelineMessage _message;
+        private readonly PipelineMessage _message;
         private ReadOnlyMemory<PipelinePolicy> _policies;
 
         public MessagePipelineExecutor(
@@ -136,9 +136,9 @@ public class MessagePipeline
             _policies = policies;
         }
 
-        public int Length => _policies.Length;
+        public override int Length => _policies.Length;
 
-        public bool ProcessNext()
+        public override bool ProcessNext()
         {
             var first = _policies.Span[0];
             _policies = _policies.Slice(1);
@@ -146,7 +146,7 @@ public class MessagePipeline
             return _policies.Length > 0;
         }
 
-        public async ValueTask<bool> ProcessNextAsync()
+        public override async ValueTask<bool> ProcessNextAsync()
         {
             var first = _policies.Span[0];
             _policies = _policies.Slice(1);
