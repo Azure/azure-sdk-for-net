@@ -104,7 +104,7 @@ namespace System.Net.ClientModel.Core
     }
     public partial class KeyCredentialAuthenticationPolicy : System.Net.ClientModel.Core.PipelinePolicy
     {
-        public KeyCredentialAuthenticationPolicy(System.Net.ClientModel.KeyCredential credential, string name, string? prefix = null) { }
+        public KeyCredentialAuthenticationPolicy(System.Net.ClientModel.KeyCredential credential, string header, string? keyPrefix = null) { }
         public override void Process(System.Net.ClientModel.Core.PipelineMessage message, System.Net.ClientModel.Core.IPipelineEnumerator pipeline) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(System.Net.ClientModel.Core.PipelineMessage message, System.Net.ClientModel.Core.IPipelineEnumerator pipeline) { throw null; }
     }
