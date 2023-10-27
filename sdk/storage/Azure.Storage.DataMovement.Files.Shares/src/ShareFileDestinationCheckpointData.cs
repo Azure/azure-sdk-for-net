@@ -9,7 +9,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
     {
         public override int Length => 0;
 
-        public override void Serialize(Stream stream)
+        protected override void Serialize(Stream stream)
         {
         }
     }

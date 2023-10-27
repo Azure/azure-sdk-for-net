@@ -28,11 +28,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="tags"> tags to be updated. </param>
         /// <param name="description"> Description of ApplicationGroup. </param>
         /// <param name="friendlyName"> Friendly name of ApplicationGroup. </param>
-        internal VirtualApplicationGroupPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, string description, string friendlyName) : base(id, name, resourceType, systemData)
+        /// <param name="showInFeed"> Boolean representing whether the applicationGroup is show in the feed. </param>
+        internal VirtualApplicationGroupPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, string description, string friendlyName, bool? showInFeed) : base(id, name, resourceType, systemData)
         {
             Tags = tags;
             Description = description;
             FriendlyName = friendlyName;
+            ShowInFeed = showInFeed;
         }
 
         /// <summary> tags to be updated. </summary>
@@ -41,5 +43,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         public string Description { get; set; }
         /// <summary> Friendly name of ApplicationGroup. </summary>
         public string FriendlyName { get; set; }
+        /// <summary> Boolean representing whether the applicationGroup is show in the feed. </summary>
+        public bool? ShowInFeed { get; set; }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.Storage.DataMovement.Blobs
 
         public override int Length => DataMovementBlobConstants.SourceCheckpointData.DataSize;
 
-        public override void Serialize(Stream stream)
+        protected override void Serialize(Stream stream)
         {
             Argument.AssertNotNull(stream, nameof(stream));
             BinaryWriter writer = new BinaryWriter(stream);

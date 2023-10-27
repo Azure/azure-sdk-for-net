@@ -37,12 +37,12 @@ namespace Azure.Storage.DataMovement
         /// Gets the source checkpoint data for this resource that will be written to the checkpointer.
         /// </summary>
         /// <returns>A <see cref="StorageResourceCheckpointData"/> containing the checkpoint information for this resource.</returns>
-        public abstract StorageResourceCheckpointData GetSourceCheckpointData();
+        protected internal abstract StorageResourceCheckpointData GetSourceCheckpointData();
 
         /// <summary>
         /// Gets the destination checkpoint data for this resource that will be written to the checkpointer.
         /// </summary>
         /// <returns>A <see cref="StorageResourceCheckpointData"/> containing the checkpoint information for this resource.</returns>
-        public abstract StorageResourceCheckpointData GetDestinationCheckpointData();
+        protected internal abstract StorageResourceCheckpointData GetDestinationCheckpointData();
     }
 }

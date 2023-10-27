@@ -22,7 +22,10 @@ namespace Azure.ResourceManager.Automation.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(UserAssignedIdentity);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(UserAssignedIdentity.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(UserAssignedIdentity))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
