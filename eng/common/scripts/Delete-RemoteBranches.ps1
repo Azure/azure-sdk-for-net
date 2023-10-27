@@ -125,7 +125,7 @@ foreach ($branch in $branches)
   if ($PSCmdlet.ShouldProcess("'$branchName' in '$RepoId'", "Deleting branch on cleanup script")) {
     gh api "repos/${RepoId}/git/refs/heads/${branchName}" -X DELETE
     if ($LASTEXITCODE) {
-      LogError "Delection of branch '$branchName` failed"
+      LogError "Deletion of branch '$branchName` failed"
     }
     Write-Host "The branch '$branchName' at commit '$commitUrl' in '$RepoId' has been deleted."
   }
