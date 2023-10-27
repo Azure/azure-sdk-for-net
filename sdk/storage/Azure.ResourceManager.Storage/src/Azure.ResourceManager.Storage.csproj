@@ -6,6 +6,7 @@
     <PackageId>Azure.ResourceManager.Storage</PackageId>
     <Description>Microsoft Azure management client SDK for Azure resource provider Microsoft.Storage.</Description>
     <PackageTags>azure;management;storage</PackageTags>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <NoWarn>$(NoWarn);CS1591;</NoWarn>
   </PropertyGroup>
 </Project>
