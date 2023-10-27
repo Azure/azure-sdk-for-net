@@ -2,7 +2,8 @@
 
 ## 1.0.0 (2023-11-01)
 ### Features Added
-
+- Perform CRUD Operations for Application Gateway for Containers (AGC).
+- Use the latest API version for (2023-11-01) 
 ### Breaking Changes
 
 ### Bugs Fixed
