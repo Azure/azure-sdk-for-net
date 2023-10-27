@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Media
         /// <returns> An object representing collection of MediaAssetFilterResources and their operations over a MediaAssetFilterResource. </returns>
         public virtual MediaAssetFilterCollection GetMediaAssetFilters()
         {
-            return GetCachedClient(Client => new MediaAssetFilterCollection(Client, Id));
+            return GetCachedClient(client => new MediaAssetFilterCollection(client, Id));
         }
 
         /// <summary>
@@ -110,8 +110,8 @@ namespace Azure.ResourceManager.Media
         /// </summary>
         /// <param name="filterName"> The Asset Filter name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MediaAssetFilterResource>> GetMediaAssetFilterAsync(string filterName, CancellationToken cancellationToken = default)
         {
@@ -133,8 +133,8 @@ namespace Azure.ResourceManager.Media
         /// </summary>
         /// <param name="filterName"> The Asset Filter name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="filterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MediaAssetFilterResource> GetMediaAssetFilter(string filterName, CancellationToken cancellationToken = default)
         {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Media
         /// <returns> An object representing collection of MediaAssetTrackResources and their operations over a MediaAssetTrackResource. </returns>
         public virtual MediaAssetTrackCollection GetMediaAssetTracks()
         {
-            return GetCachedClient(Client => new MediaAssetTrackCollection(Client, Id));
+            return GetCachedClient(client => new MediaAssetTrackCollection(client, Id));
         }
 
         /// <summary>
@@ -163,8 +163,8 @@ namespace Azure.ResourceManager.Media
         /// </summary>
         /// <param name="trackName"> The Asset Track name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="trackName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="trackName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="trackName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MediaAssetTrackResource>> GetMediaAssetTrackAsync(string trackName, CancellationToken cancellationToken = default)
         {
@@ -186,8 +186,8 @@ namespace Azure.ResourceManager.Media
         /// </summary>
         /// <param name="trackName"> The Asset Track name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="trackName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="trackName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="trackName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MediaAssetTrackResource> GetMediaAssetTrack(string trackName, CancellationToken cancellationToken = default)
         {
