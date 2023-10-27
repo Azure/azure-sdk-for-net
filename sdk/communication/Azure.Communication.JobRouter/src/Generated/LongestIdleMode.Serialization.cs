@@ -58,7 +58,7 @@ namespace Azure.Communication.JobRouter
                     continue;
                 }
             }
-            return new LongestIdleMode(kind, minConcurrentOffers, maxConcurrentOffers, Optional.ToNullable(bypassSelectors));
+            return new LongestIdleMode(kind, Optional.ToNullable(minConcurrentOffers), Optional.ToNullable(maxConcurrentOffers), Optional.ToNullable(bypassSelectors));
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

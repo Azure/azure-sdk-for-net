@@ -51,7 +51,7 @@ namespace Azure.Communication.JobRouter
         /// If false, will sort scores by ascending order. By default, set to
         /// true.
         /// </param>
-        internal ScoringRuleOptions(int? batchSize, IList<ScoringRuleParameterSelector> scoringParameters, bool? allowScoringBatchOfWorkers, bool? descendingOrder)
+        internal ScoringRuleOptions(int? batchSize, IReadOnlyList<ScoringRuleParameterSelector> scoringParameters, bool? allowScoringBatchOfWorkers, bool? descendingOrder)
         {
             BatchSize = batchSize;
             ScoringParameters = scoringParameters;

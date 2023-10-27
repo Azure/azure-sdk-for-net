@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -52,14 +51,35 @@ namespace Azure.Communication.Messages
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new SendNotificationRequest(channelRegistrationId, to.ToList(), type)
-            {
-                Content = content,
-                MediaUri = mediaUri,
-                Template = template
-            };
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(model);
+            content0.JsonWriter.WriteStartObject();
+            content0.JsonWriter.WritePropertyName("channelRegistrationId"u8);
+            content0.JsonWriter.WriteStringValue(channelRegistrationId);
+            content0.JsonWriter.WritePropertyName("to"u8);
+            content0.JsonWriter.WriteStartArray();
+            foreach (var item in to)
+            {
+                content0.JsonWriter.WriteStringValue(item);
+            }
+            content0.JsonWriter.WriteEndArray();
+            content0.JsonWriter.WritePropertyName("type"u8);
+            content0.JsonWriter.WriteStringValue(type.ToString());
+            if (Optional.IsDefined(content))
+            {
+                content0.JsonWriter.WritePropertyName("content"u8);
+                content0.JsonWriter.WriteStringValue(content);
+            }
+            if (Optional.IsDefined(mediaUri))
+            {
+                content0.JsonWriter.WritePropertyName("mediaUri"u8);
+                content0.JsonWriter.WriteStringValue(mediaUri);
+            }
+            if (Optional.IsDefined(template))
+            {
+                content0.JsonWriter.WritePropertyName("template"u8);
+                content0.JsonWriter.WriteObjectValue(template);
+            }
+            content0.JsonWriter.WriteEndObject();
             request.Content = content0;
             return message;
         }

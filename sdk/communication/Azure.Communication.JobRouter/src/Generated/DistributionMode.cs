@@ -33,7 +33,7 @@ namespace Azure.Communication.JobRouter
         /// This flag is intended more for temporary usage.
         /// By default, set to false.
         /// </param>
-        internal DistributionMode(string kind, int minConcurrentOffers, int maxConcurrentOffers, bool? bypassSelectors)
+        internal DistributionMode(string kind, int? minConcurrentOffers, int? maxConcurrentOffers, bool? bypassSelectors)
         {
             Kind = kind;
             MinConcurrentOffers = minConcurrentOffers;

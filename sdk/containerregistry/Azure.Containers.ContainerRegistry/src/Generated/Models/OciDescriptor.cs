@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -17,7 +16,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Initializes a new instance of OciDescriptor. </summary>
         public OciDescriptor()
         {
-            Urls = new ChangeTrackingList<Uri>();
+            Urls = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of OciDescriptor. </summary>
@@ -26,7 +25,7 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="digest"> Layer digest. </param>
         /// <param name="urls"> Specifies a list of URIs from which this object may be downloaded. </param>
         /// <param name="annotations"> Additional information provided through arbitrary metadata. </param>
-        internal OciDescriptor(string mediaType, long? sizeInBytes, string digest, IList<Uri> urls, OciAnnotations annotations)
+        internal OciDescriptor(string mediaType, long? sizeInBytes, string digest, IList<string> urls, OciAnnotations annotations)
         {
             MediaType = mediaType;
             SizeInBytes = sizeInBytes;

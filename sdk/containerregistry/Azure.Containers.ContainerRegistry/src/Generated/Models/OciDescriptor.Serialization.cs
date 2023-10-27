@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -38,12 +37,7 @@ namespace Azure.Containers.ContainerRegistry
                 writer.WriteStartArray();
                 foreach (var item in Urls)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item.AbsoluteUri);
+                    writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -71,7 +65,7 @@ namespace Azure.Containers.ContainerRegistry
             Optional<string> mediaType = default;
             Optional<long> size = default;
             Optional<string> digest = default;
-            Optional<IList<Uri>> urls = default;
+            Optional<IList<string>> urls = default;
             Optional<OciAnnotations> annotations = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -100,17 +94,10 @@ namespace Azure.Containers.ContainerRegistry
                     {
                         continue;
                     }
-                    List<Uri> array = new List<Uri>();
+                    List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(new Uri(item.GetString()));
-                        }
+                        array.Add(item.GetString());
                     }
                     urls = array;
                     continue;

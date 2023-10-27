@@ -30,17 +30,17 @@ namespace Azure.Containers.ContainerRegistry
             if (Optional.IsDefined(Url))
             {
                 writer.WritePropertyName("org.opencontainers.image.url"u8);
-                writer.WriteStringValue(Url.AbsoluteUri);
+                writer.WriteStringValue(Url);
             }
             if (Optional.IsDefined(Documentation))
             {
                 writer.WritePropertyName("org.opencontainers.image.documentation"u8);
-                writer.WriteStringValue(Documentation.AbsoluteUri);
+                writer.WriteStringValue(Documentation);
             }
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("org.opencontainers.image.source"u8);
-                writer.WriteStringValue(Source.AbsoluteUri);
+                writer.WriteStringValue(Source);
             }
             if (Optional.IsDefined(Version))
             {
@@ -93,9 +93,9 @@ namespace Azure.Containers.ContainerRegistry
             }
             Optional<DateTimeOffset> orgOpencontainersImageCreated = default;
             Optional<string> orgOpencontainersImageAuthors = default;
-            Optional<Uri> orgOpencontainersImageUrl = default;
-            Optional<Uri> orgOpencontainersImageDocumentation = default;
-            Optional<Uri> orgOpencontainersImageSource = default;
+            Optional<string> orgOpencontainersImageUrl = default;
+            Optional<string> orgOpencontainersImageDocumentation = default;
+            Optional<string> orgOpencontainersImageSource = default;
             Optional<string> orgOpencontainersImageVersion = default;
             Optional<string> orgOpencontainersImageRevision = default;
             Optional<string> orgOpencontainersImageVendor = default;
@@ -123,29 +123,17 @@ namespace Azure.Containers.ContainerRegistry
                 }
                 if (property.NameEquals("org.opencontainers.image.url"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    orgOpencontainersImageUrl = new Uri(property.Value.GetString());
+                    orgOpencontainersImageUrl = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("org.opencontainers.image.documentation"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    orgOpencontainersImageDocumentation = new Uri(property.Value.GetString());
+                    orgOpencontainersImageDocumentation = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("org.opencontainers.image.source"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    orgOpencontainersImageSource = new Uri(property.Value.GetString());
+                    orgOpencontainersImageSource = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("org.opencontainers.image.version"u8))

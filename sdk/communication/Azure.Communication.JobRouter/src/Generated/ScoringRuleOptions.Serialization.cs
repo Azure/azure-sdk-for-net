@@ -21,7 +21,7 @@ namespace Azure.Communication.JobRouter
                 return null;
             }
             Optional<int> batchSize = default;
-            Optional<IList<ScoringRuleParameterSelector>> scoringParameters = default;
+            Optional<IReadOnlyList<ScoringRuleParameterSelector>> scoringParameters = default;
             Optional<bool> allowScoringBatchOfWorkers = default;
             Optional<bool> descendingOrder = default;
             foreach (var property in element.EnumerateObject())

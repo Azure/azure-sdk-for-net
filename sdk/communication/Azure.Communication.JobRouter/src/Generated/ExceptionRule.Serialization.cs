@@ -20,7 +20,7 @@ namespace Azure.Communication.JobRouter
                 return null;
             }
             ExceptionTrigger trigger = default;
-            IDictionary<string, ExceptionAction> actions = default;
+            IReadOnlyDictionary<string, ExceptionAction> actions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("trigger"u8))

@@ -20,7 +20,7 @@ namespace Azure.Communication.JobRouter
         /// The string containing the expression to evaluate. Should contain return
         /// statement with calculated values.
         /// </param>
-        internal ExpressionRouterRule(string kind, string language, string expression) : base(kind)
+        internal ExpressionRouterRule(string kind, ExpressionRouterRuleLanguage? language, string expression) : base(kind)
         {
             Language = language;
             Expression = expression;

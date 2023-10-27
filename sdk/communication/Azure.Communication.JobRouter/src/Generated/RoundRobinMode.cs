@@ -27,7 +27,7 @@ namespace Azure.Communication.JobRouter
         /// This flag is intended more for temporary usage.
         /// By default, set to false.
         /// </param>
-        internal RoundRobinMode(string kind, int minConcurrentOffers, int maxConcurrentOffers, bool? bypassSelectors) : base(kind, minConcurrentOffers, maxConcurrentOffers, bypassSelectors)
+        internal RoundRobinMode(string kind, int? minConcurrentOffers, int? maxConcurrentOffers, bool? bypassSelectors) : base(kind, minConcurrentOffers, maxConcurrentOffers, bypassSelectors)
         {
         }
     }

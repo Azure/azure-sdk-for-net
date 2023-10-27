@@ -19,14 +19,18 @@ namespace Azure.Communication.JobRouter
             {
                 return null;
             }
-            Optional<string> language = default;
+            Optional<ExpressionRouterRuleLanguage> language = default;
             string expression = default;
             string kind = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("language"u8))
                 {
-                    language = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    language = new ExpressionRouterRuleLanguage(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("expression"u8))
@@ -40,7 +44,7 @@ namespace Azure.Communication.JobRouter
                     continue;
                 }
             }
-            return new ExpressionRouterRule(kind, language.Value, expression);
+            return new ExpressionRouterRule(kind, Optional.ToNullable(language), expression);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

@@ -58,7 +58,7 @@ namespace Azure.Communication.JobRouter
                     continue;
                 }
             }
-            return new RoundRobinMode(kind, minConcurrentOffers, maxConcurrentOffers, Optional.ToNullable(bypassSelectors));
+            return new RoundRobinMode(kind, Optional.ToNullable(minConcurrentOffers), Optional.ToNullable(maxConcurrentOffers), Optional.ToNullable(bypassSelectors));
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

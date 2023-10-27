@@ -50,14 +50,24 @@ namespace Azure.Communication.NetworkTraversal
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new CommunicationRelayConfigurationRequest()
-            {
-                Id = id,
-                RouteType = routeType,
-                Ttl = ttl
-            };
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteStartObject();
+            if (Optional.IsDefined(id))
+            {
+                content.JsonWriter.WritePropertyName("id"u8);
+                content.JsonWriter.WriteStringValue(id);
+            }
+            if (Optional.IsDefined(routeType))
+            {
+                content.JsonWriter.WritePropertyName("routeType"u8);
+                content.JsonWriter.WriteStringValue(routeType.Value.ToString());
+            }
+            if (Optional.IsDefined(ttl))
+            {
+                content.JsonWriter.WritePropertyName("ttl"u8);
+                content.JsonWriter.WriteNumberValue(ttl.Value);
+            }
+            content.JsonWriter.WriteEndObject();
             request.Content = content;
             return message;
         }

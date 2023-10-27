@@ -13,6 +13,22 @@ namespace Azure.Communication.Email
     /// <summary> Attachment to the email. </summary>
     public partial class EmailAttachment
     {
+        /// <summary> Initializes a new instance of EmailAttachment. </summary>
+        /// <param name="name"> Name of the attachment. </param>
+        /// <param name="contentType"> MIME type of the content being attached. </param>
+        /// <param name="content"> Base64 encoded contents of the attachment. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="contentType"/> or <paramref name="content"/> is null. </exception>
+        public EmailAttachment(string name, string contentType, byte[] content)
+        {
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(contentType, nameof(contentType));
+            Argument.AssertNotNull(content, nameof(content));
+
+            Name = name;
+            ContentType = contentType;
+            Content = content;
+        }
+
         /// <summary> Name of the attachment. </summary>
         public string Name { get; }
         /// <summary> MIME type of the content being attached. </summary>
