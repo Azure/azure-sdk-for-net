@@ -33,6 +33,6 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary> The vector representation of a search query. </summary>
-        public IReadOnlyList<float> Vector { get; set; }
+        public IReadOnlyList<float> Vector { get; }
     }
 }

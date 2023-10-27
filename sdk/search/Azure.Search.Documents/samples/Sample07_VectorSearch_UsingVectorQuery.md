@@ -132,7 +132,7 @@ Let's query the index and make sure everything works as implemented. You can als
 
 ### Single Vector Search
 
-In this vector query, the `VectorizableQueries` collection contains the vectors representing the query input. The `Fields` property specifies which vector fields are searched. The `KNearestNeighborsCount` property specifies the number of nearest neighbors to return as top hits.
+In this vector query, the `Queries` collection contains the vectors representing the query input. The `Fields` property specifies which vector fields are searched. The `KNearestNeighborsCount` property specifies the number of nearest neighbors to return as top hits.
 
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Single_Vector_Search_UsingVectorQuery
 IReadOnlyList<float> vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
@@ -142,7 +142,7 @@ SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
     {
         VectorSearch = new()
         {
-            VectorizableQueries = { new VectorQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } }
+            Queries = { new VectorQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } }
         }
     });
 
@@ -169,7 +169,7 @@ SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
     {
         VectorSearch = new()
         {
-            VectorizableQueries = { new VectorQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } }
+            Queries = { new VectorQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } }
         },
         Filter = "Category eq 'Luxury'"
     });
@@ -200,7 +200,7 @@ SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
         {
             VectorSearch = new()
             {
-                VectorizableQueries = { new VectorQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } }
+                Queries = { new VectorQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } }
             },
         });
 
@@ -217,7 +217,7 @@ Console.WriteLine($"Total number of search results:{count}");
 
 ### Multi-vector Search
 
-You can search containing multiple query vectors using the `SearchOptions.VectorSearch.VectorizableQueries` property. These queries will be executed concurrently in the search index, with each one searching for similarities in the target vector fields. The result set will be a combination of documents that matched both vector queries. One common use case for this query request is when using models like CLIP for a multi-modal vector search, where the same model can vectorize both image and non-image content.
+You can search containing multiple query vectors using the `SearchOptions.VectorSearch.Queries` property. These queries will be executed concurrently in the search index, with each one searching for similarities in the target vector fields. The result set will be a combination of documents that matched both vector queries. One common use case for this query request is when using models like CLIP for a multi-modal vector search, where the same model can vectorize both image and non-image content.
 
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Multi_Vector_Search_UsingVectorQuery
 IReadOnlyList<float> vectorizedDescriptionQuery = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
@@ -228,7 +228,7 @@ SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
     {
         VectorSearch = new()
         {
-            VectorizableQueries = {
+            Queries = {
                 new VectorQuery(vectorizedDescriptionQuery) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } },
                 new VectorQuery(vectorizedCategoryQuery) { KNearestNeighborsCount = 3, Fields = { "CategoryVector" } } }
         },
@@ -247,7 +247,7 @@ Console.WriteLine($"Total number of search results:{count}");
 
 ### Multi-field Vector Search
 
-You can set the `SearchOptions.VectorSearch.VectorizableQueries.Fields` property to multiple vector fields. For example, we have vector fields named `DescriptionVector` and `CategoryVector`. Your vector query executes over both the `DescriptionVector` and `CategoryVector` fields, which must have the same embedding space since they share the same query vector.
+You can set the `SearchOptions.VectorSearch.Queries.Fields` property to multiple vector fields. For example, we have vector fields named `DescriptionVector` and `CategoryVector`. Your vector query executes over both the `DescriptionVector` and `CategoryVector` fields, which must have the same embedding space since they share the same query vector.
 
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Multi_Fields_Vector_Search_UsingVectorQuery
 IReadOnlyList<float> vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
@@ -257,7 +257,7 @@ SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
     {
         VectorSearch = new()
         {
-            VectorizableQueries = { new VectorQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector", "CategoryVector" } } }
+            Queries = { new VectorQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector", "CategoryVector" } } }
         }
     });
 

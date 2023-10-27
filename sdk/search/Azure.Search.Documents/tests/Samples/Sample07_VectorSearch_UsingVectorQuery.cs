@@ -41,7 +41,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                     {
                         VectorSearch = new()
                         {
-                            VectorizableQueries = { new VectorQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } }
+                            Queries = { new VectorQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } }
                         }
                     });
 
@@ -86,7 +86,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                     {
                         VectorSearch = new()
                         {
-                            VectorizableQueries = { new VectorQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } }
+                            Queries = { new VectorQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } }
                         },
                         Filter = "Category eq 'Luxury'"
                     });
@@ -133,7 +133,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                         {
                             VectorSearch = new()
                             {
-                                VectorizableQueries = { new VectorQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } }
+                                Queries = { new VectorQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } }
                             },
                         });
 
@@ -179,7 +179,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                     {
                         VectorSearch = new()
                         {
-                            VectorizableQueries = {
+                            Queries = {
                                 new VectorQuery(vectorizedDescriptionQuery) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } },
                                 new VectorQuery(vectorizedCategoryQuery) { KNearestNeighborsCount = 3, Fields = { "CategoryVector" } } }
                         },
@@ -226,7 +226,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                     {
                         VectorSearch = new()
                         {
-                            VectorizableQueries = { new VectorQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector", "CategoryVector" } } }
+                            Queries = { new VectorQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector", "CategoryVector" } } }
                         }
                     });
 

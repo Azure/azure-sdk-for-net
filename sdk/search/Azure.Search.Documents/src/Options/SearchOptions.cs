@@ -192,26 +192,26 @@ namespace Azure.Search.Documents
         [CodeGenMember("SemanticErrorHandling")]
         private SemanticErrorMode? SemanticErrorMode
         {
-            get { return SemanticSearch?.SemanticErrorMode; }
-            set { SemanticSearch.SemanticErrorMode = value; }
+            get { return SemanticSearch?.ErrorMode; }
+            set { SemanticSearch.ErrorMode = value; }
         }
 
         /// <summary> Allows the user to set an upper bound on the amount of time it takes for semantic enrichment to finish processing before the request fails. </summary>
         private int? SemanticMaxWaitInMilliseconds
         {
-            get { return SemanticSearch?.SemanticMaxWaitInMilliseconds?.Milliseconds; }
-            set { SemanticSearch.SemanticMaxWaitInMilliseconds = value.HasValue ? TimeSpan.FromMilliseconds(value.Value) : null; }
+            get { return SemanticSearch?.MaxWait?.Milliseconds; }
+            set { SemanticSearch.MaxWait = value.HasValue ? TimeSpan.FromMilliseconds(value.Value) : null; }
         }
 
         /// <summary> The query parameters for multi-vector search queries. </summary>
         [CodeGenMember("VectorQueries")]
         private IList<VectorizableQuery> VectorizableQueries
         {
-            get { return VectorSearch?.VectorizableQueries; }
-            set { VectorSearch.VectorizableQueries = value; }
+            get { return VectorSearch?.Queries; }
+            set { VectorSearch.Queries = value; }
         }
 
-        /// <summary> Determines whether or not filters are applied before or after the vector search is performed. Default is 'preFilter' for new indexes. </summary>
+        /// <summary> Determines whether or not filters are applied before or after the vector search is performed. Default is <see cref="VectorFilterMode.PreFilter" /> for new indexes. </summary>
         [CodeGenMember("VectorFilterMode")]
         private VectorFilterMode? FilterMode
         {

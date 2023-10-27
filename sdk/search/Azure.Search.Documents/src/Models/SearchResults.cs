@@ -241,12 +241,12 @@ namespace Azure.Search.Documents.Models
                 else if (prop.NameEquals(Constants.SearchSemanticErrorReasonKeyJson.EncodedUtf8Bytes) &&
                     prop.Value.ValueKind != JsonValueKind.Null)
                 {
-                    results.SemanticSearch.SemanticErrorReason = new SemanticErrorReason(prop.Value.GetString());
+                    results.SemanticSearch.ErrorReason = new SemanticErrorReason(prop.Value.GetString());
                 }
                 else if (prop.NameEquals(Constants.SearchSemanticSearchResultsTypeKeyJson.EncodedUtf8Bytes) &&
                     prop.Value.ValueKind != JsonValueKind.Null)
                 {
-                    results.SemanticSearch.SemanticSearchResultsType = new SemanticSearchResultsType(prop.Value.GetString());
+                    results.SemanticSearch.ResultsType = new SemanticSearchResultsType(prop.Value.GetString());
                 }
                 else if (prop.NameEquals(Constants.SearchAnswersKeyJson.EncodedUtf8Bytes) &&
                     prop.Value.ValueKind != JsonValueKind.Null)
@@ -287,10 +287,10 @@ namespace Azure.Search.Documents.Models
         public IReadOnlyList<AnswerResult> Answers { get; internal set; }
 
         /// <summary> Reason that a partial response was returned for a semantic search request. </summary>
-        public SemanticErrorReason? SemanticErrorReason { get; internal set; }
+        public SemanticErrorReason? ErrorReason { get; internal set; }
 
         /// <summary> Type of partial response that was returned for a semantic search request. </summary>
-        public SemanticSearchResultsType? SemanticSearchResultsType { get; internal set; }
+        public SemanticSearchResultsType? ResultsType { get; internal set; }
     }
 
     /// <summary>

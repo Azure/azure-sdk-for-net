@@ -48,7 +48,7 @@ namespace Azure.Search.Documents
         /// can be passed between different client libraries.  Changing this
         /// value requires updating <see cref="Azure.Search.Documents.Models.SearchContinuationToken"/>.
         /// </summary>
-        internal const ServiceVersion ContinuationTokenVersion = ServiceVersion.V2023_11_01;
+        internal const ServiceVersion ContinuationTokenVersion = ServiceVersion.V2020_06_30;
 
         /// <summary>
         /// Gets the <see cref="ServiceVersion"/> of the service API used when

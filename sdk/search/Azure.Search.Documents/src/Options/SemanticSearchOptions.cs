@@ -39,9 +39,9 @@ namespace Azure.Search.Documents.Models
         public QueryCaption QueryCaption { get; set; }
 
         /// <summary> Allows the user to choose whether a semantic call should fail completely (default / current behavior), or to return partial results. </summary>
-        public SemanticErrorMode? SemanticErrorMode { get; set; }
+        public SemanticErrorMode? ErrorMode { get; set; }
 
         /// <summary> Allows the user to set an upper bound on the amount of time it takes for semantic enrichment to finish processing before the request fails. </summary>
-        public TimeSpan? SemanticMaxWaitInMilliseconds { get; set; }
+        public TimeSpan? MaxWait { get; set; }
     }
 }

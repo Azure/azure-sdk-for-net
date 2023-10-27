@@ -39,7 +39,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> An optional list of token filters to use when breaking the given text. </summary>
         public IList<TokenFilterName> TokenFilters { get; }
 
-        /// <summary> An optional list of character filters to use when breaking the given text. </summary>
+        /// <summary> An optional list of character filters to use when breaking the given text. You can obtain default filters from <see cref="CharFilterName" />.</summary>
         public IList<string> CharFilters { get; }
     }
 }

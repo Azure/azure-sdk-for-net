@@ -39,19 +39,19 @@ SearchIndex searchIndex = new(indexName)
     SemanticSearch = new()
     {
         Configurations =
-    {
-           new SemanticConfiguration("my-semantic-config", new()
-           {
-               TitleField = new SemanticField("HotelName"),
-               ContentFields =
-               {
-                   new SemanticField("Description")
-               },
-               KeywordFields =
-               {
-                   new SemanticField("Category")
-               }
-           })
+        {
+            new SemanticConfiguration("my-semantic-config", new()
+            {
+                TitleField = new SemanticField("HotelName"),
+                ContentFields =
+                {
+                    new SemanticField("Description")
+                },
+                KeywordFields =
+                {
+                    new SemanticField("Category")
+                }
+            })
         }
     }
 };
@@ -150,9 +150,9 @@ Let's query the index and make sure everything works as implemented. You can als
 
 ### Vector Semantic Hybrid Query
 
-In the context of vector search, the `VectorizableQueries` collection contains the vectors that represent the query input. The `Fields` property specifies which vector fields should be searched. The `KNearestNeighborsCount` property determines the number of nearest neighbors to retrieve as the top hits.
+In the context of vector search, the `Queries` collection contains the vectors that represent the query input. The `Fields` property specifies which vector fields should be searched. The `KNearestNeighborsCount` property determines the number of nearest neighbors to retrieve as the top hits.
 
-For semantic search, we will specify `SemanticConfigurationName` as `SearchQueryType.Semantic`. We will use the same `SemanticConfigurationName` that we defined when creating the index. Additionally, we have enabled `QueryCaption` and `QueryAnswer` in the `SearchOptions.SemanticSearch` to obtain the caption and answer in the response. With these configurations in place, we are prepared to execute a vector semantic hybrid query.
+For semantic search, we will specify `SemanticSearch.SemanticConfigurationName` as `SearchQueryType.Semantic`. We will use the same `SemanticConfigurationName` that we defined when creating the index. Additionally, we have enabled `SemanticSearch.QueryCaption` and `SemanticSearch.QueryAnswer` in the `SearchOptions` to obtain the caption and answer in the response. With these configurations in place, we are prepared to execute a vector semantic hybrid query.
 
 With these settings in place, we're ready to execute a vector semantic hybrid query:
 
@@ -165,7 +165,7 @@ SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
      {
          VectorSearch = new()
          {
-             VectorizableQueries = { new VectorQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } }
+             Queries = { new VectorQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } }
          },
          SemanticSearch = new()
          {

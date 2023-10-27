@@ -679,7 +679,8 @@ namespace Azure.Search.Documents
             bool async,
             CancellationToken cancellationToken)
         {
-            if (key == null) { throw new ArgumentNullException(nameof(key)); }
+            if (key == null)
+            { throw new ArgumentNullException(nameof(key)); }
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchClient)}.{nameof(GetDocument)}");
             scope.Start();
             try
@@ -696,14 +697,14 @@ namespace Azure.Search.Documents
                 switch (message.Response.Status)
                 {
                     case 200:
-                    {
-                        T value = await message.Response.ContentStream.DeserializeAsync<T>(
-                            Serializer,
-                            async,
-                            cancellationToken)
-                            .ConfigureAwait(false);
-                        return Response.FromValue(value, message.Response);
-                    }
+                        {
+                            T value = await message.Response.ContentStream.DeserializeAsync<T>(
+                                Serializer,
+                                async,
+                                cancellationToken)
+                                .ConfigureAwait(false);
+                            return Response.FromValue(value, message.Response);
+                        }
                     default:
                         throw new RequestFailedException(message.Response);
                 }
@@ -872,14 +873,18 @@ namespace Azure.Search.Documents
         /// </para>
         /// </remarks>
         public virtual Response<SearchResults<T>> Search<T>(
-            SearchOptions options = null,
-            CancellationToken cancellationToken = default) =>
-            SearchInternal<T>(
+            SearchOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            return SearchInternal<T>(
                 null,
                 options,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
+        }
 
         /// <summary>
         /// Searches for documents in the search index.
@@ -922,14 +927,18 @@ namespace Azure.Search.Documents
         /// </para>
         /// </remarks>
         public async virtual Task<Response<SearchResults<T>>> SearchAsync<T>(
-            SearchOptions options = null,
-            CancellationToken cancellationToken = default) =>
-            await SearchInternal<T>(
+            SearchOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            return await SearchInternal<T>(
                 null,
                 options,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
+        }
 
         private async Task<Response<SearchResults<T>>> SearchInternal<T>(
             string searchText,
@@ -977,21 +986,21 @@ namespace Azure.Search.Documents
                 switch (message.Response.Status)
                 {
                     case 200:
-                    {
-                        // Deserialize the results
-                        SearchResults<T> results = await SearchResults<T>.DeserializeAsync(
-                            message.Response.ContentStream,
-                            Serializer,
-                            async,
-                            cancellationToken)
-                            .ConfigureAwait(false);
+                        {
+                            // Deserialize the results
+                            SearchResults<T> results = await SearchResults<T>.DeserializeAsync(
+                                message.Response.ContentStream,
+                                Serializer,
+                                async,
+                                cancellationToken)
+                                .ConfigureAwait(false);
 
-                        // Cache the client and raw response so we can abstract
-                        // away server-side paging
-                        results.ConfigurePaging(this, message.Response);
+                            // Cache the client and raw response so we can abstract
+                            // away server-side paging
+                            results.ConfigurePaging(this, message.Response);
 
-                        return Response.FromValue(results, message.Response);
-                    }
+                            return Response.FromValue(results, message.Response);
+                        }
                     default:
                         throw new RequestFailedException(message.Response);
                 }
@@ -1146,15 +1155,15 @@ namespace Azure.Search.Documents
                 switch (message.Response.Status)
                 {
                     case 200:
-                    {
-                        SuggestResults<T> suggestions = await SuggestResults<T>.DeserializeAsync(
-                            message.Response.ContentStream,
-                            Serializer,
-                            async,
-                            cancellationToken)
-                            .ConfigureAwait(false);
-                        return Response.FromValue(suggestions, message.Response);
-                    }
+                        {
+                            SuggestResults<T> suggestions = await SuggestResults<T>.DeserializeAsync(
+                                message.Response.ContentStream,
+                                Serializer,
+                                async,
+                                cancellationToken)
+                                .ConfigureAwait(false);
+                            return Response.FromValue(suggestions, message.Response);
+                        }
                     default:
                         throw new RequestFailedException(message.Response);
                 }
@@ -1445,45 +1454,45 @@ namespace Azure.Search.Documents
                 {
                     case 200:
                     case 207: // Process partial failures the same as successes
-                    {
-                        // Parse the results
-                        using JsonDocument document = async ?
-                            await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false) :
-                            JsonDocument.Parse(message.Response.ContentStream, default);
-                        IndexDocumentsResult value = IndexDocumentsResult.DeserializeIndexDocumentsResult(document.RootElement);
-
-                        // Optionally throw an exception if any individual
-                        // write failed
-                        if (options?.ThrowOnAnyError == true)
                         {
-                            List<RequestFailedException> failures = new List<RequestFailedException>();
-                            List<string> failedKeys = new List<string>();
-                            foreach (IndexingResult result in value.Results)
+                            // Parse the results
+                            using JsonDocument document = async ?
+                                await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false) :
+                                JsonDocument.Parse(message.Response.ContentStream, default);
+                            IndexDocumentsResult value = IndexDocumentsResult.DeserializeIndexDocumentsResult(document.RootElement);
+
+                            // Optionally throw an exception if any individual
+                            // write failed
+                            if (options?.ThrowOnAnyError == true)
                             {
-                                if (!result.Succeeded)
+                                List<RequestFailedException> failures = new List<RequestFailedException>();
+                                List<string> failedKeys = new List<string>();
+                                foreach (IndexingResult result in value.Results)
                                 {
-                                    failedKeys.Add(result.Key);
-                                    var ex = new RequestFailedException(result.Status, result.ErrorMessage);
-                                    ex.Data["Key"] = result.Key;
-                                    failures.Add(ex);
+                                    if (!result.Succeeded)
+                                    {
+                                        failedKeys.Add(result.Key);
+                                        var ex = new RequestFailedException(result.Status, result.ErrorMessage);
+                                        ex.Data["Key"] = result.Key;
+                                        failures.Add(ex);
+                                    }
+                                }
+                                if (failures.Count > 0)
+                                {
+                                    throw new AggregateException(
+                                        $"Failed to index document(s): " + string.Join(", ", failedKeys) + ".",
+                                        failures);
                                 }
                             }
-                            if (failures.Count > 0)
-                            {
-                                throw new AggregateException(
-                                    $"Failed to index document(s): " + string.Join(", ", failedKeys) + ".",
-                                    failures);
-                            }
+
+                            // TODO: #10593 - Ensure input and output document
+                            // order is in sync while batching (this is waiting on
+                            // both our broader batching story and adding something
+                            // on the client that can potentially indicate the Key
+                            // column since we have no way to tell that at present.)
+
+                            return Response.FromValue(value, message.Response);
                         }
-
-                        // TODO: #10593 - Ensure input and output document
-                        // order is in sync while batching (this is waiting on
-                        // both our broader batching story and adding something
-                        // on the client that can potentially indicate the Key
-                        // column since we have no way to tell that at present.)
-
-                        return Response.FromValue(value, message.Response);
-                    }
                     default:
                         throw new RequestFailedException(message.Response);
                 }

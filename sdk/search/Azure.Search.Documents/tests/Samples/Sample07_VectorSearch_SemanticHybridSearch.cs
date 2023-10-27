@@ -45,7 +45,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                      {
                          VectorSearch = new()
                          {
-                             VectorizableQueries = { new VectorQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } }
+                             Queries = { new VectorQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } }
                          },
                          SemanticSearch = new()
                          {
@@ -131,19 +131,19 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                 SemanticSearch = new()
                 {
                     Configurations =
-                {
-                       new SemanticConfiguration("my-semantic-config", new()
-                       {
-                           TitleField = new SemanticField("HotelName"),
-                           ContentFields =
-                           {
-                               new SemanticField("Description")
-                           },
-                           KeywordFields =
-                           {
-                               new SemanticField("Category")
-                           }
-                       })
+                    {
+                        new SemanticConfiguration("my-semantic-config", new()
+                        {
+                            TitleField = new SemanticField("HotelName"),
+                            ContentFields =
+                            {
+                                new SemanticField("Description")
+                            },
+                            KeywordFields =
+                            {
+                                new SemanticField("Category")
+                            }
+                        })
                     }
                 }
             };

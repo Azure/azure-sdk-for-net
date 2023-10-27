@@ -266,19 +266,19 @@ namespace Azure.Search.Documents.Tests.Models
         public void VectorSearchOption()
         {
             SearchOptions searchOptions = new();
-            Assert.IsEmpty(searchOptions.VectorSearch.VectorizableQueries);
+            Assert.IsEmpty(searchOptions.VectorSearch.Queries);
             Assert.IsNull(searchOptions.VectorSearch.FilterMode);
 
             IReadOnlyList<float> vectors = new List<float> { -0.011113605f, -0.01902812f, 0.047524072f };
-            searchOptions.VectorSearch.VectorizableQueries = new[] { new VectorQuery(vectors) };
+            searchOptions.VectorSearch.Queries = new[] { new VectorQuery(vectors) };
 
-            Assert.AreEqual(1, searchOptions.VectorSearch.VectorizableQueries.Count);
-            Assert.AreEqual(vectors, (searchOptions.VectorSearch.VectorizableQueries[0] as VectorQuery).Vector);
+            Assert.AreEqual(1, searchOptions.VectorSearch.Queries.Count);
+            Assert.AreEqual(vectors, (searchOptions.VectorSearch.Queries[0] as VectorQuery).Vector);
             Assert.IsNull(searchOptions.VectorSearch.FilterMode);
 
             searchOptions.VectorSearch.FilterMode = VectorFilterMode.PostFilter;
-            Assert.AreEqual(1, searchOptions.VectorSearch.VectorizableQueries.Count);
-            Assert.AreEqual(vectors, (searchOptions.VectorSearch.VectorizableQueries[0] as VectorQuery).Vector);
+            Assert.AreEqual(1, searchOptions.VectorSearch.Queries.Count);
+            Assert.AreEqual(vectors, (searchOptions.VectorSearch.Queries[0] as VectorQuery).Vector);
             Assert.AreEqual(VectorFilterMode.PostFilter, searchOptions.VectorSearch.FilterMode);
         }
     }

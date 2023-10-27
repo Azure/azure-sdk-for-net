@@ -42,7 +42,7 @@ namespace Azure.Search.Documents.Tests
                    {
                        VectorSearch = new()
                        {
-                           VectorizableQueries = { new VectorQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } }
+                           Queries = { new VectorQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } }
                        },
                        Select = { "hotelId", "hotelName" }
                    });
@@ -65,7 +65,7 @@ namespace Azure.Search.Documents.Tests
                     {
                         VectorSearch = new()
                         {
-                            VectorizableQueries = { new VectorQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } }
+                            Queries = { new VectorQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } }
                         },
                         Filter = "category eq 'Budget'",
                         Select = { "hotelId", "hotelName", "category" }
@@ -90,7 +90,7 @@ namespace Azure.Search.Documents.Tests
                     {
                         VectorSearch = new()
                         {
-                            VectorizableQueries = { new VectorQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } }
+                            Queries = { new VectorQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } }
                         },
                         Select = { "hotelId", "hotelName" },
                     });
@@ -115,7 +115,7 @@ namespace Azure.Search.Documents.Tests
                     {
                         VectorSearch = new()
                         {
-                            VectorizableQueries = { new VectorQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } }
+                            Queries = { new VectorQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } }
                         },
                         SemanticSearch = new()
                         {

@@ -105,19 +105,19 @@ namespace Azure.Search.Documents.Tests.Samples
                 SemanticSearch = new()
                 {
                     Configurations =
-                {
-                       new SemanticConfiguration("my-semantic-config", new()
-                       {
-                           TitleField = new SemanticField("HotelName"),
-                           ContentFields =
-                           {
-                               new SemanticField("Description")
-                           },
-                           KeywordFields =
-                           {
-                               new SemanticField("Category")
-                           }
-                       })
+                    {
+                        new SemanticConfiguration("my-semantic-config", new()
+                        {
+                            TitleField = new SemanticField("HotelName"),
+                            ContentFields =
+                            {
+                                new SemanticField("Description")
+                            },
+                            KeywordFields =
+                            {
+                                new SemanticField("Category")
+                            }
+                        })
                     }
                 }
             };

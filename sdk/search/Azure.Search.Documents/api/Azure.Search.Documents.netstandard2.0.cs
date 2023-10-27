@@ -67,9 +67,9 @@ namespace Azure.Search.Documents
         public virtual Azure.Response<Azure.Search.Documents.Models.IndexDocumentsResult> MergeDocuments<T>(System.Collections.Generic.IEnumerable<T> documents, Azure.Search.Documents.IndexDocumentsOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Models.IndexDocumentsResult>> MergeOrUploadDocumentsAsync<T>(System.Collections.Generic.IEnumerable<T> documents, Azure.Search.Documents.IndexDocumentsOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Search.Documents.Models.IndexDocumentsResult> MergeOrUploadDocuments<T>(System.Collections.Generic.IEnumerable<T> documents, Azure.Search.Documents.IndexDocumentsOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Models.SearchResults<T>>> SearchAsync<T>(Azure.Search.Documents.SearchOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Models.SearchResults<T>>> SearchAsync<T>(Azure.Search.Documents.SearchOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Models.SearchResults<T>>> SearchAsync<T>(string searchText, Azure.Search.Documents.SearchOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Search.Documents.Models.SearchResults<T>> Search<T>(Azure.Search.Documents.SearchOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Search.Documents.Models.SearchResults<T>> Search<T>(Azure.Search.Documents.SearchOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Search.Documents.Models.SearchResults<T>> Search<T>(string searchText, Azure.Search.Documents.SearchOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Search.Documents.Models.SuggestResults<T>>> SuggestAsync<T>(string searchText, string suggesterName, Azure.Search.Documents.SuggestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Search.Documents.Models.SuggestResults<T>> Suggest<T>(string searchText, string suggesterName, Azure.Search.Documents.SuggestOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -3052,11 +3052,11 @@ namespace Azure.Search.Documents.Models
     public partial class SemanticSearchOptions
     {
         public SemanticSearchOptions() { }
+        public Azure.Search.Documents.Models.SemanticErrorMode? ErrorMode { get { throw null; } set { } }
+        public System.TimeSpan? MaxWait { get { throw null; } set { } }
         public Azure.Search.Documents.Models.QueryAnswer QueryAnswer { get { throw null; } set { } }
         public Azure.Search.Documents.Models.QueryCaption QueryCaption { get { throw null; } set { } }
         public string SemanticConfigurationName { get { throw null; } set { } }
-        public Azure.Search.Documents.Models.SemanticErrorMode? SemanticErrorMode { get { throw null; } set { } }
-        public System.TimeSpan? SemanticMaxWaitInMilliseconds { get { throw null; } set { } }
     }
     public partial class SemanticSearchResult
     {
@@ -3068,8 +3068,8 @@ namespace Azure.Search.Documents.Models
     {
         public SemanticSearchResults() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Models.AnswerResult> Answers { get { throw null; } }
-        public Azure.Search.Documents.Models.SemanticErrorReason? SemanticErrorReason { get { throw null; } }
-        public Azure.Search.Documents.Models.SemanticSearchResultsType? SemanticSearchResultsType { get { throw null; } }
+        public Azure.Search.Documents.Models.SemanticErrorReason? ErrorReason { get { throw null; } }
+        public Azure.Search.Documents.Models.SemanticSearchResultsType? ResultsType { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SemanticSearchResultsType : System.IEquatable<Azure.Search.Documents.Models.SemanticSearchResultsType>
@@ -3129,13 +3129,13 @@ namespace Azure.Search.Documents.Models
     public partial class VectorQuery : Azure.Search.Documents.Models.VectorizableQuery
     {
         public VectorQuery(System.Collections.Generic.IReadOnlyList<float> vector) { }
-        public System.Collections.Generic.IReadOnlyList<float> Vector { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<float> Vector { get { throw null; } }
     }
     public partial class VectorSearchOptions
     {
         public VectorSearchOptions() { }
         public Azure.Search.Documents.Models.VectorFilterMode? FilterMode { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Search.Documents.Models.VectorizableQuery> VectorizableQueries { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Search.Documents.Models.VectorizableQuery> Queries { get { throw null; } }
     }
 }
 namespace Microsoft.Extensions.Azure

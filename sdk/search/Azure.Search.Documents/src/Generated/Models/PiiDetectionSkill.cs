@@ -54,6 +54,8 @@ namespace Azure.Search.Documents.Indexes.Models
         }
         /// <summary> A value between 0 and 1 that be used to only include entities whose confidence score is greater than the value specified. If not set (default), or if explicitly set to null, all entities will be included. </summary>
         public double? MinPrecision { get; set; }
+        /// <summary> A parameter that provides various ways to mask the personal information detected in the input text. Default is 'none'. </summary>
+        public PiiDetectionSkillMaskingMode? MaskingMode { get; set; }
         /// <summary> The character used to mask the text if the maskingMode parameter is set to replace. Default is '*'. </summary>
         public string Mask { get; set; }
         /// <summary> The version of the model to use when calling the Text Analytics service. It will default to the latest available when not specified. We recommend you do not specify this value unless absolutely necessary. </summary>

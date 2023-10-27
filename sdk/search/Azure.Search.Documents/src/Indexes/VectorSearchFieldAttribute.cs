@@ -7,7 +7,7 @@ using Azure.Search.Documents.Indexes.Models;
 namespace Azure.Search.Documents.Indexes
 {
     /// <summary>
-    /// Attributes a vector field using a collection of single type.
+    /// Attributes a ReadOnlyMemory&lt;float&gt; vector field, allowing its use with the VectorSearch indexes.
     /// </summary>
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
     public class VectorSearchFieldAttribute : Attribute, ISearchFieldAttribute
@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Indexes
         public int VectorSearchDimensions { get; set; }
 
         /// <summary>
-        /// The name of the vector search algorithm configuration that specifies the algorithm and optional parameters for searching the vector field.
+        /// The <see cref="VectorSearchProfile.Name"/> of the vector search profile configured in the index's <see cref="VectorSearch.Profiles"/> that specifies the algorithm to use when searching the vector field.
         /// </summary>
         public string VectorSearchProfileName { get; set; }
 

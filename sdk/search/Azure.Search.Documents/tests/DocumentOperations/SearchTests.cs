@@ -7,7 +7,6 @@ using System.Globalization;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure.Core.GeoJson;
 using Azure.Core.Serialization;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
@@ -1037,12 +1036,12 @@ namespace Azure.Search.Documents.Tests
                 SemanticConfigurationName = "my-config",
                 QueryAnswer = new QueryAnswer() { AnswerType = QueryAnswerType.Extractive, Count = 5, Threshold = 0.9 },
                 QueryCaption = new QueryCaption() { CaptionType = QueryCaptionType.Extractive, HighlightEnabled = true },
-                SemanticErrorMode = SemanticErrorMode.Partial,
-                SemanticMaxWaitInMilliseconds = TimeSpan.FromMilliseconds(1000),
+                ErrorMode = SemanticErrorMode.Partial,
+                MaxWait = TimeSpan.FromMilliseconds(1000),
             };
             source.VectorSearch = new VectorSearchOptions()
             {
-                VectorizableQueries = { new VectorQuery(VectorSearchEmbeddings.SearchVectorizeDescription) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector", "CategoryVector" } } },
+                Queries = { new VectorQuery(VectorSearchEmbeddings.SearchVectorizeDescription) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector", "CategoryVector" } } },
                 FilterMode = VectorFilterMode.PostFilter
             };
             SearchOptions clonedSearchOptions = source.Clone();
@@ -1061,9 +1060,9 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual(source.SemanticSearch.QueryAnswer.Threshold, clonedSearchOptions.SemanticSearch.QueryAnswer.Threshold);
             Assert.AreEqual(source.SemanticSearch.QueryCaption.CaptionType, clonedSearchOptions.SemanticSearch.QueryCaption.CaptionType);
             Assert.AreEqual(source.SemanticSearch.QueryCaption.HighlightEnabled, clonedSearchOptions.SemanticSearch.QueryCaption.HighlightEnabled);
-            Assert.AreEqual(source.SemanticSearch.SemanticErrorMode, clonedSearchOptions.SemanticSearch.SemanticErrorMode);
-            Assert.AreEqual(source.SemanticSearch.SemanticMaxWaitInMilliseconds, clonedSearchOptions.SemanticSearch.SemanticMaxWaitInMilliseconds);
-            Assert.AreEqual(source.VectorSearch.VectorizableQueries, clonedSearchOptions.VectorSearch.VectorizableQueries);
+            Assert.AreEqual(source.SemanticSearch.ErrorMode, clonedSearchOptions.SemanticSearch.ErrorMode);
+            Assert.AreEqual(source.SemanticSearch.MaxWait, clonedSearchOptions.SemanticSearch.MaxWait);
+            Assert.AreEqual(source.VectorSearch.Queries, clonedSearchOptions.VectorSearch.Queries);
             Assert.AreEqual(source.VectorSearch.FilterMode, clonedSearchOptions.VectorSearch.FilterMode);
         }
 
