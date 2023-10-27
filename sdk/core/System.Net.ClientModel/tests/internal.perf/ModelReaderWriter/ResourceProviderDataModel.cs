@@ -15,7 +15,7 @@ namespace System.Net.ClientModel.Tests.Internal.Perf
 
         protected override ResourceProviderData CastFromResponse() => (ResourceProviderData)_result;
 
-        protected override PipelineMessageContent CastToPipelineContent() => _model;
+        protected override MessageBody CastToPipelineContent() => _model;
 
         protected override ResourceProviderData Read(JsonElement jsonElement)
             => ResourceProviderData.DeserializeResourceProviderData(jsonElement, _options);

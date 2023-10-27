@@ -35,14 +35,14 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
         void IUtf8JsonContentWriteable.Write(Utf8JsonWriter writer) => ((IJsonModel<ModelX>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
 
-        public static implicit operator PipelineMessageContent(ModelX modelX)
+        public static implicit operator MessageBody(ModelX modelX)
         {
             if (modelX == null)
             {
                 return null;
             }
 
-            return PipelineMessageContent.CreateContent(modelX, ModelReaderWriterOptions.DefaultWireOptions);
+            return MessageBody.CreateContent(modelX, ModelReaderWriterOptions.DefaultWireOptions);
         }
 
         public static explicit operator ModelX(Result result)

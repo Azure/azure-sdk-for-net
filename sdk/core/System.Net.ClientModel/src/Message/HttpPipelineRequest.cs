@@ -20,7 +20,7 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
     private const string AuthorizationHeaderName = "Authorization";
 
     private Uri? _uri;
-    private PipelineMessageContent? _content;
+    private MessageBody? _content;
 
     private readonly MessageRequestHeaders _headers;
 
@@ -45,7 +45,7 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
         set => _uri = value;
     }
 
-    public override PipelineMessageContent? Content
+    public override MessageBody? Content
     {
         get => _content;
         set => _content = value;
@@ -57,7 +57,7 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
         set;
     }
 
-    public override PipelineMessageHeaders Headers => _headers;
+    public override MessageHeaders Headers => _headers;
 
     // PATCH value needed for compat with pre-net5.0 TFMs
     private static readonly HttpMethod _patchMethod = new HttpMethod("PATCH");
@@ -131,10 +131,10 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
 
     private sealed class PipelineContentAdapter : HttpContent
     {
-        private readonly PipelineMessageContent _content;
+        private readonly MessageBody _content;
         private readonly CancellationToken _cancellationToken;
 
-        public PipelineContentAdapter(PipelineMessageContent content, CancellationToken cancellationToken)
+        public PipelineContentAdapter(MessageBody content, CancellationToken cancellationToken)
         {
             ClientUtilities.AssertNotNull(content, nameof(content));
 

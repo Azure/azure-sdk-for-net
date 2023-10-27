@@ -21,7 +21,7 @@ namespace Azure.Core
 
         public override string ReasonPhrase => _response.ReasonPhrase;
 
-        public override PipelineMessageContent? Content
+        public override MessageBody? Content
         {
             get
             {
@@ -43,7 +43,7 @@ namespace Azure.Core
         }
 
         // TODO: implement
-        public override PipelineMessageHeaders Headers => throw new NotSupportedException();
+        public override MessageHeaders Headers => throw new NotSupportedException();
 
         public override void Dispose()
         {

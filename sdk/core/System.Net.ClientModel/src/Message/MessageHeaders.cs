@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace System.Net.ClientModel.Core;
 
-public abstract class PipelineMessageHeaders
+public abstract class MessageHeaders
 {
     // TODO: why do we need this?
     public abstract int Count { get; }

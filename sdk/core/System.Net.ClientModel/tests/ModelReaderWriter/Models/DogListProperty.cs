@@ -41,9 +41,9 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests.Models
             return DeserializeDogListProperty(jsonDocument.RootElement, ModelReaderWriterOptions.DefaultWireOptions);
         }
 
-        public static implicit operator PipelineMessageContent(DogListProperty dog)
+        public static implicit operator MessageBody(DogListProperty dog)
         {
-            return PipelineMessageContent.CreateContent(dog, ModelReaderWriterOptions.DefaultWireOptions);
+            return MessageBody.CreateContent(dog, ModelReaderWriterOptions.DefaultWireOptions);
         }
 
         #region Serialization

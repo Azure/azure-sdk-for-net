@@ -19,14 +19,14 @@ namespace System.Net.ClientModel.Tests.Client.ResourceManager.Resources
     /// </summary>
     public partial class ResourceProviderData
     {
-        public static implicit operator PipelineMessageContent(ResourceProviderData resourceProviderData)
+        public static implicit operator MessageBody(ResourceProviderData resourceProviderData)
         {
             if (resourceProviderData == null)
             {
                 return null;
             }
 
-            return PipelineMessageContent.CreateContent(resourceProviderData, ModelReaderWriterOptions.DefaultWireOptions);
+            return MessageBody.CreateContent(resourceProviderData, ModelReaderWriterOptions.DefaultWireOptions);
         }
 
         public static explicit operator ResourceProviderData(Result result)

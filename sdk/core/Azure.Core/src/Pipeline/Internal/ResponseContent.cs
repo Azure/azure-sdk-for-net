@@ -14,7 +14,7 @@ namespace Azure.Core.Pipeline
     /// This class adapts Response.ContentStream and Response.Content to a
     /// PipelineResponse.Content.
     /// </summary>
-    internal class ResponseContent : PipelineMessageContent
+    internal class ResponseContent : MessageBody
     {
         private const int CopyToBufferSize = 81920;
 

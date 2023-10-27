@@ -5,18 +5,18 @@ using System.Net.ClientModel.Internal;
 
 namespace System.Net.ClientModel.Core
 {
-    public class StatusErrorClassifier : ResponseErrorClassifier
+    public class ResponseStatusClassifier : MessageClassifier
     {
         // We need 10 ulongs to represent status codes 100 - 599.
         private const int Length = 10;
         private ulong[] _successCodes;
 
         /// <summary>
-        /// Creates a new instance of <see cref="StatusErrorClassifier"/>
+        /// Creates a new instance of <see cref="ResponseStatusClassifier"/>
         /// </summary>
         /// <param name="successStatusCodes">The status codes that this classifier will consider
         /// not to be errors.</param>
-        public StatusErrorClassifier(ReadOnlySpan<ushort> successStatusCodes)
+        public ResponseStatusClassifier(ReadOnlySpan<ushort> successStatusCodes)
         {
             _successCodes = new ulong[Length];
 

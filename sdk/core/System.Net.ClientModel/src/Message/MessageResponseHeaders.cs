@@ -8,7 +8,7 @@ using System.Runtime.CompilerServices;
 
 namespace System.Net.ClientModel.Core;
 
-internal class MessageResponseHeaders : PipelineMessageHeaders
+internal class MessageResponseHeaders : MessageHeaders
 {
     private readonly HttpResponseMessage _httpResponse;
     private readonly HttpContent _httpResponseContent;

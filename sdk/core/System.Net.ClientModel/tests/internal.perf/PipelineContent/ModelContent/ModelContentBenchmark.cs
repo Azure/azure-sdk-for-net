@@ -7,9 +7,9 @@ namespace System.Net.ClientModel.Tests.Internal.Perf
 {
     public abstract class ModelContentBenchmark<T> : RequestContentBenchmark<IModel<T>> where T : class, IModel<T>
     {
-        protected override PipelineMessageContent CreatePipelineContent()
+        protected override MessageBody CreatePipelineContent()
         {
-            return PipelineMessageContent.CreateContent(_model);
+            return MessageBody.CreateContent(_model);
         }
     }
 }

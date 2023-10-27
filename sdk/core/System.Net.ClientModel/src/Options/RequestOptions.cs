@@ -19,7 +19,7 @@ public class RequestOptions : PipelineOptions
     {
         // Wire up options on message
         message.CancellationToken = CancellationToken;
-        message.ResponseClassifier = ResponseClassifier;
+        message.MessageClassifier = MessageClassifier;
 
         // TODO: note that this is a lot of *ways* to set values on the
         // message, policy, etc.  Let's get clear on how many ways we need and why
@@ -36,7 +36,7 @@ public class RequestOptions : PipelineOptions
 
     public virtual CancellationToken CancellationToken { get; set; } = DefaultCancellationToken;
 
-    public virtual ResponseErrorClassifier ResponseClassifier { get; set; } = DefaultResponseClassifier;
+    public virtual MessageClassifier MessageClassifier { get; set; } = DefaultMessageClassifier;
 
     #region Transport options - TODO: move to a subtype type?
 
@@ -59,5 +59,5 @@ public class RequestOptions : PipelineOptions
 
     public static CancellationToken DefaultCancellationToken { get; set; } = CancellationToken.None;
 
-    public static ResponseErrorClassifier DefaultResponseClassifier { get; set; } = new ResponseErrorClassifier();
+    public static MessageClassifier DefaultMessageClassifier { get; set; } = new MessageClassifier();
 }

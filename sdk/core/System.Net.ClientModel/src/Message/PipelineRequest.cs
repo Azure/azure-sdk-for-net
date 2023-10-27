@@ -9,9 +9,9 @@ public abstract class PipelineRequest : IDisposable
 
     public abstract Uri Uri { get; set; }
 
-    public abstract PipelineMessageContent? Content { get; set; }
+    public abstract MessageBody? Content { get; set; }
 
-    public abstract PipelineMessageHeaders Headers { get; }
+    public abstract MessageHeaders Headers { get; }
 
     // TODO: this is required by Azure.Core RequestAdapter constraint.  Revisit?
     public abstract void Dispose();

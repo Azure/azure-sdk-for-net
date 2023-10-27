@@ -15,7 +15,7 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
 
         protected override string WirePayload => File.ReadAllText(TestData.GetLocation("ResourceProviderData/ResourceProviderData-Collapsed.json")).TrimEnd();
 
-        protected override Func<ResourceProviderData?, PipelineMessageContent> ToPipelineContent => model => model;
+        protected override Func<ResourceProviderData?, MessageBody> ToPipelineContent => model => model;
 
         protected override Func<Result?, ResourceProviderData> FromResult => response => (ResourceProviderData)response;
 

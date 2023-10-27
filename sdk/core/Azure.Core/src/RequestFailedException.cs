@@ -89,7 +89,7 @@ namespace Azure
 
             public override int Status => _status;
 
-            public override PipelineMessageContent? Content
+            public override MessageBody? Content
             {
                 get => throw new NotSupportedException();
                 protected set => throw new NotSupportedException();
@@ -97,7 +97,7 @@ namespace Azure
 
             public override string ReasonPhrase => throw new NotSupportedException();
 
-            public override PipelineMessageHeaders Headers => throw new NotSupportedException();
+            public override MessageHeaders Headers => throw new NotSupportedException();
 
             public override void Dispose() => throw new NotSupportedException();
         }

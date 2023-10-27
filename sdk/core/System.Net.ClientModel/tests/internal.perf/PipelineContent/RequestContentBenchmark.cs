@@ -11,10 +11,10 @@ namespace System.Net.ClientModel.Tests.Internal.Perf
     public abstract class RequestContentBenchmark<T> where T : class
     {
         protected abstract string JsonFileName { get; }
-        protected abstract PipelineMessageContent CreatePipelineContent();
+        protected abstract MessageBody CreatePipelineContent();
 
         protected T _model;
-        private PipelineMessageContent _writtenContent;
+        private MessageBody _writtenContent;
         private MemoryStream _stream;
 
         [GlobalSetup]
@@ -38,13 +38,13 @@ namespace System.Net.ClientModel.Tests.Internal.Perf
         [Benchmark]
         public void Construct()
         {
-            using PipelineMessageContent content = CreatePipelineContent();
+            using MessageBody content = CreatePipelineContent();
         }
 
         [Benchmark]
         public long TryComputeLength()
         {
-            using PipelineMessageContent content = CreatePipelineContent();
+            using MessageBody content = CreatePipelineContent();
             content.TryComputeLength(out long length);
             return length;
         }

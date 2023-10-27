@@ -168,10 +168,10 @@ public partial class HttpPipelineMessageTransport : PipelineTransport<PipelineMe
         // Consider which is preferred as part of holistic extensibility-point review.
         if (contentStream is not null)
         {
-            message.Response.Content = PipelineMessageContent.CreateContent(contentStream);
+            message.Response.Content = MessageBody.CreateContent(contentStream);
         }
 
-        message.Response.IsError = message.ResponseClassifier.IsErrorResponse(message);
+        message.Response.IsError = message.MessageClassifier.IsErrorResponse(message);
     }
 
     /// <summary>

@@ -3,9 +3,9 @@
 
 namespace System.Net.ClientModel.Core
 {
-    public class ResponseErrorClassifier
+    public class MessageClassifier
     {
-        protected internal ResponseErrorClassifier() { }
+        protected internal MessageClassifier() { }
 
         /// <summary>
         /// Specifies if the response contained in the <paramref name="message"/> is not successful.
