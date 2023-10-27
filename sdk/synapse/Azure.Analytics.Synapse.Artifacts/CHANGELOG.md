@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-preview.19 (2023-10-30)
+## 1.0.0-preview.19 (2023-11-07)
 - Fix runNotebook sessionId from int to string
 - Fix placeholder links causing 404s
 - Sync expression Support From DataFactory To Synapse
