@@ -27,4 +27,4 @@ description: Samples for the Azure.Messaging.ServiceBus client library
 - [Advanced configuration](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample13_AdvancedConfiguration.md)
 - [Interact with the AMQP message](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample14_AMQPMessage.md)
 - [Mocking Client Types](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample15_MockingClientTypes.md)
-- [Cross-receiver message settlement]
+- [Cross-receiver message settlement](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample16_CrossReceiverMessageSettlement.md)
