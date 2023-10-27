@@ -201,10 +201,10 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
 
     public class CastStrategy<T> : RoundTripStrategy<T> where T : IModel<T>
     {
-        private Func<T, PipelineMessageContent> _toPipelineContent;
+        private Func<T, MessageBody> _toPipelineContent;
         private Func<Result, T> _fromResult;
 
-        public CastStrategy(Func<T, PipelineMessageContent> toPipelineContent, Func<Result, T> fromResponse)
+        public CastStrategy(Func<T, MessageBody> toPipelineContent, Func<Result, T> fromResponse)
         {
             _toPipelineContent = toPipelineContent;
             _fromResult = fromResponse;
@@ -215,7 +215,7 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
 
         public override BinaryData Write(T model, ModelReaderWriterOptions options)
         {
-            PipelineMessageContent content = _toPipelineContent(model);
+            MessageBody content = _toPipelineContent(model);
             content.TryComputeLength(out var length);
             using var stream = new MemoryStream((int)length);
             content.WriteTo(stream, default);
@@ -239,7 +239,7 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
             public MockPipelineResponse(int status, BinaryData content)
             {
                 Status = status;
-                Content = PipelineMessageContent.CreateContent(content);
+                Content = MessageBody.CreateContent(content);
             }
 
             public override int Status { get; }
@@ -248,7 +248,7 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
 
             public override PipelineMessageHeaders Headers => throw new NotImplementedException();
 
-            public override PipelineMessageContent? Content { get; protected set; }
+            public override MessageBody? Content { get; protected set; }
 
             public override void Dispose()
             {

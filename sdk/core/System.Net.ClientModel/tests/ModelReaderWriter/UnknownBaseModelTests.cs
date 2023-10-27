@@ -20,7 +20,7 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
 
         protected override string WirePayload => "{\"kind\":\"Z\",\"name\":\"zmodel\",\"zProperty\":1.5,\"extra\":\"stuff\"}";
 
-        protected override Func<BaseModel?, PipelineMessageContent> ToPipelineContent => model => model;
+        protected override Func<BaseModel?, MessageBody> ToPipelineContent => model => model;
 
         protected override Func<Result?, BaseModel> FromResult => result => (BaseModel)result;
 

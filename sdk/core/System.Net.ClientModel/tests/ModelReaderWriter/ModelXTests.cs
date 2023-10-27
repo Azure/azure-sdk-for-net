@@ -15,7 +15,7 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
 
         protected override string WirePayload => File.ReadAllText(TestData.GetLocation("ModelX/ModelXWireFormat.json")).TrimEnd();
 
-        protected override Func<ModelX?, PipelineMessageContent> ToPipelineContent => model => model;
+        protected override Func<ModelX?, MessageBody> ToPipelineContent => model => model;
 
         protected override Func<Result?, ModelX> FromResult => response => (ModelX)response;
 

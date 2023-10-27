@@ -12,42 +12,42 @@ namespace System.Net.ClientModel.Core
 {
     // I wish we could have the name MessageContent, but there is already
     // Azure.Messaging.MessageContent.
-    public abstract class PipelineMessageContent : IDisposable
+    public abstract class MessageBody : IDisposable
     {
         // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
         private static BinaryData EmptyBinaryData = new(Array.Empty<byte>());
-        internal static PipelineMessageContent Empty = CreateContent(EmptyBinaryData);
+        internal static MessageBody Empty = CreateContent(EmptyBinaryData);
 
         /// <summary>
-        /// Creates an instance of <see cref="PipelineMessageContent"/> that wraps a <see cref="Stream"/>.
+        /// Creates an instance of <see cref="MessageBody"/> that wraps a <see cref="Stream"/>.
         /// </summary>
         /// <param name="stream">The <see cref="Stream"/> to use.</param>
-        /// <returns>An instance of <see cref="PipelineMessageContent"/> that wraps a <see cref="Stream"/>.</returns>
-        public static PipelineMessageContent CreateContent(Stream stream) => new StreamPipelineContent(stream);
+        /// <returns>An instance of <see cref="MessageBody"/> that wraps a <see cref="Stream"/>.</returns>
+        public static MessageBody CreateContent(Stream stream) => new StreamPipelineContent(stream);
 
         /// <summary>
-        /// Creates an instance of <see cref="PipelineMessageContent"/> that wraps a <see cref="BinaryData"/>.
+        /// Creates an instance of <see cref="MessageBody"/> that wraps a <see cref="BinaryData"/>.
         /// </summary>
         /// <param name="content">The <see cref="BinaryData"/> to use.</param>
-        /// <returns>An instance of <see cref="PipelineMessageContent"/> that wraps a <see cref="BinaryData"/>.</returns>
-        public static PipelineMessageContent CreateContent(BinaryData content) => new BinaryDataPipelineContent(content.ToMemory());
+        /// <returns>An instance of <see cref="MessageBody"/> that wraps a <see cref="BinaryData"/>.</returns>
+        public static MessageBody CreateContent(BinaryData content) => new BinaryDataPipelineContent(content.ToMemory());
 
         /// <summary>
-        /// Creates an instance of <see cref="PipelineMessageContent"/> that wraps a <see cref="IModel{T}"/>.
+        /// Creates an instance of <see cref="MessageBody"/> that wraps a <see cref="IModel{T}"/>.
         /// </summary>
         /// <param name="model">The <see cref="IModel{T}"/> to write.</param>
         /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
-        /// <returns>An instance of <see cref="PipelineMessageContent"/> that wraps a <see cref="IModel{T}"/>.</returns>
-        public static PipelineMessageContent CreateContent(IModel<object> model, ModelReaderWriterOptions? options = default)
+        /// <returns>An instance of <see cref="MessageBody"/> that wraps a <see cref="IModel{T}"/>.</returns>
+        public static MessageBody CreateContent(IModel<object> model, ModelReaderWriterOptions? options = default)
             => new ModelWriterContent(model, options ?? ModelReaderWriterOptions.DefaultWireOptions);
 
         /// <summary>
-        /// Creates an instance of <see cref="PipelineMessageContent"/> that wraps a <see cref="IJsonModel{T}"/>.
+        /// Creates an instance of <see cref="MessageBody"/> that wraps a <see cref="IJsonModel{T}"/>.
         /// </summary>
         /// <param name="model">The <see cref="IJsonModel{T}"/> to write.</param>
         /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
-        /// <returns>An instance of <see cref="PipelineMessageContent"/> that wraps a <see cref="IJsonModel{T}"/>.</returns>
-        public static PipelineMessageContent CreateContent(IJsonModel<object> model, ModelReaderWriterOptions? options = default)
+        /// <returns>An instance of <see cref="MessageBody"/> that wraps a <see cref="IJsonModel{T}"/>.</returns>
+        public static MessageBody CreateContent(IJsonModel<object> model, ModelReaderWriterOptions? options = default)
             => new JsonModelWriterContent(model, options ?? ModelReaderWriterOptions.DefaultWireOptions);
 
         /// <summary>
@@ -70,15 +70,15 @@ namespace System.Net.ClientModel.Core
         /// <param name="cancellationToken">To cancellation token to use.</param>
         public abstract void WriteTo(Stream stream, CancellationToken cancellationToken);
 
-        public static implicit operator BinaryData(PipelineMessageContent content)
+        public static implicit operator BinaryData(MessageBody content)
             => content.ToBinaryData();
 
         // This one is needed to allow JsonDocument.Parse(PipelineContent) to succeed
         // without a cast through BinaryData.
-        public static implicit operator ReadOnlyMemory<byte>(PipelineMessageContent content)
+        public static implicit operator ReadOnlyMemory<byte>(MessageBody content)
             => content.ToBinaryData();
 
-        public static explicit operator Stream(PipelineMessageContent content)
+        public static explicit operator Stream(MessageBody content)
             => content.ToStream();
 
         internal virtual bool IsBuffered { get; }
@@ -176,7 +176,7 @@ namespace System.Net.ClientModel.Core
 
         // TODO: Note, this is copied from RequestContent.  When we can remove the corresponding
         // shared source file, we should make sure there is only one copy of this moving forward.
-        private sealed class JsonModelWriterContent : PipelineMessageContent
+        private sealed class JsonModelWriterContent : MessageBody
         {
             private readonly IJsonModel<object> _model;
             private readonly ModelReaderWriterOptions _options;
@@ -199,7 +199,7 @@ namespace System.Net.ClientModel.Core
             public override bool TryComputeLength(out long length) => Writer.TryComputeLength(out length);
         }
 
-        private sealed class ModelWriterContent : PipelineMessageContent
+        private sealed class ModelWriterContent : MessageBody
         {
             private readonly IModel<object> _model;
             private readonly ModelReaderWriterOptions _options;
@@ -233,7 +233,7 @@ namespace System.Net.ClientModel.Core
             public override async Task WriteToAsync(Stream stream, CancellationToken cancellation) => await stream.WriteAsync(Data.ToMemory(), cancellation).ConfigureAwait(false);
         }
 
-        private sealed class StreamPipelineContent : PipelineMessageContent
+        private sealed class StreamPipelineContent : MessageBody
         {
             private const int CopyToBufferSize = 81920;
             private readonly Stream _stream;
@@ -303,7 +303,7 @@ namespace System.Net.ClientModel.Core
 
         // BinaryData holds ReadOnlyMemory<byte> so this is the type that works
         // with BinaryData in an optimized way.
-        private sealed class BinaryDataPipelineContent : PipelineMessageContent
+        private sealed class BinaryDataPipelineContent : MessageBody
         {
             private readonly ReadOnlyMemory<byte> _bytes;
 

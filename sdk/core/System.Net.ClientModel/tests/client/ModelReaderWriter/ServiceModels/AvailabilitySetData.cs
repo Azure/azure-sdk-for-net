@@ -23,14 +23,14 @@ namespace System.Net.ClientModel.Tests.Client.ResourceManager.Compute
     {
         internal AvailabilitySetData() { }
 
-        public static implicit operator PipelineMessageContent(AvailabilitySetData availabilitySetData)
+        public static implicit operator MessageBody(AvailabilitySetData availabilitySetData)
         {
             if (availabilitySetData is null)
             {
                 return null;
             }
 
-            return PipelineMessageContent.CreateContent(availabilitySetData, ModelReaderWriterOptions.DefaultWireOptions);
+            return MessageBody.CreateContent(availabilitySetData, ModelReaderWriterOptions.DefaultWireOptions);
         }
 
         public static explicit operator AvailabilitySetData(Result result)

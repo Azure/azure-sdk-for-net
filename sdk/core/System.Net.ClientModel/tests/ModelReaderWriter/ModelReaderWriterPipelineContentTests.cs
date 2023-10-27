@@ -22,13 +22,13 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
         public void CanCalculateLength()
         {
             //use IModelSerializable
-            var content = PipelineMessageContent.CreateContent((IModel<ModelX>)_modelX!);
+            var content = MessageBody.CreateContent((IModel<ModelX>)_modelX!);
             AssertContentType(content, "ModelWriterContent");
             content.TryComputeLength(out long lengthNonJson);
             Assert.Greater(lengthNonJson, 0);
 
             //use IModelJsonSerializable
-            var jsonContent = PipelineMessageContent.CreateContent((IJsonModel<ModelX>)_modelX!);
+            var jsonContent = MessageBody.CreateContent((IJsonModel<ModelX>)_modelX!);
             AssertContentType(jsonContent, "JsonModelWriterContent");
             content.TryComputeLength(out long lengthJson);
             Assert.Greater(lengthJson, 0);
@@ -36,7 +36,7 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual(lengthNonJson, lengthJson);
 
             //use default
-            jsonContent = PipelineMessageContent.CreateContent(_modelX!);
+            jsonContent = MessageBody.CreateContent(_modelX!);
             AssertContentType(jsonContent, "JsonModelWriterContent");
             content.TryComputeLength(out lengthJson);
             Assert.Greater(lengthJson, 0);
@@ -44,7 +44,7 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual(lengthNonJson, lengthJson);
         }
 
-        private static void AssertContentType(PipelineMessageContent content, string expectedContent)
+        private static void AssertContentType(MessageBody content, string expectedContent)
         {
             Assert.AreEqual(expectedContent, content.GetType().Name);
         }
@@ -54,7 +54,7 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
         {
             IModel<ModelX> modelX = _modelX!;
 
-            PipelineMessageContent content = PipelineMessageContent.CreateContent(modelX);
+            MessageBody content = MessageBody.CreateContent(modelX);
             AssertContentType(content, "ModelWriterContent");
         }
     }

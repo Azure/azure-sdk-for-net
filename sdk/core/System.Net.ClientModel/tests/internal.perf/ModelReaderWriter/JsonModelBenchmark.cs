@@ -19,7 +19,7 @@ namespace System.Net.ClientModel.Tests.Internal.Perf
             public MockPipelineResponse(int status, BinaryData content)
             {
                 Status = status;
-                Content = PipelineMessageContent.CreateContent(content);
+                Content = MessageBody.CreateContent(content);
             }
 
             public override int Status { get; }
@@ -28,7 +28,7 @@ namespace System.Net.ClientModel.Tests.Internal.Perf
 
             public override PipelineMessageHeaders Headers => throw new NotImplementedException();
 
-            public override PipelineMessageContent Content { get; protected internal set; }
+            public override MessageBody Content { get; protected internal set; }
 
             public override void Dispose()
             {
@@ -60,7 +60,7 @@ namespace System.Net.ClientModel.Tests.Internal.Perf
 
         protected abstract void Write(Utf8JsonWriter writer);
 
-        protected abstract PipelineMessageContent CastToPipelineContent();
+        protected abstract MessageBody CastToPipelineContent();
 
         protected abstract T CastFromResponse();
 
