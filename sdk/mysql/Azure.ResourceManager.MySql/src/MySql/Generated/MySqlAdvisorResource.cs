@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> An object representing collection of MySqlRecommendationActionResources and their operations over a MySqlRecommendationActionResource. </returns>
         public virtual MySqlRecommendationActionCollection GetMySqlRecommendationActions()
         {
-            return GetCachedClient(Client => new MySqlRecommendationActionCollection(Client, Id));
+            return GetCachedClient(client => new MySqlRecommendationActionCollection(client, Id));
         }
 
         /// <summary>
@@ -112,8 +112,8 @@ namespace Azure.ResourceManager.MySql
         /// </summary>
         /// <param name="recommendedActionName"> The recommended action name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="recommendedActionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recommendedActionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recommendedActionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MySqlRecommendationActionResource>> GetMySqlRecommendationActionAsync(string recommendedActionName, CancellationToken cancellationToken = default)
         {
@@ -135,8 +135,8 @@ namespace Azure.ResourceManager.MySql
         /// </summary>
         /// <param name="recommendedActionName"> The recommended action name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="recommendedActionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recommendedActionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recommendedActionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MySqlRecommendationActionResource> GetMySqlRecommendationAction(string recommendedActionName, CancellationToken cancellationToken = default)
         {

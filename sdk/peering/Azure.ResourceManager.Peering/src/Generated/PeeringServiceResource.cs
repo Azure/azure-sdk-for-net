@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> An object representing collection of ConnectionMonitorTestResources and their operations over a ConnectionMonitorTestResource. </returns>
         public virtual ConnectionMonitorTestCollection GetConnectionMonitorTests()
         {
-            return GetCachedClient(Client => new ConnectionMonitorTestCollection(Client, Id));
+            return GetCachedClient(client => new ConnectionMonitorTestCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.Peering
         /// </summary>
         /// <param name="connectionMonitorTestName"> The name of the connection monitor test. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionMonitorTestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorTestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionMonitorTestName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ConnectionMonitorTestResource>> GetConnectionMonitorTestAsync(string connectionMonitorTestName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +134,8 @@ namespace Azure.ResourceManager.Peering
         /// </summary>
         /// <param name="connectionMonitorTestName"> The name of the connection monitor test. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionMonitorTestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorTestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionMonitorTestName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ConnectionMonitorTestResource> GetConnectionMonitorTest(string connectionMonitorTestName, CancellationToken cancellationToken = default)
         {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> An object representing collection of PeeringServicePrefixResources and their operations over a PeeringServicePrefixResource. </returns>
         public virtual PeeringServicePrefixCollection GetPeeringServicePrefixes()
         {
-            return GetCachedClient(Client => new PeeringServicePrefixCollection(Client, Id));
+            return GetCachedClient(client => new PeeringServicePrefixCollection(client, Id));
         }
 
         /// <summary>
@@ -165,8 +165,8 @@ namespace Azure.ResourceManager.Peering
         /// <param name="prefixName"> The name of the prefix. </param>
         /// <param name="expand"> The properties to be expanded. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="prefixName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="prefixName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="prefixName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<PeeringServicePrefixResource>> GetPeeringServicePrefixAsync(string prefixName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -189,8 +189,8 @@ namespace Azure.ResourceManager.Peering
         /// <param name="prefixName"> The name of the prefix. </param>
         /// <param name="expand"> The properties to be expanded. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="prefixName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="prefixName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="prefixName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<PeeringServicePrefixResource> GetPeeringServicePrefix(string prefixName, string expand = null, CancellationToken cancellationToken = default)
         {

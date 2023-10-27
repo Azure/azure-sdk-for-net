@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> An object representing collection of MobileAttachedDataNetworkResources and their operations over a MobileAttachedDataNetworkResource. </returns>
         public virtual MobileAttachedDataNetworkCollection GetMobileAttachedDataNetworks()
         {
-            return GetCachedClient(Client => new MobileAttachedDataNetworkCollection(Client, Id));
+            return GetCachedClient(client => new MobileAttachedDataNetworkCollection(client, Id));
         }
 
         /// <summary>
@@ -110,8 +110,8 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </summary>
         /// <param name="attachedDataNetworkName"> The name of the attached data network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="attachedDataNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="attachedDataNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="attachedDataNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MobileAttachedDataNetworkResource>> GetMobileAttachedDataNetworkAsync(string attachedDataNetworkName, CancellationToken cancellationToken = default)
         {
@@ -133,8 +133,8 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </summary>
         /// <param name="attachedDataNetworkName"> The name of the attached data network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="attachedDataNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="attachedDataNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="attachedDataNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MobileAttachedDataNetworkResource> GetMobileAttachedDataNetwork(string attachedDataNetworkName, CancellationToken cancellationToken = default)
         {

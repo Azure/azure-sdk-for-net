@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of VpnSiteLinkConnectionResources and their operations over a VpnSiteLinkConnectionResource. </returns>
         public virtual VpnSiteLinkConnectionCollection GetVpnSiteLinkConnections()
         {
-            return GetCachedClient(Client => new VpnSiteLinkConnectionCollection(Client, Id));
+            return GetCachedClient(client => new VpnSiteLinkConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -109,8 +109,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="linkConnectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<VpnSiteLinkConnectionResource>> GetVpnSiteLinkConnectionAsync(string linkConnectionName, CancellationToken cancellationToken = default)
         {
@@ -132,8 +132,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="linkConnectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<VpnSiteLinkConnectionResource> GetVpnSiteLinkConnection(string linkConnectionName, CancellationToken cancellationToken = default)
         {
