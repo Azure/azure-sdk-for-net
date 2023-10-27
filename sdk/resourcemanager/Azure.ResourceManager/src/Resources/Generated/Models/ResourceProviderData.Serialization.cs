@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Resources
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
+            Optional<string> id = default;
             Optional<string> @namespace = default;
             Optional<string> registrationState = default;
             Optional<string> registrationPolicy = default;
@@ -30,11 +30,7 @@ namespace Azure.ResourceManager.Resources
             {
                 if (property.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("namespace"u8))

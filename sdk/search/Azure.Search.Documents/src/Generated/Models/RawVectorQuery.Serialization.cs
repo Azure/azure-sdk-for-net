@@ -52,7 +52,7 @@ namespace Azure.Search.Documents.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<float>> vector = default;
+            Optional<IList<float>> vector = default;
             VectorQueryKind kind = default;
             Optional<int> k = default;
             Optional<string> fields = default;

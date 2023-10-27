@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Resources
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
+            Optional<string> id = default;
             Optional<string> subscriptionId = default;
             Optional<string> displayName = default;
             Optional<Guid> tenantId = default;
@@ -34,11 +34,7 @@ namespace Azure.ResourceManager.Resources
             {
                 if (property.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("subscriptionId"u8))

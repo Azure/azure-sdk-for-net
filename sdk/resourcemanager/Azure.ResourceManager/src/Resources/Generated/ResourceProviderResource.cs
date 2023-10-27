@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Initializes a new instance of the <see cref = "ResourceProviderResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ResourceProviderResource(ArmClient client, ResourceProviderData data) : this(client, data.Id)
+        internal ResourceProviderResource(ArmClient client, ResourceProviderData data) : this(client, new ResourceIdentifier(data.Id))
         {
             HasData = true;
             _data = data;

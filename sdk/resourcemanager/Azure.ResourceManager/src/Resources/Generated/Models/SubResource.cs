@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.Core;
-
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Sub-resource. </summary>

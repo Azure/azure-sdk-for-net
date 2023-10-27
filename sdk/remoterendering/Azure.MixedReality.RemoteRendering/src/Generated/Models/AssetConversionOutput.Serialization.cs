@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -18,12 +19,16 @@ namespace Azure.MixedReality.RemoteRendering
             {
                 return null;
             }
-            Optional<string> outputAssetUri = default;
+            Optional<Uri> outputAssetUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("outputAssetUri"u8))
                 {
-                    outputAssetUri = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    outputAssetUri = new Uri(property.Value.GetString());
                     continue;
                 }
             }

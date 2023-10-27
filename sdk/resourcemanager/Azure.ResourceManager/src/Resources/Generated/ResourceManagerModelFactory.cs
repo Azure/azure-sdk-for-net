@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Models
         /// <param name="resourceTypes"> The collection of provider resource types. </param>
         /// <param name="providerAuthorizationConsentState"> The provider authorization consent state. </param>
         /// <returns> A new <see cref="Resources.ResourceProviderData"/> instance for mocking. </returns>
-        public static ResourceProviderData ResourceProviderData(ResourceIdentifier id = null, string @namespace = null, string registrationState = null, string registrationPolicy = null, IEnumerable<ProviderResourceType> resourceTypes = null, ProviderAuthorizationConsentState? providerAuthorizationConsentState = null)
+        public static ResourceProviderData ResourceProviderData(string id = null, string @namespace = null, string registrationState = null, string registrationPolicy = null, IEnumerable<ProviderResourceType> resourceTypes = null, ProviderAuthorizationConsentState? providerAuthorizationConsentState = null)
         {
             resourceTypes ??= new List<ProviderResourceType>();
 
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.Models
         /// <param name="managedByTenants"> An array containing the tenants managing the subscription. </param>
         /// <param name="tags"> The tags attached to the subscription. </param>
         /// <returns> A new <see cref="Resources.SubscriptionData"/> instance for mocking. </returns>
-        public static SubscriptionData SubscriptionData(ResourceIdentifier id = null, string subscriptionId = null, string displayName = null, Guid? tenantId = null, SubscriptionState? state = null, SubscriptionPolicies subscriptionPolicies = null, string authorizationSource = null, IEnumerable<ManagedByTenant> managedByTenants = null, IReadOnlyDictionary<string, string> tags = null)
+        public static SubscriptionData SubscriptionData(string id = null, string subscriptionId = null, string displayName = null, Guid? tenantId = null, SubscriptionState? state = null, SubscriptionPolicies subscriptionPolicies = null, string authorizationSource = null, IEnumerable<ManagedByTenant> managedByTenants = null, IReadOnlyDictionary<string, string> tags = null)
         {
             managedByTenants ??= new List<ManagedByTenant>();
             tags ??= new Dictionary<string, string>();

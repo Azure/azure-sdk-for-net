@@ -34,7 +34,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in CharFilters)
                 {
-                    writer.WriteStringValue(item);
+                    writer.WriteStringValue(item.ToString());
                 }
                 writer.WriteEndArray();
             }
@@ -53,7 +53,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             LexicalTokenizerName tokenizer = default;
             Optional<IList<TokenFilterName>> tokenFilters = default;
-            Optional<IList<string>> charFilters = default;
+            Optional<IList<CharFilterName>> charFilters = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -83,10 +83,10 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<CharFilterName> array = new List<CharFilterName>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new CharFilterName(item.GetString()));
                     }
                     charFilters = array;
                     continue;

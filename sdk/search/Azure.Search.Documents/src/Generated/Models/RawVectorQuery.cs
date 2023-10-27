@@ -26,7 +26,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="fieldsRaw"> Vector Fields of type Collection(Edm.Single) to be included in the vector searched. </param>
         /// <param name="exhaustive"> When true, triggers an exhaustive k-nearest neighbor search across all vectors within the vector index. Useful for scenarios where exact matches are critical, such as determining ground truth values. </param>
         /// <param name="vector"> The vector representation of a search query. </param>
-        internal RawVectorQuery(VectorQueryKind kind, int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, IReadOnlyList<float> vector) : base(kind, kNearestNeighborsCount, fieldsRaw, exhaustive)
+        internal RawVectorQuery(VectorQueryKind kind, int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, IList<float> vector) : base(kind, kNearestNeighborsCount, fieldsRaw, exhaustive)
         {
             Vector = vector;
             Kind = kind;

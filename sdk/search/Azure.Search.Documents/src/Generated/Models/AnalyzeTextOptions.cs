@@ -23,7 +23,7 @@ namespace Azure.Search.Documents.Indexes.Models
 
             Text = text;
             TokenFilters = new ChangeTrackingList<TokenFilterName>();
-            CharFilters = new ChangeTrackingList<string>();
+            CharFilters = new ChangeTrackingList<CharFilterName>();
         }
 
         /// <summary> The text to break into tokens. </summary>
