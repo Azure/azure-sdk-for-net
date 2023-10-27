@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Chaos
         /// <returns> An object representing collection of CapabilityResources and their operations over a CapabilityResource. </returns>
         public virtual CapabilityCollection GetCapabilities()
         {
-            return GetCachedClient(Client => new CapabilityCollection(Client, Id));
+            return GetCachedClient(client => new CapabilityCollection(client, Id));
         }
 
         /// <summary>
@@ -110,8 +110,8 @@ namespace Azure.ResourceManager.Chaos
         /// </summary>
         /// <param name="capabilityName"> String that represents a Capability resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="capabilityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="capabilityName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="capabilityName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<CapabilityResource>> GetCapabilityAsync(string capabilityName, CancellationToken cancellationToken = default)
         {
@@ -133,8 +133,8 @@ namespace Azure.ResourceManager.Chaos
         /// </summary>
         /// <param name="capabilityName"> String that represents a Capability resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="capabilityName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="capabilityName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="capabilityName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<CapabilityResource> GetCapability(string capabilityName, CancellationToken cancellationToken = default)
         {

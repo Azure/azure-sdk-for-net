@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> An object representing collection of AutomanageVmConfigurationProfileAssignmentReportResources and their operations over a AutomanageVmConfigurationProfileAssignmentReportResource. </returns>
         public virtual AutomanageVmConfigurationProfileAssignmentReportCollection GetAutomanageVmConfigurationProfileAssignmentReports()
         {
-            return GetCachedClient(Client => new AutomanageVmConfigurationProfileAssignmentReportCollection(Client, Id));
+            return GetCachedClient(client => new AutomanageVmConfigurationProfileAssignmentReportCollection(client, Id));
         }
 
         /// <summary>
@@ -108,8 +108,8 @@ namespace Azure.ResourceManager.Automanage
         /// </summary>
         /// <param name="reportName"> The report name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AutomanageVmConfigurationProfileAssignmentReportResource>> GetAutomanageVmConfigurationProfileAssignmentReportAsync(string reportName, CancellationToken cancellationToken = default)
         {
@@ -131,8 +131,8 @@ namespace Azure.ResourceManager.Automanage
         /// </summary>
         /// <param name="reportName"> The report name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AutomanageVmConfigurationProfileAssignmentReportResource> GetAutomanageVmConfigurationProfileAssignmentReport(string reportName, CancellationToken cancellationToken = default)
         {
