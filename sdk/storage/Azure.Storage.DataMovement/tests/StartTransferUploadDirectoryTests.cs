@@ -61,7 +61,7 @@ namespace Azure.Storage.DataMovement.Tests
                 }
 
                 // Check if it's a directory or not
-                using FileStream fs = File.OpenWrite(Path.Combine(directoryPath, filePath));
+                using FileStream fs = File.OpenWrite(fullPath);
                 using Stream data = await CreateLimitedMemoryStream(size);
                 await data.CopyToAsync(fs, bufferSize: 4 * Constants.KB, cancellationToken);
             }
@@ -369,14 +369,14 @@ namespace Azure.Storage.DataMovement.Tests
 
             List<string> files = new List<string>();
 
-            string subfolderName = localDirectory;
+            string subfolderName = "";
             for (int i = 0; i < level; i++)
             {
-                subfolderName = Path.Combine(subfolderName, GetNewBlobDirectoryName());
+                subfolderName = Path.Combine(subfolderName, $"folder{i}");
                 files.Add(Path.Combine(subfolderName, GetNewBlobName()));
             }
 
-            CancellationToken cancellationToken = TestHelper.GetTimeoutToken(10);
+            CancellationToken cancellationToken = TestHelper.GetTimeoutToken(30);
             await SetupDirectory(
                 localDirectory,
                 files.Select(name => (name, (long)Constants.KB)).ToList(),
