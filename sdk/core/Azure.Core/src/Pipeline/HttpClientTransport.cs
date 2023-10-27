@@ -6,7 +6,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Net;
 using System.Net.ClientModel;
-using System.Net.ClientModel.Core;
 using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
@@ -29,7 +28,7 @@ namespace Azure.Core.Pipeline
         // TODO: move these tests into System.Rest? - can we make it private when we do?
         internal HttpClient Client { get; }
 
-        private HttpClientPipelineTransport _transport;
+        private readonly AzureCoreHttpPipelineTransport _transport;
 
         /// <summary>
         /// Creates a new <see cref="HttpClientTransport"/> instance using default configuration.
@@ -52,8 +51,9 @@ namespace Azure.Core.Pipeline
         /// <param name="client">The instance of <see cref="HttpClient"/> to use.</param>
         public HttpClientTransport(HttpClient client)
         {
-            Client = client;
-            _transport = new HttpClientPipelineTransport(client);
+            Client = client ?? throw new ArgumentNullException(nameof(client));
+
+            _transport = new AzureCoreHttpPipelineTransport(client);
         }
 
         /// <summary>
@@ -64,7 +64,6 @@ namespace Azure.Core.Pipeline
         { }
 
         /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public sealed override Request CreateRequest()
             => new RequestAdapter(new HttpClientTransportRequest());
 
@@ -106,31 +105,6 @@ namespace Azure.Core.Pipeline
                     throw new RequestFailedException(e.Message, e.InnerException);
                 }
             }
-        }
-
-        /// <inheritdoc />
-        protected void OnSendingRequest(PipelineMessage message, HttpRequestMessage httpRequest)
-        {
-            if (message is not HttpMessage httpMessage)
-            {
-                throw new InvalidOperationException($"Unsupported message type: '{message?.GetType()}'.");
-            }
-
-            HttpClientTransportRequest.AddAzureProperties(httpMessage, httpRequest);
-
-            httpMessage.ClearResponse();
-        }
-
-        /// <inheritdoc />
-        protected void OnReceivedResponse(PipelineMessage message, HttpResponseMessage httpResponse)
-        {
-            if (message is not HttpMessage httpMessage)
-            {
-                throw new InvalidOperationException($"Unsupported message type: '{message?.GetType()}'.");
-            }
-
-            string clientRequestId = httpMessage.Request.ClientRequestId;
-            httpMessage.Response = new ResponseAdapter(new HttpClientTransportResponse(clientRequestId, httpResponse));
         }
 
         private static HttpClient CreateDefaultClient(HttpPipelineTransportOptions? options = null)
