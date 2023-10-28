@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> This operation allows adding or replacing the entire set of tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags. </summary>
         /// <param name="scope"> The resource scope. </param>
-        /// <param name="data"> The TagResource to use. </param>
+        /// <param name="data"> The TagResourceData to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="data"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAtScopeAsync(string scope, TagResourceData data, CancellationToken cancellationToken = default)
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.Resources
 
         /// <summary> This operation allows adding or replacing the entire set of tags on the specified resource or subscription. The specified entity can have a maximum of 50 tags. </summary>
         /// <param name="scope"> The resource scope. </param>
-        /// <param name="data"> The TagResource to use. </param>
+        /// <param name="data"> The TagResourceData to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="data"/> is null. </exception>
         public Response CreateOrUpdateAtScope(string scope, TagResourceData data, CancellationToken cancellationToken = default)
