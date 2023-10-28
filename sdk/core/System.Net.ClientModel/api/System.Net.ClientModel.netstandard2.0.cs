@@ -124,7 +124,7 @@ namespace System.Net.ClientModel.Core
     public partial class MessageClassifier
     {
         protected internal MessageClassifier() { }
-        public virtual bool IsErrorResponse(System.Net.ClientModel.Core.PipelineMessage message) { throw null; }
+        public virtual bool IsError(System.Net.ClientModel.Core.PipelineMessage message) { throw null; }
     }
     public abstract partial class MessageHeaders
     {
@@ -282,7 +282,7 @@ namespace System.Net.ClientModel.Core
     public partial class ResponseStatusClassifier : System.Net.ClientModel.Core.MessageClassifier
     {
         public ResponseStatusClassifier(System.ReadOnlySpan<ushort> successStatusCodes) { }
-        public override bool IsErrorResponse(System.Net.ClientModel.Core.PipelineMessage message) { throw null; }
+        public override bool IsError(System.Net.ClientModel.Core.PipelineMessage message) { throw null; }
     }
 }
 namespace System.Net.ClientModel.Internal

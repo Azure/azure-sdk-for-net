@@ -26,9 +26,9 @@ namespace System.Net.ClientModel.Core
             }
         }
 
-        public override bool IsErrorResponse(PipelineMessage message)
+        public override bool IsError(PipelineMessage message)
         {
-            return base.IsErrorResponse(message);
+            return base.IsError(message);
         }
 
         private void AddClassifier(int statusCode, bool isError)
