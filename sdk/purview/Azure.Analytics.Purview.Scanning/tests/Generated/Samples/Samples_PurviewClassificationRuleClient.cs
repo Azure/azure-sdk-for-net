@@ -228,7 +228,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
-            Response response = client.TagVersion(1234, "Keep", null);
+            Response response = client.TagVersion(1234, "Keep");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -242,7 +242,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
-            Response response = await client.TagVersionAsync(1234, "Keep", null);
+            Response response = await client.TagVersionAsync(1234, "Keep");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -256,7 +256,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
-            Response response = client.TagVersion(1234, "Keep", null);
+            Response response = client.TagVersion(1234, "Keep");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("scanResultId").ToString());
@@ -279,7 +279,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
-            Response response = await client.TagVersionAsync(1234, "Keep", null);
+            Response response = await client.TagVersionAsync(1234, "Keep");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("scanResultId").ToString());
