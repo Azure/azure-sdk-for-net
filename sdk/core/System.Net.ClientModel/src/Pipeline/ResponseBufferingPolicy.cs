@@ -11,7 +11,7 @@ namespace System.Net.ClientModel.Core;
 /// <summary>
 /// Pipeline policy to buffer response content or add a timeout to response content managed by the client
 /// </summary>
-public class ResponseBufferingPolicy : PipelinePolicy<PipelineMessage>
+public class ResponseBufferingPolicy : PipelinePolicy
 {
     // Same value as Stream.CopyTo uses by default
     private const int DefaultCopyBufferSize = 81920;
@@ -30,16 +30,16 @@ public class ResponseBufferingPolicy : PipelinePolicy<PipelineMessage>
         _networkTimeout = networkTimeout;
     }
 
-    public override void Process(PipelineMessage message, IPipelineEnumerator pipeline)
+    public override void Process(PipelineMessage message, PipelineEnumerator pipeline)
 
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
         => ProcessSyncOrAsync(message, pipeline, async: false).AsTask().GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
 
-    public override async ValueTask ProcessAsync(PipelineMessage message, IPipelineEnumerator pipeline)
+    public override async ValueTask ProcessAsync(PipelineMessage message, PipelineEnumerator pipeline)
         => await ProcessSyncOrAsync(message, pipeline, async: true).ConfigureAwait(false);
 
-    private async ValueTask ProcessSyncOrAsync(PipelineMessage message, IPipelineEnumerator pipeline, bool async)
+    private async ValueTask ProcessSyncOrAsync(PipelineMessage message, PipelineEnumerator pipeline, bool async)
     {
         CancellationToken oldToken = message.CancellationToken;
         using CancellationTokenSource cts = CancellationTokenSource.CreateLinkedTokenSource(oldToken);

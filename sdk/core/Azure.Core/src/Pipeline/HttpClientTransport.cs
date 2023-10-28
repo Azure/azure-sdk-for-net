@@ -6,7 +6,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Net;
 using System.Net.ClientModel;
-using System.Net.ClientModel.Core;
 using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
@@ -29,6 +28,8 @@ namespace Azure.Core.Pipeline
         // TODO: move these tests into System.Rest? - can we make it private when we do?
         internal HttpClient Client { get; }
 
+        private readonly AzureCoreHttpPipelineTransport _transport;
+
         /// <summary>
         /// Creates a new <see cref="HttpClientTransport"/> instance using default configuration.
         /// </summary>
@@ -48,9 +49,11 @@ namespace Azure.Core.Pipeline
         /// Creates a new instance of <see cref="HttpClientTransport"/> using the provided client instance.
         /// </summary>
         /// <param name="client">The instance of <see cref="HttpClient"/> to use.</param>
-        public HttpClientTransport(HttpClient client) : base(client)
+        public HttpClientTransport(HttpClient client)
         {
-            Client = client;
+            Client = client ?? throw new ArgumentNullException(nameof(client));
+
+            _transport = new AzureCoreHttpPipelineTransport(client);
         }
 
         /// <summary>
@@ -61,7 +64,6 @@ namespace Azure.Core.Pipeline
         { }
 
         /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public sealed override Request CreateRequest()
             => new RequestAdapter(new HttpClientTransportRequest());
 
@@ -70,9 +72,9 @@ namespace Azure.Core.Pipeline
         {
             try
             {
-                base.Process(message);
+                _transport.Process(message);
             }
-            catch (PipelineRequestException e)
+            catch (UnsuccessfulRequestException e)
             {
                 if (message.HasResponse)
                 {
@@ -90,9 +92,9 @@ namespace Azure.Core.Pipeline
         {
             try
             {
-                await base.ProcessAsync(message).ConfigureAwait(false);
+                await _transport.ProcessAsync(message).ConfigureAwait(false);
             }
-            catch (PipelineRequestException e)
+            catch (UnsuccessfulRequestException e)
             {
                 if (message.HasResponse)
                 {
@@ -103,31 +105,6 @@ namespace Azure.Core.Pipeline
                     throw new RequestFailedException(e.Message, e.InnerException);
                 }
             }
-        }
-
-        /// <inheritdoc />
-        protected override void OnSendingRequest(PipelineMessage message, HttpRequestMessage httpRequest)
-        {
-            if (message is not HttpMessage httpMessage)
-            {
-                throw new InvalidOperationException($"Unsupported message type: '{message?.GetType()}'.");
-            }
-
-            HttpClientTransportRequest.AddAzureProperties(httpMessage, httpRequest);
-
-            httpMessage.ClearResponse();
-        }
-
-        /// <inheritdoc />
-        protected override void OnReceivedResponse(PipelineMessage message, HttpResponseMessage httpResponse)
-        {
-            if (message is not HttpMessage httpMessage)
-            {
-                throw new InvalidOperationException($"Unsupported message type: '{message?.GetType()}'.");
-            }
-
-            string clientRequestId = httpMessage.Request.ClientRequestId;
-            httpMessage.Response = new ResponseAdapter(new HttpClientTransportResponse(clientRequestId, httpResponse));
         }
 
         private static HttpClient CreateDefaultClient(HttpPipelineTransportOptions? options = null)
@@ -246,7 +223,7 @@ namespace Azure.Core.Pipeline
         /// <summary>
         /// Disposes the underlying <see cref="HttpClient"/>.
         /// </summary>
-        public override void Dispose()
+        public void Dispose()
         {
             if (this != Shared)
             {

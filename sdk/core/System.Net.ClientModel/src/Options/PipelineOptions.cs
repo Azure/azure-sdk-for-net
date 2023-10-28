@@ -10,17 +10,17 @@ namespace System.Net.ClientModel.Core;
 public class PipelineOptions
 {
     #region Pipeline creation: Customer-specified policies
-    public PipelinePolicy<PipelineMessage>[]? PerTryPolicies { get; set; }
+    public PipelinePolicy[]? PerTryPolicies { get; set; }
 
-    public PipelinePolicy<PipelineMessage>[]? PerCallPolicies { get; set; }
+    public PipelinePolicy[]? PerCallPolicies { get; set; }
     #endregion
 
     #region Pipeline creation: Required policy overrides
-    public PipelinePolicy<PipelineMessage>? RetryPolicy { get; set; }
+    public PipelinePolicy? RetryPolicy { get; set; }
 
-    public PipelinePolicy<PipelineMessage>? LoggingPolicy { get; set; }
+    public PipelinePolicy? LoggingPolicy { get; set; }
 
-    public PipelineTransport<PipelineMessage>? Transport { get; set; }
+    public PipelineTransport? Transport { get; set; }
     #endregion
 
     #region Pipeline creation: Policy-specific settings
@@ -28,11 +28,11 @@ public class PipelineOptions
     #endregion
 
     #region Defaults for pipeline creation - "always-there" policies.
-    public static PipelinePolicy<PipelineMessage>? DefaultRetryPolicy { get; set; }
+    public static PipelinePolicy? DefaultRetryPolicy { get; set; }
 
-    public static PipelinePolicy<PipelineMessage>? DefaultLoggingPolicy { get; set; }
+    public static PipelinePolicy? DefaultLoggingPolicy { get; set; }
 
-    public static PipelineTransport<PipelineMessage>? DefaultTransport { get; set; }
+    public static PipelineTransport? DefaultTransport { get; set; }
 
     public static TimeSpan DefaultNetworkTimeout { get; set; } = TimeSpan.FromSeconds(100);
     #endregion
