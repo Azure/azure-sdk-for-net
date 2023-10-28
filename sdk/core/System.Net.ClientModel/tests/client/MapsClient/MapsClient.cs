@@ -5,6 +5,8 @@ using System;
 using System.Net;
 using System.Net.ClientModel;
 using System.Net.ClientModel.Core;
+
+// TODO: remove
 using System.Net.ClientModel.Internal;
 using System.Text;
 using System.Threading;
@@ -20,13 +22,13 @@ public class MapsClient
 
     public MapsClient(Uri endpoint, KeyCredential credential, MapsClientOptions options = default)
     {
-        ClientUtilities.AssertNotNull(endpoint, nameof(endpoint));
-        ClientUtilities.AssertNotNull(credential, nameof(credential));
+        if (endpoint is null) throw new ArgumentNullException(nameof(endpoint));
+        if (credential is null) throw new ArgumentNullException(nameof(credential));
 
         options ??= new MapsClientOptions();
 
         _credential = credential;
-        _pipeline = MessagePipeline.Create(options, new KeyCredentialAuthenticationPolicy(_credential, "Authorization", "Bearer"));
+        _pipeline = MessagePipeline.Create(options, new KeyCredentialAuthenticationPolicy(_credential, "subscription-key"));
         _endpoint = endpoint;
         _apiVersion = options.Version;
     }
@@ -69,14 +71,19 @@ public class MapsClient
         request.Method = "GET";
 
         UriBuilder uriBuilder = new(_endpoint.ToString());
+
         StringBuilder path = new();
-        path.Append("/geolocation/ip/");
-        path.Append("json");
-        path.Append("?api-version=");
-        path.Append(Uri.EscapeDataString(_apiVersion));
-        path.Append("&ip=");
-        path.Append(Uri.EscapeDataString(ipAddress));
+        path.Append("geolocation/ip");
+        path.Append("/json");
         uriBuilder.Path += path.ToString();
+
+        StringBuilder query = new();
+        query.Append("api-version=");
+        query.Append(Uri.EscapeDataString(_apiVersion));
+        query.Append("&ip=");
+        query.Append(Uri.EscapeDataString(ipAddress));
+        uriBuilder.Query = query.ToString();
+
         request.Uri = uriBuilder.Uri;
 
         request.Headers.Add("Accept", "application/json");
