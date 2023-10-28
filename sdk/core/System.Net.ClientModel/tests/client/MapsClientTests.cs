@@ -23,6 +23,7 @@ public class MapsClientTests
         client.GetCountryCode(ipAddress);
         Result<IPAddressCountryPair> result = client.GetCountryCode(ipAddress);
 
-        Assert.AreEqual("US", result.Value.IsoCode);
+        Assert.AreEqual("US", result.Value.CountryRegion.IsoCode);
+        Assert.AreEqual(IPAddress.Parse("2001:4898:80e8:b::189"), result.Value.IpAddress);
     }
 }
