@@ -98,6 +98,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Get Big Data Pool. </summary>
         /// <param name="bigDataPoolName"> The Big Data Pool name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="bigDataPoolName"/> is null. </exception>
         public virtual async Task<Response<BigDataPoolResourceInfo>> GetAsync(string bigDataPoolName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("BigDataPoolsClient.Get");
@@ -116,6 +117,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Get Big Data Pool. </summary>
         /// <param name="bigDataPoolName"> The Big Data Pool name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="bigDataPoolName"/> is null. </exception>
         public virtual Response<BigDataPoolResourceInfo> Get(string bigDataPoolName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("BigDataPoolsClient.Get");

@@ -66,6 +66,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="linkConnectionName"> The link connection name. </param>
         /// <param name="linkConnection"> Link connection resource definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkConnectionName"/> or <paramref name="linkConnection"/> is null. </exception>
         public virtual async Task<Response<LinkConnectionResource>> CreateOrUpdateAsync(string linkConnectionName, LinkConnectionResource linkConnection, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LinkConnectionClient.CreateOrUpdate");
@@ -85,6 +86,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="linkConnectionName"> The link connection name. </param>
         /// <param name="linkConnection"> Link connection resource definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkConnectionName"/> or <paramref name="linkConnection"/> is null. </exception>
         public virtual Response<LinkConnectionResource> CreateOrUpdate(string linkConnectionName, LinkConnectionResource linkConnection, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LinkConnectionClient.CreateOrUpdate");
@@ -103,6 +105,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Get a link connection. </summary>
         /// <param name="linkConnectionName"> The link connection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkConnectionName"/> is null. </exception>
         public virtual async Task<Response<LinkConnectionResource>> GetAsync(string linkConnectionName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LinkConnectionClient.Get");
@@ -121,6 +124,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Get a link connection. </summary>
         /// <param name="linkConnectionName"> The link connection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkConnectionName"/> is null. </exception>
         public virtual Response<LinkConnectionResource> Get(string linkConnectionName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LinkConnectionClient.Get");
@@ -139,6 +143,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Delete a link connection. </summary>
         /// <param name="linkConnectionName"> The link connection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkConnectionName"/> is null. </exception>
         public virtual async Task<Response> DeleteAsync(string linkConnectionName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LinkConnectionClient.Delete");
@@ -157,6 +162,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Delete a link connection. </summary>
         /// <param name="linkConnectionName"> The link connection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkConnectionName"/> is null. </exception>
         public virtual Response Delete(string linkConnectionName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LinkConnectionClient.Delete");
@@ -176,6 +182,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="linkConnectionName"> The link connection name. </param>
         /// <param name="editTablesRequest"> Edit tables request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkConnectionName"/> or <paramref name="editTablesRequest"/> is null. </exception>
         public virtual async Task<Response> EditTablesAsync(string linkConnectionName, EditTablesRequest editTablesRequest, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LinkConnectionClient.EditTables");
@@ -195,6 +202,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="linkConnectionName"> The link connection name. </param>
         /// <param name="editTablesRequest"> Edit tables request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkConnectionName"/> or <paramref name="editTablesRequest"/> is null. </exception>
         public virtual Response EditTables(string linkConnectionName, EditTablesRequest editTablesRequest, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LinkConnectionClient.EditTables");
@@ -213,6 +221,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Start a link connection. It may take a few minutes from Starting to Running, monitor the status with LinkConnection_GetDetailedStatus. </summary>
         /// <param name="linkConnectionName"> The link connection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkConnectionName"/> is null. </exception>
         public virtual async Task<Response> StartAsync(string linkConnectionName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LinkConnectionClient.Start");
@@ -231,6 +240,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Start a link connection. It may take a few minutes from Starting to Running, monitor the status with LinkConnection_GetDetailedStatus. </summary>
         /// <param name="linkConnectionName"> The link connection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkConnectionName"/> is null. </exception>
         public virtual Response Start(string linkConnectionName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LinkConnectionClient.Start");
@@ -249,6 +259,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Stop a link connection. It may take a few minutes from Stopping to stopped, monitor the status with LinkConnection_GetDetailedStatus. </summary>
         /// <param name="linkConnectionName"> The link connection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkConnectionName"/> is null. </exception>
         public virtual async Task<Response> StopAsync(string linkConnectionName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LinkConnectionClient.Stop");
@@ -267,6 +278,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Stop a link connection. It may take a few minutes from Stopping to stopped, monitor the status with LinkConnection_GetDetailedStatus. </summary>
         /// <param name="linkConnectionName"> The link connection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkConnectionName"/> is null. </exception>
         public virtual Response Stop(string linkConnectionName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LinkConnectionClient.Stop");
@@ -285,6 +297,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Get the detailed status of a link connection. </summary>
         /// <param name="linkConnectionName"> The link connection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkConnectionName"/> is null. </exception>
         public virtual async Task<Response<LinkConnectionDetailedStatus>> GetDetailedStatusAsync(string linkConnectionName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LinkConnectionClient.GetDetailedStatus");
@@ -303,6 +316,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Get the detailed status of a link connection. </summary>
         /// <param name="linkConnectionName"> The link connection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkConnectionName"/> is null. </exception>
         public virtual Response<LinkConnectionDetailedStatus> GetDetailedStatus(string linkConnectionName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LinkConnectionClient.GetDetailedStatus");
@@ -321,6 +335,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> List the link tables of a link connection. </summary>
         /// <param name="linkConnectionName"> The link connection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkConnectionName"/> is null. </exception>
         public virtual async Task<Response<LinkTableListResponse>> ListLinkTablesAsync(string linkConnectionName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LinkConnectionClient.ListLinkTables");
@@ -339,6 +354,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> List the link tables of a link connection. </summary>
         /// <param name="linkConnectionName"> The link connection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkConnectionName"/> is null. </exception>
         public virtual Response<LinkTableListResponse> ListLinkTables(string linkConnectionName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LinkConnectionClient.ListLinkTables");
@@ -358,6 +374,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="linkConnectionName"> The link connection name. </param>
         /// <param name="queryTableStatusRequest"> Query table status request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkConnectionName"/> or <paramref name="queryTableStatusRequest"/> is null. </exception>
         public virtual async Task<Response<LinkConnectionQueryTableStatus>> QueryTableStatusAsync(string linkConnectionName, QueryTableStatusRequest queryTableStatusRequest, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LinkConnectionClient.QueryTableStatus");
@@ -377,6 +394,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="linkConnectionName"> The link connection name. </param>
         /// <param name="queryTableStatusRequest"> Query table status request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkConnectionName"/> or <paramref name="queryTableStatusRequest"/> is null. </exception>
         public virtual Response<LinkConnectionQueryTableStatus> QueryTableStatus(string linkConnectionName, QueryTableStatusRequest queryTableStatusRequest, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LinkConnectionClient.QueryTableStatus");
@@ -396,6 +414,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="linkConnectionName"> The link connection name. </param>
         /// <param name="updateLandingZoneCredentialRequest"> update landing zone credential request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkConnectionName"/> or <paramref name="updateLandingZoneCredentialRequest"/> is null. </exception>
         public virtual async Task<Response> UpdateLandingZoneCredentialAsync(string linkConnectionName, UpdateLandingZoneCredential updateLandingZoneCredentialRequest, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LinkConnectionClient.UpdateLandingZoneCredential");
@@ -415,6 +434,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="linkConnectionName"> The link connection name. </param>
         /// <param name="updateLandingZoneCredentialRequest"> update landing zone credential request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkConnectionName"/> or <paramref name="updateLandingZoneCredentialRequest"/> is null. </exception>
         public virtual Response UpdateLandingZoneCredential(string linkConnectionName, UpdateLandingZoneCredential updateLandingZoneCredentialRequest, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LinkConnectionClient.UpdateLandingZoneCredential");
@@ -433,6 +453,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Pause a link connection. It may take a few minutes from Pausing to Paused, monitor the status with LinkConnection_GetDetailedStatus. </summary>
         /// <param name="linkConnectionName"> The link connection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkConnectionName"/> is null. </exception>
         public virtual async Task<Response> PauseAsync(string linkConnectionName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LinkConnectionClient.Pause");
@@ -451,6 +472,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Pause a link connection. It may take a few minutes from Pausing to Paused, monitor the status with LinkConnection_GetDetailedStatus. </summary>
         /// <param name="linkConnectionName"> The link connection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkConnectionName"/> is null. </exception>
         public virtual Response Pause(string linkConnectionName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LinkConnectionClient.Pause");
@@ -469,6 +491,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Resume a link connection. It may take a few minutes from Resuming to Running, monitor the status with LinkConnection_GetDetailedStatus. </summary>
         /// <param name="linkConnectionName"> The link connection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkConnectionName"/> is null. </exception>
         public virtual async Task<Response> ResumeAsync(string linkConnectionName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LinkConnectionClient.Resume");
@@ -487,6 +510,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Resume a link connection. It may take a few minutes from Resuming to Running, monitor the status with LinkConnection_GetDetailedStatus. </summary>
         /// <param name="linkConnectionName"> The link connection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkConnectionName"/> is null. </exception>
         public virtual Response Resume(string linkConnectionName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LinkConnectionClient.Resume");

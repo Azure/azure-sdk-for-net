@@ -66,6 +66,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="sqlScriptName"> The sql script name. </param>
         /// <param name="ifNoneMatch"> ETag of the sql compute entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlScriptName"/> is null. </exception>
         public virtual async Task<Response<SqlScriptResource>> GetSqlScriptAsync(string sqlScriptName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SqlScriptClient.GetSqlScript");
@@ -85,6 +86,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="sqlScriptName"> The sql script name. </param>
         /// <param name="ifNoneMatch"> ETag of the sql compute entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlScriptName"/> is null. </exception>
         public virtual Response<SqlScriptResource> GetSqlScript(string sqlScriptName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SqlScriptClient.GetSqlScript");

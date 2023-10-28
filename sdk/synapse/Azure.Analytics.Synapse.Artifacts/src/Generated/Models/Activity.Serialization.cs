@@ -84,10 +84,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "Container": return ControlActivity.DeserializeControlActivity(element);
                     case "Copy": return CopyActivity.DeserializeCopyActivity(element);
                     case "Custom": return CustomActivity.DeserializeCustomActivity(element);
-                    case "DataLakeAnalyticsU-SQL": return DataLakeAnalyticsUsqlActivity.DeserializeDataLakeAnalyticsUsqlActivity(element);
                     case "DatabricksNotebook": return DatabricksNotebookActivity.DeserializeDatabricksNotebookActivity(element);
                     case "DatabricksSparkJar": return DatabricksSparkJarActivity.DeserializeDatabricksSparkJarActivity(element);
                     case "DatabricksSparkPython": return DatabricksSparkPythonActivity.DeserializeDatabricksSparkPythonActivity(element);
+                    case "DataLakeAnalyticsU-SQL": return DataLakeAnalyticsUsqlActivity.DeserializeDataLakeAnalyticsUsqlActivity(element);
                     case "Delete": return DeleteActivity.DeserializeDeleteActivity(element);
                     case "ExecuteDataFlow": return ExecuteDataFlowActivity.DeserializeExecuteDataFlowActivity(element);
                     case "ExecutePipeline": return ExecutePipelineActivity.DeserializeExecutePipelineActivity(element);
