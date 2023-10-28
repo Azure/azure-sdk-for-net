@@ -17,7 +17,11 @@ namespace Azure.Communication.JobRouter
         /// <param name="id"> Unique identifier of this policy. </param>
         /// <param name="name"> Friendly name of this policy. </param>
         /// <param name="fallbackQueueId"> The fallback queue to select if the queue selector doesn't find a match. </param>
-        /// <param name="queueSelectors"> The queue selectors to resolve a queue for a given job. </param>
+        /// <param name="queueSelectors">
+        /// The queue selectors to resolve a queue for a given job.
+        /// Please note <see cref="QueueSelectorAttachment"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ConditionalQueueSelectorAttachment"/>, <see cref="PassThroughQueueSelectorAttachment"/>, <see cref="RuleEngineQueueSelectorAttachment"/>, <see cref="StaticQueueSelectorAttachment"/> and <see cref="WeightedAllocationQueueSelectorAttachment"/>.
+        /// </param>
         /// <param name="prioritizationRule">
         /// A rule of one of the following types:
         ///
@@ -32,8 +36,14 @@ namespace Azure.Communication.JobRouter
         /// Function.
         /// WebhookRule: A rule providing a binding to a webserver following
         /// OAuth2.0 authentication protocol.
+        /// Please note <see cref="RouterRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DirectMapRouterRule"/>, <see cref="ExpressionRouterRule"/>, <see cref="FunctionRouterRule"/>, <see cref="StaticRouterRule"/> and <see cref="WebhookRouterRule"/>.
         /// </param>
-        /// <param name="workerSelectors"> The worker label selectors to attach to a given job. </param>
+        /// <param name="workerSelectors">
+        /// The worker label selectors to attach to a given job.
+        /// Please note <see cref="WorkerSelectorAttachment"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ConditionalWorkerSelectorAttachment"/>, <see cref="PassThroughWorkerSelectorAttachment"/>, <see cref="RuleEngineWorkerSelectorAttachment"/>, <see cref="StaticWorkerSelectorAttachment"/> and <see cref="WeightedAllocationWorkerSelectorAttachment"/>.
+        /// </param>
         internal ClassificationPolicy(string id, string name, string fallbackQueueId, IList<QueueSelectorAttachment> queueSelectors, RouterRule prioritizationRule, IList<WorkerSelectorAttachment> workerSelectors)
         {
             Id = id;

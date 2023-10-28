@@ -67,6 +67,8 @@ namespace Azure.Communication.JobRouter
         /// the job will not start automatically.
         /// SuspendMode: Used when matching workers
         /// to a job needs to be suspended.
+        /// Please note <see cref="JobMatchingMode"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ScheduleAndSuspendMode"/>, <see cref="QueueAndMatchMode"/> and <see cref="SuspendMode"/>.
         /// </param>
         internal RouterJob(string id, string channelReference, RouterJobStatus? status, DateTimeOffset? enqueuedAt, string channelId, string classificationPolicyId, string queueId, int? priority, string dispositionCode, IList<RouterWorkerSelector> requestedWorkerSelectors, IReadOnlyList<RouterWorkerSelector> attachedWorkerSelectors, IDictionary<string, BinaryData> labels, IReadOnlyDictionary<string, RouterJobAssignment> assignments, IDictionary<string, BinaryData> tags, IDictionary<string, string> notes, DateTimeOffset? scheduledAt, JobMatchingMode matchingMode)
         {
