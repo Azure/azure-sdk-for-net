@@ -65,6 +65,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Add a data flow into debug session. </summary>
         /// <param name="request"> Data flow debug session definition with debug content. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
         public virtual async Task<Response<AddDataFlowToDebugSessionResponse>> AddDataFlowAsync(DataFlowDebugPackage request, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DataFlowDebugSessionClient.AddDataFlow");
@@ -83,6 +84,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Add a data flow into debug session. </summary>
         /// <param name="request"> Data flow debug session definition with debug content. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
         public virtual Response<AddDataFlowToDebugSessionResponse> AddDataFlow(DataFlowDebugPackage request, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DataFlowDebugSessionClient.AddDataFlow");
@@ -101,6 +103,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Deletes a data flow debug session. </summary>
         /// <param name="request"> Data flow debug session definition for deletion. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
         public virtual async Task<Response> DeleteDataFlowDebugSessionAsync(DeleteDataFlowDebugSessionRequest request, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DataFlowDebugSessionClient.DeleteDataFlowDebugSession");
@@ -119,6 +122,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Deletes a data flow debug session. </summary>
         /// <param name="request"> Data flow debug session definition for deletion. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
         public virtual Response DeleteDataFlowDebugSession(DeleteDataFlowDebugSessionRequest request, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("DataFlowDebugSessionClient.DeleteDataFlowDebugSession");

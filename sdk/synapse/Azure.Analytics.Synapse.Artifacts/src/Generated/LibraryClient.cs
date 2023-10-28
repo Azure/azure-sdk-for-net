@@ -66,6 +66,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Get Operation result for Library. </summary>
         /// <param name="operationId"> operation id for which status is requested. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         public virtual async Task<Response<object>> GetOperationResultAsync(string operationId, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LibraryClient.GetOperationResult");
@@ -84,6 +85,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Get Operation result for Library. </summary>
         /// <param name="operationId"> operation id for which status is requested. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         public virtual Response<object> GetOperationResult(string operationId, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LibraryClient.GetOperationResult");
@@ -102,6 +104,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Get Library. </summary>
         /// <param name="libraryName"> file name to upload. Minimum length of the filename should be 1 excluding the extension length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="libraryName"/> is null. </exception>
         public virtual async Task<Response<LibraryResource>> GetAsync(string libraryName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LibraryClient.Get");
@@ -120,6 +123,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Get Library. </summary>
         /// <param name="libraryName"> file name to upload. Minimum length of the filename should be 1 excluding the extension length. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="libraryName"/> is null. </exception>
         public virtual Response<LibraryResource> Get(string libraryName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LibraryClient.Get");
@@ -140,6 +144,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="content"> Library file chunk. </param>
         /// <param name="blobConditionAppendPosition"> Set this header to a byte offset at which the block is expected to be appended. The request succeeds only if the current offset matches this value. Otherwise, the request fails with the AppendPositionConditionNotMet error (HTTP status code 412 – Precondition Failed). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="libraryName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<Response> AppendAsync(string libraryName, Stream content, long? blobConditionAppendPosition = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LibraryClient.Append");
@@ -160,6 +165,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="content"> Library file chunk. </param>
         /// <param name="blobConditionAppendPosition"> Set this header to a byte offset at which the block is expected to be appended. The request succeeds only if the current offset matches this value. Otherwise, the request fails with the AppendPositionConditionNotMet error (HTTP status code 412 – Precondition Failed). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="libraryName"/> or <paramref name="content"/> is null. </exception>
         public virtual Response Append(string libraryName, Stream content, long? blobConditionAppendPosition = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("LibraryClient.Append");

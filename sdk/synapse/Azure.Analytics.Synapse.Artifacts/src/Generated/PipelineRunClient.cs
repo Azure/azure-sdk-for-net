@@ -64,6 +64,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Query pipeline runs in the workspace based on input filter conditions. </summary>
         /// <param name="filterParameters"> Parameters to filter the pipeline run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="filterParameters"/> is null. </exception>
         public virtual async Task<Response<PipelineRunsQueryResponse>> QueryPipelineRunsByWorkspaceAsync(RunFilterParameters filterParameters, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PipelineRunClient.QueryPipelineRunsByWorkspace");
@@ -82,6 +83,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Query pipeline runs in the workspace based on input filter conditions. </summary>
         /// <param name="filterParameters"> Parameters to filter the pipeline run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="filterParameters"/> is null. </exception>
         public virtual Response<PipelineRunsQueryResponse> QueryPipelineRunsByWorkspace(RunFilterParameters filterParameters, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PipelineRunClient.QueryPipelineRunsByWorkspace");
@@ -100,6 +102,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Get a pipeline run by its run ID. </summary>
         /// <param name="runId"> The pipeline run identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         public virtual async Task<Response<PipelineRun>> GetPipelineRunAsync(string runId, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PipelineRunClient.GetPipelineRun");
@@ -118,6 +121,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Get a pipeline run by its run ID. </summary>
         /// <param name="runId"> The pipeline run identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         public virtual Response<PipelineRun> GetPipelineRun(string runId, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PipelineRunClient.GetPipelineRun");
@@ -138,6 +142,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="runId"> The pipeline run identifier. </param>
         /// <param name="filterParameters"> Parameters to filter the activity runs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/>, <paramref name="runId"/> or <paramref name="filterParameters"/> is null. </exception>
         public virtual async Task<Response<ActivityRunsQueryResponse>> QueryActivityRunsAsync(string pipelineName, string runId, RunFilterParameters filterParameters, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PipelineRunClient.QueryActivityRuns");
@@ -158,6 +163,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="runId"> The pipeline run identifier. </param>
         /// <param name="filterParameters"> Parameters to filter the activity runs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/>, <paramref name="runId"/> or <paramref name="filterParameters"/> is null. </exception>
         public virtual Response<ActivityRunsQueryResponse> QueryActivityRuns(string pipelineName, string runId, RunFilterParameters filterParameters, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PipelineRunClient.QueryActivityRuns");
@@ -177,6 +183,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="runId"> The pipeline run identifier. </param>
         /// <param name="isRecursive"> If true, cancel all the Child pipelines that are triggered by the current pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         public virtual async Task<Response> CancelPipelineRunAsync(string runId, bool? isRecursive = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PipelineRunClient.CancelPipelineRun");
@@ -196,6 +203,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="runId"> The pipeline run identifier. </param>
         /// <param name="isRecursive"> If true, cancel all the Child pipelines that are triggered by the current pipeline. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         public virtual Response CancelPipelineRun(string runId, bool? isRecursive = null, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("PipelineRunClient.CancelPipelineRun");
