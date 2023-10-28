@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -123,17 +124,24 @@ namespace Azure.Communication.Rooms
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/merge-patch+json");
-            UpdateParticipantsRequest updateParticipantsRequest = new UpdateParticipantsRequest();
-            if (participants != null)
+            if (participants == null || !participants.Any())
             {
-                foreach (var value in participants)
-                {
-                    updateParticipantsRequest.Participants.Add(value);
-                }
+                participants = new ChangeTrackingDictionary<string, ParticipantProperties>();
             }
-            var model = updateParticipantsRequest;
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteStartObject();
+            if (Optional.IsCollectionDefined(participants))
+            {
+                content.JsonWriter.WritePropertyName("participants"u8);
+                content.JsonWriter.WriteStartObject();
+                foreach (var item in participants)
+                {
+                    content.JsonWriter.WritePropertyName(item.Key);
+                    content.JsonWriter.WriteObjectValue(item.Value);
+                }
+                content.JsonWriter.WriteEndObject();
+            }
+            content.JsonWriter.WriteEndObject();
             request.Content = content;
             return message;
         }
