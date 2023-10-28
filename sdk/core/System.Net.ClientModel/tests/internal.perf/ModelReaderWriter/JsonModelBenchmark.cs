@@ -19,7 +19,7 @@ namespace System.Net.ClientModel.Tests.Internal.Perf
             public MockPipelineResponse(int status, BinaryData content)
             {
                 Status = status;
-                Content = MessageBody.CreateContent(content);
+                Content = MessageBody.CreateBody(content);
             }
 
             public override int Status { get; }

@@ -24,7 +24,10 @@ public class PipelineOptions
     #endregion
 
     #region Pipeline creation: Policy-specific settings
+    // TODO: when do we want these to be nullable and when do we want to set defaults?  Why?
     public TimeSpan? NetworkTimeout { get; set; }
+
+    public virtual MessageClassifier MessageClassifier { get; set; } = DefaultMessageClassifier;
     #endregion
 
     #region Defaults for pipeline creation - "always-there" policies.
@@ -35,5 +38,7 @@ public class PipelineOptions
     public static PipelineTransport? DefaultTransport { get; set; }
 
     public static TimeSpan DefaultNetworkTimeout { get; set; } = TimeSpan.FromSeconds(100);
+
+    public static MessageClassifier DefaultMessageClassifier { get; set; } = new MessageClassifier();
     #endregion
 }
