@@ -35,7 +35,7 @@ namespace Azure.Core.Sse
                         {
                             break;
                         }
-                        JsonDocument sseMessageJson = JsonDocument.Parse(value);
+                        using JsonDocument sseMessageJson = JsonDocument.Parse(value);
                         IEnumerable<T> newItems = multiElementDeserializer.Invoke(sseMessageJson.RootElement);
                         foreach (T item in newItems)
                         {
