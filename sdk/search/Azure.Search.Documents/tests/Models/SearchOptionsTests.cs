@@ -256,9 +256,9 @@ namespace Azure.Search.Documents.Tests.Models
         public void VectorSearchOption()
         {
             SearchOptions searchOptions = new();
-            Assert.IsEmpty(searchOptions.VectorSearch.Queries);
-            Assert.IsNull(searchOptions.VectorSearch.FilterMode);
+            Assert.IsNull(searchOptions.VectorSearch);
 
+            searchOptions.VectorSearch = new();
             IReadOnlyList<float> vectors = new List<float> { -0.011113605f, -0.01902812f, 0.047524072f };
             searchOptions.VectorSearch.Queries = new[] { new VectorQuery(vectors) };
 
