@@ -453,6 +453,7 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendPath("/parties/", false);
             uri.AppendPath(partyId, true);
             uri.AppendPath("/attachments", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (resourceIds != null && Optional.IsCollectionDefined(resourceIds))
             {
                 foreach (var param in resourceIds)
@@ -519,7 +520,6 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 uri.AppendQuery("skipToken", skipToken, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -557,7 +557,9 @@ namespace Azure.Verticals.AgriFood.Farming
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "multipart/form-data");
-            request.Content = content;
+            var content0 = new MultipartFormDataContent();
+            content0.Add(content, null, null);
+            content0.ApplyToRequest(request);
             return message;
         }
 
