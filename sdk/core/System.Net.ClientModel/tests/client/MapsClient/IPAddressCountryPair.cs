@@ -16,7 +16,7 @@ public class IPAddressCountryPair : IJsonModel<IPAddressCountryPair>
         IpAddress = ipAddress;
     }
 
-    internal CountryRegion CountryRegion { get; }
+    public CountryRegion CountryRegion { get; }
 
     public IPAddress IpAddress { get; }
 

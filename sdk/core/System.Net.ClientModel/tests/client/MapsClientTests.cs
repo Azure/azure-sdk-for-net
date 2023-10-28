@@ -20,7 +20,6 @@ public class MapsClientTests
         MapsClient client = new MapsClient(new Uri("https://atlas.microsoft.com"), credential);
 
         IPAddress ipAddress = IPAddress.Parse("2001:4898:80e8:b::189");
-        client.GetCountryCode(ipAddress);
         Result<IPAddressCountryPair> result = client.GetCountryCode(ipAddress);
 
         Assert.AreEqual("US", result.Value.CountryRegion.IsoCode);
