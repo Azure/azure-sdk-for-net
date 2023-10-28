@@ -5,9 +5,6 @@ using System;
 using System.Net;
 using System.Net.ClientModel;
 using System.Net.ClientModel.Core;
-
-// TODO: remove
-using System.Net.ClientModel.Internal;
 using System.Text;
 using System.Threading;
 
@@ -56,8 +53,14 @@ public class MapsClient
 
         using PipelineMessage message = CreateGetLocationRequest(ipAddress, options);
 
-        // TODO: do this out instead of using extensions
-        PipelineResponse response = _pipeline.ProcessMessage(message, options);
+        _pipeline.Send(message);
+
+        PipelineResponse response = message.Response;
+
+        if (response.IsError && options.ErrorBehavior == ErrorBehavior.Default)
+        {
+            throw new UnsuccessfulRequestException(response);
+        }
 
         return Result.FromResponse(response);
     }
