@@ -900,6 +900,7 @@ namespace Azure.Developer.LoadTesting
             uri.AppendRaw("https://", false);
             uri.Reset(_endpoint);
             uri.AppendPath("/tests", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (orderby != null)
             {
                 uri.AppendQuery("orderby", orderby, true);
@@ -920,7 +921,6 @@ namespace Azure.Developer.LoadTesting
             {
                 uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -938,11 +938,11 @@ namespace Azure.Developer.LoadTesting
             uri.AppendPath(testId, true);
             uri.AppendPath("/files/", false);
             uri.AppendPath(fileName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (fileType != null)
             {
                 uri.AppendQuery("fileType", fileType, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/octet-stream");
