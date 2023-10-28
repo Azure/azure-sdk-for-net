@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary> Changes private store properties. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
-        /// <param name="data"> The PrivateStore to use. </param>
+        /// <param name="data"> The PrivateStoreData to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public async Task<Response> CreateOrUpdateAsync(Guid privateStoreId, PrivateStoreData data, CancellationToken cancellationToken = default)
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary> Changes private store properties. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
-        /// <param name="data"> The PrivateStore to use. </param>
+        /// <param name="data"> The PrivateStoreData to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public Response CreateOrUpdate(Guid privateStoreId, PrivateStoreData data, CancellationToken cancellationToken = default)
@@ -877,7 +877,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Create approval request. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="requestApprovalId"> The request approval ID to get create or update. </param>
-        /// <param name="data"> The MarketplaceApprovalRequest to use. </param>
+        /// <param name="data"> The MarketplaceApprovalRequestData to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="requestApprovalId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -905,7 +905,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Create approval request. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="requestApprovalId"> The request approval ID to get create or update. </param>
-        /// <param name="data"> The MarketplaceApprovalRequest to use. </param>
+        /// <param name="data"> The MarketplaceApprovalRequestData to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="requestApprovalId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1173,7 +1173,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Update the admin action, weather the request is approved or rejected and the approved plans. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="adminRequestApprovalId"> The admin request approval ID to get create or update. </param>
-        /// <param name="data"> The MarketplaceAdminApprovalRequest to use. </param>
+        /// <param name="data"> The MarketplaceAdminApprovalRequestData to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="adminRequestApprovalId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="adminRequestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -1201,7 +1201,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Update the admin action, weather the request is approved or rejected and the approved plans. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="adminRequestApprovalId"> The admin request approval ID to get create or update. </param>
-        /// <param name="data"> The MarketplaceAdminApprovalRequest to use. </param>
+        /// <param name="data"> The MarketplaceAdminApprovalRequestData to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="adminRequestApprovalId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="adminRequestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
