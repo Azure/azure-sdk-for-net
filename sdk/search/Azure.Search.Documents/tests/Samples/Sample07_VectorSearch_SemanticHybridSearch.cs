@@ -50,8 +50,8 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                          SemanticSearch = new()
                          {
                              SemanticConfigurationName = "my-semantic-config",
-                             QueryCaption = new() { CaptionType = QueryCaptionType.Extractive },
-                             QueryAnswer = new() { AnswerType = QueryAnswerType.Extractive }
+                             QueryCaption = new(QueryCaptionType.Extractive),
+                             QueryAnswer = new(QueryAnswerType.Extractive)
                          },
                          QueryType = SearchQueryType.Semantic,
                      });
@@ -60,7 +60,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                 Console.WriteLine($"Semantic Hybrid Search Results:");
 
                 Console.WriteLine($"\nQuery Answer:");
-                foreach (AnswerResult result in response.SemanticSearch.Answers)
+                foreach (QueryAnswerResult result in response.SemanticSearch.QueryAnswers)
                 {
                     Console.WriteLine($"Answer Highlights: {result.Highlights}");
                     Console.WriteLine($"Answer Text: {result.Text}");
@@ -72,9 +72,9 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                     Hotel doc = result.Document;
                     Console.WriteLine($"{doc.HotelId}: {doc.HotelName}");
 
-                    if (result.SemanticSearch.Captions != null)
+                    if (result.SemanticSearch.QueryCaptions != null)
                     {
-                        var caption = result.SemanticSearch.Captions.FirstOrDefault();
+                        var caption = result.SemanticSearch.QueryCaptions.FirstOrDefault();
                         if (caption.Highlights != null && caption.Highlights != "")
                         {
                             Console.WriteLine($"Caption Highlights: {caption.Highlights}");

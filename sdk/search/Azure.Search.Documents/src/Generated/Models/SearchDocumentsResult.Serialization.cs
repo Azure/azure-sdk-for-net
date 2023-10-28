@@ -23,7 +23,7 @@ namespace Azure.Search.Documents.Models
             Optional<long> odataCount = default;
             Optional<double> searchCoverage = default;
             Optional<IReadOnlyDictionary<string, IList<FacetResult>>> searchFacets = default;
-            Optional<IReadOnlyList<AnswerResult>> searchAnswers = default;
+            Optional<IReadOnlyList<QueryAnswerResult>> searchAnswers = default;
             Optional<SearchOptions> searchNextPageParameters = default;
             IReadOnlyList<SearchResult> value = default;
             Optional<string> odataNextLink = default;
@@ -82,10 +82,10 @@ namespace Azure.Search.Documents.Models
                         searchAnswers = null;
                         continue;
                     }
-                    List<AnswerResult> array = new List<AnswerResult>();
+                    List<QueryAnswerResult> array = new List<QueryAnswerResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AnswerResult.DeserializeAnswerResult(item));
+                        array.Add(QueryAnswerResult.DeserializeQueryAnswerResult(item));
                     }
                     searchAnswers = array;
                     continue;

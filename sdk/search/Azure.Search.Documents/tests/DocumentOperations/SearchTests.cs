@@ -1034,8 +1034,8 @@ namespace Azure.Search.Documents.Tests
             source.SemanticSearch = new SemanticSearchOptions()
             {
                 SemanticConfigurationName = "my-config",
-                QueryAnswer = new QueryAnswer() { AnswerType = QueryAnswerType.Extractive, Count = 5, Threshold = 0.9 },
-                QueryCaption = new QueryCaption() { CaptionType = QueryCaptionType.Extractive, HighlightEnabled = true },
+                QueryAnswer = new QueryAnswer(QueryAnswerType.Extractive) { Count = 5, Threshold = 0.9 },
+                QueryCaption = new QueryCaption(QueryCaptionType.Extractive) { HighlightEnabled = true },
                 ErrorMode = SemanticErrorMode.Partial,
                 MaxWait = TimeSpan.FromMilliseconds(1000),
             };

@@ -10,15 +10,6 @@ namespace Azure.Search.Documents.Models
     /// </summary>
     public partial class SemanticSearchOptions
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SemanticSearchOptions"/> class.
-        /// </summary>
-        public SemanticSearchOptions()
-        {
-            QueryAnswer = new QueryAnswer();
-            QueryCaption = new QueryCaption();
-        }
-
         /// <summary> The name of a semantic configuration that will be used when processing documents for queries of type semantic. </summary>
         public string SemanticConfigurationName { get; set; }
 

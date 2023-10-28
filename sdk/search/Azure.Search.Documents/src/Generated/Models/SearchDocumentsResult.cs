@@ -24,7 +24,7 @@ namespace Azure.Search.Documents.Models
             Argument.AssertNotNull(results, nameof(results));
 
             Facets = new ChangeTrackingDictionary<string, IList<FacetResult>>();
-            Answers = new ChangeTrackingList<AnswerResult>();
+            Answers = new ChangeTrackingList<QueryAnswerResult>();
             Results = results.ToList();
         }
 
@@ -38,7 +38,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="nextLink"> Continuation URL returned when Azure Cognitive Search can't return all the requested results in a single Search response. You can use this URL to formulate another GET or POST Search request to get the next part of the search response. Make sure to use the same verb (GET or POST) as the request that produced this response. </param>
         /// <param name="semanticPartialResponseReason"> Reason that a partial response was returned for a semantic search request. </param>
         /// <param name="semanticPartialResponseType"> Type of partial response that was returned for a semantic search request. </param>
-        internal SearchDocumentsResult(long? count, double? coverage, IReadOnlyDictionary<string, IList<FacetResult>> facets, IReadOnlyList<AnswerResult> answers, SearchOptions nextPageParameters, IReadOnlyList<SearchResult> results, string nextLink, SemanticErrorReason? semanticPartialResponseReason, SemanticSearchResultsType? semanticPartialResponseType)
+        internal SearchDocumentsResult(long? count, double? coverage, IReadOnlyDictionary<string, IList<FacetResult>> facets, IReadOnlyList<QueryAnswerResult> answers, SearchOptions nextPageParameters, IReadOnlyList<SearchResult> results, string nextLink, SemanticErrorReason? semanticPartialResponseReason, SemanticSearchResultsType? semanticPartialResponseType)
         {
             Count = count;
             Coverage = coverage;
@@ -58,7 +58,7 @@ namespace Azure.Search.Documents.Models
         /// <summary> The facet query results for the search operation, organized as a collection of buckets for each faceted field; null if the query did not include any facet expressions. </summary>
         public IReadOnlyDictionary<string, IList<FacetResult>> Facets { get; }
         /// <summary> The answers query results for the search operation; null if the answers query parameter was not specified or set to 'none'. </summary>
-        public IReadOnlyList<AnswerResult> Answers { get; }
+        public IReadOnlyList<QueryAnswerResult> Answers { get; }
         /// <summary> Continuation JSON payload returned when Azure Cognitive Search can't return all the requested results in a single Search response. You can use this JSON along with @odata.nextLink to formulate another POST Search request to get the next part of the search response. </summary>
         public SearchOptions NextPageParameters { get; }
         /// <summary> The sequence of results returned by the query. </summary>

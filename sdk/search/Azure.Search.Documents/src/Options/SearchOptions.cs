@@ -159,17 +159,23 @@ namespace Azure.Search.Documents
         public IList<string> ScoringParameters { get; internal set; } = new List<string>();
 
         /// <summary> Options for performing Semantic Search. </summary>
-        public SemanticSearchOptions SemanticSearch { get; set; } = new SemanticSearchOptions();
+        public SemanticSearchOptions SemanticSearch { get; set; }
 
         /// <summary> Options for performing Vector Search. </summary>
-        public VectorSearchOptions VectorSearch { get; set; } = new VectorSearchOptions();
+        public VectorSearchOptions VectorSearch { get; set; }
 
         /// <summary> The name of a semantic configuration that will be used when processing documents for queries of type semantic. </summary>
         [CodeGenMember("SemanticConfiguration")]
         private string SemanticConfigurationName
         {
             get { return SemanticSearch?.SemanticConfigurationName; }
-            set { SemanticSearch.SemanticConfigurationName = value; }
+            set
+            {
+                if (SemanticSearch?.SemanticConfigurationName != null)
+                {
+                    SemanticSearch.SemanticConfigurationName = value;
+                }
+            }
         }
 
         /// <summary> Constructed from <see cref="QueryAnswer.AnswerType"/>, <see cref="QueryAnswer.Count"/> and <see cref="QueryAnswer.Threshold"/>. For example: "extractive|count-1,threshold-0.7"</summary>
@@ -177,7 +183,13 @@ namespace Azure.Search.Documents
         private string QueryAnswerRaw
         {
             get { return SemanticSearch?.QueryAnswer?.QueryAnswerRaw; }
-            set { SemanticSearch.QueryAnswer.QueryAnswerRaw = value; }
+            set
+            {
+                if (SemanticSearch?.QueryAnswer?.QueryAnswerRaw != null)
+                {
+                    SemanticSearch.QueryAnswer.QueryAnswerRaw = value;
+                }
+            }
         }
 
         /// <summary> Constructed from <see cref="QueryCaption.CaptionType"/> and <see cref="QueryCaption.HighlightEnabled"/>.</summary>
@@ -185,7 +197,13 @@ namespace Azure.Search.Documents
         private string QueryCaptionRaw
         {
             get { return SemanticSearch?.QueryCaption?.QueryCaptionRaw; }
-            set { SemanticSearch.QueryCaption.QueryCaptionRaw = value; }
+            set
+            {
+                if (SemanticSearch?.QueryCaption?.QueryCaptionRaw != null)
+                {
+                    SemanticSearch.QueryCaption.QueryCaptionRaw = value;
+                }
+            }
         }
 
         /// <summary> Allows the user to choose whether a semantic call should fail completely (default / current behavior), or to return partial results. </summary>
@@ -193,22 +211,40 @@ namespace Azure.Search.Documents
         private SemanticErrorMode? SemanticErrorMode
         {
             get { return SemanticSearch?.ErrorMode; }
-            set { SemanticSearch.ErrorMode = value; }
+            set
+            {
+                if (SemanticSearch?.ErrorMode != null)
+                {
+                    SemanticSearch.ErrorMode = value;
+                }
+            }
         }
 
         /// <summary> Allows the user to set an upper bound on the amount of time it takes for semantic enrichment to finish processing before the request fails. </summary>
         private int? SemanticMaxWaitInMilliseconds
         {
             get { return SemanticSearch?.MaxWait?.Milliseconds; }
-            set { SemanticSearch.MaxWait = value.HasValue ? TimeSpan.FromMilliseconds(value.Value) : null; }
+            set
+            {
+                if (SemanticSearch?.MaxWait?.Milliseconds != null)
+                {
+                    SemanticSearch.MaxWait = value.HasValue ? TimeSpan.FromMilliseconds(value.Value) : null;
+                }
+            }
         }
 
         /// <summary> The query parameters for multi-vector search queries. </summary>
         [CodeGenMember("VectorQueries")]
         private IList<VectorizableQuery> VectorizableQueries
         {
-            get { return VectorSearch?.Queries; }
-            set { VectorSearch.Queries = value; }
+            get { return VectorSearch?.Queries != null? VectorSearch.Queries : new ChangeTrackingList<VectorizableQuery>(); }
+            set
+            {
+                if (VectorSearch?.Queries != null)
+                {
+                    VectorSearch.Queries = value;
+                }
+            }
         }
 
         /// <summary> Determines whether or not filters are applied before or after the vector search is performed. Default is <see cref="VectorFilterMode.PreFilter" /> for new indexes. </summary>
@@ -216,7 +252,13 @@ namespace Azure.Search.Documents
         private VectorFilterMode? FilterMode
         {
             get { return VectorSearch?.FilterMode; }
-            set { VectorSearch.FilterMode = value; }
+            set
+            {
+                if (VectorSearch?.FilterMode != null)
+                {
+                    VectorSearch.FilterMode = value;
+                }
+            }
         }
 
         /// <summary>

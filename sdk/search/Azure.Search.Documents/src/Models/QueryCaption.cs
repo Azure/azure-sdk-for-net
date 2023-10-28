@@ -15,17 +15,28 @@ namespace Azure.Search.Documents.Models
         private const string QueryCaptionRawSplitter = "|highlight-";
 
         /// <summary>
-        /// A value that specifies whether <see cref="SemanticSearchResult.Captions"/> should be returned as part of the search response.
+        /// Initializes a new instance of the <see cref="QueryCaption"/> class.
+        /// </summary>
+        /// <param name="captionType">A value that specifies whether <see cref="SemanticSearchResult.QueryCaptions"/> should be returned as part of the search response.</param>
+        public QueryCaption(QueryCaptionType captionType)
+        {
+            Argument.AssertNotNull(captionType, nameof(captionType));
+
+            CaptionType = captionType;
+        }
+
+        /// <summary>
+        /// A value that specifies whether <see cref="SemanticSearchResult.QueryCaptions"/> should be returned as part of the search response.
         /// <para>The default value is <see cref="QueryCaptionType.None"/>.</para>
         /// </summary>
-        public QueryCaptionType? CaptionType { get; set; }
+        public QueryCaptionType CaptionType { get; set; }
 
         /// <summary>
         /// If <see cref="CaptionType"/> is set to <see cref="QueryCaptionType.Extractive"/>, setting this to <c>true</c> enables highlighting of the returned captions.
-        /// It populates <see cref="CaptionResult.Highlights"/>.
+        /// It populates <see cref="QueryCaptionResult.Highlights"/>.
         /// <para>The default value is <c>true</c>.</para>
         /// </summary>
-        public bool? HighlightEnabled { get; set; }
+        public bool HighlightEnabled { get; set; } = true;
 
         /// <summary> Constructed from <see cref="CaptionType"/> and <see cref="HighlightEnabled"/>.</summary>
         [CodeGenMember("Captions")]
@@ -33,21 +44,14 @@ namespace Azure.Search.Documents.Models
         {
             get
             {
-                string queryCaptionStringValue = null;
-
-                if (CaptionType.HasValue)
-                {
-                    if (CaptionType.Value == QueryCaptionType.Extractive)
+                    if (CaptionType == QueryCaptionType.Extractive)
                     {
-                        queryCaptionStringValue = $"{CaptionType.Value}{QueryCaptionRawSplitter}{HighlightEnabled.GetValueOrDefault(true)}";
+                        return $"{CaptionType}{QueryCaptionRawSplitter}{HighlightEnabled}";
                     }
                     else
                     {
-                        queryCaptionStringValue = CaptionType.ToString();
+                        return CaptionType.ToString();
                     }
-                }
-
-                return queryCaptionStringValue;
             }
 
             set
@@ -55,7 +59,6 @@ namespace Azure.Search.Documents.Models
                 if (string.IsNullOrEmpty(value))
                 {
                     CaptionType = null;
-                    HighlightEnabled = null;
                 }
                 else
                 {
@@ -66,12 +69,11 @@ namespace Azure.Search.Documents.Models
                         var highlightPart = value.Substring(splitIndex + QueryCaptionRawSplitter.Length);
 
                         CaptionType = string.IsNullOrEmpty(queryCaptionPart) ? null : new QueryCaptionType(queryCaptionPart);
-                        HighlightEnabled = bool.TryParse(highlightPart, out bool highlightValue) ? highlightValue : null;
+                        HighlightEnabled = bool.TryParse(highlightPart, out bool highlightValue) ? highlightValue : true;
                     }
                     else
                     {
                         CaptionType = new QueryCaptionType(value);
-                        HighlightEnabled = null;
                     }
                 }
             }

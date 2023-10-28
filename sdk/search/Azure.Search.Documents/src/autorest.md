@@ -268,6 +268,24 @@ directive:
       $.properties.minimumPrecision["x-ms-client-name"] = "MinPrecision";
 ```
 
+### Rename `AnswerResult` to `QueryAnswerResult`
+
+```yaml
+directive:
+- from: searchindex.json
+  where: $.definitions.AnswerResult
+  transform: $["x-ms-client-name"] = "QueryAnswerResult";
+```
+
+### Rename `CaptionResult` to `QueryCaptionResult`
+
+```yaml
+directive:
+- from: searchindex.json
+  where: $.definitions.CaptionResult
+  transform: $["x-ms-client-name"] = "QueryCaptionResult";
+```
+
 ### Add `Edm.Single` in `SearchFieldDataType`
 
 In the case of a vector field, the `Edm.Single` data type was missing. Therefore, it is now being added to the `SearchFieldDataType`.

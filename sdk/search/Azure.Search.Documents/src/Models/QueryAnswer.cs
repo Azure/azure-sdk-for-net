@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 using System.Text;
 using Azure.Core;
 
@@ -16,13 +17,24 @@ namespace Azure.Search.Documents.Models
         private const string QueryAnswerCountRaw = "count-";
         private const string QueryAnswerThresholdRaw = "threshold-";
 
-        /// <summary> A value that specifies whether <see cref="SemanticSearchResults.Answers"/> should be returned as part of the search response. </summary>
-        public QueryAnswerType? AnswerType { get; set; }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="QueryAnswer"/> class.
+        /// </summary>
+        /// <param name="answerType">A value that specifies whether <see cref="SemanticSearchResults.QueryAnswers"/> should be returned as part of the search response.</param>
+        public QueryAnswer(QueryAnswerType answerType)
+        {
+            Argument.AssertNotNull(answerType, nameof(answerType));
 
-        /// <summary> A value that specifies the number of <see cref="SemanticSearchResults.Answers"/> that should be returned as part of the search response and will default to 1. </summary>
+            AnswerType = answerType;
+        }
+
+        /// <summary> A value that specifies whether <see cref="SemanticSearchResults.QueryAnswers"/> should be returned as part of the search response. </summary>
+        public QueryAnswerType AnswerType { get; set; }
+
+        /// <summary> A value that specifies the number of <see cref="SemanticSearchResults.QueryAnswers"/> that should be returned as part of the search response and will default to 1. </summary>
         public int? Count { get; set; }
 
-        /// <summary> A value that specifies the threshold of <see cref="SemanticSearchResults.Answers"/> that should be returned as part of the search response. The threshold is optional and will default to 0.7.
+        /// <summary> A value that specifies the threshold of <see cref="SemanticSearchResults.QueryAnswers"/> that should be returned as part of the search response. The threshold is optional and will default to 0.7.
         /// </summary>
         public double? Threshold { get; set; }
 
@@ -31,9 +43,7 @@ namespace Azure.Search.Documents.Models
         {
             get
             {
-                if (AnswerType.HasValue)
-                {
-                    StringBuilder queryAnswerStringValue = new(AnswerType.Value.ToString());
+                    StringBuilder queryAnswerStringValue = new(AnswerType.ToString());
 
                     if (Count.HasValue && Threshold.HasValue)
                     {
@@ -52,9 +62,6 @@ namespace Azure.Search.Documents.Models
                         return queryAnswerStringValue.ToString();
                     }
                 }
-
-                return null;
-            }
             set
             {
                 if (!string.IsNullOrEmpty(value)) // If the value is - "extractive" or "extractive|count-1" or "extractive|threshold-0.7" or "extractive|count-5,threshold-0.9" or "extractive|threshold-0.8,count-4"

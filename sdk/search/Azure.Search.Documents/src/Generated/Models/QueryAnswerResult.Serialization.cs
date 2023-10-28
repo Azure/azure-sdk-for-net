@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
-    public partial class AnswerResult
+    public partial class QueryAnswerResult
     {
-        internal static AnswerResult DeserializeAnswerResult(JsonElement element)
+        internal static QueryAnswerResult DeserializeQueryAnswerResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -59,7 +59,7 @@ namespace Azure.Search.Documents.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AnswerResult(Optional.ToNullable(score), key.Value, text.Value, highlights.Value, additionalProperties);
+            return new QueryAnswerResult(Optional.ToNullable(score), key.Value, text.Value, highlights.Value, additionalProperties);
         }
     }
 }

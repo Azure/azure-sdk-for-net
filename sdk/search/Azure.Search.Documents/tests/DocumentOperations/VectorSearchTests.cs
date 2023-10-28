@@ -120,26 +120,26 @@ namespace Azure.Search.Documents.Tests
                         SemanticSearch = new()
                         {
                             SemanticConfigurationName = "my-semantic-config",
-                            QueryCaption = new() { CaptionType = QueryCaptionType.Extractive },
-                            QueryAnswer = new() { AnswerType = QueryAnswerType.Extractive }
+                            QueryCaption = new(QueryCaptionType.Extractive),
+                            QueryAnswer = new(QueryAnswerType.Extractive)
                         },
                         QueryType = SearchQueryType.Semantic,
                         Select = { "hotelId", "hotelName", "description", "category" },
                     });
 
-            Assert.NotNull(response.SemanticSearch.Answers);
-            Assert.AreEqual(1, response.SemanticSearch.Answers.Count);
-            Assert.AreEqual("9", response.SemanticSearch.Answers[0].Key);
-            Assert.NotNull(response.SemanticSearch.Answers[0].Highlights);
-            Assert.NotNull(response.SemanticSearch.Answers[0].Text);
+            Assert.NotNull(response.SemanticSearch.QueryAnswers);
+            Assert.AreEqual(1, response.SemanticSearch.QueryAnswers.Count);
+            Assert.AreEqual("9", response.SemanticSearch.QueryAnswers[0].Key);
+            Assert.NotNull(response.SemanticSearch.QueryAnswers[0].Highlights);
+            Assert.NotNull(response.SemanticSearch.QueryAnswers[0].Text);
 
             await foreach (SearchResult<Hotel> result in response.GetResultsAsync())
             {
                 Hotel doc = result.Document;
 
-                Assert.NotNull(result.SemanticSearch.Captions);
+                Assert.NotNull(result.SemanticSearch.QueryCaptions);
 
-                var caption = result.SemanticSearch.Captions.FirstOrDefault();
+                var caption = result.SemanticSearch.QueryCaptions.FirstOrDefault();
                 Assert.NotNull(caption.Highlights, "Caption highlight is null");
                 Assert.NotNull(caption.Text, "Caption text is null");
             }

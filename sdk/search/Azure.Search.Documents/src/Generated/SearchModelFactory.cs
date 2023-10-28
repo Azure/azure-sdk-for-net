@@ -15,30 +15,30 @@ namespace Azure.Search.Documents.Models
     /// <summary> Model factory for models. </summary>
     public static partial class SearchModelFactory
     {
-        /// <summary> Initializes a new instance of AnswerResult. </summary>
+        /// <summary> Initializes a new instance of QueryAnswerResult. </summary>
         /// <param name="score"> The score value represents how relevant the answer is to the query relative to other answers returned for the query. </param>
         /// <param name="key"> The key of the document the answer was extracted from. </param>
         /// <param name="text"> The text passage extracted from the document contents as the answer. </param>
         /// <param name="highlights"> Same text passage as in the Text property with highlighted text phrases most relevant to the query. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <returns> A new <see cref="Models.AnswerResult"/> instance for mocking. </returns>
-        public static AnswerResult AnswerResult(double? score = null, string key = null, string text = null, string highlights = null, IReadOnlyDictionary<string, object> additionalProperties = null)
+        /// <returns> A new <see cref="Models.QueryAnswerResult"/> instance for mocking. </returns>
+        public static QueryAnswerResult QueryAnswerResult(double? score = null, string key = null, string text = null, string highlights = null, IReadOnlyDictionary<string, object> additionalProperties = null)
         {
             additionalProperties ??= new Dictionary<string, object>();
 
-            return new AnswerResult(score, key, text, highlights, additionalProperties);
+            return new QueryAnswerResult(score, key, text, highlights, additionalProperties);
         }
 
-        /// <summary> Initializes a new instance of CaptionResult. </summary>
+        /// <summary> Initializes a new instance of QueryCaptionResult. </summary>
         /// <param name="text"> A representative text passage extracted from the document most relevant to the search query. </param>
         /// <param name="highlights"> Same text passage as in the Text property with highlighted phrases most relevant to the query. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <returns> A new <see cref="Models.CaptionResult"/> instance for mocking. </returns>
-        public static CaptionResult CaptionResult(string text = null, string highlights = null, IReadOnlyDictionary<string, object> additionalProperties = null)
+        /// <returns> A new <see cref="Models.QueryCaptionResult"/> instance for mocking. </returns>
+        public static QueryCaptionResult QueryCaptionResult(string text = null, string highlights = null, IReadOnlyDictionary<string, object> additionalProperties = null)
         {
             additionalProperties ??= new Dictionary<string, object>();
 
-            return new CaptionResult(text, highlights, additionalProperties);
+            return new QueryCaptionResult(text, highlights, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of AutocompleteResults. </summary>
