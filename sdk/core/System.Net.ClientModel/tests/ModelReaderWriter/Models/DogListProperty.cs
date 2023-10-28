@@ -43,7 +43,7 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests.Models
 
         public static implicit operator MessageBody(DogListProperty dog)
         {
-            return MessageBody.CreateContent(dog, ModelReaderWriterOptions.DefaultWireOptions);
+            return MessageBody.CreateBody(dog, ModelReaderWriterOptions.DefaultWireOptions);
         }
 
         #region Serialization
