@@ -113,6 +113,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The SKU of the cluster. </param>
+        /// <param name="zones"> The availability zones of the cluster. </param>
         /// <param name="identity"> The identity of the cluster, if configured. </param>
         /// <param name="state"> The state of the resource. </param>
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
@@ -140,9 +141,10 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="privateEndpointConnections"> A list of private endpoint connections. </param>
         /// <param name="migrationCluster"> Properties of the peer cluster involved in a migration to/from this cluster. </param>
         /// <returns> A new <see cref="Models.KustoClusterPatch"/> instance for mocking. </returns>
-        public static KustoClusterPatch KustoClusterPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, KustoSku sku = null, ManagedServiceIdentity identity = null, KustoClusterState? state = null, KustoProvisioningState? provisioningState = null, Uri uri = null, Uri dataIngestionUri = null, string stateReason = null, IEnumerable<KustoClusterTrustedExternalTenant> trustedExternalTenants = null, OptimizedAutoscale optimizedAutoscale = null, bool? isDiskEncryptionEnabled = null, bool? isStreamingIngestEnabled = null, KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration = null, KustoKeyVaultProperties keyVaultProperties = null, bool? isPurgeEnabled = null, IEnumerable<KustoLanguageExtension> languageExtensionsValue = null, bool? isDoubleEncryptionEnabled = null, KustoClusterPublicNetworkAccess? publicNetworkAccess = null, IEnumerable<string> allowedIPRangeList = null, KustoClusterEngineType? engineType = null, IEnumerable<AcceptedAudience> acceptedAudiences = null, bool? isAutoStopEnabled = null, KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess = null, IEnumerable<string> allowedFqdnList = null, KustoClusterPublicIPType? publicIPType = null, string virtualClusterGraduationProperties = null, IEnumerable<KustoPrivateEndpointConnectionData> privateEndpointConnections = null, MigrationClusterProperties migrationCluster = null)
+        public static KustoClusterPatch KustoClusterPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, KustoSku sku = null, IEnumerable<string> zones = null, ManagedServiceIdentity identity = null, KustoClusterState? state = null, KustoProvisioningState? provisioningState = null, Uri uri = null, Uri dataIngestionUri = null, string stateReason = null, IEnumerable<KustoClusterTrustedExternalTenant> trustedExternalTenants = null, OptimizedAutoscale optimizedAutoscale = null, bool? isDiskEncryptionEnabled = null, bool? isStreamingIngestEnabled = null, KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration = null, KustoKeyVaultProperties keyVaultProperties = null, bool? isPurgeEnabled = null, IEnumerable<KustoLanguageExtension> languageExtensionsValue = null, bool? isDoubleEncryptionEnabled = null, KustoClusterPublicNetworkAccess? publicNetworkAccess = null, IEnumerable<string> allowedIPRangeList = null, KustoClusterEngineType? engineType = null, IEnumerable<AcceptedAudience> acceptedAudiences = null, bool? isAutoStopEnabled = null, KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess = null, IEnumerable<string> allowedFqdnList = null, KustoClusterPublicIPType? publicIPType = null, string virtualClusterGraduationProperties = null, IEnumerable<KustoPrivateEndpointConnectionData> privateEndpointConnections = null, MigrationClusterProperties migrationCluster = null)
         {
             tags ??= new Dictionary<string, string>();
+            zones ??= new List<string>();
             trustedExternalTenants ??= new List<KustoClusterTrustedExternalTenant>();
             languageExtensionsValue ??= new List<KustoLanguageExtension>();
             allowedIPRangeList ??= new List<string>();
@@ -150,7 +152,7 @@ namespace Azure.ResourceManager.Kusto.Models
             allowedFqdnList ??= new List<string>();
             privateEndpointConnections ??= new List<KustoPrivateEndpointConnectionData>();
 
-            return new KustoClusterPatch(id, name, resourceType, systemData, tags, location, sku, identity, state, provisioningState, uri, dataIngestionUri, stateReason, trustedExternalTenants?.ToList(), optimizedAutoscale, isDiskEncryptionEnabled, isStreamingIngestEnabled, virtualNetworkConfiguration, keyVaultProperties, isPurgeEnabled, languageExtensionsValue != null ? new KustoLanguageExtensionList(languageExtensionsValue?.ToList()) : null, isDoubleEncryptionEnabled, publicNetworkAccess, allowedIPRangeList?.ToList(), engineType, acceptedAudiences?.ToList(), isAutoStopEnabled, restrictOutboundNetworkAccess, allowedFqdnList?.ToList(), publicIPType, virtualClusterGraduationProperties, privateEndpointConnections?.ToList(), migrationCluster);
+            return new KustoClusterPatch(id, name, resourceType, systemData, tags, location, sku, zones?.ToList(), identity, state, provisioningState, uri, dataIngestionUri, stateReason, trustedExternalTenants?.ToList(), optimizedAutoscale, isDiskEncryptionEnabled, isStreamingIngestEnabled, virtualNetworkConfiguration, keyVaultProperties, isPurgeEnabled, languageExtensionsValue != null ? new KustoLanguageExtensionList(languageExtensionsValue?.ToList()) : null, isDoubleEncryptionEnabled, publicNetworkAccess, allowedIPRangeList?.ToList(), engineType, acceptedAudiences?.ToList(), isAutoStopEnabled, restrictOutboundNetworkAccess, allowedFqdnList?.ToList(), publicIPType, virtualClusterGraduationProperties, privateEndpointConnections?.ToList(), migrationCluster);
         }
 
         /// <summary> Initializes a new instance of KustoNameAvailabilityResult. </summary>
@@ -346,6 +348,21 @@ namespace Azure.ResourceManager.Kusto.Models
         public static KustoScriptData KustoScriptData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Uri scriptUri = null, string scriptUriSasToken = null, string scriptContent = null, string forceUpdateTag = null, bool? shouldContinueOnErrors = null, KustoProvisioningState? provisioningState = null)
         {
             return new KustoScriptData(id, name, resourceType, systemData, scriptUri, scriptUriSasToken, scriptContent, forceUpdateTag, shouldContinueOnErrors, provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of SandboxCustomImageData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="language"> The language name, for example Python. </param>
+        /// <param name="languageVersion"> The version of the language. </param>
+        /// <param name="requirementsFileContent"> The requirements file content. </param>
+        /// <param name="provisioningState"> The provisioned state of the resource. </param>
+        /// <returns> A new <see cref="Kusto.SandboxCustomImageData"/> instance for mocking. </returns>
+        public static SandboxCustomImageData SandboxCustomImageData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SandboxCustomImageLanguage? language = null, string languageVersion = null, string requirementsFileContent = null, KustoProvisioningState? provisioningState = null)
+        {
+            return new SandboxCustomImageData(id, name, resourceType, systemData, language, languageVersion, requirementsFileContent, provisioningState);
         }
 
         /// <summary> Initializes a new instance of KustoManagedPrivateEndpointData. </summary>

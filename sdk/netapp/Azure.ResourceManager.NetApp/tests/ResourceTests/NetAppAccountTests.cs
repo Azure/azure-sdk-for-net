@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.NetApp.Tests
     public class NetAppAccountTests: NetAppTestBase
     {
         private const string namePrefix = "testNetAppNetSDKmgmt";
+        public static new AzureLocation DefaultLocation = " eastus2";
 
         public NetAppAccountTests(bool isAsync) : base(isAsync)
         {
@@ -141,8 +142,8 @@ namespace Azure.ResourceManager.NetApp.Tests
             _resourceGroup = await CreateResourceGroupAsync();
             string accountName = await CreateValidAccountNameAsync(_accountNamePrefix, _resourceGroup, DefaultLocation);
             NetAppAccountCollection netAppAccountCollection = _resourceGroup.GetNetAppAccounts();
-            NetAppAccountResource account1 = (await netAppAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, GetDefaultNetAppAccountParameters())).Value;
-            VerifyNetAppAccountProperties(account1, true);
+            NetAppAccountResource account1 = (await netAppAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, GetDefaultNetAppAccountParameters(location:DefaultLocation))).Value;
+            VerifyNetAppAccountProperties(account1, true, location:DefaultLocation);
 
             //update
 

@@ -90,7 +90,7 @@ This sample shows how to call CreateRasterizeJobAsync and parse the result.
 TokenCredential credential = new DefaultAzureCredential();
 ImageProcessing client = new FarmBeatsClient(credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     partyId = "<partyId>",
     shapefileAttachmentId = "<shapefileAttachmentId>",
@@ -112,7 +112,7 @@ This sample shows how to call CreateRasterizeJobAsync with all parameters and re
 TokenCredential credential = new DefaultAzureCredential();
 ImageProcessing client = new FarmBeatsClient(credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     partyId = "<partyId>",
     shapefileAttachmentId = "<shapefileAttachmentId>",
@@ -157,7 +157,7 @@ This sample shows how to call CreateRasterizeJob and parse the result.
 TokenCredential credential = new DefaultAzureCredential();
 ImageProcessing client = new FarmBeatsClient(credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     partyId = "<partyId>",
     shapefileAttachmentId = "<shapefileAttachmentId>",
@@ -179,7 +179,7 @@ This sample shows how to call CreateRasterizeJob with all parameters and request
 TokenCredential credential = new DefaultAzureCredential();
 ImageProcessing client = new FarmBeatsClient(credential).GetImageProcessingClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     partyId = "<partyId>",
     shapefileAttachmentId = "<shapefileAttachmentId>",

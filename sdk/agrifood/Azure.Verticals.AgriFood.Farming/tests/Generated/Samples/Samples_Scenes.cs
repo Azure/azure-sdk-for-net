@@ -194,7 +194,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 startDateTime = "2022-05-10T18:57:31.2311892Z",
                 endDateTime = "2022-05-10T18:57:31.2311892Z",
@@ -218,7 +218,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 startDateTime = "2022-05-10T18:57:31.2311892Z",
                 endDateTime = "2022-05-10T18:57:31.2311892Z",
@@ -242,7 +242,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 startDateTime = "2022-05-10T18:57:31.2311892Z",
                 endDateTime = "2022-05-10T18:57:31.2311892Z",
@@ -302,7 +302,7 @@ new object[]
             TokenCredential credential = new DefaultAzureCredential();
             Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 startDateTime = "2022-05-10T18:57:31.2311892Z",
                 endDateTime = "2022-05-10T18:57:31.2311892Z",
@@ -542,7 +542,7 @@ new object[]
             TokenCredential credential = new DefaultAzureCredential();
             Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 partyId = "<partyId>",
                 boundaryId = "<boundaryId>",
@@ -568,7 +568,7 @@ new object[]
             TokenCredential credential = new DefaultAzureCredential();
             Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 partyId = "<partyId>",
                 boundaryId = "<boundaryId>",
@@ -594,7 +594,7 @@ new object[]
             TokenCredential credential = new DefaultAzureCredential();
             Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 partyId = "<partyId>",
                 boundaryId = "<boundaryId>",
@@ -660,7 +660,7 @@ new object[]
             TokenCredential credential = new DefaultAzureCredential();
             Scenes client = new FarmBeatsClient(credential).GetScenesClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 partyId = "<partyId>",
                 boundaryId = "<boundaryId>",

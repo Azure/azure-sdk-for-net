@@ -4,6 +4,7 @@
     <AssemblyTitle>Azure.Analytics.Synapse.Artifacts</AssemblyTitle>
     <Version>1.0.0-preview.19</Version>
     <PackageTags>Microsoft Azure Synapse Artifacts;$(PackageCommonTags)</PackageTags>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
 
     <NoWarn>
