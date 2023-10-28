@@ -460,11 +460,11 @@ namespace Azure.Storage.DataMovement
             {
                 header.Serialize(stream);
                 await _checkpointer.AddNewJobPartAsync(
-                        transferId: _dataTransfer.Id,
-                        partNumber: PartNumber,
-                        chunksTotal: chunksTotal,
-                        headerStream: stream,
-                        cancellationToken: _cancellationToken).ConfigureAwait(false);
+                    transferId: _dataTransfer.Id,
+                    partNumber: PartNumber,
+                    chunksTotal: chunksTotal,
+                    headerStream: stream,
+                    cancellationToken: _cancellationToken).ConfigureAwait(false);
             }
         }
 

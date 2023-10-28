@@ -56,7 +56,6 @@ namespace Azure.Storage.DataMovement
 
         internal const int OneByte = 1;
         internal const int LongSizeInBytes = 8;
-        internal const int UShortSizeInBytes = 2;
         internal const int IntSizeInBytes = 4;
         internal const int GuidSizeInBytes = 16;
 

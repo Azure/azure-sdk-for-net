@@ -61,6 +61,10 @@ namespace Azure.Storage.DataMovement
             StorageResource destination,
             CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(transferId, nameof(transferId));
+            Argument.AssertNotNull(source, nameof(source));
+            Argument.AssertNotNull(destination, nameof(destination));
+
             if (_transferStates.ContainsKey(transferId))
             {
                 throw Errors.CollisionTransferIdCheckpointer(transferId);
