@@ -1243,7 +1243,7 @@ AnomalyDetectorClient client = new AnomalyDetectorClient(endpoint, credential);
 
 MultivariateLastDetectionOptions options = new MultivariateLastDetectionOptions(new VariableValues[]
 {
-    new VariableValues("<variable>", new string[]{"<timestamps>"}, new float[]{123.45F})
+    new VariableValues("<variable>", new string[] { "<timestamps>" }, new float[] { 123.45F })
 });
 Response<MultivariateLastDetectionResult> response = await client.DetectMultivariateLastAnomalyAsync("<modelId>", options);
 ]]></code>
@@ -1255,7 +1255,7 @@ AnomalyDetectorClient client = new AnomalyDetectorClient(endpoint, credential);
 
 MultivariateLastDetectionOptions options = new MultivariateLastDetectionOptions(new VariableValues[]
 {
-    new VariableValues("<variable>", new string[]{"<timestamps>"}, new float[]{123.45F})
+    new VariableValues("<variable>", new string[] { "<timestamps>" }, new float[] { 123.45F })
 })
 {
     TopContributorCount = 1234,
@@ -1273,7 +1273,7 @@ AnomalyDetectorClient client = new AnomalyDetectorClient(endpoint, credential);
 
 MultivariateLastDetectionOptions options = new MultivariateLastDetectionOptions(new VariableValues[]
 {
-    new VariableValues("<variable>", new string[]{"<timestamps>"}, new float[]{123.45F})
+    new VariableValues("<variable>", new string[] { "<timestamps>" }, new float[] { 123.45F })
 });
 Response<MultivariateLastDetectionResult> response = client.DetectMultivariateLastAnomaly("<modelId>", options);
 ]]></code>
@@ -1285,7 +1285,7 @@ AnomalyDetectorClient client = new AnomalyDetectorClient(endpoint, credential);
 
 MultivariateLastDetectionOptions options = new MultivariateLastDetectionOptions(new VariableValues[]
 {
-    new VariableValues("<variable>", new string[]{"<timestamps>"}, new float[]{123.45F})
+    new VariableValues("<variable>", new string[] { "<timestamps>" }, new float[] { 123.45F })
 })
 {
     TopContributorCount = 1234,
