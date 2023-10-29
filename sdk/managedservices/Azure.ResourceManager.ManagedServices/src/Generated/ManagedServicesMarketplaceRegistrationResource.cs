@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.ManagedServices
     public partial class ManagedServicesMarketplaceRegistrationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagedServicesMarketplaceRegistrationResource"/> instance. </summary>
+        /// <param name="scope"> The scope. </param>
+        /// <param name="marketplaceIdentifier"> The marketplaceIdentifier. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string marketplaceIdentifier)
         {
             var resourceId = $"{scope}/providers/Microsoft.ManagedServices/marketplaceRegistrationDefinitions/{marketplaceIdentifier}";
