@@ -1081,35 +1081,6 @@ await foreach (BinaryData item in client.GetMetricsAsync("<testRunId>", "<metric
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
 }
-]]></code>
-This sample shows how to call GetMetricsAsync with all parameters and request content and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
-
-using RequestContent content = RequestContent.Create(new
-{
-    filters = new object[]
-    {
-        new
-        {
-            name = "<name>",
-            values = new object[]
-            {
-                "<values>"
-            },
-        }
-    },
-});
-await foreach (BinaryData item in client.GetMetricsAsync("<testRunId>", "<metricname>", "<metricNamespace>", "<timespan>", content, aggregation: "<aggregation>", interval: "PT5S"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("data")[0].GetProperty("timestamp").ToString());
-    Console.WriteLine(result.GetProperty("data")[0].GetProperty("value").ToString());
-    Console.WriteLine(result.GetProperty("dimensionValues")[0].GetProperty("name").ToString());
-    Console.WriteLine(result.GetProperty("dimensionValues")[0].GetProperty("value").ToString());
-}
 ]]></code></example>
     </member>
     <member name="GetMetrics(string,string,string,string,RequestContent,string,string,RequestContext)">
@@ -1125,35 +1096,6 @@ foreach (BinaryData item in client.GetMetrics("<testRunId>", "<metricname>", "<m
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.ToString());
-}
-]]></code>
-This sample shows how to call GetMetrics with all parameters and request content and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-TokenCredential credential = new DefaultAzureCredential();
-LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
-
-using RequestContent content = RequestContent.Create(new
-{
-    filters = new object[]
-    {
-        new
-        {
-            name = "<name>",
-            values = new object[]
-            {
-                "<values>"
-            },
-        }
-    },
-});
-foreach (BinaryData item in client.GetMetrics("<testRunId>", "<metricname>", "<metricNamespace>", "<timespan>", content, aggregation: "<aggregation>", interval: "PT5S"))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("data")[0].GetProperty("timestamp").ToString());
-    Console.WriteLine(result.GetProperty("data")[0].GetProperty("value").ToString());
-    Console.WriteLine(result.GetProperty("dimensionValues")[0].GetProperty("name").ToString());
-    Console.WriteLine(result.GetProperty("dimensionValues")[0].GetProperty("value").ToString());
 }
 ]]></code></example>
     </member>
