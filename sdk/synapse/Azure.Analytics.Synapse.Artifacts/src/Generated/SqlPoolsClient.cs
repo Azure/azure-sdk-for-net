@@ -98,6 +98,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Get Sql Pool. </summary>
         /// <param name="sqlPoolName"> The Sql Pool name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlPoolName"/> is null. </exception>
         public virtual async Task<Response<SqlPool>> GetAsync(string sqlPoolName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SqlPoolsClient.Get");
@@ -116,6 +117,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Get Sql Pool. </summary>
         /// <param name="sqlPoolName"> The Sql Pool name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlPoolName"/> is null. </exception>
         public virtual Response<SqlPool> Get(string sqlPoolName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("SqlPoolsClient.Get");

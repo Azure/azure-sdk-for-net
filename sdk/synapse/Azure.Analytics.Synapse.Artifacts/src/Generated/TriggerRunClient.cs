@@ -65,6 +65,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="runId"> The pipeline run identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> or <paramref name="runId"/> is null. </exception>
         public virtual async Task<Response> RerunTriggerInstanceAsync(string triggerName, string runId, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("TriggerRunClient.RerunTriggerInstance");
@@ -84,6 +85,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="runId"> The pipeline run identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> or <paramref name="runId"/> is null. </exception>
         public virtual Response RerunTriggerInstance(string triggerName, string runId, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("TriggerRunClient.RerunTriggerInstance");
@@ -103,6 +105,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="runId"> The pipeline run identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> or <paramref name="runId"/> is null. </exception>
         public virtual async Task<Response> CancelTriggerInstanceAsync(string triggerName, string runId, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("TriggerRunClient.CancelTriggerInstance");
@@ -122,6 +125,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="runId"> The pipeline run identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> or <paramref name="runId"/> is null. </exception>
         public virtual Response CancelTriggerInstance(string triggerName, string runId, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("TriggerRunClient.CancelTriggerInstance");
@@ -140,6 +144,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Query trigger runs. </summary>
         /// <param name="filterParameters"> Parameters to filter the pipeline run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="filterParameters"/> is null. </exception>
         public virtual async Task<Response<TriggerRunsQueryResponse>> QueryTriggerRunsByWorkspaceAsync(RunFilterParameters filterParameters, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("TriggerRunClient.QueryTriggerRunsByWorkspace");
@@ -158,6 +163,7 @@ namespace Azure.Analytics.Synapse.Artifacts
         /// <summary> Query trigger runs. </summary>
         /// <param name="filterParameters"> Parameters to filter the pipeline run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="filterParameters"/> is null. </exception>
         public virtual Response<TriggerRunsQueryResponse> QueryTriggerRunsByWorkspace(RunFilterParameters filterParameters, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("TriggerRunClient.QueryTriggerRunsByWorkspace");
