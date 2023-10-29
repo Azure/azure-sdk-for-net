@@ -189,123 +189,6 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateGetPropertiesRequest(string snapshot, string versionId, int? timeout, string leaseId, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Head;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            if (snapshot != null)
-            {
-                uri.AppendQuery("snapshot", snapshot, true);
-            }
-            if (versionId != null)
-            {
-                uri.AppendQuery("versionid", versionId, true);
-            }
-            if (timeout != null)
-            {
-                uri.AppendQuery("timeout", timeout.Value, true);
-            }
-            request.Uri = uri;
-            if (leaseId != null)
-            {
-                request.Headers.Add("x-ms-lease-id", leaseId);
-            }
-            if (encryptionKey != null)
-            {
-                request.Headers.Add("x-ms-encryption-key", encryptionKey);
-            }
-            if (encryptionKeySha256 != null)
-            {
-                request.Headers.Add("x-ms-encryption-key-sha256", encryptionKeySha256);
-            }
-            if (encryptionAlgorithm != null)
-            {
-                request.Headers.Add("x-ms-encryption-algorithm", encryptionAlgorithm.Value.ToSerialString());
-            }
-            if (ifModifiedSince != null)
-            {
-                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
-            }
-            if (ifUnmodifiedSince != null)
-            {
-                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
-            }
-            if (ifMatch != null)
-            {
-                request.Headers.Add("If-Match", ifMatch);
-            }
-            if (ifNoneMatch != null)
-            {
-                request.Headers.Add("If-None-Match", ifNoneMatch);
-            }
-            if (ifTags != null)
-            {
-                request.Headers.Add("x-ms-if-tags", ifTags);
-            }
-            request.Headers.Add("x-ms-version", _version);
-            request.Headers.Add("Accept", "application/xml");
-            return message;
-        }
-
-        /// <summary> The Get Properties operation returns all user-defined metadata, standard HTTP properties, and system properties for the blob. It does not return the content of the blob. </summary>
-        /// <param name="snapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob"&gt;Creating a Snapshot of a Blob.&lt;/a&gt;. </param>
-        /// <param name="versionId"> The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It's for service version 2019-10-10 and newer. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
-        /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
-        /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
-        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
-        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided. </param>
-        /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
-        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
-        /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
-        /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
-        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<BlobGetPropertiesHeaders>> GetPropertiesAsync(string snapshot = null, string versionId = null, int? timeout = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateGetPropertiesRequest(snapshot, versionId, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new BlobGetPropertiesHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> The Get Properties operation returns all user-defined metadata, standard HTTP properties, and system properties for the blob. It does not return the content of the blob. </summary>
-        /// <param name="snapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob"&gt;Creating a Snapshot of a Blob.&lt;/a&gt;. </param>
-        /// <param name="versionId"> The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It's for service version 2019-10-10 and newer. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
-        /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
-        /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
-        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
-        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided. </param>
-        /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
-        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
-        /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
-        /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
-        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<BlobGetPropertiesHeaders> GetProperties(string snapshot = null, string versionId = null, int? timeout = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateGetPropertiesRequest(snapshot, versionId, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new BlobGetPropertiesHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
         internal HttpMessage CreateGetPropertiesRequest(string snapshot, string versionId, int? timeout, string leaseId, string encryptionKey, string encryptionKeySha256, string encryptionAlgorithm, string ifTags, RequestConditions requestConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
@@ -355,6 +238,62 @@ namespace Azure.Storage.Blobs
             return message;
         }
 
+        /// <summary> The Get Properties operation returns all user-defined metadata, standard HTTP properties, and system properties for the blob. It does not return the content of the blob. </summary>
+        /// <param name="snapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob"&gt;Creating a Snapshot of a Blob.&lt;/a&gt;. </param>
+        /// <param name="versionId"> The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It's for service version 2019-10-10 and newer. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
+        /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided. </param>
+        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
+        /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
+        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
+        /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
+        /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<ResponseWithHeaders<BlobGetPropertiesHeaders>> GetPropertiesAsync(string snapshot = null, string versionId = null, int? timeout = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string ifTags = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            Response response = await GetPropertiesAsync(snapshot, versionId, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), ifTags, new RequestConditions { IfModifiedSince = ifModifiedSince, IfUnmodifiedSince = ifUnmodifiedSince, IfMatch = new ETag(ifMatch), IfNoneMatch = new ETag(ifNoneMatch) }, context).ConfigureAwait(false);
+            var headers = new BlobGetPropertiesHeaders(response);
+            switch (response.Status)
+            {
+                case 200:
+                    return ResponseWithHeaders.FromValue(headers, response);
+                default:
+                    throw new RequestFailedException(response);
+            }
+        }
+
+        /// <summary> The Get Properties operation returns all user-defined metadata, standard HTTP properties, and system properties for the blob. It does not return the content of the blob. </summary>
+        /// <param name="snapshot"> The snapshot parameter is an opaque DateTime value that, when present, specifies the blob snapshot to retrieve. For more information on working with blob snapshots, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/creating-a-snapshot-of-a-blob"&gt;Creating a Snapshot of a Blob.&lt;/a&gt;. </param>
+        /// <param name="versionId"> The version id parameter is an opaque DateTime value that, when present, specifies the version of the blob to operate on. It's for service version 2019-10-10 and newer. </param>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="leaseId"> If specified, the operation only succeeds if the resource's lease is active and matches this ID. </param>
+        /// <param name="encryptionKey"> Optional. Specifies the encryption key to use to encrypt the data provided in the request. If not specified, encryption is performed with the root account encryption key.  For more information, see Encryption at Rest for Azure Storage Services. </param>
+        /// <param name="encryptionKeySha256"> The SHA-256 hash of the provided encryption key. Must be provided if the x-ms-encryption-key header is provided. </param>
+        /// <param name="encryptionAlgorithm"> The algorithm used to produce the encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-encryption-key header is provided. </param>
+        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
+        /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
+        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
+        /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
+        /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public ResponseWithHeaders<BlobGetPropertiesHeaders> GetProperties(string snapshot = null, string versionId = null, int? timeout = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string ifTags = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            Response response = GetProperties(snapshot, versionId, timeout, leaseId, encryptionKey, encryptionKeySha256, encryptionAlgorithm?.ToSerialString(), ifTags, new RequestConditions { IfModifiedSince = ifModifiedSince, IfUnmodifiedSince = ifUnmodifiedSince, IfMatch = new ETag(ifMatch), IfNoneMatch = new ETag(ifNoneMatch) }, context);
+            var headers = new BlobGetPropertiesHeaders(response);
+            switch (response.Status)
+            {
+                case 200:
+                    return ResponseWithHeaders.FromValue(headers, response);
+                default:
+                    throw new RequestFailedException(response);
+            }
+        }
+
         /// <summary>
         /// [Protocol Method] The Get Properties operation returns all user-defined metadata, standard HTTP properties, and system properties for the blob. It does not return the content of the blob.
         /// <list type="bullet">
@@ -379,7 +318,7 @@ namespace Azure.Storage.Blobs
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetPropertiesAsync(string snapshot = null, string versionId = null, int? timeout = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, string encryptionAlgorithm = null, string ifTags = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
-            using var scope = ClientDiagnostics.CreateScope("Blob.GetProperties");
+            using var scope = ClientDiagnostics.CreateScope("BlobClient.GetProperties");
             scope.Start();
             try
             {
@@ -417,7 +356,7 @@ namespace Azure.Storage.Blobs
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetProperties(string snapshot = null, string versionId = null, int? timeout = null, string leaseId = null, string encryptionKey = null, string encryptionKeySha256 = null, string encryptionAlgorithm = null, string ifTags = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
-            using var scope = ClientDiagnostics.CreateScope("Blob.GetProperties");
+            using var scope = ClientDiagnostics.CreateScope("BlobClient.GetProperties");
             scope.Start();
             try
             {
@@ -1074,101 +1013,6 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateAcquireLeaseRequest(int? timeout, long? duration, string proposedLeaseId, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendQuery("comp", "lease", true);
-            if (timeout != null)
-            {
-                uri.AppendQuery("timeout", timeout.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("x-ms-lease-action", "acquire");
-            if (duration != null)
-            {
-                request.Headers.Add("x-ms-lease-duration", duration.Value);
-            }
-            if (proposedLeaseId != null)
-            {
-                request.Headers.Add("x-ms-proposed-lease-id", proposedLeaseId);
-            }
-            if (ifModifiedSince != null)
-            {
-                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
-            }
-            if (ifUnmodifiedSince != null)
-            {
-                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
-            }
-            if (ifMatch != null)
-            {
-                request.Headers.Add("If-Match", ifMatch);
-            }
-            if (ifNoneMatch != null)
-            {
-                request.Headers.Add("If-None-Match", ifNoneMatch);
-            }
-            if (ifTags != null)
-            {
-                request.Headers.Add("x-ms-if-tags", ifTags);
-            }
-            request.Headers.Add("x-ms-version", _version);
-            request.Headers.Add("Accept", "application/xml");
-            return message;
-        }
-
-        /// <summary> [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
-        /// <param name="duration"> Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. A non-infinite lease can be between 15 and 60 seconds. A lease duration cannot be changed using renew or change. </param>
-        /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The Blob service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
-        /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
-        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
-        /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
-        /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
-        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<BlobAcquireLeaseHeaders>> AcquireLeaseAsync(int? timeout = null, long? duration = null, string proposedLeaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateAcquireLeaseRequest(timeout, duration, proposedLeaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new BlobAcquireLeaseHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 201:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
-        /// <param name="duration"> Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. A non-infinite lease can be between 15 and 60 seconds. A lease duration cannot be changed using renew or change. </param>
-        /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The Blob service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
-        /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
-        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
-        /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
-        /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
-        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<BlobAcquireLeaseHeaders> AcquireLease(int? timeout = null, long? duration = null, string proposedLeaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateAcquireLeaseRequest(timeout, duration, proposedLeaseId, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new BlobAcquireLeaseHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 201:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
         internal HttpMessage CreateAcquireLeaseRequest(int? timeout, long? duration, string proposedLeaseId, string ifTags, RequestConditions requestConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier201);
@@ -1204,6 +1048,54 @@ namespace Azure.Storage.Blobs
             return message;
         }
 
+        /// <summary> [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="duration"> Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. A non-infinite lease can be between 15 and 60 seconds. A lease duration cannot be changed using renew or change. </param>
+        /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The Blob service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
+        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
+        /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
+        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
+        /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
+        /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<ResponseWithHeaders<BlobAcquireLeaseHeaders>> AcquireLeaseAsync(int? timeout = null, long? duration = null, string proposedLeaseId = null, string ifTags = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            Response response = await AcquireLeaseAsync(timeout, duration, proposedLeaseId, ifTags, new RequestConditions { IfModifiedSince = ifModifiedSince, IfUnmodifiedSince = ifUnmodifiedSince, IfMatch = new ETag(ifMatch), IfNoneMatch = new ETag(ifNoneMatch) }, context).ConfigureAwait(false);
+            var headers = new BlobAcquireLeaseHeaders(response);
+            switch (response.Status)
+            {
+                case 201:
+                    return ResponseWithHeaders.FromValue(headers, response);
+                default:
+                    throw new RequestFailedException(response);
+            }
+        }
+
+        /// <summary> [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="duration"> Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. A non-infinite lease can be between 15 and 60 seconds. A lease duration cannot be changed using renew or change. </param>
+        /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The Blob service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
+        /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
+        /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
+        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
+        /// <param name="ifMatch"> Specify an ETag value to operate only on blobs with a matching value. </param>
+        /// <param name="ifNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public ResponseWithHeaders<BlobAcquireLeaseHeaders> AcquireLease(int? timeout = null, long? duration = null, string proposedLeaseId = null, string ifTags = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            Response response = AcquireLease(timeout, duration, proposedLeaseId, ifTags, new RequestConditions { IfModifiedSince = ifModifiedSince, IfUnmodifiedSince = ifUnmodifiedSince, IfMatch = new ETag(ifMatch), IfNoneMatch = new ETag(ifNoneMatch) }, context);
+            var headers = new BlobAcquireLeaseHeaders(response);
+            switch (response.Status)
+            {
+                case 201:
+                    return ResponseWithHeaders.FromValue(headers, response);
+                default:
+                    throw new RequestFailedException(response);
+            }
+        }
+
         /// <summary>
         /// [Protocol Method] [Update] The Lease Blob operation establishes and manages a lock on a blob for write and delete operations
         /// <list type="bullet">
@@ -1224,7 +1116,7 @@ namespace Azure.Storage.Blobs
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> AcquireLeaseAsync(int? timeout = null, long? duration = null, string proposedLeaseId = null, string ifTags = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
-            using var scope = ClientDiagnostics.CreateScope("Blob.AcquireLease");
+            using var scope = ClientDiagnostics.CreateScope("BlobClient.AcquireLease");
             scope.Start();
             try
             {
@@ -1258,7 +1150,7 @@ namespace Azure.Storage.Blobs
         /// <returns> The response returned from the service. </returns>
         public virtual Response AcquireLease(int? timeout = null, long? duration = null, string proposedLeaseId = null, string ifTags = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
-            using var scope = ClientDiagnostics.CreateScope("Blob.AcquireLease");
+            using var scope = ClientDiagnostics.CreateScope("BlobClient.AcquireLease");
             scope.Start();
             try
             {

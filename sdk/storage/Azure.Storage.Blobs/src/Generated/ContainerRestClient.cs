@@ -812,84 +812,6 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateAcquireLeaseRequest(int? timeout, long? duration, string proposedLeaseId, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendQuery("comp", "lease", true);
-            uri.AppendQuery("restype", "container", true);
-            if (timeout != null)
-            {
-                uri.AppendQuery("timeout", timeout.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("x-ms-lease-action", "acquire");
-            if (duration != null)
-            {
-                request.Headers.Add("x-ms-lease-duration", duration.Value);
-            }
-            if (proposedLeaseId != null)
-            {
-                request.Headers.Add("x-ms-proposed-lease-id", proposedLeaseId);
-            }
-            if (ifModifiedSince != null)
-            {
-                request.Headers.Add("If-Modified-Since", ifModifiedSince.Value, "R");
-            }
-            if (ifUnmodifiedSince != null)
-            {
-                request.Headers.Add("If-Unmodified-Since", ifUnmodifiedSince.Value, "R");
-            }
-            request.Headers.Add("x-ms-version", _version);
-            request.Headers.Add("Accept", "application/xml");
-            return message;
-        }
-
-        /// <summary> [Update] establishes and manages a lock on a container for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
-        /// <param name="duration"> Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. A non-infinite lease can be between 15 and 60 seconds. A lease duration cannot be changed using renew or change. </param>
-        /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The Blob service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
-        /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
-        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ContainerAcquireLeaseHeaders>> AcquireLeaseAsync(int? timeout = null, long? duration = null, string proposedLeaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateAcquireLeaseRequest(timeout, duration, proposedLeaseId, ifModifiedSince, ifUnmodifiedSince);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new ContainerAcquireLeaseHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 201:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> [Update] establishes and manages a lock on a container for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite. </summary>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
-        /// <param name="duration"> Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. A non-infinite lease can be between 15 and 60 seconds. A lease duration cannot be changed using renew or change. </param>
-        /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The Blob service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
-        /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
-        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ContainerAcquireLeaseHeaders> AcquireLease(int? timeout = null, long? duration = null, string proposedLeaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
-        {
-            using var message = CreateAcquireLeaseRequest(timeout, duration, proposedLeaseId, ifModifiedSince, ifUnmodifiedSince);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new ContainerAcquireLeaseHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 201:
-                    return ResponseWithHeaders.FromValue(headers, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
         internal HttpMessage CreateAcquireLeaseRequest(int? timeout, long? duration, string proposedLeaseId, RequestConditions requestConditions, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier201);
@@ -922,6 +844,48 @@ namespace Azure.Storage.Blobs
             return message;
         }
 
+        /// <summary> [Update] establishes and manages a lock on a container for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="duration"> Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. A non-infinite lease can be between 15 and 60 seconds. A lease duration cannot be changed using renew or change. </param>
+        /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The Blob service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
+        /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
+        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public async Task<ResponseWithHeaders<ContainerAcquireLeaseHeaders>> AcquireLeaseAsync(int? timeout = null, long? duration = null, string proposedLeaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            Response response = await AcquireLeaseAsync(timeout, duration, proposedLeaseId, new RequestConditions { IfModifiedSince = ifModifiedSince, IfUnmodifiedSince = ifUnmodifiedSince }, context).ConfigureAwait(false);
+            var headers = new ContainerAcquireLeaseHeaders(response);
+            switch (response.Status)
+            {
+                case 201:
+                    return ResponseWithHeaders.FromValue(headers, response);
+                default:
+                    throw new RequestFailedException(response);
+            }
+        }
+
+        /// <summary> [Update] establishes and manages a lock on a container for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite. </summary>
+        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
+        /// <param name="duration"> Specifies the duration of the lease, in seconds, or negative one (-1) for a lease that never expires. A non-infinite lease can be between 15 and 60 seconds. A lease duration cannot be changed using renew or change. </param>
+        /// <param name="proposedLeaseId"> Proposed lease ID, in a GUID string format. The Blob service returns 400 (Invalid request) if the proposed lease ID is not in the correct format. See Guid Constructor (String) for a list of valid GUID string formats. </param>
+        /// <param name="ifModifiedSince"> Specify this header value to operate only on a blob if it has been modified since the specified date/time. </param>
+        /// <param name="ifUnmodifiedSince"> Specify this header value to operate only on a blob if it has not been modified since the specified date/time. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public ResponseWithHeaders<ContainerAcquireLeaseHeaders> AcquireLease(int? timeout = null, long? duration = null, string proposedLeaseId = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            Response response = AcquireLease(timeout, duration, proposedLeaseId, new RequestConditions { IfModifiedSince = ifModifiedSince, IfUnmodifiedSince = ifUnmodifiedSince }, context);
+            var headers = new ContainerAcquireLeaseHeaders(response);
+            switch (response.Status)
+            {
+                case 201:
+                    return ResponseWithHeaders.FromValue(headers, response);
+                default:
+                    throw new RequestFailedException(response);
+            }
+        }
+
         /// <summary>
         /// [Protocol Method] [Update] establishes and manages a lock on a container for delete operations. The lock duration can be 15 to 60 seconds, or can be infinite
         /// <list type="bullet">
@@ -944,7 +908,7 @@ namespace Azure.Storage.Blobs
             Argument.AssertNull(requestConditions.IfMatch, nameof(requestConditions), "Service does not support the If-Match header for this operation.");
             Argument.AssertNull(requestConditions.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
 
-            using var scope = ClientDiagnostics.CreateScope("Container.AcquireLease");
+            using var scope = ClientDiagnostics.CreateScope("ContainerClient.AcquireLease");
             scope.Start();
             try
             {
@@ -980,7 +944,7 @@ namespace Azure.Storage.Blobs
             Argument.AssertNull(requestConditions.IfMatch, nameof(requestConditions), "Service does not support the If-Match header for this operation.");
             Argument.AssertNull(requestConditions.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
 
-            using var scope = ClientDiagnostics.CreateScope("Container.AcquireLease");
+            using var scope = ClientDiagnostics.CreateScope("ContainerClient.AcquireLease");
             scope.Start();
             try
             {
@@ -1493,180 +1457,6 @@ namespace Azure.Storage.Blobs
         public ResponseWithHeaders<ListBlobsHierarchySegmentResponse, ContainerListBlobHierarchySegmentHeaders> ListBlobHierarchySegment(string prefix = null, string delimiter = null, string marker = null, int? maxresults = null, IEnumerable<ListBlobsIncludeItem> include = null, int? timeout = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateListBlobHierarchySegmentRequest(prefix, delimiter, marker, maxresults, include, timeout);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new ContainerListBlobHierarchySegmentHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ListBlobsHierarchySegmentResponse value = default;
-                        var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
-                        if (document.Element("EnumerationResults") is XElement enumerationResultsElement)
-                        {
-                            value = ListBlobsHierarchySegmentResponse.DeserializeListBlobsHierarchySegmentResponse(enumerationResultsElement);
-                        }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateListBlobFlatSegmentNextPageRequest(string nextLink, string prefix, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, int? timeout)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("x-ms-version", _version);
-            request.Headers.Add("Accept", "application/xml");
-            return message;
-        }
-
-        /// <summary> [Update] The List Blobs operation returns a list of the blobs under the specified container. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="prefix"> Filters the results to return only containers whose name begins with the specified prefix. </param>
-        /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
-        /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000. </param>
-        /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ListBlobsFlatSegmentResponse, ContainerListBlobFlatSegmentHeaders>> ListBlobFlatSegmentNextPageAsync(string nextLink, string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListBlobsIncludeItem> include = null, int? timeout = null, CancellationToken cancellationToken = default)
-        {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-
-            using var message = CreateListBlobFlatSegmentNextPageRequest(nextLink, prefix, marker, maxresults, include, timeout);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new ContainerListBlobFlatSegmentHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ListBlobsFlatSegmentResponse value = default;
-                        var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
-                        if (document.Element("EnumerationResults") is XElement enumerationResultsElement)
-                        {
-                            value = ListBlobsFlatSegmentResponse.DeserializeListBlobsFlatSegmentResponse(enumerationResultsElement);
-                        }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> [Update] The List Blobs operation returns a list of the blobs under the specified container. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="prefix"> Filters the results to return only containers whose name begins with the specified prefix. </param>
-        /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
-        /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000. </param>
-        /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public ResponseWithHeaders<ListBlobsFlatSegmentResponse, ContainerListBlobFlatSegmentHeaders> ListBlobFlatSegmentNextPage(string nextLink, string prefix = null, string marker = null, int? maxresults = null, IEnumerable<ListBlobsIncludeItem> include = null, int? timeout = null, CancellationToken cancellationToken = default)
-        {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-
-            using var message = CreateListBlobFlatSegmentNextPageRequest(nextLink, prefix, marker, maxresults, include, timeout);
-            _pipeline.Send(message, cancellationToken);
-            var headers = new ContainerListBlobFlatSegmentHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ListBlobsFlatSegmentResponse value = default;
-                        var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
-                        if (document.Element("EnumerationResults") is XElement enumerationResultsElement)
-                        {
-                            value = ListBlobsFlatSegmentResponse.DeserializeListBlobsFlatSegmentResponse(enumerationResultsElement);
-                        }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateListBlobHierarchySegmentNextPageRequest(string nextLink, string prefix, string delimiter, string marker, int? maxresults, IEnumerable<ListBlobsIncludeItem> include, int? timeout)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("x-ms-version", _version);
-            request.Headers.Add("Accept", "application/xml");
-            return message;
-        }
-
-        /// <summary> [Update] The List Blobs operation returns a list of the blobs under the specified container. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="prefix"> Filters the results to return only containers whose name begins with the specified prefix. </param>
-        /// <param name="delimiter"> When the request includes this parameter, the operation returns a BlobPrefix element in the response body that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string. </param>
-        /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
-        /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000. </param>
-        /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<ResponseWithHeaders<ListBlobsHierarchySegmentResponse, ContainerListBlobHierarchySegmentHeaders>> ListBlobHierarchySegmentNextPageAsync(string nextLink, string prefix = null, string delimiter = null, string marker = null, int? maxresults = null, IEnumerable<ListBlobsIncludeItem> include = null, int? timeout = null, CancellationToken cancellationToken = default)
-        {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-
-            using var message = CreateListBlobHierarchySegmentNextPageRequest(nextLink, prefix, delimiter, marker, maxresults, include, timeout);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new ContainerListBlobHierarchySegmentHeaders(message.Response);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ListBlobsHierarchySegmentResponse value = default;
-                        var document = XDocument.Load(message.Response.ContentStream, LoadOptions.PreserveWhitespace);
-                        if (document.Element("EnumerationResults") is XElement enumerationResultsElement)
-                        {
-                            value = ListBlobsHierarchySegmentResponse.DeserializeListBlobsHierarchySegmentResponse(enumerationResultsElement);
-                        }
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> [Update] The List Blobs operation returns a list of the blobs under the specified container. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="prefix"> Filters the results to return only containers whose name begins with the specified prefix. </param>
-        /// <param name="delimiter"> When the request includes this parameter, the operation returns a BlobPrefix element in the response body that acts as a placeholder for all blobs whose names begin with the same substring up to the appearance of the delimiter character. The delimiter may be a single character or a string. </param>
-        /// <param name="marker"> A string value that identifies the portion of the list of containers to be returned with the next listing operation. The operation returns the NextMarker value within the response body if the listing operation did not return all containers remaining to be listed with the current page. The NextMarker value can be used as the value for the marker parameter in a subsequent call to request the next page of list items. The marker value is opaque to the client. </param>
-        /// <param name="maxresults"> Specifies the maximum number of containers to return. If the request does not specify maxresults, or specifies a value greater than 5000, the server will return up to 5000 items. Note that if the listing operation crosses a partition boundary, then the service will return a continuation token for retrieving the remainder of the results. For this reason, it is possible that the service will return fewer results than specified by maxresults, or than the default of 5000. </param>
-        /// <param name="include"> Include this parameter to specify one or more datasets to include in the response. </param>
-        /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/fileservices/setting-timeouts-for-blob-service-operations"&gt;Setting Timeouts for Blob Service Operations.&lt;/a&gt;. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public ResponseWithHeaders<ListBlobsHierarchySegmentResponse, ContainerListBlobHierarchySegmentHeaders> ListBlobHierarchySegmentNextPage(string nextLink, string prefix = null, string delimiter = null, string marker = null, int? maxresults = null, IEnumerable<ListBlobsIncludeItem> include = null, int? timeout = null, CancellationToken cancellationToken = default)
-        {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-
-            using var message = CreateListBlobHierarchySegmentNextPageRequest(nextLink, prefix, delimiter, marker, maxresults, include, timeout);
             _pipeline.Send(message, cancellationToken);
             var headers = new ContainerListBlobHierarchySegmentHeaders(message.Response);
             switch (message.Response.Status)
