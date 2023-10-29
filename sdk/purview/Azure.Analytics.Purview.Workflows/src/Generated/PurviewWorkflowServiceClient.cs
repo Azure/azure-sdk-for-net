@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
 using Azure;
+using Azure.Analytics.Purview.Workflows.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -858,8 +859,8 @@ namespace Azure.Analytics.Purview.Workflows
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowRunsAsync(string,string,IEnumerable{string},IEnumerable{string},int?,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetWorkflowRunsAsync(string timeWindow, string orderby, IEnumerable<string> runStatuses, IEnumerable<string> workflowIds, int? maxpagesize, RequestContext context)
+        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowRunsAsync(string,string,IEnumerable{Status},IEnumerable{string},int?,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetWorkflowRunsAsync(string timeWindow, string orderby, IEnumerable<Workflows.Models.Status> runStatuses, IEnumerable<string> workflowIds, int? maxpagesize, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkflowRunsRequest(timeWindow, orderby, runStatuses, workflowIds, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWorkflowRunsNextPageRequest(nextLink, timeWindow, orderby, runStatuses, workflowIds, maxpagesize, context);
@@ -884,8 +885,8 @@ namespace Azure.Analytics.Purview.Workflows
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowRuns(string,string,IEnumerable{string},IEnumerable{string},int?,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetWorkflowRuns(string timeWindow, string orderby, IEnumerable<string> runStatuses, IEnumerable<string> workflowIds, int? maxpagesize, RequestContext context)
+        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowRuns(string,string,IEnumerable{Status},IEnumerable{string},int?,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetWorkflowRuns(string timeWindow, string orderby, IEnumerable<Workflows.Models.Status> runStatuses, IEnumerable<string> workflowIds, int? maxpagesize, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkflowRunsRequest(timeWindow, orderby, runStatuses, workflowIds, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWorkflowRunsNextPageRequest(nextLink, timeWindow, orderby, runStatuses, workflowIds, maxpagesize, context);
@@ -913,8 +914,8 @@ namespace Azure.Analytics.Purview.Workflows
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowTasksAsync(string,IEnumerable{string},string,int?,string,IEnumerable{string},IEnumerable{string},string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetWorkflowTasksAsync(string viewMode, IEnumerable<string> workflowIds, string timeWindow, int? maxpagesize, string orderby, IEnumerable<string> taskTypes, IEnumerable<string> taskStatuses, string workflowNameKeyword, RequestContext context)
+        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowTasksAsync(string,IEnumerable{string},string,int?,string,IEnumerable{TaskType},IEnumerable{Status},string,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetWorkflowTasksAsync(string viewMode, IEnumerable<string> workflowIds, string timeWindow, int? maxpagesize, string orderby, IEnumerable<Workflows.Models.TaskType> taskTypes, IEnumerable<Workflows.Models.Status> taskStatuses, string workflowNameKeyword, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkflowTasksRequest(viewMode, workflowIds, timeWindow, maxpagesize, orderby, taskTypes, taskStatuses, workflowNameKeyword, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWorkflowTasksNextPageRequest(nextLink, viewMode, workflowIds, timeWindow, maxpagesize, orderby, taskTypes, taskStatuses, workflowNameKeyword, context);
@@ -942,8 +943,8 @@ namespace Azure.Analytics.Purview.Workflows
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowTasks(string,IEnumerable{string},string,int?,string,IEnumerable{string},IEnumerable{string},string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetWorkflowTasks(string viewMode, IEnumerable<string> workflowIds, string timeWindow, int? maxpagesize, string orderby, IEnumerable<string> taskTypes, IEnumerable<string> taskStatuses, string workflowNameKeyword, RequestContext context)
+        /// <include file="Docs/PurviewWorkflowServiceClient.xml" path="doc/members/member[@name='GetWorkflowTasks(string,IEnumerable{string},string,int?,string,IEnumerable{TaskType},IEnumerable{Status},string,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetWorkflowTasks(string viewMode, IEnumerable<string> workflowIds, string timeWindow, int? maxpagesize, string orderby, IEnumerable<Workflows.Models.TaskType> taskTypes, IEnumerable<Workflows.Models.Status> taskStatuses, string workflowNameKeyword, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkflowTasksRequest(viewMode, workflowIds, timeWindow, maxpagesize, orderby, taskTypes, taskStatuses, workflowNameKeyword, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWorkflowTasksNextPageRequest(nextLink, viewMode, workflowIds, timeWindow, maxpagesize, orderby, taskTypes, taskStatuses, workflowNameKeyword, context);
@@ -1032,7 +1033,7 @@ namespace Azure.Analytics.Purview.Workflows
             return message;
         }
 
-        internal HttpMessage CreateGetWorkflowRunsRequest(string timeWindow, string orderby, IEnumerable<string> runStatuses, IEnumerable<string> workflowIds, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetWorkflowRunsRequest(string timeWindow, string orderby, IEnumerable<Workflows.Models.Status> runStatuses, IEnumerable<string> workflowIds, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1102,7 +1103,7 @@ namespace Azure.Analytics.Purview.Workflows
             return message;
         }
 
-        internal HttpMessage CreateGetWorkflowTasksRequest(string viewMode, IEnumerable<string> workflowIds, string timeWindow, int? maxpagesize, string orderby, IEnumerable<string> taskTypes, IEnumerable<string> taskStatuses, string workflowNameKeyword, RequestContext context)
+        internal HttpMessage CreateGetWorkflowTasksRequest(string viewMode, IEnumerable<string> workflowIds, string timeWindow, int? maxpagesize, string orderby, IEnumerable<Workflows.Models.TaskType> taskTypes, IEnumerable<Workflows.Models.Status> taskStatuses, string workflowNameKeyword, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1254,7 +1255,7 @@ namespace Azure.Analytics.Purview.Workflows
             return message;
         }
 
-        internal HttpMessage CreateGetWorkflowRunsNextPageRequest(string nextLink, string timeWindow, string orderby, IEnumerable<string> runStatuses, IEnumerable<string> workflowIds, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetWorkflowRunsNextPageRequest(string nextLink, string timeWindow, string orderby, IEnumerable<Workflows.Models.Status> runStatuses, IEnumerable<string> workflowIds, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1268,7 +1269,7 @@ namespace Azure.Analytics.Purview.Workflows
             return message;
         }
 
-        internal HttpMessage CreateGetWorkflowTasksNextPageRequest(string nextLink, string viewMode, IEnumerable<string> workflowIds, string timeWindow, int? maxpagesize, string orderby, IEnumerable<string> taskTypes, IEnumerable<string> taskStatuses, string workflowNameKeyword, RequestContext context)
+        internal HttpMessage CreateGetWorkflowTasksNextPageRequest(string nextLink, string viewMode, IEnumerable<string> workflowIds, string timeWindow, int? maxpagesize, string orderby, IEnumerable<Workflows.Models.TaskType> taskTypes, IEnumerable<Workflows.Models.Status> taskStatuses, string workflowNameKeyword, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
