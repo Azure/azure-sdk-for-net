@@ -394,7 +394,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </list>
         /// </summary>
         /// <param name="runId"> The String to use. </param>
-        /// <param name="scanLevel"> The ScanLevelType to use. Allowed values: "Full" | "Incremental". </param>
+        /// <param name="scanLevel"> The String to use. Allowed values: "Full" | "Incremental". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -430,7 +430,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </list>
         /// </summary>
         /// <param name="runId"> The String to use. </param>
-        /// <param name="scanLevel"> The ScanLevelType to use. Allowed values: "Full" | "Incremental". </param>
+        /// <param name="scanLevel"> The String to use. Allowed values: "Full" | "Incremental". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -859,11 +859,11 @@ namespace Azure.Analytics.Purview.Scanning
             uri.AppendPath(_scanName, true);
             uri.AppendPath("/runs/", false);
             uri.AppendPath(runId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (scanLevel != null)
             {
                 uri.AppendQuery("scanLevel", scanLevel, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
