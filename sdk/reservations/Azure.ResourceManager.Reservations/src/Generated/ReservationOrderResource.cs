@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Reservations
         /// <returns> An object representing collection of ReservationDetailResources and their operations over a ReservationDetailResource. </returns>
         public virtual ReservationDetailCollection GetReservationDetails()
         {
-            return GetCachedClient(Client => new ReservationDetailCollection(Client, Id));
+            return GetCachedClient(client => new ReservationDetailCollection(client, Id));
         }
 
         /// <summary>
