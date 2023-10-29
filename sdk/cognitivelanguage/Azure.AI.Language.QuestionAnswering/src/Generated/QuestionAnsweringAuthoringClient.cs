@@ -1955,7 +1955,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetQnasNextPageRequest(string nextLink, string projectName, string source, RequestContext context)
+        internal HttpMessage CreateUpdateSourcesNextPageRequest(string nextLink, string projectName, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1969,7 +1969,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             return message;
         }
 
-        internal HttpMessage CreateUpdateSourcesNextPageRequest(string nextLink, string projectName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateGetQnasNextPageRequest(string nextLink, string projectName, string source, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
