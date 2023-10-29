@@ -38,6 +38,30 @@ namespace Azure.Storage.Blobs.Batch
             _version = version ?? throw new ArgumentNullException(nameof(version));
         }
 
+        internal HttpMessage CreateSubmitBatchRequest(string containerName, long contentLength, string multipartContentType, RequestContent content, int? timeout, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_url, false);
+            uri.AppendPath("/", false);
+            uri.AppendPath(containerName, false);
+            uri.AppendQuery("restype", "container", true);
+            uri.AppendQuery("comp", "batch", true);
+            if (timeout != null)
+            {
+                uri.AppendQuery("timeout", timeout.Value, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("x-ms-version", _version);
+            request.Headers.Add("Accept", "application/xml");
+            request.Headers.Add("Content-Length", contentLength);
+            request.Headers.Add("Content-Type", multipartContentType);
+            request.Content = content;
+            return message;
+        }
+
         /// <summary> The Batch operation allows multiple API calls to be embedded into a single HTTP request. </summary>
         /// <param name="containerName"> The container name. </param>
         /// <param name="contentLength"> The length of the request. </param>
@@ -61,7 +85,9 @@ namespace Azure.Storage.Blobs.Batch
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateSubmitBatchRequest(containerName, contentLength, multipartContentType, body, timeout);
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            using RequestContent content = RequestContent.Create(body);
+            using var message = CreateSubmitBatchRequest(containerName, contentLength, multipartContentType, content, timeout, context);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new ContainerSubmitBatchHeaders(message.Response);
             switch (message.Response.Status)
@@ -99,7 +125,9 @@ namespace Azure.Storage.Blobs.Batch
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateSubmitBatchRequest(containerName, contentLength, multipartContentType, body, timeout);
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            using RequestContent content = RequestContent.Create(body);
+            using var message = CreateSubmitBatchRequest(containerName, contentLength, multipartContentType, content, timeout, context);
             _pipeline.Send(message, cancellationToken);
             var headers = new ContainerSubmitBatchHeaders(message.Response);
             switch (message.Response.Status)
@@ -112,30 +140,6 @@ namespace Azure.Storage.Blobs.Batch
                 default:
                     throw new RequestFailedException(message.Response);
             }
-        }
-
-        internal HttpMessage CreateSubmitBatchRequest(string containerName, long contentLength, string multipartContentType, RequestContent content, int? timeout, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier202);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(_url, false);
-            uri.AppendPath("/", false);
-            uri.AppendPath(containerName, false);
-            uri.AppendQuery("restype", "container", true);
-            uri.AppendQuery("comp", "batch", true);
-            if (timeout != null)
-            {
-                uri.AppendQuery("timeout", timeout.Value, true);
-            }
-            request.Uri = uri;
-            request.Headers.Add("x-ms-version", _version);
-            request.Headers.Add("Accept", "application/xml");
-            request.Headers.Add("Content-Length", contentLength);
-            request.Headers.Add("Content-Type", multipartContentType);
-            request.Content = content;
-            return message;
         }
 
         /// <summary>
@@ -163,7 +167,7 @@ namespace Azure.Storage.Blobs.Batch
             Argument.AssertNotNull(multipartContentType, nameof(multipartContentType));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Container.SubmitBatch");
+            using var scope = ClientDiagnostics.CreateScope("ContainerClient.SubmitBatch");
             scope.Start();
             try
             {
@@ -202,7 +206,7 @@ namespace Azure.Storage.Blobs.Batch
             Argument.AssertNotNull(multipartContentType, nameof(multipartContentType));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Container.SubmitBatch");
+            using var scope = ClientDiagnostics.CreateScope("ContainerClient.SubmitBatch");
             scope.Start();
             try
             {

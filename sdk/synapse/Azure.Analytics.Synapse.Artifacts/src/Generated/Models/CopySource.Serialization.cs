@@ -59,9 +59,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "AmazonRedshiftSource": return AmazonRedshiftSource.DeserializeAmazonRedshiftSource(element);
                     case "AvroSource": return AvroSource.DeserializeAvroSource(element);
                     case "AzureBlobFSSource": return AzureBlobFSSource.DeserializeAzureBlobFSSource(element);
+                    case "AzureDatabricksDeltaLakeSource": return AzureDatabricksDeltaLakeSource.DeserializeAzureDatabricksDeltaLakeSource(element);
                     case "AzureDataExplorerSource": return AzureDataExplorerSource.DeserializeAzureDataExplorerSource(element);
                     case "AzureDataLakeStoreSource": return AzureDataLakeStoreSource.DeserializeAzureDataLakeStoreSource(element);
-                    case "AzureDatabricksDeltaLakeSource": return AzureDatabricksDeltaLakeSource.DeserializeAzureDatabricksDeltaLakeSource(element);
                     case "AzureMariaDBSource": return AzureMariaDBSource.DeserializeAzureMariaDBSource(element);
                     case "AzureMySqlSource": return AzureMySqlSource.DeserializeAzureMySqlSource(element);
                     case "AzurePostgreSqlSource": return AzurePostgreSqlSource.DeserializeAzurePostgreSqlSource(element);

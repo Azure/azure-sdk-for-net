@@ -64,16 +64,16 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
         }
 
         /// <summary> Get Managed Private Endpoints. </summary>
-        /// <param name="managedVirtualNetworkName"> Managed virtual network name. The default value is "default". </param>
         /// <param name="managedPrivateEndpointName"> Managed private endpoint name. </param>
+        /// <param name="managedVirtualNetworkName"> Managed virtual network name. The default value is "default". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ManagedPrivateEndpoint>> GetAsync(string managedVirtualNetworkName, string managedPrivateEndpointName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedPrivateEndpoint>> GetAsync(string managedPrivateEndpointName, string managedVirtualNetworkName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ManagedPrivateEndpointsClient.Get");
             scope.Start();
             try
             {
-                return await RestClient.GetAsync(managedVirtualNetworkName, managedPrivateEndpointName, cancellationToken).ConfigureAwait(false);
+                return await RestClient.GetAsync(managedPrivateEndpointName, managedVirtualNetworkName, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -83,16 +83,16 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
         }
 
         /// <summary> Get Managed Private Endpoints. </summary>
-        /// <param name="managedVirtualNetworkName"> Managed virtual network name. The default value is "default". </param>
         /// <param name="managedPrivateEndpointName"> Managed private endpoint name. </param>
+        /// <param name="managedVirtualNetworkName"> Managed virtual network name. The default value is "default". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManagedPrivateEndpoint> Get(string managedVirtualNetworkName, string managedPrivateEndpointName, CancellationToken cancellationToken = default)
+        public virtual Response<ManagedPrivateEndpoint> Get(string managedPrivateEndpointName, string managedVirtualNetworkName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ManagedPrivateEndpointsClient.Get");
             scope.Start();
             try
             {
-                return RestClient.Get(managedVirtualNetworkName, managedPrivateEndpointName, cancellationToken);
+                return RestClient.Get(managedPrivateEndpointName, managedVirtualNetworkName, cancellationToken);
             }
             catch (Exception e)
             {
@@ -102,17 +102,17 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
         }
 
         /// <summary> Create Managed Private Endpoints. </summary>
-        /// <param name="managedVirtualNetworkName"> Managed virtual network name. The default value is "default". </param>
         /// <param name="managedPrivateEndpointName"> Managed private endpoint name. </param>
         /// <param name="managedPrivateEndpoint"> Managed private endpoint properties. </param>
+        /// <param name="managedVirtualNetworkName"> Managed virtual network name. The default value is "default". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ManagedPrivateEndpoint>> CreateAsync(string managedVirtualNetworkName, string managedPrivateEndpointName, ManagedPrivateEndpoint managedPrivateEndpoint, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedPrivateEndpoint>> CreateAsync(string managedPrivateEndpointName, ManagedPrivateEndpoint managedPrivateEndpoint, string managedVirtualNetworkName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ManagedPrivateEndpointsClient.Create");
             scope.Start();
             try
             {
-                return await RestClient.CreateAsync(managedVirtualNetworkName, managedPrivateEndpointName, managedPrivateEndpoint, cancellationToken).ConfigureAwait(false);
+                return await RestClient.CreateAsync(managedPrivateEndpointName, managedPrivateEndpoint, managedVirtualNetworkName, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -122,17 +122,17 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
         }
 
         /// <summary> Create Managed Private Endpoints. </summary>
-        /// <param name="managedVirtualNetworkName"> Managed virtual network name. The default value is "default". </param>
         /// <param name="managedPrivateEndpointName"> Managed private endpoint name. </param>
         /// <param name="managedPrivateEndpoint"> Managed private endpoint properties. </param>
+        /// <param name="managedVirtualNetworkName"> Managed virtual network name. The default value is "default". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManagedPrivateEndpoint> Create(string managedVirtualNetworkName, string managedPrivateEndpointName, ManagedPrivateEndpoint managedPrivateEndpoint, CancellationToken cancellationToken = default)
+        public virtual Response<ManagedPrivateEndpoint> Create(string managedPrivateEndpointName, ManagedPrivateEndpoint managedPrivateEndpoint, string managedVirtualNetworkName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ManagedPrivateEndpointsClient.Create");
             scope.Start();
             try
             {
-                return RestClient.Create(managedVirtualNetworkName, managedPrivateEndpointName, managedPrivateEndpoint, cancellationToken);
+                return RestClient.Create(managedPrivateEndpointName, managedPrivateEndpoint, managedVirtualNetworkName, cancellationToken);
             }
             catch (Exception e)
             {
@@ -142,16 +142,16 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
         }
 
         /// <summary> Delete Managed Private Endpoints. </summary>
-        /// <param name="managedVirtualNetworkName"> Managed virtual network name. The default value is "default". </param>
         /// <param name="managedPrivateEndpointName"> Managed private endpoint name. </param>
+        /// <param name="managedVirtualNetworkName"> Managed virtual network name. The default value is "default". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeleteAsync(string managedVirtualNetworkName, string managedPrivateEndpointName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteAsync(string managedPrivateEndpointName, string managedVirtualNetworkName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ManagedPrivateEndpointsClient.Delete");
             scope.Start();
             try
             {
-                return await RestClient.DeleteAsync(managedVirtualNetworkName, managedPrivateEndpointName, cancellationToken).ConfigureAwait(false);
+                return await RestClient.DeleteAsync(managedPrivateEndpointName, managedVirtualNetworkName, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -161,16 +161,16 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints
         }
 
         /// <summary> Delete Managed Private Endpoints. </summary>
-        /// <param name="managedVirtualNetworkName"> Managed virtual network name. The default value is "default". </param>
         /// <param name="managedPrivateEndpointName"> Managed private endpoint name. </param>
+        /// <param name="managedVirtualNetworkName"> Managed virtual network name. The default value is "default". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Delete(string managedVirtualNetworkName, string managedPrivateEndpointName, CancellationToken cancellationToken = default)
+        public virtual Response Delete(string managedPrivateEndpointName, string managedVirtualNetworkName, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("ManagedPrivateEndpointsClient.Delete");
             scope.Start();
             try
             {
-                return RestClient.Delete(managedVirtualNetworkName, managedPrivateEndpointName, cancellationToken);
+                return RestClient.Delete(managedPrivateEndpointName, managedVirtualNetworkName, cancellationToken);
             }
             catch (Exception e)
             {
