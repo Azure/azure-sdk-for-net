@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An object representing collection of NetworkDeviceInterfaceResources and their operations over a NetworkDeviceInterfaceResource. </returns>
         public virtual NetworkDeviceInterfaceCollection GetNetworkDeviceInterfaces()
         {
-            return GetCachedClient(Client => new NetworkDeviceInterfaceCollection(Client, Id));
+            return GetCachedClient(client => new NetworkDeviceInterfaceCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="networkInterfaceName"> Name of the Network Interface. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkDeviceInterfaceResource>> GetNetworkDeviceInterfaceAsync(string networkInterfaceName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +134,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="networkInterfaceName"> Name of the Network Interface. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkInterfaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkInterfaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkDeviceInterfaceResource> GetNetworkDeviceInterface(string networkInterfaceName, CancellationToken cancellationToken = default)
         {

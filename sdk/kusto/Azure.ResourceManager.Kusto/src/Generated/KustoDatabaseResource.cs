@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> An object representing collection of KustoDatabasePrincipalAssignmentResources and their operations over a KustoDatabasePrincipalAssignmentResource. </returns>
         public virtual KustoDatabasePrincipalAssignmentCollection GetKustoDatabasePrincipalAssignments()
         {
-            return GetCachedClient(Client => new KustoDatabasePrincipalAssignmentCollection(Client, Id));
+            return GetCachedClient(client => new KustoDatabasePrincipalAssignmentCollection(client, Id));
         }
 
         /// <summary>
@@ -129,8 +129,8 @@ namespace Azure.ResourceManager.Kusto
         /// </summary>
         /// <param name="principalAssignmentName"> The name of the Kusto principalAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="principalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="principalAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="principalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<KustoDatabasePrincipalAssignmentResource>> GetKustoDatabasePrincipalAssignmentAsync(string principalAssignmentName, CancellationToken cancellationToken = default)
         {
@@ -152,8 +152,8 @@ namespace Azure.ResourceManager.Kusto
         /// </summary>
         /// <param name="principalAssignmentName"> The name of the Kusto principalAssignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="principalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="principalAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="principalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<KustoDatabasePrincipalAssignmentResource> GetKustoDatabasePrincipalAssignment(string principalAssignmentName, CancellationToken cancellationToken = default)
         {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> An object representing collection of KustoScriptResources and their operations over a KustoScriptResource. </returns>
         public virtual KustoScriptCollection GetKustoScripts()
         {
-            return GetCachedClient(Client => new KustoScriptCollection(Client, Id));
+            return GetCachedClient(client => new KustoScriptCollection(client, Id));
         }
 
         /// <summary>
@@ -182,8 +182,8 @@ namespace Azure.ResourceManager.Kusto
         /// </summary>
         /// <param name="scriptName"> The name of the Kusto database script. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<KustoScriptResource>> GetKustoScriptAsync(string scriptName, CancellationToken cancellationToken = default)
         {
@@ -205,8 +205,8 @@ namespace Azure.ResourceManager.Kusto
         /// </summary>
         /// <param name="scriptName"> The name of the Kusto database script. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scriptName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<KustoScriptResource> GetKustoScript(string scriptName, CancellationToken cancellationToken = default)
         {
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> An object representing collection of KustoDataConnectionResources and their operations over a KustoDataConnectionResource. </returns>
         public virtual KustoDataConnectionCollection GetKustoDataConnections()
         {
-            return GetCachedClient(Client => new KustoDataConnectionCollection(Client, Id));
+            return GetCachedClient(client => new KustoDataConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -235,8 +235,8 @@ namespace Azure.ResourceManager.Kusto
         /// </summary>
         /// <param name="dataConnectionName"> The name of the data connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<KustoDataConnectionResource>> GetKustoDataConnectionAsync(string dataConnectionName, CancellationToken cancellationToken = default)
         {
@@ -258,8 +258,8 @@ namespace Azure.ResourceManager.Kusto
         /// </summary>
         /// <param name="dataConnectionName"> The name of the data connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<KustoDataConnectionResource> GetKustoDataConnection(string dataConnectionName, CancellationToken cancellationToken = default)
         {
