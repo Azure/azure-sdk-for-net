@@ -43,6 +43,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <summary> Gets a phone number search result by search id. </summary>
         /// <param name="searchId"> The search Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
         public virtual async Task<Response<PhoneNumberSearchResult>> GetSearchResultAsync(string searchId, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.GetSearchResult");
@@ -61,6 +62,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <summary> Gets a phone number search result by search id. </summary>
         /// <param name="searchId"> The search Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
         public virtual Response<PhoneNumberSearchResult> GetSearchResult(string searchId, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.GetSearchResult");
@@ -79,6 +81,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <summary> Gets the details of the given purchased phone number. </summary>
         /// <param name="phoneNumber"> The purchased phone number whose details are to be fetched in E.164 format, e.g. +11234567890. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
         public virtual async Task<Response<PurchasedPhoneNumber>> GetByNumberAsync(string phoneNumber, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.GetByNumber");
@@ -97,6 +100,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <summary> Gets the details of the given purchased phone number. </summary>
         /// <param name="phoneNumber"> The purchased phone number whose details are to be fetched in E.164 format, e.g. +11234567890. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="phoneNumber"/> is null. </exception>
         public virtual Response<PurchasedPhoneNumber> GetByNumber(string phoneNumber, CancellationToken cancellationToken = default)
         {
             using var scope = _clientDiagnostics.CreateScope("InternalPhoneNumbersClient.GetByNumber");
