@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.EventGrid
     public partial class VerifiedPartnerResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="VerifiedPartnerResource"/> instance. </summary>
+        /// <param name="verifiedPartnerName"> The verifiedPartnerName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string verifiedPartnerName)
         {
             var resourceId = $"/providers/Microsoft.EventGrid/verifiedPartners/{verifiedPartnerName}";

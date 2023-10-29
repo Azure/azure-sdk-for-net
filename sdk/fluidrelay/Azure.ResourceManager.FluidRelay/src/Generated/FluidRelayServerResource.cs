@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.FluidRelay
     public partial class FluidRelayServerResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="FluidRelayServerResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroup"> The resourceGroup. </param>
+        /// <param name="fluidRelayServerName"> The fluidRelayServerName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroup, string fluidRelayServerName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.FluidRelay/fluidRelayServers/{fluidRelayServerName}";

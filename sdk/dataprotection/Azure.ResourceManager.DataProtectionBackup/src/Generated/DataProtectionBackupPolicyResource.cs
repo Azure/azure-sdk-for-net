@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.DataProtectionBackup
     public partial class DataProtectionBackupPolicyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DataProtectionBackupPolicyResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="vaultName"> The vaultName. </param>
+        /// <param name="backupPolicyName"> The backupPolicyName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName, string backupPolicyName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupPolicies/{backupPolicyName}";
