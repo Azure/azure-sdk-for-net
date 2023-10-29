@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="data"> The HybridContainerServiceAgentPool to use. </param>
+        /// <param name="data"> The HybridContainerServiceAgentPoolData to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<HybridContainerServiceAgentPoolResource>> UpdateAsync(HybridContainerServiceAgentPoolData data, CancellationToken cancellationToken = default)
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="data"> The HybridContainerServiceAgentPool to use. </param>
+        /// <param name="data"> The HybridContainerServiceAgentPoolData to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response<HybridContainerServiceAgentPoolResource> Update(HybridContainerServiceAgentPoolData data, CancellationToken cancellationToken = default)
