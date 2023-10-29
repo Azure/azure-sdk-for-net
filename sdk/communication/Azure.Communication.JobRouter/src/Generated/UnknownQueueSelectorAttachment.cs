@@ -11,11 +11,6 @@ namespace Azure.Communication.JobRouter
     internal partial class UnknownQueueSelectorAttachment : QueueSelectorAttachment
     {
         /// <summary> Initializes a new instance of UnknownQueueSelectorAttachment. </summary>
-        internal UnknownQueueSelectorAttachment()
-        {
-        }
-
-        /// <summary> Initializes a new instance of UnknownQueueSelectorAttachment. </summary>
         /// <param name="kind"> Discriminator. </param>
         internal UnknownQueueSelectorAttachment(string kind) : base(kind)
         {

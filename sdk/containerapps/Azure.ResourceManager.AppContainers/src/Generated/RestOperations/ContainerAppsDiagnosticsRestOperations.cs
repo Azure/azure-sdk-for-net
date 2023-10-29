@@ -422,8 +422,6 @@ namespace Azure.ResourceManager.AppContainers
                         value = ContainerAppData.DeserializeContainerAppData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((ContainerAppData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -453,8 +451,6 @@ namespace Azure.ResourceManager.AppContainers
                         value = ContainerAppData.DeserializeContainerAppData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                case 404:
-                    return Response.FromValue((ContainerAppData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
