@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -450,9 +451,11 @@ namespace Azure.Security.KeyVault.Storage
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new StorageRestoreParameters(storageBundleBackup);
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteStartObject();
+            content.JsonWriter.WritePropertyName("value"u8);
+            content.JsonWriter.WriteBase64StringValue(storageBundleBackup, "U");
+            content.JsonWriter.WriteEndObject();
             request.Content = content;
             return message;
         }
@@ -664,21 +667,40 @@ namespace Azure.Security.KeyVault.Storage
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            StorageAccountCreateParameters storageAccountCreateParameters = new StorageAccountCreateParameters(resourceId, activeKeyName, autoRegenerateKey)
+            if (tags == null || !tags.Any())
             {
-                RegenerationPeriod = regenerationPeriod,
-                StorageAccountAttributes = storageAccountAttributes
-            };
-            if (tags != null)
-            {
-                foreach (var value in tags)
-                {
-                    storageAccountCreateParameters.Tags.Add(value);
-                }
+                tags = new ChangeTrackingDictionary<string, string>();
             }
-            var model = storageAccountCreateParameters;
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteStartObject();
+            content.JsonWriter.WritePropertyName("resourceId"u8);
+            content.JsonWriter.WriteStringValue(resourceId);
+            content.JsonWriter.WritePropertyName("activeKeyName"u8);
+            content.JsonWriter.WriteStringValue(activeKeyName);
+            content.JsonWriter.WritePropertyName("autoRegenerateKey"u8);
+            content.JsonWriter.WriteBooleanValue(autoRegenerateKey);
+            if (Optional.IsDefined(regenerationPeriod))
+            {
+                content.JsonWriter.WritePropertyName("regenerationPeriod"u8);
+                content.JsonWriter.WriteStringValue(regenerationPeriod);
+            }
+            if (Optional.IsDefined(storageAccountAttributes))
+            {
+                content.JsonWriter.WritePropertyName("attributes"u8);
+                content.JsonWriter.WriteObjectValue(storageAccountAttributes);
+            }
+            if (Optional.IsCollectionDefined(tags))
+            {
+                content.JsonWriter.WritePropertyName("tags"u8);
+                content.JsonWriter.WriteStartObject();
+                foreach (var item in tags)
+                {
+                    content.JsonWriter.WritePropertyName(item.Key);
+                    content.JsonWriter.WriteStringValue(item.Value);
+                }
+                content.JsonWriter.WriteEndObject();
+            }
+            content.JsonWriter.WriteEndObject();
             request.Content = content;
             return message;
         }
@@ -778,23 +800,44 @@ namespace Azure.Security.KeyVault.Storage
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            StorageAccountUpdateParameters storageAccountUpdateParameters = new StorageAccountUpdateParameters()
+            if (tags == null || !tags.Any())
             {
-                ActiveKeyName = activeKeyName,
-                AutoRegenerateKey = autoRegenerateKey,
-                RegenerationPeriod = regenerationPeriod,
-                StorageAccountAttributes = storageAccountAttributes
-            };
-            if (tags != null)
-            {
-                foreach (var value in tags)
-                {
-                    storageAccountUpdateParameters.Tags.Add(value);
-                }
+                tags = new ChangeTrackingDictionary<string, string>();
             }
-            var model = storageAccountUpdateParameters;
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteStartObject();
+            if (Optional.IsDefined(activeKeyName))
+            {
+                content.JsonWriter.WritePropertyName("activeKeyName"u8);
+                content.JsonWriter.WriteStringValue(activeKeyName);
+            }
+            if (Optional.IsDefined(autoRegenerateKey))
+            {
+                content.JsonWriter.WritePropertyName("autoRegenerateKey"u8);
+                content.JsonWriter.WriteBooleanValue(autoRegenerateKey.Value);
+            }
+            if (Optional.IsDefined(regenerationPeriod))
+            {
+                content.JsonWriter.WritePropertyName("regenerationPeriod"u8);
+                content.JsonWriter.WriteStringValue(regenerationPeriod);
+            }
+            if (Optional.IsDefined(storageAccountAttributes))
+            {
+                content.JsonWriter.WritePropertyName("attributes"u8);
+                content.JsonWriter.WriteObjectValue(storageAccountAttributes);
+            }
+            if (Optional.IsCollectionDefined(tags))
+            {
+                content.JsonWriter.WritePropertyName("tags"u8);
+                content.JsonWriter.WriteStartObject();
+                foreach (var item in tags)
+                {
+                    content.JsonWriter.WritePropertyName(item.Key);
+                    content.JsonWriter.WriteStringValue(item.Value);
+                }
+                content.JsonWriter.WriteEndObject();
+            }
+            content.JsonWriter.WriteEndObject();
             request.Content = content;
             return message;
         }
@@ -877,9 +920,11 @@ namespace Azure.Security.KeyVault.Storage
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new StorageAccountRegenerteKeyParameters(keyName);
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteStartObject();
+            content.JsonWriter.WritePropertyName("keyName"u8);
+            content.JsonWriter.WriteStringValue(keyName);
+            content.JsonWriter.WriteEndObject();
             request.Content = content;
             return message;
         }
@@ -1446,20 +1491,35 @@ namespace Azure.Security.KeyVault.Storage
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            SasDefinitionCreateParameters sasDefinitionCreateParameters = new SasDefinitionCreateParameters(templateUri, sasType, validityPeriod)
+            if (tags == null || !tags.Any())
             {
-                SasDefinitionAttributes = sasDefinitionAttributes
-            };
-            if (tags != null)
-            {
-                foreach (var value in tags)
-                {
-                    sasDefinitionCreateParameters.Tags.Add(value);
-                }
+                tags = new ChangeTrackingDictionary<string, string>();
             }
-            var model = sasDefinitionCreateParameters;
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteStartObject();
+            content.JsonWriter.WritePropertyName("templateUri"u8);
+            content.JsonWriter.WriteStringValue(templateUri);
+            content.JsonWriter.WritePropertyName("sasType"u8);
+            content.JsonWriter.WriteStringValue(sasType.ToString());
+            content.JsonWriter.WritePropertyName("validityPeriod"u8);
+            content.JsonWriter.WriteStringValue(validityPeriod);
+            if (Optional.IsDefined(sasDefinitionAttributes))
+            {
+                content.JsonWriter.WritePropertyName("attributes"u8);
+                content.JsonWriter.WriteObjectValue(sasDefinitionAttributes);
+            }
+            if (Optional.IsCollectionDefined(tags))
+            {
+                content.JsonWriter.WritePropertyName("tags"u8);
+                content.JsonWriter.WriteStartObject();
+                foreach (var item in tags)
+                {
+                    content.JsonWriter.WritePropertyName(item.Key);
+                    content.JsonWriter.WriteStringValue(item.Value);
+                }
+                content.JsonWriter.WriteEndObject();
+            }
+            content.JsonWriter.WriteEndObject();
             request.Content = content;
             return message;
         }
@@ -1569,23 +1629,44 @@ namespace Azure.Security.KeyVault.Storage
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            SasDefinitionUpdateParameters sasDefinitionUpdateParameters = new SasDefinitionUpdateParameters()
+            if (tags == null || !tags.Any())
             {
-                TemplateUri = templateUri,
-                SasType = sasType,
-                ValidityPeriod = validityPeriod,
-                SasDefinitionAttributes = sasDefinitionAttributes
-            };
-            if (tags != null)
-            {
-                foreach (var value in tags)
-                {
-                    sasDefinitionUpdateParameters.Tags.Add(value);
-                }
+                tags = new ChangeTrackingDictionary<string, string>();
             }
-            var model = sasDefinitionUpdateParameters;
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteStartObject();
+            if (Optional.IsDefined(templateUri))
+            {
+                content.JsonWriter.WritePropertyName("templateUri"u8);
+                content.JsonWriter.WriteStringValue(templateUri);
+            }
+            if (Optional.IsDefined(sasType))
+            {
+                content.JsonWriter.WritePropertyName("sasType"u8);
+                content.JsonWriter.WriteStringValue(sasType.Value.ToString());
+            }
+            if (Optional.IsDefined(validityPeriod))
+            {
+                content.JsonWriter.WritePropertyName("validityPeriod"u8);
+                content.JsonWriter.WriteStringValue(validityPeriod);
+            }
+            if (Optional.IsDefined(sasDefinitionAttributes))
+            {
+                content.JsonWriter.WritePropertyName("attributes"u8);
+                content.JsonWriter.WriteObjectValue(sasDefinitionAttributes);
+            }
+            if (Optional.IsCollectionDefined(tags))
+            {
+                content.JsonWriter.WritePropertyName("tags"u8);
+                content.JsonWriter.WriteStartObject();
+                foreach (var item in tags)
+                {
+                    content.JsonWriter.WritePropertyName(item.Key);
+                    content.JsonWriter.WriteStringValue(item.Value);
+                }
+                content.JsonWriter.WriteEndObject();
+            }
+            content.JsonWriter.WriteEndObject();
             request.Content = content;
             return message;
         }
