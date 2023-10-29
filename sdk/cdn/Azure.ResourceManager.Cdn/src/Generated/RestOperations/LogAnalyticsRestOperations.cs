@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 foreach (var param in metrics)
                 {
-                    uri.AppendQuery("metrics", param.ToString(), true);
+                    uri.AppendQuery("metrics", param, true);
                 }
             }
             uri.AppendQuery("dateTimeBegin", dateTimeBegin, "O", true);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 foreach (var param in groupBy)
                 {
-                    uri.AppendQuery("groupBy", param.ToString(), true);
+                    uri.AppendQuery("groupBy", param, true);
                 }
             }
             if (continents != null && Optional.IsCollectionDefined(continents))
@@ -108,15 +108,15 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
-        /// <param name="metrics"> The ArrayOfLogMetric to use. </param>
-        /// <param name="dateTimeBegin"> The DateTime to use. </param>
-        /// <param name="dateTimeEnd"> The DateTime to use. </param>
+        /// <param name="metrics"> The IEnumerable{LogMetric} to use. </param>
+        /// <param name="dateTimeBegin"> The DateTimeOffset to use. </param>
+        /// <param name="dateTimeEnd"> The DateTimeOffset to use. </param>
         /// <param name="granularity"> The LogMetricsGranularity to use. </param>
-        /// <param name="customDomains"> The ArrayOfGet11ItemsItem to use. </param>
-        /// <param name="protocols"> The ArrayOfGet12ItemsItem to use. </param>
-        /// <param name="groupBy"> The ArrayOfLogMetricsGroupBy to use. </param>
-        /// <param name="continents"> The ArrayOfGet9ItemsItem to use. </param>
-        /// <param name="countryOrRegions"> The ArrayOfGet10ItemsItem to use. </param>
+        /// <param name="customDomains"> The IEnumerable{string} to use. </param>
+        /// <param name="protocols"> The IEnumerable{string} to use. </param>
+        /// <param name="groupBy"> The IEnumerable{LogMetricsGroupBy} to use. </param>
+        /// <param name="continents"> The IEnumerable{string} to use. </param>
+        /// <param name="countryOrRegions"> The IEnumerable{string} to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="metrics"/>, <paramref name="customDomains"/> or <paramref name="protocols"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -149,15 +149,15 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
-        /// <param name="metrics"> The ArrayOfLogMetric to use. </param>
-        /// <param name="dateTimeBegin"> The DateTime to use. </param>
-        /// <param name="dateTimeEnd"> The DateTime to use. </param>
+        /// <param name="metrics"> The IEnumerable{LogMetric} to use. </param>
+        /// <param name="dateTimeBegin"> The DateTimeOffset to use. </param>
+        /// <param name="dateTimeEnd"> The DateTimeOffset to use. </param>
         /// <param name="granularity"> The LogMetricsGranularity to use. </param>
-        /// <param name="customDomains"> The ArrayOfGet11ItemsItem to use. </param>
-        /// <param name="protocols"> The ArrayOfGet12ItemsItem to use. </param>
-        /// <param name="groupBy"> The ArrayOfLogMetricsGroupBy to use. </param>
-        /// <param name="continents"> The ArrayOfGet9ItemsItem to use. </param>
-        /// <param name="countryOrRegions"> The ArrayOfGet10ItemsItem to use. </param>
+        /// <param name="customDomains"> The IEnumerable{string} to use. </param>
+        /// <param name="protocols"> The IEnumerable{string} to use. </param>
+        /// <param name="groupBy"> The IEnumerable{LogMetricsGroupBy} to use. </param>
+        /// <param name="continents"> The IEnumerable{string} to use. </param>
+        /// <param name="countryOrRegions"> The IEnumerable{string} to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="metrics"/>, <paramref name="customDomains"/> or <paramref name="protocols"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -205,14 +205,14 @@ namespace Azure.ResourceManager.Cdn
             {
                 foreach (var param in rankings)
                 {
-                    uri.AppendQuery("rankings", param.ToString(), true);
+                    uri.AppendQuery("rankings", param, true);
                 }
             }
             if (metrics != null && Optional.IsCollectionDefined(metrics))
             {
                 foreach (var param in metrics)
                 {
-                    uri.AppendQuery("metrics", param.ToString(), true);
+                    uri.AppendQuery("metrics", param, true);
                 }
             }
             uri.AppendQuery("maxRanking", maxRanking, true);
@@ -235,12 +235,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
-        /// <param name="rankings"> The ArrayOfLogRanking to use. </param>
-        /// <param name="metrics"> The ArrayOfLogRankingMetric to use. </param>
-        /// <param name="maxRanking"> The Integer to use. </param>
-        /// <param name="dateTimeBegin"> The DateTime to use. </param>
-        /// <param name="dateTimeEnd"> The DateTime to use. </param>
-        /// <param name="customDomains"> The ArrayOfString to use. </param>
+        /// <param name="rankings"> The IEnumerable{LogRanking} to use. </param>
+        /// <param name="metrics"> The IEnumerable{LogRankingMetric} to use. </param>
+        /// <param name="maxRanking"> The int to use. </param>
+        /// <param name="dateTimeBegin"> The DateTimeOffset to use. </param>
+        /// <param name="dateTimeEnd"> The DateTimeOffset to use. </param>
+        /// <param name="customDomains"> The IEnumerable{string} to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="rankings"/> or <paramref name="metrics"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -272,12 +272,12 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
-        /// <param name="rankings"> The ArrayOfLogRanking to use. </param>
-        /// <param name="metrics"> The ArrayOfLogRankingMetric to use. </param>
-        /// <param name="maxRanking"> The Integer to use. </param>
-        /// <param name="dateTimeBegin"> The DateTime to use. </param>
-        /// <param name="dateTimeEnd"> The DateTime to use. </param>
-        /// <param name="customDomains"> The ArrayOfString to use. </param>
+        /// <param name="rankings"> The IEnumerable{LogRanking} to use. </param>
+        /// <param name="metrics"> The IEnumerable{LogRankingMetric} to use. </param>
+        /// <param name="maxRanking"> The int to use. </param>
+        /// <param name="dateTimeBegin"> The DateTimeOffset to use. </param>
+        /// <param name="dateTimeEnd"> The DateTimeOffset to use. </param>
+        /// <param name="customDomains"> The IEnumerable{string} to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="rankings"/> or <paramref name="metrics"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 foreach (var param in metrics)
                 {
-                    uri.AppendQuery("metrics", param.ToString(), true);
+                    uri.AppendQuery("metrics", param, true);
                 }
             }
             uri.AppendQuery("dateTimeBegin", dateTimeBegin, "O", true);
@@ -492,21 +492,21 @@ namespace Azure.ResourceManager.Cdn
             {
                 foreach (var param in actions)
                 {
-                    uri.AppendQuery("actions", param.ToString(), true);
+                    uri.AppendQuery("actions", param, true);
                 }
             }
             if (groupBy != null && Optional.IsCollectionDefined(groupBy))
             {
                 foreach (var param in groupBy)
                 {
-                    uri.AppendQuery("groupBy", param.ToString(), true);
+                    uri.AppendQuery("groupBy", param, true);
                 }
             }
             if (ruleTypes != null && Optional.IsCollectionDefined(ruleTypes))
             {
                 foreach (var param in ruleTypes)
                 {
-                    uri.AppendQuery("ruleTypes", param.ToString(), true);
+                    uri.AppendQuery("ruleTypes", param, true);
                 }
             }
             request.Uri = uri;
@@ -519,13 +519,13 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
-        /// <param name="metrics"> The ArrayOfWafMetric to use. </param>
-        /// <param name="dateTimeBegin"> The DateTime to use. </param>
-        /// <param name="dateTimeEnd"> The DateTime to use. </param>
+        /// <param name="metrics"> The IEnumerable{WafMetric} to use. </param>
+        /// <param name="dateTimeBegin"> The DateTimeOffset to use. </param>
+        /// <param name="dateTimeEnd"> The DateTimeOffset to use. </param>
         /// <param name="granularity"> The WafGranularity to use. </param>
-        /// <param name="actions"> The ArrayOfWafAction to use. </param>
-        /// <param name="groupBy"> The ArrayOfWafRankingGroupBy to use. </param>
-        /// <param name="ruleTypes"> The ArrayOfWafRuleType to use. </param>
+        /// <param name="actions"> The IEnumerable{WafAction} to use. </param>
+        /// <param name="groupBy"> The IEnumerable{WafRankingGroupBy} to use. </param>
+        /// <param name="ruleTypes"> The IEnumerable{WafRuleType} to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="metrics"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -556,13 +556,13 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
-        /// <param name="metrics"> The ArrayOfWafMetric to use. </param>
-        /// <param name="dateTimeBegin"> The DateTime to use. </param>
-        /// <param name="dateTimeEnd"> The DateTime to use. </param>
+        /// <param name="metrics"> The IEnumerable{WafMetric} to use. </param>
+        /// <param name="dateTimeBegin"> The DateTimeOffset to use. </param>
+        /// <param name="dateTimeEnd"> The DateTimeOffset to use. </param>
         /// <param name="granularity"> The WafGranularity to use. </param>
-        /// <param name="actions"> The ArrayOfWafAction to use. </param>
-        /// <param name="groupBy"> The ArrayOfWafRankingGroupBy to use. </param>
-        /// <param name="ruleTypes"> The ArrayOfWafRuleType to use. </param>
+        /// <param name="actions"> The IEnumerable{WafAction} to use. </param>
+        /// <param name="groupBy"> The IEnumerable{WafRankingGroupBy} to use. </param>
+        /// <param name="ruleTypes"> The IEnumerable{WafRuleType} to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/> or <paramref name="metrics"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.Cdn
             {
                 foreach (var param in metrics)
                 {
-                    uri.AppendQuery("metrics", param.ToString(), true);
+                    uri.AppendQuery("metrics", param, true);
                 }
             }
             uri.AppendQuery("dateTimeBegin", dateTimeBegin, "O", true);
@@ -618,21 +618,21 @@ namespace Azure.ResourceManager.Cdn
             {
                 foreach (var param in rankings)
                 {
-                    uri.AppendQuery("rankings", param.ToString(), true);
+                    uri.AppendQuery("rankings", param, true);
                 }
             }
             if (actions != null && Optional.IsCollectionDefined(actions))
             {
                 foreach (var param in actions)
                 {
-                    uri.AppendQuery("actions", param.ToString(), true);
+                    uri.AppendQuery("actions", param, true);
                 }
             }
             if (ruleTypes != null && Optional.IsCollectionDefined(ruleTypes))
             {
                 foreach (var param in ruleTypes)
                 {
-                    uri.AppendQuery("ruleTypes", param.ToString(), true);
+                    uri.AppendQuery("ruleTypes", param, true);
                 }
             }
             request.Uri = uri;
@@ -645,13 +645,13 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
-        /// <param name="metrics"> The ArrayOfWafMetric to use. </param>
-        /// <param name="dateTimeBegin"> The DateTime to use. </param>
-        /// <param name="dateTimeEnd"> The DateTime to use. </param>
-        /// <param name="maxRanking"> The Integer to use. </param>
-        /// <param name="rankings"> The ArrayOfWafRankingType to use. </param>
-        /// <param name="actions"> The ArrayOfWafAction to use. </param>
-        /// <param name="ruleTypes"> The ArrayOfWafRuleType to use. </param>
+        /// <param name="metrics"> The IEnumerable{WafMetric} to use. </param>
+        /// <param name="dateTimeBegin"> The DateTimeOffset to use. </param>
+        /// <param name="dateTimeEnd"> The DateTimeOffset to use. </param>
+        /// <param name="maxRanking"> The int to use. </param>
+        /// <param name="rankings"> The IEnumerable{WafRankingType} to use. </param>
+        /// <param name="actions"> The IEnumerable{WafAction} to use. </param>
+        /// <param name="ruleTypes"> The IEnumerable{WafRuleType} to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="metrics"/> or <paramref name="rankings"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -683,13 +683,13 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="subscriptionId"> Azure Subscription ID. </param>
         /// <param name="resourceGroupName"> Name of the Resource group within the Azure subscription. </param>
         /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium profile which is unique within the resource group. which is unique within the resource group. </param>
-        /// <param name="metrics"> The ArrayOfWafMetric to use. </param>
-        /// <param name="dateTimeBegin"> The DateTime to use. </param>
-        /// <param name="dateTimeEnd"> The DateTime to use. </param>
-        /// <param name="maxRanking"> The Integer to use. </param>
-        /// <param name="rankings"> The ArrayOfWafRankingType to use. </param>
-        /// <param name="actions"> The ArrayOfWafAction to use. </param>
-        /// <param name="ruleTypes"> The ArrayOfWafRuleType to use. </param>
+        /// <param name="metrics"> The IEnumerable{WafMetric} to use. </param>
+        /// <param name="dateTimeBegin"> The DateTimeOffset to use. </param>
+        /// <param name="dateTimeEnd"> The DateTimeOffset to use. </param>
+        /// <param name="maxRanking"> The int to use. </param>
+        /// <param name="rankings"> The IEnumerable{WafRankingType} to use. </param>
+        /// <param name="actions"> The IEnumerable{WafAction} to use. </param>
+        /// <param name="ruleTypes"> The IEnumerable{WafRuleType} to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="profileName"/>, <paramref name="metrics"/> or <paramref name="rankings"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
