@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Network
     public partial class NetworkInterfaceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkInterfaceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="networkInterfaceName"> The networkInterfaceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkInterfaceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}";

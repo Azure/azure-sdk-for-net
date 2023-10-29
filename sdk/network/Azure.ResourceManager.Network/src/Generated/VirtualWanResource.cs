@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.Network
     public partial class VirtualWanResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="VirtualWanResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="virtualWanName"> The virtualWanName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualWanName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualWans/{virtualWanName}";
