@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <returns> An object representing collection of ContainerServiceFleetMemberResources and their operations over a ContainerServiceFleetMemberResource. </returns>
         public virtual ContainerServiceFleetMemberCollection GetContainerServiceFleetMembers()
         {
-            return GetCachedClient(Client => new ContainerServiceFleetMemberCollection(Client, Id));
+            return GetCachedClient(client => new ContainerServiceFleetMemberCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </summary>
         /// <param name="fleetMemberName"> The name of the Fleet member resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fleetMemberName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fleetMemberName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fleetMemberName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ContainerServiceFleetMemberResource>> GetContainerServiceFleetMemberAsync(string fleetMemberName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +134,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </summary>
         /// <param name="fleetMemberName"> The name of the Fleet member resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fleetMemberName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fleetMemberName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fleetMemberName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ContainerServiceFleetMemberResource> GetContainerServiceFleetMember(string fleetMemberName, CancellationToken cancellationToken = default)
         {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <returns> An object representing collection of ContainerServiceFleetUpdateRunResources and their operations over a ContainerServiceFleetUpdateRunResource. </returns>
         public virtual ContainerServiceFleetUpdateRunCollection GetContainerServiceFleetUpdateRuns()
         {
-            return GetCachedClient(Client => new ContainerServiceFleetUpdateRunCollection(Client, Id));
+            return GetCachedClient(client => new ContainerServiceFleetUpdateRunCollection(client, Id));
         }
 
         /// <summary>
@@ -164,8 +164,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </summary>
         /// <param name="updateRunName"> The name of the UpdateRun resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="updateRunName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ContainerServiceFleetUpdateRunResource>> GetContainerServiceFleetUpdateRunAsync(string updateRunName, CancellationToken cancellationToken = default)
         {
@@ -187,8 +187,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </summary>
         /// <param name="updateRunName"> The name of the UpdateRun resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="updateRunName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="updateRunName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ContainerServiceFleetUpdateRunResource> GetContainerServiceFleetUpdateRun(string updateRunName, CancellationToken cancellationToken = default)
         {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <returns> An object representing collection of FleetUpdateStrategyResources and their operations over a FleetUpdateStrategyResource. </returns>
         public virtual FleetUpdateStrategyCollection GetFleetUpdateStrategies()
         {
-            return GetCachedClient(Client => new FleetUpdateStrategyCollection(Client, Id));
+            return GetCachedClient(client => new FleetUpdateStrategyCollection(client, Id));
         }
 
         /// <summary>
@@ -217,8 +217,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </summary>
         /// <param name="updateStrategyName"> The name of the UpdateStrategy resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="updateStrategyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="updateStrategyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="updateStrategyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<FleetUpdateStrategyResource>> GetFleetUpdateStrategyAsync(string updateStrategyName, CancellationToken cancellationToken = default)
         {
@@ -240,8 +240,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </summary>
         /// <param name="updateStrategyName"> The name of the UpdateStrategy resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="updateStrategyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="updateStrategyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="updateStrategyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<FleetUpdateStrategyResource> GetFleetUpdateStrategy(string updateStrategyName, CancellationToken cancellationToken = default)
         {
