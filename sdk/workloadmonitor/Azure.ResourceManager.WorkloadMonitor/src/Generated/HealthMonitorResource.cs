@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <returns> An object representing collection of HealthMonitorStateChangeResources and their operations over a HealthMonitorStateChangeResource. </returns>
         public virtual HealthMonitorStateChangeCollection GetHealthMonitorStateChanges()
         {
-            return GetCachedClient(Client => new HealthMonitorStateChangeCollection(Client, Id));
+            return GetCachedClient(client => new HealthMonitorStateChangeCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <param name="timestampUnix"> The timestamp of the state change (unix format). </param>
         /// <param name="expand"> Optionally expand the monitor’s evidence and/or configuration. Example: $expand=evidence,configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="timestampUnix"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="timestampUnix"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="timestampUnix"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<HealthMonitorStateChangeResource>> GetHealthMonitorStateChangeAsync(string timestampUnix, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -135,8 +135,8 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <param name="timestampUnix"> The timestamp of the state change (unix format). </param>
         /// <param name="expand"> Optionally expand the monitor’s evidence and/or configuration. Example: $expand=evidence,configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="timestampUnix"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="timestampUnix"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="timestampUnix"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<HealthMonitorStateChangeResource> GetHealthMonitorStateChange(string timestampUnix, string expand = null, CancellationToken cancellationToken = default)
         {
