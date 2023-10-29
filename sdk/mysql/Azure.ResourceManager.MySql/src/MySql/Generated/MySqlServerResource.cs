@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> An object representing collection of MySqlFirewallRuleResources and their operations over a MySqlFirewallRuleResource. </returns>
         public virtual MySqlFirewallRuleCollection GetMySqlFirewallRules()
         {
-            return GetCachedClient(Client => new MySqlFirewallRuleCollection(Client, Id));
+            return GetCachedClient(client => new MySqlFirewallRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -136,8 +136,8 @@ namespace Azure.ResourceManager.MySql
         /// </summary>
         /// <param name="firewallRuleName"> The name of the server firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MySqlFirewallRuleResource>> GetMySqlFirewallRuleAsync(string firewallRuleName, CancellationToken cancellationToken = default)
         {
@@ -159,8 +159,8 @@ namespace Azure.ResourceManager.MySql
         /// </summary>
         /// <param name="firewallRuleName"> The name of the server firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MySqlFirewallRuleResource> GetMySqlFirewallRule(string firewallRuleName, CancellationToken cancellationToken = default)
         {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> An object representing collection of MySqlVirtualNetworkRuleResources and their operations over a MySqlVirtualNetworkRuleResource. </returns>
         public virtual MySqlVirtualNetworkRuleCollection GetMySqlVirtualNetworkRules()
         {
-            return GetCachedClient(Client => new MySqlVirtualNetworkRuleCollection(Client, Id));
+            return GetCachedClient(client => new MySqlVirtualNetworkRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -189,8 +189,8 @@ namespace Azure.ResourceManager.MySql
         /// </summary>
         /// <param name="virtualNetworkRuleName"> The name of the virtual network rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MySqlVirtualNetworkRuleResource>> GetMySqlVirtualNetworkRuleAsync(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
         {
@@ -212,8 +212,8 @@ namespace Azure.ResourceManager.MySql
         /// </summary>
         /// <param name="virtualNetworkRuleName"> The name of the virtual network rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MySqlVirtualNetworkRuleResource> GetMySqlVirtualNetworkRule(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
         {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> An object representing collection of MySqlDatabaseResources and their operations over a MySqlDatabaseResource. </returns>
         public virtual MySqlDatabaseCollection GetMySqlDatabases()
         {
-            return GetCachedClient(Client => new MySqlDatabaseCollection(Client, Id));
+            return GetCachedClient(client => new MySqlDatabaseCollection(client, Id));
         }
 
         /// <summary>
@@ -242,8 +242,8 @@ namespace Azure.ResourceManager.MySql
         /// </summary>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MySqlDatabaseResource>> GetMySqlDatabaseAsync(string databaseName, CancellationToken cancellationToken = default)
         {
@@ -265,8 +265,8 @@ namespace Azure.ResourceManager.MySql
         /// </summary>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MySqlDatabaseResource> GetMySqlDatabase(string databaseName, CancellationToken cancellationToken = default)
         {
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> An object representing collection of MySqlConfigurationResources and their operations over a MySqlConfigurationResource. </returns>
         public virtual MySqlConfigurationCollection GetMySqlConfigurations()
         {
-            return GetCachedClient(Client => new MySqlConfigurationCollection(Client, Id));
+            return GetCachedClient(client => new MySqlConfigurationCollection(client, Id));
         }
 
         /// <summary>
@@ -295,8 +295,8 @@ namespace Azure.ResourceManager.MySql
         /// </summary>
         /// <param name="configurationName"> The name of the server configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MySqlConfigurationResource>> GetMySqlConfigurationAsync(string configurationName, CancellationToken cancellationToken = default)
         {
@@ -318,8 +318,8 @@ namespace Azure.ResourceManager.MySql
         /// </summary>
         /// <param name="configurationName"> The name of the server configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MySqlConfigurationResource> GetMySqlConfiguration(string configurationName, CancellationToken cancellationToken = default)
         {
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> An object representing collection of MySqlServerSecurityAlertPolicyResources and their operations over a MySqlServerSecurityAlertPolicyResource. </returns>
         public virtual MySqlServerSecurityAlertPolicyCollection GetMySqlServerSecurityAlertPolicies()
         {
-            return GetCachedClient(Client => new MySqlServerSecurityAlertPolicyCollection(Client, Id));
+            return GetCachedClient(client => new MySqlServerSecurityAlertPolicyCollection(client, Id));
         }
 
         /// <summary>
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> An object representing collection of MySqlQueryTextResources and their operations over a MySqlQueryTextResource. </returns>
         public virtual MySqlQueryTextCollection GetMySqlQueryTexts()
         {
-            return GetCachedClient(Client => new MySqlQueryTextCollection(Client, Id));
+            return GetCachedClient(client => new MySqlQueryTextCollection(client, Id));
         }
 
         /// <summary>
@@ -404,8 +404,8 @@ namespace Azure.ResourceManager.MySql
         /// </summary>
         /// <param name="queryId"> The Query-Store query identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="queryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="queryId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="queryId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MySqlQueryTextResource>> GetMySqlQueryTextAsync(string queryId, CancellationToken cancellationToken = default)
         {
@@ -427,8 +427,8 @@ namespace Azure.ResourceManager.MySql
         /// </summary>
         /// <param name="queryId"> The Query-Store query identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="queryId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="queryId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="queryId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MySqlQueryTextResource> GetMySqlQueryText(string queryId, CancellationToken cancellationToken = default)
         {
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> An object representing collection of MySqlQueryStatisticResources and their operations over a MySqlQueryStatisticResource. </returns>
         public virtual MySqlQueryStatisticCollection GetMySqlQueryStatistics()
         {
-            return GetCachedClient(Client => new MySqlQueryStatisticCollection(Client, Id));
+            return GetCachedClient(client => new MySqlQueryStatisticCollection(client, Id));
         }
 
         /// <summary>
@@ -457,8 +457,8 @@ namespace Azure.ResourceManager.MySql
         /// </summary>
         /// <param name="queryStatisticId"> The Query Statistic identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="queryStatisticId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="queryStatisticId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="queryStatisticId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MySqlQueryStatisticResource>> GetMySqlQueryStatisticAsync(string queryStatisticId, CancellationToken cancellationToken = default)
         {
@@ -480,8 +480,8 @@ namespace Azure.ResourceManager.MySql
         /// </summary>
         /// <param name="queryStatisticId"> The Query Statistic identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="queryStatisticId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="queryStatisticId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="queryStatisticId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MySqlQueryStatisticResource> GetMySqlQueryStatistic(string queryStatisticId, CancellationToken cancellationToken = default)
         {
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> An object representing collection of MySqlWaitStatisticResources and their operations over a MySqlWaitStatisticResource. </returns>
         public virtual MySqlWaitStatisticCollection GetMySqlWaitStatistics()
         {
-            return GetCachedClient(Client => new MySqlWaitStatisticCollection(Client, Id));
+            return GetCachedClient(client => new MySqlWaitStatisticCollection(client, Id));
         }
 
         /// <summary>
@@ -510,8 +510,8 @@ namespace Azure.ResourceManager.MySql
         /// </summary>
         /// <param name="waitStatisticsId"> The Wait Statistic identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="waitStatisticsId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="waitStatisticsId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="waitStatisticsId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MySqlWaitStatisticResource>> GetMySqlWaitStatisticAsync(string waitStatisticsId, CancellationToken cancellationToken = default)
         {
@@ -533,8 +533,8 @@ namespace Azure.ResourceManager.MySql
         /// </summary>
         /// <param name="waitStatisticsId"> The Wait Statistic identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="waitStatisticsId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="waitStatisticsId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="waitStatisticsId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MySqlWaitStatisticResource> GetMySqlWaitStatistic(string waitStatisticsId, CancellationToken cancellationToken = default)
         {
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> An object representing collection of MySqlAdvisorResources and their operations over a MySqlAdvisorResource. </returns>
         public virtual MySqlAdvisorCollection GetMySqlAdvisors()
         {
-            return GetCachedClient(Client => new MySqlAdvisorCollection(Client, Id));
+            return GetCachedClient(client => new MySqlAdvisorCollection(client, Id));
         }
 
         /// <summary>
@@ -563,8 +563,8 @@ namespace Azure.ResourceManager.MySql
         /// </summary>
         /// <param name="advisorName"> The advisor name for recommendation action. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="advisorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="advisorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="advisorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MySqlAdvisorResource>> GetMySqlAdvisorAsync(string advisorName, CancellationToken cancellationToken = default)
         {
@@ -586,8 +586,8 @@ namespace Azure.ResourceManager.MySql
         /// </summary>
         /// <param name="advisorName"> The advisor name for recommendation action. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="advisorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="advisorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="advisorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MySqlAdvisorResource> GetMySqlAdvisor(string advisorName, CancellationToken cancellationToken = default)
         {
@@ -598,7 +598,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> An object representing collection of MySqlPrivateEndpointConnectionResources and their operations over a MySqlPrivateEndpointConnectionResource. </returns>
         public virtual MySqlPrivateEndpointConnectionCollection GetMySqlPrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new MySqlPrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new MySqlPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -616,8 +616,8 @@ namespace Azure.ResourceManager.MySql
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MySqlPrivateEndpointConnectionResource>> GetMySqlPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -639,8 +639,8 @@ namespace Azure.ResourceManager.MySql
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MySqlPrivateEndpointConnectionResource> GetMySqlPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> An object representing collection of MySqlPrivateLinkResources and their operations over a MySqlPrivateLinkResource. </returns>
         public virtual MySqlPrivateLinkResourceCollection GetMySqlPrivateLinkResources()
         {
-            return GetCachedClient(Client => new MySqlPrivateLinkResourceCollection(Client, Id));
+            return GetCachedClient(client => new MySqlPrivateLinkResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -669,8 +669,8 @@ namespace Azure.ResourceManager.MySql
         /// </summary>
         /// <param name="groupName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MySqlPrivateLinkResource>> GetMySqlPrivateLinkResourceAsync(string groupName, CancellationToken cancellationToken = default)
         {
@@ -692,8 +692,8 @@ namespace Azure.ResourceManager.MySql
         /// </summary>
         /// <param name="groupName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MySqlPrivateLinkResource> GetMySqlPrivateLinkResource(string groupName, CancellationToken cancellationToken = default)
         {
@@ -704,7 +704,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> An object representing collection of MySqlServerKeyResources and their operations over a MySqlServerKeyResource. </returns>
         public virtual MySqlServerKeyCollection GetMySqlServerKeys()
         {
-            return GetCachedClient(Client => new MySqlServerKeyCollection(Client, Id));
+            return GetCachedClient(client => new MySqlServerKeyCollection(client, Id));
         }
 
         /// <summary>
@@ -722,8 +722,8 @@ namespace Azure.ResourceManager.MySql
         /// </summary>
         /// <param name="keyName"> The name of the MySQL Server key to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MySqlServerKeyResource>> GetMySqlServerKeyAsync(string keyName, CancellationToken cancellationToken = default)
         {
@@ -745,8 +745,8 @@ namespace Azure.ResourceManager.MySql
         /// </summary>
         /// <param name="keyName"> The name of the MySQL Server key to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MySqlServerKeyResource> GetMySqlServerKey(string keyName, CancellationToken cancellationToken = default)
         {
