@@ -7,9 +7,8 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.Search.Documents.Indexes.Models;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
     internal partial class UnknownScoringFunction : IUtf8JsonSerializable
     {
