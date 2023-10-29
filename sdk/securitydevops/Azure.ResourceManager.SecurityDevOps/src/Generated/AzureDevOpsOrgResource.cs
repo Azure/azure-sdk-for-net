@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.SecurityDevOps
     public partial class AzureDevOpsOrgResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AzureDevOpsOrgResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="azureDevOpsConnectorName"> The azureDevOpsConnectorName. </param>
+        /// <param name="azureDevOpsOrgName"> The azureDevOpsOrgName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string azureDevOpsConnectorName, string azureDevOpsOrgName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityDevOps/azureDevOpsConnectors/{azureDevOpsConnectorName}/orgs/{azureDevOpsOrgName}";
