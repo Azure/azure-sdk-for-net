@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An object representing collection of FrontDoorCustomDomainResources and their operations over a FrontDoorCustomDomainResource. </returns>
         public virtual FrontDoorCustomDomainCollection GetFrontDoorCustomDomains()
         {
-            return GetCachedClient(Client => new FrontDoorCustomDomainCollection(Client, Id));
+            return GetCachedClient(client => new FrontDoorCustomDomainCollection(client, Id));
         }
 
         /// <summary>
@@ -120,8 +120,8 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<FrontDoorCustomDomainResource>> GetFrontDoorCustomDomainAsync(string customDomainName, CancellationToken cancellationToken = default)
         {
@@ -143,8 +143,8 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="customDomainName"> Name of the domain under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<FrontDoorCustomDomainResource> GetFrontDoorCustomDomain(string customDomainName, CancellationToken cancellationToken = default)
         {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An object representing collection of FrontDoorEndpointResources and their operations over a FrontDoorEndpointResource. </returns>
         public virtual FrontDoorEndpointCollection GetFrontDoorEndpoints()
         {
-            return GetCachedClient(Client => new FrontDoorEndpointCollection(Client, Id));
+            return GetCachedClient(client => new FrontDoorEndpointCollection(client, Id));
         }
 
         /// <summary>
@@ -173,8 +173,8 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<FrontDoorEndpointResource>> GetFrontDoorEndpointAsync(string endpointName, CancellationToken cancellationToken = default)
         {
@@ -196,8 +196,8 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<FrontDoorEndpointResource> GetFrontDoorEndpoint(string endpointName, CancellationToken cancellationToken = default)
         {
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An object representing collection of FrontDoorOriginGroupResources and their operations over a FrontDoorOriginGroupResource. </returns>
         public virtual FrontDoorOriginGroupCollection GetFrontDoorOriginGroups()
         {
-            return GetCachedClient(Client => new FrontDoorOriginGroupCollection(Client, Id));
+            return GetCachedClient(client => new FrontDoorOriginGroupCollection(client, Id));
         }
 
         /// <summary>
@@ -226,8 +226,8 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="originGroupName"> Name of the origin group which is unique within the endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="originGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="originGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<FrontDoorOriginGroupResource>> GetFrontDoorOriginGroupAsync(string originGroupName, CancellationToken cancellationToken = default)
         {
@@ -249,8 +249,8 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="originGroupName"> Name of the origin group which is unique within the endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="originGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="originGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<FrontDoorOriginGroupResource> GetFrontDoorOriginGroup(string originGroupName, CancellationToken cancellationToken = default)
         {
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An object representing collection of FrontDoorRuleSetResources and their operations over a FrontDoorRuleSetResource. </returns>
         public virtual FrontDoorRuleSetCollection GetFrontDoorRuleSets()
         {
-            return GetCachedClient(Client => new FrontDoorRuleSetCollection(Client, Id));
+            return GetCachedClient(client => new FrontDoorRuleSetCollection(client, Id));
         }
 
         /// <summary>
@@ -279,8 +279,8 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="ruleSetName"> Name of the rule set under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<FrontDoorRuleSetResource>> GetFrontDoorRuleSetAsync(string ruleSetName, CancellationToken cancellationToken = default)
         {
@@ -302,8 +302,8 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="ruleSetName"> Name of the rule set under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<FrontDoorRuleSetResource> GetFrontDoorRuleSet(string ruleSetName, CancellationToken cancellationToken = default)
         {
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An object representing collection of FrontDoorSecurityPolicyResources and their operations over a FrontDoorSecurityPolicyResource. </returns>
         public virtual FrontDoorSecurityPolicyCollection GetFrontDoorSecurityPolicies()
         {
-            return GetCachedClient(Client => new FrontDoorSecurityPolicyCollection(Client, Id));
+            return GetCachedClient(client => new FrontDoorSecurityPolicyCollection(client, Id));
         }
 
         /// <summary>
@@ -332,8 +332,8 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="securityPolicyName"> Name of the security policy under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="securityPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="securityPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<FrontDoorSecurityPolicyResource>> GetFrontDoorSecurityPolicyAsync(string securityPolicyName, CancellationToken cancellationToken = default)
         {
@@ -355,8 +355,8 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="securityPolicyName"> Name of the security policy under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="securityPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="securityPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<FrontDoorSecurityPolicyResource> GetFrontDoorSecurityPolicy(string securityPolicyName, CancellationToken cancellationToken = default)
         {
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An object representing collection of FrontDoorSecretResources and their operations over a FrontDoorSecretResource. </returns>
         public virtual FrontDoorSecretCollection GetFrontDoorSecrets()
         {
-            return GetCachedClient(Client => new FrontDoorSecretCollection(Client, Id));
+            return GetCachedClient(client => new FrontDoorSecretCollection(client, Id));
         }
 
         /// <summary>
@@ -385,8 +385,8 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="secretName"> Name of the Secret under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<FrontDoorSecretResource>> GetFrontDoorSecretAsync(string secretName, CancellationToken cancellationToken = default)
         {
@@ -408,8 +408,8 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="secretName"> Name of the Secret under the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<FrontDoorSecretResource> GetFrontDoorSecret(string secretName, CancellationToken cancellationToken = default)
         {
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An object representing collection of CdnEndpointResources and their operations over a CdnEndpointResource. </returns>
         public virtual CdnEndpointCollection GetCdnEndpoints()
         {
-            return GetCachedClient(Client => new CdnEndpointCollection(Client, Id));
+            return GetCachedClient(client => new CdnEndpointCollection(client, Id));
         }
 
         /// <summary>
@@ -438,8 +438,8 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<CdnEndpointResource>> GetCdnEndpointAsync(string endpointName, CancellationToken cancellationToken = default)
         {
@@ -461,8 +461,8 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="endpointName"> Name of the endpoint under the profile which is unique globally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<CdnEndpointResource> GetCdnEndpoint(string endpointName, CancellationToken cancellationToken = default)
         {

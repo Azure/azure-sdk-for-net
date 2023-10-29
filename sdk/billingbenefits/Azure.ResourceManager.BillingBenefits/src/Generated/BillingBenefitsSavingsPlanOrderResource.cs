@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <returns> An object representing collection of BillingBenefitsSavingsPlanResources and their operations over a BillingBenefitsSavingsPlanResource. </returns>
         public virtual BillingBenefitsSavingsPlanCollection GetBillingBenefitsSavingsPlans()
         {
-            return GetCachedClient(Client => new BillingBenefitsSavingsPlanCollection(Client, Id));
+            return GetCachedClient(client => new BillingBenefitsSavingsPlanCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="savingsPlanId"> ID of the savings plan. </param>
         /// <param name="expand"> May be used to expand the detail information of some properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<BillingBenefitsSavingsPlanResource>> GetBillingBenefitsSavingsPlanAsync(string savingsPlanId, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -135,8 +135,8 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="savingsPlanId"> ID of the savings plan. </param>
         /// <param name="expand"> May be used to expand the detail information of some properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="savingsPlanId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<BillingBenefitsSavingsPlanResource> GetBillingBenefitsSavingsPlan(string savingsPlanId, string expand = null, CancellationToken cancellationToken = default)
         {

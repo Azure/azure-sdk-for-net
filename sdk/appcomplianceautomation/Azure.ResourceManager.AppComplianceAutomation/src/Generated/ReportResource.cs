@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <returns> An object representing collection of SnapshotResources and their operations over a SnapshotResource. </returns>
         public virtual SnapshotResourceCollection GetSnapshotResources()
         {
-            return GetCachedClient(Client => new SnapshotResourceCollection(Client, Id));
+            return GetCachedClient(client => new SnapshotResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -110,8 +110,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// </summary>
         /// <param name="snapshotName"> Snapshot Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SnapshotResource>> GetSnapshotResourceAsync(string snapshotName, CancellationToken cancellationToken = default)
         {
@@ -133,8 +133,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// </summary>
         /// <param name="snapshotName"> Snapshot Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SnapshotResource> GetSnapshotResource(string snapshotName, CancellationToken cancellationToken = default)
         {
