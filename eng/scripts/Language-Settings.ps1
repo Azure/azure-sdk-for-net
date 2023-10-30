@@ -588,42 +588,74 @@ function Get-dotnet-EmitterAdditionalOptions([string]$projectDirectory) {
 }
 
 function Update-dotnet-GeneratedSdks([string]$PackageDirectoriesFile) {
-  $showSummary = ($env:SYSTEM_DEBUG -eq 'true') -or ($VerbosePreference -ne 'SilentlyContinue')
-  $summaryArgs = $showSummary ? "/v:n /ds" : ""
+  Write-Host "`n`n======================================================================"
+  Write-Host "Generating projects" -ForegroundColor Yellow
+  Write-Host "======================================================================`n"
 
   $packageDirectories = Get-Content $PackageDirectoriesFile | ConvertFrom-Json
 
-  $directoriesWithErrors = @()
+  # Build the project list override file
 
-  Invoke-LoggedCommand "npm install -g autorest"
+  $lines = @('<Project><ItemGroup>')
 
   foreach ($directory in $packageDirectories) {
-    Push-Location $RepoRoot
-    try {
-      Write-Host "`n`n======================================================================"
-      Write-Host "Generating projects under directory '$directory'" -ForegroundColor Yellow
-      Write-Host "======================================================================`n"
+    $projects = Get-ChildItem -Path "$RepoRoot/sdk/$directory" -Filter "*.csproj"
+    foreach ($project in $projects) {
+      $lines += "<ProjectReference Include=`"$($project.FullName)`" />"
+    }
+  }
 
-      Invoke-LoggedCommand "dotnet msbuild /restore /t:GenerateCode /p:Scope=`"$directory`" $summaryArgs eng\service.proj" -GroupOutput
-    }
-    catch {
-      Write-Host "##[error]Error generating project under directory $directory"
-      Write-Host $_.Exception.Message
-      $directoriesWithErrors += $directory
-    }
-    finally {
+  $lines += '</ItemGroup></Project>'
+  $artifactsPath = Join-Path $RepoRoot "artifacts"
+  $projectListOverrideFile = Join-Path $artifactsPath "GeneratedSdks.proj"
+
+  Write-Host "Creating ProjectListOverrideFile $projectListOverrideFile`:"
+  $lines | ForEach-Object { "  $_" } | Out-Host
+
+  New-Item $artifactsPath -ItemType Directory -Force | Out-Null
+  $lines | Out-File $projectListOverrideFile -Encoding UTF8
+
+  # Initialize npm and npx cache
+
+  Write-Host "##[group]Initializing npm and npx cache"
+
+  # Generate code in sdk/template to prime the npx and npm cache
+  $templatePath = "$SdkRepoRoot/sdk/template/Azure.Template"
+  Invoke-LoggedCommand "dotnet build /t:GenerateCode" -ExecutePath $templatePath
+  Invoke-LoggedCommand "git restore ." -ExecutePath $templatePath
+  Invoke-LoggedCommand "git clean . --force" -ExecutePath $templatePath
+
+  # Run npm install over emitter-package.json in a temp folder to prime the npm cache
+  $tempFolder = New-TemporaryFile
+  $tempFolder | Remove-Item -Force
+  New-Item $tempFolder -ItemType Directory -Force | Out-Null
+
+  Push-Location $tempFolder
+  try {
+      Copy-Item "$SdkRepoRoot/eng/emitter-package.json" "package.json"
+      if(Test-Path "$SdkRepoRoot/eng/emitter-package-lock.json") {
+          Copy-Item "$SdkRepoRoot/eng/emitter-package-lock.json" "package-lock.json"
+          Invoke "npm ci" -ExecutePath $PWD
+      } else {
+          Invoke "npm install" -ExecutePath $PWD
+      }
+  }
+  finally {
       Pop-Location
-    }
+      $tempFolder | Remove-Item -Force -Recurse
   }
 
-  if($directoriesWithErrors.Count -gt 0) {
-    Write-Host "##[error]Generation errors found in $($directoriesWithErrors.Count) directories:"
+  Write-Host "##[endgroup]"
 
-    foreach ($directory in $directoriesWithErrors) {
-      Write-Host "  $directory"
-    }
+  # Generate projects
+  $showSummary = ($env:SYSTEM_DEBUG -eq 'true') -or ($VerbosePreference -ne 'SilentlyContinue')
+  $summaryArgs = $showSummary ? "/v:n /ds" : ""
 
-    exit 1
+  Push-Location $RepoRoot
+  try {
+    Invoke-LoggedCommand "dotnet msbuild /restore /t:GenerateCode /p:ProjectListOverrideFile=$projectListOverrideFile $summaryArgs eng\service.proj" -GroupOutput
   }
-
+  finally {
+    Pop-Location
+  }
 }
