@@ -101,13 +101,11 @@ namespace Azure.Storage.DataMovement
         public override async Task AddNewJobPartAsync(
             string transferId,
             int partNumber,
-            int chunksTotal,
             Stream headerStream,
             CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(transferId, nameof(transferId));
             Argument.AssertNotNull(partNumber, nameof(partNumber));
-            Argument.AssertNotNull(chunksTotal, nameof(chunksTotal));
             Argument.AssertNotNull(headerStream, nameof(headerStream));
             headerStream.Position = 0;
 

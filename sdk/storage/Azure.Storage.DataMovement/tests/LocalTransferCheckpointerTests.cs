@@ -197,7 +197,6 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             string transferId = GetNewTransferId();
             int partNumber = 0;
-            int chunksTotal = 1;
             JobPartPlanHeader header = CheckpointerTesting.CreateDefaultJobPartHeader(
                     transferId: transferId,
                     partNumber: partNumber);
@@ -214,7 +213,6 @@ namespace Azure.Storage.DataMovement.Tests
                 await transferCheckpointer.AddNewJobPartAsync(
                     transferId: transferId,
                     partNumber: partNumber,
-                    chunksTotal: chunksTotal,
                     headerStream: stream);
             }
 
@@ -236,7 +234,6 @@ namespace Azure.Storage.DataMovement.Tests
 
             string transferId = GetNewTransferId();
             int partNumber = 0;
-            int chunksTotal = 1;
             JobPartPlanHeader header = CheckpointerTesting.CreateDefaultJobPartHeader(
                     transferId: transferId,
                     partNumber: partNumber);
@@ -252,7 +249,6 @@ namespace Azure.Storage.DataMovement.Tests
                 await transferCheckpointer.AddNewJobPartAsync(
                     transferId: transferId,
                     partNumber: partNumber,
-                    chunksTotal: chunksTotal,
                     headerStream: stream);
 
                 // Add the same job part twice
@@ -260,7 +256,6 @@ namespace Azure.Storage.DataMovement.Tests
                     async () => await transferCheckpointer.AddNewJobPartAsync(
                     transferId: transferId,
                     partNumber: partNumber,
-                    chunksTotal: chunksTotal,
                     headerStream: stream));
             }
 
@@ -280,7 +275,6 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Add multiple parts for the same job
             string transferId = GetNewTransferId();
-            int chunksTotal = 1;
             JobPartPlanHeader header1 = CheckpointerTesting.CreateDefaultJobPartHeader(
                     transferId: transferId,
                     partNumber: 0);
@@ -305,7 +299,6 @@ namespace Azure.Storage.DataMovement.Tests
                 await transferCheckpointer.AddNewJobPartAsync(
                     transferId: transferId,
                     partNumber: 0,
-                    chunksTotal: chunksTotal,
                     headerStream: stream);
             }
             using (Stream stream = new MemoryStream())
@@ -315,7 +308,6 @@ namespace Azure.Storage.DataMovement.Tests
                 await transferCheckpointer.AddNewJobPartAsync(
                     transferId: transferId,
                     partNumber: 1,
-                    chunksTotal: chunksTotal,
                     headerStream: stream);
             }
             using (Stream stream = new MemoryStream())
@@ -325,7 +317,6 @@ namespace Azure.Storage.DataMovement.Tests
                 await transferCheckpointer.AddNewJobPartAsync(
                     transferId: transferId,
                     partNumber: 2,
-                    chunksTotal: chunksTotal,
                     headerStream: stream);
             }
             using (Stream stream = new MemoryStream())
@@ -335,7 +326,6 @@ namespace Azure.Storage.DataMovement.Tests
                 await transferCheckpointer.AddNewJobPartAsync(
                     transferId: transferId,
                     partNumber: 3,
-                    chunksTotal: chunksTotal,
                     headerStream: stream);
             }
 
@@ -370,7 +360,6 @@ namespace Azure.Storage.DataMovement.Tests
                 await transferCheckpointer.AddNewJobPartAsync(
                     transferId: transferId,
                     partNumber: 1,
-                    chunksTotal: 2,
                     headerStream: stream);
             }
             await transferCheckpointer.TryRemoveStoredTransferAsync(transferId);
@@ -382,7 +371,6 @@ namespace Azure.Storage.DataMovement.Tests
                 await transferCheckpointer.AddNewJobPartAsync(
                     transferId: transferId,
                     partNumber: 1,
-                    chunksTotal: 2,
                     headerStream: stream);
             }
 
@@ -564,7 +552,6 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             string transferId = GetNewTransferId();
             int partNumber = 0;
-            int chunksTotal = 1;
             JobPartPlanHeader header = CheckpointerTesting.CreateDefaultJobPartHeader(
                     transferId: transferId,
                     partNumber: partNumber);
@@ -580,7 +567,6 @@ namespace Azure.Storage.DataMovement.Tests
                 await transferCheckpointer.AddNewJobPartAsync(
                     transferId: transferId,
                     partNumber: partNumber,
-                    chunksTotal: chunksTotal,
                     headerStream: stream);
             }
 
@@ -598,7 +584,6 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Arrange
             string transferId = GetNewTransferId();
-            int chunksTotal = 1;
             JobPartPlanHeader header1 = CheckpointerTesting.CreateDefaultJobPartHeader(
                     transferId: transferId,
                     partNumber: 0);
@@ -623,7 +608,6 @@ namespace Azure.Storage.DataMovement.Tests
                 await transferCheckpointer.AddNewJobPartAsync(
                     transferId: transferId,
                     partNumber: 0,
-                    chunksTotal: chunksTotal,
                     headerStream: stream);
             }
             using (Stream stream = new MemoryStream())
@@ -633,7 +617,6 @@ namespace Azure.Storage.DataMovement.Tests
                 await transferCheckpointer.AddNewJobPartAsync(
                     transferId: transferId,
                     partNumber: 1,
-                    chunksTotal: chunksTotal,
                     headerStream: stream);
             }
             using (Stream stream = new MemoryStream())
@@ -643,7 +626,6 @@ namespace Azure.Storage.DataMovement.Tests
                 await transferCheckpointer.AddNewJobPartAsync(
                     transferId: transferId,
                     partNumber: 2,
-                    chunksTotal: chunksTotal,
                     headerStream: stream);
             }
             using (Stream stream = new MemoryStream())
@@ -653,7 +635,6 @@ namespace Azure.Storage.DataMovement.Tests
                 await transferCheckpointer.AddNewJobPartAsync(
                     transferId: transferId,
                     partNumber: 3,
-                    chunksTotal: chunksTotal,
                     headerStream: stream);
             }
 
@@ -742,7 +723,6 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             string transferId = GetNewTransferId();
             int partNumber = 0;
-            int chunksTotal = 1;
             JobPartPlanHeader header = CheckpointerTesting.CreateDefaultJobPartHeader(
                     transferId: transferId,
                     partNumber: partNumber);
@@ -757,7 +737,6 @@ namespace Azure.Storage.DataMovement.Tests
                 await transferCheckpointer.AddNewJobPartAsync(
                     transferId: transferId,
                     partNumber: partNumber,
-                    chunksTotal: chunksTotal,
                     headerStream: stream);
             }
 
@@ -903,7 +882,6 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             string transferId = GetNewTransferId();
             int partNumber = 0;
-            int chunksTotal = 1;
             // originally the default is set to Queued
             DataTransferStatus newStatus = SuccessfulCompletedStatus;
             JobPartPlanHeader header = CheckpointerTesting.CreateDefaultJobPartHeader(
@@ -920,7 +898,6 @@ namespace Azure.Storage.DataMovement.Tests
                 await transferCheckpointer.AddNewJobPartAsync(
                     transferId: transferId,
                     partNumber: partNumber,
-                    chunksTotal: chunksTotal,
                     headerStream: stream);
             }
 
