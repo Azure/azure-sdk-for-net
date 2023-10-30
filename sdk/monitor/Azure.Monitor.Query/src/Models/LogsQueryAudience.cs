@@ -7,7 +7,7 @@ using Azure.Core;
 
 namespace Azure.Monitor.Query
 {
-    /// <summary> Cloud audiences available for Ingestion. </summary>
+    /// <summary> Cloud audiences available for Query. </summary>
     public readonly partial struct LogsQueryAudience : IEquatable<LogsQueryAudience>
     {
         private readonly string _value;
@@ -31,8 +31,8 @@ namespace Azure.Monitor.Query
         /// <summary> Azure China. </summary>
         public static LogsQueryAudience AzureChina { get; } = new LogsQueryAudience(AzureChinaValue);
 
-        /// <summary> Azure Government. </summary>
-        public static LogsQueryAudience AzureGovernment { get; } = new LogsQueryAudience(AzureGovernmentValue);
+        /// <summary> Azure US Government. </summary>
+        public static LogsQueryAudience AzureUSGovernment { get; } = new LogsQueryAudience(AzureGovernmentValue);
 
         /// <summary> Azure Public Cloud. </summary>
         public static LogsQueryAudience AzurePublicCloud { get; } = new LogsQueryAudience(AzurePublicCloudValue);

@@ -49,10 +49,10 @@ namespace Azure.Monitor.Query.Tests
 
             else if (authorityHost == AzureAuthorityHosts.AzureGovernment)
             {
-                if (AzureAuthorityHosts.AzureGovernment.ToString() == LogsQueryAudience.AzureGovernment)
-                    return LogsQueryAudience.AzureGovernment.ToString();
-                if (AzureAuthorityHosts.AzureGovernment.ToString() == MetricsQueryAudience.AzureGovernment)
-                    return MetricsQueryAudience.AzureGovernment.ToString();
+                if (AzureAuthorityHosts.AzureGovernment.ToString() == LogsQueryAudience.AzureUSGovernment)
+                    return LogsQueryAudience.AzureUSGovernment.ToString();
+                if (AzureAuthorityHosts.AzureGovernment.ToString() == MetricsQueryAudience.AzureUSGovernment)
+                    return MetricsQueryAudience.AzureUSGovernment.ToString();
             }
 
             throw new NotSupportedException($"Cloud for authority host {authorityHost} is not supported.");

@@ -7,7 +7,7 @@ using Azure.Core;
 
 namespace Azure.Monitor.Query
 {
-    /// <summary> Cloud audiences available for Ingestion. </summary>
+    /// <summary> Cloud audiences available for Query. </summary>
     public readonly partial struct MetricsQueryAudience : IEquatable<MetricsQueryAudience>
     {
         private readonly string _value;
@@ -31,8 +31,8 @@ namespace Azure.Monitor.Query
         /// <summary> Azure China. </summary>
         public static MetricsQueryAudience AzureChina { get; } = new MetricsQueryAudience(AzureChinaValue);
 
-        /// <summary> Azure Government. </summary>
-        public static MetricsQueryAudience AzureGovernment { get; } = new MetricsQueryAudience(AzureGovernmentValue);
+        /// <summary> Azure US Government. </summary>
+        public static MetricsQueryAudience AzureUSGovernment { get; } = new MetricsQueryAudience(AzureGovernmentValue);
 
         /// <summary> Azure Public Cloud. </summary>
         public static MetricsQueryAudience AzurePublicCloud { get; } = new MetricsQueryAudience(AzurePublicCloudValue);

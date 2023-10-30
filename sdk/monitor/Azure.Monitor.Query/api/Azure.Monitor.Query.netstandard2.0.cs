@@ -12,8 +12,8 @@ namespace Azure.Monitor.Query
         private readonly int _dummyPrimitive;
         public LogsQueryAudience(string value) { throw null; }
         public static Azure.Monitor.Query.LogsQueryAudience AzureChina { get { throw null; } }
-        public static Azure.Monitor.Query.LogsQueryAudience AzureGovernment { get { throw null; } }
         public static Azure.Monitor.Query.LogsQueryAudience AzurePublicCloud { get { throw null; } }
+        public static Azure.Monitor.Query.LogsQueryAudience AzureUSGovernment { get { throw null; } }
         public bool Equals(Azure.Monitor.Query.LogsQueryAudience other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -85,8 +85,8 @@ namespace Azure.Monitor.Query
         private readonly int _dummyPrimitive;
         public MetricsQueryAudience(string value) { throw null; }
         public static Azure.Monitor.Query.MetricsQueryAudience AzureChina { get { throw null; } }
-        public static Azure.Monitor.Query.MetricsQueryAudience AzureGovernment { get { throw null; } }
         public static Azure.Monitor.Query.MetricsQueryAudience AzurePublicCloud { get { throw null; } }
+        public static Azure.Monitor.Query.MetricsQueryAudience AzureUSGovernment { get { throw null; } }
         public bool Equals(Azure.Monitor.Query.MetricsQueryAudience other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
