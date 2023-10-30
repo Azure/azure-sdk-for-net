@@ -57,7 +57,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         protected override StorageResourceCheckpointData GetDestinationCheckpointData()
         {
-            return new ShareFileDestinationCheckpointData();
+            return new ShareFileDestinationCheckpointData(null, null);
         }
     }
 }
