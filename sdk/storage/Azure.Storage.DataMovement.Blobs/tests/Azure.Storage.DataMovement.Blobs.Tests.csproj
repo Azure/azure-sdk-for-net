@@ -16,7 +16,6 @@
     <Compile Include="$(AzureStorageSharedTestSources)\RandomExtensions.cs" LinkBase="Shared\Storage" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="$(AzureStorageDataMovementTestSharedSources)CheckpointerTesting.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementTestSharedSources)DisposingLocalDirectory.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementTestSharedSources)TransferUtility.cs" LinkBase="Shared\DataMovement" />
   </ItemGroup>

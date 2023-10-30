@@ -11,6 +11,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Azure.Messaging.EventGrid.Models;
+using AcsRouterJobStatus = Azure.Messaging.EventGrid.Models.AcsRouterJobStatus;
 
 namespace Azure.Messaging.EventGrid.Tests
 {
@@ -3856,7 +3857,8 @@ namespace Azure.Messaging.EventGrid.Tests
                     ""key"": ""string"",
                     ""labelOperator"": ""equal"",
                     ""value"": 5,
-                    ""ttlSeconds"": 1000
+                    ""ttlSeconds"": 1000,
+                    ""state"": ""active""
                   }
                 ]
               },
@@ -3874,7 +3876,62 @@ namespace Azure.Messaging.EventGrid.Tests
             var selectors = routerJobQueuedEventData.AttachedWorkerSelectors;
             Assert.AreEqual(1, selectors.Count);
             Assert.AreEqual(TimeSpan.FromSeconds(1000), selectors[0].TimeToLive);
-            Assert.AreEqual(AcsRouterLabelOperator.Equal, selectors[0].LabelOperator);
+            Assert.AreEqual(Azure.Messaging.EventGrid.Models.AcsRouterLabelOperator.Equal, selectors[0].LabelOperator);
+            Assert.AreEqual(Azure.Messaging.EventGrid.SystemEvents.AcsRouterLabelOperator.Equal, selectors[0].Operator);
+
+            Assert.AreEqual(Azure.Messaging.EventGrid.Models.AcsRouterWorkerSelectorState.Active, selectors[0].State);
+            Assert.AreEqual(Azure.Messaging.EventGrid.SystemEvents.AcsRouterWorkerSelectorState.Active, selectors[0].SelectorState);
+        }
+
+        [Test]
+        public void ConsumeCloudEventAcsRouterJobReceivedEvent()
+        {
+            string requestContent = @"{
+              ""id"": ""acdf8fa5-8ab4-4a65-874a-c1d2a4a97f2e"",
+              ""source"": ""/subscriptions/{subscription-id}/resourceGroups/{group-name}/providers/Microsoft.Communication/communicationServices/{communication-services-resource-name}"",
+              ""subject"": ""job/{job-id}/channel/{channel-id}"",
+              ""data"": {
+                ""jobId"": ""7f1df17b-570b-4ae5-9cf5-fe6ff64cc712"",
+                ""channelReference"": ""test-abc"",
+                ""jobStatus"": ""PendingClassification"",
+                ""channelId"": ""FooVoiceChannelId"",
+                ""classificationPolicyId"": ""test-policy"",
+                ""queueId"": ""queue-id"",
+                ""priority"": 0,
+                ""labels"": {
+                  ""Locale"": ""en-us"",
+                  ""Segment"": ""Enterprise"",
+                  ""Token"": ""FooToken""
+                },
+                ""tags"": {
+                  ""Locale"": ""en-us"",
+                  ""Segment"": ""Enterprise"",
+                  ""Token"": ""FooToken""
+                },
+                ""requestedWorkerSelectors"": [
+                  {
+                    ""key"": ""string"",
+                    ""labelOperator"": ""equal"",
+                    ""value"": 5,
+                    ""ttlSeconds"": 36
+                  }
+                ],
+                ""scheduledOn"": ""3/28/2007 7:13:50 PM +00:00"",
+                ""unavailableForMatching"": false
+              },
+              ""type"": ""Microsoft.Communication.RouterJobReceived"",
+              ""specversion"": ""1.0"",
+              ""time"": ""2022-02-17T00:55:25.1736293Z""
+            }";
+
+            CloudEvent[] events = CloudEvent.ParseMany(new BinaryData(requestContent));
+
+            Assert.NotNull(events);
+            events[0].TryGetSystemEventData(out object eventData);
+            var routerJobReceivedEventData = eventData as AcsRouterJobReceivedEventData;
+            Assert.IsNotNull(routerJobReceivedEventData);
+            Assert.AreEqual(Azure.Messaging.EventGrid.Models.AcsRouterJobStatus.PendingClassification, routerJobReceivedEventData.JobStatus);
+            Assert.AreEqual(Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobStatus.PendingClassification, routerJobReceivedEventData.Status);
         }
         #endregion
 

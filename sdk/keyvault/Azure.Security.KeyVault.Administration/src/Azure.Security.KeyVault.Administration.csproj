@@ -7,6 +7,7 @@
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>4.3.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure Key Vault Administration;$(PackageCommonTags)</PackageTags>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);3021;CA1812</NoWarn>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>

@@ -1,14 +1,22 @@
 # Release History
 
-## 1.1.0-beta.2 (Unreleased)
+## 1.1.0-beta.2 (2023-10-31) 
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Model Event has a new parameter arg_query
+- Model Event has a new parameter event_sub_type
+- Model Event has a new parameter maintenance_id
+- Model Event has a new parameter maintenance_type
+- Model EventImpactedResource has a new parameter maintenance_end_time
+- Model EventImpactedResource has a new parameter maintenance_start_time
+- Model EventImpactedResource has a new parameter resource_group
+- Model EventImpactedResource has a new parameter resource_name
+- Model EventImpactedResource has a new parameter status
 
 ### Other Changes
+
+- Upgraded API version to `2023-10-01-preview`
 
 ## 1.1.0-beta.1 (2023-05-31)
 

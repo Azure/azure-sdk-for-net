@@ -1,6 +1,6 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.6.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,16 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.5.0 (2023-10-25)
+
+### Features Added
+
+- Introduced Cluster Sandbox Custom Image functionality.
+
+### Other Changes
+
+- Upgraded to Azure API version 2023-08-15.
 
 ## 1.4.0 (2023-07-05)
 
