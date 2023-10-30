@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq.Expressions;
+using System.Net.Http;
 using System.Reflection;
 
 namespace Azure.Core.Pipeline
@@ -142,11 +143,20 @@ namespace Azure.Core.Pipeline
             "neither does Application Insights, we can suppress the warning coming from the inner method.")]
         public void Failed(Exception exception)
         {
-            _activityAdapter?.MarkFailed(exception);
+            if (exception is RequestFailedException requestFailedException && requestFailedException.ErrorCode != null)
+            {
+                _activityAdapter?.MarkFailed(requestFailedException.ErrorCode);
+                // TODO (limolkova) when we start targeting .NET 8 we should put
+                // requestFailedException.InnerException.HttpRequestError into error.type
+            }
+            else
+            {
+                _activityAdapter?.MarkFailed(exception);
+            }
         }
 
         /// <summary>
-        /// Marks the scope as failed with low-cardinality error.type.
+        /// Marks the scope as failed with low-cardinality error.type attribute.
         /// </summary>
         /// <param name="errorCode">Error code to associate with the failed scope.</param>
         public void Failed(string errorCode)
@@ -530,6 +540,12 @@ namespace Azure.Core.Pipeline
 
             public void MarkFailed(string statusCode)
             {
+#if NETCOREAPP2_1
+                if (ActivityExtensions.SupportsActivitySource())
+                {
+                    _currentActivity?.SetErrorStatus(statusCode);
+                }
+#endif
 #if NET6_0_OR_GREATER // SetStatus is only defined in NET 6 or greater
                 _currentActivity?.AddTag("error.type", statusCode);
                 _currentActivity?.SetStatus(ActivityStatusCode.Error, null);

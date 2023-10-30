@@ -340,8 +340,10 @@ namespace Azure.Core.Tests
 
                 await requestTask;
 
-                Assert.AreEqual(activity, testListener.Activities.Single());
+                Assert.AreSame(activity, testListener.Activities.Single());
+                Assert.AreEqual("GET", activity.DisplayName);
 
+                Assert.AreEqual(ActivityKind.Client, activity.Kind);
                 CollectionAssert.Contains(activity.TagObjects, new KeyValuePair<string, int>("http.response.status_code", 201));
                 CollectionAssert.Contains(activity.TagObjects, new KeyValuePair<string, string>("url.full", url));
                 CollectionAssert.Contains(activity.TagObjects, new KeyValuePair<string, string>("http.request.method", "GET"));
@@ -416,7 +418,6 @@ namespace Azure.Core.Tests
 
             var activity = clientListener.AssertAndRemoveActivity("Azure.Core.Http.Request");
 
-            // TODO: can we do https://learn.microsoft.com/en-us/dotnet/api/system.net.http.httprequesterror?view=net-8.0?
             CollectionAssert.Contains(activity.TagObjects, new KeyValuePair<string, string>("error.type", "System.Net.Http.HttpRequestException"));
             Assert.AreEqual(ActivityStatusCode.Error, activity.Status);
             StringAssert.Contains("Test exception", activity.StatusDescription);
@@ -440,9 +441,9 @@ namespace Azure.Core.Tests
             var activity = clientListener.AssertAndRemoveActivity("Azure.Core.Http.Request");
 
             CollectionAssert.Contains(activity.TagObjects, new KeyValuePair<string, string>("error.type", "500"));
-            // TODO: diag source teCollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("otel.status_code", "ERROR"));
             Assert.AreEqual(ActivityStatusCode.Error, activity.Status);
             Assert.IsNull(activity.StatusDescription);
+            Assert.IsEmpty(activity.TagObjects.Where(t => t.Key == "otel.status_code"));
         }
 
         [Test]
@@ -470,9 +471,9 @@ namespace Azure.Core.Tests
 
             CollectionAssert.Contains(activity.TagObjects, new KeyValuePair<string, object>("http.request.resend_count", 42));
             CollectionAssert.Contains(activity.TagObjects, new KeyValuePair<string, string>("error.type", "500"));
-            // TODO: diag source teCollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("otel.status_code", "ERROR"));
             Assert.AreEqual(ActivityStatusCode.Error, activity.Status);
             Assert.IsNull(activity.StatusDescription);
+            Assert.IsEmpty(activity.TagObjects.Where(t => t.Key == "otel.status_code"));
         }
 #endif
     }
