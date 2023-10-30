@@ -29,6 +29,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(DefaultSourcePath, header.SourcePath);
             Assert.AreEqual(DefaultDestinationPath, header.DestinationPath);
             Assert.IsFalse(header.Overwrite);
+            Assert.AreEqual(DefaultInitialTransferSize, header.InitialTransferSize);
             Assert.AreEqual(DefaultChunkSize, header.ChunkSize);
             Assert.AreEqual(DefaultPriority, header.Priority);
             Assert.AreEqual(DefaultPartStatus, header.JobPartStatus);
@@ -54,11 +55,6 @@ namespace Azure.Storage.DataMovement.Tests
 
                 CollectionAssert.AreEqual(expected, actual);
             }
-
-            //using (Stream stream = File.OpenWrite(@"D:\azure-sdk-for-net\sdk\storage\Azure.Storage.DataMovement\tests\Resources\SampleJobPartPlanFile.b3.ndmpart"))
-            //{
-            //    header.Serialize(stream);
-            //}
         }
 
         [Test]
@@ -151,6 +147,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(DefaultSourcePath, deserializedHeader.SourcePath);
             Assert.AreEqual(DefaultDestinationPath, deserializedHeader.DestinationPath);
             Assert.IsFalse(deserializedHeader.Overwrite);
+            Assert.AreEqual(DefaultInitialTransferSize, deserializedHeader.InitialTransferSize);
             Assert.AreEqual(DefaultChunkSize, deserializedHeader.ChunkSize);
             Assert.AreEqual(DefaultPriority, deserializedHeader.Priority);
             Assert.AreEqual(DefaultPartStatus, deserializedHeader.JobPartStatus);

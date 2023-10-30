@@ -21,6 +21,7 @@ namespace Azure.Storage.DataMovement.Tests
         internal const string DefaultDestinationTypeId = "BlockBlob";
         internal const string DefaultDestinationPath = "C:/sample-destination";
         internal const string DefaultWebDestinationPath = "https://example.com/destination";
+        internal const long DefaultInitialTransferSize = 32 * Constants.MB;
         internal const long DefaultChunkSize = 4 * Constants.MB;
         internal const byte DefaultPriority = 0;
         internal const JobPlanOperation DefaultJobPlanOperation = JobPlanOperation.Upload;
@@ -41,6 +42,7 @@ namespace Azure.Storage.DataMovement.Tests
             string sourcePath = DefaultSourcePath,
             string destinationPath = DefaultDestinationPath,
             bool overwrite = false,
+            long initialTransferSize = DefaultInitialTransferSize,
             long chunkSize = DefaultChunkSize,
             byte priority = DefaultPriority,
             DataTransferStatus jobPartStatus = default)
@@ -61,6 +63,7 @@ namespace Azure.Storage.DataMovement.Tests
                 sourcePath,
                 destinationPath,
                 overwrite,
+                initialTransferSize,
                 chunkSize,
                 priority,
                 jobPartStatus);

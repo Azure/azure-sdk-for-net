@@ -56,6 +56,11 @@ namespace Azure.Storage.DataMovement.JobPlan
         public bool Overwrite;
 
         /// <summary>
+        /// Ths intial transfer size for the transfer.
+        /// </summary>
+        public long InitialTransferSize;
+
+        /// <summary>
         /// The chunk size to use for the transfer.
         /// </summary>
         public long ChunkSize;
@@ -80,6 +85,7 @@ namespace Azure.Storage.DataMovement.JobPlan
             string sourcePath,
             string destinationPath,
             bool overwrite,
+            long initialTransferSize,
             long chunkSize,
             byte priority,
             DataTransferStatus jobPartStatus)
@@ -128,6 +134,7 @@ namespace Azure.Storage.DataMovement.JobPlan
             SourcePath = sourcePath;
             DestinationPath = destinationPath;
             Overwrite = overwrite;
+            InitialTransferSize = initialTransferSize;
             ChunkSize = chunkSize;
             Priority = priority;
             JobPartStatus = jobPartStatus;
@@ -168,6 +175,9 @@ namespace Azure.Storage.DataMovement.JobPlan
 
             // Overwrite
             writer.Write(Overwrite);
+
+            // InitialTransferSize
+            writer.Write(InitialTransferSize);
 
             // ChunkSize
             writer.Write(ChunkSize);
@@ -227,6 +237,9 @@ namespace Azure.Storage.DataMovement.JobPlan
             byte overwriteByte = reader.ReadByte();
             bool overwrite = Convert.ToBoolean(overwriteByte);
 
+            // InitialTransferSize
+            long initialTransferSize = reader.ReadInt64();
+
             // ChunkSize
             long chunkSize = reader.ReadInt64();
 
@@ -265,6 +278,7 @@ namespace Azure.Storage.DataMovement.JobPlan
                 sourcePath,
                 destinationPath,
                 overwrite,
+                initialTransferSize,
                 chunkSize,
                 priority,
                 jobPartStatus);
@@ -290,6 +304,7 @@ namespace Azure.Storage.DataMovement.JobPlan
                 (SourcePath == other.SourcePath) &&
                 (DestinationPath == other.DestinationPath) &&
                 (Overwrite == other.Overwrite) &&
+                (InitialTransferSize == other.InitialTransferSize) &&
                 (ChunkSize == other.ChunkSize) &&
                 (Priority == other.Priority) &&
                 (JobPartStatus == other.JobPartStatus);

@@ -197,7 +197,8 @@ namespace Azure.Storage.DataMovement
                 sourcePath: sourcePath,
                 destinationPath: destinationPath,
                 overwrite: jobPart._createMode == StorageResourceCreationPreference.OverwriteIfExists,
-                chunkSize: 0, // TODO: Get chunk size
+                initialTransferSize: jobPart._initialTransferSize,
+                chunkSize: jobPart._maximumTransferChunkSize,
                 priority: 0, // TODO: add priority feature
                 jobPartStatus: jobPart.JobPartStatus);
         }

@@ -126,7 +126,8 @@ namespace Azure.Storage.DataMovement
             internal const int DestinationPathOffsetIndex = SourcePathLengthIndex + IntSizeInBytes;
             internal const int DestinationPathLengthIndex = DestinationPathOffsetIndex + IntSizeInBytes;
             internal const int OverwriteIndex = DestinationPathLengthIndex + IntSizeInBytes;
-            internal const int ChunkSizeIndex = OverwriteIndex + OneByte;
+            internal const int InitialTransferSizeIndex = OverwriteIndex + OneByte;
+            internal const int ChunkSizeIndex = InitialTransferSizeIndex + LongSizeInBytes;
             internal const int PriorityIndex = ChunkSizeIndex + LongSizeInBytes;
             internal const int JobPartStatusIndex = PriorityIndex + OneByte;
             internal const int VariableLengthStartIndex = JobPartStatusIndex + IntSizeInBytes;
