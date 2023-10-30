@@ -19,6 +19,9 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNullOrWhiteSpace(workerId, nameof(workerId));
 
             Id = workerId;
+
+            _labels = new ChangeTrackingDictionary<string, BinaryData>();
+            _tags = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary>

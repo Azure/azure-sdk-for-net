@@ -17,6 +17,7 @@ namespace Azure.Communication.JobRouter
         public ReclassifyExceptionAction()
         {
             Kind = "reclassify";
+            _labelsToUpsert = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         [CodeGenMember("LabelsToUpsert")]
@@ -43,7 +44,7 @@ namespace Azure.Communication.JobRouter
         /// <summary>
         /// (optional) Dictionary containing the labels to update (or add if not existing) in key-value pairs
         /// </summary>
-        public IDictionary<string, LabelValue> LabelsToUpsert { get; }
+        public IDictionary<string, LabelValue> LabelsToUpsert { get; } = new Dictionary<string, LabelValue>();
 
         /// <summary>
         /// (optional) The new classification policy that will determine queue, priority
@@ -76,7 +77,7 @@ namespace Azure.Communication.JobRouter
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue(item.Value.ToObjectFromJson());
                 }
                 writer.WriteEndObject();
             }

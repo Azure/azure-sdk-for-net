@@ -29,6 +29,8 @@ namespace Azure.Communication.JobRouter
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            writer.WritePropertyName("channelId"u8);
+            writer.WriteStringValue(ChannelId);
             writer.WritePropertyName("capacityCostPerJob"u8);
             writer.WriteNumberValue(CapacityCostPerJob);
 

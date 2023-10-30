@@ -115,7 +115,7 @@ namespace Azure.Communication.JobRouter
                 var result = await UpsertClassificationPolicyAsync(
                         classificationPolicyId: options.ClassificationPolicyId,
                         content: request.ToRequestContent(),
-                        requestConditions: options.RequestConditions,
+                        requestConditions: options.RequestConditions ?? new RequestConditions(),
                         context: FromCancellationToken(cancellationToken))
                     .ConfigureAwait(false);
 
@@ -153,7 +153,7 @@ namespace Azure.Communication.JobRouter
                 var result = UpsertClassificationPolicy(
                     classificationPolicyId: options.ClassificationPolicyId,
                     content: request.ToRequestContent(),
-                    requestConditions: options.RequestConditions,
+                    requestConditions: options.RequestConditions ?? new RequestConditions(),
                     context: FromCancellationToken(cancellationToken));
 
                 return Response.FromValue(ClassificationPolicy.FromResponse(result), result);
@@ -181,7 +181,7 @@ namespace Azure.Communication.JobRouter
                 var response = await UpsertClassificationPolicyAsync(
                         classificationPolicyId: classificationPolicy.Id,
                         content: classificationPolicy.ToRequestContent(),
-                        requestConditions: requestConditions,
+                        requestConditions: requestConditions ?? new RequestConditions(),
                         context: FromCancellationToken(cancellationToken))
                     .ConfigureAwait(false);
 
@@ -210,7 +210,7 @@ namespace Azure.Communication.JobRouter
                 var response = UpsertClassificationPolicy(
                     classificationPolicyId: classificationPolicy.Id,
                     content: classificationPolicy.ToRequestContent(),
-                    requestConditions: requestConditions,
+                    requestConditions: requestConditions ?? new RequestConditions(),
                     context: FromCancellationToken(cancellationToken));
 
                 return Response.FromValue(ClassificationPolicy.FromResponse(response), response);
@@ -245,8 +245,8 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNullOrEmpty(classificationPolicyId, nameof(classificationPolicyId));
             Argument.AssertNotNull(content, nameof(content));
 
-            Argument.AssertNull(requestConditions.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
-            Argument.AssertNull(requestConditions.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
 
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateClassificationPolicy)}");
             scope.Start();
@@ -285,8 +285,8 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNullOrEmpty(classificationPolicyId, nameof(classificationPolicyId));
             Argument.AssertNotNull(content, nameof(content));
 
-            Argument.AssertNull(requestConditions.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
-            Argument.AssertNull(requestConditions.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
 
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateClassificationPolicy)}");
             scope.Start();
@@ -326,7 +326,7 @@ namespace Azure.Communication.JobRouter
                 var response = await UpsertDistributionPolicyAsync(
                         distributionPolicyId: options.DistributionPolicyId,
                         content: request.ToRequestContent(),
-                        requestConditions: options.RequestConditions,
+                        requestConditions: options.RequestConditions ?? new RequestConditions(),
                         context: FromCancellationToken(cancellationToken))
                     .ConfigureAwait(false);
 
@@ -359,7 +359,7 @@ namespace Azure.Communication.JobRouter
                 var response = UpsertDistributionPolicy(
                     distributionPolicyId: options.DistributionPolicyId,
                     content: request.ToRequestContent(),
-                    requestConditions: options.RequestConditions,
+                    requestConditions: options.RequestConditions ?? new RequestConditions(),
                     context: FromCancellationToken(cancellationToken));
 
                 return Response.FromValue(DistributionPolicy.FromResponse(response), response);
@@ -387,7 +387,7 @@ namespace Azure.Communication.JobRouter
                 var response = await UpsertDistributionPolicyAsync(
                         distributionPolicyId: distributionPolicy.Id,
                         content: distributionPolicy.ToRequestContent(),
-                        requestConditions: requestConditions,
+                        requestConditions: requestConditions ?? new RequestConditions(),
                         context: FromCancellationToken(cancellationToken))
                     .ConfigureAwait(false);
 
@@ -416,7 +416,7 @@ namespace Azure.Communication.JobRouter
                 var response = UpsertDistributionPolicy(
                     distributionPolicyId: distributionPolicy.Id,
                     content: distributionPolicy.ToRequestContent(),
-                    requestConditions: requestConditions,
+                    requestConditions: requestConditions ?? new RequestConditions(),
                     context: FromCancellationToken(cancellationToken));
 
                 return Response.FromValue(DistributionPolicy.FromResponse(response), response);
@@ -451,8 +451,8 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNullOrEmpty(distributionPolicyId, nameof(distributionPolicyId));
             Argument.AssertNotNull(content, nameof(content));
 
-            Argument.AssertNull(requestConditions.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
-            Argument.AssertNull(requestConditions.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
 
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateDistributionPolicy)}");
             scope.Start();
@@ -491,8 +491,8 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNullOrEmpty(distributionPolicyId, nameof(distributionPolicyId));
             Argument.AssertNotNull(content, nameof(content));
 
-            Argument.AssertNull(requestConditions.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
-            Argument.AssertNull(requestConditions.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
 
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateDistributionPolicy)}");
             scope.Start();
@@ -534,7 +534,7 @@ namespace Azure.Communication.JobRouter
                 var response = await UpsertExceptionPolicyAsync(
                         exceptionPolicyId: options.ExceptionPolicyId,
                         content: request.ToRequestContent(),
-                        requestConditions: options.RequestConditions,
+                        requestConditions: options.RequestConditions ?? new RequestConditions(),
                         context: FromCancellationToken(cancellationToken))
                     .ConfigureAwait(false);
 
@@ -569,7 +569,7 @@ namespace Azure.Communication.JobRouter
                 var response = UpsertExceptionPolicy(
                     exceptionPolicyId: options.ExceptionPolicyId,
                     content: request.ToRequestContent(),
-                    requestConditions: options.RequestConditions,
+                    requestConditions: options.RequestConditions ?? new RequestConditions(),
                     context: FromCancellationToken(cancellationToken));
 
                 return Response.FromValue(ExceptionPolicy.FromResponse(response), response);
@@ -597,7 +597,7 @@ namespace Azure.Communication.JobRouter
                 var response = await UpsertExceptionPolicyAsync(
                         exceptionPolicyId: exceptionPolicy.Id,
                         content: exceptionPolicy.ToRequestContent(),
-                        requestConditions: requestConditions,
+                        requestConditions: requestConditions ?? new RequestConditions(),
                         context: FromCancellationToken(cancellationToken))
                     .ConfigureAwait(false);
 
@@ -626,7 +626,7 @@ namespace Azure.Communication.JobRouter
                 var response = UpsertExceptionPolicy(
                     exceptionPolicyId: exceptionPolicy.Id,
                     content: exceptionPolicy.ToRequestContent(),
-                    requestConditions: requestConditions,
+                    requestConditions: requestConditions ?? new RequestConditions(),
                     context: FromCancellationToken(cancellationToken));
 
                 return Response.FromValue(ExceptionPolicy.FromResponse(response), response);
@@ -661,8 +661,8 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNullOrEmpty(exceptionPolicyId, nameof(exceptionPolicyId));
             Argument.AssertNotNull(content, nameof(content));
 
-            Argument.AssertNull(requestConditions.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
-            Argument.AssertNull(requestConditions.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
 
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateExceptionPolicy)}");
             scope.Start();
@@ -701,8 +701,8 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNullOrEmpty(exceptionPolicyId, nameof(exceptionPolicyId));
             Argument.AssertNotNull(content, nameof(content));
 
-            Argument.AssertNull(requestConditions.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
-            Argument.AssertNull(requestConditions.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
 
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateExceptionPolicy)}");
             scope.Start();
@@ -749,7 +749,7 @@ namespace Azure.Communication.JobRouter
                 var response = await UpsertQueueAsync(
                         queueId: options.QueueId,
                         content: request.ToRequestContent(),
-                        requestConditions: options.RequestConditions,
+                        requestConditions: options.RequestConditions ?? new RequestConditions(),
                         context: FromCancellationToken(cancellationToken))
                     .ConfigureAwait(false);
 
@@ -789,7 +789,7 @@ namespace Azure.Communication.JobRouter
                 var response = UpsertQueue(
                     queueId: options.QueueId,
                     content: request.ToRequestContent(),
-                    requestConditions: options.RequestConditions,
+                    requestConditions: options.RequestConditions ?? new RequestConditions(),
                     context: FromCancellationToken(cancellationToken));
 
                 return Response.FromValue(RouterQueue.FromResponse(response), response);
@@ -818,7 +818,7 @@ namespace Azure.Communication.JobRouter
                 var response = await UpsertQueueAsync(
                         queueId: queue.Id,
                         content: queue.ToRequestContent(),
-                        requestConditions: requestConditions,
+                        requestConditions: requestConditions ?? new RequestConditions(),
                         context: FromCancellationToken(cancellationToken))
                     .ConfigureAwait(false);
 
@@ -847,7 +847,7 @@ namespace Azure.Communication.JobRouter
                 var response = UpsertQueue(
                     queueId: queue.Id,
                     content: queue.ToRequestContent(),
-                    requestConditions: requestConditions,
+                    requestConditions: requestConditions ?? new RequestConditions(),
                     context: FromCancellationToken(cancellationToken));
 
                 return Response.FromValue(RouterQueue.FromResponse(response), response);
@@ -882,8 +882,8 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNullOrEmpty(queueId, nameof(queueId));
             Argument.AssertNotNull(content, nameof(content));
 
-            Argument.AssertNull(requestConditions.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
-            Argument.AssertNull(requestConditions.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
 
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateQueue)}");
             scope.Start();
@@ -922,8 +922,8 @@ namespace Azure.Communication.JobRouter
             Argument.AssertNotNullOrEmpty(queueId, nameof(queueId));
             Argument.AssertNotNull(content, nameof(content));
 
-            Argument.AssertNull(requestConditions.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
-            Argument.AssertNull(requestConditions.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
 
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateQueue)}");
             scope.Start();

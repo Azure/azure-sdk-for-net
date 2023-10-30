@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Communication.JobRouter.Tests.Scenarios
@@ -94,6 +95,14 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             Assert.IsNotNull(finalJobState.Value.Assignments[accept.Value.AssignmentId].ClosedAt);
             Assert.IsNotEmpty(finalJobState.Value.Notes);
             Assert.IsTrue(finalJobState.Value.Notes.Count == 2);
+
+            // in-test cleanup
+            worker.Value.AvailableForOffers = false;
+            await client.UpdateWorkerAsync(worker);
+            if (Mode != RecordedTestMode.Playback)
+            {
+                await Task.Delay(TimeSpan.FromSeconds(5));
+            }
         }
     }
 }

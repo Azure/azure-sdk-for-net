@@ -47,7 +47,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             AddForCleanup(new Task(async () => await client.UpdateWorkerAsync(new RouterWorker(workerId1) { AvailableForOffers = false })));
             AddForCleanup(new Task(async () => await client.DeleteWorkerAsync(workerId1)));
 
-            var jobId = GenerateUniqueId($"JobId-SQ-{ScenarioPrefix}");
+            var jobId = GenerateUniqueId($"{IdPrefix}-JobId-SQ-{ScenarioPrefix}");
             var timeToEnqueueJob = GetOrSetScheduledTimeUtc(DateTimeOffset.UtcNow.AddSeconds(10));
 
             var createJob = await client.CreateJobAsync(

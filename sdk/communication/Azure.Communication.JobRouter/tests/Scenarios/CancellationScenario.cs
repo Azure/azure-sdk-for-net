@@ -46,7 +46,6 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
                 {
                     Priority = 1,
                 });
-            AddForCleanup(new Task(async () => await client.CancelJobAsync(jobId)));
             AddForCleanup(new Task(async () => await client.DeleteJobAsync(jobId)));
 
             var job = await Poll(async () => await client.GetJobAsync(createJob.Value.Id),

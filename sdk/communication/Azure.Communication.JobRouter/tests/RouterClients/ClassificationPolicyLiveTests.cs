@@ -106,17 +106,18 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             Assert.IsTrue(!string.IsNullOrWhiteSpace(createClassificationPolicy.FallbackQueueId) && createClassificationPolicy.FallbackQueueId == createQueueResponse.Value.Id);
             Assert.IsFalse(string.IsNullOrWhiteSpace(createClassificationPolicy.Name));
 
+            updateClassificationPolicyResponse.Value.FallbackQueueId = null;
+            updateClassificationPolicyResponse.Value.PrioritizationRule = null;
+            updateClassificationPolicyResponse.Value.QueueSelectorAttachments.Clear();
+            updateClassificationPolicyResponse.Value.WorkerSelectorAttachments.Clear();
+            updateClassificationPolicyResponse.Value.Name = $"{classificationPolicyName}-updated";
+
             updateClassificationPolicyResponse = await routerClient.UpdateClassificationPolicyAsync(
-                new ClassificationPolicy(classificationPolicyId)
-                {
-                    FallbackQueueId = null,
-                    PrioritizationRule = null,
-                    Name = $"{classificationPolicyName}-updated",
-                });
+                updateClassificationPolicyResponse.Value);
 
             var updateClassificationPolicy = updateClassificationPolicyResponse.Value;
-            Assert.IsTrue(updateClassificationPolicy.QueueSelectorAttachments.Any());
-            Assert.IsTrue(updateClassificationPolicy.WorkerSelectorAttachments.Any());
+            Assert.IsFalse(updateClassificationPolicy.QueueSelectorAttachments.Any());
+            Assert.IsFalse(updateClassificationPolicy.WorkerSelectorAttachments.Any());
             Assert.AreEqual(updateClassificationPolicy.Name, $"{classificationPolicyName}-updated");
         }
 

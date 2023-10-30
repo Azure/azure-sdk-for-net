@@ -20,7 +20,7 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
         private ConcurrentDictionary<string, Stack<Task>> _testCleanupTasks;
         private const string URIDomainRegEx = @"https://([^/?]+)";
 
-        public RouterLiveTestBase(bool isAsync, RecordedTestMode? mode = RecordedTestMode.Playback) : base(isAsync, RecordedTestMode.Record)
+        public RouterLiveTestBase(bool isAsync, RecordedTestMode? mode = RecordedTestMode.Playback) : base(isAsync, mode)
         {
             _testCleanupTasks = new ConcurrentDictionary<string, Stack<Task>>();
             JsonPathSanitizers.Add("$..token");
@@ -43,6 +43,8 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
             var mode = TestEnvironment.Mode ?? Mode;
             if (mode != RecordedTestMode.Playback)
             {
+                await Task.Delay(TimeSpan.FromSeconds(3));
+
                 var testName = TestContext.CurrentContext.Test.FullName;
 
                 var popTestResources = _testCleanupTasks.TryRemove(testName, out var cleanupTasks);
@@ -52,8 +54,19 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
                     {
                         while (cleanupTasks.Count > 0)
                         {
+                            await Task.Delay(TimeSpan.FromSeconds(1));
+
                             var executableTask = cleanupTasks.Pop();
-                            await Task.Run(() => executableTask.Start());
+                            try
+                            {
+                                await Task.Run(() => executableTask.Start());
+                            }
+                            catch (Exception)
+                            {
+                                // Retry after delay
+                                await Task.Delay(TimeSpan.FromSeconds(3));
+                                await Task.Run(() => executableTask.Start());
+                            }
                         }
                     }
                 }

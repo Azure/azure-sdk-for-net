@@ -131,7 +131,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var exceptionPolicy = createExceptionPolicyResponse.Value;
 
             Assert.AreEqual(exceptionPolicyId, exceptionPolicy.Id);
-            Assert.AreEqual(exceptionPolicyId, exceptionPolicy.Id);
             Assert.DoesNotThrow(() =>
             {
                 var exceptionRule = exceptionPolicy.ExceptionRules.First();

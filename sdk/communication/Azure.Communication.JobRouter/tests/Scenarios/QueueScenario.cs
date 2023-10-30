@@ -165,6 +165,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             var job = await Poll(async () => await client.GetJobAsync(createJob.Value.Id),
                 x => x.Value.Status == RouterJobStatus.Queued,
                 TimeSpan.FromSeconds(10));
+
             Assert.AreEqual(RouterJobStatus.Queued, job.Value.Status);
             Assert.AreEqual(job.Value.QueueId, queueResponse.Value.Id);
         }

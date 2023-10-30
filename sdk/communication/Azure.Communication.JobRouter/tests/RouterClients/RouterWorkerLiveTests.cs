@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
+using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Communication.JobRouter.Tests.RouterClients
@@ -57,6 +58,11 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             Assert.NotNull(routerWorkerResponse.Value);
             AssertRegisteredWorkerIsValid(routerWorkerResponse, workerId, queues,
                 capacity, workerLabels, channels);
+
+            routerWorkerResponse.Value.AvailableForOffers = false;
+            routerWorkerResponse.Value.Queues.RemoveAt(0);
+
+            await routerClient.UpdateWorkerAsync(routerWorkerResponse);
         }
 
         [Test]
@@ -72,6 +78,9 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             AddForCleanup(new Task(async () => await routerClient.DeleteWorkerAsync(workerId)));
 
             Assert.NotNull(routerWorkerResponse.Value);
+
+            routerWorkerResponse.Value.AvailableForOffers = false;
+            await routerClient.UpdateWorkerAsync(routerWorkerResponse);
         }
 
         /*[Test]
@@ -288,29 +297,25 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             AssertRegisteredWorkerIsValid(routerWorkerResponse, workerId, queues,
                 capacity, workerLabels, channels, workerTags);
 
-            // Remove queue assignment, channel configuration and label
-            queues.Remove(createQueueResponse.Value.Id);
-            channels.RemoveAt(0);
-            workerLabels[workerLabels.First().Key] = null;
-            workerTags[workerTags.First().Key] = null;
-
-            var updatedWorker = new RouterWorker(workerId)
-            {
-                AvailableForOffers = false
-            };
-            updatedWorker.Labels.Append(workerLabels);
-            updatedWorker.Channels.AddRange(channels);
-            updatedWorker.Queues.AddRange(queues);
-            updatedWorker.Tags.Append(workerTags);
+            var updatedWorker = routerWorkerResponse.Value;
+            updatedWorker.Labels[workerLabels.First().Key] = null;
+            updatedWorker.Tags[workerTags.First().Key] = null;
+            updatedWorker.Queues.Remove(createQueueResponse.Value.Id);
+            updatedWorker.Channels.RemoveAt(0);
 
             var updateWorkerResponse = await routerClient.UpdateWorkerAsync(updatedWorker);
 
-            updatedWorker.Channels.RemoveAt(0);
+            updatedWorker.Labels.Remove("Id");
             updatedWorker.Labels.Remove(workerLabels.First().Key);
             updatedWorker.Tags.Remove(workerTags.First().Key);
 
             AssertRegisteredWorkerIsValid(updateWorkerResponse, workerId, new List<string>(),
                 capacity, updatedWorker.Labels, updatedWorker.Channels, updatedWorker.Tags);
+
+            // in-test cleanup
+            updatedWorker.AvailableForOffers = false;
+
+            await routerClient.UpdateWorkerAsync(updatedWorker);
         }
 
         #endregion Worker Tests
