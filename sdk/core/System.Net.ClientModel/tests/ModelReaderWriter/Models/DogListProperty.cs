@@ -37,13 +37,13 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests.Models
 
         public static explicit operator DogListProperty(Result response)
         {
-            using JsonDocument jsonDocument = JsonDocument.Parse(response.GetRawResponse().Content);
+            using JsonDocument jsonDocument = JsonDocument.Parse(response.GetRawResponse().Body);
             return DeserializeDogListProperty(jsonDocument.RootElement, ModelReaderWriterOptions.DefaultWireOptions);
         }
 
         public static implicit operator MessageBody(DogListProperty dog)
         {
-            return MessageBody.CreateBody(dog, ModelReaderWriterOptions.DefaultWireOptions);
+            return MessageBody.Create(dog, ModelReaderWriterOptions.DefaultWireOptions);
         }
 
         #region Serialization

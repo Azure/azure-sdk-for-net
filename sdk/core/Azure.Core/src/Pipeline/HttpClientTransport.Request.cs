@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Net.ClientModel.Core;
+using System.Net.ClientModel.Internal.Core;
 using System.Net.Http;
 using System.Runtime.InteropServices;
 
@@ -15,7 +16,7 @@ namespace Azure.Core.Pipeline
     /// </summary>
     public partial class HttpClientTransport : HttpPipelineTransport, IDisposable
     {
-        internal static bool TryGetPipelineRequest(Request request, out PipelineRequest? pipelineRequest)
+        internal static bool TryGetPipelineRequest(Request request, out MessageRequest? pipelineRequest)
         {
             if (request is RequestAdapter requestAdapter)
             {
@@ -27,7 +28,7 @@ namespace Azure.Core.Pipeline
             return false;
         }
 
-        private sealed class HttpClientTransportRequest : HttpPipelineRequest
+        private sealed class HttpClientTransportRequest : HttpMessageRequest
         {
             private RequestUriBuilder? _uriBuilder;
 
@@ -102,7 +103,7 @@ namespace Azure.Core.Pipeline
                 _request = request;
             }
 
-            internal PipelineRequest PipelineRequest => _request;
+            internal MessageRequest PipelineRequest => _request;
 
             public override RequestMethod Method
             {
@@ -120,16 +121,16 @@ namespace Azure.Core.Pipeline
             {
                 get
                 {
-                    if (_request.Content is not RequestContent &&
-                        _request.Content is not null)
+                    if (_request.Body is not RequestContent &&
+                        _request.Body is not null)
                     {
-                        throw new NotSupportedException($"Invalid type for request Content: '{_request.Content.GetType()}'.");
+                        throw new NotSupportedException($"Invalid type for request Content: '{_request.Body.GetType()}'.");
                     }
 
-                    return (RequestContent?)_request.Content;
+                    return (RequestContent?)_request.Body;
                 }
 
-                set => _request.Content = value;
+                set => _request.Body = value;
             }
 
             public override void Dispose() => _request.Dispose();

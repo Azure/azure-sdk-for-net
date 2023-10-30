@@ -7,6 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Net.ClientModel.Core;
 using System.Net.ClientModel.Internal;
+using System.Net.ClientModel.Internal.Core;
 using System.Net.Http;
 
 namespace Azure.Core.Pipeline
@@ -16,7 +17,7 @@ namespace Azure.Core.Pipeline
     /// </summary>
     public partial class HttpClientTransport : HttpPipelineTransport
     {
-        internal static bool TryGetPipelineResponse(Response response, out PipelineResponse? pipelineResponse)
+        internal static bool TryGetPipelineResponse(Response response, out MessageResponse? pipelineResponse)
         {
             if (response is ResponseAdapter responseAdapter)
             {
@@ -28,7 +29,7 @@ namespace Azure.Core.Pipeline
             return false;
         }
 
-        private sealed class HttpClientTransportResponse : HttpPipelineResponse
+        private sealed class HttpClientTransportResponse : HttpMessageResponse
         {
             public HttpClientTransportResponse(string requestId, HttpResponseMessage httpResponse)
                 : base(httpResponse)
@@ -42,7 +43,7 @@ namespace Azure.Core.Pipeline
             {
                 ClientUtilities.AssertNotNull(stream, nameof(stream));
 
-                Content = MessageBody.CreateBody(stream);
+                Body = MessageBody.Create(stream);
             }
         }
 
@@ -55,7 +56,7 @@ namespace Azure.Core.Pipeline
                 _pipelineResponse = pipelineResponse;
             }
 
-            internal PipelineResponse PipelineResponse => _pipelineResponse;
+            internal MessageResponse PipelineResponse => _pipelineResponse;
 
             public override int Status => _pipelineResponse.Status;
 
@@ -65,12 +66,12 @@ namespace Azure.Core.Pipeline
             {
                 get
                 {
-                    if (_pipelineResponse.Content is null)
+                    if (_pipelineResponse.Body is null)
                     {
                         return null;
                     }
 
-                    return (Stream)_pipelineResponse.Content;
+                    return (Stream)_pipelineResponse.Body;
                 }
 
                 set

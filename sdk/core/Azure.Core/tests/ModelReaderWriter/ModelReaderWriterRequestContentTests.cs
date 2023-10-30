@@ -26,13 +26,13 @@ namespace Azure.Core.Tests.ModelReaderWriterTests
         {
             //use IModelSerializable
             var content = RequestContent.Create((IModel<ModelX>)_modelX);
-            AssertContentType(content, "ModelWriterContent");
+            AssertContentType(content, "ModelMessageBody");
             content.TryComputeLength(out long lengthNonJson);
             Assert.Greater(lengthNonJson, 0);
 
             //use IModelJsonSerializable
             var jsonContent = RequestContent.Create((IJsonModel<ModelX>)_modelX);
-            AssertContentType(jsonContent, "JsonModelWriterContent");
+            AssertContentType(jsonContent, "JsonModelMessageBody");
             content.TryComputeLength(out long lengthJson);
             Assert.Greater(lengthJson, 0);
 
@@ -40,7 +40,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests
 
             //use default
             jsonContent = RequestContent.Create(_modelX);
-            AssertContentType(jsonContent, "JsonModelWriterContent");
+            AssertContentType(jsonContent, "JsonModelMessageBody");
             content.TryComputeLength(out lengthJson);
             Assert.Greater(lengthJson, 0);
 
@@ -49,7 +49,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests
 
         private static void AssertContentType(RequestContent content, string expectedContent)
         {
-            Assert.AreEqual("PipelineContentContent", content.GetType().Name);
+            Assert.AreEqual("MessageBodyContent", content.GetType().Name);
             var field = content.GetType().GetField("_content", BindingFlags.NonPublic | BindingFlags.Instance);
             Assert.IsNotNull(field);
             Assert.AreEqual(expectedContent, field.GetValue(content).GetType().Name);
@@ -61,7 +61,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests
             IModel<ModelX> modelX = _modelX;
 
             RequestContent content = RequestContent.Create(modelX);
-            AssertContentType(content, "ModelWriterContent");
+            AssertContentType(content, "ModelMessageBody");
         }
     }
 }

@@ -113,6 +113,6 @@ public partial class CompletionsOptions : IUtf8JsonContentWriteable
     {
         using Utf8JsonContentWriter writer = new();
         writer.Write(this);
-        return MessageBody.CreateBody(writer.WrittenContent);
+        return MessageBody.Create(writer.WrittenContent);
     }
 }

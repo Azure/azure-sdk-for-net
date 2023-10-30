@@ -6,20 +6,20 @@ using System.Threading;
 
 namespace System.Net.ClientModel.Core;
 
-public class PipelineMessage : IDisposable
+public class ClientMessage : IDisposable
 {
-    private PipelineResponse? _response;
+    private MessageResponse? _response;
     private bool _disposed;
 
-    protected internal PipelineMessage(PipelineRequest request)
+    protected internal ClientMessage(MessageRequest request)
     {
         Request = request;
         _propertyBag = new ArrayBackedPropertyBag<ulong, object>();
     }
 
-    public virtual PipelineRequest Request { get; }
+    public virtual MessageRequest Request { get; }
 
-    public virtual PipelineResponse Response
+    public virtual MessageResponse Response
     {
         get
         {

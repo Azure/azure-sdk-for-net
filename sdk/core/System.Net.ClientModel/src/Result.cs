@@ -8,12 +8,12 @@ namespace System.Net.ClientModel;
 
 public abstract class Result
 {
-    public abstract PipelineResponse GetRawResponse();
+    public abstract MessageResponse GetRawResponse();
 
-    public static Result FromResponse(PipelineResponse response)
+    public static Result FromResponse(MessageResponse response)
         => new NoModelResult(response);
 
-    public static Result<T> FromValue<T>(T value, PipelineResponse response)
+    public static Result<T> FromValue<T>(T value, MessageResponse response)
     {
         // Null values are required to use NullableResult<T>
         if (value is null)
@@ -26,7 +26,7 @@ public abstract class Result
         return new Result<T>(value, response);
     }
 
-    public static NullableResult<T> FromNullableValue<T>(T? value, PipelineResponse response)
+    public static NullableResult<T> FromNullableValue<T>(T? value, MessageResponse response)
     {
         ClientUtilities.AssertNotNull(response, nameof(response));
 
@@ -35,11 +35,11 @@ public abstract class Result
 
     private class NoModelResult : Result
     {
-        public readonly PipelineResponse _response;
+        public readonly MessageResponse _response;
 
-        public NoModelResult(PipelineResponse response)
+        public NoModelResult(MessageResponse response)
             => _response = response;
 
-        public override PipelineResponse GetRawResponse() => _response;
+        public override MessageResponse GetRawResponse() => _response;
     }
 }

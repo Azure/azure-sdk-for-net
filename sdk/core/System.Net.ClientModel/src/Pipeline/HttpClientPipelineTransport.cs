@@ -2,12 +2,12 @@
 // Licensed under the MIT License.
 
 using System.IO;
+using System.Net.ClientModel.Core;
 using System.Net.Http;
-using System.Net.ClientModel.Internal;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace System.Net.ClientModel.Core;
+namespace System.Net.ClientModel.Internal.Core;
 
 // Introduces the dependency on System.Net.Http;
 
@@ -59,15 +59,15 @@ public class HttpClientPipelineTransport : PipelineTransport, IDisposable
         };
     }
 
-    public override PipelineMessage CreateMessage()
+    public override ClientMessage CreateMessage()
     {
-        PipelineRequest request = new HttpPipelineRequest();
-        PipelineMessage message = new PipelineMessage(request);
+        MessageRequest request = new HttpMessageRequest();
+        ClientMessage message = new ClientMessage(request);
 
         return message;
     }
 
-    public override void Process(PipelineMessage message)
+    public override void Process(ClientMessage message)
     {
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
 
@@ -89,11 +89,11 @@ public class HttpClientPipelineTransport : PipelineTransport, IDisposable
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
     }
 
-    public override async ValueTask ProcessAsync(PipelineMessage message)
+    public override async ValueTask ProcessAsync(ClientMessage message)
         => await ProcessSyncOrAsync(message, async: true).ConfigureAwait(false);
 
 #pragma warning disable CA1801 // async parameter unused on netstandard
-    private async ValueTask ProcessSyncOrAsync(PipelineMessage message, bool async)
+    private async ValueTask ProcessSyncOrAsync(ClientMessage message, bool async)
 #pragma warning restore CA1801
     {
         using HttpRequestMessage httpRequest = BuildRequestMessage(message);
@@ -168,7 +168,7 @@ public class HttpClientPipelineTransport : PipelineTransport, IDisposable
         // Consider which is preferred as part of holistic extensibility-point review.
         if (contentStream is not null)
         {
-            message.Response.Content = MessageBody.CreateBody(contentStream);
+            message.Response.Body = MessageBody.Create(contentStream);
         }
 
         message.Response.IsError = message.MessageClassifier.IsError(message);
@@ -179,19 +179,19 @@ public class HttpClientPipelineTransport : PipelineTransport, IDisposable
     /// </summary>
     /// <param name="message"></param>
     /// <param name="httpRequest"></param>
-    protected virtual void OnSendingRequest(PipelineMessage message, HttpRequestMessage httpRequest) { }
+    protected virtual void OnSendingRequest(ClientMessage message, HttpRequestMessage httpRequest) { }
 
     /// <summary>
     /// TBD.  Needed for inheritdoc.
     /// </summary>
     /// <param name="message"></param>
     /// <param name="httpResponse"></param>
-    protected virtual void OnReceivedResponse(PipelineMessage message, HttpResponseMessage httpResponse)
-        => message.Response = new HttpPipelineResponse(httpResponse);
+    protected virtual void OnReceivedResponse(ClientMessage message, HttpResponseMessage httpResponse)
+        => message.Response = new HttpMessageResponse(httpResponse);
 
-    private static HttpRequestMessage BuildRequestMessage(PipelineMessage message)
+    private static HttpRequestMessage BuildRequestMessage(ClientMessage message)
     {
-        if (message.Request is not HttpPipelineRequest pipelineRequest)
+        if (message.Request is not HttpMessageRequest pipelineRequest)
         {
             throw new InvalidOperationException($"The request type is not compatible with the transport: '{message.Request?.GetType()}'.");
         }

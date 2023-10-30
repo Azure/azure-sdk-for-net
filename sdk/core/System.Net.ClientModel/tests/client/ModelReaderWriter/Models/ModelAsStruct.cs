@@ -65,7 +65,7 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
         public static implicit operator MessageBody(ModelAsStruct model)
         {
-            return MessageBody.CreateBody(model, ModelReaderWriterOptions.DefaultWireOptions);
+            return MessageBody.Create(model, ModelReaderWriterOptions.DefaultWireOptions);
         }
 
         ModelAsStruct IModel<ModelAsStruct>.Read(BinaryData data, ModelReaderWriterOptions options)
@@ -110,7 +110,7 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
         {
             ClientUtilities.AssertNotNull(result, nameof(result));
 
-            using JsonDocument doc = JsonDocument.Parse(result.GetRawResponse().Content);
+            using JsonDocument doc = JsonDocument.Parse(result.GetRawResponse().Body);
             return DeserializeInputAdditionalPropertiesModelStruct(doc.RootElement, ModelReaderWriterOptions.DefaultWireOptions);
         }
 

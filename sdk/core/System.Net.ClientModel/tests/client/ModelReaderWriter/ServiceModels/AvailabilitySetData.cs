@@ -30,14 +30,14 @@ namespace System.Net.ClientModel.Tests.Client.ResourceManager.Compute
                 return null;
             }
 
-            return MessageBody.CreateBody(availabilitySetData, ModelReaderWriterOptions.DefaultWireOptions);
+            return MessageBody.Create(availabilitySetData, ModelReaderWriterOptions.DefaultWireOptions);
         }
 
         public static explicit operator AvailabilitySetData(Result result)
         {
             ClientUtilities.AssertNotNull(result, nameof(result));
 
-            using JsonDocument jsonDocument = JsonDocument.Parse(result.GetRawResponse().Content);
+            using JsonDocument jsonDocument = JsonDocument.Parse(result.GetRawResponse().Body);
             return DeserializeAvailabilitySetData(jsonDocument.RootElement, ModelReaderWriterOptions.DefaultWireOptions);
         }
 

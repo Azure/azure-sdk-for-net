@@ -42,14 +42,14 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
                 return null;
             }
 
-            return MessageBody.CreateBody(modelX, ModelReaderWriterOptions.DefaultWireOptions);
+            return MessageBody.Create(modelX, ModelReaderWriterOptions.DefaultWireOptions);
         }
 
         public static explicit operator ModelX(Result result)
         {
             ClientUtilities.AssertNotNull(result, nameof(result));
 
-            using JsonDocument jsonDocument = JsonDocument.Parse(result.GetRawResponse().Content);
+            using JsonDocument jsonDocument = JsonDocument.Parse(result.GetRawResponse().Body);
             return DeserializeModelX(jsonDocument.RootElement, ModelReaderWriterOptions.DefaultWireOptions);
         }
 

@@ -26,8 +26,21 @@ public class MapsClient
 
         _endpoint = endpoint;
         _credential = credential;
-        _pipeline = MessagePipeline.Create(options, new KeyCredentialAuthenticationPolicy(_credential, "subscription-key"));
         _apiVersion = options.Version;
+
+        if (options.PerCallPolicies is null)
+        {
+            options.PerCallPolicies = new PipelinePolicy[1];
+        }
+        else
+        {
+            var perCallPolicies = new PipelinePolicy[options.PerCallPolicies.Length + 1];
+            options.PerCallPolicies.CopyTo(perCallPolicies.AsSpan());
+        }
+
+        options.PerCallPolicies[options.PerCallPolicies.Length - 1] = new KeyCredentialAuthenticationPolicy(_credential, "subscription-key");
+
+        _pipeline = MessagePipeline.Create(options);
     }
 
     public virtual Result<IPAddressCountryPair> GetCountryCode(IPAddress ipAddress, CancellationToken cancellationToken = default)
@@ -40,7 +53,7 @@ public class MapsClient
 
         Result result = GetCountryCode(ipAddress.ToString(), options);
 
-        PipelineResponse response = result.GetRawResponse();
+        MessageResponse response = result.GetRawResponse();
         IPAddressCountryPair value = IPAddressCountryPair.FromResponse(response);
 
         return Result.FromValue(value, response);
@@ -53,11 +66,11 @@ public class MapsClient
         options ??= new RequestOptions();
         options.MessageClassifier = new ResponseStatusClassifier(stackalloc ushort[] { 200 });
 
-        using PipelineMessage message = CreateGetLocationRequest(ipAddress, options);
+        using ClientMessage message = CreateGetLocationRequest(ipAddress, options);
 
         _pipeline.Send(message);
 
-        PipelineResponse response = message.Response;
+        MessageResponse response = message.Response;
 
         if (response.IsError && options.ErrorBehavior == ErrorBehavior.Default)
         {
@@ -67,12 +80,12 @@ public class MapsClient
         return Result.FromResponse(response);
     }
 
-    private PipelineMessage CreateGetLocationRequest(string ipAddress, RequestOptions options)
+    private ClientMessage CreateGetLocationRequest(string ipAddress, RequestOptions options)
     {
-        PipelineMessage message = _pipeline.CreateMessage();
+        ClientMessage message = _pipeline.CreateMessage();
         options.Apply(message);
 
-        PipelineRequest request = message.Request;
+        MessageRequest request = message.Request;
         request.Method = "GET";
 
         UriBuilder uriBuilder = new(_endpoint.ToString());

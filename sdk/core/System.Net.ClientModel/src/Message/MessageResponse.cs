@@ -3,7 +3,7 @@
 
 namespace System.Net.ClientModel.Core;
 
-public abstract class PipelineResponse : IDisposable
+public abstract class MessageResponse : IDisposable
 {
     public abstract int Status { get; }
 
@@ -11,7 +11,7 @@ public abstract class PipelineResponse : IDisposable
 
     public abstract MessageHeaders Headers { get; }
 
-    public abstract MessageBody? Content { get; protected internal set; }
+    public abstract MessageBody? Body { get; protected internal set; }
 
     #region Meta-data properties set by the pipeline.
 

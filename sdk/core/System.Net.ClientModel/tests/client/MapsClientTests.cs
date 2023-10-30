@@ -3,6 +3,7 @@
 
 using NUnit.Framework;
 using Maps;
+using System.Net.ClientModel.Core;
 
 namespace System.Net.ClientModel.Tests;
 
@@ -21,6 +22,9 @@ public class MapsClientTests
 
         IPAddress ipAddress = IPAddress.Parse("2001:4898:80e8:b::189");
         Result<IPAddressCountryPair> result = client.GetCountryCode(ipAddress);
+
+        //Result result = client.GetCountryCode((MessageBody)ipAddress);
+        //IPAddressCountryPair value = (IPAddressCountryPair)result.Body;
 
         Assert.AreEqual("US", result.Value.CountryRegion.IsoCode);
         Assert.AreEqual(IPAddress.Parse("2001:4898:80e8:b::189"), result.Value.IpAddress);

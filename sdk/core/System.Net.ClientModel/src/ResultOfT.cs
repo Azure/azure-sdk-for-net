@@ -9,7 +9,7 @@ namespace System.Net.ClientModel;
 
 public class Result<T> : NullableResult<T>
 {
-    internal Result(T value, PipelineResponse response) : base(value, response)
+    internal Result(T value, MessageResponse response) : base(value, response)
     {
         Debug.Assert(value != null);
         Debug.Assert(response != null);

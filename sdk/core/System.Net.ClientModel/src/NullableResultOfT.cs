@@ -9,9 +9,9 @@ namespace System.Net.ClientModel;
 public class NullableResult<T> : Result
 {
     private T? _value;
-    private PipelineResponse _response;
+    private MessageResponse _response;
 
-    internal NullableResult(T? value, PipelineResponse response)
+    internal NullableResult(T? value, MessageResponse response)
     {
         Debug.Assert(response != null);
         _response = response!;
@@ -22,5 +22,5 @@ public class NullableResult<T> : Result
 
     public virtual bool HasValue => _value != null;
 
-    public override PipelineResponse GetRawResponse() => _response;
+    public override MessageResponse GetRawResponse() => _response;
 }

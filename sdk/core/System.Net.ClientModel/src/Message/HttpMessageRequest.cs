@@ -4,18 +4,17 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
+using System.Net.ClientModel.Core;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Net.ClientModel.Internal;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace System.Net.ClientModel.Core;
+namespace System.Net.ClientModel.Internal.Core;
 
 // This adds the Http dependency, and some implementation
 
-public class HttpPipelineRequest : PipelineRequest, IDisposable
+public class HttpMessageRequest : MessageRequest, IDisposable
 {
     private const string AuthorizationHeaderName = "Authorization";
 
@@ -24,7 +23,7 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
 
     private readonly MessageRequestHeaders _headers;
 
-    protected internal HttpPipelineRequest()
+    protected internal HttpMessageRequest()
     {
         Method = HttpMethod.Get.Method;
         _headers = new MessageRequestHeaders();
@@ -45,7 +44,7 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
         set => _uri = value;
     }
 
-    public override MessageBody? Content
+    public override MessageBody? Body
     {
         get => _content;
         set => _content = value;

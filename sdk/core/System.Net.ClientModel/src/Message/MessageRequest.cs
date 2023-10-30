@@ -3,13 +3,13 @@
 
 namespace System.Net.ClientModel.Core;
 
-public abstract class PipelineRequest : IDisposable
+public abstract class MessageRequest : IDisposable
 {
     public abstract string Method { get; set; }
 
     public abstract Uri Uri { get; set; }
 
-    public abstract MessageBody? Content { get; set; }
+    public abstract MessageBody? Body { get; set; }
 
     public abstract MessageHeaders Headers { get; }
 

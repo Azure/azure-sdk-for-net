@@ -26,14 +26,14 @@ namespace System.Net.ClientModel.Tests.Client.ResourceManager.Resources
                 return null;
             }
 
-            return MessageBody.CreateBody(resourceProviderData, ModelReaderWriterOptions.DefaultWireOptions);
+            return MessageBody.Create(resourceProviderData, ModelReaderWriterOptions.DefaultWireOptions);
         }
 
         public static explicit operator ResourceProviderData(Result result)
         {
             ClientUtilities.AssertNotNull(result, nameof(result));
 
-            using JsonDocument jsonDocument = JsonDocument.Parse(result.GetRawResponse().Content);
+            using JsonDocument jsonDocument = JsonDocument.Parse(result.GetRawResponse().Body);
             return DeserializeResourceProviderData(jsonDocument.RootElement, ModelReaderWriterOptions.DefaultWireOptions);
         }
 

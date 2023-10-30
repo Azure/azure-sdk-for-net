@@ -97,9 +97,9 @@ public partial class CompletionsLogProbabilityModel
 
     /// <summary> Deserializes the model from a raw response. </summary>
     /// <param name="response"> The response to deserialize the model from. </param>
-    internal static CompletionsLogProbabilityModel FromResponse(PipelineResponse response)
+    internal static CompletionsLogProbabilityModel FromResponse(MessageResponse response)
     {
-        using var document = JsonDocument.Parse(response.Content);
+        using var document = JsonDocument.Parse(response.Body);
         return DeserializeCompletionsLogProbabilityModel(document.RootElement);
     }
 }

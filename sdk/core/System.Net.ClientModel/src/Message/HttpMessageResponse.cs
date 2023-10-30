@@ -1,11 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Net.ClientModel.Core;
 using System.Net.Http;
 
-namespace System.Net.ClientModel.Core;
+namespace System.Net.ClientModel.Internal.Core;
 
-public class HttpPipelineResponse : PipelineResponse, IDisposable
+public class HttpMessageResponse : MessageResponse, IDisposable
 {
     private readonly HttpResponseMessage _httpResponse;
 
@@ -20,7 +21,7 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
 
     private bool _disposed;
 
-    protected internal HttpPipelineResponse(HttpResponseMessage httpResponse)
+    protected internal HttpMessageResponse(HttpResponseMessage httpResponse)
     {
         _httpResponse = httpResponse ?? throw new ArgumentNullException(nameof(httpResponse));
         _httpResponseContent = _httpResponse.Content;
@@ -34,7 +35,7 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
     public override MessageHeaders Headers
         => new MessageResponseHeaders(_httpResponse, _httpResponseContent);
 
-    public override MessageBody? Content
+    public override MessageBody? Body
     {
         get
         {

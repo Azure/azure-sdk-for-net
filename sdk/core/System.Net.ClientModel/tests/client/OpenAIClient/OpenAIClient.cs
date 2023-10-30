@@ -22,9 +22,22 @@ public class OpenAIClient
         ClientUtilities.AssertNotNull(credential, nameof(credential));
         options ??= new OpenAIClientOptions();
 
-        _credential = credential;
-        _pipeline = MessagePipeline.Create(options, new KeyCredentialAuthenticationPolicy(_credential, "Authorization", "Bearer"));
         _endpoint = endpoint;
+        _credential = credential;
+
+        if (options.PerCallPolicies is null)
+        {
+            options.PerCallPolicies = new PipelinePolicy[1];
+        }
+        else
+        {
+            var perCallPolicies = new PipelinePolicy[options.PerCallPolicies.Length + 1];
+            options.PerCallPolicies.CopyTo(perCallPolicies.AsSpan());
+        }
+
+        options.PerCallPolicies[options.PerCallPolicies.Length - 1] = new KeyCredentialAuthenticationPolicy(_credential, "Authorization", "Bearer");
+
+        _pipeline = MessagePipeline.Create(options);
     }
 
     public virtual Result<Completions> GetCompletions(string deploymentId, CompletionsOptions completionsOptions, CancellationToken cancellationToken = default)
@@ -34,7 +47,7 @@ public class OpenAIClient
 
         RequestOptions context = FromCancellationToken(cancellationToken);
         Result result = GetCompletions(deploymentId, completionsOptions.ToRequestContent(), context);
-        PipelineResponse response = result.GetRawResponse();
+        MessageResponse response = result.GetRawResponse();
         Completions completions = Completions.FromResponse(response);
         return Result.FromValue(completions, response);
     }
@@ -44,22 +57,22 @@ public class OpenAIClient
         ClientUtilities.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
         ClientUtilities.AssertNotNull(content, nameof(content));
 
-        using PipelineMessage message = CreateGetCompletionsRequest(deploymentId, content, options);
+        using ClientMessage message = CreateGetCompletionsRequest(deploymentId, content, options);
 
         // TODO: per precedence rules, we should not override a customer-specified message classifier.
         options.MessageClassifier = MessageClassifier200;
 
-        PipelineResponse response = _pipeline.ProcessMessage(message, options);
+        MessageResponse response = _pipeline.ProcessMessage(message, options);
         Result result = Result.FromResponse(response);
         return result;
     }
 
-    internal PipelineMessage CreateGetCompletionsRequest(string deploymentId, MessageBody content, RequestOptions options)
+    internal ClientMessage CreateGetCompletionsRequest(string deploymentId, MessageBody content, RequestOptions options)
     {
-        PipelineMessage message = _pipeline.CreateMessage();
+        ClientMessage message = _pipeline.CreateMessage();
         options.Apply(message);
 
-        PipelineRequest request = message.Request;
+        MessageRequest request = message.Request;
         request.Method = "POST";
 
         UriBuilder uriBuilder = new(_endpoint.ToString());
@@ -72,7 +85,7 @@ public class OpenAIClient
         request.Headers.Set("Accept", "application/json");
         request.Headers.Set("Content-Type", "application/json");
 
-        request.Content = content;
+        request.Body = content;
 
         return message;
     }

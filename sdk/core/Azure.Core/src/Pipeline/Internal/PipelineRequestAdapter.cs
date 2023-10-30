@@ -6,7 +6,7 @@ using System.Net.ClientModel.Core;
 
 namespace Azure.Core
 {
-    internal class PipelineRequestAdapter : PipelineRequest
+    internal class PipelineRequestAdapter : MessageRequest
     {
         private readonly Request _request;
 
@@ -26,7 +26,7 @@ namespace Azure.Core
             set => _request.Uri.Reset(value);
         }
 
-        public override MessageBody? Content
+        public override MessageBody? Body
         {
             get => _request.Content;
             set

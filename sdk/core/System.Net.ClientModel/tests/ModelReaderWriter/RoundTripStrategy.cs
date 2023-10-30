@@ -234,12 +234,12 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
             var result = new MockResult(200, new BinaryData(Encoding.UTF8.GetBytes(payload)));
             return _fromResult(result);
         }
-        private class MockPipelineResponse : PipelineResponse
+        private class MockPipelineResponse : MessageResponse
         {
             public MockPipelineResponse(int status, BinaryData content)
             {
                 Status = status;
-                Content = MessageBody.CreateBody(content);
+                Body = MessageBody.Create(content);
             }
 
             public override int Status { get; }
@@ -248,24 +248,24 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
 
             public override MessageHeaders Headers => throw new NotImplementedException();
 
-            public override MessageBody? Content { get; protected set; }
+            public override MessageBody? Body { get; protected set; }
 
             public override void Dispose()
             {
-                Content?.Dispose();
+                Body?.Dispose();
             }
         }
 
         private class MockResult : Result
         {
-            private PipelineResponse _response;
+            private MessageResponse _response;
 
             public MockResult(int status, BinaryData content)
             {
                 _response = new MockPipelineResponse(status, content);
             }
 
-            public override PipelineResponse GetRawResponse() => _response;
+            public override MessageResponse GetRawResponse() => _response;
         }
     }
 

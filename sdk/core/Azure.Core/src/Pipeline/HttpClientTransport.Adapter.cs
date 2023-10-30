@@ -3,6 +3,7 @@
 
 using System;
 using System.Net.ClientModel.Core;
+using System.Net.ClientModel.Internal.Core;
 using System.Net.Http;
 
 namespace Azure.Core.Pipeline
@@ -16,7 +17,7 @@ namespace Azure.Core.Pipeline
             }
 
             /// <inheritdoc />
-            protected override void OnSendingRequest(PipelineMessage message, HttpRequestMessage httpRequest)
+            protected override void OnSendingRequest(ClientMessage message, HttpRequestMessage httpRequest)
             {
                 if (message is not HttpMessage httpMessage)
                 {
@@ -29,7 +30,7 @@ namespace Azure.Core.Pipeline
             }
 
             /// <inheritdoc />
-            protected override void OnReceivedResponse(PipelineMessage message, HttpResponseMessage httpResponse)
+            protected override void OnReceivedResponse(ClientMessage message, HttpResponseMessage httpResponse)
             {
                 if (message is not HttpMessage httpMessage)
                 {

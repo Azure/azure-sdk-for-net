@@ -8,7 +8,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Core
 {
-    internal class PipelineResponseAdapter : PipelineResponse
+    internal class PipelineResponseAdapter : MessageResponse
     {
         private readonly Response _response;
 
@@ -21,7 +21,7 @@ namespace Azure.Core
 
         public override string ReasonPhrase => _response.ReasonPhrase;
 
-        public override MessageBody? Content
+        public override MessageBody? Body
         {
             get
             {

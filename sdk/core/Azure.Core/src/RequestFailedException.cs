@@ -78,7 +78,7 @@ namespace Azure
             ErrorCode = errorCode;
         }
 
-        private class ErrorPipelineResult : PipelineResponse
+        private class ErrorPipelineResult : MessageResponse
         {
             private readonly int _status;
 
@@ -89,7 +89,7 @@ namespace Azure
 
             public override int Status => _status;
 
-            public override MessageBody? Content
+            public override MessageBody? Body
             {
                 get => throw new NotSupportedException();
                 protected set => throw new NotSupportedException();

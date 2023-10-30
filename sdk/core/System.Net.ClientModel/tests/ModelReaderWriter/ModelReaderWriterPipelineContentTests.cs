@@ -22,22 +22,22 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
         public void CanCalculateLength()
         {
             //use IModelSerializable
-            var content = MessageBody.CreateBody((IModel<ModelX>)_modelX!);
-            AssertContentType(content, "ModelWriterContent");
+            var content = MessageBody.Create((IModel<ModelX>)_modelX!);
+            AssertContentType(content, "ModelMessageBody");
             content.TryComputeLength(out long lengthNonJson);
             Assert.Greater(lengthNonJson, 0);
 
             //use IModelJsonSerializable
-            var jsonContent = MessageBody.CreateBody((IJsonModel<ModelX>)_modelX!);
-            AssertContentType(jsonContent, "JsonModelWriterContent");
+            var jsonContent = MessageBody.Create((IJsonModel<ModelX>)_modelX!);
+            AssertContentType(jsonContent, "JsonModelMessageBody");
             content.TryComputeLength(out long lengthJson);
             Assert.Greater(lengthJson, 0);
 
             Assert.AreEqual(lengthNonJson, lengthJson);
 
             //use default
-            jsonContent = MessageBody.CreateBody(_modelX!);
-            AssertContentType(jsonContent, "JsonModelWriterContent");
+            jsonContent = MessageBody.Create(_modelX!);
+            AssertContentType(jsonContent, "JsonModelMessageBody");
             content.TryComputeLength(out lengthJson);
             Assert.Greater(lengthJson, 0);
 
@@ -54,8 +54,8 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
         {
             IModel<ModelX> modelX = _modelX!;
 
-            MessageBody content = MessageBody.CreateBody(modelX);
-            AssertContentType(content, "ModelWriterContent");
+            MessageBody content = MessageBody.Create(modelX);
+            AssertContentType(content, "ModelMessageBody");
         }
     }
 }
