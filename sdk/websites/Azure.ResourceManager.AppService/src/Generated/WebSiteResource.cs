@@ -4174,13 +4174,22 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <returns> An async collection of <see cref="WebAppNetworkTrace" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WebAppNetworkTrace> GetNetworkTraceOperationAsync(string operationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<object>> GetNetworkTraceOperationAsync(string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteWebAppsRestClient.CreateGetNetworkTraceOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, WebAppNetworkTrace.DeserializeWebAppNetworkTrace, _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteResource.GetNetworkTraceOperation", "", null, cancellationToken);
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.GetNetworkTraceOperation");
+            scope.Start();
+            try
+            {
+                var response = await _webSiteWebAppsRestClient.GetNetworkTraceOperationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -4200,13 +4209,22 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <returns> A collection of <see cref="WebAppNetworkTrace" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WebAppNetworkTrace> GetNetworkTraceOperation(string operationId, CancellationToken cancellationToken = default)
+        public virtual Response<object> GetNetworkTraceOperation(string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteWebAppsRestClient.CreateGetNetworkTraceOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, WebAppNetworkTrace.DeserializeWebAppNetworkTrace, _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteResource.GetNetworkTraceOperation", "", null, cancellationToken);
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.GetNetworkTraceOperation");
+            scope.Start();
+            try
+            {
+                var response = _webSiteWebAppsRestClient.GetNetworkTraceOperation(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -4478,13 +4496,22 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <returns> An async collection of <see cref="WebAppNetworkTrace" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<WebAppNetworkTrace> GetNetworkTraceOperationV2Async(string operationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<object>> GetNetworkTraceOperationV2Async(string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteWebAppsRestClient.CreateGetNetworkTraceOperationV2Request(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, WebAppNetworkTrace.DeserializeWebAppNetworkTrace, _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteResource.GetNetworkTraceOperationV2", "", null, cancellationToken);
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.GetNetworkTraceOperationV2");
+            scope.Start();
+            try
+            {
+                var response = await _webSiteWebAppsRestClient.GetNetworkTraceOperationV2Async(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -4504,13 +4531,22 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        /// <returns> A collection of <see cref="WebAppNetworkTrace" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<WebAppNetworkTrace> GetNetworkTraceOperationV2(string operationId, CancellationToken cancellationToken = default)
+        public virtual Response<object> GetNetworkTraceOperationV2(string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _webSiteWebAppsRestClient.CreateGetNetworkTraceOperationV2Request(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, WebAppNetworkTrace.DeserializeWebAppNetworkTrace, _webSiteWebAppsClientDiagnostics, Pipeline, "WebSiteResource.GetNetworkTraceOperationV2", "", null, cancellationToken);
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.GetNetworkTraceOperationV2");
+            scope.Start();
+            try
+            {
+                var response = _webSiteWebAppsRestClient.GetNetworkTraceOperationV2(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, operationId, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
