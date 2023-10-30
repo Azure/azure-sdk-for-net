@@ -33,7 +33,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
             {
                 Test = string.Empty,
                 Message = "Testing request without payload throws an error",
-                ExceptionMessage = "Invalid Json Payload"
+                ExceptionMessage = "Invalid Json Payload: JSON is null or empty."
             }.ToArray;
             yield return new TestCaseStructure()
             {

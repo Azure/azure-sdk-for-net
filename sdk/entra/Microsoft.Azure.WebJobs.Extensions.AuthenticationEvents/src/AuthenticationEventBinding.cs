@@ -248,10 +248,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         {
             try
             {
-                if (!Helpers.IsJson(body))
-                {
-                    throw new RequestValidationException(AuthenticationEventResource.Ex_Invalid_JsonPayload);
-                }
+                Helpers.ValidateJson(body);
             }
             catch (JsonException ex)
             {

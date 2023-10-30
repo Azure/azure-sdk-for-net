@@ -108,19 +108,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 
         /// <summary>Determines whether the specified input is json.</summary>
         /// <param name="input">The input.</param>
-        /// <returns>
-        ///   <c>true</c> if the specified input is json; otherwise, <c>false</c>.</returns>
-        internal static bool IsJson(string input)
+        internal static void ValidateJson(string input)
         {
             if (string.IsNullOrEmpty(input))
             {
-                return false;
+                throw new JsonException(AuthenticationEventResource.Ex_Empty_Json);
             }
 
-			// try parsing input to json object
-			using var _ = JsonDocument.Parse(input);
-			return true;
-		}
+            // try parsing input to json object
+            using var _ = JsonDocument.Parse(input);
+        }
 
         internal static AuthenticationEventAction GetEventActionForActionType(string actionType)
         {
