@@ -24,9 +24,9 @@ public class MapsClient
 
         options ??= new MapsClientOptions();
 
+        _endpoint = endpoint;
         _credential = credential;
         _pipeline = MessagePipeline.Create(options, new KeyCredentialAuthenticationPolicy(_credential, "subscription-key"));
-        _endpoint = endpoint;
         _apiVersion = options.Version;
     }
 
@@ -65,7 +65,7 @@ public class MapsClient
         return Result.FromResponse(response);
     }
 
-    internal PipelineMessage CreateGetLocationRequest(string ipAddress, RequestOptions options)
+    private PipelineMessage CreateGetLocationRequest(string ipAddress, RequestOptions options)
     {
         PipelineMessage message = _pipeline.CreateMessage();
         options.Apply(message);

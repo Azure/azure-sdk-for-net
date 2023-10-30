@@ -78,11 +78,11 @@ public class IPAddressCountryPair : IJsonModel<IPAddressCountryPair>
 
     public void Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
     {
-        throw new NotImplementedException();
+        throw new NotSupportedException("This model is used for output only");
     }
 
     public BinaryData Write(ModelReaderWriterOptions options)
     {
-        throw new NotImplementedException();
+        throw new NotSupportedException("This model is used for output only");
     }
 }
