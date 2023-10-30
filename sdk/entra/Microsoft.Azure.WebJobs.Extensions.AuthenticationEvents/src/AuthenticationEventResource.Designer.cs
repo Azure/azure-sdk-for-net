@@ -80,7 +80,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Json passed is empty..
+        ///   Looks up a localized string similar to JSON is null or empty..
         /// </summary>
         internal static string Ex_Empty_Json {
             get {
