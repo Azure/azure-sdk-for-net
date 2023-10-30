@@ -18,8 +18,9 @@
     - Correspondingly, `OpenAI.GetChatCompletionsStreaming()` now returns a
       `StreamingResponse<StreamingChatCompletionsUpdate>` that may be enumerated over directly.
       `StreamingChatCompletions`, `StreamingChatChoice`, and related methods are removed.
-    - For more information, please see [the related pull request description]() as well as the updated snippets in the
-      project README.
+    - For more information, please see
+      [the related pull request description](https://github.com/Azure/azure-sdk-for-net/pull/39347) as well as the
+      updated snippets in the project README.
 
 ### Bugs Fixed
 
