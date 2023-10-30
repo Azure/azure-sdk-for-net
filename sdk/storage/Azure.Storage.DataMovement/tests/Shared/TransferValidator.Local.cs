@@ -44,7 +44,7 @@ namespace Azure.Storage.DataMovement.Tests
                     }
                     foreach (string filePath in Directory.GetFiles(workingDir))
                     {
-                        result.Add(new LocalFileResourceEnumerationItem(filePath, filePath.Substring(workingDir.Length)));
+                        result.Add(new LocalFileResourceEnumerationItem(filePath, filePath.Substring(directoryPath.Length)));
                     }
                 }
                 return Task.FromResult(result);

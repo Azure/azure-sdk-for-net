@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Storage.DataMovement.Blobs;
 using Azure.Storage.Files.Shares;
 using Azure.Storage.Files.Shares.Models;
 
@@ -157,12 +158,16 @@ namespace Azure.Storage.DataMovement.Files.Shares
             CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-            await ShareFileClient.UploadRangeFromUriAsync(
-                sourceUri: sourceResource.Uri,
-                range: new HttpRange(0, completeLength),
-                sourceRange: new HttpRange(0, completeLength),
-                options: _options.ToShareFileUploadRangeFromUriOptions(),
-                cancellationToken: cancellationToken).ConfigureAwait(false);
+            await CreateAsync(overwrite, completeLength, cancellationToken).ConfigureAwait(false);
+            if (completeLength > 0)
+            {
+                await ShareFileClient.UploadRangeFromUriAsync(
+                    sourceUri: sourceResource.Uri,
+                    range: new HttpRange(0, completeLength),
+                    sourceRange: new HttpRange(0, completeLength),
+                    options: _options.ToShareFileUploadRangeFromUriOptions(),
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
         }
 
         protected override async Task<bool> DeleteIfExistsAsync(CancellationToken cancellationToken = default)
@@ -171,11 +176,9 @@ namespace Azure.Storage.DataMovement.Files.Shares
             return await ShareFileClient.DeleteIfExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
-        protected override Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(CancellationToken cancellationToken = default)
+        protected override async Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(CancellationToken cancellationToken = default)
         {
-            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-            // TODO: This needs an update to ShareFileClient to allow getting the Copy Authorization Token
-            throw new NotImplementedException();
+            return await ShareFileClientInternals.GetCopyAuthorizationTokenAsync(ShareFileClient, cancellationToken).ConfigureAwait(false);
         }
 
         protected override async Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
@@ -203,12 +206,12 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         protected override StorageResourceCheckpointData GetSourceCheckpointData()
         {
-            throw new NotImplementedException();
+            return new ShareFileSourceCheckpointData();
         }
 
         protected override StorageResourceCheckpointData GetDestinationCheckpointData()
         {
-            throw new NotImplementedException();
+            return new ShareFileDestinationCheckpointData(null, null);
         }
     }
 
