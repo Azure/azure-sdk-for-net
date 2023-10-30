@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(AzureLocation.WestUS2));
             var dataFactoryLro = await CreateDataFactory(rgLro.Value, dataFactoryName);
             _dataFactoryIdentifier = dataFactoryLro.Id;
-            _connectionString = Environment.GetEnvironmentVariable("DATAFACTORY_CONNECTIONSTRING");
-            _accessBlobKey = Environment.GetEnvironmentVariable("DATAFACTORY_BLOBKEY");
-            _accessGen2Key = Environment.GetEnvironmentVariable("DATAFACTORY_Gen2KEY");
+            _connectionString = SessionRecording.GenerateAssetName("DATAFACTORY_CONNECTIONSTRING");
+            _accessBlobKey = SessionRecording.GenerateAssetName("DATAFACTORY_BLOBKEY");
+            _accessGen2Key = SessionRecording.GenerateAssetName("DATAFACTORY_Gen2KEY");
             await StopSessionRecordingAsync();
         }
 
