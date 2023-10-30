@@ -91,7 +91,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             int version = reader.ReadInt32();
             if (version != DataMovementShareConstants.DestinationCheckpointData.SchemaVersion)
             {
-                //throw Errors.UnsupportedJobSchemaVersionHeader(version.ToString());
+                throw Storage.Errors.UnsupportedJobSchemaVersionHeader(version.ToString());
             }
 
             // ContentType offset/length

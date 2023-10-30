@@ -57,7 +57,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             byte[] metadata = Encoding.UTF8.GetBytes(DefaultMetadata.DictionaryToString());
 
             int currentVariableLengthIndex = DataMovementShareConstants.DestinationCheckpointData.VariableLengthStartIndex;
-            writer.Write(DataMovementShareConstants.SourceCheckpointData.SchemaVersion);
+            writer.Write(DataMovementShareConstants.DestinationCheckpointData.SchemaVersion);
             writer.WriteVariableLengthFieldInfo(contentType.Length, ref currentVariableLengthIndex);
             writer.WriteVariableLengthFieldInfo(contentEncoding.Length, ref currentVariableLengthIndex);
             writer.WriteVariableLengthFieldInfo(contentLanguage.Length, ref currentVariableLengthIndex);

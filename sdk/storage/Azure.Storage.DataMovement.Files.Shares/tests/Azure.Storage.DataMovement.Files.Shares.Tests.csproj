@@ -21,6 +21,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureStorageSharedTestSources)\**\*.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedTestSources)\DataProvider.cs" LinkBase="Shared\Storage" />
     <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Files.Shares\tests\DisposingShare.cs" LinkBase="Shared\Storage" />
     <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Files.Shares\tests\ShareClientTestFixtureAttribute.cs" LinkBase="Shared\Storage" />
     <Compile Remove="$(AzureStorageSharedTestSources)\AzuriteFixture.cs" />

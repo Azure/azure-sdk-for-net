@@ -17,10 +17,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         internal class SourceCheckpointData
         {
-            internal const int SchemaVersion = 1;
-
-            internal const int VersionIndex = 0;
-            internal const int DataSize = VersionIndex + OneByte;
+            internal const int DataSize = 0;
         }
 
         internal class DestinationCheckpointData
