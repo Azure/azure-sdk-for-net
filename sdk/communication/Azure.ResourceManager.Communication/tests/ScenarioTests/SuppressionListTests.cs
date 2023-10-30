@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Communication.Tests
         private string _dataLocation;
 
         public SuppressionListTests(bool isAsync)
-            : base(isAsync, Core.TestFramework.RecordedTestMode.Record)
+            : base(isAsync) //, Core.TestFramework.RecordedTestMode.Record)
         {
         }
 
