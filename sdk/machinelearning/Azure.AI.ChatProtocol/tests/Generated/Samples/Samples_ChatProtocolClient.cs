@@ -26,7 +26,7 @@ namespace Azure.AI.ChatProtocol.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ChatProtocolClient client = new ChatProtocolClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 messages = new object[]
             {
@@ -55,7 +55,7 @@ role = "user",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ChatProtocolClient client = new ChatProtocolClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 messages = new object[]
             {
@@ -84,11 +84,11 @@ role = "user",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ChatProtocolClient client = new ChatProtocolClient(endpoint, credential);
 
-            ChatCompletionOptions chatCompletionOptions = new ChatCompletionOptions(new ChatMessage[]
+            ChatCompletionOptions chatCompletionOptionsunknownRecord = new ChatCompletionOptions(new ChatMessage[]
             {
 new ChatMessage("<content>", ChatRole.User)
             });
-            Response<ChatCompletion> response = client.Create(chatCompletionOptions);
+            Response<ChatCompletion> response = client.Create(chatCompletionOptionsunknownRecord);
         }
 
         [Test]
@@ -99,11 +99,11 @@ new ChatMessage("<content>", ChatRole.User)
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ChatProtocolClient client = new ChatProtocolClient(endpoint, credential);
 
-            ChatCompletionOptions chatCompletionOptions = new ChatCompletionOptions(new ChatMessage[]
+            ChatCompletionOptions chatCompletionOptionsunknownRecord = new ChatCompletionOptions(new ChatMessage[]
             {
 new ChatMessage("<content>", ChatRole.User)
             });
-            Response<ChatCompletion> response = await client.CreateAsync(chatCompletionOptions);
+            Response<ChatCompletion> response = await client.CreateAsync(chatCompletionOptionsunknownRecord);
         }
 
         [Test]
@@ -114,7 +114,7 @@ new ChatMessage("<content>", ChatRole.User)
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ChatProtocolClient client = new ChatProtocolClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 messages = new object[]
             {
@@ -152,7 +152,7 @@ session_state = new object(),
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ChatProtocolClient client = new ChatProtocolClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 messages = new object[]
             {
@@ -190,7 +190,7 @@ session_state = new object(),
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ChatProtocolClient client = new ChatProtocolClient(endpoint, credential);
 
-            ChatCompletionOptions chatCompletionOptions = new ChatCompletionOptions(new ChatMessage[]
+            ChatCompletionOptions chatCompletionOptionsunknownRecord = new ChatCompletionOptions(new ChatMessage[]
             {
 new ChatMessage("<content>", ChatRole.User)
 {
@@ -204,7 +204,7 @@ SessionState = BinaryData.FromObjectAsJson(new object()),
 ["key"] = BinaryData.FromObjectAsJson(new object())
 },
             };
-            Response<ChatCompletion> response = client.Create(chatCompletionOptions);
+            Response<ChatCompletion> response = client.Create(chatCompletionOptionsunknownRecord);
         }
 
         [Test]
@@ -215,7 +215,7 @@ SessionState = BinaryData.FromObjectAsJson(new object()),
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ChatProtocolClient client = new ChatProtocolClient(endpoint, credential);
 
-            ChatCompletionOptions chatCompletionOptions = new ChatCompletionOptions(new ChatMessage[]
+            ChatCompletionOptions chatCompletionOptionsunknownRecord = new ChatCompletionOptions(new ChatMessage[]
             {
 new ChatMessage("<content>", ChatRole.User)
 {
@@ -229,7 +229,7 @@ SessionState = BinaryData.FromObjectAsJson(new object()),
 ["key"] = BinaryData.FromObjectAsJson(new object())
 },
             };
-            Response<ChatCompletion> response = await client.CreateAsync(chatCompletionOptions);
+            Response<ChatCompletion> response = await client.CreateAsync(chatCompletionOptionsunknownRecord);
         }
     }
 }

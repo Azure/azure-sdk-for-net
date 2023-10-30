@@ -165,34 +165,6 @@ namespace Azure.AI.ChatProtocol
             }
         }
 
-        /// <summary> Creates a new chat completion. </summary>
-        /// <param name="chatCompletionOptions"> The configuration for a chat completion request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="chatCompletionOptions"/> is null. </exception>
-        /// <include file="Docs/ChatProtocolClient.xml" path="doc/members/member[@name='CreateAsync(ChatCompletionOptions,CancellationToken)']/*" />
-        public virtual async Task<Response<ChatCompletion>> CreateAsync(ChatCompletionOptions chatCompletionOptions, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(chatCompletionOptions, nameof(chatCompletionOptions));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateAsync(chatCompletionOptions.ToRequestContent(), context).ConfigureAwait(false);
-            return Response.FromValue(ChatCompletion.FromResponse(response), response);
-        }
-
-        /// <summary> Creates a new chat completion. </summary>
-        /// <param name="chatCompletionOptions"> The configuration for a chat completion request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="chatCompletionOptions"/> is null. </exception>
-        /// <include file="Docs/ChatProtocolClient.xml" path="doc/members/member[@name='Create(ChatCompletionOptions,CancellationToken)']/*" />
-        public virtual Response<ChatCompletion> Create(ChatCompletionOptions chatCompletionOptions, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(chatCompletionOptions, nameof(chatCompletionOptions));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = Create(chatCompletionOptions.ToRequestContent(), context);
-            return Response.FromValue(ChatCompletion.FromResponse(response), response);
-        }
-
         /// <summary>
         /// [Protocol Method] Creates a new chat completion.
         /// <list type="bullet">

@@ -9,11 +9,11 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ChatProtocolClient client = new ChatProtocolClient(endpoint, credential);
 
-ChatCompletionOptions chatCompletionOptions = new ChatCompletionOptions(new ChatMessage[]
+ChatCompletionOptions chatCompletionOptionsunknownRecord = new ChatCompletionOptions(new ChatMessage[]
 {
     new ChatMessage("<content>", ChatRole.User)
 });
-Response<ChatCompletion> response = await client.CreateAsync(chatCompletionOptions);
+Response<ChatCompletion> response = await client.CreateAsync(chatCompletionOptionsunknownRecord);
 ]]></code>
 This sample shows how to call CreateAsync with all parameters.
 <code><![CDATA[
@@ -21,7 +21,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ChatProtocolClient client = new ChatProtocolClient(endpoint, credential);
 
-ChatCompletionOptions chatCompletionOptions = new ChatCompletionOptions(new ChatMessage[]
+ChatCompletionOptions chatCompletionOptionsunknownRecord = new ChatCompletionOptions(new ChatMessage[]
 {
     new ChatMessage("<content>", ChatRole.User)
     {
@@ -35,7 +35,7 @@ ChatCompletionOptions chatCompletionOptions = new ChatCompletionOptions(new Chat
         ["key"] = BinaryData.FromObjectAsJson(new object())
     },
 };
-Response<ChatCompletion> response = await client.CreateAsync(chatCompletionOptions);
+Response<ChatCompletion> response = await client.CreateAsync(chatCompletionOptionsunknownRecord);
 ]]></code></example>
     </member>
     <member name="Create(ChatCompletionOptions,CancellationToken)">
@@ -46,11 +46,11 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ChatProtocolClient client = new ChatProtocolClient(endpoint, credential);
 
-ChatCompletionOptions chatCompletionOptions = new ChatCompletionOptions(new ChatMessage[]
+ChatCompletionOptions chatCompletionOptionsunknownRecord = new ChatCompletionOptions(new ChatMessage[]
 {
     new ChatMessage("<content>", ChatRole.User)
 });
-Response<ChatCompletion> response = client.Create(chatCompletionOptions);
+Response<ChatCompletion> response = client.Create(chatCompletionOptionsunknownRecord);
 ]]></code>
 This sample shows how to call Create with all parameters.
 <code><![CDATA[
@@ -58,7 +58,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ChatProtocolClient client = new ChatProtocolClient(endpoint, credential);
 
-ChatCompletionOptions chatCompletionOptions = new ChatCompletionOptions(new ChatMessage[]
+ChatCompletionOptions chatCompletionOptionsunknownRecord = new ChatCompletionOptions(new ChatMessage[]
 {
     new ChatMessage("<content>", ChatRole.User)
     {
@@ -72,7 +72,7 @@ ChatCompletionOptions chatCompletionOptions = new ChatCompletionOptions(new Chat
         ["key"] = BinaryData.FromObjectAsJson(new object())
     },
 };
-Response<ChatCompletion> response = client.Create(chatCompletionOptions);
+Response<ChatCompletion> response = client.Create(chatCompletionOptionsunknownRecord);
 ]]></code></example>
     </member>
     <member name="CreateAsync(RequestContent,RequestContext)">
@@ -83,7 +83,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ChatProtocolClient client = new ChatProtocolClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     messages = new object[]
     {
@@ -109,7 +109,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ChatProtocolClient client = new ChatProtocolClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     messages = new object[]
     {
@@ -147,7 +147,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ChatProtocolClient client = new ChatProtocolClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     messages = new object[]
     {
@@ -173,7 +173,7 @@ Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ChatProtocolClient client = new ChatProtocolClient(endpoint, credential);
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     messages = new object[]
     {

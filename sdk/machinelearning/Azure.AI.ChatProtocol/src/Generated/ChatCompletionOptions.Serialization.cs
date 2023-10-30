@@ -30,7 +30,10 @@ namespace Azure.AI.ChatProtocol
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(SessionState);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(SessionState.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(SessionState))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsCollectionDefined(Context))
@@ -48,7 +51,10 @@ namespace Azure.AI.ChatProtocol
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
                 writer.WriteEndObject();

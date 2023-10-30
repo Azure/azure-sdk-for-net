@@ -103,4 +103,34 @@ public partial class ChatProtocolClient
         IEnumerable<ChatCompletionChunk> value = GetStreamingEnumerable(response);
         return Response.FromValue(value, response);
     }
+
+    /// <summary> Creates a new chat completion. </summary>
+    /// <param name="chatCompletionOptions"> The configuration for a chat completion request. </param>
+    /// <param name="cancellationToken"> The cancellation token to use. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="chatCompletionOptions"/> is null. </exception>
+    public virtual async Task<Response<ChatCompletion>> CreateAsync(ChatCompletionOptions chatCompletionOptions, CancellationToken cancellationToken = default)
+    {
+        // https://github.com/Azure/autorest.csharp/issues/3880
+        Argument.AssertNotNull(chatCompletionOptions, nameof(chatCompletionOptions));
+
+        RequestContext context = FromCancellationToken(cancellationToken);
+        using RequestContent content = chatCompletionOptions.ToRequestContent();
+        Response response = await CreateAsync(content, context).ConfigureAwait(false);
+        return Response.FromValue(ChatCompletion.FromResponse(response), response);
+    }
+
+    /// <summary> Creates a new chat completion. </summary>
+    /// <param name="chatCompletionOptions"> The configuration for a chat completion request. </param>
+    /// <param name="cancellationToken"> The cancellation token to use. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="chatCompletionOptions"/> is null. </exception>
+    public virtual Response<ChatCompletion> Create(ChatCompletionOptions chatCompletionOptions, CancellationToken cancellationToken = default)
+    {
+        // https://github.com/Azure/autorest.csharp/issues/3880
+        Argument.AssertNotNull(chatCompletionOptions, nameof(chatCompletionOptions));
+
+        RequestContext context = FromCancellationToken(cancellationToken);
+        using RequestContent content = chatCompletionOptions.ToRequestContent();
+        Response response = Create(content, context);
+        return Response.FromValue(ChatCompletion.FromResponse(response), response);
+    }
 }
