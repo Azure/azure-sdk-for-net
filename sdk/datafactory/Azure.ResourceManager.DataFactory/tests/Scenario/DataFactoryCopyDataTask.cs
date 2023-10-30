@@ -1,10 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -44,7 +40,6 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
             string rgName = SessionRecording.GenerateAssetName("DataFactory-RG-");
             string dataFactoryName = SessionRecording.GenerateAssetName("DataFactory-");
-            string storageAccountName = SessionRecording.GenerateAssetName("datafactory");
             var rgLro = await GlobalClient.GetDefaultSubscriptionAsync().Result.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, new ResourceGroupData(AzureLocation.WestUS2));
             var dataFactoryLro = await CreateDataFactory(rgLro.Value, dataFactoryName);
             _dataFactoryIdentifier = dataFactoryLro.Id;
