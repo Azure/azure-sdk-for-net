@@ -90,7 +90,7 @@ namespace Azure.Core
         /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a a <see cref="IModel{T}"/>.</returns>
         public static new RequestContent Create(IModel<object> model, ModelReaderWriterOptions? options = default)
-            => new PipelineContentContent(Create(model, options ?? ModelReaderWriterOptions.DefaultWireOptions));
+            => new MessageBodyContent(MessageBody.Create(model, options ?? ModelReaderWriterOptions.DefaultWireOptions));
 
         /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps a <see cref="IJsonModel{T}"/>.
@@ -99,7 +99,7 @@ namespace Azure.Core
         /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a <see cref="IJsonModel{T}"/>.</returns>
         public static new RequestContent Create(IJsonModel<object> model, ModelReaderWriterOptions? options = default)
-            => new PipelineContentContent(Create(model, options ?? ModelReaderWriterOptions.DefaultWireOptions));
+            => new MessageBodyContent(MessageBody.Create(model, options ?? ModelReaderWriterOptions.DefaultWireOptions));
 
         /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.
@@ -159,10 +159,10 @@ namespace Azure.Core
         /// <param name="content">The <see cref="DynamicData"/> to use.</param>
         public static implicit operator RequestContent(DynamicData content) => Create(content);
 
-        private sealed class PipelineContentContent : RequestContent
+        private sealed class MessageBodyContent : RequestContent
         {
             private readonly MessageBody _content;
-            public PipelineContentContent(MessageBody content)
+            public MessageBodyContent(MessageBody content)
             {
                 _content = content;
             }
