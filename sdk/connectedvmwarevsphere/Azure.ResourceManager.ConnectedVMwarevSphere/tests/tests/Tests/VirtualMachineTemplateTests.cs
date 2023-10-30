@@ -7,145 +7,199 @@ using NUnit.Framework;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Tests.Helpers;
 using Azure.ResourceManager.Resources.Models;
+using Azure.Core;
+using Azure.Identity;
+using Azure.ResourceManager.Resources;
+using System;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
 {
-    public class VirtualMachineTemplateTests : ConnectedVMwareTestBase
+    public class VirtualMachineTemplateTests
     {
-        public VirtualMachineTemplateTests(bool isAsync) : base(isAsync)
-        {
-        }
-
-        private async Task<VMwareVmTemplateCollection> GetVirtualMachineTemplateCollectionAsync()
-        {
-            var resourceGroup = await CreateResourceGroupAsync();
-            return resourceGroup.GetVMwareVmTemplates();
-        }
-
+        // CreateVirtualMachineTemplate
         [TestCase]
         [RecordedTest]
-        public async Task CreateDelete()
+        public async Task CreateOrUpdate_CreateVirtualMachineTemplate()
         {
-            var vmtemplateName = Recording.GenerateAssetName("testvmtemplate");
-            var _virtualMachineTemplateCollection = await GetVirtualMachineTemplateCollectionAsync();
-            var _extendedLocation = new ExtendedLocation()
-            {
-                Name = CustomLocationId,
-                ExtendedLocationType = EXTENDED_LOCATION_TYPE
-            };
-            var virtualMachineTemplateBody = new VMwareVmTemplateData(DefaultLocation);
-            virtualMachineTemplateBody.MoRefId = "vm-70";
-            virtualMachineTemplateBody.VCenterId = VcenterId;
-            virtualMachineTemplateBody.ExtendedLocation = _extendedLocation;
-            // create virtual machine template
-            VMwareVmTemplateResource vmtemplate1 = (await _virtualMachineTemplateCollection.CreateOrUpdateAsync(WaitUntil.Completed, vmtemplateName, virtualMachineTemplateBody)).Value;
-            Assert.IsNotNull(vmtemplate1);
-            Assert.AreEqual(vmtemplate1.Id.Name, vmtemplateName);
-        }
+            // Generated from example definition: specification/connectedvmware/resource-manager/Microsoft.ConnectedVMwarevSphere/stable/2023-10-01/examples/CreateVirtualMachineTemplate.json
+            // this example is just showing the usage of "VirtualMachineTemplates_Create" operation, for the dependent resources, they will have to be created separately.
 
-        [TestCase]
-        [RecordedTest]
-        public async Task Get()
-        {
-            var vmtemplateName = Recording.GenerateAssetName("testvmtemplate");
-            var _virtualMachineTemplateCollection = await GetVirtualMachineTemplateCollectionAsync();
-            var _extendedLocation = new ExtendedLocation()
-            {
-                Name = CustomLocationId,
-                ExtendedLocationType = EXTENDED_LOCATION_TYPE
-            };
-            var virtualMachineTemplateBody = new VMwareVmTemplateData(DefaultLocation);
-            virtualMachineTemplateBody.MoRefId = "vm-74";
-            virtualMachineTemplateBody.VCenterId = VcenterId;
-            virtualMachineTemplateBody.ExtendedLocation = _extendedLocation;
-            // create virtual machine template
-            VMwareVmTemplateResource vmtemplate1 = (await _virtualMachineTemplateCollection.CreateOrUpdateAsync(WaitUntil.Completed, vmtemplateName, virtualMachineTemplateBody)).Value;
-            Assert.IsNotNull(vmtemplate1);
-            Assert.AreEqual(vmtemplate1.Id.Name, vmtemplateName);
-            // get vm template
-            vmtemplate1 = await _virtualMachineTemplateCollection.GetAsync(vmtemplateName);
-            Assert.AreEqual(vmtemplate1.Id.Name, vmtemplateName);
-        }
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
 
-        [TestCase]
-        [RecordedTest]
-        public async Task Exists()
-        {
-            var vmtemplateName = Recording.GenerateAssetName("testvmtemplate");
-            var _virtualMachineTemplateCollection = await GetVirtualMachineTemplateCollectionAsync();
-            var _extendedLocation = new ExtendedLocation()
-            {
-                Name = CustomLocationId,
-                ExtendedLocationType = EXTENDED_LOCATION_TYPE
-            };
-            var virtualMachineTemplateBody = new VMwareVmTemplateData(DefaultLocation);
-            virtualMachineTemplateBody.MoRefId = "vm-72";
-            virtualMachineTemplateBody.VCenterId = VcenterId;
-            virtualMachineTemplateBody.ExtendedLocation = _extendedLocation;
-            // create virtual machine template
-            VMwareVmTemplateResource vmtemplate1 = (await _virtualMachineTemplateCollection.CreateOrUpdateAsync(WaitUntil.Completed, vmtemplateName, virtualMachineTemplateBody)).Value;
-            Assert.IsNotNull(vmtemplate1);
-            Assert.AreEqual(vmtemplate1.Id.Name, vmtemplateName);
-            // check for exists vm template
-            bool exists = await _virtualMachineTemplateCollection.ExistsAsync(vmtemplateName);
-            Assert.IsTrue(exists);
-        }
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "204898ee-cd13-4332-b9d4-55ca5c25496d";
+            string resourceGroupName = "azcli-test-rg";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-        [TestCase]
-        [RecordedTest]
-        public async Task GetAll()
-        {
-            var vmtemplateName = Recording.GenerateAssetName("testvmtemplate");
-            var _virtualMachineTemplateCollection = await GetVirtualMachineTemplateCollectionAsync();
-            var _extendedLocation = new ExtendedLocation()
-            {
-                Name = CustomLocationId,
-                ExtendedLocationType = EXTENDED_LOCATION_TYPE
-            };
-            var virtualMachineTemplateBody = new VMwareVmTemplateData(DefaultLocation);
-            virtualMachineTemplateBody.MoRefId = "vm-11788";
-            virtualMachineTemplateBody.VCenterId = VcenterId;
-            virtualMachineTemplateBody.ExtendedLocation = _extendedLocation;
-            // create virtual machine template
-            VMwareVmTemplateResource vmtemplate1 = (await _virtualMachineTemplateCollection.CreateOrUpdateAsync(WaitUntil.Completed, vmtemplateName, virtualMachineTemplateBody)).Value;
-            Assert.IsNotNull(vmtemplate1);
-            Assert.AreEqual(vmtemplate1.Id.Name, vmtemplateName);
-            int count = 0;
-            await foreach (var vmtemplate in _virtualMachineTemplateCollection.GetAllAsync())
-            {
-                count++;
-            }
-            Assert.GreaterOrEqual(count, 1);
-        }
+            // get the collection of this VMwareVmTemplateResource
+            VMwareVmTemplateCollection collection = resourceGroupResource.GetVMwareVmTemplates();
 
-        [TestCase]
-        [RecordedTest]
-        public async Task GetAllInSubscription()
-        {
-            var vmtemplateName = Recording.GenerateAssetName("testvmtemplate");
-            var _virtualMachineTemplateCollection = await GetVirtualMachineTemplateCollectionAsync();
-            var _extendedLocation = new ExtendedLocation()
+            // invoke the operation
+            string virtualMachineTemplateName = "azcli-test-linux-tmpl";
+            VMwareVmTemplateData data = new VMwareVmTemplateData(new AzureLocation("East US"))
             {
-                Name = CustomLocationId,
-                ExtendedLocationType = EXTENDED_LOCATION_TYPE
-            };
-            var virtualMachineTemplateBody = new VMwareVmTemplateData(DefaultLocation);
-            virtualMachineTemplateBody.MoRefId = "vm-75";
-            virtualMachineTemplateBody.VCenterId = VcenterId;
-            virtualMachineTemplateBody.ExtendedLocation = _extendedLocation;
-            // create virtual machine template
-            VMwareVmTemplateResource vmtemplate1 = (await _virtualMachineTemplateCollection.CreateOrUpdateAsync(WaitUntil.Completed, vmtemplateName, virtualMachineTemplateBody)).Value;
-            Assert.IsNotNull(vmtemplate1);
-            Assert.AreEqual(vmtemplate1.Id.Name, vmtemplateName);
-            vmtemplate1 = null;
-            await foreach (var vmtemplate in DefaultSubscription.GetVMwareVmTemplatesAsync())
-            {
-                if (vmtemplate.Data.Name == vmtemplateName)
+                ExtendedLocation = new ExtendedLocation()
                 {
-                    vmtemplate1 = vmtemplate;
-                }
+                    ExtendedLocationType = "CustomLocation",
+                    Name = "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourcegroups/azcli-test-rg/providers/microsoft.extendedlocation/customlocations/azcli-test-cl",
+                },
+                InventoryItemId = "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/azcli-test-rg/providers/Microsoft.ConnectedVMwarevSphere/VCenters/azcli-test-vc/InventoryItems/vmtpl-vm-1184288",
+            };
+            ArmOperation<VMwareVmTemplateResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineTemplateName, data);
+            VMwareVmTemplateResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            VMwareVmTemplateData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // GetVirtualMachineTemplate
+        [TestCase]
+        [RecordedTest]
+        public async Task Get_GetVirtualMachineTemplate()
+        {
+            // Generated from example definition: specification/connectedvmware/resource-manager/Microsoft.ConnectedVMwarevSphere/stable/2023-10-01/examples/GetVirtualMachineTemplate.json
+            // this example is just showing the usage of "VirtualMachineTemplates_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "204898ee-cd13-4332-b9d4-55ca5c25496d";
+            string resourceGroupName = "azcli-test-rg";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this VMwareVmTemplateResource
+            VMwareVmTemplateCollection collection = resourceGroupResource.GetVMwareVmTemplates();
+
+            // invoke the operation
+            string virtualMachineTemplateName = "azcli-test-linux-tmpl";
+            VMwareVmTemplateResource result = await collection.GetAsync(virtualMachineTemplateName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            VMwareVmTemplateData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // GetVirtualMachineTemplate
+        [TestCase]
+        [RecordedTest]
+        public async Task Exists_GetVirtualMachineTemplate()
+        {
+            // Generated from example definition: specification/connectedvmware/resource-manager/Microsoft.ConnectedVMwarevSphere/stable/2023-10-01/examples/GetVirtualMachineTemplate.json
+            // this example is just showing the usage of "VirtualMachineTemplates_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "204898ee-cd13-4332-b9d4-55ca5c25496d";
+            string resourceGroupName = "azcli-test-rg";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this VMwareVmTemplateResource
+            VMwareVmTemplateCollection collection = resourceGroupResource.GetVMwareVmTemplates();
+
+            // invoke the operation
+            string virtualMachineTemplateName = "azcli-test-linux-tmpl";
+            bool result = await collection.ExistsAsync(virtualMachineTemplateName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // GetVirtualMachineTemplate
+        [TestCase]
+        [RecordedTest]
+        public async Task GetIfExists_GetVirtualMachineTemplate()
+        {
+            // Generated from example definition: specification/connectedvmware/resource-manager/Microsoft.ConnectedVMwarevSphere/stable/2023-10-01/examples/GetVirtualMachineTemplate.json
+            // this example is just showing the usage of "VirtualMachineTemplates_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "204898ee-cd13-4332-b9d4-55ca5c25496d";
+            string resourceGroupName = "azcli-test-rg";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this VMwareVmTemplateResource
+            VMwareVmTemplateCollection collection = resourceGroupResource.GetVMwareVmTemplates();
+
+            // invoke the operation
+            string virtualMachineTemplateName = "azcli-test-linux-tmpl";
+            NullableResponse<VMwareVmTemplateResource> response = await collection.GetIfExistsAsync(virtualMachineTemplateName);
+            VMwareVmTemplateResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
             }
-            Assert.NotNull(vmtemplate1);
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                VMwareVmTemplateData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        // ListVirtualMachineTemplatesByResourceGroup
+        [TestCase]
+        [RecordedTest]
+        public async Task GetAll_ListVirtualMachineTemplatesByResourceGroup()
+        {
+            // Generated from example definition: specification/connectedvmware/resource-manager/Microsoft.ConnectedVMwarevSphere/stable/2023-10-01/examples/ListVirtualMachineTemplatesByResourceGroup.json
+            // this example is just showing the usage of "VirtualMachineTemplates_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "204898ee-cd13-4332-b9d4-55ca5c25496d";
+            string resourceGroupName = "azcli-test-rg";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this VMwareVmTemplateResource
+            VMwareVmTemplateCollection collection = resourceGroupResource.GetVMwareVmTemplates();
+
+            // invoke the operation and iterate over the result
+            await foreach (VMwareVmTemplateResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                VMwareVmTemplateData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine($"Succeeded");
         }
     }
 }
