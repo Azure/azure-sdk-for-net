@@ -3,8 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text;
-using Azure.Communication.JobRouter.Models;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -73,5 +71,10 @@ namespace Azure.Communication.JobRouter
         /// If provided, will determine how job matching will be carried out. Default mode: QueueAndMatchMode.
         /// </summary>
         public JobMatchingMode MatchingMode { get; set; }
+
+        /// <summary>
+        /// The content to send as the request conditions of the request.
+        /// </summary>
+        public RequestConditions RequestConditions { get; set; } = new();
     }
 }

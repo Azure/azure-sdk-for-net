@@ -52,16 +52,16 @@ namespace Azure.Identity
         internal bool _isChainedCredential;
 
         /// <summary>
-        /// Create an instance of CliCredential class.
+        /// Create an instance of <see cref="AzureCliCredential"/> class.
         /// </summary>
         public AzureCliCredential()
             : this(CredentialPipeline.GetInstance(null), default)
         { }
 
         /// <summary>
-        /// Create an instance of CliCredential class.
+        /// Create an instance of <see cref="AzureCliCredential"/> class.
         /// </summary>
-        /// <param name="options"> The Azure Active Directory tenant (directory) Id of the service principal. </param>
+        /// <param name="options"> The Microsoft Entra tenant (directory) ID of the service principal. </param>
         public AzureCliCredential(AzureCliCredentialOptions options)
             : this(CredentialPipeline.GetInstance(null), default, options)
         { }
@@ -73,7 +73,7 @@ namespace Azure.Identity
             _pipeline = pipeline;
             _path = !string.IsNullOrEmpty(EnvironmentVariables.Path) ? EnvironmentVariables.Path : DefaultPath;
             _processService = processService ?? ProcessService.Default;
-            TenantId = options?.TenantId;
+            TenantId = Validations.ValidateTenantId(options?.TenantId, $"{nameof(options)}.{nameof(options.TenantId)}", true);
             AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
             ProcessTimeout = options?.ProcessTimeout ?? TimeSpan.FromSeconds(13);
             _isChainedCredential = options?.IsChainedCredential ?? false;
@@ -121,6 +121,7 @@ namespace Azure.Identity
             string resource = ScopeUtilities.ScopesToResource(context.Scopes);
             string tenantId = TenantIdResolver.Resolve(TenantId, context, AdditionallyAllowedTenantIds);
 
+            Validations.ValidateTenantId(tenantId, nameof(context.TenantId), true);
             ScopeUtilities.ValidateScope(resource);
 
             GetFileNameAndArguments(resource, tenantId, out string fileName, out string argument);
