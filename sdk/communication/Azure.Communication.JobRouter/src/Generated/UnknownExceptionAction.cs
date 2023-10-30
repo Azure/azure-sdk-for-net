@@ -11,11 +11,6 @@ namespace Azure.Communication.JobRouter
     internal partial class UnknownExceptionAction : ExceptionAction
     {
         /// <summary> Initializes a new instance of UnknownExceptionAction. </summary>
-        internal UnknownExceptionAction()
-        {
-        }
-
-        /// <summary> Initializes a new instance of UnknownExceptionAction. </summary>
         /// <param name="kind"> Discriminator. </param>
         internal UnknownExceptionAction(string kind) : base(kind)
         {
