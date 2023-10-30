@@ -98,7 +98,7 @@ namespace Azure.Core
         /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a <see cref="IJsonModel{T}"/>.</returns>
         public static RequestContent Create(IJsonModel<object> model, ModelReaderWriterOptions? options = default)
-            => new PipelineContentContent(CreateBody((IModel<object>)model, options ?? ModelReaderWriterOptions.DefaultWireOptions));
+            => new PipelineContentContent(CreateBody(model, options ?? ModelReaderWriterOptions.DefaultWireOptions));
 
         /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.
