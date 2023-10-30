@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Net.ClientModel;
 using System.Net.ClientModel.Core;
 using System.Net.ClientModel.Internal;
 using System.Text.Json;

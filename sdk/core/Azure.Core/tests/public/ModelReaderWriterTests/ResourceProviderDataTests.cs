@@ -3,6 +3,7 @@
 
 using System;
 using System.IO;
+using System.Net.ClientModel;
 using System.Net.ClientModel.Core;
 using Azure.Core.Tests.Common;
 using Azure.Core.Tests.ResourceManager.Resources;

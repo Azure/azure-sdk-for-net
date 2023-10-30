@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 
-namespace System.Net.ClientModel.Core
+namespace System.Net.ClientModel
 {
     /// <summary>
     /// Provides the client options for reading and writing models.
