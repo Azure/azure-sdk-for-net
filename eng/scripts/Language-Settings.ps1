@@ -593,37 +593,69 @@ function Update-dotnet-GeneratedSdks([string]$PackageDirectoriesFile) {
 
   $packageDirectories = Get-Content $PackageDirectoriesFile | ConvertFrom-Json
 
-  $directoriesWithErrors = @()
+  Push-Location
+  try {
+    # Initialize npm and npx cache
+    Write-Host "##[group]Initializing npm and npx cache"
 
-  Invoke-LoggedCommand "npm install -g autorest"
+    # Generate code in sdk/template to prime the npx and npm cache
+    Set-Location "$RepoRoot/sdk/template/Azure.Template"
+    Write-Host "Building then resetting sdk/template/Azure.Template"
+    Invoke-LoggedCommand "dotnet build /t:GenerateCode"
+    Invoke-LoggedCommand "git restore ."
+    Invoke-LoggedCommand "git clean . --force"
 
-  foreach ($directory in $packageDirectories) {
-    Push-Location $RepoRoot
+    # Run npm install over emitter-package.json in a temp folder to prime the npm cache
+    $tempFolder = New-TemporaryFile
+    $tempFolder | Remove-Item -Force
+    New-Item $tempFolder -ItemType Directory -Force | Out-Null
+
+    Set-Location $tempFolder
     try {
-      Write-Host "`n`n======================================================================"
-      Write-Host "Generating projects under directory '$directory'" -ForegroundColor Yellow
-      Write-Host "======================================================================`n"
-
-      Invoke-LoggedCommand "dotnet msbuild /restore /t:GenerateCode /p:Scope=`"$directory`" $summaryArgs eng\service.proj" -GroupOutput
-    }
-    catch {
-      Write-Host "##[error]Error generating project under directory $directory"
-      Write-Host $_.Exception.Message
-      $directoriesWithErrors += $directory
+        Copy-Item "$RepoRoot/eng/emitter-package.json" "package.json"
+        if(Test-Path "$RepoRoot/eng/emitter-package-lock.json") {
+            Copy-Item "$RepoRoot/eng/emitter-package-lock.json" "package-lock.json"
+            Invoke-LoggedCommand "npm ci" -ExecutePath $PWD
+        } else {
+          Invoke-LoggedCommand "npm install" -ExecutePath $PWD
+        }
     }
     finally {
-      Pop-Location
-    }
-  }
-
-  if($directoriesWithErrors.Count -gt 0) {
-    Write-Host "##[error]Generation errors found in $($directoriesWithErrors.Count) directories:"
-
-    foreach ($directory in $directoriesWithErrors) {
-      Write-Host "  $directory"
+        Set-Location $RepoRoot
+        $tempFolder | Remove-Item -Force -Recurse -ErrorAction Continue
     }
 
-    exit 1
-  }
+    Write-Host "##[endgroup]"
 
+    # Generate projects
+    $directoriesWithErrors = @()
+
+    foreach ($directory in $packageDirectories) {
+      Set-Location $RepoRoot
+      try {
+        Write-Host "`n`n======================================================================"
+        Write-Host "Generating projects under directory 'sdk/$directory'" -ForegroundColor Yellow
+        Write-Host "======================================================================`n"
+        Invoke-LoggedCommand "dotnet msbuild /restore /t:GenerateCode /p:Scope=`"$directory`" $summaryArgs eng\service.proj" -GroupOutput
+      }
+      catch {
+        Write-Host "##[error]Error generating project under directory $directory"
+        Write-Host $_.Exception.Message
+        $directoriesWithErrors += $directory
+      }
+    }
+
+    if($directoriesWithErrors.Count -gt 0) {
+      Write-Host "##[error]Generation errors found in $($directoriesWithErrors.Count) directories:"
+
+      foreach ($directory in $directoriesWithErrors) {
+        Write-Host "  $directory"
+      }
+
+      exit 1
+    }
+  }
+  finally {
+    Pop-Location
+  }
 }
