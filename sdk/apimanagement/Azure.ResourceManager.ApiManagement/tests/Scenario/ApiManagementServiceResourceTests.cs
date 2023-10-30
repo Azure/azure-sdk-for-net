@@ -306,5 +306,13 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             };
             Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await apiManagementService.UpdateQuotaByPeriodKeyAsync("ba", "0_P3Y6M4DT12H30M5S", updateContent));
         }
+
+        [Test]
+        public async Task GetReportsByRequestTest()
+        {
+            var apiManagementService = await GetApiManagementServiceAsync();
+            var filter = "timestamp ge datetime'2023-10-23T00:00:00.000Z' and timestamp le datetime'2023-10-23T23:59:59.999Z'";
+            Assert.ThrowsAsync<Azure.RequestFailedException>(async () => await apiManagementService.GetReportsByRequestAsync(filter).ToEnumerableAsync());
+        }
     }
 }
