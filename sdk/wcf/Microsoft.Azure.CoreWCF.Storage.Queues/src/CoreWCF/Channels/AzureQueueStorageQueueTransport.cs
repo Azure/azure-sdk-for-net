@@ -27,7 +27,10 @@ namespace Azure.Storage.CoreWCF.Channels
         private Uri _baseAddress;
         private TimeSpan _receiveMessageVisibilityTimeout;
 
-        public AzureQueueStorageQueueTransport(IServiceDispatcher serviceDispatcher, IServiceProvider serviceProvider, AzureQueueStorageTransportBindingElement azureQueueStorageTransportBindingElement)
+        public AzureQueueStorageQueueTransport(
+            IServiceDispatcher serviceDispatcher,
+            IServiceProvider serviceProvider,
+            AzureQueueStorageTransportBindingElement azureQueueStorageTransportBindingElement)
         {
             if (string.IsNullOrEmpty(azureQueueStorageTransportBindingElement.ConnectionString) &&
                     (serviceDispatcher.BaseAddress == null || string.IsNullOrEmpty(serviceDispatcher.BaseAddress.AbsoluteUri)))
@@ -37,13 +40,7 @@ namespace Azure.Storage.CoreWCF.Channels
 
             string extractedQueueName = AzureQueueStorageChannelHelpers.ExtractAndValidateQueueName(
                 serviceDispatcher.BaseAddress,
-                azureQueueStorageTransportBindingElement,
-                azureQueueStorageTransportBindingElement.QueueName);
-
-            if (string.IsNullOrEmpty(azureQueueStorageTransportBindingElement.QueueName))
-            {
-                azureQueueStorageTransportBindingElement.QueueName = extractedQueueName;
-            }
+                azureQueueStorageTransportBindingElement);
 
             QueueClientOptions queueClientOptions = new QueueClientOptions();
             var httpClientFactory = serviceProvider.GetService<IHttpClientFactory>();
@@ -58,7 +55,7 @@ namespace Azure.Storage.CoreWCF.Channels
             {
                 _queueClient = new MessageQueue(
                     azureQueueStorageTransportBindingElement.ConnectionString,
-                    azureQueueStorageTransportBindingElement.QueueName,
+                    extractedQueueName,
                     queueClientOptions);
 
                 _deadLetterQueueClient = new DeadLetterQueue(
@@ -74,6 +71,8 @@ namespace Azure.Storage.CoreWCF.Channels
                         azureQueueStorageTransportBindingElement.DeadLetterQueueName));
             }
 
+            _queueClient.CreateIfNotExistsAsync();
+            _deadLetterQueueClient.CreateIfNotExistsAsync();
             _logger = serviceProvider.GetRequiredService<ILogger<AzureQueueStorageQueueTransport>>();
             _baseAddress = serviceDispatcher.BaseAddress;
             _receiveMessageVisibilityTimeout = azureQueueStorageTransportBindingElement.MaxReceivedTimeout;

@@ -3,6 +3,8 @@
 
 using Azure.Storage.Queues;
 using System;
+using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.Storage.CoreWCF.Channels
@@ -11,7 +13,7 @@ namespace Azure.Storage.CoreWCF.Channels
     {
         public QueueClient queueClient { get; set; }
 
-        //Task Send(PipeReader message, Uri endpoint);
+        public Task<Azure.Response> CreateIfNotExistsAsync(IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default);
 
         public Task<Azure.Response<Azure.Storage.Queues.Models.QueueMessage>> ReceiveMessageAsync(TimeSpan? visibilityTimeout = default, System.Threading.CancellationToken cancellationToken = default);
 

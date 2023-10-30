@@ -47,7 +47,6 @@ namespace Azure.Storage.CoreWCF
         private void ConfigureAuthentication(AzureQueueStorageTransportBindingElement aqsBindingElement)
         {
             aqsBindingElement.ConnectionString = _connectionString;
-            aqsBindingElement.QueueName = _queueName;
         }
     }
 }

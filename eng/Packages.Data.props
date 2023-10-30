@@ -301,7 +301,7 @@
 
   <!-- Packages for WCF Client library -->
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.WCF'))">
-    <PackageReference Update="System.ServiceModel.Primitives" Version="4.10.3" />
+    <PackageReference Update="System.ServiceModel.Primitives" Version="6.0.0" />
   </ItemGroup>
   
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">

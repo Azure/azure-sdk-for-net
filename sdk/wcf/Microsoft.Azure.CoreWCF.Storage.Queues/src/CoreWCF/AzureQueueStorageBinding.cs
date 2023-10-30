@@ -17,16 +17,14 @@ namespace Azure.Storage.CoreWCF
         private BinaryMessageEncodingBindingElement _binaryMessageEncodingBindingElement;
         private bool _isInitialized;
         private string _connectionString;
-        private string _queueName;
         private string _deadLetterQueueName;
 
         /// <summary>
         /// Initializes a new instance of the AzureQueueStorageBinding class with the specified parameters.
         /// </summary>
-        public AzureQueueStorageBinding(string connectionString, string queueName = "", string deadLetterQueueName = "DefaultDeadLetterQueue")
+        public AzureQueueStorageBinding(string connectionString, string deadLetterQueueName = "DefaultDeadLetterQueue")
         {
             _connectionString = connectionString;
-            _queueName = queueName;
             _deadLetterQueueName = deadLetterQueueName;
             Initialize();
         }
@@ -38,7 +36,6 @@ namespace Azure.Storage.CoreWCF
         {
             _transport.MaxReceivedMessageSize = TransportDefaults.DefaultMaxMessageSize;
             _transport.ConnectionString = _connectionString;
-            _transport.QueueName = _queueName;
             _transport.DeadLetterQueueName = _deadLetterQueueName;
 
             BindingElementCollection elements = new BindingElementCollection();

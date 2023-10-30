@@ -88,8 +88,7 @@ namespace Azure.Storage.CoreWCF.Channels
 
         internal static string ExtractAndValidateQueueName(
             Uri endpointUri,
-            AzureQueueStorageTransportBindingElement azureQueueStorageTransportBindingElement,
-            string queueName)
+            AzureQueueStorageTransportBindingElement azureQueueStorageTransportBindingElement)
         {
             string queueNameConnectionString = "";
 
@@ -100,29 +99,26 @@ namespace Azure.Storage.CoreWCF.Channels
 
             string queueNameUri = ExtractQueueNameFromUri(endpointUri);
 
-            ValidateQueueNames(queueName, queueNameConnectionString, queueNameUri);
+            ValidateQueueNames(queueNameConnectionString, queueNameUri);
 
             return queueNameConnectionString ?? queueNameUri;
         }
 
-        internal static void ValidateQueueNames(string queueName, string queueNameConnectionString, string queueNameUri)
+        internal static void ValidateQueueNames(
+            string queueNameConnectionString,
+            string queueNameUri)
         {
-            if (string.IsNullOrEmpty(queueName) && string.IsNullOrEmpty(queueNameConnectionString) && string.IsNullOrEmpty(queueNameUri))
+            if (string.IsNullOrEmpty(queueNameConnectionString) && string.IsNullOrEmpty(queueNameUri))
             {
                 throw new ArgumentException("Queue name could not be found.");
             }
 
-            if (!string.IsNullOrEmpty(queueName) && !string.IsNullOrEmpty(queueNameConnectionString) && !queueName.Equals(queueNameConnectionString))
+            if (string.IsNullOrEmpty(queueNameConnectionString) || string.IsNullOrEmpty(queueNameUri))
             {
-                throw new ArgumentException("Queue Name passed in as parameter and queuename on connection string do not match.");
+                return;
             }
 
-            if (!string.IsNullOrEmpty(queueName) && !string.IsNullOrEmpty(queueNameUri) && !queueName.Equals(queueNameUri))
-            {
-                throw new ArgumentException("Queue Name passed in as parameter and queuename on End point Uri do not match.");
-            }
-
-            if (!string.IsNullOrEmpty(queueNameConnectionString) && !string.IsNullOrEmpty(queueNameUri) && !queueName.Equals(queueNameUri))
+            if (queueNameConnectionString != queueNameUri)
             {
                 throw new ArgumentException("Queue Name passed in as queuename on connection string and End point Uri do not match.");
             }
@@ -139,6 +135,20 @@ namespace Azure.Storage.CoreWCF.Channels
 
             segments[4] = queueName;
             return new Uri(string.Join("/", segments));
+        }
+
+        internal static Uri CreateEndpointUriFromConnectionString(string connectionString)
+        {
+            string[] segments = connectionString.Split(new char[] { ';' });
+
+            foreach (string segment in segments)
+            {
+                if (segment.Contains("QueueEndpoint="))
+                {
+                    return new UriBuilder(segment.Replace("QueueEndpoint=", "")).Uri;
+                }
+            }
+            return null;
         }
     }
 }

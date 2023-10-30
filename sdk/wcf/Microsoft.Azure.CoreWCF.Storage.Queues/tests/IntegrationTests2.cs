@@ -32,7 +32,7 @@ namespace CoreWCF.AzureQueueStorage.Tests
         {
             host = ServiceHelper.CreateWebHostBuilder<Startup2_ConflictingQueueName>().Build();
             System.ArgumentException exception = Assert.Throws<System.ArgumentException>(() => host.Start());
-            Assert.That(exception.Message, Is.EqualTo("Queue Name passed in as parameter and queuename on End point Uri do not match."));
+            Assert.That(exception.Message, Is.EqualTo("Queue Name passed in as queuename on connection string and End point Uri do not match."));
         }
 
         [Test]

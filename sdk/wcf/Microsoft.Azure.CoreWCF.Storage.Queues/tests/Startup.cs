@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Storage.CoreWCF;
 using Azure.Storage.CoreWCF.Channels;
 using Azure.Storage.Queues;
 using Contracts;
@@ -39,7 +40,7 @@ namespace CoreWCF.AzureQueueStorage.Tests
             var azuriteFixture = AzuriteNUnitFixture.Instance;
             var transport = azuriteFixture.GetTransport();
             connectionString = azuriteFixture.GetAzureAccount().ConnectionString;
-            var endpointUriBuilder = new UriBuilder(azuriteFixture.GetAzureAccount().QueueEndpoint + "/" + queueName);
+            var endpointUriBuilder = new UriBuilder(azuriteFixture.GetAzureAccount().QueueEndpoint + "/" + "test" /*queueName*/);
             endpointUriBuilder.Scheme = "net.aqs";
             endpointUrlString = endpointUriBuilder.Uri.AbsoluteUri;
             var queueClient = new QueueClient(connectionString, queueName, new QueueClientOptions { Transport = transport });
@@ -54,7 +55,7 @@ namespace CoreWCF.AzureQueueStorage.Tests
             app.UseServiceModel(services =>
             {
                 services.AddService<TestService>();
-                services.AddServiceEndpoint<TestService, ITestContract>(new AzureQueueStorageBinding(connectionString, queueName, deadLetterQueueName),
+                services.AddServiceEndpoint<TestService, ITestContract>(new AzureQueueStorageBinding(connectionString, deadLetterQueueName),
                 endpointUrlString);
             });
         }

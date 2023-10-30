@@ -65,6 +65,7 @@ namespace Azure.Storage.CoreWCF.Channels
         private IQueueTransport CreateMyQueueTransport(BindingContext context)
         {
             var serviceDispatcher = context.BindingParameters.Find<IServiceDispatcher>();
+            // serviceDispatcher.BaseAddress = AzureQueueStorageChannelHelpers.CreateEndpointUriFromConnectionString(ConnectionString);
             var serviceProvider = context.BindingParameters.Find<IServiceProvider>();
             return new AzureQueueStorageQueueTransport(serviceDispatcher, serviceProvider, this);
         }
@@ -106,11 +107,6 @@ namespace Azure.Storage.CoreWCF.Channels
         /// Gets or sets the connection string of Azure queue Storage.
         /// </summary>
         public string ConnectionString { get; set; }
-
-        /// <summary>
-        /// Gets or sets name of Azure queue Storage.
-        /// </summary>
-        public string QueueName { get; set; }
 
         /// <summary>
         /// Gets or sets uri of Azure queue Storage.

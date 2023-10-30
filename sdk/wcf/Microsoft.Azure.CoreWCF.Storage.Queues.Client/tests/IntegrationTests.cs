@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 using System.ServiceModel;
 using System.Threading;
 using Azure.Storage.WCF;
+using System.IdentityModel.Selectors;
+using System.ServiceModel.Security;
+using NuGet.Frameworks;
 
 namespace WCF.AzureQueueStorage.Tests
 {
@@ -27,11 +30,19 @@ namespace WCF.AzureQueueStorage.Tests
             var queueClient = new QueueClient(connectionString, queueName, new QueueClientOptions { Transport = transport });
             queueClient.CreateIfNotExists();
 
-            AzureQueueStorageBinding azureQueueStorageBinding = new AzureQueueStorageBinding(AzureQueueStorageMessageEncoding.Text);
+            queueClient.SendMessageAsync("test").Wait();
+            var m = queueClient.ReceiveMessageAsync().Result;
+            Assert.AreEqual(m.Value.MessageText, "test");
+
+            AzureQueueStorageBinding azureQueueStorageBinding = new AzureQueueStorageBinding(connectionString, AzureQueueStorageMessageEncoding.Text);
             var channelFactory = new ChannelFactory<ITestContract>(azureQueueStorageBinding, new EndpointAddress(endpointUrlString));
+
+            channelFactory.Credentials.ServiceCertificate.SslCertificateAuthentication = new X509ServiceCertificateAuthentication();
+            channelFactory.Credentials.ServiceCertificate.SslCertificateAuthentication.CertificateValidationMode = X509CertificateValidationMode.None;
+
             var channel = channelFactory.CreateChannel();
             ((System.ServiceModel.Channels.IChannel)channel).Open();
-            channel.Create("test");
+            channel.Create("TestService");
 
             string inputMessage = "<s:Envelope xmlns:s=\"http://www.w3.org/2003/05/soap-envelope\" xmlns:a=\"http://www.w3.org/2005/08/addressing\"><s:Header><a:Action s:mustUnderstand=\"1\">http://tempuri.org/ITestContract/Create</a:Action></s:Header><s:Body><Create xmlns=\"http://tempuri.org/\"><name>test</name></Create></s:Body></s:Envelope>";
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();

@@ -85,5 +85,10 @@ namespace Azure.Storage.WCF.Channels
         /// Gets the QueueMessageEncoding for the transport.
         /// </summary>
         public Azure.Storage.Queues.QueueMessageEncoding QueueMessageEncoding { get; set; }
+
+        /// <summary>
+        /// Gets or sets the connection string of Azure queue Storage.
+        /// </summary>
+        public string ConnectionString { get; set; }
     }
 }

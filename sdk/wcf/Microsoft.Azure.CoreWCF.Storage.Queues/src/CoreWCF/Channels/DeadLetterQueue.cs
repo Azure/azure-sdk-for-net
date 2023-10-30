@@ -4,6 +4,7 @@
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -51,6 +52,11 @@ namespace Azure.Storage.CoreWCF.Channels
             {
                 cts.Dispose();
             }
+        }
+
+        public Task<Response> CreateIfNotExistsAsync(IDictionary<string, string> metadata = default, CancellationToken cancellationToken = default)
+        {
+            return _client.CreateIfNotExistsAsync(metadata, cancellationToken);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Storage.CoreWCF;
 using Azure.Storage.CoreWCF.Channels;
 using Azure.Storage.Queues;
 using Contracts;
@@ -54,7 +55,7 @@ namespace CoreWCF.AzureQueueStorage.Tests
             app.UseServiceModel(services =>
             {
                 services.AddService<TestService>();
-                services.AddServiceEndpoint<TestService, ITestContract>(new AzureQueueStorageBinding(connectionString, "", deadLetterQueueName),
+                services.AddServiceEndpoint<TestService, ITestContract>(new AzureQueueStorageBinding(connectionString, deadLetterQueueName),
                 endpointUrlString);
             });
         }
