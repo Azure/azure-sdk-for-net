@@ -1,5 +1,15 @@
 # Release History
 
+## 1.11.3 (Unreleased)
+### Features Added
+* Added `RetryOptions` to `SignalROptions` to configure retry policy for SignalR Service REST API calls.
+
+### Bugs Fixed
+* Fixed the issue when using customized server endpoint with Azure AD credential.
+
+### Other Changes
+* Upgraded  `Microsoft.Azure.SignalR`, `Microsoft.Azure.SignalR.Management`, `Microsoft.Azure.SignalR.Protocols` from 1.21.6 to 1.22.0
+
 ## 1.11.2 (2023-09-12)
 
 ### Bugs Fixed

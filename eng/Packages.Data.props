@@ -143,9 +143,9 @@
     <PackageReference Update="Grpc.Tools" Version="2.51.0" PrivateAssets="all" />
     <PackageReference Update="MessagePack" Version="1.9.11" />
     <PackageReference Update="Microsoft.AspNetCore.SignalR.Protocols.MessagePack" Version="1.1.5" />
-    <PackageReference Update="Microsoft.Azure.SignalR" Version="1.21.6" />
-    <PackageReference Update="Microsoft.Azure.SignalR.Management" Version="1.21.6" />
-    <PackageReference Update="Microsoft.Azure.SignalR.Protocols" Version="1.21.6" />
+    <PackageReference Update="Microsoft.Azure.SignalR" Version="1.22.0" />
+    <PackageReference Update="Microsoft.Azure.SignalR.Management" Version="1.22.0" />
+    <PackageReference Update="Microsoft.Azure.SignalR.Protocols" Version="1.22.0" />
     <PackageReference Update="Microsoft.Azure.SignalR.Serverless.Protocols" Version="1.9.0" />
     <PackageReference Update="Microsoft.Azure.WebJobs" Version="3.0.37" />
     <PackageReference Update="Microsoft.Azure.WebJobs.Sources" Version="3.0.37" PrivateAssets="All"/>

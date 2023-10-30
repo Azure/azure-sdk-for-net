@@ -29,6 +29,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                 options.ServiceEndpoints = optionsFromCode.ServiceEndpoints?.ToArray();
                 options.ServiceTransportType = optionsFromCode.ServiceTransportType;
                 options.UseJsonObjectSerializer(optionsFromCode.JsonObjectSerializer);
+                options.RetryOptions = optionsFromCode.RetryOptions;
 
                 // Apply options from configuration
                 if (_configuration.TryGetJsonObjectSerializer(out var serializer))
@@ -61,6 +62,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                 }
                 //make connection more stable
                 options.ConnectionCount = 3;
+
+                var retryOptions = _configuration.GetSection(Constants.AzureSignalRRetry).Get<ServiceManagerRetryOptions>();
+                if (retryOptions != null)
+                {
+                    options.RetryOptions = retryOptions;
+                }
             };
         }
 

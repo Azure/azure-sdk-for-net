@@ -86,5 +86,46 @@ namespace SignalRServiceExtension.Tests.Config
             var serializer = typeof(ServiceManagerOptions).GetProperty("ObjectSerializer", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(options);
             Assert.Equal(objectSerializerType, serializer?.GetType());
         }
+
+        [Fact]
+        public void TestNullRetryOptions()
+        {
+            var configuration = new ConfigurationBuilder().AddInMemoryCollection().Build();
+            var options = new ServiceManagerOptions();
+            var setup = new OptionsSetup(configuration, SingletonAzureComponentFactory.Instance, "key", new());
+            setup.Configure(options);
+            Assert.Null(options.RetryOptions);
+        }
+
+        [Fact]
+        public void TestDefaultRetryOptions()
+        {
+            var configuration = new ConfigurationBuilder().AddInMemoryCollection().Build();
+            configuration[Constants.AzureSignalRRetry + ":Default"] = "";
+            var options = new ServiceManagerOptions();
+            var setup = new OptionsSetup(configuration, SingletonAzureComponentFactory.Instance, "key", new());
+            setup.Configure(options);
+            Assert.Equal(3, options.RetryOptions.MaxRetries);
+            Assert.Equal(TimeSpan.FromSeconds(0.8), options.RetryOptions.Delay);
+            Assert.Equal(TimeSpan.FromMinutes(1), options.RetryOptions.MaxDelay);
+            Assert.Equal(ServiceManagerRetryMode.Fixed, options.RetryOptions.Mode);
+        }
+
+        [Fact]
+        public void TestCustomizedRetryOptions()
+        {
+            var configuration = new ConfigurationBuilder().AddInMemoryCollection().Build();
+            configuration[Constants.AzureSignalRRetry + ":MaxRetries"] = "4";
+            configuration[Constants.AzureSignalRRetry + ":Delay"] = "00:00:1";
+            configuration[Constants.AzureSignalRRetry + ":MaxDelay"] = "00:02:00";
+            configuration[Constants.AzureSignalRRetry + ":Mode"] = "Exponential";
+            var options = new ServiceManagerOptions();
+            var setup = new OptionsSetup(configuration, SingletonAzureComponentFactory.Instance, "key", new());
+            setup.Configure(options);
+            Assert.Equal(4, options.RetryOptions.MaxRetries);
+            Assert.Equal(TimeSpan.FromSeconds(1), options.RetryOptions.Delay);
+            Assert.Equal(TimeSpan.FromMinutes(2), options.RetryOptions.MaxDelay);
+            Assert.Equal(ServiceManagerRetryMode.Exponential, options.RetryOptions.Mode);
+        }
     }
 }
