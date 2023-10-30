@@ -4,9 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Azure.Communication.JobRouter.Models;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -35,7 +33,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             // Create job queue
             string jobQueueId = "job-queue-id-2";
-            Response<Models.RouterQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
+            Response<RouterQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
                 queueId: jobQueueId,
                 distributionPolicyId: distributionPolicyId));
 
@@ -116,7 +114,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             // Create job queue
             string queueId = "job-queue-id-1";
-            Response<Models.RouterQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
+            Response<RouterQueue> jobQueue = await routerAdministrationClient.CreateQueueAsync(new CreateQueueOptions(
                 queueId: queueId,
                 distributionPolicyId: distributionPolicyId));
 

@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return apiVersion;
         }
 
-        /// <summary> Gets an object representing a VirtualMachineInstanceResource along with the instance operations that can be performed on it in the ArmResource. </summary>
-        /// <returns> Returns a <see cref="VirtualMachineInstanceResource" /> object. </returns>
-        public virtual VirtualMachineInstanceResource GetVirtualMachineInstance()
+        /// <summary> Gets an object representing a VMwareVmInstanceResource along with the instance operations that can be performed on it in the ArmResource. </summary>
+        /// <returns> Returns a <see cref="VMwareVmInstanceResource" /> object. </returns>
+        public virtual VMwareVmInstanceResource GetVMwareVmInstance()
         {
-            return new VirtualMachineInstanceResource(Client, Id.AppendProviderResource("Microsoft.ConnectedVMwarevSphere", "virtualMachineInstances", "default"));
+            return new VMwareVmInstanceResource(Client, Id.AppendProviderResource("Microsoft.ConnectedVMwarevSphere", "virtualMachineInstances", "default"));
         }
     }
 }

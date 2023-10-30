@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Samples
             VMwareDatastoreResource vMwareDatastore = client.GetVMwareDatastoreResource(vMwareDatastoreResourceId);
 
             // invoke the operation
-            ResourcePatch patch = new ResourcePatch()
+            VMwareResourcePatchContent content = new VMwareResourcePatchContent()
             {
                 Tags =
 {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Samples
 ["tag2"] = "value2",
 },
             };
-            VMwareDatastoreResource result = await vMwareDatastore.UpdateAsync(patch);
+            VMwareDatastoreResource result = await vMwareDatastore.UpdateAsync(content);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

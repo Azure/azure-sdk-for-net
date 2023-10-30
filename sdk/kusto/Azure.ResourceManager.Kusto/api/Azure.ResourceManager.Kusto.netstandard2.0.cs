@@ -158,6 +158,8 @@ namespace Azure.ResourceManager.Kusto
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Kusto.Models.KustoNameAvailabilityResult>> CheckKustoDatabaseNameAvailabilityAsync(Azure.ResourceManager.Kusto.Models.KustoDatabaseNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Kusto.Models.KustoNameAvailabilityResult> CheckKustoManagedPrivateEndpointNameAvailability(Azure.ResourceManager.Kusto.Models.KustoManagedPrivateEndpointNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Kusto.Models.KustoNameAvailabilityResult>> CheckKustoManagedPrivateEndpointNameAvailabilityAsync(Azure.ResourceManager.Kusto.Models.KustoManagedPrivateEndpointNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Kusto.Models.KustoNameAvailabilityResult> CheckNameAvailabilitySandboxCustomImage(Azure.ResourceManager.Kusto.Models.SandboxCustomImagesCheckNameContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Kusto.Models.KustoNameAvailabilityResult>> CheckNameAvailabilitySandboxCustomImageAsync(Azure.ResourceManager.Kusto.Models.SandboxCustomImagesCheckNameContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -193,6 +195,9 @@ namespace Azure.ResourceManager.Kusto
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Kusto.Models.KustoLanguageExtension> GetLanguageExtensionsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Kusto.Models.OutboundNetworkDependenciesEndpoint> GetOutboundNetworkDependenciesEndpoints(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Kusto.Models.OutboundNetworkDependenciesEndpoint> GetOutboundNetworkDependenciesEndpointsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Kusto.SandboxCustomImageResource> GetSandboxCustomImage(string sandboxCustomImageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Kusto.SandboxCustomImageResource>> GetSandboxCustomImageAsync(string sandboxCustomImageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Kusto.SandboxCustomImageCollection GetSandboxCustomImages() { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Migrate(Azure.WaitUntil waitUntil, Azure.ResourceManager.Kusto.Models.ClusterMigrateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> MigrateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Kusto.Models.ClusterMigrateContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation RemoveLanguageExtensions(Azure.WaitUntil waitUntil, Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionList languageExtensionsToRemove, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -378,6 +383,7 @@ namespace Azure.ResourceManager.Kusto
         public static Azure.ResourceManager.Kusto.KustoPrivateEndpointConnectionResource GetKustoPrivateEndpointConnectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Kusto.KustoPrivateLinkResource GetKustoPrivateLinkResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Kusto.KustoScriptResource GetKustoScriptResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Kusto.SandboxCustomImageResource GetSandboxCustomImageResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Kusto.Models.KustoSkuDescription> GetSkus(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Kusto.Models.KustoSkuDescription> GetSkusAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -533,6 +539,45 @@ namespace Azure.ResourceManager.Kusto
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Kusto.KustoScriptResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Kusto.KustoScriptData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Kusto.KustoScriptResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Kusto.KustoScriptData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class SandboxCustomImageCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Kusto.SandboxCustomImageResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.SandboxCustomImageResource>, System.Collections.IEnumerable
+    {
+        protected SandboxCustomImageCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Kusto.SandboxCustomImageResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string sandboxCustomImageName, Azure.ResourceManager.Kusto.SandboxCustomImageData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Kusto.SandboxCustomImageResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string sandboxCustomImageName, Azure.ResourceManager.Kusto.SandboxCustomImageData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string sandboxCustomImageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string sandboxCustomImageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Kusto.SandboxCustomImageResource> Get(string sandboxCustomImageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Kusto.SandboxCustomImageResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Kusto.SandboxCustomImageResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Kusto.SandboxCustomImageResource>> GetAsync(string sandboxCustomImageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Kusto.SandboxCustomImageResource> GetIfExists(string sandboxCustomImageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Kusto.SandboxCustomImageResource>> GetIfExistsAsync(string sandboxCustomImageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Kusto.SandboxCustomImageResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Kusto.SandboxCustomImageResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Kusto.SandboxCustomImageResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.SandboxCustomImageResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SandboxCustomImageData : Azure.ResourceManager.Models.ResourceData
+    {
+        public SandboxCustomImageData() { }
+        public Azure.ResourceManager.Kusto.Models.SandboxCustomImageLanguage? Language { get { throw null; } set { } }
+        public string LanguageVersion { get { throw null; } set { } }
+        public Azure.ResourceManager.Kusto.Models.KustoProvisioningState? ProvisioningState { get { throw null; } }
+        public string RequirementsFileContent { get { throw null; } set { } }
+    }
+    public partial class SandboxCustomImageResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SandboxCustomImageResource() { }
+        public virtual Azure.ResourceManager.Kusto.SandboxCustomImageData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string sandboxCustomImageName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Kusto.SandboxCustomImageResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Kusto.SandboxCustomImageResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Kusto.SandboxCustomImageResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Kusto.SandboxCustomImageData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Kusto.SandboxCustomImageResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Kusto.SandboxCustomImageData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
 }
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -551,7 +596,9 @@ namespace Azure.ResourceManager.Kusto.Models
         public static Azure.ResourceManager.Kusto.Models.KustoAvailableSkuDetails KustoAvailableSkuDetails(string resourceType = null, Azure.ResourceManager.Kusto.Models.KustoSku sku = null, Azure.ResourceManager.Kusto.Models.KustoCapacity capacity = null) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.KustoCapacity KustoCapacity(Azure.ResourceManager.Kusto.Models.KustoScaleType scaleType = default(Azure.ResourceManager.Kusto.Models.KustoScaleType), int minimum = 0, int maximum = 0, int @default = 0) { throw null; }
         public static Azure.ResourceManager.Kusto.KustoClusterData KustoClusterData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Kusto.Models.KustoSku sku = null, System.Collections.Generic.IEnumerable<string> zones = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Kusto.Models.KustoClusterState? state = default(Azure.ResourceManager.Kusto.Models.KustoClusterState?), Azure.ResourceManager.Kusto.Models.KustoProvisioningState? provisioningState = default(Azure.ResourceManager.Kusto.Models.KustoProvisioningState?), System.Uri clusterUri = null, System.Uri dataIngestionUri = null, string stateReason = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.Models.KustoClusterTrustedExternalTenant> trustedExternalTenants = null, Azure.ResourceManager.Kusto.Models.OptimizedAutoscale optimizedAutoscale = null, bool? isDiskEncryptionEnabled = default(bool?), bool? isStreamingIngestEnabled = default(bool?), Azure.ResourceManager.Kusto.Models.KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration = null, Azure.ResourceManager.Kusto.Models.KustoKeyVaultProperties keyVaultProperties = null, bool? isPurgeEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.Models.KustoLanguageExtension> languageExtensionsValue = null, bool? isDoubleEncryptionEnabled = default(bool?), Azure.ResourceManager.Kusto.Models.KustoClusterPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.Kusto.Models.KustoClusterPublicNetworkAccess?), System.Collections.Generic.IEnumerable<string> allowedIPRangeList = null, Azure.ResourceManager.Kusto.Models.KustoClusterEngineType? engineType = default(Azure.ResourceManager.Kusto.Models.KustoClusterEngineType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.Models.AcceptedAudience> acceptedAudiences = null, bool? isAutoStopEnabled = default(bool?), Azure.ResourceManager.Kusto.Models.KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess = default(Azure.ResourceManager.Kusto.Models.KustoClusterNetworkAccessFlag?), System.Collections.Generic.IEnumerable<string> allowedFqdnList = null, Azure.ResourceManager.Kusto.Models.KustoClusterPublicIPType? publicIPType = default(Azure.ResourceManager.Kusto.Models.KustoClusterPublicIPType?), string virtualClusterGraduationProperties = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.KustoPrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.Kusto.Models.MigrationClusterProperties migrationCluster = null) { throw null; }
-        public static Azure.ResourceManager.Kusto.Models.KustoClusterPatch KustoClusterPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Kusto.Models.KustoSku sku = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Kusto.Models.KustoClusterState? state = default(Azure.ResourceManager.Kusto.Models.KustoClusterState?), Azure.ResourceManager.Kusto.Models.KustoProvisioningState? provisioningState = default(Azure.ResourceManager.Kusto.Models.KustoProvisioningState?), System.Uri uri = null, System.Uri dataIngestionUri = null, string stateReason = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.Models.KustoClusterTrustedExternalTenant> trustedExternalTenants = null, Azure.ResourceManager.Kusto.Models.OptimizedAutoscale optimizedAutoscale = null, bool? isDiskEncryptionEnabled = default(bool?), bool? isStreamingIngestEnabled = default(bool?), Azure.ResourceManager.Kusto.Models.KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration = null, Azure.ResourceManager.Kusto.Models.KustoKeyVaultProperties keyVaultProperties = null, bool? isPurgeEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.Models.KustoLanguageExtension> languageExtensionsValue = null, bool? isDoubleEncryptionEnabled = default(bool?), Azure.ResourceManager.Kusto.Models.KustoClusterPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.Kusto.Models.KustoClusterPublicNetworkAccess?), System.Collections.Generic.IEnumerable<string> allowedIPRangeList = null, Azure.ResourceManager.Kusto.Models.KustoClusterEngineType? engineType = default(Azure.ResourceManager.Kusto.Models.KustoClusterEngineType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.Models.AcceptedAudience> acceptedAudiences = null, bool? isAutoStopEnabled = default(bool?), Azure.ResourceManager.Kusto.Models.KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess = default(Azure.ResourceManager.Kusto.Models.KustoClusterNetworkAccessFlag?), System.Collections.Generic.IEnumerable<string> allowedFqdnList = null, Azure.ResourceManager.Kusto.Models.KustoClusterPublicIPType? publicIPType = default(Azure.ResourceManager.Kusto.Models.KustoClusterPublicIPType?), string virtualClusterGraduationProperties = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.KustoPrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.Kusto.Models.MigrationClusterProperties migrationCluster = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.Kusto.Models.KustoClusterPatch KustoClusterPatch(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Kusto.Models.KustoSku sku, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ResourceManager.Kusto.Models.KustoClusterState? state, Azure.ResourceManager.Kusto.Models.KustoProvisioningState? provisioningState, System.Uri uri, System.Uri dataIngestionUri, string stateReason, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.Models.KustoClusterTrustedExternalTenant> trustedExternalTenants, Azure.ResourceManager.Kusto.Models.OptimizedAutoscale optimizedAutoscale, bool? isDiskEncryptionEnabled, bool? isStreamingIngestEnabled, Azure.ResourceManager.Kusto.Models.KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration, Azure.ResourceManager.Kusto.Models.KustoKeyVaultProperties keyVaultProperties, bool? isPurgeEnabled, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.Models.KustoLanguageExtension> languageExtensionsValue, bool? isDoubleEncryptionEnabled, Azure.ResourceManager.Kusto.Models.KustoClusterPublicNetworkAccess? publicNetworkAccess, System.Collections.Generic.IEnumerable<string> allowedIPRangeList, Azure.ResourceManager.Kusto.Models.KustoClusterEngineType? engineType, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.Models.AcceptedAudience> acceptedAudiences, bool? isAutoStopEnabled, Azure.ResourceManager.Kusto.Models.KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess, System.Collections.Generic.IEnumerable<string> allowedFqdnList, Azure.ResourceManager.Kusto.Models.KustoClusterPublicIPType? publicIPType, string virtualClusterGraduationProperties, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.KustoPrivateEndpointConnectionData> privateEndpointConnections, Azure.ResourceManager.Kusto.Models.MigrationClusterProperties migrationCluster) { throw null; }
+        public static Azure.ResourceManager.Kusto.Models.KustoClusterPatch KustoClusterPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Kusto.Models.KustoSku sku = null, System.Collections.Generic.IEnumerable<string> zones = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Kusto.Models.KustoClusterState? state = default(Azure.ResourceManager.Kusto.Models.KustoClusterState?), Azure.ResourceManager.Kusto.Models.KustoProvisioningState? provisioningState = default(Azure.ResourceManager.Kusto.Models.KustoProvisioningState?), System.Uri uri = null, System.Uri dataIngestionUri = null, string stateReason = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.Models.KustoClusterTrustedExternalTenant> trustedExternalTenants = null, Azure.ResourceManager.Kusto.Models.OptimizedAutoscale optimizedAutoscale = null, bool? isDiskEncryptionEnabled = default(bool?), bool? isStreamingIngestEnabled = default(bool?), Azure.ResourceManager.Kusto.Models.KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration = null, Azure.ResourceManager.Kusto.Models.KustoKeyVaultProperties keyVaultProperties = null, bool? isPurgeEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.Models.KustoLanguageExtension> languageExtensionsValue = null, bool? isDoubleEncryptionEnabled = default(bool?), Azure.ResourceManager.Kusto.Models.KustoClusterPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.Kusto.Models.KustoClusterPublicNetworkAccess?), System.Collections.Generic.IEnumerable<string> allowedIPRangeList = null, Azure.ResourceManager.Kusto.Models.KustoClusterEngineType? engineType = default(Azure.ResourceManager.Kusto.Models.KustoClusterEngineType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.Models.AcceptedAudience> acceptedAudiences = null, bool? isAutoStopEnabled = default(bool?), Azure.ResourceManager.Kusto.Models.KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess = default(Azure.ResourceManager.Kusto.Models.KustoClusterNetworkAccessFlag?), System.Collections.Generic.IEnumerable<string> allowedFqdnList = null, Azure.ResourceManager.Kusto.Models.KustoClusterPublicIPType? publicIPType = default(Azure.ResourceManager.Kusto.Models.KustoClusterPublicIPType?), string virtualClusterGraduationProperties = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.KustoPrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.Kusto.Models.MigrationClusterProperties migrationCluster = null) { throw null; }
         public static Azure.ResourceManager.Kusto.KustoClusterPrincipalAssignmentData KustoClusterPrincipalAssignmentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string clusterPrincipalId = null, Azure.ResourceManager.Kusto.Models.KustoClusterPrincipalRole? role = default(Azure.ResourceManager.Kusto.Models.KustoClusterPrincipalRole?), System.Guid? tenantId = default(System.Guid?), Azure.ResourceManager.Kusto.Models.KustoPrincipalAssignmentType? principalType = default(Azure.ResourceManager.Kusto.Models.KustoPrincipalAssignmentType?), string tenantName = null, string principalName = null, Azure.ResourceManager.Kusto.Models.KustoProvisioningState? provisioningState = default(Azure.ResourceManager.Kusto.Models.KustoProvisioningState?), System.Guid? aadObjectId = default(System.Guid?)) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.KustoCosmosDBDataConnection KustoCosmosDBDataConnection(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string tableName = null, string mappingRuleName = null, Azure.Core.ResourceIdentifier managedIdentityResourceId = null, System.Guid? managedIdentityObjectId = default(System.Guid?), Azure.Core.ResourceIdentifier cosmosDBAccountResourceId = null, string cosmosDBDatabase = null, string cosmosDBContainer = null, System.DateTimeOffset? retrievalStartOn = default(System.DateTimeOffset?), Azure.ResourceManager.Kusto.Models.KustoProvisioningState? provisioningState = default(Azure.ResourceManager.Kusto.Models.KustoProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Kusto.KustoDatabaseData KustoDatabaseData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string kind = "Unknown") { throw null; }
@@ -576,6 +623,7 @@ namespace Azure.ResourceManager.Kusto.Models
         public static Azure.ResourceManager.Kusto.Models.KustoSkuLocationInfoItem KustoSkuLocationInfoItem(Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IEnumerable<string> zones = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.Models.KustoResourceSkuZoneDetails> zoneDetails = null) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.MigrationClusterProperties MigrationClusterProperties(string id = null, System.Uri uri = null, System.Uri dataIngestionUri = null, Azure.ResourceManager.Kusto.Models.MigrationClusterRole? role = default(Azure.ResourceManager.Kusto.Models.MigrationClusterRole?)) { throw null; }
         public static Azure.ResourceManager.Kusto.Models.OutboundNetworkDependenciesEndpoint OutboundNetworkDependenciesEndpoint(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ETag? etag = default(Azure.ETag?), string category = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.Models.EndpointDependency> endpoints = null, Azure.ResourceManager.Kusto.Models.KustoProvisioningState? provisioningState = default(Azure.ResourceManager.Kusto.Models.KustoProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.Kusto.SandboxCustomImageData SandboxCustomImageData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Kusto.Models.SandboxCustomImageLanguage? language = default(Azure.ResourceManager.Kusto.Models.SandboxCustomImageLanguage?), string languageVersion = null, string requirementsFileContent = null, Azure.ResourceManager.Kusto.Models.KustoProvisioningState? provisioningState = default(Azure.ResourceManager.Kusto.Models.KustoProvisioningState?)) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AttachedDatabaseType : System.IEquatable<Azure.ResourceManager.Kusto.Models.AttachedDatabaseType>
@@ -663,6 +711,7 @@ namespace Azure.ResourceManager.Kusto.Models
     public partial class EndpointDetail
     {
         public EndpointDetail() { }
+        public string IPAddress { get { throw null; } set { } }
         public int? Port { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -776,6 +825,7 @@ namespace Azure.ResourceManager.Kusto.Models
         public System.Uri Uri { get { throw null; } }
         public string VirtualClusterGraduationProperties { get { throw null; } set { } }
         public Azure.ResourceManager.Kusto.Models.KustoClusterVirtualNetworkConfiguration VirtualNetworkConfiguration { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Zones { get { throw null; } }
     }
     public partial class KustoClusterPrincipalAssignmentNameAvailabilityContent
     {
@@ -907,7 +957,26 @@ namespace Azure.ResourceManager.Kusto.Models
         public KustoClusterVirtualNetworkConfiguration(string subnetId, string enginePublicIPId, string dataManagementPublicIPId) { }
         public string DataManagementPublicIPId { get { throw null; } set { } }
         public string EnginePublicIPId { get { throw null; } set { } }
+        public Azure.ResourceManager.Kusto.Models.KustoClusterVnetState? State { get { throw null; } set { } }
         public string SubnetId { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct KustoClusterVnetState : System.IEquatable<Azure.ResourceManager.Kusto.Models.KustoClusterVnetState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public KustoClusterVnetState(string value) { throw null; }
+        public static Azure.ResourceManager.Kusto.Models.KustoClusterVnetState Disabled { get { throw null; } }
+        public static Azure.ResourceManager.Kusto.Models.KustoClusterVnetState Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Kusto.Models.KustoClusterVnetState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Kusto.Models.KustoClusterVnetState left, Azure.ResourceManager.Kusto.Models.KustoClusterVnetState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.KustoClusterVnetState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Kusto.Models.KustoClusterVnetState left, Azure.ResourceManager.Kusto.Models.KustoClusterVnetState right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class KustoCosmosDBDataConnection : Azure.ResourceManager.Kusto.KustoDataConnectionData
     {
@@ -1299,6 +1368,7 @@ namespace Azure.ResourceManager.Kusto.Models
     public partial class KustoLanguageExtension
     {
         public KustoLanguageExtension() { }
+        public string LanguageExtensionCustomImageName { get { throw null; } set { } }
         public Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionImageName? LanguageExtensionImageName { get { throw null; } set { } }
         public Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionName? LanguageExtensionName { get { throw null; } set { } }
     }
@@ -1308,12 +1378,14 @@ namespace Azure.ResourceManager.Kusto.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public KustoLanguageExtensionImageName(string value) { throw null; }
+        public static Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionImageName Python3108DL { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionImageName Python3_10_8 { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionImageName Python3_6_5 { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionImageName Python3_9_12 { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionImageName Python3_9_12IncludeDeepLearning { get { throw null; } }
+        public static Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionImageName PythonCustomImage { get { throw null; } }
         public static Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionImageName R { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Kusto.Models.KustoLanguageExtensionImageName other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -1689,5 +1761,45 @@ namespace Azure.ResourceManager.Kusto.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Kusto.Models.EndpointDependency> Endpoints { get { throw null; } }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Kusto.Models.KustoProvisioningState? ProvisioningState { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SandboxCustomImageLanguage : System.IEquatable<Azure.ResourceManager.Kusto.Models.SandboxCustomImageLanguage>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SandboxCustomImageLanguage(string value) { throw null; }
+        public static Azure.ResourceManager.Kusto.Models.SandboxCustomImageLanguage Python { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Kusto.Models.SandboxCustomImageLanguage other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Kusto.Models.SandboxCustomImageLanguage left, Azure.ResourceManager.Kusto.Models.SandboxCustomImageLanguage right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.SandboxCustomImageLanguage (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Kusto.Models.SandboxCustomImageLanguage left, Azure.ResourceManager.Kusto.Models.SandboxCustomImageLanguage right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class SandboxCustomImagesCheckNameContent
+    {
+        public SandboxCustomImagesCheckNameContent(string name) { }
+        public Azure.ResourceManager.Kusto.Models.SandboxCustomImageType ImageType { get { throw null; } }
+        public string Name { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SandboxCustomImageType : System.IEquatable<Azure.ResourceManager.Kusto.Models.SandboxCustomImageType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SandboxCustomImageType(string value) { throw null; }
+        public static Azure.ResourceManager.Kusto.Models.SandboxCustomImageType MicrosoftKustoClustersSandboxCustomImages { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Kusto.Models.SandboxCustomImageType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Kusto.Models.SandboxCustomImageType left, Azure.ResourceManager.Kusto.Models.SandboxCustomImageType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Kusto.Models.SandboxCustomImageType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Kusto.Models.SandboxCustomImageType left, Azure.ResourceManager.Kusto.Models.SandboxCustomImageType right) { throw null; }
+        public override string ToString() { throw null; }
     }
 }

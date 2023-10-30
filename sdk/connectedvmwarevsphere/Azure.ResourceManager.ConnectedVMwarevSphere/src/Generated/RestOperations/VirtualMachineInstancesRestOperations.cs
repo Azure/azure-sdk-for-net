@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceUri, VirtualMachineInstanceData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceUri, VMwareVmInstanceData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="data"/> is null. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceUri, VirtualMachineInstanceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceUri, VMwareVmInstanceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNull(data, nameof(data));
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="data"/> is null. </exception>
-        public Response CreateOrUpdate(string resourceUri, VirtualMachineInstanceData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string resourceUri, VMwareVmInstanceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNull(data, nameof(data));
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the Hybrid Compute machine resource to be extended. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
-        public async Task<Response<VirtualMachineInstanceData>> GetAsync(string resourceUri, CancellationToken cancellationToken = default)
+        public async Task<Response<VMwareVmInstanceData>> GetAsync(string resourceUri, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
@@ -133,13 +133,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             {
                 case 200:
                     {
-                        VirtualMachineInstanceData value = default;
+                        VMwareVmInstanceData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VirtualMachineInstanceData.DeserializeVirtualMachineInstanceData(document.RootElement);
+                        value = VMwareVmInstanceData.DeserializeVMwareVmInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((VirtualMachineInstanceData)null, message.Response);
+                    return Response.FromValue((VMwareVmInstanceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the Hybrid Compute machine resource to be extended. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
-        public Response<VirtualMachineInstanceData> Get(string resourceUri, CancellationToken cancellationToken = default)
+        public Response<VMwareVmInstanceData> Get(string resourceUri, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
@@ -159,19 +159,19 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             {
                 case 200:
                     {
-                        VirtualMachineInstanceData value = default;
+                        VMwareVmInstanceData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VirtualMachineInstanceData.DeserializeVirtualMachineInstanceData(document.RootElement);
+                        value = VMwareVmInstanceData.DeserializeVMwareVmInstanceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((VirtualMachineInstanceData)null, message.Response);
+                    return Response.FromValue((VMwareVmInstanceData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string resourceUri, VirtualMachineInstancePatch patch)
+        internal HttpMessage CreateUpdateRequest(string resourceUri, VMwareVmInstancePatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="patch"> Resource properties to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="patch"/> is null. </exception>
-        public async Task<Response> UpdateAsync(string resourceUri, VirtualMachineInstancePatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string resourceUri, VMwareVmInstancePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNull(patch, nameof(patch));
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="patch"> Resource properties to update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="patch"/> is null. </exception>
-        public Response Update(string resourceUri, VirtualMachineInstancePatch patch, CancellationToken cancellationToken = default)
+        public Response Update(string resourceUri, VMwareVmInstancePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNull(patch, nameof(patch));
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the Hybrid Compute machine resource to be extended. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
-        public async Task<Response<VirtualMachineInstancesList>> ListAsync(string resourceUri, CancellationToken cancellationToken = default)
+        public async Task<Response<VMwareVmInstanceListResult>> ListAsync(string resourceUri, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
@@ -336,9 +336,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             {
                 case 200:
                     {
-                        VirtualMachineInstancesList value = default;
+                        VMwareVmInstanceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VirtualMachineInstancesList.DeserializeVirtualMachineInstancesList(document.RootElement);
+                        value = VMwareVmInstanceListResult.DeserializeVMwareVmInstanceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the Hybrid Compute machine resource to be extended. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
-        public Response<VirtualMachineInstancesList> List(string resourceUri, CancellationToken cancellationToken = default)
+        public Response<VMwareVmInstanceListResult> List(string resourceUri, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
@@ -360,9 +360,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             {
                 case 200:
                     {
-                        VirtualMachineInstancesList value = default;
+                        VMwareVmInstanceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VirtualMachineInstancesList.DeserializeVirtualMachineInstancesList(document.RootElement);
+                        value = VMwareVmInstanceListResult.DeserializeVMwareVmInstanceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the Hybrid Compute machine resource to be extended. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceUri"/> is null. </exception>
-        public async Task<Response<VirtualMachineInstancesList>> ListNextPageAsync(string nextLink, string resourceUri, CancellationToken cancellationToken = default)
+        public async Task<Response<VMwareVmInstanceListResult>> ListNextPageAsync(string nextLink, string resourceUri, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
@@ -574,9 +574,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             {
                 case 200:
                     {
-                        VirtualMachineInstancesList value = default;
+                        VMwareVmInstanceListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VirtualMachineInstancesList.DeserializeVirtualMachineInstancesList(document.RootElement);
+                        value = VMwareVmInstanceListResult.DeserializeVMwareVmInstanceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -589,7 +589,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the Hybrid Compute machine resource to be extended. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceUri"/> is null. </exception>
-        public Response<VirtualMachineInstancesList> ListNextPage(string nextLink, string resourceUri, CancellationToken cancellationToken = default)
+        public Response<VMwareVmInstanceListResult> ListNextPage(string nextLink, string resourceUri, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
@@ -600,9 +600,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             {
                 case 200:
                     {
-                        VirtualMachineInstancesList value = default;
+                        VMwareVmInstanceListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VirtualMachineInstancesList.DeserializeVirtualMachineInstancesList(document.RootElement);
+                        value = VMwareVmInstanceListResult.DeserializeVMwareVmInstanceListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

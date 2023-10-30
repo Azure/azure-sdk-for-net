@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
         {
         }
 
-        private async Task<VirtualNetworkCollection> GetVirtualNetworkCollectionAsync()
+        private async Task<VMwareVirtualNetworkCollection> GetVirtualNetworkCollectionAsync()
         {
             var resourceGroup = await CreateResourceGroupAsync();
-            return resourceGroup.GetVirtualNetworks();
+            return resourceGroup.GetVMwareVirtualNetworks();
         }
 
         [TestCase]
@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
                 Name = CustomLocationId,
                 ExtendedLocationType = EXTENDED_LOCATION_TYPE
             };
-            var vnetBody = new VirtualNetworkData(DefaultLocation);
+            var vnetBody = new VMwareVirtualNetworkData(DefaultLocation);
             vnetBody.MoRefId = "network-o61";
             vnetBody.VCenterId = VcenterId;
             vnetBody.ExtendedLocation = _extendedLocation;
             // create virtual network
-            VirtualNetworkResource vnet1 = (await _virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnetBody)).Value;
+            VMwareVirtualNetworkResource vnet1 = (await _virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnetBody)).Value;
             Assert.IsNotNull(vnet1);
             Assert.AreEqual(vnet1.Id.Name, vnetName);
         }
@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
                 Name = CustomLocationId,
                 ExtendedLocationType = EXTENDED_LOCATION_TYPE
             };
-            var vnetBody = new VirtualNetworkData(DefaultLocation);
+            var vnetBody = new VMwareVirtualNetworkData(DefaultLocation);
             vnetBody.MoRefId = "network-o25797";
             vnetBody.VCenterId = VcenterId;
             vnetBody.ExtendedLocation = _extendedLocation;
             // create virtual network
-            VirtualNetworkResource vnet1 = (await _virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnetBody)).Value;
+            VMwareVirtualNetworkResource vnet1 = (await _virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnetBody)).Value;
             Assert.IsNotNull(vnet1);
             Assert.AreEqual(vnet1.Id.Name, vnetName);
             // get virtual network
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
                 Name = CustomLocationId,
                 ExtendedLocationType = EXTENDED_LOCATION_TYPE
             };
-            var vnetBody = new VirtualNetworkData(DefaultLocation);
+            var vnetBody = new VMwareVirtualNetworkData(DefaultLocation);
             vnetBody.MoRefId = "network-o114814";
             vnetBody.VCenterId = VcenterId;
             vnetBody.ExtendedLocation = _extendedLocation;
             // create virtual network
-            VirtualNetworkResource vnet1 = (await _virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnetBody)).Value;
+            VMwareVirtualNetworkResource vnet1 = (await _virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnetBody)).Value;
             Assert.IsNotNull(vnet1);
             Assert.AreEqual(vnet1.Id.Name, vnetName);
             // check for exists virtual network
@@ -101,12 +101,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
                 Name = CustomLocationId,
                 ExtendedLocationType = EXTENDED_LOCATION_TYPE
             };
-            var vnetBody = new VirtualNetworkData(DefaultLocation);
+            var vnetBody = new VMwareVirtualNetworkData(DefaultLocation);
             vnetBody.MoRefId = "network-o2286";
             vnetBody.VCenterId = VcenterId;
             vnetBody.ExtendedLocation = _extendedLocation;
             // create virtual network
-            VirtualNetworkResource vnet1 = (await _virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnetBody)).Value;
+            VMwareVirtualNetworkResource vnet1 = (await _virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnetBody)).Value;
             Assert.IsNotNull(vnet1);
             Assert.AreEqual(vnet1.Id.Name, vnetName);
             int count = 0;
@@ -128,16 +128,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
                 Name = CustomLocationId,
                 ExtendedLocationType = EXTENDED_LOCATION_TYPE
             };
-            var vnetBody = new VirtualNetworkData(DefaultLocation);
+            var vnetBody = new VMwareVirtualNetworkData(DefaultLocation);
             vnetBody.MoRefId = "network-o85628";
             vnetBody.VCenterId = VcenterId;
             vnetBody.ExtendedLocation = _extendedLocation;
             // create virtual network
-            VirtualNetworkResource vnet1 = (await _virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnetBody)).Value;
+            VMwareVirtualNetworkResource vnet1 = (await _virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetName, vnetBody)).Value;
             Assert.IsNotNull(vnet1);
             Assert.AreEqual(vnet1.Id.Name, vnetName);
             vnet1 = null;
-            await foreach (var vnet in DefaultSubscription.GetVirtualNetworksAsync())
+            await foreach (var vnet in DefaultSubscription.GetVMwareVirtualNetworksAsync())
             {
                 if (vnet.Data.Name == vnetName)
                 {

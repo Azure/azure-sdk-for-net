@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     /// A Class representing a VmInstanceHybridIdentityMetadata along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="VmInstanceHybridIdentityMetadataResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetVmInstanceHybridIdentityMetadataResource method.
-    /// Otherwise you can get one from its parent resource <see cref="VirtualMachineInstanceResource" /> using the GetVmInstanceHybridIdentityMetadata method.
+    /// Otherwise you can get one from its parent resource <see cref="VMwareVmInstanceResource" /> using the GetVmInstanceHybridIdentityMetadata method.
     /// </summary>
     public partial class VmInstanceHybridIdentityMetadataResource : ArmResource
     {

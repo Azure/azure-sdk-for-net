@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             Optional<SystemData> systemData = default;
             Optional<string> resourceUid = default;
             Optional<string> publicKey = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<VMwareResourceProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new VMwareResourceProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }

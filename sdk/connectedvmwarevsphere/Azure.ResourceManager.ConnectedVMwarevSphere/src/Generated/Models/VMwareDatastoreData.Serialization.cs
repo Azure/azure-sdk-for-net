@@ -82,11 +82,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             Optional<string> moRefId = default;
             Optional<string> inventoryItemId = default;
             Optional<string> moName = default;
-            Optional<IReadOnlyList<ResourceStatus>> statuses = default;
+            Optional<IReadOnlyList<VMwareResourceStatus>> statuses = default;
             Optional<string> customResourceName = default;
             Optional<long> capacityGB = default;
             Optional<long> freeSpaceGB = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<VMwareResourceProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -186,10 +186,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                             {
                                 continue;
                             }
-                            List<ResourceStatus> array = new List<ResourceStatus>();
+                            List<VMwareResourceStatus> array = new List<VMwareResourceStatus>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ResourceStatus.DeserializeResourceStatus(item));
+                                array.Add(VMwareResourceStatus.DeserializeVMwareResourceStatus(item));
                             }
                             statuses = array;
                             continue;
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new VMwareResourceProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }

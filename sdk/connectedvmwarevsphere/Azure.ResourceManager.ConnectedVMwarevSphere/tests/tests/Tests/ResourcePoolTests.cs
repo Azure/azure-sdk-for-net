@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
         {
         }
 
-        private async Task<ResourcePoolCollection> GetResourcePoolCollectionAsync()
+        private async Task<VMwareResourcePoolCollection> GetResourcePoolCollectionAsync()
         {
             var resourceGroup = await CreateResourceGroupAsync();
-            return resourceGroup.GetResourcePools();
+            return resourceGroup.GetVMwareResourcePools();
         }
 
         [TestCase]
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
                 Name = CustomLocationId,
                 ExtendedLocationType = EXTENDED_LOCATION_TYPE
             };
-            var resourcePoolBody = new ResourcePoolData(DefaultLocation);
+            var resourcePoolBody = new VMwareResourcePoolData(DefaultLocation);
             resourcePoolBody.MoRefId = "resgroup-87733";
             resourcePoolBody.VCenterId = VcenterId;
             resourcePoolBody.ExtendedLocation = _extendedLocation;
             // create resource pool
-            ResourcePoolResource resourcePool1 = (await _resourcePoolCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourcePoolName, resourcePoolBody)).Value;
+            VMwareResourcePoolResource resourcePool1 = (await _resourcePoolCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourcePoolName, resourcePoolBody)).Value;
             Assert.IsNotNull(resourcePool1);
             Assert.AreEqual(resourcePool1.Id.Name, resourcePoolName);
         }
@@ -54,12 +54,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
                 Name = CustomLocationId,
                 ExtendedLocationType = EXTENDED_LOCATION_TYPE
             };
-            var resourcePoolBody = new ResourcePoolData(DefaultLocation);
+            var resourcePoolBody = new VMwareResourcePoolData(DefaultLocation);
             resourcePoolBody.MoRefId = "resgroup-87735";
             resourcePoolBody.VCenterId = VcenterId;
             resourcePoolBody.ExtendedLocation = _extendedLocation;
             // create resource pool
-            ResourcePoolResource resourcePool1 = (await _resourcePoolCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourcePoolName, resourcePoolBody)).Value;
+            VMwareResourcePoolResource resourcePool1 = (await _resourcePoolCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourcePoolName, resourcePoolBody)).Value;
             Assert.IsNotNull(resourcePool1);
             Assert.AreEqual(resourcePool1.Id.Name, resourcePoolName);
             // get resource pool
@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
                 Name = CustomLocationId,
                 ExtendedLocationType = EXTENDED_LOCATION_TYPE
             };
-            var resourcePoolBody = new ResourcePoolData(DefaultLocation);
+            var resourcePoolBody = new VMwareResourcePoolData(DefaultLocation);
             resourcePoolBody.MoRefId = "resgroup-87730";
             resourcePoolBody.VCenterId = VcenterId;
             resourcePoolBody.ExtendedLocation = _extendedLocation;
             // create resource pool
-            ResourcePoolResource resourcePool1 = (await _resourcePoolCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourcePoolName, resourcePoolBody)).Value;
+            VMwareResourcePoolResource resourcePool1 = (await _resourcePoolCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourcePoolName, resourcePoolBody)).Value;
             Assert.IsNotNull(resourcePool1);
             Assert.AreEqual(resourcePool1.Id.Name, resourcePoolName);
             // check for exists resource pool
@@ -102,12 +102,12 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
                 Name = CustomLocationId,
                 ExtendedLocationType = EXTENDED_LOCATION_TYPE
             };
-            var resourcePoolBody = new ResourcePoolData(DefaultLocation);
+            var resourcePoolBody = new VMwareResourcePoolData(DefaultLocation);
             resourcePoolBody.MoRefId = "resgroup-119001";
             resourcePoolBody.VCenterId = VcenterId;
             resourcePoolBody.ExtendedLocation = _extendedLocation;
             // create resource pool
-            ResourcePoolResource resourcePool1 = (await _resourcePoolCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourcePoolName, resourcePoolBody)).Value;
+            VMwareResourcePoolResource resourcePool1 = (await _resourcePoolCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourcePoolName, resourcePoolBody)).Value;
             Assert.IsNotNull(resourcePool1);
             Assert.AreEqual(resourcePool1.Id.Name, resourcePoolName);
             int count = 0;
@@ -129,16 +129,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
                 Name = CustomLocationId,
                 ExtendedLocationType = EXTENDED_LOCATION_TYPE
             };
-            var resourcePoolBody = new ResourcePoolData(DefaultLocation);
+            var resourcePoolBody = new VMwareResourcePoolData(DefaultLocation);
             resourcePoolBody.MoRefId = "resgroup-89261";
             resourcePoolBody.VCenterId = VcenterId;
             resourcePoolBody.ExtendedLocation = _extendedLocation;
             // create resource pool
-            ResourcePoolResource resourcePool1 = (await _resourcePoolCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourcePoolName, resourcePoolBody)).Value;
+            VMwareResourcePoolResource resourcePool1 = (await _resourcePoolCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourcePoolName, resourcePoolBody)).Value;
             Assert.IsNotNull(resourcePool1);
             Assert.AreEqual(resourcePool1.Id.Name, resourcePoolName);
             resourcePool1 = null;
-            await foreach (var resourcePool in DefaultSubscription.GetResourcePoolsAsync())
+            await foreach (var resourcePool in DefaultSubscription.GetVMwareResourcePoolsAsync())
             {
                 if (resourcePool.Data.Name == resourcePoolName)
                 {

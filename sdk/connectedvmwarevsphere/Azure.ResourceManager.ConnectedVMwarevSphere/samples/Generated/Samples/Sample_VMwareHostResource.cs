@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Samples
             VMwareHostResource vMwareHost = client.GetVMwareHostResource(vMwareHostResourceId);
 
             // invoke the operation
-            ResourcePatch patch = new ResourcePatch()
+            VMwareResourcePatchContent content = new VMwareResourcePatchContent()
             {
                 Tags =
 {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Samples
 ["tag2"] = "value2",
 },
             };
-            VMwareHostResource result = await vMwareHost.UpdateAsync(patch);
+            VMwareHostResource result = await vMwareHost.UpdateAsync(content);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             Optional<string> adminUsername = default;
             Optional<string> adminPassword = default;
             Optional<string> guestId = default;
-            Optional<OSType> osType = default;
+            Optional<VMwareOSType> osType = default;
             Optional<string> osSku = default;
             Optional<string> toolsRunningStatus = default;
             Optional<string> toolsVersionStatus = default;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     {
                         continue;
                     }
-                    osType = new OSType(property.Value.GetString());
+                    osType = new VMwareOSType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("osSku"u8))

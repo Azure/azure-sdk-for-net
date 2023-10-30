@@ -1,12 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <ProjectReference Include="..\src\Azure.ResourceManager.ConnectedVMwarevSphere.csproj" />
+    <Compile Remove="SessionRecords\**" />
+    <EmbeddedResource Remove="SessionRecords\**" />
+    <None Remove="SessionRecords\**" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="SessionRecords\ClusterTests\" />
-    <Folder Include="SessionRecords\ResourcePoolTests\" />
-    <Folder Include="SessionRecords\VirtualMachineTemplateTests\" />
-    <Folder Include="SessionRecords\VirtualMachineTests\" />
-    <Folder Include="SessionRecords\VirtualNetworkTests\" />
+    <ProjectReference Include="..\src\Azure.ResourceManager.ConnectedVMwarevSphere.csproj" />
   </ItemGroup>
 </Project>

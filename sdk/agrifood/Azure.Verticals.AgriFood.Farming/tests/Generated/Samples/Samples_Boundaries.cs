@@ -103,7 +103,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.CreateOrUpdate("<partyId>", "<boundaryId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -117,7 +117,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.CreateOrUpdateAsync("<partyId>", "<boundaryId>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -131,7 +131,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             TokenCredential credential = new DefaultAzureCredential();
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 geometry = new
                 {
@@ -200,7 +200,7 @@ new object[]
             TokenCredential credential = new DefaultAzureCredential();
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 geometry = new
                 {
@@ -553,7 +553,7 @@ new object[]
             TokenCredential credential = new DefaultAzureCredential();
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             foreach (BinaryData item in client.Search(content))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
@@ -568,7 +568,7 @@ new object[]
             TokenCredential credential = new DefaultAzureCredential();
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             await foreach (BinaryData item in client.SearchAsync(content))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
@@ -583,7 +583,7 @@ new object[]
             TokenCredential credential = new DefaultAzureCredential();
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 ids = new object[]
             {
@@ -663,7 +663,7 @@ new object[]
             TokenCredential credential = new DefaultAzureCredential();
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 ids = new object[]
             {
@@ -831,7 +831,7 @@ new object[]
             TokenCredential credential = new DefaultAzureCredential();
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             foreach (BinaryData item in client.SearchByPartyId("<partyId>", content))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
@@ -846,7 +846,7 @@ new object[]
             TokenCredential credential = new DefaultAzureCredential();
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             await foreach (BinaryData item in client.SearchByPartyIdAsync("<partyId>", content))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
@@ -861,7 +861,7 @@ new object[]
             TokenCredential credential = new DefaultAzureCredential();
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 ids = new object[]
             {
@@ -941,7 +941,7 @@ new object[]
             TokenCredential credential = new DefaultAzureCredential();
             Boundaries client = new FarmBeatsClient(credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 ids = new object[]
             {

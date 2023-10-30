@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <param name="resourceUid"> The unique identifier for the resource. </param>
         /// <param name="publicKey"> Gets or sets the Public Key. </param>
         /// <param name="provisioningState"> Gets the provisioning state. </param>
-        internal VmInstanceHybridIdentityMetadataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string resourceUid, string publicKey, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal VmInstanceHybridIdentityMetadataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string resourceUid, string publicKey, VMwareResourceProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             ResourceUid = resourceUid;
             PublicKey = publicKey;
@@ -42,6 +42,6 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         /// <summary> Gets or sets the Public Key. </summary>
         public string PublicKey { get; set; }
         /// <summary> Gets the provisioning state. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public VMwareResourceProvisioningState? ProvisioningState { get; }
     }
 }
