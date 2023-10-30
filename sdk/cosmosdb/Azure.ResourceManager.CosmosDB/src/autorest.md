@@ -9,8 +9,8 @@ azure-arm: true
 csharp: true
 library-name: CosmosDB
 namespace: Azure.ResourceManager.CosmosDB
-require: https://github.com/Azure/azure-rest-api-specs/blob/15ba5b8a954afb74a6bb8902038835f0cddb9930/specification/cosmos-db/resource-manager/readme.md
-tag: package-preview-2023-09
+require: https://github.com/Azure/azure-rest-api-specs/blob/fa285f544fa37cd839c4befe1109db3547b016ab/specification/cosmos-db/resource-manager/readme.md
+#tag: package-preview-2023-09
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -134,13 +134,10 @@ rename-mapping:
   Role: MongoDBRole
   Role.db: DBName
   MongoRoleDefinitionGetResults.properties.type: RoleDefinitionType
-  PrivilegeResourceInfo: PrivilegeResourceInfoResource
   MongoRoleDefinitionListResult: MongoDBRoleDefinitionListResult
   MongoUserDefinitionListResult: MongoDBUserDefinitionListResult
-  SqlRoleDefinitionResource: CosmosDBSqlRoleDefinitionResourceInfo
   CassandraKeyspacePropertiesOptions: CassandraKeyspacePropertiesConfig
   CassandraTablePropertiesOptions: CassandraTablePropertiesConfig
-  CosmosTablePropertiesOptions: CosmosDBTablePropertiesConfig
   CreateUpdateOptions: CosmosDBCreateUpdateConfig
   GremlinDatabasePropertiesOptions: GremlinDatabasePropertiesConfig
   GremlinGraphPropertiesOptions: GremlinGraphPropertiesConfig
@@ -154,7 +151,6 @@ rename-mapping:
   CassandraKeyspaceResource: CassandraKeyspaceResourceInfo
   CassandraTablePropertiesResource: ExtendedCassandraTableResourceInfo
   CassandraTableResource: CassandraTableResourceInfo
-  CosmosTablePropertiesResource: ExtendedCosmosTableResourceInfo
   ClientEncryptionKeyGetPropertiesResource: CosmosDBSqlClientEncryptionKeyProperties
   ClientEncryptionKeyResource: CosmosDBSqlClientEncryptionKeyResourceInfo
   ClientEncryptionPolicy: CosmosDBClientEncryptionPolicy
@@ -182,11 +178,9 @@ rename-mapping:
   CosmosDBSqlContainerPropertiesResource: ExtendedCosmosDBSqlContainerResourceInfo
   SqlContainerResource: CosmosDBSqlContainerResourceInfo
   SqlDatabaseResource: CosmosDBSqlDatabaseResourceInfo
-  SqlStoredProcedurePropertiesResource: ExtendedCosmosDBSqlStoredProcedureResourceInfo
   SqlStoredProcedureResource: CosmosDBSqlStoredProcedureResourceInfo
   SqlTriggerResource: CosmosDBSqlTriggerResourceInfo
   CosmosDBSqlTriggerPropertiesResource: ExtendedCosmosDBSqlTriggerResourceInfo
-  SqlUserDefinedFunctionPropertiesResource: ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo
   SqlUserDefinedFunctionResource: CosmosDBSqlUserDefinedFunctionResourceInfo
   TableResource: CosmosDBTableResourceInfo
   ThroughputPolicyResource: ThroughputPolicyResourceInfo
@@ -340,7 +334,6 @@ prepend-rp-prefix:
 - FailoverPolicies
 - FailoverPolicy
 - BackupInformation
-- ContainerPartitionKey
 - CompositePath
 - PartitionKind
 - PercentileMetric
