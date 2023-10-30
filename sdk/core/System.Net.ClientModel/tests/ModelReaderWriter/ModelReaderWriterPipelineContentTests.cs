@@ -28,7 +28,7 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
             Assert.Greater(lengthNonJson, 0);
 
             //use IModelJsonSerializable
-            var jsonContent = MessageBody.CreateBody((IModel<object>)(IJsonModel<ModelX>)_modelX!);
+            var jsonContent = MessageBody.CreateBody((IJsonModel<ModelX>)_modelX!);
             AssertContentType(jsonContent, "JsonModelWriterContent");
             content.TryComputeLength(out long lengthJson);
             Assert.Greater(lengthJson, 0);
@@ -36,7 +36,7 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual(lengthNonJson, lengthJson);
 
             //use default
-            jsonContent = MessageBody.CreateBody((IModel<object>)_modelX!);
+            jsonContent = MessageBody.CreateBody(_modelX!);
             AssertContentType(jsonContent, "JsonModelWriterContent");
             content.TryComputeLength(out lengthJson);
             Assert.Greater(lengthJson, 0);
