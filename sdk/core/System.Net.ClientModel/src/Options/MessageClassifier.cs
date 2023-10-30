@@ -10,11 +10,11 @@ namespace System.Net.ClientModel.Core
         /// <summary>
         /// Specifies if the response contained in the <paramref name="message"/> is not successful.
         /// </summary>
-        public virtual bool IsErrorResponse(PipelineMessage message)
+        public virtual bool IsError(PipelineMessage message)
         {
             if (message.Response is null)
             {
-                throw new InvalidOperationException("IsErrorResponse must be called on a message where the Result is populated.");
+                throw new InvalidOperationException("IsError must be called on a message where the Result is populated.");
             }
 
             int statusKind = message.Response.Status / 100;

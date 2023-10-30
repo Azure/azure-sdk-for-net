@@ -9,7 +9,7 @@ namespace System.Net.ClientModel.Tests.Internal.Perf
     {
         protected override MessageBody CreatePipelineContent()
         {
-            return MessageBody.CreateContent(_model);
+            return MessageBody.CreateBody(_model);
         }
     }
 }

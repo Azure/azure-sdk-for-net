@@ -26,7 +26,7 @@ namespace System.Net.ClientModel.Tests.Client.ResourceManager.Resources
                 return null;
             }
 
-            return MessageBody.CreateContent(resourceProviderData, ModelReaderWriterOptions.DefaultWireOptions);
+            return MessageBody.CreateBody(resourceProviderData, ModelReaderWriterOptions.DefaultWireOptions);
         }
 
         public static explicit operator ResourceProviderData(Result result)

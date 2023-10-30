@@ -42,7 +42,7 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
                 return null;
             }
 
-            return MessageBody.CreateContent(modelX, ModelReaderWriterOptions.DefaultWireOptions);
+            return MessageBody.CreateBody(modelX, ModelReaderWriterOptions.DefaultWireOptions);
         }
 
         public static explicit operator ModelX(Result result)

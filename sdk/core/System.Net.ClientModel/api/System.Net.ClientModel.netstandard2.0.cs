@@ -18,9 +18,7 @@ namespace System.Net.ClientModel
         public RequestOptions() { }
         public virtual System.Threading.CancellationToken CancellationToken { get { throw null; } set { } }
         public static System.Threading.CancellationToken DefaultCancellationToken { get { throw null; } set { } }
-        public static System.Net.ClientModel.Core.MessageClassifier DefaultMessageClassifier { get { throw null; } set { } }
         public virtual System.Net.ClientModel.Core.ErrorBehavior ErrorBehavior { get { throw null; } set { } }
-        public virtual System.Net.ClientModel.Core.MessageClassifier MessageClassifier { get { throw null; } set { } }
         public virtual void Apply(System.Net.ClientModel.Core.PipelineMessage message) { }
     }
     public abstract partial class Result
@@ -105,10 +103,10 @@ namespace System.Net.ClientModel.Core
     public abstract partial class MessageBody : System.IDisposable
     {
         protected MessageBody() { }
-        public static System.Net.ClientModel.Core.MessageBody CreateContent(System.BinaryData content) { throw null; }
-        public static System.Net.ClientModel.Core.MessageBody CreateContent(System.IO.Stream stream) { throw null; }
-        public static System.Net.ClientModel.Core.MessageBody CreateContent(System.Net.ClientModel.Core.IJsonModel<object> model, System.Net.ClientModel.Core.ModelReaderWriterOptions? options = null) { throw null; }
-        public static System.Net.ClientModel.Core.MessageBody CreateContent(System.Net.ClientModel.Core.IModel<object> model, System.Net.ClientModel.Core.ModelReaderWriterOptions? options = null) { throw null; }
+        public static System.Net.ClientModel.Core.MessageBody CreateBody(System.BinaryData value) { throw null; }
+        public static System.Net.ClientModel.Core.MessageBody CreateBody(System.IO.Stream stream) { throw null; }
+        public static System.Net.ClientModel.Core.MessageBody CreateBody(System.Net.ClientModel.Core.IJsonModel<object> model, System.Net.ClientModel.Core.ModelReaderWriterOptions? options = null) { throw null; }
+        public static System.Net.ClientModel.Core.MessageBody CreateBody(System.Net.ClientModel.Core.IModel<object> model, System.Net.ClientModel.Core.ModelReaderWriterOptions? options = null) { throw null; }
         public abstract void Dispose();
         public static explicit operator System.IO.Stream (System.Net.ClientModel.Core.MessageBody content) { throw null; }
         public static implicit operator System.BinaryData (System.Net.ClientModel.Core.MessageBody content) { throw null; }
@@ -124,7 +122,7 @@ namespace System.Net.ClientModel.Core
     public partial class MessageClassifier
     {
         protected internal MessageClassifier() { }
-        public virtual bool IsErrorResponse(System.Net.ClientModel.Core.PipelineMessage message) { throw null; }
+        public virtual bool IsError(System.Net.ClientModel.Core.PipelineMessage message) { throw null; }
     }
     public abstract partial class MessageHeaders
     {
@@ -225,10 +223,12 @@ namespace System.Net.ClientModel.Core
     {
         public PipelineOptions() { }
         public static System.Net.ClientModel.Core.PipelinePolicy? DefaultLoggingPolicy { get { throw null; } set { } }
+        public static System.Net.ClientModel.Core.MessageClassifier DefaultMessageClassifier { get { throw null; } set { } }
         public static System.TimeSpan DefaultNetworkTimeout { get { throw null; } set { } }
         public static System.Net.ClientModel.Core.PipelinePolicy? DefaultRetryPolicy { get { throw null; } set { } }
         public static System.Net.ClientModel.Core.PipelineTransport? DefaultTransport { get { throw null; } set { } }
         public System.Net.ClientModel.Core.PipelinePolicy? LoggingPolicy { get { throw null; } set { } }
+        public virtual System.Net.ClientModel.Core.MessageClassifier MessageClassifier { get { throw null; } set { } }
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
         public System.Net.ClientModel.Core.PipelinePolicy[]? PerCallPolicies { get { throw null; } set { } }
         public System.Net.ClientModel.Core.PipelinePolicy[]? PerTryPolicies { get { throw null; } set { } }
@@ -282,7 +282,7 @@ namespace System.Net.ClientModel.Core
     public partial class ResponseStatusClassifier : System.Net.ClientModel.Core.MessageClassifier
     {
         public ResponseStatusClassifier(System.ReadOnlySpan<ushort> successStatusCodes) { }
-        public override bool IsErrorResponse(System.Net.ClientModel.Core.PipelineMessage message) { throw null; }
+        public override bool IsError(System.Net.ClientModel.Core.PipelineMessage message) { throw null; }
     }
 }
 namespace System.Net.ClientModel.Internal

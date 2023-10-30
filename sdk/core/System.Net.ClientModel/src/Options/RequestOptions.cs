@@ -36,8 +36,6 @@ public class RequestOptions : PipelineOptions
 
     public virtual CancellationToken CancellationToken { get; set; } = DefaultCancellationToken;
 
-    public virtual MessageClassifier MessageClassifier { get; set; } = DefaultMessageClassifier;
-
     #region Transport options - TODO: move to a subtype type?
 
     // TODO: Can we throw if someone gives us Transport options and transport isn't
@@ -58,6 +56,4 @@ public class RequestOptions : PipelineOptions
     #endregion
 
     public static CancellationToken DefaultCancellationToken { get; set; } = CancellationToken.None;
-
-    public static MessageClassifier DefaultMessageClassifier { get; set; } = new MessageClassifier();
 }

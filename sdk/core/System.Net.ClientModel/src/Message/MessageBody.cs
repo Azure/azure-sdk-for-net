@@ -15,21 +15,21 @@ namespace System.Net.ClientModel.Core
     {
         // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
         private static BinaryData EmptyBinaryData = new(Array.Empty<byte>());
-        internal static MessageBody Empty = CreateContent(EmptyBinaryData);
+        internal static MessageBody Empty = CreateBody(EmptyBinaryData);
 
         /// <summary>
         /// Creates an instance of <see cref="MessageBody"/> that wraps a <see cref="Stream"/>.
         /// </summary>
         /// <param name="stream">The <see cref="Stream"/> to use.</param>
         /// <returns>An instance of <see cref="MessageBody"/> that wraps a <see cref="Stream"/>.</returns>
-        public static MessageBody CreateContent(Stream stream) => new StreamPipelineContent(stream);
+        public static MessageBody CreateBody(Stream stream) => new StreamPipelineContent(stream);
 
         /// <summary>
         /// Creates an instance of <see cref="MessageBody"/> that wraps a <see cref="BinaryData"/>.
         /// </summary>
-        /// <param name="content">The <see cref="BinaryData"/> to use.</param>
+        /// <param name="value">The <see cref="BinaryData"/> to use.</param>
         /// <returns>An instance of <see cref="MessageBody"/> that wraps a <see cref="BinaryData"/>.</returns>
-        public static MessageBody CreateContent(BinaryData content) => new BinaryDataPipelineContent(content.ToMemory());
+        public static MessageBody CreateBody(BinaryData value) => new BinaryDataPipelineContent(value.ToMemory());
 
         /// <summary>
         /// Creates an instance of <see cref="MessageBody"/> that wraps a <see cref="IModel{T}"/>.
@@ -37,7 +37,7 @@ namespace System.Net.ClientModel.Core
         /// <param name="model">The <see cref="IModel{T}"/> to write.</param>
         /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
         /// <returns>An instance of <see cref="MessageBody"/> that wraps a <see cref="IModel{T}"/>.</returns>
-        public static MessageBody CreateContent(IModel<object> model, ModelReaderWriterOptions? options = default)
+        public static MessageBody CreateBody(IModel<object> model, ModelReaderWriterOptions? options = default)
             => new ModelWriterContent(model, options ?? ModelReaderWriterOptions.DefaultWireOptions);
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace System.Net.ClientModel.Core
         /// <param name="model">The <see cref="IJsonModel{T}"/> to write.</param>
         /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
         /// <returns>An instance of <see cref="MessageBody"/> that wraps a <see cref="IJsonModel{T}"/>.</returns>
-        public static MessageBody CreateContent(IJsonModel<object> model, ModelReaderWriterOptions? options = default)
+        public static MessageBody CreateBody(IJsonModel<object> model, ModelReaderWriterOptions? options = default)
             => new JsonModelWriterContent(model, options ?? ModelReaderWriterOptions.DefaultWireOptions);
 
         /// <summary>
