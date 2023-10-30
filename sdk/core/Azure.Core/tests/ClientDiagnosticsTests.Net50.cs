@@ -156,7 +156,7 @@ namespace Azure.Core.Tests
             nestedScope.SetDisplayName("Nested Activity Display Name");
             nestedScope.Start();
 
-            if (suppressNestedScopes.GetValueOrDefault(false))
+            if (suppressNestedScopes.GetValueOrDefault(true))
             {
                 Assert.IsFalse(nestedScope.IsEnabled);
                 Assert.AreEqual("ClientName.ActivityName", Activity.Current.OperationName);
