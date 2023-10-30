@@ -18,7 +18,7 @@ namespace Azure.Core.Pipeline
     {
         private const string AzureSdkScopeLabel = "az.sdk.scope";
         internal const string OpenTelemetrySchemaAttribute = "az.schema_url";
-        internal const string OpenTelemetrySchemaVersion = "https://opentelemetry.io/schemas/1.17.0";
+        internal const string OpenTelemetrySchemaVersion = "https://opentelemetry.io/schemas/1.23.0";
         private static readonly object AzureSdkScopeValue = bool.TrueString;
 
         private readonly ActivityAdapter? _activityAdapter;
@@ -140,9 +140,18 @@ namespace Azure.Core.Pipeline
         [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "The Exception being passed into this method has public properties preserved on the inner method MarkFailed." +
             "The public property System.Exception.TargetSite.get is not compatible with trimming and produces a warning when preserving all public properties. Since we do not use this property, and" +
             "neither does Application Insights, we can suppress the warning coming from the inner method.")]
-        public void Failed(Exception? exception = default)
+        public void Failed(Exception exception)
         {
             _activityAdapter?.MarkFailed(exception);
+        }
+
+        /// <summary>
+        /// Marks the scope as failed with low-cardinality error.type.
+        /// </summary>
+        /// <param name="errorCode">Error code to associate with the failed scope.</param>
+        public void Failed(string errorCode)
+        {
+            _activityAdapter?.MarkFailed(errorCode);
         }
 
 #if NETCOREAPP2_1
@@ -514,7 +523,16 @@ namespace Azure.Core.Pipeline
                 }
 #endif
 #if NET6_0_OR_GREATER // SetStatus is only defined in NET 6 or greater
+                _currentActivity?.AddTag("error.type", exception?.GetType()?.FullName ?? "_OTHER");
                 _currentActivity?.SetStatus(ActivityStatusCode.Error, exception?.ToString());
+#endif
+            }
+
+            public void MarkFailed(string statusCode)
+            {
+#if NET6_0_OR_GREATER // SetStatus is only defined in NET 6 or greater
+                _currentActivity?.AddTag("error.type", statusCode);
+                _currentActivity?.SetStatus(ActivityStatusCode.Error, null);
 #endif
             }
 

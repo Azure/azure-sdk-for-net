@@ -274,6 +274,25 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void FailedStopsActivityAndWritesErrorType()
+        {
+            using var testListener = new TestActivitySourceListener("Azure.Clients");
+            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true, false);
+
+            DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
+
+            scope.Start();
+            scope.Failed(new ArgumentException());
+            scope.Dispose();
+
+            Activity activity = testListener.Activities.Single();
+
+            Assert.AreEqual(1, activity.Events.Count());
+            CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("error.type", typeof(ArgumentException).FullName));
+            CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("az.namespace", "Microsoft.Azure.Core.Cool.Tests"));
+        }
+
+        [Test]
         public void NoOpsWhenDisabled()
         {
             DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients",  "Microsoft.Azure.Core.Cool.Tests", false, false);
