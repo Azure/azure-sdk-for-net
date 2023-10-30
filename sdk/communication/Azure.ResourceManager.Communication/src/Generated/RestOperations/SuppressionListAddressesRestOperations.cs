@@ -9,6 +9,7 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -18,6 +19,7 @@ namespace Azure.ResourceManager.Communication
 {
     internal partial class SuppressionListAddressesRestOperations
     {
+        private string _skipTokenQueryParameter = "$skipToken";
         private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
@@ -424,12 +426,23 @@ namespace Azure.ResourceManager.Communication
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string emailServiceName, string domainName, string suppressionListName)
         {
+            if (string.IsNullOrWhiteSpace(nextLink))
+                return default;
+
+            var query = HttpUtility.ParseQueryString(new Uri(nextLink).Query);
+            var skipToken = query.Get(_skipTokenQueryParameter);
+
+            if (string.IsNullOrWhiteSpace(skipToken))
+                return default;
+
+            var skipTokenQueryParam = $"{_skipTokenQueryParameter}={skipToken}";
+
             var message = _pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
+            uri.AppendRawNextLink(skipTokenQueryParam, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);

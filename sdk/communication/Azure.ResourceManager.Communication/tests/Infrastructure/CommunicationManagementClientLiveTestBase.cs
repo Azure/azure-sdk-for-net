@@ -98,15 +98,17 @@ namespace Azure.ResourceManager.Communication.Tests
 
         internal async Task<SuppressionListResource> CreateDefaultSuppressionListResource(CommunicationDomainResource domain, string listName)
         {
+            var id = Recording.Random.NewGuid().ToString();
+
             SuppressionListResourceData data = new SuppressionListResourceData
             {
                  ListName = listName
             };
 
             ArmOperation<SuppressionListResource> suppressionListOp =
-                await domain.GetSuppressionListResources().CreateOrUpdateAsync(WaitUntil.Completed, Guid.NewGuid().ToString(), data);
-            SuppressionListResource senderUsername = suppressionListOp.Value;
-            return senderUsername;
+                await domain.GetSuppressionListResources().CreateOrUpdateAsync(WaitUntil.Completed, id, data);
+            SuppressionListResource suppressionList = suppressionListOp.Value;
+            return suppressionList;
         }
 
         internal async Task<SuppressionListAddressResource> CreateDefaultSuppressionListAddressResource(
@@ -116,7 +118,7 @@ namespace Azure.ResourceManager.Communication.Tests
             string lastName = default,
             string notes = default)
         {
-            var id = Guid.NewGuid().ToString();
+            var id = Recording.Random.NewGuid().ToString();
 
             SuppressionListAddressResourceData data = new SuppressionListAddressResourceData
             {
