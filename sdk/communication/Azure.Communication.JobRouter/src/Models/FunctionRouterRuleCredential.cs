@@ -42,13 +42,13 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> (Optional) Access key scoped to a particular function. </summary>
-        public string FunctionKey { get; internal set; }
+        internal string FunctionKey { get; }
 
         /// <summary>
         /// (Optional) Access key scoped to a Azure Function app.
         /// This key grants access to all functions under the app.
         /// </summary>
-        public string AppKey { get; internal set; }
+        internal string AppKey { get; }
 
         /// <summary>
         /// (Optional) Client id, when AppKey is provided

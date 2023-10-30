@@ -25,7 +25,7 @@ Response<ClassificationPolicy> classificationPolicy = routerAdministrationClient
     {
         Name = "Sample classification policy",
         PrioritizationRule = new StaticRouterRule(new LabelValue(10)),
-        QueueSelectors =
+        QueueSelectorAttachments =
         {
             new StaticQueueSelectorAttachment(new RouterQueueSelector("Region", LabelOperator.Equal, new LabelValue("NA"))),
             new ConditionalQueueSelectorAttachment(
@@ -36,7 +36,7 @@ Response<ClassificationPolicy> classificationPolicy = routerAdministrationClient
                     new RouterQueueSelector("QGroup", LabelOperator.Equal, new LabelValue("NA_O365"))
                 }),
         },
-        WorkerSelectors =
+        WorkerSelectorAttachments =
         {
             new ConditionalWorkerSelectorAttachment(
                 condition: new ExpressionRouterRule("If(job.Product = \"O365\", true, false)"),
@@ -71,7 +71,7 @@ Console.WriteLine($"Successfully fetched classification policy with id: {queried
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateClassificationPolicy
 Response<ClassificationPolicy> updatedClassificationPolicy = routerAdministrationClient.UpdateClassificationPolicy(
-    new UpdateClassificationPolicyOptions(classificationPolicyId)
+    new ClassificationPolicy(classificationPolicyId)
     {
         PrioritizationRule = new ExpressionRouterRule("If(job.HighPriority = \"true\", 50, 10)")
     });
@@ -84,12 +84,12 @@ Console.WriteLine($"Classification policy successfully update with new prioritiz
 ## List classification policies
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetClassificationPolicies
-Pageable<ClassificationPolicyItem> classificationPolicies = routerAdministrationClient.GetClassificationPolicies();
-foreach (Page<ClassificationPolicyItem> asPage in classificationPolicies.AsPages(pageSizeHint: 10))
+Pageable<ClassificationPolicy> classificationPolicies = routerAdministrationClient.GetClassificationPolicies();
+foreach (Page<ClassificationPolicy> asPage in classificationPolicies.AsPages(pageSizeHint: 10))
 {
-    foreach (ClassificationPolicyItem? policy in asPage.Values)
+    foreach (ClassificationPolicy? policy in asPage.Values)
     {
-        Console.WriteLine($"Listing classification policy with id: {policy.ClassificationPolicy.Id}");
+        Console.WriteLine($"Listing classification policy with id: {policy.Id}");
     }
 }
 ```

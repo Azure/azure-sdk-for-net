@@ -14,10 +14,18 @@ namespace Azure.Communication.JobRouter
     public partial class ClassificationPolicy
     {
         /// <summary> Initializes a new instance of ClassificationPolicy. </summary>
+        internal ClassificationPolicy()
+        {
+            QueueSelectorAttachments = new ChangeTrackingList<QueueSelectorAttachment>();
+            WorkerSelectorAttachments = new ChangeTrackingList<WorkerSelectorAttachment>();
+        }
+
+        /// <summary> Initializes a new instance of ClassificationPolicy. </summary>
+        /// <param name="etag"> Concurrency Token. </param>
         /// <param name="id"> Unique identifier of this policy. </param>
         /// <param name="name"> Friendly name of this policy. </param>
         /// <param name="fallbackQueueId"> The fallback queue to select if the queue selector doesn't find a match. </param>
-        /// <param name="queueSelectors"> The queue selectors to resolve a queue for a given job. </param>
+        /// <param name="queueSelectorAttachments"> The queue selector attachments used to resolve a queue for a given job. </param>
         /// <param name="prioritizationRule">
         /// A rule of one of the following types:
         ///
@@ -33,17 +41,20 @@ namespace Azure.Communication.JobRouter
         /// WebhookRule: A rule providing a binding to a webserver following
         /// OAuth2.0 authentication protocol.
         /// </param>
-        /// <param name="workerSelectors"> The worker label selectors to attach to a given job. </param>
-        internal ClassificationPolicy(string id, string name, string fallbackQueueId, IList<QueueSelectorAttachment> queueSelectors, RouterRule prioritizationRule, IList<WorkerSelectorAttachment> workerSelectors)
+        /// <param name="workerSelectorAttachments"> The worker selector attachments used to attach worker selectors to a given job. </param>
+        internal ClassificationPolicy(string etag, string id, string name, string fallbackQueueId, IList<QueueSelectorAttachment> queueSelectorAttachments, RouterRule prioritizationRule, IList<WorkerSelectorAttachment> workerSelectorAttachments)
         {
+            Etag = etag;
             Id = id;
             Name = name;
             FallbackQueueId = fallbackQueueId;
-            _queueSelectors = queueSelectors;
+            QueueSelectorAttachments = queueSelectorAttachments;
             PrioritizationRule = prioritizationRule;
-            _workerSelectors = workerSelectors;
+            WorkerSelectorAttachments = workerSelectorAttachments;
         }
 
+        /// <summary> Concurrency Token. </summary>
+        public string Etag { get; }
         /// <summary> Unique identifier of this policy. </summary>
         public string Id { get; }
     }

@@ -23,11 +23,14 @@ JobRouterAdministrationClient routerAdministrationClient = new JobRouterAdminist
 
 // Create distribution policy
 string distributionPolicyId = "best-worker-dp-2";
-Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
+var distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
     new CreateDistributionPolicyOptions(
         distributionPolicyId: distributionPolicyId,
         offerExpiresAfter: TimeSpan.FromMinutes(5),
-        mode: new BestWorkerMode(scoringRule: new ExpressionRouterRule("If(worker.HandleEscalation = true, 100, 1)"))));
+        mode: new BestWorkerMode
+        {
+            ScoringRule = new ExpressionRouterRule("If(worker.HandleEscalation = true, 100, 1)")
+        }));
 
 // Create job queue
 string jobQueueId = "job-queue-id-2";
@@ -46,22 +49,22 @@ Dictionary<string, LabelValue> worker1Labels = new Dictionary<string, LabelValue
 ;
 
 Response<RouterWorker> worker1 = await routerClient.CreateWorkerAsync(
-    options: new CreateWorkerOptions(workerId: worker1Id, totalCapacity: 10)
+    options: new CreateWorkerOptions(workerId: worker1Id, capacity: 10)
     {
         AvailableForOffers = true,
-        ChannelConfigurations = { [channelId] = new ChannelConfiguration(10), },
+        Channels = { new RouterChannel(channelId, 10), },
         Labels = { ["HandleEscalation"] = new LabelValue(true), ["IT_Support"] = new LabelValue(true) },
-        QueueAssignments = { [jobQueueId] = new RouterQueueAssignment(), }
+        Queues = { jobQueueId }
     });
 
 // Worker 2 cannot handle escalation
 Response<RouterWorker> worker2 = await routerClient.CreateWorkerAsync(
-    options: new CreateWorkerOptions(workerId: worker2Id, totalCapacity: 10)
+    options: new CreateWorkerOptions(workerId: worker2Id, capacity: 10)
     {
         AvailableForOffers = true,
-        ChannelConfigurations = { [channelId] = new ChannelConfiguration(10), },
+        Channels = { new RouterChannel(channelId, 10), },
         Labels = { ["IT_Support"] = new LabelValue(true), },
-        QueueAssignments = { [jobQueueId] = new RouterQueueAssignment(), },
+        Queues = { jobQueueId },
     });
 
 // Create job
@@ -250,11 +253,14 @@ Let us set up the rest using the Router SDK.
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Distribution_Advanced_Scoring_AzureFunctionRouterRule
 // Create distribution policy
 string distributionPolicyId = "best-worker-dp-1";
-Response<DistributionPolicy> distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
+var distributionPolicy = await routerAdministrationClient.CreateDistributionPolicyAsync(
     new CreateDistributionPolicyOptions(
         distributionPolicyId: distributionPolicyId,
         offerExpiresAfter: TimeSpan.FromMinutes(5),
-        mode: new BestWorkerMode(scoringRule: new FunctionRouterRule(new Uri("<insert function url>")))));
+        mode: new BestWorkerMode
+        {
+            ScoringRule = new FunctionRouterRule(new Uri("<insert function url>"))
+        }));
 
 // Create job queue
 string queueId = "job-queue-id-1";
@@ -268,9 +274,9 @@ string channelId = "general";
 
 string workerId1 = "worker-Id-1";
 Response<RouterWorker> worker1 = await routerClient.CreateWorkerAsync(
-    options: new CreateWorkerOptions(workerId: workerId1, totalCapacity: 100)
+    options: new CreateWorkerOptions(workerId: workerId1, capacity: 100)
     {
-        QueueAssignments = { [queueId] = new RouterQueueAssignment(), },
+        Queues = { queueId },
         Labels =
         {
             ["HighPrioritySupport"] = new LabelValue(true),
@@ -280,16 +286,16 @@ Response<RouterWorker> worker1 = await routerClient.CreateWorkerAsync(
             ["ChatSupport"] = new LabelValue(true),
             ["XboxSupport"] = new LabelValue(true)
         },
-        ChannelConfigurations = { [channelId] = new ChannelConfiguration(10), },
+        Channels = { new RouterChannel(channelId, 10), },
         AvailableForOffers = true,
     });
 
 string workerId2 = "worker-Id-2";
 
 Response<RouterWorker> worker2 = await routerClient.CreateWorkerAsync(
-    options: new CreateWorkerOptions(workerId: workerId2, totalCapacity: 100)
+    options: new CreateWorkerOptions(workerId: workerId2, capacity: 100)
     {
-        QueueAssignments = { [queueId] = new RouterQueueAssignment(), },
+        Queues = { queueId },
         Labels =
         {
             ["HighPrioritySupport"] = new LabelValue(true),
@@ -300,7 +306,7 @@ Response<RouterWorker> worker2 = await routerClient.CreateWorkerAsync(
             ["ChatSupport"] = new LabelValue(true),
             ["XboxSupport"] = new LabelValue(true)
         },
-        ChannelConfigurations = { [channelId] = new ChannelConfiguration(10), },
+        Channels = { new RouterChannel(channelId, 10), },
         AvailableForOffers = true,
     });
 
@@ -309,9 +315,9 @@ Dictionary<string, LabelValue> worker3Labels = new Dictionary<string, LabelValue
 ;
 
 Response<RouterWorker> worker3 = await routerClient.CreateWorkerAsync(
-    options: new CreateWorkerOptions(workerId: workerId3, totalCapacity: 100)
+    options: new CreateWorkerOptions(workerId: workerId3, capacity: 100)
     {
-        QueueAssignments = { [queueId] = new RouterQueueAssignment(), },
+        Queues = { queueId },
         Labels =
         {
             ["HighPrioritySupport"] = new LabelValue(false),
@@ -321,7 +327,7 @@ Response<RouterWorker> worker3 = await routerClient.CreateWorkerAsync(
             ["ChatSupport"] = new LabelValue(true),
             ["XboxSupport"] = new LabelValue(true),
         },
-        ChannelConfigurations = { [channelId] = new ChannelConfiguration(10), },
+        Channels = { new RouterChannel(channelId, 10), },
         AvailableForOffers = true,
     });
 
