@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Net.ClientModel;
 using System.Net.ClientModel.Core;
 using System.Reflection;
 using Azure.Core.Tests.ModelReaderWriterTests.Models;
