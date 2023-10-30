@@ -26,8 +26,21 @@ public class MapsClient
 
         _endpoint = endpoint;
         _credential = credential;
-        _pipeline = MessagePipeline.Create(options, new KeyCredentialAuthenticationPolicy(_credential, "subscription-key"));
         _apiVersion = options.Version;
+
+        if (options.PerCallPolicies is null)
+        {
+            options.PerCallPolicies = new PipelinePolicy[1];
+        }
+        else
+        {
+            var perCallPolicies = new PipelinePolicy[options.PerCallPolicies.Length + 1];
+            options.PerCallPolicies.CopyTo(perCallPolicies.AsSpan());
+        }
+
+        options.PerCallPolicies[options.PerCallPolicies.Length - 1] = new KeyCredentialAuthenticationPolicy(_credential, "subscription-key");
+
+        _pipeline = MessagePipeline.Create(options);
     }
 
     public virtual Result<IPAddressCountryPair> GetCountryCode(IPAddress ipAddress, CancellationToken cancellationToken = default)

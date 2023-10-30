@@ -22,9 +22,22 @@ public class OpenAIClient
         ClientUtilities.AssertNotNull(credential, nameof(credential));
         options ??= new OpenAIClientOptions();
 
-        _credential = credential;
-        _pipeline = MessagePipeline.Create(options, new KeyCredentialAuthenticationPolicy(_credential, "Authorization", "Bearer"));
         _endpoint = endpoint;
+        _credential = credential;
+
+        if (options.PerCallPolicies is null)
+        {
+            options.PerCallPolicies = new PipelinePolicy[1];
+        }
+        else
+        {
+            var perCallPolicies = new PipelinePolicy[options.PerCallPolicies.Length + 1];
+            options.PerCallPolicies.CopyTo(perCallPolicies.AsSpan());
+        }
+
+        options.PerCallPolicies[options.PerCallPolicies.Length - 1] = new KeyCredentialAuthenticationPolicy(_credential, "Authorization", "Bearer");
+
+        _pipeline = MessagePipeline.Create(options);
     }
 
     public virtual Result<Completions> GetCompletions(string deploymentId, CompletionsOptions completionsOptions, CancellationToken cancellationToken = default)

@@ -28,17 +28,9 @@ public class MessagePipeline
         _policies = policies;
     }
 
-    public static MessagePipeline Create(
-        PipelineOptions options,
-        params PipelinePolicy[] perTryPolicies)
-        => Create(options, perTryPolicies, ReadOnlySpan<PipelinePolicy>.Empty);
-
-    public static MessagePipeline Create(
-        PipelineOptions options,
-        ReadOnlySpan<PipelinePolicy> perCallPolicies,
-        ReadOnlySpan<PipelinePolicy> perTryPolicies)
+    public static MessagePipeline Create(PipelineOptions options)
     {
-        int pipelineLength = perCallPolicies.Length + perTryPolicies.Length;
+        int pipelineLength = 0;
 
         if (options.PerTryPolicies != null)
         {
@@ -56,13 +48,9 @@ public class MessagePipeline
         pipelineLength++; // for response buffering policy
         pipelineLength++; // for transport
 
-        PipelinePolicy[] pipeline
-            = new PipelinePolicy[pipelineLength];
+        PipelinePolicy[] pipeline = new PipelinePolicy[pipelineLength];
 
         int index = 0;
-
-        perCallPolicies.CopyTo(pipeline.AsSpan(index));
-        index += perCallPolicies.Length;
 
         if (options.PerCallPolicies != null)
         {
@@ -80,9 +68,6 @@ public class MessagePipeline
             options.PerTryPolicies.CopyTo(pipeline.AsSpan(index));
             index += options.PerTryPolicies.Length;
         }
-
-        perTryPolicies.CopyTo(pipeline.AsSpan(index));
-        index += perTryPolicies.Length;
 
         if (options.LoggingPolicy != null)
         {
@@ -107,10 +92,10 @@ public class MessagePipeline
         return new MessagePipeline(pipeline);
     }
 
-    // Note: nothing validates this API shape, or that Azure.Core.HttpPipeline has the same
-    // API shape.  This becomes something a human must track if we wanted to add a base class later.
-    public PipelineMessage CreateMessage()
-        => _transport.CreateMessage();
+    // TODO: note that without a common base type, nothing validates that MessagePipeline
+    // and Azure.Core.HttpPipeline have the same API shape. This is something a human
+    // must keep track of if we wanted to add a common base class later.
+    public PipelineMessage CreateMessage() => _transport.CreateMessage();
 
     public void Send(PipelineMessage message)
     {

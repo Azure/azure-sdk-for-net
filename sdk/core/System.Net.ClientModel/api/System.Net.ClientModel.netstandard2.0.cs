@@ -143,8 +143,7 @@ namespace System.Net.ClientModel.Core
     public partial class MessagePipeline
     {
         public MessagePipeline(System.Net.ClientModel.Core.PipelineTransport transport, System.ReadOnlyMemory<System.Net.ClientModel.Core.PipelinePolicy> policies) { }
-        public static System.Net.ClientModel.Core.MessagePipeline Create(System.Net.ClientModel.Core.PipelineOptions options, params System.Net.ClientModel.Core.PipelinePolicy[] perTryPolicies) { throw null; }
-        public static System.Net.ClientModel.Core.MessagePipeline Create(System.Net.ClientModel.Core.PipelineOptions options, System.ReadOnlySpan<System.Net.ClientModel.Core.PipelinePolicy> perCallPolicies, System.ReadOnlySpan<System.Net.ClientModel.Core.PipelinePolicy> perTryPolicies) { throw null; }
+        public static System.Net.ClientModel.Core.MessagePipeline Create(System.Net.ClientModel.Core.PipelineOptions options) { throw null; }
         public System.Net.ClientModel.Core.PipelineMessage CreateMessage() { throw null; }
         public void Send(System.Net.ClientModel.Core.PipelineMessage message) { }
         public System.Threading.Tasks.ValueTask SendAsync(System.Net.ClientModel.Core.PipelineMessage message) { throw null; }
