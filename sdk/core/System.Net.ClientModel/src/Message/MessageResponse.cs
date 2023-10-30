@@ -3,7 +3,7 @@
 
 namespace System.Net.ClientModel.Core;
 
-public abstract class PipelineResponse : IDisposable
+public abstract class MessageResponse : IDisposable
 {
     public abstract int Status { get; }
 

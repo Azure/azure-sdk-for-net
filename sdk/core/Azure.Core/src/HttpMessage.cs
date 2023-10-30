@@ -13,7 +13,7 @@ namespace Azure.Core
     /// <summary>
     /// Represents a context flowing through the <see cref="HttpPipeline"/>.
     /// </summary>
-    public sealed class HttpMessage : PipelineMessage
+    public sealed class HttpMessage : ClientMessage
     {
         private ArrayBackedPropertyBag<ulong, object> _propertyBag;
         private Response? _response;
@@ -266,11 +266,11 @@ namespace Azure.Core
         /// </summary>
         private class MessagePropertyKey { }
 
-        private static PipelineRequest ToPipelineRequest(Request request)
+        private static MessageRequest ToPipelineRequest(Request request)
         {
             Argument.AssertNotNull(request, nameof(request));
 
-            if (HttpClientTransport.TryGetPipelineRequest(request, out PipelineRequest? pipelineRequest))
+            if (HttpClientTransport.TryGetPipelineRequest(request, out MessageRequest? pipelineRequest))
             {
                 return pipelineRequest!;
             }
@@ -279,14 +279,14 @@ namespace Azure.Core
             return new PipelineRequestAdapter(request);
         }
 
-        private static PipelineResponse? ToPipelineResponse(Response response)
+        private static MessageResponse? ToPipelineResponse(Response response)
         {
             if (response is null)
             {
                 return null;
             }
 
-            if (HttpClientTransport.TryGetPipelineResponse(response, out PipelineResponse? pipelineResponse))
+            if (HttpClientTransport.TryGetPipelineResponse(response, out MessageResponse? pipelineResponse))
             {
                 return pipelineResponse!;
             }

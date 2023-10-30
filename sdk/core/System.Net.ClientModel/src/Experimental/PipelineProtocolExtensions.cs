@@ -9,7 +9,7 @@ namespace System.Net.ClientModel.Internal;
 
 public static class PipelineProtocolExtensions
 {
-    public static async ValueTask<PipelineResponse> ProcessMessageAsync(this MessagePipeline pipeline, PipelineMessage message, RequestOptions requestContext, CancellationToken cancellationToken = default)
+    public static async ValueTask<MessageResponse> ProcessMessageAsync(this MessagePipeline pipeline, ClientMessage message, RequestOptions requestContext, CancellationToken cancellationToken = default)
     {
         await pipeline.SendAsync(message).ConfigureAwait(false);
 
@@ -26,7 +26,7 @@ public static class PipelineProtocolExtensions
         throw new UnsuccessfulRequestException(message.Response);
     }
 
-    public static PipelineResponse ProcessMessage(this MessagePipeline pipeline, PipelineMessage message, RequestOptions requestContext, CancellationToken cancellationToken = default)
+    public static MessageResponse ProcessMessage(this MessagePipeline pipeline, ClientMessage message, RequestOptions requestContext, CancellationToken cancellationToken = default)
     {
         pipeline.Send(message);
 
@@ -43,9 +43,9 @@ public static class PipelineProtocolExtensions
         throw new UnsuccessfulRequestException(message.Response);
     }
 
-    public static async ValueTask<NullableResult<bool>> ProcessHeadAsBoolMessageAsync(this MessagePipeline pipeline, PipelineMessage message, RequestOptions requestContext)
+    public static async ValueTask<NullableResult<bool>> ProcessHeadAsBoolMessageAsync(this MessagePipeline pipeline, ClientMessage message, RequestOptions requestContext)
     {
-        PipelineResponse response = await pipeline.ProcessMessageAsync(message, requestContext).ConfigureAwait(false);
+        MessageResponse response = await pipeline.ProcessMessageAsync(message, requestContext).ConfigureAwait(false);
         switch (response.Status)
         {
             case >= 200 and < 300:
@@ -57,9 +57,9 @@ public static class PipelineProtocolExtensions
         }
     }
 
-    public static NullableResult<bool> ProcessHeadAsBoolMessage(this MessagePipeline pipeline, PipelineMessage message, RequestOptions requestContext)
+    public static NullableResult<bool> ProcessHeadAsBoolMessage(this MessagePipeline pipeline, ClientMessage message, RequestOptions requestContext)
     {
-        PipelineResponse response = pipeline.ProcessMessage(message, requestContext);
+        MessageResponse response = pipeline.ProcessMessage(message, requestContext);
         switch (response.Status)
         {
             case >= 200 and < 300:
@@ -73,10 +73,10 @@ public static class PipelineProtocolExtensions
 
     internal class ErrorResult<T> : NullableResult<T>
     {
-        private readonly PipelineResponse _response;
+        private readonly MessageResponse _response;
         private readonly UnsuccessfulRequestException _exception;
 
-        public ErrorResult(PipelineResponse response, UnsuccessfulRequestException exception)
+        public ErrorResult(MessageResponse response, UnsuccessfulRequestException exception)
             : base(default, response)
         {
             _response = response;
@@ -87,6 +87,6 @@ public static class PipelineProtocolExtensions
 
         public override bool HasValue => false;
 
-        public override PipelineResponse GetRawResponse() => _response;
+        public override MessageResponse GetRawResponse() => _response;
     }
 }

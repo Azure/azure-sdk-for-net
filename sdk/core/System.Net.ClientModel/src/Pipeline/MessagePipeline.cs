@@ -95,15 +95,15 @@ public class MessagePipeline
     // TODO: note that without a common base type, nothing validates that MessagePipeline
     // and Azure.Core.HttpPipeline have the same API shape. This is something a human
     // must keep track of if we wanted to add a common base class later.
-    public PipelineMessage CreateMessage() => _transport.CreateMessage();
+    public ClientMessage CreateMessage() => _transport.CreateMessage();
 
-    public void Send(PipelineMessage message)
+    public void Send(ClientMessage message)
     {
         PipelineEnumerator enumerator = new MessagePipelineExecutor(message, _policies);
         enumerator.ProcessNext();
     }
 
-    public async ValueTask SendAsync(PipelineMessage message)
+    public async ValueTask SendAsync(ClientMessage message)
     {
         PipelineEnumerator enumerator = new MessagePipelineExecutor(message, _policies);
         await enumerator.ProcessNextAsync().ConfigureAwait(false);
@@ -111,11 +111,11 @@ public class MessagePipeline
 
     private class MessagePipelineExecutor : PipelineEnumerator
     {
-        private readonly PipelineMessage _message;
+        private readonly ClientMessage _message;
         private ReadOnlyMemory<PipelinePolicy> _policies;
 
         public MessagePipelineExecutor(
-            PipelineMessage message,
+            ClientMessage message,
             ReadOnlyMemory<PipelinePolicy> policies )
         {
             _message = message;

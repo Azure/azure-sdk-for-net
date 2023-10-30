@@ -10,7 +10,7 @@ namespace System.Net.ClientModel.Core
         /// <summary>
         /// Specifies if the response contained in the <paramref name="message"/> is not successful.
         /// </summary>
-        public virtual bool IsError(PipelineMessage message)
+        public virtual bool IsError(ClientMessage message)
         {
             if (message.Response is null)
             {

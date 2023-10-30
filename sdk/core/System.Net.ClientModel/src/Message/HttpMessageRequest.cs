@@ -14,7 +14,7 @@ namespace System.Net.ClientModel.Internal.Core;
 
 // This adds the Http dependency, and some implementation
 
-public class HttpPipelineRequest : PipelineRequest, IDisposable
+public class HttpMessageRequest : MessageRequest, IDisposable
 {
     private const string AuthorizationHeaderName = "Authorization";
 
@@ -23,7 +23,7 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
 
     private readonly MessageRequestHeaders _headers;
 
-    protected internal HttpPipelineRequest()
+    protected internal HttpMessageRequest()
     {
         Method = HttpMethod.Get.Method;
         _headers = new MessageRequestHeaders();

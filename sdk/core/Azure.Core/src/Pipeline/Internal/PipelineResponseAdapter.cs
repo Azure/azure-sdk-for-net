@@ -8,7 +8,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Core
 {
-    internal class PipelineResponseAdapter : PipelineResponse
+    internal class PipelineResponseAdapter : MessageResponse
     {
         private readonly Response _response;
 

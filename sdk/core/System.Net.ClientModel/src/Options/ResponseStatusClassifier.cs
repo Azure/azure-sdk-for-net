@@ -26,7 +26,7 @@ namespace System.Net.ClientModel.Core
             }
         }
 
-        public override bool IsError(PipelineMessage message)
+        public override bool IsError(ClientMessage message)
         {
             return base.IsError(message);
         }

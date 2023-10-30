@@ -13,12 +13,12 @@ namespace System.Net.ClientModel
         /// </summary>
         public int Status { get; }
 
-        public UnsuccessfulRequestException(PipelineResponse response) : base(GetMessageFromResponse(response))
+        public UnsuccessfulRequestException(MessageResponse response) : base(GetMessageFromResponse(response))
         {
             Status = response.Status;
         }
 
-        protected UnsuccessfulRequestException(PipelineResponse response, string message, Exception? innerException)
+        protected UnsuccessfulRequestException(MessageResponse response, string message, Exception? innerException)
             // TODO: what is the actual behavior of the EBN RFE constructor that takes both erroCode and message?
             // Duplicate that here.
             : base(message, innerException)
@@ -31,7 +31,7 @@ namespace System.Net.ClientModel
             // TODO: What is the experience if someone tries to access this.Response?
         }
 
-        private static string GetMessageFromResponse(PipelineResponse response)
+        private static string GetMessageFromResponse(MessageResponse response)
         {
             // TODO: implement for real
             return $"Service error: {response.Status}";

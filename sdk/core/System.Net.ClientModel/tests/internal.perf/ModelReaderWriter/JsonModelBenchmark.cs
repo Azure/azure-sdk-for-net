@@ -14,7 +14,7 @@ namespace System.Net.ClientModel.Tests.Internal.Perf
     [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
     public abstract class JsonModelBenchmark<T> where T : class, IJsonModel<T>
     {
-        private class MockPipelineResponse : PipelineResponse
+        private class MockPipelineResponse : MessageResponse
         {
             public MockPipelineResponse(int status, BinaryData content)
             {
@@ -38,14 +38,14 @@ namespace System.Net.ClientModel.Tests.Internal.Perf
 
         private class MockResult : Result
         {
-            private PipelineResponse _response;
+            private MessageResponse _response;
 
             public MockResult(int status, BinaryData content)
             {
                 _response = new MockPipelineResponse(status, content);
             }
 
-            public override PipelineResponse GetRawResponse() => _response;
+            public override MessageResponse GetRawResponse() => _response;
         }
 
         private string _json;

@@ -47,7 +47,7 @@ public class OpenAIClient
 
         RequestOptions context = FromCancellationToken(cancellationToken);
         Result result = GetCompletions(deploymentId, completionsOptions.ToRequestContent(), context);
-        PipelineResponse response = result.GetRawResponse();
+        MessageResponse response = result.GetRawResponse();
         Completions completions = Completions.FromResponse(response);
         return Result.FromValue(completions, response);
     }
@@ -57,22 +57,22 @@ public class OpenAIClient
         ClientUtilities.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
         ClientUtilities.AssertNotNull(content, nameof(content));
 
-        using PipelineMessage message = CreateGetCompletionsRequest(deploymentId, content, options);
+        using ClientMessage message = CreateGetCompletionsRequest(deploymentId, content, options);
 
         // TODO: per precedence rules, we should not override a customer-specified message classifier.
         options.MessageClassifier = MessageClassifier200;
 
-        PipelineResponse response = _pipeline.ProcessMessage(message, options);
+        MessageResponse response = _pipeline.ProcessMessage(message, options);
         Result result = Result.FromResponse(response);
         return result;
     }
 
-    internal PipelineMessage CreateGetCompletionsRequest(string deploymentId, MessageBody content, RequestOptions options)
+    internal ClientMessage CreateGetCompletionsRequest(string deploymentId, MessageBody content, RequestOptions options)
     {
-        PipelineMessage message = _pipeline.CreateMessage();
+        ClientMessage message = _pipeline.CreateMessage();
         options.Apply(message);
 
-        PipelineRequest request = message.Request;
+        MessageRequest request = message.Request;
         request.Method = "POST";
 
         UriBuilder uriBuilder = new(_endpoint.ToString());

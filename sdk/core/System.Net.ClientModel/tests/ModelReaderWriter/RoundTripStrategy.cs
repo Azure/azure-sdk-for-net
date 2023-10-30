@@ -234,7 +234,7 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
             var result = new MockResult(200, new BinaryData(Encoding.UTF8.GetBytes(payload)));
             return _fromResult(result);
         }
-        private class MockPipelineResponse : PipelineResponse
+        private class MockPipelineResponse : MessageResponse
         {
             public MockPipelineResponse(int status, BinaryData content)
             {
@@ -258,14 +258,14 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
 
         private class MockResult : Result
         {
-            private PipelineResponse _response;
+            private MessageResponse _response;
 
             public MockResult(int status, BinaryData content)
             {
                 _response = new MockPipelineResponse(status, content);
             }
 
-            public override PipelineResponse GetRawResponse() => _response;
+            public override MessageResponse GetRawResponse() => _response;
         }
     }
 

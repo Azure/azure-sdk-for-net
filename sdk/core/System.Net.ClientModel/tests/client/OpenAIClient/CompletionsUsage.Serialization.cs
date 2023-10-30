@@ -44,7 +44,7 @@ public partial class CompletionsUsage
 
     /// <summary> Deserializes the model from a raw response. </summary>
     /// <param name="response"> The response to deserialize the model from. </param>
-    internal static CompletionsUsage FromResponse(PipelineResponse response)
+    internal static CompletionsUsage FromResponse(MessageResponse response)
     {
         using var document = JsonDocument.Parse(response.Body);
         return DeserializeCompletionsUsage(document.RootElement);
