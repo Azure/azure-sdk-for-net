@@ -24,21 +24,6 @@ namespace Azure.Communication.JobRouter
         /// A collection of worker selectors that will be applied if this allocation is
         /// selected.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workerSelectors"/> is null. </exception>
-        internal WorkerWeightedAllocation(double weight, IEnumerable<RouterWorkerSelector> workerSelectors)
-        {
-            Argument.AssertNotNull(workerSelectors, nameof(workerSelectors));
-
-            Weight = weight;
-            WorkerSelectors = workerSelectors.ToList();
-        }
-
-        /// <summary> Initializes a new instance of WorkerWeightedAllocation. </summary>
-        /// <param name="weight"> The percentage of this weight, expressed as a fraction of 1. </param>
-        /// <param name="workerSelectors">
-        /// A collection of worker selectors that will be applied if this allocation is
-        /// selected.
-        /// </param>
         internal WorkerWeightedAllocation(double weight, IReadOnlyList<RouterWorkerSelector> workerSelectors)
         {
             Weight = weight;

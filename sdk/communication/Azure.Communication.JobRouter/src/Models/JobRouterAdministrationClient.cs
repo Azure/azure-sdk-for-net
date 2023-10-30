@@ -109,13 +109,13 @@ namespace Azure.Communication.JobRouter
                     PrioritizationRule = options.PrioritizationRule,
                 };
 
-                request.QueueSelectors.AddRange(options.QueueSelectors);
-                request.WorkerSelectors.AddRange(options.WorkerSelectors);
+                request.QueueSelectorAttachments.AddRange(options.QueueSelectorAttachments);
+                request.WorkerSelectorAttachments.AddRange(options.WorkerSelectorAttachments);
 
                 var result = await UpsertClassificationPolicyAsync(
-                        id: options.ClassificationPolicyId,
+                        classificationPolicyId: options.ClassificationPolicyId,
                         content: request.ToRequestContent(),
-                        requestConditions: options.RequestConditions,
+                        requestConditions: options.RequestConditions ?? new RequestConditions(),
                         context: FromCancellationToken(cancellationToken))
                     .ConfigureAwait(false);
 
@@ -147,13 +147,13 @@ namespace Azure.Communication.JobRouter
                     PrioritizationRule = options.PrioritizationRule,
                 };
 
-                request.QueueSelectors.AddRange(options.QueueSelectors);
-                request.WorkerSelectors.AddRange(options.WorkerSelectors);
+                request.QueueSelectorAttachments.AddRange(options.QueueSelectorAttachments);
+                request.WorkerSelectorAttachments.AddRange(options.WorkerSelectorAttachments);
 
                 var result = UpsertClassificationPolicy(
-                    id: options.ClassificationPolicyId,
+                    classificationPolicyId: options.ClassificationPolicyId,
                     content: request.ToRequestContent(),
-                    requestConditions: options.RequestConditions,
+                    requestConditions: options.RequestConditions ?? new RequestConditions(),
                     context: FromCancellationToken(cancellationToken));
 
                 return Response.FromValue(ClassificationPolicy.FromResponse(result), result);
@@ -165,32 +165,23 @@ namespace Azure.Communication.JobRouter
             }
         }
 
-        /// <summary> Creates or updates classification policy. </summary>
-        /// <param name="options"> (Optional) Options for updating classification policy. Uses merge-patch semantics: https://datatracker.ietf.org/doc/html/rfc7396. </param>
+        /// <summary> Updates classification policy. </summary>
+        /// <param name="classificationPolicy"> Classification policy to update. Uses merge-patch semantics: https://datatracker.ietf.org/doc/html/rfc7396. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<ClassificationPolicy>> UpdateClassificationPolicyAsync(
-            UpdateClassificationPolicyOptions options,
+            ClassificationPolicy classificationPolicy, RequestConditions requestConditions = default,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateClassificationPolicy)}");
             scope.Start();
             try
             {
-                var request = new ClassificationPolicy()
-                {
-                    Name = options.Name,
-                    FallbackQueueId = options.FallbackQueueId,
-                    PrioritizationRule = options.PrioritizationRule
-                };
-
-                request.QueueSelectors.AddRange(options.QueueSelectors);
-                request.WorkerSelectors.AddRange(options.WorkerSelectors);
-
                 var response = await UpsertClassificationPolicyAsync(
-                        id: options.ClassificationPolicyId,
-                        content: request.ToRequestContent(),
-                        requestConditions: options.RequestConditions,
+                        classificationPolicyId: classificationPolicy.Id,
+                        content: classificationPolicy.ToRequestContent(),
+                        requestConditions: requestConditions ?? new RequestConditions(),
                         context: FromCancellationToken(cancellationToken))
                     .ConfigureAwait(false);
 
@@ -203,32 +194,23 @@ namespace Azure.Communication.JobRouter
             }
         }
 
-        /// <summary> Creates or updates a classification policy. </summary>
-        /// <param name="options"> (Optional) Options for updating classification policy. Uses merge-patch semantics: https://datatracker.ietf.org/doc/html/rfc7396. </param>
+        /// <summary> Updates classification policy. </summary>
+        /// <param name="classificationPolicy"> Classification policy to update. Uses merge-patch semantics: https://datatracker.ietf.org/doc/html/rfc7396. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<ClassificationPolicy> UpdateClassificationPolicy(
-            UpdateClassificationPolicyOptions options,
+            ClassificationPolicy classificationPolicy, RequestConditions requestConditions = default,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateClassificationPolicy)}");
             scope.Start();
             try
             {
-                var request = new ClassificationPolicy()
-                {
-                    Name = options.Name,
-                    FallbackQueueId = options.FallbackQueueId,
-                    PrioritizationRule = options.PrioritizationRule
-                };
-
-                request.QueueSelectors.AddRange(options.QueueSelectors);
-                request.WorkerSelectors.AddRange(options.WorkerSelectors);
-
                 var response = UpsertClassificationPolicy(
-                    id: options.ClassificationPolicyId,
-                    content: request.ToRequestContent(),
-                    requestConditions: options.RequestConditions,
+                    classificationPolicyId: classificationPolicy.Id,
+                    content: classificationPolicy.ToRequestContent(),
+                    requestConditions: requestConditions ?? new RequestConditions(),
                     context: FromCancellationToken(cancellationToken));
 
                 return Response.FromValue(ClassificationPolicy.FromResponse(response), response);
@@ -236,6 +218,86 @@ namespace Azure.Communication.JobRouter
             catch (Exception ex)
             {
                 scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Updates a classification policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="classificationPolicyId"> Unique identifier of this policy. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="classificationPolicyId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="classificationPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> UpdateClassificationPolicyAsync(string classificationPolicyId, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(classificationPolicyId, nameof(classificationPolicyId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateClassificationPolicy)}");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUpsertClassificationPolicyRequest(classificationPolicyId, content, requestConditions, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Updates a classification policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="classificationPolicyId"> Unique identifier of this policy. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="classificationPolicyId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="classificationPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response UpdateClassificationPolicy(string classificationPolicyId, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(classificationPolicyId, nameof(classificationPolicyId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateClassificationPolicy)}");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUpsertClassificationPolicyRequest(classificationPolicyId, content, requestConditions, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
                 throw;
             }
         }
@@ -262,9 +324,9 @@ namespace Azure.Communication.JobRouter
                 };
 
                 var response = await UpsertDistributionPolicyAsync(
-                        id: options.DistributionPolicyId,
+                        distributionPolicyId: options.DistributionPolicyId,
                         content: request.ToRequestContent(),
-                        requestConditions: options.RequestConditions,
+                        requestConditions: options.RequestConditions ?? new RequestConditions(),
                         context: FromCancellationToken(cancellationToken))
                     .ConfigureAwait(false);
 
@@ -295,9 +357,9 @@ namespace Azure.Communication.JobRouter
                 };
 
                 var response = UpsertDistributionPolicy(
-                    id: options.DistributionPolicyId,
+                    distributionPolicyId: options.DistributionPolicyId,
                     content: request.ToRequestContent(),
-                    requestConditions: options.RequestConditions,
+                    requestConditions: options.RequestConditions ?? new RequestConditions(),
                     context: FromCancellationToken(cancellationToken));
 
                 return Response.FromValue(DistributionPolicy.FromResponse(response), response);
@@ -310,28 +372,22 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Updates a distribution policy. </summary>
-        /// <param name="options"> (Optional) Options for the distribution policy. </param>
+        /// <param name="distributionPolicy"> The distribution policy to update. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<DistributionPolicy>> UpdateDistributionPolicyAsync(
-            UpdateDistributionPolicyOptions options,
+            DistributionPolicy distributionPolicy, RequestConditions requestConditions = default,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateDistributionPolicy)}");
             scope.Start();
             try
             {
-                var request = new DistributionPolicy()
-                {
-                    Name = options.Name,
-                    OfferExpiresAfter = options.OfferExpiresAfter,
-                    Mode = options.Mode,
-                };
-
                 var response = await UpsertDistributionPolicyAsync(
-                        id: options.DistributionPolicyId,
-                        content: request.ToRequestContent(),
-                        requestConditions: options.RequestConditions,
+                        distributionPolicyId: distributionPolicy.Id,
+                        content: distributionPolicy.ToRequestContent(),
+                        requestConditions: requestConditions ?? new RequestConditions(),
                         context: FromCancellationToken(cancellationToken))
                     .ConfigureAwait(false);
 
@@ -345,28 +401,22 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Updates a distribution policy. </summary>
-        /// <param name="options"> (Optional) Options for the distribution policy. </param>
+        /// <param name="distributionPolicy"> The distribution policy to update. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<DistributionPolicy> UpdateDistributionPolicy(
-            UpdateDistributionPolicyOptions options,
+            DistributionPolicy distributionPolicy, RequestConditions requestConditions = default,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateDistributionPolicy)}");
             scope.Start();
             try
             {
-                var request = new DistributionPolicy()
-                {
-                    Name = options.Name,
-                    OfferExpiresAfter = options.OfferExpiresAfter,
-                    Mode = options.Mode,
-                };
-
                 var response = UpsertDistributionPolicy(
-                    id: options.DistributionPolicyId,
-                    content: request.ToRequestContent(),
-                    requestConditions: options.RequestConditions,
+                    distributionPolicyId: distributionPolicy.Id,
+                    content: distributionPolicy.ToRequestContent(),
+                    requestConditions: requestConditions ?? new RequestConditions(),
                     context: FromCancellationToken(cancellationToken));
 
                 return Response.FromValue(DistributionPolicy.FromResponse(response), response);
@@ -374,6 +424,86 @@ namespace Azure.Communication.JobRouter
             catch (Exception ex)
             {
                 scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Updates a distribution policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="distributionPolicyId"> The unique identifier of the policy. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="distributionPolicyId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="distributionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> UpdateDistributionPolicyAsync(string distributionPolicyId, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(distributionPolicyId, nameof(distributionPolicyId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateDistributionPolicy)}");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUpsertDistributionPolicyRequest(distributionPolicyId, content, requestConditions, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Updates a distribution policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="distributionPolicyId"> The unique identifier of the policy. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="distributionPolicyId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="distributionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response UpdateDistributionPolicy(string distributionPolicyId, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(distributionPolicyId, nameof(distributionPolicyId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateDistributionPolicy)}");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUpsertDistributionPolicyRequest(distributionPolicyId, content, requestConditions, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
                 throw;
             }
         }
@@ -399,15 +529,12 @@ namespace Azure.Communication.JobRouter
                     Name = options.Name
                 };
 
-                foreach (var rule in options.ExceptionRules)
-                {
-                    request.ExceptionRules[rule.Key] = rule.Value;
-                }
+                request.ExceptionRules.AddRange(options.ExceptionRules);
 
                 var response = await UpsertExceptionPolicyAsync(
-                        id: options.ExceptionPolicyId,
+                        exceptionPolicyId: options.ExceptionPolicyId,
                         content: request.ToRequestContent(),
-                        requestConditions: options.RequestConditions,
+                        requestConditions: options.RequestConditions ?? new RequestConditions(),
                         context: FromCancellationToken(cancellationToken))
                     .ConfigureAwait(false);
 
@@ -437,15 +564,12 @@ namespace Azure.Communication.JobRouter
                     Name = options.Name
                 };
 
-                foreach (var rule in options.ExceptionRules)
-                {
-                    request.ExceptionRules[rule.Key] = rule.Value;
-                }
+                request.ExceptionRules.AddRange(options.ExceptionRules);
 
                 var response = UpsertExceptionPolicy(
-                    id: options.ExceptionPolicyId,
+                    exceptionPolicyId: options.ExceptionPolicyId,
                     content: request.ToRequestContent(),
-                    requestConditions: options.RequestConditions,
+                    requestConditions: options.RequestConditions ?? new RequestConditions(),
                     context: FromCancellationToken(cancellationToken));
 
                 return Response.FromValue(ExceptionPolicy.FromResponse(response), response);
@@ -458,31 +582,22 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Creates a new exception policy. </summary>
-        /// <param name="options"> Options for updating exception policy. Uses merge-patch semantics: https://datatracker.ietf.org/doc/html/rfc7396. </param>
+        /// <param name="exceptionPolicy"> Exception policy to update. Uses merge-patch semantics: https://datatracker.ietf.org/doc/html/rfc7396. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<ExceptionPolicy>> UpdateExceptionPolicyAsync(
-            UpdateExceptionPolicyOptions options,
+            ExceptionPolicy exceptionPolicy, RequestConditions requestConditions = default,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateExceptionPolicy)}");
             scope.Start();
             try
             {
-                var request = new ExceptionPolicy()
-                {
-                    Name = options.Name
-                };
-
-                foreach (var rule in options.ExceptionRules)
-                {
-                    request.ExceptionRules[rule.Key] = rule.Value;
-                }
-
                 var response = await UpsertExceptionPolicyAsync(
-                        id: options.ExceptionPolicyId,
-                        content: request.ToRequestContent(),
-                        requestConditions: options.RequestConditions,
+                        exceptionPolicyId: exceptionPolicy.Id,
+                        content: exceptionPolicy.ToRequestContent(),
+                        requestConditions: requestConditions ?? new RequestConditions(),
                         context: FromCancellationToken(cancellationToken))
                     .ConfigureAwait(false);
 
@@ -495,32 +610,23 @@ namespace Azure.Communication.JobRouter
             }
         }
 
-        /// <summary> Creates or updates a exception policy. </summary>
-        /// <param name="options"> Options for updating exception policy. Uses merge-patch semantics: https://datatracker.ietf.org/doc/html/rfc7396. </param>
+        /// <summary> Creates a new exception policy. </summary>
+        /// <param name="exceptionPolicy"> Exception policy to update. Uses merge-patch semantics: https://datatracker.ietf.org/doc/html/rfc7396. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<ExceptionPolicy> UpdateExceptionPolicy(
-            UpdateExceptionPolicyOptions options,
+            ExceptionPolicy exceptionPolicy, RequestConditions requestConditions = default,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateExceptionPolicy)}");
             scope.Start();
             try
             {
-                var request = new ExceptionPolicy()
-                {
-                    Name = options.Name
-                };
-
-                foreach (var rule in options.ExceptionRules)
-                {
-                    request.ExceptionRules[rule.Key] = rule.Value;
-                }
-
                 var response = UpsertExceptionPolicy(
-                    id: options.ExceptionPolicyId,
-                    content: request.ToRequestContent(),
-                    requestConditions: options.RequestConditions,
+                    exceptionPolicyId: exceptionPolicy.Id,
+                    content: exceptionPolicy.ToRequestContent(),
+                    requestConditions: requestConditions ?? new RequestConditions(),
                     context: FromCancellationToken(cancellationToken));
 
                 return Response.FromValue(ExceptionPolicy.FromResponse(response), response);
@@ -532,11 +638,91 @@ namespace Azure.Communication.JobRouter
             }
         }
 
+        /// <summary>
+        /// [Protocol Method] Updates a exception policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="exceptionPolicyId"> The Id of the exception policy. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="exceptionPolicyId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="exceptionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> UpdateExceptionPolicyAsync(string exceptionPolicyId, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(exceptionPolicyId, nameof(exceptionPolicyId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateExceptionPolicy)}");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUpsertExceptionPolicyRequest(exceptionPolicyId, content, requestConditions, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Updates a exception policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="exceptionPolicyId"> The Id of the exception policy. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="exceptionPolicyId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="exceptionPolicyId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response UpdateExceptionPolicy(string exceptionPolicyId, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(exceptionPolicyId, nameof(exceptionPolicyId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateExceptionPolicy)}");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUpsertExceptionPolicyRequest(exceptionPolicyId, content, requestConditions, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         #endregion ExceptionPolicy
 
         #region Queue
 
-        /// <summary> Creates or updates a queue. </summary>
+        /// <summary> Creates a queue. </summary>
         /// <param name="options"> Options for creating a job queue. </param>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
@@ -561,9 +747,9 @@ namespace Azure.Communication.JobRouter
                 }
 
                 var response = await UpsertQueueAsync(
-                        id: options.QueueId,
+                        queueId: options.QueueId,
                         content: request.ToRequestContent(),
-                        requestConditions: options.RequestConditions,
+                        requestConditions: options.RequestConditions ?? new RequestConditions(),
                         context: FromCancellationToken(cancellationToken))
                     .ConfigureAwait(false);
 
@@ -576,7 +762,7 @@ namespace Azure.Communication.JobRouter
             }
         }
 
-        /// <summary> Creates or updates a queue. </summary>
+        /// <summary> Creates a queue. </summary>
         /// <param name="options"> Options for creating a job queue. </param>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
@@ -601,9 +787,9 @@ namespace Azure.Communication.JobRouter
                 }
 
                 var response = UpsertQueue(
-                    id: options.QueueId,
+                    queueId: options.QueueId,
                     content: request.ToRequestContent(),
-                    requestConditions: options.RequestConditions,
+                    requestConditions: options.RequestConditions ?? new RequestConditions(),
                     context: FromCancellationToken(cancellationToken));
 
                 return Response.FromValue(RouterQueue.FromResponse(response), response);
@@ -615,35 +801,24 @@ namespace Azure.Communication.JobRouter
             }
         }
 
-        /// <summary> Creates or updates a queue. </summary>
-        /// <param name="options"> Options for updating a job queue. Uses merge-patch semantics: https://datatracker.ietf.org/doc/html/rfc7396. </param>
+        /// <summary> Updates a queue. </summary>
+        /// <param name="queue"> Queue to update. Uses merge-patch semantics: https://datatracker.ietf.org/doc/html/rfc7396. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="queue"/> is null. </exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<RouterQueue>> UpdateQueueAsync(
-            UpdateQueueOptions options,
+            RouterQueue queue, RequestConditions requestConditions = default,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateQueue)}");
             scope.Start();
             try
             {
-                var request = new RouterQueue()
-                {
-                    DistributionPolicyId = options.DistributionPolicyId,
-                    Name = options.Name,
-                    ExceptionPolicyId = options.ExceptionPolicyId,
-                };
-
-                foreach (var label in options.Labels)
-                {
-                    request.Labels[label.Key] = label.Value;
-                }
-
                 var response = await UpsertQueueAsync(
-                        id: options.QueueId,
-                        content: request.ToRequestContent(),
-                        requestConditions: options.RequestConditions,
+                        queueId: queue.Id,
+                        content: queue.ToRequestContent(),
+                        requestConditions: requestConditions ?? new RequestConditions(),
                         context: FromCancellationToken(cancellationToken))
                     .ConfigureAwait(false);
 
@@ -656,35 +831,23 @@ namespace Azure.Communication.JobRouter
             }
         }
 
-        /// <summary> Creates or updates a queue. </summary>
-        /// <param name="options"> Options for updating a queue. Uses merge-patch semantics: https://datatracker.ietf.org/doc/html/rfc7396. </param>
+        /// <summary> Updates a queue. </summary>
+        /// <param name="queue"> Queue to update. Uses merge-patch semantics: https://datatracker.ietf.org/doc/html/rfc7396. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
         /// <param name="cancellationToken"> (Optional) The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="queue"/> is null. </exception>/// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<RouterQueue> UpdateQueue(
-            UpdateQueueOptions options,
+            RouterQueue queue, RequestConditions requestConditions = default,
             CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateQueue)}");
             scope.Start();
             try
             {
-                var request = new RouterQueue()
-                {
-                    DistributionPolicyId = options.DistributionPolicyId,
-                    Name = options.Name,
-                    ExceptionPolicyId = options.ExceptionPolicyId,
-                };
-
-                foreach (var label in options.Labels)
-                {
-                    request.Labels[label.Key] = label.Value;
-                }
-
                 var response = UpsertQueue(
-                    id: options.QueueId,
-                    content: request.ToRequestContent(),
-                    requestConditions: options.RequestConditions,
+                    queueId: queue.Id,
+                    content: queue.ToRequestContent(),
+                    requestConditions: requestConditions ?? new RequestConditions(),
                     context: FromCancellationToken(cancellationToken));
 
                 return Response.FromValue(RouterQueue.FromResponse(response), response);
@@ -692,6 +855,86 @@ namespace Azure.Communication.JobRouter
             catch (Exception ex)
             {
                 scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Updates a queue.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="queueId"> The Id of this queue. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="queueId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="queueId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> UpdateQueueAsync(string queueId, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(queueId, nameof(queueId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateQueue)}");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUpsertQueueRequest(queueId, content, requestConditions, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Updates a queue.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="queueId"> The Id of this queue. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="queueId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="queueId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response UpdateQueue(string queueId, RequestContent content, RequestConditions requestConditions = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(queueId, nameof(queueId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            Argument.AssertNull(requestConditions?.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
+            Argument.AssertNull(requestConditions?.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
+
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(JobRouterAdministrationClient)}.{nameof(UpdateQueue)}");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUpsertQueueRequest(queueId, content, requestConditions, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
                 throw;
             }
         }
