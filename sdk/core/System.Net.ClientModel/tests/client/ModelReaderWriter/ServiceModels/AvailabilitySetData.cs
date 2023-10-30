@@ -30,7 +30,7 @@ namespace System.Net.ClientModel.Tests.Client.ResourceManager.Compute
                 return null;
             }
 
-            return MessageBody.CreateBody(availabilitySetData, ModelReaderWriterOptions.DefaultWireOptions);
+            return MessageBody.Create(availabilitySetData, ModelReaderWriterOptions.DefaultWireOptions);
         }
 
         public static explicit operator AvailabilitySetData(Result result)

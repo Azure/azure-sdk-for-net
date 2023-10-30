@@ -109,18 +109,16 @@ namespace System.Net.ClientModel.Core
     public abstract partial class MessageBody : System.IDisposable
     {
         protected MessageBody() { }
-        public static System.Net.ClientModel.Core.MessageBody CreateBody(System.BinaryData value) { throw null; }
-        public static System.Net.ClientModel.Core.MessageBody CreateBody(System.IO.Stream stream) { throw null; }
-        public static System.Net.ClientModel.Core.MessageBody CreateBody(System.Net.ClientModel.Core.IJsonModel<object> model, System.Net.ClientModel.ModelReaderWriterOptions? options = null) { throw null; }
-        public static System.Net.ClientModel.Core.MessageBody CreateBody(System.Net.ClientModel.Core.IModel<object> model, System.Net.ClientModel.ModelReaderWriterOptions? options = null) { throw null; }
+        public static System.Net.ClientModel.Core.MessageBody Create(System.BinaryData value) { throw null; }
+        public static System.Net.ClientModel.Core.MessageBody Create(System.IO.Stream stream) { throw null; }
+        public static System.Net.ClientModel.Core.MessageBody Create(System.Net.ClientModel.Core.IJsonModel<object> model, System.Net.ClientModel.ModelReaderWriterOptions? options = null) { throw null; }
+        public static System.Net.ClientModel.Core.MessageBody Create(System.Net.ClientModel.Core.IModel<object> model, System.Net.ClientModel.ModelReaderWriterOptions? options = null) { throw null; }
         public abstract void Dispose();
         public static explicit operator System.IO.Stream (System.Net.ClientModel.Core.MessageBody content) { throw null; }
         public static implicit operator System.BinaryData (System.Net.ClientModel.Core.MessageBody content) { throw null; }
         public static implicit operator System.ReadOnlyMemory<byte> (System.Net.ClientModel.Core.MessageBody content) { throw null; }
         protected virtual System.BinaryData ToBinaryData(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        protected virtual System.Threading.Tasks.Task<System.BinaryData> ToBinaryDataAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         protected virtual System.IO.Stream ToStream(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        protected virtual System.Threading.Tasks.Task<System.IO.Stream> ToStreamAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public abstract bool TryComputeLength(out long length);
         public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken);
         public abstract System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken);

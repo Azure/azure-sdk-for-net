@@ -15,21 +15,21 @@ namespace System.Net.ClientModel.Core
     {
         // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
         private static BinaryData EmptyBinaryData = new(Array.Empty<byte>());
-        internal static MessageBody Empty = CreateBody(EmptyBinaryData);
+        internal static MessageBody Empty = Create(EmptyBinaryData);
 
         /// <summary>
         /// Creates an instance of <see cref="MessageBody"/> that wraps a <see cref="Stream"/>.
         /// </summary>
         /// <param name="stream">The <see cref="Stream"/> to use.</param>
         /// <returns>An instance of <see cref="MessageBody"/> that wraps a <see cref="Stream"/>.</returns>
-        public static MessageBody CreateBody(Stream stream) => new StreamPipelineContent(stream);
+        public static MessageBody Create(Stream stream) => new StreamPipelineContent(stream);
 
         /// <summary>
         /// Creates an instance of <see cref="MessageBody"/> that wraps a <see cref="BinaryData"/>.
         /// </summary>
         /// <param name="value">The <see cref="BinaryData"/> to use.</param>
         /// <returns>An instance of <see cref="MessageBody"/> that wraps a <see cref="BinaryData"/>.</returns>
-        public static MessageBody CreateBody(BinaryData value) => new BinaryDataPipelineContent(value.ToMemory());
+        public static MessageBody Create(BinaryData value) => new BinaryDataPipelineContent(value.ToMemory());
 
         /// <summary>
         /// Creates an instance of <see cref="MessageBody"/> that wraps a <see cref="IModel{T}"/>.
@@ -37,7 +37,7 @@ namespace System.Net.ClientModel.Core
         /// <param name="model">The <see cref="IModel{T}"/> to write.</param>
         /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
         /// <returns>An instance of <see cref="MessageBody"/> that wraps a <see cref="IModel{T}"/>.</returns>
-        public static MessageBody CreateBody(IModel<object> model, ModelReaderWriterOptions? options = default)
+        public static MessageBody Create(IModel<object> model, ModelReaderWriterOptions? options = default)
             => new ModelWriterContent(model, options ?? ModelReaderWriterOptions.DefaultWireOptions);
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace System.Net.ClientModel.Core
         /// <param name="model">The <see cref="IJsonModel{T}"/> to write.</param>
         /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
         /// <returns>An instance of <see cref="MessageBody"/> that wraps a <see cref="IJsonModel{T}"/>.</returns>
-        public static MessageBody CreateBody(IJsonModel<object> model, ModelReaderWriterOptions? options = default)
+        public static MessageBody Create(IJsonModel<object> model, ModelReaderWriterOptions? options = default)
             => new JsonModelWriterContent(model, options ?? ModelReaderWriterOptions.DefaultWireOptions);
 
         /// <summary>
@@ -90,8 +90,8 @@ namespace System.Net.ClientModel.Core
             => ToBinaryDataSyncOrAsync(cancellationToken, async: false).GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
 
-        protected virtual async Task<BinaryData> ToBinaryDataAsync(CancellationToken cancellationToken = default)
-            => await ToBinaryDataSyncOrAsync(cancellationToken, async: true).ConfigureAwait(false);
+        //protected virtual async Task<BinaryData> ToBinaryDataAsync(CancellationToken cancellationToken = default)
+        //    => await ToBinaryDataSyncOrAsync(cancellationToken, async: true).ConfigureAwait(false);
 
         private async Task<BinaryData> ToBinaryDataSyncOrAsync(CancellationToken cancellationToken, bool async)
         {
@@ -135,8 +135,8 @@ namespace System.Net.ClientModel.Core
             => ToStreamSyncOrAsync(cancellationToken, async: false).GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
 
-        protected virtual async Task<Stream> ToStreamAsync(CancellationToken cancellationToken = default)
-            => await ToStreamSyncOrAsync(cancellationToken, async: true).ConfigureAwait(false);
+        //protected virtual async Task<Stream> ToStreamAsync(CancellationToken cancellationToken = default)
+        //    => await ToStreamSyncOrAsync(cancellationToken, async: true).ConfigureAwait(false);
 
         private async Task<Stream> ToStreamSyncOrAsync(CancellationToken cancellationToken, bool async)
         {
@@ -290,8 +290,8 @@ namespace System.Net.ClientModel.Core
             protected override Stream ToStream(CancellationToken cancellationToken = default)
                 => _stream;
 
-            protected override Task<Stream> ToStreamAsync(CancellationToken cancellationToken = default)
-                => Task.FromResult(_stream);
+            //protected override Task<Stream> ToStreamAsync(CancellationToken cancellationToken = default)
+            //    => Task.FromResult(_stream);
 
             public override void Dispose()
             {
@@ -331,8 +331,8 @@ namespace System.Net.ClientModel.Core
             protected override BinaryData ToBinaryData(CancellationToken cancellationToken = default)
                 => BinaryData.FromBytes(_bytes);
 
-            protected override Task<BinaryData> ToBinaryDataAsync(CancellationToken cancellationToken = default)
-                => Task.FromResult(BinaryData.FromBytes(_bytes));
+            //protected override Task<BinaryData> ToBinaryDataAsync(CancellationToken cancellationToken = default)
+            //    => Task.FromResult(BinaryData.FromBytes(_bytes));
 
             public override void Dispose() { }
         }

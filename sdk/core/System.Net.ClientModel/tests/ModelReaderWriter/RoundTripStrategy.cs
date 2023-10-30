@@ -239,7 +239,7 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
             public MockPipelineResponse(int status, BinaryData content)
             {
                 Status = status;
-                Content = MessageBody.CreateBody(content);
+                Content = MessageBody.Create(content);
             }
 
             public override int Status { get; }

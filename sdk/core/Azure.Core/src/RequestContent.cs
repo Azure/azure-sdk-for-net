@@ -29,7 +29,7 @@ namespace Azure.Core
         /// </summary>
         /// <param name="stream">The <see cref="Stream"/> to use.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a <see cref="Stream"/>.</returns>
-        public static RequestContent Create(Stream stream) => new StreamContent(stream);
+        public static new RequestContent Create(Stream stream) => new StreamContent(stream);
 
         /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps an <see cref="Array"/>of <see cref="Byte"/>.
@@ -74,7 +74,7 @@ namespace Azure.Core
         /// </summary>
         /// <param name="content">The <see cref="BinaryData"/> to use.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a <see cref="BinaryData"/>.</returns>
-        public static RequestContent Create(BinaryData content) => new MemoryContent(content.ToMemory());
+        public static new RequestContent Create(BinaryData content) => new MemoryContent(content.ToMemory());
 
         /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps a <see cref="DynamicData"/>.
@@ -89,8 +89,8 @@ namespace Azure.Core
         /// <param name="model">The <see cref="IModel{T}"/> to write.</param>
         /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a a <see cref="IModel{T}"/>.</returns>
-        public static RequestContent Create(IModel<object> model, ModelReaderWriterOptions? options = default)
-            => new PipelineContentContent(CreateBody(model, options ?? ModelReaderWriterOptions.DefaultWireOptions));
+        public static new RequestContent Create(IModel<object> model, ModelReaderWriterOptions? options = default)
+            => new PipelineContentContent(Create(model, options ?? ModelReaderWriterOptions.DefaultWireOptions));
 
         /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps a <see cref="IJsonModel{T}"/>.
@@ -98,8 +98,8 @@ namespace Azure.Core
         /// <param name="model">The <see cref="IJsonModel{T}"/> to write.</param>
         /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a <see cref="IJsonModel{T}"/>.</returns>
-        public static RequestContent Create(IJsonModel<object> model, ModelReaderWriterOptions? options = default)
-            => new PipelineContentContent(CreateBody(model, options ?? ModelReaderWriterOptions.DefaultWireOptions));
+        public static new RequestContent Create(IJsonModel<object> model, ModelReaderWriterOptions? options = default)
+            => new PipelineContentContent(Create(model, options ?? ModelReaderWriterOptions.DefaultWireOptions));
 
         /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.
