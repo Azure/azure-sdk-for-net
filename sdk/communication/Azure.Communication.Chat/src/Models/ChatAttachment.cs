@@ -25,7 +25,7 @@ namespace Azure.Communication.Chat
         /// <param name="name"> The name of the attachment content. </param>
         /// <param name="url"> The URL where the attachment can be downloaded. </param>
         /// <param name="previewUrl"> The URL where the preview of attachment can be downloaded. </param>
-        internal ChatAttachment(string id, AttachmentType attachmentType, string extension, string name, Uri url, Uri previewUrl)
+        internal ChatAttachment(string id, AttachmentType attachmentType, string extension, string name, string url, string previewUrl)
         {
             Id = id;
             AttachmentType = attachmentType;
@@ -54,9 +54,9 @@ namespace Azure.Communication.Chat
         /// <summary> The name of the attachment content. </summary>
         public string Name { get; }
         /// <summary> The URL where the attachment can be downloaded. </summary>
-        public Uri Url { get; }
+        public string Url { get; }
         /// <summary> The URL where the preview of attachment can be downloaded. </summary>
-        public Uri PreviewUrl { get; }
+        public string PreviewUrl { get; }
 
         internal ChatAttachmentInternal ToChatAttachmentInternal()
         {
