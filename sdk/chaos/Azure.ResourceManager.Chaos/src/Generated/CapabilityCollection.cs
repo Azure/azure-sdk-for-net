@@ -9,7 +9,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
@@ -82,7 +81,7 @@ namespace Azure.ResourceManager.Chaos
             scope.Start();
             try
             {
-                var response = await _capabilityRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, capabilityName, data, cancellationToken).ConfigureAwait(false);
+                var response = await _capabilityRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, capabilityName, data, cancellationToken).ConfigureAwait(false);
                 var operation = new ChaosArmOperation<CapabilityResource>(Response.FromValue(new CapabilityResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.Chaos
             scope.Start();
             try
             {
-                var response = _capabilityRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, capabilityName, data, cancellationToken);
+                var response = _capabilityRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, capabilityName, data, cancellationToken);
                 var operation = new ChaosArmOperation<CapabilityResource>(Response.FromValue(new CapabilityResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
@@ -161,7 +160,7 @@ namespace Azure.ResourceManager.Chaos
             scope.Start();
             try
             {
-                var response = await _capabilityRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, capabilityName, cancellationToken).ConfigureAwait(false);
+                var response = await _capabilityRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, capabilityName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CapabilityResource(Client, response.Value), response.GetRawResponse());
@@ -198,7 +197,7 @@ namespace Azure.ResourceManager.Chaos
             scope.Start();
             try
             {
-                var response = _capabilityRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, capabilityName, cancellationToken);
+                var response = _capabilityRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, capabilityName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CapabilityResource(Client, response.Value), response.GetRawResponse());
@@ -228,8 +227,8 @@ namespace Azure.ResourceManager.Chaos
         /// <returns> An async collection of <see cref="CapabilityResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CapabilityResource> GetAllAsync(string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _capabilityRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, continuationToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _capabilityRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, continuationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _capabilityRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, continuationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _capabilityRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, continuationToken);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CapabilityResource(Client, CapabilityData.DeserializeCapabilityData(e)), _capabilityClientDiagnostics, Pipeline, "CapabilityCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -251,8 +250,8 @@ namespace Azure.ResourceManager.Chaos
         /// <returns> A collection of <see cref="CapabilityResource" /> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CapabilityResource> GetAll(string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _capabilityRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, continuationToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _capabilityRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, continuationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _capabilityRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, continuationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _capabilityRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, continuationToken);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CapabilityResource(Client, CapabilityData.DeserializeCapabilityData(e)), _capabilityClientDiagnostics, Pipeline, "CapabilityCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -281,7 +280,7 @@ namespace Azure.ResourceManager.Chaos
             scope.Start();
             try
             {
-                var response = await _capabilityRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, capabilityName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _capabilityRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, capabilityName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -316,7 +315,7 @@ namespace Azure.ResourceManager.Chaos
             scope.Start();
             try
             {
-                var response = _capabilityRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, capabilityName, cancellationToken: cancellationToken);
+                var response = _capabilityRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, capabilityName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -351,7 +350,7 @@ namespace Azure.ResourceManager.Chaos
             scope.Start();
             try
             {
-                var response = await _capabilityRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, capabilityName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _capabilityRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, capabilityName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<CapabilityResource>(response.GetRawResponse());
                 return Response.FromValue(new CapabilityResource(Client, response.Value), response.GetRawResponse());
@@ -388,7 +387,7 @@ namespace Azure.ResourceManager.Chaos
             scope.Start();
             try
             {
-                var response = _capabilityRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, capabilityName, cancellationToken: cancellationToken);
+                var response = _capabilityRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, capabilityName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<CapabilityResource>(response.GetRawResponse());
                 return Response.FromValue(new CapabilityResource(Client, response.Value), response.GetRawResponse());

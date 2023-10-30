@@ -285,7 +285,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='GetStacFeatureAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetStacFeatureAsync(string collectionId, string featureId, RequestContext context)
+        public virtual async Task<Response> GetStacFeatureAsync(string collectionId, string featureId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(featureId, nameof(featureId));
@@ -322,7 +322,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/Scenes.xml" path="doc/members/member[@name='GetStacFeature(string,string,RequestContext)']/*" />
-        public virtual Response GetStacFeature(string collectionId, string featureId, RequestContext context)
+        public virtual Response GetStacFeature(string collectionId, string featureId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(featureId, nameof(featureId));

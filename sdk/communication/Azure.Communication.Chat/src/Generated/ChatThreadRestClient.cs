@@ -137,9 +137,11 @@ namespace Azure.Communication.Chat
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new SendReadReceiptRequest(chatMessageId);
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteStartObject();
+            content.JsonWriter.WritePropertyName("chatMessageId"u8);
+            content.JsonWriter.WriteStringValue(chatMessageId);
+            content.JsonWriter.WriteEndObject();
             request.Content = content;
             return message;
         }
@@ -212,21 +214,36 @@ namespace Azure.Communication.Chat
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            SendChatMessageRequest sendChatMessageRequest = new SendChatMessageRequest(content)
+            if (metadata == null || !metadata.Any())
             {
-                SenderDisplayName = senderDisplayName,
-                Type = type
-            };
-            if (metadata != null)
-            {
-                foreach (var value in metadata)
-                {
-                    sendChatMessageRequest.Metadata.Add(value);
-                }
+                metadata = new ChangeTrackingDictionary<string, string>();
             }
-            var model = sendChatMessageRequest;
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(model);
+            content0.JsonWriter.WriteStartObject();
+            content0.JsonWriter.WritePropertyName("content"u8);
+            content0.JsonWriter.WriteStringValue(content);
+            if (Optional.IsDefined(senderDisplayName))
+            {
+                content0.JsonWriter.WritePropertyName("senderDisplayName"u8);
+                content0.JsonWriter.WriteStringValue(senderDisplayName);
+            }
+            if (Optional.IsDefined(type))
+            {
+                content0.JsonWriter.WritePropertyName("type"u8);
+                content0.JsonWriter.WriteStringValue(type.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(metadata))
+            {
+                content0.JsonWriter.WritePropertyName("metadata"u8);
+                content0.JsonWriter.WriteStartObject();
+                foreach (var item in metadata)
+                {
+                    content0.JsonWriter.WritePropertyName(item.Key);
+                    content0.JsonWriter.WriteStringValue(item.Value);
+                }
+                content0.JsonWriter.WriteEndObject();
+            }
+            content0.JsonWriter.WriteEndObject();
             request.Content = content0;
             return message;
         }
@@ -479,20 +496,29 @@ namespace Azure.Communication.Chat
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/merge-patch+json");
-            UpdateChatMessageRequest updateChatMessageRequest = new UpdateChatMessageRequest()
+            if (metadata == null || !metadata.Any())
             {
-                Content = content
-            };
-            if (metadata != null)
-            {
-                foreach (var value in metadata)
-                {
-                    updateChatMessageRequest.Metadata.Add(value);
-                }
+                metadata = new ChangeTrackingDictionary<string, string>();
             }
-            var model = updateChatMessageRequest;
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(model);
+            content0.JsonWriter.WriteStartObject();
+            if (Optional.IsDefined(content))
+            {
+                content0.JsonWriter.WritePropertyName("content"u8);
+                content0.JsonWriter.WriteStringValue(content);
+            }
+            if (Optional.IsCollectionDefined(metadata))
+            {
+                content0.JsonWriter.WritePropertyName("metadata"u8);
+                content0.JsonWriter.WriteStartObject();
+                foreach (var item in metadata)
+                {
+                    content0.JsonWriter.WritePropertyName(item.Key);
+                    content0.JsonWriter.WriteStringValue(item.Value);
+                }
+                content0.JsonWriter.WriteEndObject();
+            }
+            content0.JsonWriter.WriteEndObject();
             request.Content = content0;
             return message;
         }
@@ -722,15 +748,29 @@ namespace Azure.Communication.Chat
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new CommunicationIdentifierModel()
-            {
-                RawId = rawId,
-                CommunicationUser = communicationUser,
-                PhoneNumber = phoneNumber,
-                MicrosoftTeamsUser = microsoftTeamsUser
-            };
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteStartObject();
+            if (Optional.IsDefined(rawId))
+            {
+                content.JsonWriter.WritePropertyName("rawId"u8);
+                content.JsonWriter.WriteStringValue(rawId);
+            }
+            if (Optional.IsDefined(communicationUser))
+            {
+                content.JsonWriter.WritePropertyName("communicationUser"u8);
+                content.JsonWriter.WriteObjectValue(communicationUser);
+            }
+            if (Optional.IsDefined(phoneNumber))
+            {
+                content.JsonWriter.WritePropertyName("phoneNumber"u8);
+                content.JsonWriter.WriteObjectValue(phoneNumber);
+            }
+            if (Optional.IsDefined(microsoftTeamsUser))
+            {
+                content.JsonWriter.WritePropertyName("microsoftTeamsUser"u8);
+                content.JsonWriter.WriteObjectValue(microsoftTeamsUser);
+            }
+            content.JsonWriter.WriteEndObject();
             request.Content = content;
             return message;
         }
@@ -801,9 +841,16 @@ namespace Azure.Communication.Chat
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new AddChatParticipantsRequest(participants.ToList());
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteStartObject();
+            content.JsonWriter.WritePropertyName("participants"u8);
+            content.JsonWriter.WriteStartArray();
+            foreach (var item in participants)
+            {
+                content.JsonWriter.WriteObjectValue(item);
+            }
+            content.JsonWriter.WriteEndArray();
+            content.JsonWriter.WriteEndObject();
             request.Content = content;
             return message;
         }
@@ -885,12 +932,14 @@ namespace Azure.Communication.Chat
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/merge-patch+json");
-            var model = new UpdateChatThreadRequest()
-            {
-                Topic = topic
-            };
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteStartObject();
+            if (Optional.IsDefined(topic))
+            {
+                content.JsonWriter.WritePropertyName("topic"u8);
+                content.JsonWriter.WriteStringValue(topic);
+            }
+            content.JsonWriter.WriteEndObject();
             request.Content = content;
             return message;
         }
@@ -1024,12 +1073,14 @@ namespace Azure.Communication.Chat
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new SendTypingNotificationRequest()
-            {
-                SenderDisplayName = senderDisplayName
-            };
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteStartObject();
+            if (Optional.IsDefined(senderDisplayName))
+            {
+                content.JsonWriter.WritePropertyName("senderDisplayName"u8);
+                content.JsonWriter.WriteStringValue(senderDisplayName);
+            }
+            content.JsonWriter.WriteEndObject();
             request.Content = content;
             return message;
         }
