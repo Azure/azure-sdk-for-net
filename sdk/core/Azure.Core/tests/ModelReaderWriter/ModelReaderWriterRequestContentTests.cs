@@ -49,7 +49,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests
 
         private static void AssertContentType(RequestContent content, string expectedContent)
         {
-            Assert.AreEqual("PipelineContentContent", content.GetType().Name);
+            Assert.AreEqual("MessageBodyContent", content.GetType().Name);
             var field = content.GetType().GetField("_content", BindingFlags.NonPublic | BindingFlags.Instance);
             Assert.IsNotNull(field);
             Assert.AreEqual(expectedContent, field.GetValue(content).GetType().Name);
