@@ -395,5 +395,29 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
 
         [Event(39, Message = "Received a partial success from ingestion. This status code is not handled and telemetry will be lost. Error StatusCode: {0}. Error Message: {1}", Level = EventLevel.Warning)]
         public void PartialContentResponseUnhandled(string errorStatusCode, string errorMessage) => WriteEvent(39, errorStatusCode, errorMessage);
+
+        [NonEvent]
+        public void FailedToConvertScopeItem(string key, Exception ex)
+        {
+            if (IsEnabled(EventLevel.Warning))
+            {
+                FailedToConvertScopeItem(key, ex.FlattenException().ToInvariantString());
+            }
+        }
+
+        [Event(40, Message = "An exception {1} occurred while converting the scope value associated with the scope key {0}.")]
+        public void FailedToConvertScopeItem(string key, string exceptionMessage) => WriteEvent(40, key, exceptionMessage);
+
+        [NonEvent]
+        public void FailedToConvertLogAttribute(string key, Exception ex)
+        {
+            if (IsEnabled(EventLevel.Warning))
+            {
+                FailedToConvertLogAttribute(key, ex.FlattenException().ToInvariantString());
+            }
+        }
+
+        [Event(41, Message = "An exception {1} occurred while adding the log attribute associated with the key {0}")]
+        public void FailedToConvertLogAttribute(string key, string exceptionMessage) => WriteEvent(41, key, exceptionMessage);
     }
 }

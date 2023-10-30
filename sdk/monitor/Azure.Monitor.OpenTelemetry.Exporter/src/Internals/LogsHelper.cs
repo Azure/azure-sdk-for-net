@@ -31,8 +31,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                 if (scopeItem.Value != null)
                 {
-                    properties.Add(scopeItem.Key,
-                                    Convert.ToString(scopeItem.Value, CultureInfo.InvariantCulture) ?? "null");
+                    try
+                    {
+                        string truncatedKey = scopeItem.Key.Truncate(SchemaConstants.MessageData_Properties_MaxKeyLength);
+                        if (!properties.ContainsKey(truncatedKey))
+                        {
+                            properties.Add(truncatedKey, Convert.ToString(scopeItem.Value, CultureInfo.InvariantCulture)?.Truncate(SchemaConstants.MessageData_Properties_MaxValueLength)!);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        AzureMonitorExporterEventSource.Log.FailedToConvertScopeItem(scopeItem.Key, ex);
+                    }
                 }
             }
         };
@@ -97,7 +107,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     }
                     else
                     {
-                        properties.Add(item.Key, item.Value.ToString().Truncate(SchemaConstants.KVP_MaxValueLength) ?? "null");
+                        try
+                        {
+                            string truncatedKey = item.Key.Truncate(SchemaConstants.MessageData_Properties_MaxKeyLength);
+                            if (!properties.ContainsKey(truncatedKey))
+                            {
+                                properties.Add(item.Key, item.Value.ToString().Truncate(SchemaConstants.KVP_MaxValueLength)?.Truncate(SchemaConstants.MessageData_Properties_MaxValueLength)!);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            AzureMonitorExporterEventSource.Log.FailedToConvertLogAttribute(item.Key, ex);
+                        }
                     }
                 }
             }
