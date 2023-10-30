@@ -45,9 +45,9 @@ extends:
       safeName: AzureMonitorOpenTelemetryAspNetCore
     - name: Azure.Monitor.OpenTelemetry.Exporter
       safeName: AzureMonitorOpenTelemetryExporter
-    - name: Azure.Monitor.OpenTelemetry.Exporter
-      safeName: Azure.Monitor.OpenTelemetry.LiveMetrics
     - name: Azure.Monitor.OpenTelemetry.LiveMetrics
+      safeName: AzureMonitorOpenTelemetryLiveMetrics
+    - name: Azure.Monitor.Query
       safeName: AzureMonitorQuery
     - name: Azure.Monitor.Ingestion
       safeName: AzureMonitorIngestion
