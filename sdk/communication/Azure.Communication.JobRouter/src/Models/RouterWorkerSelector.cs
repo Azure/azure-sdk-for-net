@@ -45,6 +45,9 @@ namespace Azure.Communication.JobRouter
         /// <summary> The time at which this worker selector expires in UTC. </summary>
         public DateTimeOffset? ExpiresAt { get; set; }
 
+        /// <summary> Pushes the job to the front of the queue as long as this selector is active. </summary>
+        public bool? Expedite { get; set; }
+
         /// <summary> Initializes a new instance of WorkerSelector. </summary>
         /// <param name="key"> The label key to query against. </param>
         /// <param name="labelOperator"> Describes how the value of the label is compared to the value defined on the label selector. </param>

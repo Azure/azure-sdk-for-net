@@ -65,14 +65,11 @@ ManualReclassifyExceptionAction action = new ManualReclassifyExceptionAction
 
 Response<ExceptionPolicy> exceptionPolicy = await routerAdministrationClient.CreateExceptionPolicyAsync(new CreateExceptionPolicyOptions(
     exceptionPolicyId: exceptionPolicyId,
-    exceptionRules: new Dictionary<string, ExceptionRule>()
+    exceptionRules: new List<ExceptionRule>()
     {
-        ["QueueLengthExceptionTrigger"] = new ExceptionRule(
+        new ExceptionRule(id: "QueueLengthExceptionTrigger",
             trigger: trigger,
-            actions: new Dictionary<string, ExceptionAction?>()
-            {
-                ["ManualReclassifyExceptionAction"] = action,
-            })
+            actions: new List<ExceptionAction> { action })
     }));
 
 // create primary queue
