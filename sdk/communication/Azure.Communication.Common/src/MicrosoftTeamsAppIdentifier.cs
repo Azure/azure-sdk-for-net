@@ -49,14 +49,13 @@ namespace Azure.Communication
         /// </summary>
         /// <param name="teamsAppId">Id of the Microsoft teams app. The unique Microsoft app ID for Teams.</param>
         /// <param name="cloud">The cloud that the Microsoft teams app belongs to. A null value translates to the Public cloud.</param>
-        /// <param name="rawId"> Raw Id of the identifier. Optional in requests, required in responses. </param>
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when the <paramref name="teamsAppId"/> is null.
         /// </exception>
         /// <exception cref="System.ArgumentException">
         /// Thrown when the <paramref name="teamsAppId"/> is empty.
         /// </exception>
-        public MicrosoftTeamsAppIdentifier(string teamsAppId, CommunicationCloudEnvironment? cloud = null, string rawId = null)
+        public MicrosoftTeamsAppIdentifier(string teamsAppId, CommunicationCloudEnvironment? cloud = null)
         {
             Argument.AssertNotNullOrEmpty(teamsAppId, nameof(teamsAppId));
             TeamsAppId = teamsAppId;
