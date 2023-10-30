@@ -17,6 +17,8 @@ using Azure.Storage.Files.Shares.Tests;
 using NUnit.Framework;
 using System.Security.AccessControl;
 using Microsoft.Extensions.Options;
+using System.Threading;
+using Azure.Core;
 
 namespace Azure.Storage.DataMovement.Files.Shares.Tests
 {
@@ -44,18 +46,23 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             ShareClient container,
             long? objectLength = null,
             string objectName = null,
-            Stream contents = default)
-            => await CreateShareFileAsync(container, objectLength, objectName, contents);
+            Stream contents = default,
+            CancellationToken cancellationToken = default)
+            => await CreateShareFileAsync(container, objectLength, objectName, contents, cancellationToken);
 
         protected override async Task CreateObjectInDestinationAsync(
             ShareClient container,
             long? objectLength = null,
             string objectName = null,
-            Stream contents = null)
-            => await CreateShareFileAsync(container, objectLength, objectName, contents);
+            Stream contents = null,
+            CancellationToken cancellationToken = default)
+            => await CreateShareFileAsync(container, objectLength, objectName, contents, cancellationToken);
 
-        protected override async Task<IDisposingContainer<ShareClient>> GetDestinationDisposingContainerAsync(ShareServiceClient service = null, string containerName = null)
-            => await DestinationClientBuilder.GetTestShareAsync(service, containerName);
+        protected override async Task<IDisposingContainer<ShareClient>> GetDestinationDisposingContainerAsync(
+            ShareServiceClient service = null,
+            string containerName = null,
+            CancellationToken cancellationToken = default)
+            => await DestinationClientBuilder.GetTestShareAsync(service, containerName, cancellationToken: cancellationToken);
 
         protected override StorageResourceContainer GetDestinationStorageResourceContainer(ShareClient containerClient, string prefix)
             => new ShareDirectoryStorageResourceContainer(containerClient.GetDirectoryClient(prefix), default);
@@ -76,7 +83,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             return oauthService.GetShareClient(containerName);
         }
 
-        protected override async Task<IDisposingContainer<ShareClient>> GetSourceDisposingContainerAsync(ShareServiceClient service = null, string containerName = null)
+        protected override async Task<IDisposingContainer<ShareClient>> GetSourceDisposingContainerAsync(ShareServiceClient service = null, string containerName = null, CancellationToken cancellationToken = default)
         {
             service ??= SourceClientBuilder.GetServiceClientFromSharedKeyConfig(SourceClientBuilder.Tenants.TestConfigDefault, SourceClientBuilder.GetOptions());
             ShareServiceClient sasService = new ShareServiceClient(service.GenerateAccountSasUri(
@@ -84,24 +91,28 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 SourceClientBuilder.Recording.UtcNow.AddDays(1),
                 Sas.AccountSasResourceTypes.All),
                 SourceClientBuilder.GetOptions());
-            return await SourceClientBuilder.GetTestShareAsync(sasService, containerName);
+            return await SourceClientBuilder.GetTestShareAsync(sasService, containerName, cancellationToken: cancellationToken);
         }
 
         protected override StorageResourceContainer GetSourceStorageResourceContainer(ShareClient containerClient, string prefix = null)
             => new ShareDirectoryStorageResourceContainer(containerClient.GetDirectoryClient(prefix), default);
 
-        protected override async Task CreateDirectoryInSourceAsync(ShareClient sourceContainer, string directoryPath)
-            => await CreateDirectoryTree(sourceContainer, directoryPath);
+        protected override async Task CreateDirectoryInSourceAsync(ShareClient sourceContainer, string directoryPath, CancellationToken cancellationToken = default)
+            => await CreateDirectoryTreeAsync(sourceContainer, directoryPath, cancellationToken);
 
-        protected override async Task CreateDirectoryInDestinationAsync(ShareClient destinationContainer, string directoryPath)
-            => await CreateDirectoryTree(destinationContainer, directoryPath);
+        protected override async Task CreateDirectoryInDestinationAsync(ShareClient destinationContainer, string directoryPath, CancellationToken cancellationToken = default)
+            => await CreateDirectoryTreeAsync(destinationContainer, directoryPath, cancellationToken);
 
-        protected override async Task VerifyEmptyDestinationContainerAsync(ShareClient destinationContainer, string destinationPrefix)
+        protected override async Task VerifyEmptyDestinationContainerAsync(
+            ShareClient destinationContainer,
+            string destinationPrefix,
+            CancellationToken cancellationToken = default)
         {
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             ShareDirectoryClient destinationDirectory = string.IsNullOrEmpty(destinationPrefix) ?
                 destinationContainer.GetRootDirectoryClient() :
                 destinationContainer.GetDirectoryClient(destinationPrefix);
-            IList<ShareFileItem> items = await destinationDirectory.GetFilesAndDirectoriesAsync().ToListAsync();
+            IList<ShareFileItem> items = await destinationDirectory.GetFilesAndDirectoriesAsync(cancellationToken: cancellationToken).ToListAsync();
             Assert.IsEmpty(items);
         }
 
@@ -109,8 +120,11 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             ShareClient sourceContainer,
             string sourcePrefix,
             ShareClient destinationContainer,
-            string destinationPrefix)
+            string destinationPrefix,
+            CancellationToken cancellationToken = default)
         {
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+
             // List all files in source blob folder path
             List<string> sourceFileNames = new List<string>();
             List<string> sourceDirectoryNames = new List<string>();
@@ -152,8 +166,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
                 // Verify Download
                 string sourceFileName = Path.Combine(sourcePrefix, sourceFileNames[i]);
-                using Stream sourceStream = await sourceDirectory.GetFileClient(sourceFileNames[i]).OpenReadAsync();
-                using Stream destinationStream = await destinationDirectory.GetFileClient(destinationFileNames[i]).OpenReadAsync();
+                using Stream sourceStream = await sourceDirectory.GetFileClient(sourceFileNames[i]).OpenReadAsync(cancellationToken: cancellationToken);
+                using Stream destinationStream = await destinationDirectory.GetFileClient(destinationFileNames[i]).OpenReadAsync(cancellationToken: cancellationToken);
                 Assert.AreEqual(sourceStream, destinationStream);
             }
         }
@@ -162,8 +176,10 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             ShareClient container,
             long? objectLength = null,
             string objectName = null,
-            Stream contents = default)
+            Stream contents = default,
+            CancellationToken cancellationToken = default)
         {
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             objectName ??= GetNewObjectName();
             if (!objectLength.HasValue)
             {
@@ -174,15 +190,16 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             if (contents != default)
             {
-                await fileClient.UploadAsync(contents);
+                await fileClient.UploadAsync(contents, cancellationToken: cancellationToken);
             }
         }
 
-        private async Task CreateDirectoryTree(ShareClient container, string directoryPath)
+        private async Task CreateDirectoryTreeAsync(ShareClient container, string directoryPath, CancellationToken cancellationToken = default)
         {
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             // Parse for parent directory names and create the parent directory(s).
             ShareDirectoryClient directory = container.GetRootDirectoryClient().GetSubdirectoryClient(directoryPath);
-            await directory.CreateIfNotExistsAsync();
+            await directory.CreateIfNotExistsAsync(cancellationToken: cancellationToken);
         }
     }
 }

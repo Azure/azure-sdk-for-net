@@ -190,9 +190,6 @@ namespace Azure.Storage.DataMovement
                             ? current.Uri.GetPath()
                             : current.Uri.GetPath().Substring(containerUriPath.Length + 1);
 
-                        // Because AsyncEnumerable doesn't let us know which storage resource is the last resource
-                        // we only yield return when we know this is not the last storage resource to be listed
-                        // from the container.
                         StreamToUriJobPart part;
                         try
                         {

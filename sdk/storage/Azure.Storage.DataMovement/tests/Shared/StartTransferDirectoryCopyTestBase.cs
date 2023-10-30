@@ -68,7 +68,8 @@ namespace Azure.Storage.DataMovement.Tests
         /// <param name="containerName">Optional container name specification.</param>
         protected abstract Task<IDisposingContainer<TSourceContainerClient>> GetSourceDisposingContainerAsync(
             TSourceServiceClient service = default,
-            string containerName = default);
+            string containerName = default,
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets the specific storage resource from the given TDestinationObjectClient
@@ -77,7 +78,7 @@ namespace Azure.Storage.DataMovement.Tests
         /// <param name="containerClient">The object client to create the storage resource object.</param>
         /// <param name="directoryPath">The path of the directory.</param>
         /// <returns></returns>
-        protected abstract StorageResourceContainer GetSourceStorageResourceContainer(TSourceContainerClient directoryClient, string prefix);
+        protected abstract StorageResourceContainer GetSourceStorageResourceContainer(TSourceContainerClient containerClient, string directoryPath);
 
         /// <summary>
         /// Creates the directory within the source container. Will also create any parent directories if required and is a hierarchical structure.
@@ -88,7 +89,10 @@ namespace Azure.Storage.DataMovement.Tests
         /// <param name="directoryPath">
         /// The directory path. If parent paths are required, will also create any parent directories if required and is a hierarchical structure.
         /// </param>
-        protected abstract Task CreateDirectoryInSourceAsync(TSourceContainerClient sourceContainer, string directoryPath);
+        protected abstract Task CreateDirectoryInSourceAsync(
+            TSourceContainerClient sourceContainer,
+            string directoryPath,
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates the object in the source storage resource container.
@@ -97,7 +101,12 @@ namespace Azure.Storage.DataMovement.Tests
         /// <param name="objectName">The name of the object to create.</param>
         /// <param name="contents">The contents to set in the object.</param>
         /// <returns></returns>
-        protected abstract Task CreateObjectInSourceAsync(TSourceContainerClient container, long? objectLength = null, string objectName = null, Stream contents = default);
+        protected abstract Task CreateObjectInSourceAsync(
+            TSourceContainerClient container,
+            long? objectLength = null,
+            string objectName = null,
+            Stream contents = default,
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets a service-specific disposing container for use with tests in this class.
@@ -106,7 +115,8 @@ namespace Azure.Storage.DataMovement.Tests
         /// <param name="containerName">Optional container name specification.</param>
         protected abstract Task<IDisposingContainer<TDestinationContainerClient>> GetDestinationDisposingContainerAsync(
             TDestinationServiceClient service = default,
-            string containerName = default);
+            string containerName = default,
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Gets the service client using OAuth to authenticate.
@@ -130,7 +140,10 @@ namespace Azure.Storage.DataMovement.Tests
         /// <param name="directoryPath">
         /// The directory path. If parent paths are required, will also create any parent directories if required and is a hierarchical structure.
         /// </param>
-        protected abstract Task CreateDirectoryInDestinationAsync(TDestinationContainerClient destinationContainer, string directoryPath);
+        protected abstract Task CreateDirectoryInDestinationAsync(
+            TDestinationContainerClient destinationContainer,
+            string directoryPath,
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Creates the object in the source storage resource container.
@@ -139,7 +152,12 @@ namespace Azure.Storage.DataMovement.Tests
         /// <param name="objectName">The name of the object to create.</param>
         /// <param name="contents">The contents to set in the object.</param>
         /// <returns></returns>
-        protected abstract Task CreateObjectInDestinationAsync(TDestinationContainerClient container, long? objectLength = null, string objectName = null, Stream contents = default);
+        protected abstract Task CreateObjectInDestinationAsync(
+            TDestinationContainerClient container,
+            long? objectLength = null,
+            string objectName = null,
+            Stream contents = default,
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Verifies that the destination container is empty when we expect it to be.
@@ -148,7 +166,10 @@ namespace Azure.Storage.DataMovement.Tests
         /// The respective destination container to verify empty contents.
         /// </param>
         /// <returns></returns>
-        protected abstract Task VerifyEmptyDestinationContainerAsync(TDestinationContainerClient destinationContainer, string destinationPrefix);
+        protected abstract Task VerifyEmptyDestinationContainerAsync(
+            TDestinationContainerClient destinationContainer,
+            string destinationPrefix,
+            CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Verifies the results between the source and the destination container.
@@ -162,21 +183,22 @@ namespace Azure.Storage.DataMovement.Tests
             TSourceContainerClient sourceContainer,
             string sourcePrefix,
             TDestinationContainerClient destinationContainer,
-            string destinationPrefix);
+            string destinationPrefix,
+            CancellationToken cancellationToken = default);
         #endregion
 
         protected string GetNewObjectName()
             => _generatedResourceNamePrefix + SourceClientBuilder.Recording.Random.NewGuid();
 
         /// <summary>
-        /// Upload and verify the contents of the blob
+        /// Upload and verify the contents of the items
         ///
         /// By default in this function an event argument will be added to the options event handler
         /// to detect when the upload has finished.
         /// </summary>
-        /// <param name="sourceContainer">The source container which will contains the source blobs</param>
-        /// <param name="sourcePrefix">The source blob prefix/folder</param>
-        /// <param name="destinationPrefix">The destination local path to download the blobs to</param>
+        /// <param name="sourceContainer">The source container which will contains the source items</param>
+        /// <param name="sourcePrefix">The source prefix/folder</param>
+        /// <param name="destinationPrefix">The destination local path to download the items to</param>
         /// <param name="waitTimeInSec">
         /// How long we should wait until we cancel the operation. If this timeout is reached the test will fail.
         /// </param>
@@ -220,7 +242,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(transfer.HasCompleted);
             Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
 
-            // List all files in source blob folder path
+            // List all files in source folder path
             await VerifyResultsAsync(
                 sourceContainer: sourceContainer,
                 sourcePrefix: sourcePrefix,
