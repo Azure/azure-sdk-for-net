@@ -3,6 +3,7 @@
 
 using System;
 using System.Net;
+using System.Net.ClientModel;
 using System.Net.ClientModel.Core;
 using System.Text.Json;
 
