@@ -34,7 +34,9 @@ public class MapsClient
     {
         if (ipAddress is null) throw new ArgumentNullException(nameof(ipAddress));
 
-        RequestOptions options = FromCancellationToken(cancellationToken);
+        RequestOptions options = cancellationToken.CanBeCanceled ?
+            new RequestOptions() { CancellationToken = cancellationToken } :
+            new RequestOptions();
 
         Result result = GetCountryCode(ipAddress.ToString(), options);
 
@@ -93,18 +95,4 @@ public class MapsClient
 
         return message;
     }
-
-    private static RequestOptions DefaultRequestOptions = new RequestOptions();
-    internal static RequestOptions FromCancellationToken(CancellationToken cancellationToken = default)
-    {
-        if (!cancellationToken.CanBeCanceled)
-        {
-            return DefaultRequestOptions;
-        }
-
-        return new RequestOptions() { CancellationToken = cancellationToken };
-    }
-
-    private static MessageClassifier _messageClassifier200;
-    private static MessageClassifier MessageClassifier200 => _messageClassifier200 ??= new ResponseStatusClassifier(stackalloc ushort[] { 200 });
 }
