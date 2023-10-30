@@ -45,8 +45,6 @@ namespace Azure.Communication.JobRouter
         /// label selector
         /// </summary>
         public LabelOperator LabelOperator { get; }
-        /// <summary> Pushes the job to the front of the queue as long as this selector is active. </summary>
-        public bool? Expedite { get; }
         /// <summary> The status of the worker selector. </summary>
         public RouterWorkerSelectorStatus? Status { get; }
     }

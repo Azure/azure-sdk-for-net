@@ -37,7 +37,7 @@ namespace Azure.Communication.JobRouter
         /// Note:
         /// Worker labels are always sent with scoring payload.
         /// </param>
-        /// <param name="allowScoringBatchOfWorkers">
+        /// <param name="isBatchScoringEnabled">
         /// (Optional)
         /// If set to true, will score workers in batches, and the parameter
         /// name of the worker labels will be sent as `workers`.
@@ -51,34 +51,12 @@ namespace Azure.Communication.JobRouter
         /// If false, will sort scores by ascending order. By default, set to
         /// true.
         /// </param>
-        internal ScoringRuleOptions(int? batchSize, IList<ScoringRuleParameterSelector> scoringParameters, bool? allowScoringBatchOfWorkers, bool? descendingOrder)
+        internal ScoringRuleOptions(int? batchSize, IList<ScoringRuleParameterSelector> scoringParameters, bool? isBatchScoringEnabled, bool? descendingOrder)
         {
             BatchSize = batchSize;
             ScoringParameters = scoringParameters;
-            AllowScoringBatchOfWorkers = allowScoringBatchOfWorkers;
+            IsBatchScoringEnabled = isBatchScoringEnabled;
             DescendingOrder = descendingOrder;
         }
-
-        /// <summary>
-        /// (Optional) Set batch size when AllowScoringBatchOfWorkers is set to true.
-        /// Defaults to 20 if not configured.
-        /// </summary>
-        public int? BatchSize { get; }
-        /// <summary>
-        /// (Optional)
-        /// If set to true, will score workers in batches, and the parameter
-        /// name of the worker labels will be sent as `workers`.
-        /// By default, set to false
-        /// and the parameter name for the worker labels will be sent as `worker`.
-        /// Note: If
-        /// enabled, use BatchSize to set batch size.
-        /// </summary>
-        public bool? AllowScoringBatchOfWorkers { get; }
-        /// <summary>
-        /// (Optional)
-        /// If false, will sort scores by ascending order. By default, set to
-        /// true.
-        /// </summary>
-        public bool? DescendingOrder { get; }
     }
 }
