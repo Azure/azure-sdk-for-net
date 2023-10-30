@@ -168,7 +168,7 @@ public class HttpClientPipelineTransport : PipelineTransport, IDisposable
         // Consider which is preferred as part of holistic extensibility-point review.
         if (contentStream is not null)
         {
-            message.Response.Content = MessageBody.Create(contentStream);
+            message.Response.Body = MessageBody.Create(contentStream);
         }
 
         message.Response.IsError = message.MessageClassifier.IsError(message);

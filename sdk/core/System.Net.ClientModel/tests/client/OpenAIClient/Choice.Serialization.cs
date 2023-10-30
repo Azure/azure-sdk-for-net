@@ -73,7 +73,7 @@ public partial class Choice
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static Choice FromResponse(PipelineResponse response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Body);
             return DeserializeChoice(document.RootElement);
         }
     }

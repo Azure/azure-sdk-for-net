@@ -239,7 +239,7 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
             public MockPipelineResponse(int status, BinaryData content)
             {
                 Status = status;
-                Content = MessageBody.Create(content);
+                Body = MessageBody.Create(content);
             }
 
             public override int Status { get; }
@@ -248,11 +248,11 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
 
             public override MessageHeaders Headers => throw new NotImplementedException();
 
-            public override MessageBody? Content { get; protected set; }
+            public override MessageBody? Body { get; protected set; }
 
             public override void Dispose()
             {
-                Content?.Dispose();
+                Body?.Dispose();
             }
         }
 

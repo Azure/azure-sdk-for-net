@@ -44,7 +44,7 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
         set => _uri = value;
     }
 
-    public override MessageBody? Content
+    public override MessageBody? Body
     {
         get => _content;
         set => _content = value;

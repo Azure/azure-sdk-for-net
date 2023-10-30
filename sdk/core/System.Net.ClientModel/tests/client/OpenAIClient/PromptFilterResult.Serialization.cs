@@ -45,7 +45,7 @@ public partial class PromptFilterResult
     /// <param name="response"> The response to deserialize the model from. </param>
     internal static PromptFilterResult FromResponse(PipelineResponse response)
     {
-        using var document = JsonDocument.Parse(response.Content);
+        using var document = JsonDocument.Parse(response.Body);
         return DeserializePromptFilterResult(document.RootElement);
     }
 }

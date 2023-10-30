@@ -72,7 +72,7 @@ public class OpenAIClient
         request.Headers.Set("Accept", "application/json");
         request.Headers.Set("Content-Type", "application/json");
 
-        request.Content = content;
+        request.Body = content;
 
         return message;
     }

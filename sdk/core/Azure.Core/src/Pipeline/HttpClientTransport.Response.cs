@@ -43,7 +43,7 @@ namespace Azure.Core.Pipeline
             {
                 ClientUtilities.AssertNotNull(stream, nameof(stream));
 
-                Content = MessageBody.Create(stream);
+                Body = MessageBody.Create(stream);
             }
         }
 
@@ -66,12 +66,12 @@ namespace Azure.Core.Pipeline
             {
                 get
                 {
-                    if (_pipelineResponse.Content is null)
+                    if (_pipelineResponse.Body is null)
                     {
                         return null;
                     }
 
-                    return (Stream)_pipelineResponse.Content;
+                    return (Stream)_pipelineResponse.Body;
                 }
 
                 set

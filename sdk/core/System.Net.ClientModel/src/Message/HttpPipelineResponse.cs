@@ -35,7 +35,7 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
     public override MessageHeaders Headers
         => new MessageResponseHeaders(_httpResponse, _httpResponseContent);
 
-    public override MessageBody? Content
+    public override MessageBody? Body
     {
         get
         {

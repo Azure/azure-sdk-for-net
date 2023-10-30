@@ -114,9 +114,9 @@ namespace System.Net.ClientModel.Core
         public static System.Net.ClientModel.Core.MessageBody Create(System.Net.ClientModel.Core.IJsonModel<object> model, System.Net.ClientModel.ModelReaderWriterOptions? options = null) { throw null; }
         public static System.Net.ClientModel.Core.MessageBody Create(System.Net.ClientModel.Core.IModel<object> model, System.Net.ClientModel.ModelReaderWriterOptions? options = null) { throw null; }
         public abstract void Dispose();
-        public static explicit operator System.IO.Stream (System.Net.ClientModel.Core.MessageBody content) { throw null; }
-        public static implicit operator System.BinaryData (System.Net.ClientModel.Core.MessageBody content) { throw null; }
-        public static implicit operator System.ReadOnlyMemory<byte> (System.Net.ClientModel.Core.MessageBody content) { throw null; }
+        public static explicit operator System.IO.Stream (System.Net.ClientModel.Core.MessageBody body) { throw null; }
+        public static implicit operator System.BinaryData (System.Net.ClientModel.Core.MessageBody body) { throw null; }
+        public static implicit operator System.ReadOnlyMemory<byte> (System.Net.ClientModel.Core.MessageBody body) { throw null; }
         protected virtual System.BinaryData ToBinaryData(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         protected virtual System.IO.Stream ToStream(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public abstract bool TryComputeLength(out long length);
@@ -210,7 +210,7 @@ namespace System.Net.ClientModel.Core
     public abstract partial class PipelineRequest : System.IDisposable
     {
         protected PipelineRequest() { }
-        public abstract System.Net.ClientModel.Core.MessageBody? Content { get; set; }
+        public abstract System.Net.ClientModel.Core.MessageBody? Body { get; set; }
         public abstract System.Net.ClientModel.Core.MessageHeaders Headers { get; }
         public abstract string Method { get; set; }
         public abstract System.Uri Uri { get; set; }
@@ -219,7 +219,7 @@ namespace System.Net.ClientModel.Core
     public abstract partial class PipelineResponse : System.IDisposable
     {
         protected PipelineResponse() { }
-        public abstract System.Net.ClientModel.Core.MessageBody? Content { get; protected internal set; }
+        public abstract System.Net.ClientModel.Core.MessageBody? Body { get; protected internal set; }
         public abstract System.Net.ClientModel.Core.MessageHeaders Headers { get; }
         public bool IsError { get { throw null; } }
         public abstract string ReasonPhrase { get; }
@@ -397,7 +397,7 @@ namespace System.Net.ClientModel.Internal.Core
     public partial class HttpPipelineRequest : System.Net.ClientModel.Core.PipelineRequest, System.IDisposable
     {
         protected internal HttpPipelineRequest() { }
-        public override System.Net.ClientModel.Core.MessageBody? Content { get { throw null; } set { } }
+        public override System.Net.ClientModel.Core.MessageBody? Body { get { throw null; } set { } }
         public override System.Net.ClientModel.Core.MessageHeaders Headers { get { throw null; } }
         public override string Method { get { throw null; } set { } }
         public override System.Uri Uri { get { throw null; } set { } }
@@ -407,7 +407,7 @@ namespace System.Net.ClientModel.Internal.Core
     public partial class HttpPipelineResponse : System.Net.ClientModel.Core.PipelineResponse, System.IDisposable
     {
         protected internal HttpPipelineResponse(System.Net.Http.HttpResponseMessage httpResponse) { }
-        public override System.Net.ClientModel.Core.MessageBody? Content { get { throw null; } protected internal set { } }
+        public override System.Net.ClientModel.Core.MessageBody? Body { get { throw null; } protected internal set { } }
         public override System.Net.ClientModel.Core.MessageHeaders Headers { get { throw null; } }
         public override string ReasonPhrase { get { throw null; } }
         public override int Status { get { throw null; } }

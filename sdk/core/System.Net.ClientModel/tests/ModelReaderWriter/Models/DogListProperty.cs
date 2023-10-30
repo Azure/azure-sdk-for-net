@@ -37,7 +37,7 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests.Models
 
         public static explicit operator DogListProperty(Result response)
         {
-            using JsonDocument jsonDocument = JsonDocument.Parse(response.GetRawResponse().Content);
+            using JsonDocument jsonDocument = JsonDocument.Parse(response.GetRawResponse().Body);
             return DeserializeDogListProperty(jsonDocument.RootElement, ModelReaderWriterOptions.DefaultWireOptions);
         }
 

@@ -33,7 +33,7 @@ namespace System.Net.ClientModel.Tests.Client.ResourceManager.Resources
         {
             ClientUtilities.AssertNotNull(result, nameof(result));
 
-            using JsonDocument jsonDocument = JsonDocument.Parse(result.GetRawResponse().Content);
+            using JsonDocument jsonDocument = JsonDocument.Parse(result.GetRawResponse().Body);
             return DeserializeResourceProviderData(jsonDocument.RootElement, ModelReaderWriterOptions.DefaultWireOptions);
         }
 

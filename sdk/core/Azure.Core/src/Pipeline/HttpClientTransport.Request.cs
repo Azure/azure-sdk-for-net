@@ -121,16 +121,16 @@ namespace Azure.Core.Pipeline
             {
                 get
                 {
-                    if (_request.Content is not RequestContent &&
-                        _request.Content is not null)
+                    if (_request.Body is not RequestContent &&
+                        _request.Body is not null)
                     {
-                        throw new NotSupportedException($"Invalid type for request Content: '{_request.Content.GetType()}'.");
+                        throw new NotSupportedException($"Invalid type for request Content: '{_request.Body.GetType()}'.");
                     }
 
-                    return (RequestContent?)_request.Content;
+                    return (RequestContent?)_request.Body;
                 }
 
-                set => _request.Content = value;
+                set => _request.Body = value;
             }
 
             public override void Dispose() => _request.Dispose();
