@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
+using System.Net.ClientModel.Internal.Core;
 
 namespace System.Net.ClientModel.Core;
 

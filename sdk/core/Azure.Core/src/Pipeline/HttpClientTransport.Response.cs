@@ -7,6 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Net.ClientModel.Core;
 using System.Net.ClientModel.Internal;
+using System.Net.ClientModel.Internal.Core;
 using System.Net.Http;
 
 namespace Azure.Core.Pipeline

@@ -90,38 +90,6 @@ namespace System.Net.ClientModel.Core
         Default = 0,
         NoThrow = 1,
     }
-    public partial class HttpClientPipelineTransport : System.Net.ClientModel.Core.PipelineTransport, System.IDisposable
-    {
-        public HttpClientPipelineTransport() { }
-        public HttpClientPipelineTransport(System.Net.Http.HttpClient client) { }
-        public override System.Net.ClientModel.Core.PipelineMessage CreateMessage() { throw null; }
-        public virtual void Dispose() { }
-        protected virtual void Dispose(bool disposing) { }
-        protected virtual void OnReceivedResponse(System.Net.ClientModel.Core.PipelineMessage message, System.Net.Http.HttpResponseMessage httpResponse) { }
-        protected virtual void OnSendingRequest(System.Net.ClientModel.Core.PipelineMessage message, System.Net.Http.HttpRequestMessage httpRequest) { }
-        public override void Process(System.Net.ClientModel.Core.PipelineMessage message) { }
-        public override System.Threading.Tasks.ValueTask ProcessAsync(System.Net.ClientModel.Core.PipelineMessage message) { throw null; }
-    }
-    public partial class HttpPipelineRequest : System.Net.ClientModel.Core.PipelineRequest, System.IDisposable
-    {
-        protected internal HttpPipelineRequest() { }
-        public override System.Net.ClientModel.Core.MessageBody? Content { get { throw null; } set { } }
-        public override System.Net.ClientModel.Core.MessageHeaders Headers { get { throw null; } }
-        public override string Method { get { throw null; } set { } }
-        public override System.Uri Uri { get { throw null; } set { } }
-        public override void Dispose() { }
-        public override string ToString() { throw null; }
-    }
-    public partial class HttpPipelineResponse : System.Net.ClientModel.Core.PipelineResponse, System.IDisposable
-    {
-        protected internal HttpPipelineResponse(System.Net.Http.HttpResponseMessage httpResponse) { }
-        public override System.Net.ClientModel.Core.MessageBody? Content { get { throw null; } protected internal set { } }
-        public override System.Net.ClientModel.Core.MessageHeaders Headers { get { throw null; } }
-        public override string ReasonPhrase { get { throw null; } }
-        public override int Status { get { throw null; } }
-        public override void Dispose() { }
-        protected virtual void Dispose(bool disposing) { }
-    }
     public partial interface IJsonModel<out T> : System.Net.ClientModel.Core.IModel<T>
     {
         T Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options);
@@ -412,5 +380,40 @@ namespace System.Net.ClientModel.Internal
         public void Dispose() { }
         protected virtual void Dispose(bool disposing) { }
         public void Write(System.Net.ClientModel.Internal.IUtf8JsonContentWriteable content) { }
+    }
+}
+namespace System.Net.ClientModel.Internal.Core
+{
+    public partial class HttpClientPipelineTransport : System.Net.ClientModel.Core.PipelineTransport, System.IDisposable
+    {
+        public HttpClientPipelineTransport() { }
+        public HttpClientPipelineTransport(System.Net.Http.HttpClient client) { }
+        public override System.Net.ClientModel.Core.PipelineMessage CreateMessage() { throw null; }
+        public virtual void Dispose() { }
+        protected virtual void Dispose(bool disposing) { }
+        protected virtual void OnReceivedResponse(System.Net.ClientModel.Core.PipelineMessage message, System.Net.Http.HttpResponseMessage httpResponse) { }
+        protected virtual void OnSendingRequest(System.Net.ClientModel.Core.PipelineMessage message, System.Net.Http.HttpRequestMessage httpRequest) { }
+        public override void Process(System.Net.ClientModel.Core.PipelineMessage message) { }
+        public override System.Threading.Tasks.ValueTask ProcessAsync(System.Net.ClientModel.Core.PipelineMessage message) { throw null; }
+    }
+    public partial class HttpPipelineRequest : System.Net.ClientModel.Core.PipelineRequest, System.IDisposable
+    {
+        protected internal HttpPipelineRequest() { }
+        public override System.Net.ClientModel.Core.MessageBody? Content { get { throw null; } set { } }
+        public override System.Net.ClientModel.Core.MessageHeaders Headers { get { throw null; } }
+        public override string Method { get { throw null; } set { } }
+        public override System.Uri Uri { get { throw null; } set { } }
+        public override void Dispose() { }
+        public override string ToString() { throw null; }
+    }
+    public partial class HttpPipelineResponse : System.Net.ClientModel.Core.PipelineResponse, System.IDisposable
+    {
+        protected internal HttpPipelineResponse(System.Net.Http.HttpResponseMessage httpResponse) { }
+        public override System.Net.ClientModel.Core.MessageBody? Content { get { throw null; } protected internal set { } }
+        public override System.Net.ClientModel.Core.MessageHeaders Headers { get { throw null; } }
+        public override string ReasonPhrase { get { throw null; } }
+        public override int Status { get { throw null; } }
+        public override void Dispose() { }
+        protected virtual void Dispose(bool disposing) { }
     }
 }

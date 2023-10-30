@@ -4,14 +4,13 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
+using System.Net.ClientModel.Core;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Net.ClientModel.Internal;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace System.Net.ClientModel.Core;
+namespace System.Net.ClientModel.Internal.Core;
 
 // This adds the Http dependency, and some implementation
 
