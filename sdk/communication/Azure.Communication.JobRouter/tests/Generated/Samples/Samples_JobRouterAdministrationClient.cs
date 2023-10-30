@@ -8,6 +8,9 @@
 using System;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Azure;
+using Azure.Communication.JobRouter;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Communication.JobRouter.Samples
