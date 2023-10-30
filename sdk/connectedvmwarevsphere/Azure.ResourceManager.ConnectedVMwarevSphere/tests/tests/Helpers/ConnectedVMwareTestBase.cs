@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.Helpers
 
         protected async Task<ResourceGroupResource> CreateResourceGroupAsync()
         {
-            var resourceGroupName = Recording.GenerateAssetName("testConnectedVMwareRG-");
+            var resourceGroupName = Recording.GenerateAssetName("azcli-test-rg");
             var rgOp = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 resourceGroupName,

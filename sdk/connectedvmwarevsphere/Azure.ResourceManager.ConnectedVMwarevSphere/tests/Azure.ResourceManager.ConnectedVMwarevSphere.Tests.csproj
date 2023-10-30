@@ -5,6 +5,7 @@
     <None Remove="SessionRecords\**" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\samples\Azure.ResourceManager.ConnectedVMwarevSphere.Samples.csproj" />
     <ProjectReference Include="..\src\Azure.ResourceManager.ConnectedVMwarevSphere.csproj" />
   </ItemGroup>
 </Project>
