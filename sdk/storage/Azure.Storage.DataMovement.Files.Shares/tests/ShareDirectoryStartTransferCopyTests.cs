@@ -197,7 +197,6 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         private async Task CreateDirectoryTreeAsync(ShareClient container, string directoryPath, CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-            // Parse for parent directory names and create the parent directory(s).
             ShareDirectoryClient directory = container.GetRootDirectoryClient().GetSubdirectoryClient(directoryPath);
             await directory.CreateIfNotExistsAsync(cancellationToken: cancellationToken);
         }

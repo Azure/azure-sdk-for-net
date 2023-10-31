@@ -81,13 +81,13 @@ namespace Azure.Storage.DataMovement.Tests
         protected abstract StorageResourceContainer GetSourceStorageResourceContainer(TSourceContainerClient containerClient, string directoryPath);
 
         /// <summary>
-        /// Creates the directory within the source container. Will also create any parent directories if required and is a hierarchical structure.
+        /// Creates the directory within the source container.
         /// </summary>
         /// <param name="sourceContainer">
         /// The respective source container to create the directory in.
         /// </param>
         /// <param name="directoryPath">
-        /// The directory path. If parent paths are required, will also create any parent directories if required and is a hierarchical structure.
+        /// The directory path.
         /// </param>
         protected abstract Task CreateDirectoryInSourceAsync(
             TSourceContainerClient sourceContainer,
