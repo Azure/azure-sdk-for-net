@@ -11,6 +11,9 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 {
     internal class RemoteCryptographyClient : ICryptographyProvider
     {
+        private const string OTelKeyIdKey = "az.key_vault.key.id"
+        private readonly string _keyIdStr;
+
         private readonly Uri _keyId;
 
         protected RemoteCryptographyClient()
@@ -23,6 +26,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             Argument.AssertNotNull(credential, nameof(credential));
 
             _keyId = keyId;
+            _keyIdStr = _keyId.OriginalString;
             options ??= new CryptographyClientOptions();
             string apiVersion = options.GetVersionString();
 
@@ -44,7 +48,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         public virtual async Task<Response<EncryptResult>> EncryptAsync(EncryptParameters parameters, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = Pipeline.CreateScope($"{nameof(RemoteCryptographyClient)}.{nameof(Encrypt)}");
-            scope.AddAttribute("key", _keyId);
+            scope.AddAttribute(OTelKeyIdKey, _keyId);
             scope.Start();
 
             try
@@ -65,7 +69,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         public virtual Response<EncryptResult> Encrypt(EncryptParameters parameters, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = Pipeline.CreateScope($"{nameof(RemoteCryptographyClient)}.{nameof(Encrypt)}");
-            scope.AddAttribute("key", _keyId);
+            scope.AddAttribute(OTelKeyIdKey, _keyId);
             scope.Start();
 
             try
@@ -86,7 +90,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         public virtual async Task<Response<DecryptResult>> DecryptAsync(DecryptParameters parameters, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = Pipeline.CreateScope($"{nameof(RemoteCryptographyClient)}.{nameof(Decrypt)}");
-            scope.AddAttribute("key", _keyId);
+            scope.AddAttribute(OTelKeyIdKey, _keyId);
             scope.Start();
 
             try
@@ -103,7 +107,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         public virtual Response<DecryptResult> Decrypt(DecryptParameters parameters, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = Pipeline.CreateScope($"{nameof(RemoteCryptographyClient)}.{nameof(Decrypt)}");
-            scope.AddAttribute("key", _keyId);
+            scope.AddAttribute(OTelKeyIdKey, _keyId);
             scope.Start();
 
             try
@@ -126,7 +130,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             };
 
             using DiagnosticScope scope = Pipeline.CreateScope($"{nameof(RemoteCryptographyClient)}.{nameof(WrapKey)}");
-            scope.AddAttribute("key", _keyId);
+            scope.AddAttribute(OTelKeyIdKey, _keyId);
             scope.Start();
 
             try
@@ -149,7 +153,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             };
 
             using DiagnosticScope scope = Pipeline.CreateScope($"{nameof(RemoteCryptographyClient)}.{nameof(WrapKey)}");
-            scope.AddAttribute("key", _keyId);
+            scope.AddAttribute(OTelKeyIdKey, _keyId);
             scope.Start();
 
             try
@@ -172,7 +176,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             };
 
             using DiagnosticScope scope = Pipeline.CreateScope($"{nameof(RemoteCryptographyClient)}.{nameof(UnwrapKey)}");
-            scope.AddAttribute("key", _keyId);
+            scope.AddAttribute(OTelKeyIdKey, _keyId);
             scope.Start();
 
             try
@@ -195,7 +199,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             };
 
             using DiagnosticScope scope = Pipeline.CreateScope($"{nameof(RemoteCryptographyClient)}.{nameof(UnwrapKey)}");
-            scope.AddAttribute("key", _keyId);
+            scope.AddAttribute(OTelKeyIdKey, _keyId);
             scope.Start();
 
             try
@@ -218,7 +222,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             };
 
             using DiagnosticScope scope = Pipeline.CreateScope($"{nameof(RemoteCryptographyClient)}.{nameof(Sign)}");
-            scope.AddAttribute("key", _keyId);
+            scope.AddAttribute(OTelKeyIdKey, _keyId);
             scope.Start();
 
             try
@@ -241,7 +245,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             };
 
             using DiagnosticScope scope = Pipeline.CreateScope($"{nameof(RemoteCryptographyClient)}.{nameof(Sign)}");
-            scope.AddAttribute("key", _keyId);
+            scope.AddAttribute(OTelKeyIdKey, _keyId);
             scope.Start();
 
             try
@@ -265,7 +269,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             };
 
             using DiagnosticScope scope = Pipeline.CreateScope($"{nameof(RemoteCryptographyClient)}.{nameof(Verify)}");
-            scope.AddAttribute("key", _keyId);
+            scope.AddAttribute(OTelKeyIdKey, _keyId);
             scope.Start();
 
             try
@@ -289,7 +293,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             };
 
             using DiagnosticScope scope = Pipeline.CreateScope($"{nameof(RemoteCryptographyClient)}.{nameof(Verify)}");
-            scope.AddAttribute("key", _keyId);
+            scope.AddAttribute(OTelKeyIdKey, _keyId);
             scope.Start();
 
             try
@@ -306,7 +310,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         internal virtual async Task<Response<KeyVaultKey>> GetKeyAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = Pipeline.CreateScope($"{nameof(RemoteCryptographyClient)}.{nameof(GetKey)}");
-            scope.AddAttribute("key", _keyId);
+            scope.AddAttribute(OTelKeyIdKey, _keyId);
             scope.Start();
 
             try
@@ -323,7 +327,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         internal virtual Response<KeyVaultKey> GetKey(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = Pipeline.CreateScope($"{nameof(RemoteCryptographyClient)}.{nameof(GetKey)}");
-            scope.AddAttribute("key", _keyId);
+            scope.AddAttribute(OTelKeyIdKey, _keyId);
             scope.Start();
 
             try

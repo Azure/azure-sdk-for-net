@@ -79,7 +79,7 @@ namespace Azure.Core.Tests
 
             scope.AddAttribute("Attribute1", "Value1");
             scope.AddAttribute("Attribute2", 2, i => i.ToString());
-            scope.AddAttribute("Attribute3", 3);
+            scope.AddIntegerAttribute("Attribute3", 3);
 
             scope.AddLink("00-6e76af18746bae4eadc3581338bbe8b1-2899ebfdbdce904b-00", "foo=bar");
             scope.AddLink("00-6e76af18746bae4eadc3581338bbe8b2-2899ebfdbdce904b-00", null, new Dictionary<string, string>()
@@ -102,7 +102,7 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual("Value1", activity.TagObjects.Single(o => o.Key == "Attribute1").Value);
             Assert.AreEqual("2", activity.TagObjects.Single(o => o.Key == "Attribute2").Value);
-            Assert.AreEqual("3", activity.TagObjects.Single(o => o.Key == "Attribute3").Value);
+            Assert.AreEqual(3, activity.TagObjects.Single(o => o.Key == "Attribute3").Value);
 
             var links = activity.Links.ToArray();
             Assert.AreEqual(2, links.Length);
@@ -121,7 +121,6 @@ namespace Azure.Core.Tests
             using var _ = SetAppConfigSwitch();
 
             using var activityListener = new TestActivitySourceListener("Azure.Clients.ActivityName");
-
             DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true, false);
 
             DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
@@ -281,7 +280,7 @@ namespace Azure.Core.Tests
             using var activityListener = new TestActivitySourceListener("Azure.Clients.ClientName");
             DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true, true);
             DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName");
-            scope.AddAttribute("sampled-out", true);
+            scope.AddAttribute("sampled-out", "True");
             scope.Start();
             Assert.IsNull(Activity.Current);
 
@@ -317,7 +316,7 @@ namespace Azure.Core.Tests
 
             scope.AddAttribute("Attribute1", "Value1");
             scope.AddAttribute("Attribute2", 2, i => i.ToString());
-            scope.AddAttribute("Attribute3", 3);
+            scope.AddIntegerAttribute("Attribute3", 3);
             scope.Dispose();
 
             (string Key, object Value, DiagnosticListener) stopEvent = testListener.Events.Dequeue();
@@ -327,7 +326,7 @@ namespace Azure.Core.Tests
             var activitySourceActivity = activityListener.Activities.Dequeue();
             Assert.AreEqual("Value1", activitySourceActivity.TagObjects.Single(o => o.Key == "Attribute1").Value);
             Assert.AreEqual("2", activitySourceActivity.TagObjects.Single(o => o.Key == "Attribute2").Value);
-            Assert.AreEqual("3", activitySourceActivity.TagObjects.Single(o => o.Key == "Attribute3").Value);
+            Assert.AreEqual(3, activitySourceActivity.TagObjects.Single(o => o.Key == "Attribute3").Value);
             CollectionAssert.Contains(activitySourceActivity.Tags, new KeyValuePair<string, string>(DiagnosticScope.OpenTelemetrySchemaAttribute, DiagnosticScope.OpenTelemetrySchemaVersion));
 
             Assert.Null(Activity.Current);
@@ -338,7 +337,9 @@ namespace Azure.Core.Tests
             Assert.AreEqual(ActivityIdFormat.W3C, diagnosticSourceActivity.IdFormat);
             CollectionAssert.Contains(diagnosticSourceActivity.Tags, new KeyValuePair<string, string>("Attribute1", "Value1"));
             CollectionAssert.Contains(diagnosticSourceActivity.Tags, new KeyValuePair<string, string>("Attribute2", "2"));
-            CollectionAssert.Contains(diagnosticSourceActivity.Tags, new KeyValuePair<string, string>("Attribute3", "3"));
+
+            // int attributes are returned by TagObjects, not Tags
+            Assert.IsEmpty(diagnosticSourceActivity.Tags.Where(kvp => kvp.Value == "Attribute3"));
 
             // Since both ActivitySource and DiagnosticSource listeners are used, we should see the az.schema_url tag set even in diagnostic source because they use the same
             // underlying activity.
@@ -443,14 +444,14 @@ namespace Azure.Core.Tests
                 "Microsoft.Azure.Core.Cool.Tests",
                 true,
                 false);
-            DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
+            DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName");
 
             scope.AddAttribute("Attribute1", "Value1");
             scope.AddAttribute("Attribute2", 2, i => i.ToString());
 
             scope.Start();
 
-            var activity = activityListener.AssertAndRemoveActivity("ActivityName");
+            var activity = activityListener.AssertAndRemoveActivity("ClientName.ActivityName");
             Assert.IsEmpty(activityListener.Activities);
 
             Assert.AreEqual(ActivityStatusCode.Unset, activity.Status);
