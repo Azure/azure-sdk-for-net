@@ -548,6 +548,7 @@ namespace Azure.Core.Tests
             Activity activity = testListener.AssertAndRemoveActivity("ActivityName");
             Assert.IsEmpty(activity.Events);
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("error.type", typeof(ArgumentException).FullName));
+            Assert.AreEqual(ActivityStatusCode.Error, activity.Status);
         }
 
         [Test]
@@ -566,6 +567,7 @@ namespace Azure.Core.Tests
             Activity activity = testListener.AssertAndRemoveActivity("ActivityName");
             Assert.IsEmpty(activity.Events);
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("error.type", "errorCode"));
+            Assert.AreEqual(ActivityStatusCode.Error, activity.Status);
         }
 
         [Test]
@@ -583,7 +585,8 @@ namespace Azure.Core.Tests
 
             Activity activity = testListener.AssertAndRemoveActivity("ActivityName");
             Assert.IsEmpty(activity.Events);
-            CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("error.type", "errorcode"));
+            CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("error.type", "errorCode"));
+            Assert.AreEqual(ActivityStatusCode.Error, activity.Status);
         }
 
         private class CustomSampler : Sampler
