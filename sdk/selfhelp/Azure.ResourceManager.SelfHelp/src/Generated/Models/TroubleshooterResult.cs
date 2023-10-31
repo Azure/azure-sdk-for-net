@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.SelfHelp.Models
 {
     /// <summary> User Response for Troubleshooter continue request. </summary>
-    public partial class TroubleshooterResponse
+    public partial class TroubleshooterResult
     {
-        /// <summary> Initializes a new instance of TroubleshooterResponse. </summary>
-        public TroubleshooterResponse()
+        /// <summary> Initializes a new instance of TroubleshooterResult. </summary>
+        public TroubleshooterResult()
         {
         }
 

@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="troubleshooterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="troubleshooterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RestartTroubleshooterResponse>> RestartAsync(string scope, string troubleshooterName, CancellationToken cancellationToken = default)
+        public async Task<Response<RestartTroubleshooterResult>> RestartAsync(string scope, string troubleshooterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
@@ -366,9 +366,9 @@ namespace Azure.ResourceManager.SelfHelp
             {
                 case 200:
                     {
-                        RestartTroubleshooterResponse value = default;
+                        RestartTroubleshooterResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RestartTroubleshooterResponse.DeserializeRestartTroubleshooterResponse(document.RootElement);
+                        value = RestartTroubleshooterResult.DeserializeRestartTroubleshooterResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="troubleshooterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="troubleshooterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RestartTroubleshooterResponse> Restart(string scope, string troubleshooterName, CancellationToken cancellationToken = default)
+        public Response<RestartTroubleshooterResult> Restart(string scope, string troubleshooterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
@@ -393,9 +393,9 @@ namespace Azure.ResourceManager.SelfHelp
             {
                 case 200:
                     {
-                        RestartTroubleshooterResponse value = default;
+                        RestartTroubleshooterResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RestartTroubleshooterResponse.DeserializeRestartTroubleshooterResponse(document.RootElement);
+                        value = RestartTroubleshooterResult.DeserializeRestartTroubleshooterResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

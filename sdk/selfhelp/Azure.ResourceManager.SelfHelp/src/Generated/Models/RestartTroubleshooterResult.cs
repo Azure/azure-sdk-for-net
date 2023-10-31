@@ -8,16 +8,16 @@
 namespace Azure.ResourceManager.SelfHelp.Models
 {
     /// <summary> Troubleshooter restart response. </summary>
-    public partial class RestartTroubleshooterResponse
+    public partial class RestartTroubleshooterResult
     {
-        /// <summary> Initializes a new instance of RestartTroubleshooterResponse. </summary>
-        internal RestartTroubleshooterResponse()
+        /// <summary> Initializes a new instance of RestartTroubleshooterResult. </summary>
+        internal RestartTroubleshooterResult()
         {
         }
 
-        /// <summary> Initializes a new instance of RestartTroubleshooterResponse. </summary>
+        /// <summary> Initializes a new instance of RestartTroubleshooterResult. </summary>
         /// <param name="troubleshooterResourceName"> Updated TroubleshooterResource Name . </param>
-        internal RestartTroubleshooterResponse(string troubleshooterResourceName)
+        internal RestartTroubleshooterResult(string troubleshooterResourceName)
         {
             TroubleshooterResourceName = troubleshooterResourceName;
         }

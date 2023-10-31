@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.SelfHelp.Samples
                 StepId = "SampleStepId",
                 Responses =
 {
-new TroubleshooterResponse()
+new TroubleshooterResult()
 {
 QuestionId = "SampleQuestionId",
 QuestionType = new QuestionType("Text"),
@@ -173,7 +173,7 @@ Response = "Connection exception",
             TroubleshooterResource troubleshooterResource = client.GetTroubleshooterResource(troubleshooterResourceId);
 
             // invoke the operation
-            RestartTroubleshooterResponse result = await troubleshooterResource.RestartAsync();
+            RestartTroubleshooterResult result = await troubleshooterResource.RestartAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }

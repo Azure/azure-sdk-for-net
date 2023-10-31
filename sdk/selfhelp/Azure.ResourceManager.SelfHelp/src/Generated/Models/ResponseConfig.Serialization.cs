@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    public partial class ResponseOption
+    public partial class ResponseConfig
     {
-        internal static ResponseOption DeserializeResponseOption(JsonElement element)
+        internal static ResponseConfig DeserializeResponseConfig(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     continue;
                 }
             }
-            return new ResponseOption(key.Value, value.Value);
+            return new ResponseConfig(key.Value, value.Value);
         }
     }
 }

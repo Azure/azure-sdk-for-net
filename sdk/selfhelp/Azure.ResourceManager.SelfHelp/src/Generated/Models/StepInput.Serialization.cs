@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             Optional<string> recommendedOption = default;
             Optional<string> selectedOptionValue = default;
             Optional<ResponseValidationProperties> responseValidationProperties = default;
-            Optional<IReadOnlyList<ResponseOption>> responseOptions = default;
+            Optional<IReadOnlyList<ResponseConfig>> responseOptions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("questionId"u8))
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    List<ResponseOption> array = new List<ResponseOption>();
+                    List<ResponseConfig> array = new List<ResponseConfig>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResponseOption.DeserializeResponseOption(item));
+                        array.Add(ResponseConfig.DeserializeResponseConfig(item));
                     }
                     responseOptions = array;
                     continue;

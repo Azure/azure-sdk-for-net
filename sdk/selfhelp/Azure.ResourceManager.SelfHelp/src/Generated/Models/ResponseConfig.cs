@@ -8,17 +8,17 @@
 namespace Azure.ResourceManager.SelfHelp.Models
 {
     /// <summary> The status of the resource. </summary>
-    public partial class ResponseOption
+    public partial class ResponseConfig
     {
-        /// <summary> Initializes a new instance of ResponseOption. </summary>
-        internal ResponseOption()
+        /// <summary> Initializes a new instance of ResponseConfig. </summary>
+        internal ResponseConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of ResponseOption. </summary>
+        /// <summary> Initializes a new instance of ResponseConfig. </summary>
         /// <param name="key"> Unique string. </param>
         /// <param name="value"> Option description. </param>
-        internal ResponseOption(string key, string value)
+        internal ResponseConfig(string key, string value)
         {
             Key = key;
             Value = value;

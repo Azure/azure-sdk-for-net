@@ -84,6 +84,9 @@ rename-mapping:
   Step: SelfHelpStep
   Type: SelfHelpType
   Name: SelfHelpName
+  RestartTroubleshooterResponse: RestartTroubleshooterResult
+  TroubleshooterResponse: TroubleshooterResult
+  ResponseOption: ResponseConfig
 
 override-operation-name:
   CheckNameAvailability_Post: CheckSelfHelpNameAvailability

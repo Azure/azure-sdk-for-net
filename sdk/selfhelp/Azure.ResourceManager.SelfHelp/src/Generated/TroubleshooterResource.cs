@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RestartTroubleshooterResponse>> RestartAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<RestartTroubleshooterResult>> RestartAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _troubleshooterResourceTroubleshootersClientDiagnostics.CreateScope("TroubleshooterResource.Restart");
             scope.Start();
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RestartTroubleshooterResponse> Restart(CancellationToken cancellationToken = default)
+        public virtual Response<RestartTroubleshooterResult> Restart(CancellationToken cancellationToken = default)
         {
             using var scope = _troubleshooterResourceTroubleshootersClientDiagnostics.CreateScope("TroubleshooterResource.Restart");
             scope.Start();

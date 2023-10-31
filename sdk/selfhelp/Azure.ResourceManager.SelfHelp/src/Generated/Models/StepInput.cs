@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <summary> Initializes a new instance of StepInput. </summary>
         internal StepInput()
         {
-            ResponseOptions = new ChangeTrackingList<ResponseOption>();
+            ResponseOptions = new ChangeTrackingList<ResponseConfig>();
         }
 
         /// <summary> Initializes a new instance of StepInput. </summary>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="selectedOptionValue"> Text of response that was selected. </param>
         /// <param name="responseValidationProperties"> Troubleshooter step input response validation properties. </param>
         /// <param name="responseOptions"></param>
-        internal StepInput(string questionId, string questionType, string questionContent, QuestionContentType? questionContentType, string responseHint, string recommendedOption, string selectedOptionValue, ResponseValidationProperties responseValidationProperties, IReadOnlyList<ResponseOption> responseOptions)
+        internal StepInput(string questionId, string questionType, string questionContent, QuestionContentType? questionContentType, string responseHint, string recommendedOption, string selectedOptionValue, ResponseValidationProperties responseValidationProperties, IReadOnlyList<ResponseConfig> responseOptions)
         {
             QuestionId = questionId;
             QuestionType = questionType;
@@ -59,6 +59,6 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <summary> Troubleshooter step input response validation properties. </summary>
         public ResponseValidationProperties ResponseValidationProperties { get; }
         /// <summary> Gets the response options. </summary>
-        public IReadOnlyList<ResponseOption> ResponseOptions { get; }
+        public IReadOnlyList<ResponseConfig> ResponseOptions { get; }
     }
 }

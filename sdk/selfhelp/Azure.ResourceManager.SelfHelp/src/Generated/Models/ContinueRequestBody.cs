@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <summary> Initializes a new instance of ContinueRequestBody. </summary>
         public ContinueRequestBody()
         {
-            Responses = new ChangeTrackingList<TroubleshooterResponse>();
+            Responses = new ChangeTrackingList<TroubleshooterResult>();
         }
 
         /// <summary> Unique id of the result. </summary>
         public string StepId { get; set; }
         /// <summary> Gets the responses. </summary>
-        public IList<TroubleshooterResponse> Responses { get; }
+        public IList<TroubleshooterResult> Responses { get; }
     }
 }

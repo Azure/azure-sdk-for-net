@@ -164,9 +164,9 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="responseValidationProperties"> Troubleshooter step input response validation properties. </param>
         /// <param name="responseOptions"></param>
         /// <returns> A new <see cref="Models.StepInput"/> instance for mocking. </returns>
-        public static StepInput StepInput(string questionId = null, string questionType = null, string questionContent = null, QuestionContentType? questionContentType = null, string responseHint = null, string recommendedOption = null, string selectedOptionValue = null, ResponseValidationProperties responseValidationProperties = null, IEnumerable<ResponseOption> responseOptions = null)
+        public static StepInput StepInput(string questionId = null, string questionType = null, string questionContent = null, QuestionContentType? questionContentType = null, string responseHint = null, string recommendedOption = null, string selectedOptionValue = null, ResponseValidationProperties responseValidationProperties = null, IEnumerable<ResponseConfig> responseOptions = null)
         {
-            responseOptions ??= new List<ResponseOption>();
+            responseOptions ??= new List<ResponseConfig>();
 
             return new StepInput(questionId, questionType, questionContent, questionContentType, responseHint, recommendedOption, selectedOptionValue, responseValidationProperties, responseOptions?.ToList());
         }
@@ -182,13 +182,13 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new ResponseValidationProperties(regex, isRequired, validationErrorMessage, maxLength);
         }
 
-        /// <summary> Initializes a new instance of ResponseOption. </summary>
+        /// <summary> Initializes a new instance of ResponseConfig. </summary>
         /// <param name="key"> Unique string. </param>
         /// <param name="value"> Option description. </param>
-        /// <returns> A new <see cref="Models.ResponseOption"/> instance for mocking. </returns>
-        public static ResponseOption ResponseOption(string key = null, string value = null)
+        /// <returns> A new <see cref="Models.ResponseConfig"/> instance for mocking. </returns>
+        public static ResponseConfig ResponseConfig(string key = null, string value = null)
         {
-            return new ResponseOption(key, value);
+            return new ResponseConfig(key, value);
         }
 
         /// <summary> Initializes a new instance of AutomatedCheckResult. </summary>
@@ -200,12 +200,12 @@ namespace Azure.ResourceManager.SelfHelp.Models
             return new AutomatedCheckResult(result, resultType);
         }
 
-        /// <summary> Initializes a new instance of RestartTroubleshooterResponse. </summary>
+        /// <summary> Initializes a new instance of RestartTroubleshooterResult. </summary>
         /// <param name="troubleshooterResourceName"> Updated TroubleshooterResource Name . </param>
-        /// <returns> A new <see cref="Models.RestartTroubleshooterResponse"/> instance for mocking. </returns>
-        public static RestartTroubleshooterResponse RestartTroubleshooterResponse(string troubleshooterResourceName = null)
+        /// <returns> A new <see cref="Models.RestartTroubleshooterResult"/> instance for mocking. </returns>
+        public static RestartTroubleshooterResult RestartTroubleshooterResult(string troubleshooterResourceName = null)
         {
-            return new RestartTroubleshooterResponse(troubleshooterResourceName);
+            return new RestartTroubleshooterResult(troubleshooterResourceName);
         }
     }
 }

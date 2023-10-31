@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    public partial class RestartTroubleshooterResponse
+    public partial class RestartTroubleshooterResult
     {
-        internal static RestartTroubleshooterResponse DeserializeRestartTroubleshooterResponse(JsonElement element)
+        internal static RestartTroubleshooterResult DeserializeRestartTroubleshooterResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     continue;
                 }
             }
-            return new RestartTroubleshooterResponse(troubleshooterResourceName.Value);
+            return new RestartTroubleshooterResult(troubleshooterResourceName.Value);
         }
     }
 }
