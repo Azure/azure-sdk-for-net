@@ -3,6 +3,8 @@ namespace Azure.ResourceManager.Maintenance
     public partial class MaintenanceApplyUpdateCollection : Azure.ResourceManager.ArmCollection
     {
         protected MaintenanceApplyUpdateCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Maintenance.MaintenanceApplyUpdateResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string providerName, string resourceType, string resourceName, string applyUpdateName, Azure.ResourceManager.Maintenance.MaintenanceApplyUpdateData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Maintenance.MaintenanceApplyUpdateResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string providerName, string resourceType, string resourceName, string applyUpdateName, Azure.ResourceManager.Maintenance.MaintenanceApplyUpdateData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string providerName, string resourceType, string resourceName, string applyUpdateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string providerName, string resourceType, string resourceName, string applyUpdateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Maintenance.MaintenanceApplyUpdateResource> Get(string providerName, string resourceType, string resourceName, string applyUpdateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -26,6 +28,8 @@ namespace Azure.ResourceManager.Maintenance
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string providerName, string resourceType, string resourceName, string applyUpdateName) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Maintenance.MaintenanceApplyUpdateResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Maintenance.MaintenanceApplyUpdateResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Maintenance.MaintenanceApplyUpdateResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Maintenance.MaintenanceApplyUpdateData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Maintenance.MaintenanceApplyUpdateResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Maintenance.MaintenanceApplyUpdateData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class MaintenanceConfigurationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Maintenance.MaintenanceConfigurationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Maintenance.MaintenanceConfigurationResource>, System.Collections.IEnumerable
     {
@@ -394,8 +398,11 @@ namespace Azure.ResourceManager.Maintenance.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public MaintenanceUpdateStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Maintenance.Models.MaintenanceUpdateStatus Cancel { get { throw null; } }
+        public static Azure.ResourceManager.Maintenance.Models.MaintenanceUpdateStatus Cancelled { get { throw null; } }
         public static Azure.ResourceManager.Maintenance.Models.MaintenanceUpdateStatus Completed { get { throw null; } }
         public static Azure.ResourceManager.Maintenance.Models.MaintenanceUpdateStatus InProgress { get { throw null; } }
+        public static Azure.ResourceManager.Maintenance.Models.MaintenanceUpdateStatus NoUpdatesPending { get { throw null; } }
         public static Azure.ResourceManager.Maintenance.Models.MaintenanceUpdateStatus Pending { get { throw null; } }
         public static Azure.ResourceManager.Maintenance.Models.MaintenanceUpdateStatus RetryLater { get { throw null; } }
         public static Azure.ResourceManager.Maintenance.Models.MaintenanceUpdateStatus RetryNow { get { throw null; } }

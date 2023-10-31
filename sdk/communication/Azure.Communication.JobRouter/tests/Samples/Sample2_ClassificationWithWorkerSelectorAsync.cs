@@ -21,7 +21,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Classification_StaticWorkerSelectors
             // In this scenario we are going to use a classification policy while submitting a job.
-            // We are going to utilize the 'WorkerSelectors' attribute on the classification policy to attach
+            // We are going to utilize the 'WorkerSelectorAttachments' attribute on the classification policy to attach
             // custom worker selectors to the job. For this scenario, we are going to demonstrate
             // StaticWorkerSelector to filter workers on static values.
             // We would like to filter workers on the following criteria:-
@@ -37,7 +37,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             // 1. Incoming job will have the aforementioned worker selectors attached to it.
             // 2. Offer will be sent only to the worker who satisfies all three criteria
             //
-            // NOTE: All jobs with referencing the classification policy will have the WorkerSelectors attached to them
+            // NOTE: All jobs with referencing the classification policy will have the WorkerSelectorAttachments attached to them
 
             // Set up queue
             string distributionPolicyId = "distribution-policy-id-2";
@@ -64,7 +64,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 new CreateClassificationPolicyOptions(classificationPolicyId: cpId)
                 {
                     Name = "Classification_Policy_O365",
-                    WorkerSelectors =
+                    WorkerSelectorAttachments =
                     {
                         new StaticWorkerSelectorAttachment(new RouterWorkerSelector("Location", LabelOperator.Equal, new LabelValue("United States"))),
                         new StaticWorkerSelectorAttachment(new RouterWorkerSelector("Language", LabelOperator.Equal, new LabelValue("en-us"))),
@@ -77,8 +77,8 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 new CreateJobWithClassificationPolicyOptions(jobId: "jobO365", channelId: "general", classificationPolicyId: cp1.Value.Id)
                 {
                     ChannelReference = "12345",
-                    QueueId = queueId, // We only want to attach WorkerSelectors with classification policy this time, so we will specify queueId
-                    Priority = 10, // We only want to attach WorkerSelectors with classification policy this time, so we will specify priority
+                    QueueId = queueId, // We only want to attach WorkerSelectorAttachments with classification policy this time, so we will specify queueId
+                    Priority = 10, // We only want to attach WorkerSelectorAttachments with classification policy this time, so we will specify priority
                 });
 
 #if !SNIPPET
@@ -101,10 +101,10 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             string workerId1 = "worker-id-1";
 
             Response<RouterWorker> worker1 = await routerClient.CreateWorkerAsync(
-                options: new CreateWorkerOptions(workerId: workerId1, totalCapacity: 100)
+                options: new CreateWorkerOptions(workerId: workerId1, capacity: 100)
                 {
                     AvailableForOffers = true, // registering worker at the time of creation
-                    ChannelConfigurations = { ["general"] = new ChannelConfiguration(10), },
+                    Channels = { new RouterChannel("general", 10), },
                     Labels =
                     {
                         ["Location"] = new LabelValue("United States"),
@@ -112,18 +112,18 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                         ["Geo"] = new LabelValue("NA"),
                         ["Skill_English_Lvl"] = new LabelValue(7),
                     }, // attaching labels associated with worker
-                    QueueAssignments = { [queueId] = new RouterQueueAssignment() }
+                    Queues = { queueId }
                 });
 
             string workerId2 = "worker-id-2";
 
             Response<RouterWorker> worker2 = await routerClient.CreateWorkerAsync(
-                options: new CreateWorkerOptions(workerId: workerId2, totalCapacity: 100)
+                options: new CreateWorkerOptions(workerId: workerId2, capacity: 100)
                 {
                     AvailableForOffers = true, // registering worker at the time of creation
-                    ChannelConfigurations = { ["general"] = new ChannelConfiguration(10), },
+                    Channels = { new RouterChannel("general", 10), },
                     Labels = { ["Skill_English_Lvl"] = new LabelValue(7) }, // attaching labels associated with worker
-                    QueueAssignments = { [queueId] = new RouterQueueAssignment() }
+                    Queues = { queueId }
                 });
 
 #if !SNIPPET
@@ -158,7 +158,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Classification_CondtitionalWorkerSelectors
             // In this scenario we are going to use a classification policy while submitting a job.
-            // We are going to utilize the 'WorkerSelectors' attribute on the classification policy to attach
+            // We are going to utilize the 'WorkerSelectorAttachments' attribute on the classification policy to attach
             // custom worker selectors to the job. For this scenario, we are going to demonstrate
             // ConditionalWorkerSelector to filter workers based on a condition.
             // We would like to filter workers on the following criteria:-
@@ -207,7 +207,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 new CreateClassificationPolicyOptions(classificationPolicyId: cpId)
                 {
                     Name = "Classification_Policy_O365",
-                    WorkerSelectors =
+                    WorkerSelectorAttachments =
                     {
                         new ConditionalWorkerSelectorAttachment(
                             condition: new ExpressionRouterRule("If(job.Location = \"United States\", true, false)"),
@@ -233,8 +233,8 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 new CreateJobWithClassificationPolicyOptions(jobId: "jobO365", channelId: "general", classificationPolicyId: cp1.Value.Id)
                 {
                     ChannelReference = "12345",
-                    QueueId = queueId, // We only want to attach WorkerSelectors with classification policy this time, so we will specify queueId
-                    Priority = 10, // We only want to attach WorkerSelectors with classification policy this time, so we will specify priority
+                    QueueId = queueId, // We only want to attach WorkerSelectorAttachments with classification policy this time, so we will specify queueId
+                    Priority = 10, // We only want to attach WorkerSelectorAttachments with classification policy this time, so we will specify priority
                     Labels = // we will attach a label to the job which will affects its classification
                     {
                         ["Location"] = new LabelValue("United States"),
@@ -261,32 +261,32 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             // Set up two workers
             string workerId1 = "worker-id-1";
             Response<RouterWorker> worker1 = await routerClient.CreateWorkerAsync(
-                options: new CreateWorkerOptions(workerId: workerId1, totalCapacity: 100)
+                options: new CreateWorkerOptions(workerId: workerId1, capacity: 100)
                 {
                     AvailableForOffers = true, // registering worker at the time of creation
-                    ChannelConfigurations = { ["general"] = new ChannelConfiguration(10), },
+                    Channels = { new RouterChannel("general", 10), },
                     Labels =
                     {
                         ["Language"] = new LabelValue("en-us"),
                         ["Geo"] = new LabelValue("NA"),
                         ["Skill_English_Lvl"] = new LabelValue(7)
                     }, // attaching labels associated with worker
-                    QueueAssignments = { [queueId] = new RouterQueueAssignment() }
+                    Queues = { queueId }
                 });
 
             string workerId2 = "worker-id-2";
             Response<RouterWorker> worker2 = await routerClient.CreateWorkerAsync(
-                options: new CreateWorkerOptions(workerId: workerId2, totalCapacity: 100)
+                options: new CreateWorkerOptions(workerId: workerId2, capacity: 100)
                 {
                     AvailableForOffers = true, // registering worker at the time of creation
-                    ChannelConfigurations = { ["general"] = new ChannelConfiguration(10) },
+                    Channels = { new RouterChannel("general", 10) },
                     Labels =
                     {
                         ["Language"] = new LabelValue("en-ca"),
                         ["Geo"] = new LabelValue("NA"),
                         ["Skill_English_Lvl"] = new LabelValue(7)
                     }, // attaching labels associated with worker
-                    QueueAssignments = { [queueId] = new RouterQueueAssignment() }
+                    Queues = { queueId }
                 });
 
 #if !SNIPPET
@@ -321,7 +321,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Classification_PassThroughWorkerSelectors
             // cSpell:ignore XBOX, Xbox
             // In this scenario we are going to use a classification policy while submitting a job.
-            // We are going to utilize the 'WorkerSelectors' attribute on the classification policy to attach
+            // We are going to utilize the 'WorkerSelectorAttachments' attribute on the classification policy to attach
             // custom worker selectors to the job. For this scenario, we are going to demonstrate
             // PassThroughWorkerSelectors to filter workers based on a conditions already attached to job.
             // We would like to filter workers on the following criteria already attached to job:-
@@ -364,7 +364,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 new CreateClassificationPolicyOptions(classificationPolicyId: cpId)
                 {
                     Name = "Classification_Policy_O365_XBOX",
-                    WorkerSelectors =
+                    WorkerSelectorAttachments =
                     {
                         new PassThroughWorkerSelectorAttachment("Location", LabelOperator.Equal),
                         new PassThroughWorkerSelectorAttachment("Geo", LabelOperator.Equal),
@@ -379,8 +379,8 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 new CreateJobWithClassificationPolicyOptions(jobId: "jobO365", channelId: "general", classificationPolicyId: cp1.Value.Id)
                 {
                     ChannelReference = "12345",
-                    QueueId = queueId, // We only want to attach WorkerSelectors with classification policy this time, so we will specify queueId
-                    Priority = 10, // We only want to attach WorkerSelectors with classification policy this time, so we will specify priority
+                    QueueId = queueId, // We only want to attach WorkerSelectorAttachments with classification policy this time, so we will specify queueId
+                    Priority = 10, // We only want to attach WorkerSelectorAttachments with classification policy this time, so we will specify priority
                     Labels = // we will attach a label to the job which will affects its classification
                     {
                         ["Location"] = new LabelValue("United States"),
@@ -394,8 +394,8 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 new CreateJobWithClassificationPolicyOptions(jobId: "jobXbox", channelId: "general", classificationPolicyId: cp1.Value.Id)
                 {
                     ChannelReference = "12345",
-                    QueueId = queueId, // We only want to attach WorkerSelectors with classification policy this time, so we will specify queueId
-                    Priority = 10, // We only want to attach WorkerSelectors with classification policy this time, so we will specify priority
+                    QueueId = queueId, // We only want to attach WorkerSelectorAttachments with classification policy this time, so we will specify queueId
+                    Priority = 10, // We only want to attach WorkerSelectorAttachments with classification policy this time, so we will specify priority
                     Labels = // we will attach a label to the job which will affects its classification
                     {
                         ["Location"] = new LabelValue("United States"),
@@ -431,10 +431,10 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             // Set up two workers
             string workerId1 = "worker-id-1";
             Response<RouterWorker> worker1 = await routerClient.CreateWorkerAsync(
-                options: new CreateWorkerOptions(workerId: workerId1, totalCapacity: 100)
+                options: new CreateWorkerOptions(workerId: workerId1, capacity: 100)
                 {
                     AvailableForOffers = true, // registering worker at the time of creation
-                    ChannelConfigurations = { ["general"] = new ChannelConfiguration(10), },
+                    Channels = { new RouterChannel("general", 10), },
                     Labels =
                     {
                         ["Location"] = new LabelValue("United States"),
@@ -443,16 +443,16 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                         ["Dept"] = new LabelValue("O365"),
                         ["Skill_English_Lvl"] = new LabelValue(10),
                     }, // attaching labels associated with worker
-                    QueueAssignments = { [queueId] = new RouterQueueAssignment() }
+                    Queues = { queueId }
                 });
 
             string workerId2 = "worker-id-2";
 
             Response<RouterWorker> worker2 = await routerClient.CreateWorkerAsync(
-                options: new CreateWorkerOptions(workerId: workerId2, totalCapacity: 100)
+                options: new CreateWorkerOptions(workerId: workerId2, capacity: 100)
                 {
                     AvailableForOffers = true, // registering worker at the time of creation
-                    ChannelConfigurations = { ["general"] = new ChannelConfiguration(10), },
+                    Channels = { new RouterChannel("general", 10), },
                     Labels =
                     {
                         ["Location"] = new LabelValue("United States"),
@@ -461,7 +461,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                         ["Dept"] = new LabelValue("Xbox"),
                         ["Skill_English_Lvl"] = new LabelValue(10),
                     }, // attaching labels associated with worker
-                    QueueAssignments = { [queueId] = new RouterQueueAssignment() }
+                    Queues = { queueId }
                 });
 
 #if !SNIPPET

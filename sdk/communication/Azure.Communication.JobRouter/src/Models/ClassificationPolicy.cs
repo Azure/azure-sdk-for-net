@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
@@ -8,58 +9,30 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    [CodeGenModel("ClassificationPolicy")]
-    [CodeGenSuppress("ClassificationPolicy")]
     public partial class ClassificationPolicy: IUtf8JsonSerializable
     {
         /// <summary> Initializes a new instance of ClassificationPolicy. </summary>
-        internal ClassificationPolicy()
+        /// <param name="classificationPolicyId"> Id of the policy. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="classificationPolicyId"/> is null. </exception>
+        public ClassificationPolicy(string classificationPolicyId)
         {
-            _queueSelectors = new ChangeTrackingList<QueueSelectorAttachment>();
-            _workerSelectors = new ChangeTrackingList<WorkerSelectorAttachment>();
+            Argument.AssertNotNullOrWhiteSpace(classificationPolicyId, nameof(classificationPolicyId));
+
+            Id = classificationPolicyId;
         }
 
-        [CodeGenMember("QueueSelectors")]
-        internal IList<QueueSelectorAttachment> _queueSelectors
-        {
-            get
-            {
-                return QueueSelectors != null && QueueSelectors.Any()
-                    ? QueueSelectors.ToList()
-                    : new ChangeTrackingList<QueueSelectorAttachment>();
-            }
-            set
-            {
-                QueueSelectors.AddRange(value);
-            }
-        }
+        /// <summary> The queue selector attachments used to resolve a queue for a given job. </summary>
+        public IList<QueueSelectorAttachment> QueueSelectorAttachments { get; } = new List<QueueSelectorAttachment>();
 
-        [CodeGenMember("WorkerSelectors")]
-        internal IList<WorkerSelectorAttachment> _workerSelectors
-        {
-            get
-            {
-                return WorkerSelectors != null && WorkerSelectors.Any()
-                    ? WorkerSelectors.ToList()
-                    : new ChangeTrackingList<WorkerSelectorAttachment>();
-            }
-            set
-            {
-                WorkerSelectors.AddRange(value);
-            }
-        }
-
-        /// <summary> The queue selectors to resolve a queue for a given job. </summary>
-        public List<QueueSelectorAttachment> QueueSelectors { get; } = new List<QueueSelectorAttachment>();
-
-        /// <summary> The worker label selectors to attach to a given job. </summary>
-        public List<WorkerSelectorAttachment> WorkerSelectors { get; } = new List<WorkerSelectorAttachment>();
+        /// <summary> The worker selector attachments used to attach worker selectors to a given job. </summary>
+        public IList<WorkerSelectorAttachment> WorkerSelectorAttachments { get; } = new List<WorkerSelectorAttachment>();
 
         /// <summary> (Optional) The name of the classification policy. </summary>
-        public string Name { get; internal set; }
+        public string Name { get; set; }
 
-        /// <summary> The fallback queue to select if the queue selector doesn't find a match. </summary>
-        public string FallbackQueueId { get; internal set; }
+        /// <summary> The fallback queue to select if the queue selector attachments fail to resolve a queue for a given job. </summary>
+        public string FallbackQueueId { get; set; }
+
         /// <summary>
         /// A rule of one of the following types:
         ///
@@ -71,7 +44,7 @@ namespace Azure.Communication.JobRouter
         /// Please note <see cref="RouterRule"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FunctionRouterRule"/>, <see cref="DirectMapRouterRule"/>, <see cref="ExpressionRouterRule"/>, <see cref="StaticRouterRule"/> and <see cref="WebhookRouterRule"/>.
         /// </summary>
-        public RouterRule PrioritizationRule { get; internal set; }
+        public RouterRule PrioritizationRule { get; set; }
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -86,11 +59,11 @@ namespace Azure.Communication.JobRouter
                 writer.WritePropertyName("fallbackQueueId"u8);
                 writer.WriteStringValue(FallbackQueueId);
             }
-            if (Optional.IsCollectionDefined(_queueSelectors))
+            if (Optional.IsCollectionDefined(QueueSelectorAttachments))
             {
-                writer.WritePropertyName("queueSelectors"u8);
+                writer.WritePropertyName("queueSelectorAttachments"u8);
                 writer.WriteStartArray();
-                foreach (var item in _queueSelectors)
+                foreach (var item in QueueSelectorAttachments)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -101,11 +74,11 @@ namespace Azure.Communication.JobRouter
                 writer.WritePropertyName("prioritizationRule"u8);
                 writer.WriteObjectValue(PrioritizationRule);
             }
-            if (Optional.IsCollectionDefined(_workerSelectors))
+            if (Optional.IsCollectionDefined(WorkerSelectorAttachments))
             {
-                writer.WritePropertyName("workerSelectors"u8);
+                writer.WritePropertyName("workerSelectorAttachments"u8);
                 writer.WriteStartArray();
-                foreach (var item in _workerSelectors)
+                foreach (var item in WorkerSelectorAttachments)
                 {
                     writer.WriteObjectValue(item);
                 }
