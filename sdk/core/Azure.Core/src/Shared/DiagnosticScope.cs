@@ -63,9 +63,12 @@ namespace Azure.Core.Pipeline
 
         public bool IsEnabled { get; }
 
-        public void AddAttribute(string name, string value)
+        public void AddAttribute(string name, string? value)
         {
-            _activityAdapter?.AddTag(name, value);
+            if (value != null)
+            {
+                _activityAdapter?.AddTag(name, value);
+            }
         }
 
         public void AddIntegerAttribute(string name, int value)
@@ -73,13 +76,12 @@ namespace Azure.Core.Pipeline
             _activityAdapter?.AddTag(name, value);
         }
 
-        public void AddAttribute<T>(string name,
-#if AZURE_NULLABLE
-            [AllowNull]
-#endif
-            T value)
+        public void AddAttribute<T>(string name, T? value)
         {
-            AddAttribute(name, value, static v => Convert.ToString(v, CultureInfo.InvariantCulture) ?? string.Empty);
+            if (value != null)
+            {
+                AddAttribute(name, value, static v => Convert.ToString(v, CultureInfo.InvariantCulture));
+            }
         }
 
         public void AddAttribute<T>(string name, T value, Func<T, string> format)

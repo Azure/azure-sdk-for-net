@@ -82,9 +82,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Activity messageActivity = testListener.AssertAndRemoveActivity(DiagnosticProperty.EventActivityName);
             AssertCommonTags(messageActivity, eventHubName, endpoint, default, 1);
+            Assert.AreEqual(DiagnosticProperty.DiagnosticNamespace + ".Message", messageActivity.Source.Name);
 
             Activity sendActivity = testListener.AssertAndRemoveActivity(DiagnosticProperty.ProducerActivityName);
             AssertCommonTags(sendActivity, eventHubName, endpoint, MessagingDiagnosticOperation.Publish, 1);
+            Assert.AreEqual(DiagnosticProperty.DiagnosticNamespace + ".EventHubProducerClient", sendActivity.Source.Name);
 
             Assert.That(eventData.Properties[MessagingClientDiagnostics.DiagnosticIdAttribute], Is.EqualTo(messageActivity.Id), "The diagnostics identifier should match.");
             // Kind attribute is not set for the OTel path as this is handled by the OTel exporter SDK
@@ -457,6 +459,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(processingActivity.ParentId, Is.EqualTo(diagnosticId), "The parent of the processing scope should have been equal to the diagnosticId.");
             AssertCommonTags(processingActivity, eventHubName, fullyQualifiedNamespace, MessagingDiagnosticOperation.Process, 1);
+            Assert.AreEqual(DiagnosticProperty.DiagnosticNamespace + ".EventProcessor", processingActivity.Source.Name);
 
             var expectedTag =
                 new KeyValuePair<string, string>(DiagnosticProperty.EnqueuedTimeAttribute,
@@ -523,17 +526,14 @@ namespace Azure.Messaging.EventHubs.Tests
         private void AssertCommonTags(Activity activity, string eventHubName, string endpoint, MessagingDiagnosticOperation operation, int eventCount)
         {
             var tags = activity.TagObjects.ToList();
-            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.NetPeerName, endpoint));
+            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.ServerAddress, endpoint));
 
             CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.MessagingSystem, DiagnosticProperty.EventHubsServiceContext));
             if (operation != default)
             {
                 CollectionAssert.Contains(tags,
                     new KeyValuePair<string, string>(MessagingClientDiagnostics.MessagingOperation, operation.ToString()));
-                var entityKey = operation == MessagingDiagnosticOperation.Receive || operation == MessagingDiagnosticOperation.Process
-                    ? MessagingClientDiagnostics.SourceName
-                    : MessagingClientDiagnostics.DestinationName;
-                CollectionAssert.Contains(tags, new KeyValuePair<string, string>(entityKey, eventHubName));
+                CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.DestinationName, eventHubName));
             }
             else
             {

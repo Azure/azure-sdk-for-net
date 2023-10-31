@@ -21,9 +21,6 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         /// <summary>The value which identifies the Event Hubs diagnostics context.</summary>
         public const string EventHubsServiceContext = "eventhubs";
 
-        /// <summary>The value which identifies an Event Hub producer as the type associated with the diagnostics information.</summary>
-        public const string EventHubProducerType = "producer";
-
         /// <summary>The attribute which represents the kind of diagnostic scope.</summary>
         public const string KindAttribute = "kind";
 
@@ -38,9 +35,10 @@ namespace Azure.Messaging.EventHubs.Diagnostics
 
         /// <summary>
         ///   The activity name associated with events.
+        ///   TODO (limolkova): check it does not break appinsights SDK/visualizations
         /// </summary>
         ///
-        public static string EventActivityName { get; } = "EventHubs.Message";
+        public static string EventActivityName { get; } = "Message";
 
         /// <summary>
         ///   The activity name associated with Event Hub producers.
