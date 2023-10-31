@@ -124,7 +124,6 @@ namespace System.Net.ClientModel.Core
         protected MessageBody() { }
         public static System.Net.ClientModel.Core.MessageBody Create(System.BinaryData value) { throw null; }
         public static System.Net.ClientModel.Core.MessageBody Create(System.IO.Stream stream) { throw null; }
-        public static System.Net.ClientModel.Core.MessageBody Create(System.Net.ClientModel.Core.IJsonModel<object> model, System.Net.ClientModel.ModelReaderWriterOptions? options = null) { throw null; }
         public static System.Net.ClientModel.Core.MessageBody Create(System.Net.ClientModel.Core.IModel<object> model, System.Net.ClientModel.ModelReaderWriterOptions? options = null) { throw null; }
         public abstract void Dispose();
         public static explicit operator System.IO.Stream (System.Net.ClientModel.Core.MessageBody body) { throw null; }
