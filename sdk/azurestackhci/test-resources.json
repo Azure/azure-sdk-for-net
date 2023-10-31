@@ -21,23 +21,23 @@
         },
         "extendedLocationRg": {
             "type": "string",
-            "defaultValue": "mkclus0824-rg",
+            "defaultValue": "hci-dotnet-test-rg",
             "metadata": {
                 "description": "The resource group to which the custom location belongs."
             }
         },
         "imagePath": {
             "type": "string",
-            "defaultValue": "C:\\test.vhdx",
+            "defaultValue": "C:\\ClusterStorage\\Volume1\\test.vhdx",
             "metadata": {
-                "description": "The imagePath to create gallery images from."
+                "description": "The image path to create gallery images from."
             }
         },
-        "imageOsType": {
+        "storagePath": {
             "type": "string",
-            "defaultValue": "Linux",
+            "defaultValue": "C:\\ClusterStorage\\Volume1\\test.vhdx",
             "metadata": {
-                "description": "The os type to create gallery images with."
+                "description": "The storage path to create storage containers from."
             }
         }
     },
@@ -50,9 +50,9 @@
             "type": "string",
             "value": "reference(parameters('imagePath'))"
         },
-        "IMAGE_OS_TYPE": {
+        "STORAGE_PATH": {
             "type": "string",
-            "value": "reference(parameters('imageOsType'))"
+            "value": "reference(parameters('storagePath'))"
         }
     }
 }

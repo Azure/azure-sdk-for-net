@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ArcVm.Tests
             var data = new GalleryImageData(Location)
             {
                 OSType = OperatingSystemType.Linux,
-                ImagePath = "C:\\ClusterStorage\\Volume1\\test.vhdx",
+                ImagePath = TestEnvironment.ImagePath,
                 ExtendedLocation = extendedLocation,
             };
             var lro = await ResourceGroup.GetGalleryImages().CreateOrUpdateAsync(WaitUntil.Completed, galleryImageName, data);
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ArcVm.Tests
             var data = new StorageContainerData(Location)
             {
                 ExtendedLocation = extendedLocation,
-                Path = "C:\\ClusterStorage\\Volume1\\sc-dotnet-test",
+                Path = TestEnvironment.StoragePath,
             };
 
             var lro = await ResourceGroup.GetStorageContainers().CreateOrUpdateAsync(WaitUntil.Completed, storageContainerName, data);
