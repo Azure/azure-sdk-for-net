@@ -35,6 +35,14 @@ stages:
                 -WorkingDirectory '$(Build.ArtifactStagingDirectory)'
                 -NupkgFilesDestination 'nupkgFiles'
 
+          - task: securedevelopmentteam.vss-secure-development-tools.build-task-apiscan.APIScan@2
+            displayName: 'Run APIScan'
+            inputs:
+              softwareFolder: '$(Build.ArtifactStagingDirectory)/nugetPackages'
+              softwareName: 'Azure SDK'
+              softwareVersionNum: 1.0
+              isLargeApp: false
+
           - pwsh: |
               ."eng/common/spelling/Invoke-Cspell.ps1" `
                 -CSpellConfigPath "./.vscode/cspell.json" `
