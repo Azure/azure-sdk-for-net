@@ -1,10 +1,14 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0 (2023-09-01-preview)
 
 ### Features Added
+Discovery
+GUidedTroubleshooter
+Solutions
 
 ### Breaking Changes
+Discovery API contract change
 
 ### Bugs Fixed
 
