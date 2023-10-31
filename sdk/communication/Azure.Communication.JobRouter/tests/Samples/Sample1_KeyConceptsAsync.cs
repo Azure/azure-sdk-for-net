@@ -2,14 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 #region Snippet:Azure_Communication_JobRouter_Tests_Samples_UsingStatements_Async
 using Azure.Communication.JobRouter;
-using Azure.Communication.JobRouter.Models;
 #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_UsingStatements_Async
 using Azure.Communication.JobRouter.Tests.Infrastructure;
 using Azure.Core.TestFramework;
@@ -39,7 +36,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateDistributionPolicyLongestIdleTTL1D_Async
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateQueue_Async
-            Response<Models.RouterQueue> queue = await routerAdministrationClient.CreateQueueAsync(
+            Response<RouterQueue> queue = await routerAdministrationClient.CreateQueueAsync(
                 new CreateQueueOptions(
                     queueId: "queue-1",
                     distributionPolicyId: distributionPolicy.Value.Id)
@@ -65,11 +62,11 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_RegisterWorker_Async
 
             Response<RouterWorker> worker = await routerClient.CreateWorkerAsync(
-                new CreateWorkerOptions(workerId: "worker-1", totalCapacity: 1)
+                new CreateWorkerOptions(workerId: "worker-1", capacity: 1)
                 {
-                    QueueAssignments = { [queue.Value.Id] = new RouterQueueAssignment() },
+                    Queues = { queue.Value.Id },
                     Labels = { ["Some-Skill"] = new LabelValue(11) },
-                    ChannelConfigurations = { ["my-channel"] = new ChannelConfiguration(1) },
+                    Channels = { new RouterChannel("my-channel", 1) },
                     AvailableForOffers = true,
                 }
             );
@@ -77,7 +74,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_QueryWorker_Async
             Response<RouterWorker> result = await routerClient.GetWorkerAsync(worker.Value.Id);
-            foreach (Models.RouterJobOffer? offer in result.Value.Offers)
+            foreach (RouterJobOffer? offer in result.Value.Offers)
             {
                 Console.WriteLine($"Worker {worker.Value.Id} has an active offer for job {offer.JobId}");
             }
@@ -86,7 +83,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_AcceptOffer_Async
 
             // fetching the offer id
-            Models.RouterJobOffer jobOffer = result.Value.Offers.First<RouterJobOffer>(x => x.JobId == job.Value.Id);
+            RouterJobOffer jobOffer = result.Value.Offers.First<RouterJobOffer>(x => x.JobId == job.Value.Id);
 
             string offerId = jobOffer.OfferId; // `OfferId` can be retrieved directly from consuming event from Event grid
 
@@ -105,9 +102,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_CompleteJob_Async
 
             Response completeJob = await routerClient.CompleteJobAsync(
-                options: new CompleteJobOptions(
-                        jobId: job.Value.Id,
-                        assignmentId: acceptJobOfferResult.Value.AssignmentId)
+                jobId: job.Value.Id, new CompleteJobOptions(acceptJobOfferResult.Value.AssignmentId)
                 {
                     Note = $"Job has been completed by {worker.Value.Id} at {DateTimeOffset.UtcNow}"
                 });
@@ -119,9 +114,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_CloseJob_Async
 
             Response closeJob = await routerClient.CloseJobAsync(
-                options: new CloseJobOptions(
-                    jobId: job.Value.Id,
-                    assignmentId: acceptJobOfferResult.Value.AssignmentId)
+                jobId: job.Value.Id, new CloseJobOptions(acceptJobOfferResult.Value.AssignmentId)
                 {
                     Note = $"Job has been closed by {worker.Value.Id} at {DateTimeOffset.UtcNow}"
                 });
@@ -135,7 +128,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_CloseJobInFuture_Async
             // Optionally, a job can also be set up to be marked as closed in the future.
             var closeJobInFuture = await routerClient.CloseJobAsync(
-                options: new CloseJobOptions(job.Value.Id, acceptJobOfferResult.Value.AssignmentId)
+                jobId: job.Value.Id, new CloseJobOptions(acceptJobOfferResult.Value.AssignmentId)
                 {
                     CloseAt = DateTimeOffset.UtcNow.AddSeconds(2), // this will mark the job as closed after 2 seconds
                     Note = $"Job has been marked to close in the future by {worker.Value.Id} at {DateTimeOffset.UtcNow}"

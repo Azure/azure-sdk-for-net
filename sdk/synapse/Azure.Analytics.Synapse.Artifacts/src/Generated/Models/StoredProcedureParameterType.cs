@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Stored procedure parameter type. </summary>
-    public readonly partial struct StoredProcedureParameterType : IEquatable<StoredProcedureParameterType>
+    internal readonly partial struct StoredProcedureParameterType : IEquatable<StoredProcedureParameterType>
     {
         private readonly string _value;
 

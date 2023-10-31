@@ -16,11 +16,11 @@ using NUnit.Framework;
 
 namespace Azure.Analytics.Purview.Sharing.Samples
 {
-    public class Samples_ReceivedSharesClient
+    public partial class Samples_ReceivedSharesClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetReceivedShare()
+        public void Example_GetReceivedShare_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -30,12 +30,11 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("shareKind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetReceivedShare_Async()
+        public async Task Example_GetReceivedShare_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -45,7 +44,6 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("shareKind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -82,13 +80,13 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ActivateTenantEmailRegistration()
+        public void Example_ActivateTenantEmailRegistration_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             ReceivedSharesClient client = new ReceivedSharesClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = client.ActivateTenantEmailRegistration(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -97,13 +95,13 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ActivateTenantEmailRegistration_Async()
+        public async Task Example_ActivateTenantEmailRegistration_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             ReceivedSharesClient client = new ReceivedSharesClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new object());
             Response response = await client.ActivateTenantEmailRegistrationAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -118,7 +116,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             TokenCredential credential = new DefaultAzureCredential();
             ReceivedSharesClient client = new ReceivedSharesClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 properties = new
                 {
@@ -146,7 +144,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             TokenCredential credential = new DefaultAzureCredential();
             ReceivedSharesClient client = new ReceivedSharesClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 properties = new
                 {
@@ -168,7 +166,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_RegisterTenantEmailRegistration()
+        public void Example_RegisterTenantEmailRegistration_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -182,7 +180,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_RegisterTenantEmailRegistration_Async()
+        public async Task Example_RegisterTenantEmailRegistration_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -238,7 +236,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetAllAttachedReceivedShares()
+        public void Example_GetAllAttachedReceivedShares_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -247,14 +245,13 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             foreach (BinaryData item in client.GetAllAttachedReceivedShares("<referenceName>", null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("shareKind").ToString());
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.GetProperty("shareKind").ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAllAttachedReceivedShares_Async()
+        public async Task Example_GetAllAttachedReceivedShares_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -263,8 +260,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             await foreach (BinaryData item in client.GetAllAttachedReceivedSharesAsync("<referenceName>", null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("shareKind").ToString());
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.GetProperty("shareKind").ToString());
             }
         }
 
@@ -279,9 +275,9 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             foreach (BinaryData item in client.GetAllAttachedReceivedShares("<referenceName>", "<filter>", "<orderby>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("shareKind").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("shareKind").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("type").ToString());
             }
         }
 
@@ -296,15 +292,15 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             await foreach (BinaryData item in client.GetAllAttachedReceivedSharesAsync("<referenceName>", "<filter>", "<orderby>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("shareKind").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("shareKind").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("type").ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetAllDetachedReceivedShares()
+        public void Example_GetAllDetachedReceivedShares_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -313,14 +309,13 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             foreach (BinaryData item in client.GetAllDetachedReceivedShares(null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("shareKind").ToString());
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.GetProperty("shareKind").ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetAllDetachedReceivedShares_Async()
+        public async Task Example_GetAllDetachedReceivedShares_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -329,8 +324,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             await foreach (BinaryData item in client.GetAllDetachedReceivedSharesAsync(null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("shareKind").ToString());
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.GetProperty("shareKind").ToString());
             }
         }
 
@@ -345,9 +339,9 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             foreach (BinaryData item in client.GetAllDetachedReceivedShares("<filter>", "<orderby>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("shareKind").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("shareKind").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("type").ToString());
             }
         }
 
@@ -362,21 +356,21 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             await foreach (BinaryData item in client.GetAllDetachedReceivedSharesAsync("<filter>", "<orderby>", null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("shareKind").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("type").ToString());
+                Console.WriteLine(result.GetProperty("shareKind").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("type").ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrReplaceReceivedShare()
+        public void Example_CreateOrReplaceReceivedShare_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             ReceivedSharesClient client = new ReceivedSharesClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 properties = new object(),
                 shareKind = "InPlace",
@@ -386,18 +380,17 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("shareKind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrReplaceReceivedShare_Async()
+        public async Task Example_CreateOrReplaceReceivedShare_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             ReceivedSharesClient client = new ReceivedSharesClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 properties = new object(),
                 shareKind = "InPlace",
@@ -407,7 +400,6 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
             JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
             Console.WriteLine(result.GetProperty("shareKind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -418,7 +410,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             TokenCredential credential = new DefaultAzureCredential();
             ReceivedSharesClient client = new ReceivedSharesClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 properties = new
                 {
@@ -460,7 +452,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
             TokenCredential credential = new DefaultAzureCredential();
             ReceivedSharesClient client = new ReceivedSharesClient(endpoint, credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 properties = new
                 {
@@ -496,7 +488,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeleteReceivedShare()
+        public void Example_DeleteReceivedShare_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -511,7 +503,7 @@ namespace Azure.Analytics.Purview.Sharing.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeleteReceivedShare_Async()
+        public async Task Example_DeleteReceivedShare_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();

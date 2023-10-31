@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
-using System.Threading.Tasks;
 using Azure.Core;
 
 namespace Azure.Storage.DataMovement
@@ -18,10 +17,9 @@ namespace Azure.Storage.DataMovement
     {
         private Uri _uri;
 
-        /// <summary>
-        /// Gets the path
-        /// </summary>
         public override Uri Uri => _uri;
+
+        public override string ProviderId => "local";
 
         /// <summary>
         /// Constructor
@@ -37,6 +35,17 @@ namespace Azure.Storage.DataMovement
                 Path = path,
             };
             _uri = uriBuilder.Uri;
+        }
+
+        /// <summary>
+        /// Internal Constructor for uri
+        /// </summary>
+        /// <param name="uri"></param>
+        internal LocalDirectoryStorageResourceContainer(Uri uri)
+        {
+            Argument.AssertNotNull(uri, nameof(uri));
+            Argument.AssertNotNullOrWhiteSpace(uri.AbsoluteUri, nameof(uri));
+            _uri = uri;
         }
 
         /// <summary>
@@ -69,6 +78,16 @@ namespace Azure.Storage.DataMovement
                     yield return new LocalFileStorageResource(fileSystemInfo.FullName);
                 }
             }
+        }
+
+        protected internal override StorageResourceCheckpointData GetSourceCheckpointData()
+        {
+            return new LocalSourceCheckpointData();
+        }
+
+        protected internal override StorageResourceCheckpointData GetDestinationCheckpointData()
+        {
+            return new LocalDestinationCheckpointData();
         }
     }
 }

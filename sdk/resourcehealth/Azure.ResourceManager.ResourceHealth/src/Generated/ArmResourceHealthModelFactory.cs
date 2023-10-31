@@ -143,13 +143,18 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <param name="targetResourceType"> Resource type within Microsoft cloud. </param>
         /// <param name="targetResourceId"> Identity for resource within Microsoft cloud. </param>
         /// <param name="targetRegion"> Impacted resource region name. </param>
+        /// <param name="resourceName"> Resource name of the impacted resource. </param>
+        /// <param name="resourceGroup"> Resource group name of the impacted resource. </param>
+        /// <param name="status"> Status of the impacted resource. </param>
+        /// <param name="maintenanceStartTime"> Start time of maintenance for the impacted resource. </param>
+        /// <param name="maintenanceEndTime"> End time of maintenance for the impacted resource. </param>
         /// <param name="info"> Additional information. </param>
         /// <returns> A new <see cref="ResourceHealth.ResourceHealthEventImpactedResourceData"/> instance for mocking. </returns>
-        public static ResourceHealthEventImpactedResourceData ResourceHealthEventImpactedResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceType? targetResourceType = null, ResourceIdentifier targetResourceId = null, string targetRegion = null, IEnumerable<ResourceHealthKeyValueItem> info = null)
+        public static ResourceHealthEventImpactedResourceData ResourceHealthEventImpactedResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceType? targetResourceType = null, ResourceIdentifier targetResourceId = null, string targetRegion = null, string resourceName = null, string resourceGroup = null, string status = null, string maintenanceStartTime = null, string maintenanceEndTime = null, IEnumerable<ResourceHealthKeyValueItem> info = null)
         {
             info ??= new List<ResourceHealthKeyValueItem>();
 
-            return new ResourceHealthEventImpactedResourceData(id, name, resourceType, systemData, targetResourceType, targetResourceId, targetRegion, info?.ToList());
+            return new ResourceHealthEventImpactedResourceData(id, name, resourceType, systemData, targetResourceType, targetResourceId, targetRegion, resourceName, resourceGroup, status, maintenanceStartTime, maintenanceEndTime, info?.ToList());
         }
 
         /// <summary> Initializes a new instance of ResourceHealthKeyValueItem. </summary>
@@ -167,6 +172,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="eventType"> Type of event. </param>
+        /// <param name="eventSubType"> Sub type of the event. Currently used to determine retirement communications for health advisory events. </param>
         /// <param name="eventSource"> Source of event. </param>
         /// <param name="status"> Current status of event. </param>
         /// <param name="title"> Title text of event. </param>
@@ -194,14 +200,17 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <param name="additionalInformationMessage"> Additional information. </param>
         /// <param name="duration"> duration in seconds. </param>
         /// <param name="impactType"> The type of the impact. </param>
+        /// <param name="maintenanceId"> Unique identifier for planned maintenance event. </param>
+        /// <param name="maintenanceType"> The type of planned maintenance event. </param>
+        /// <param name="argQuery"> Azure Resource Graph query to fetch the affected resources from their existing Azure Resource Graph locations. </param>
         /// <returns> A new <see cref="ResourceHealth.ResourceHealthEventData"/> instance for mocking. </returns>
-        public static ResourceHealthEventData ResourceHealthEventData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceHealthEventTypeValue? eventType = null, ResourceHealthEventSourceValue? eventSource = null, ResourceHealthEventStatusValue? status = null, string title = null, string summary = null, string header = null, ResourceHealthEventInsightLevelValue? level = null, ResourceHealthEventLevelValue? eventLevel = null, string externalIncidentId = null, string reason = null, ResourceHealthEventArticle article = null, IEnumerable<ResourceHealthEventLink> links = null, DateTimeOffset? impactStartOn = null, DateTimeOffset? impactMitigationOn = null, IEnumerable<ResourceHealthEventImpact> impact = null, ResourceHealthEventRecommendedActions recommendedActions = null, IEnumerable<ResourceHealthEventFaq> faqs = null, bool? isHirEvent = null, bool? isMicrosoftSupportEnabled = null, string description = null, bool? isPlatformInitiated = null, bool? isChatWithUsEnabled = null, int? priority = null, DateTimeOffset? lastUpdateOn = null, string hirStage = null, string additionalInformationMessage = null, int? duration = null, string impactType = null)
+        public static ResourceHealthEventData ResourceHealthEventData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceHealthEventTypeValue? eventType = null, EventSubTypeValue? eventSubType = null, ResourceHealthEventSourceValue? eventSource = null, ResourceHealthEventStatusValue? status = null, string title = null, string summary = null, string header = null, ResourceHealthEventInsightLevelValue? level = null, ResourceHealthEventLevelValue? eventLevel = null, string externalIncidentId = null, string reason = null, ResourceHealthEventArticle article = null, IEnumerable<ResourceHealthEventLink> links = null, DateTimeOffset? impactStartOn = null, DateTimeOffset? impactMitigationOn = null, IEnumerable<ResourceHealthEventImpact> impact = null, ResourceHealthEventRecommendedActions recommendedActions = null, IEnumerable<ResourceHealthEventFaq> faqs = null, bool? isHirEvent = null, bool? isMicrosoftSupportEnabled = null, string description = null, bool? isPlatformInitiated = null, bool? isChatWithUsEnabled = null, int? priority = null, DateTimeOffset? lastUpdateOn = null, string hirStage = null, string additionalInformationMessage = null, int? duration = null, string impactType = null, string maintenanceId = null, string maintenanceType = null, string argQuery = null)
         {
             links ??= new List<ResourceHealthEventLink>();
             impact ??= new List<ResourceHealthEventImpact>();
             faqs ??= new List<ResourceHealthEventFaq>();
 
-            return new ResourceHealthEventData(id, name, resourceType, systemData, eventType, eventSource, status, title, summary, header, level, eventLevel, externalIncidentId, reason, article, links?.ToList(), impactStartOn, impactMitigationOn, impact?.ToList(), recommendedActions, faqs?.ToList(), isHirEvent, isMicrosoftSupportEnabled, description, isPlatformInitiated, isChatWithUsEnabled, priority, lastUpdateOn, hirStage, additionalInformationMessage != null ? new ResourceHealthEventAdditionalInformation(additionalInformationMessage) : null, duration, impactType);
+            return new ResourceHealthEventData(id, name, resourceType, systemData, eventType, eventSubType, eventSource, status, title, summary, header, level, eventLevel, externalIncidentId, reason, article, links?.ToList(), impactStartOn, impactMitigationOn, impact?.ToList(), recommendedActions, faqs?.ToList(), isHirEvent, isMicrosoftSupportEnabled, description, isPlatformInitiated, isChatWithUsEnabled, priority, lastUpdateOn, hirStage, additionalInformationMessage != null ? new ResourceHealthEventAdditionalInformation(additionalInformationMessage) : null, duration, impactType, maintenanceId, maintenanceType, argQuery);
         }
 
         /// <summary> Initializes a new instance of ResourceHealthEventArticle. </summary>

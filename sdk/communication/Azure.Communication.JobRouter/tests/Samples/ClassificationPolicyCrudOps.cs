@@ -3,10 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Azure.Communication.JobRouter.Models;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -31,7 +27,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 {
                     Name = "Sample classification policy",
                     PrioritizationRule = new StaticRouterRule(new LabelValue(10)),
-                    QueueSelectors =
+                    QueueSelectorAttachments =
                     {
                         new StaticQueueSelectorAttachment(new RouterQueueSelector("Region", LabelOperator.Equal, new LabelValue("NA"))),
                         new ConditionalQueueSelectorAttachment(
@@ -42,7 +38,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                                 new RouterQueueSelector("QGroup", LabelOperator.Equal, new LabelValue("NA_O365"))
                             }),
                     },
-                    WorkerSelectors =
+                    WorkerSelectorAttachments =
                     {
                         new ConditionalWorkerSelectorAttachment(
                             condition: new ExpressionRouterRule("If(job.Product = \"O365\", true, false)"),
@@ -72,21 +68,10 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetClassificationPolicy
 
-            #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateClassificationPolicyRemoveProp
-
-            Response updatedClassificationPolicyWithoutName = routerAdministrationClient.UpdateClassificationPolicy(classificationPolicyId,
-                RequestContent.Create(new { Name = (string?)null }));
-
-            Response<ClassificationPolicy> queriedClassificationPolicyWithoutName = routerAdministrationClient.GetClassificationPolicy(classificationPolicyId);
-
-            Console.WriteLine($"Classification policy successfully updated: 'Name' has been removed. Status: {string.IsNullOrWhiteSpace(queriedClassificationPolicyWithoutName.Value.Name)}");
-
-            #endregion Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateClassificationPolicyRemoveProp
-
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateClassificationPolicy
 
             Response<ClassificationPolicy> updatedClassificationPolicy = routerAdministrationClient.UpdateClassificationPolicy(
-                new UpdateClassificationPolicyOptions(classificationPolicyId)
+                new ClassificationPolicy(classificationPolicyId)
                 {
                     PrioritizationRule = new ExpressionRouterRule("If(job.HighPriority = \"true\", 50, 10)")
                 });
@@ -97,12 +82,12 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetClassificationPolicies
 
-            Pageable<ClassificationPolicyItem> classificationPolicies = routerAdministrationClient.GetClassificationPolicies();
-            foreach (Page<ClassificationPolicyItem> asPage in classificationPolicies.AsPages(pageSizeHint: 10))
+            Pageable<ClassificationPolicy> classificationPolicies = routerAdministrationClient.GetClassificationPolicies();
+            foreach (Page<ClassificationPolicy> asPage in classificationPolicies.AsPages(pageSizeHint: 10))
             {
-                foreach (ClassificationPolicyItem? policy in asPage.Values)
+                foreach (ClassificationPolicy? policy in asPage.Values)
                 {
-                    Console.WriteLine($"Listing classification policy with id: {policy.ClassificationPolicy.Id}");
+                    Console.WriteLine($"Listing classification policy with id: {policy.Id}");
                 }
             }
 

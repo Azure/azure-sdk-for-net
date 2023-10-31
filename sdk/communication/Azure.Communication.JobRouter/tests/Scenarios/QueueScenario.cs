@@ -4,9 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.Communication.JobRouter.Models;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
-using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.Communication.JobRouter.Tests.Scenarios
@@ -69,7 +67,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             var classificationPolicyResponse = await administrationClient.CreateClassificationPolicyAsync(
                 new CreateClassificationPolicyOptions(GenerateUniqueId($"Cp-StaticLabels-{IdPrefix}"))
                 {
-                    QueueSelectors = {
+                    QueueSelectorAttachments = {
                         new StaticQueueSelectorAttachment(new RouterQueueSelector(key: "Id", LabelOperator.Equal, new LabelValue(queueResponse.Value.Id)))
                     }
                 });
@@ -105,7 +103,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             var classificationPolicyResponse = await administrationClient.CreateClassificationPolicyAsync(
                 new CreateClassificationPolicyOptions(GenerateUniqueId($"Cp-default_Q-{IdPrefix}"))
                 {
-                    QueueSelectors = {
+                    QueueSelectorAttachments = {
                         new StaticQueueSelectorAttachment(new RouterQueueSelector(key: "Id", LabelOperator.Equal, new LabelValue("QueueIdDoesNotExist")))
                     },
                     FallbackQueueId = fallbackQueueResponse.Value.Id,
@@ -147,7 +145,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             var classificationPolicyResponse = await administrationClient.CreateClassificationPolicyAsync(
                 new CreateClassificationPolicyOptions(GenerateUniqueId($"{IdPrefix}-cp-conditional"))
                 {
-                    QueueSelectors = {
+                    QueueSelectorAttachments = {
                         new ConditionalQueueSelectorAttachment(
                             condition: new ExpressionRouterRule("If(job.Product = \"O365\", true, false)"),
                             queueSelectors: new List<RouterQueueSelector>()
@@ -167,6 +165,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             var job = await Poll(async () => await client.GetJobAsync(createJob.Value.Id),
                 x => x.Value.Status == RouterJobStatus.Queued,
                 TimeSpan.FromSeconds(10));
+
             Assert.AreEqual(RouterJobStatus.Queued, job.Value.Status);
             Assert.AreEqual(job.Value.QueueId, queueResponse.Value.Id);
         }
@@ -205,7 +204,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             var classificationPolicyResponse = await administrationClient.CreateClassificationPolicyAsync(
                 new CreateClassificationPolicyOptions(GenerateUniqueId($"{IdPrefix}-cp-pass-through-selector"))
                 {
-                    QueueSelectors = {
+                    QueueSelectorAttachments = {
                         new PassThroughQueueSelectorAttachment("Region", LabelOperator.Equal),
                         new PassThroughQueueSelectorAttachment("Language", LabelOperator.Equal),
                         new PassThroughQueueSelectorAttachment("Product", LabelOperator.Equal),
@@ -281,7 +280,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             var classificationPolicyResponse = await administrationClient.CreateClassificationPolicyAsync(
                 new CreateClassificationPolicyOptions(GenerateUniqueId($"{IdPrefix}-combination"))
                 {
-                    QueueSelectors = {
+                    QueueSelectorAttachments = {
                         new PassThroughQueueSelectorAttachment("Region", LabelOperator.Equal),
                         new PassThroughQueueSelectorAttachment("Product", LabelOperator.Equal),
                         new ConditionalQueueSelectorAttachment(

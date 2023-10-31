@@ -223,20 +223,15 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="orderBy"> Please choose OrderBy value from ['createdtime', 'modifiedtime']. </param>
-        /// <param name="top">
-        /// Top count of results, top count cannot be greater than the page size.
-        ///                               If topCount &gt; page size, results with be default page size count will be returned
-        /// </param>
-        /// <param name="skip"> Continuation token for pagination. </param>
-        /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
-        /// <param name="listViewType"> [ListViewType.ActiveOnly, ListViewType.ArchivedOnly, ListViewType.All]View type for including/excluding (for example) archived entities. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MachineLearningDataVersionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MachineLearningDataVersionResource> GetAllAsync(string orderBy = null, int? top = null, string skip = null, string tags = null, MachineLearningListViewType? listViewType = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<MachineLearningDataVersionResource> GetAllAsync(MachineLearningDataVersionCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningDataVersionDataVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, tags, listViewType);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningDataVersionDataVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, tags, listViewType);
+            options ??= new MachineLearningDataVersionCollectionGetAllOptions();
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningDataVersionDataVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.OrderBy, options.Top, options.Skip, options.Tags, options.ListViewType, options.Stage);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningDataVersionDataVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.OrderBy, options.Top, options.Skip, options.Tags, options.ListViewType, options.Stage);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningDataVersionResource(Client, MachineLearningDataVersionData.DeserializeMachineLearningDataVersionData(e)), _machineLearningDataVersionDataVersionsClientDiagnostics, Pipeline, "MachineLearningDataVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -253,20 +248,15 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="orderBy"> Please choose OrderBy value from ['createdtime', 'modifiedtime']. </param>
-        /// <param name="top">
-        /// Top count of results, top count cannot be greater than the page size.
-        ///                               If topCount &gt; page size, results with be default page size count will be returned
-        /// </param>
-        /// <param name="skip"> Continuation token for pagination. </param>
-        /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
-        /// <param name="listViewType"> [ListViewType.ActiveOnly, ListViewType.ArchivedOnly, ListViewType.All]View type for including/excluding (for example) archived entities. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MachineLearningDataVersionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MachineLearningDataVersionResource> GetAll(string orderBy = null, int? top = null, string skip = null, string tags = null, MachineLearningListViewType? listViewType = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<MachineLearningDataVersionResource> GetAll(MachineLearningDataVersionCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningDataVersionDataVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, tags, listViewType);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningDataVersionDataVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, tags, listViewType);
+            options ??= new MachineLearningDataVersionCollectionGetAllOptions();
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningDataVersionDataVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.OrderBy, options.Top, options.Skip, options.Tags, options.ListViewType, options.Stage);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningDataVersionDataVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.OrderBy, options.Top, options.Skip, options.Tags, options.ListViewType, options.Stage);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningDataVersionResource(Client, MachineLearningDataVersionData.DeserializeMachineLearningDataVersionData(e)), _machineLearningDataVersionDataVersionsClientDiagnostics, Pipeline, "MachineLearningDataVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -416,17 +406,17 @@ namespace Azure.ResourceManager.MachineLearning
 
         IEnumerator<MachineLearningDataVersionResource> IEnumerable<MachineLearningDataVersionResource>.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(options: null).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(options: null).GetEnumerator();
         }
 
         IAsyncEnumerator<MachineLearningDataVersionResource> IAsyncEnumerable<MachineLearningDataVersionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

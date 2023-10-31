@@ -4,7 +4,6 @@
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_UsingStatements
 using Azure.Communication.JobRouter;
-using Azure.Communication.JobRouter.Models;
 ```
 
 ## Create a client
@@ -20,7 +19,7 @@ JobRouterAdministrationClient routerAdministrationClient = new JobRouterAdminist
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Classification_QueueSelectionById
 // In this scenario we are going to use a classification policy while submitting a job.
-// We are going to utilize the 'QueueSelectors' attribute on the classification policy to determine
+// We are going to utilize the 'QueueSelectorAttachments' attribute on the classification policy to determine
 // which queue a job should be enqueued in. For this scenario, we are going to demonstrate
 // StaticLabelSelector to select a queue directly by its unique ID through the classification policy
 // Steps
@@ -39,13 +38,13 @@ Response<DistributionPolicy> distributionPolicy = await routerAdministrationClie
     }
     );
 
-Response<Models.RouterQueue> queue1 = await routerAdministrationClient.CreateQueueAsync(
+Response<RouterQueue> queue1 = await routerAdministrationClient.CreateQueueAsync(
     new CreateQueueOptions(queueId: "Queue-1", distributionPolicyId: distributionPolicy.Value.Id)
     {
         Name = "Queue_365",
     });
 
-Response<Models.RouterQueue> queue2 = await routerAdministrationClient.CreateQueueAsync(
+Response<RouterQueue> queue2 = await routerAdministrationClient.CreateQueueAsync(
     new CreateQueueOptions(queueId: "Queue-2", distributionPolicyId: distributionPolicy.Value.Id)
     {
         Name = "Queue_XBox",
@@ -55,7 +54,7 @@ Response<ClassificationPolicy> cp1 = await routerAdministrationClient.CreateClas
     new CreateClassificationPolicyOptions(classificationPolicyId: "classification-policy-o365")
     {
         Name = "Classification_Policy_O365",
-        QueueSelectors =
+        QueueSelectorAttachments =
         {
             new StaticQueueSelectorAttachment(new RouterQueueSelector("Id", LabelOperator.Equal, new LabelValue(queue1.Value.Id)))
         },
@@ -65,7 +64,7 @@ Response<ClassificationPolicy> cp2 = await routerAdministrationClient.CreateClas
     new CreateClassificationPolicyOptions(classificationPolicyId: "classification-policy-xbox")
     {
         Name = "Classification_Policy_XBox",
-        QueueSelectors =
+        QueueSelectorAttachments =
         {
             new StaticQueueSelectorAttachment(new RouterQueueSelector("Id", LabelOperator.Equal, new LabelValue(queue2.Value.Id)))
         }
@@ -101,7 +100,7 @@ Console.WriteLine($"XBox job has been enqueued in queue: {queue2.Value.Id}. Stat
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Classification_QueueSelectionByConditionalLabelAttachments
 // In this scenario we are going to use a classification policy while submitting a job.
-// We are going to utilize the 'QueueSelectors' attribute on the classification policy to determine
+// We are going to utilize the 'QueueSelectorAttachments' attribute on the classification policy to determine
 // which queue a job should be enqueued in. For this scenario, we are going to demonstrate
 // ConditionalLabelSelector to select a queue based on labels associated with a queue
 // Steps
@@ -129,7 +128,7 @@ Response<DistributionPolicy> distributionPolicy = await routerAdministrationClie
     }
 );
 
-Response<Models.RouterQueue> queue1 = await routerAdministrationClient.CreateQueueAsync(
+Response<RouterQueue> queue1 = await routerAdministrationClient.CreateQueueAsync(
     new CreateQueueOptions(
         queueId: "Queue-1",
         distributionPolicyId: distributionPolicy.Value.Id)
@@ -141,7 +140,7 @@ Response<Models.RouterQueue> queue1 = await routerAdministrationClient.CreateQue
         }
     });
 
-Response<Models.RouterQueue> queue2 = await routerAdministrationClient.CreateQueueAsync(
+Response<RouterQueue> queue2 = await routerAdministrationClient.CreateQueueAsync(
     new CreateQueueOptions(
         queueId: "Queue-2",
         distributionPolicyId: distributionPolicy.Value.Id)
@@ -157,7 +156,7 @@ Response<ClassificationPolicy> classificationPolicy = await routerAdministration
     new CreateClassificationPolicyOptions(classificationPolicyId: "classification-policy")
     {
         Name = "Classification_Policy_O365_And_XBox",
-        QueueSelectors = {
+        QueueSelectorAttachments = {
             new ConditionalQueueSelectorAttachment(
                 condition: new ExpressionRouterRule("If(job.Product = \"O365\", true, false)"),
                 queueSelectors: new List<RouterQueueSelector>()
@@ -216,7 +215,7 @@ Console.WriteLine($"XBox job has been enqueued in queue: {queue2.Value.Id}. Stat
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Classification_QueueSelectionByPassThroughLabelAttachments
 // cSpell:ignore EMEA, Emea
 // In this scenario we are going to use a classification policy while submitting a job.
-// We are going to utilize the 'QueueSelectors' attribute on the classification policy to determine
+// We are going to utilize the 'QueueSelectorAttachments' attribute on the classification policy to determine
 // which queue a job should be enqueued in. For this scenario, we are going to demonstrate
 // PassThroughLabelSelector to select a queue based on labels associated with a queue and the incoming job
 // Steps
@@ -246,7 +245,7 @@ Response<DistributionPolicy> distributionPolicy = await routerAdministrationClie
     }
     );
 
-Response<Models.RouterQueue> queue1 = await routerAdministrationClient.CreateQueueAsync(
+Response<RouterQueue> queue1 = await routerAdministrationClient.CreateQueueAsync(
     new CreateQueueOptions(
         queueId: "Queue-1",
         distributionPolicyId: distributionPolicy.Value.Id)
@@ -260,7 +259,7 @@ Response<Models.RouterQueue> queue1 = await routerAdministrationClient.CreateQue
         },
     });
 
-Response<Models.RouterQueue> queue2 = await routerAdministrationClient.CreateQueueAsync(
+Response<RouterQueue> queue2 = await routerAdministrationClient.CreateQueueAsync(
     new CreateQueueOptions(
         queueId: "Queue-2",
         distributionPolicyId: distributionPolicy.Value.Id)
@@ -274,7 +273,7 @@ Response<Models.RouterQueue> queue2 = await routerAdministrationClient.CreateQue
         },
     });
 
-Response<Models.RouterQueue> queue3 = await routerAdministrationClient.CreateQueueAsync(
+Response<RouterQueue> queue3 = await routerAdministrationClient.CreateQueueAsync(
     new CreateQueueOptions(
         queueId: "Queue-3",
         distributionPolicyId: distributionPolicy.Value.Id)
@@ -292,7 +291,7 @@ Response<ClassificationPolicy> classificationPolicy = await routerAdministration
     new CreateClassificationPolicyOptions(classificationPolicyId: "classification-policy")
     {
         Name = "Classification_Policy_O365_EMEA_NA",
-        QueueSelectors = {
+        QueueSelectorAttachments = {
             new PassThroughQueueSelectorAttachment("ProductDetail", LabelOperator.Equal),
             new PassThroughQueueSelectorAttachment("Language", LabelOperator.Equal),
             new PassThroughQueueSelectorAttachment("Region", LabelOperator.Equal),

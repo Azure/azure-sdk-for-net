@@ -15,5 +15,9 @@ namespace Azure.Developer.DevCenter.Tests
         public string EnvironmentTypeName => GetRecordedVariable("DEFAULT_ENVIRONMENT_TYPE_NAME");
         public string UserId => GetRecordedVariable("STATIC_TEST_USER_ID");
         public string MeUserId => "me";
+        public RequestContext context = null;
+        public string filter = null;
+        public int? maxCount = null;
+        public bool? hibernate = null;
     }
 }

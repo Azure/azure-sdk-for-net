@@ -50,7 +50,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         [Test]
         [TestCase(null, typeof(ArgumentNullException))]
         [TestCase("", typeof(ArgumentException))]
-        [TestCase("  ", typeof(ArgumentException))]
         public void NullOrEmptyIdThrowsError_GetClassificationPolicy(string? input, Type exceptionType)
         {
             var client = CreateMockRouterAdministrationClient(200);
@@ -67,7 +66,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         [Test]
         [TestCase(null, typeof(ArgumentNullException))]
         [TestCase("", typeof(ArgumentException))]
-        [TestCase("  ", typeof(ArgumentException))]
         public async Task NullOrEmptyIdThrowsError_GetClassificationPolicyAsync(string? input, Type exceptionType)
         {
             var client = CreateMockRouterAdministrationClient(200);
@@ -84,7 +82,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         [Test]
         [TestCase(null, typeof(ArgumentNullException))]
         [TestCase("", typeof(ArgumentException))]
-        [TestCase("  ", typeof(ArgumentException))]
         public void NullOrEmptyIdThrowsError_DeleteClassificationPolicy(string? input, Type exceptionType)
         {
             var client = CreateMockRouterAdministrationClient(200);
@@ -101,7 +98,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         [Test]
         [TestCase(null, typeof(ArgumentNullException))]
         [TestCase("", typeof(ArgumentException))]
-        [TestCase("  ", typeof(ArgumentException))]
         public async Task NullOrEmptyIdThrowsError_DeleteClassificationPolicyAsync(string? input, Type exceptionType)
         {
             var client = CreateMockRouterAdministrationClient(200);
@@ -156,7 +152,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         [Test]
         [TestCase(null, typeof(ArgumentNullException))]
         [TestCase("", typeof(ArgumentException))]
-        [TestCase("  ", typeof(ArgumentException))]
         public void NullOrEmptyIdThrowsError_GetDistributionPolicy(string? input, Type exceptionType)
         {
             var client = CreateMockRouterAdministrationClient(200);
@@ -173,7 +168,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         [Test]
         [TestCase(null, typeof(ArgumentNullException))]
         [TestCase("", typeof(ArgumentException))]
-        [TestCase("  ", typeof(ArgumentException))]
         public async Task NullOrEmptyIdThrowsError_GetDistributionPolicyAsync(string? input, Type exceptionType)
         {
             var client = CreateMockRouterAdministrationClient(200);
@@ -190,7 +184,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         [Test]
         [TestCase(null, typeof(ArgumentNullException))]
         [TestCase("", typeof(ArgumentException))]
-        [TestCase("  ", typeof(ArgumentException))]
         public void NullOrEmptyIdThrowsError_DeleteDistributionPolicy(string? input, Type exceptionType)
         {
             var client = CreateMockRouterAdministrationClient(200);
@@ -207,7 +200,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         [Test]
         [TestCase(null, typeof(ArgumentNullException))]
         [TestCase("", typeof(ArgumentException))]
-        [TestCase("  ", typeof(ArgumentException))]
         public async Task NullOrEmptyIdThrowsError_DeleteDistributionPolicyAsync(string? input, Type exceptionType)
         {
             var client = CreateMockRouterAdministrationClient(200);
@@ -234,7 +226,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var client = CreateMockRouterAdministrationClient(200);
             try
             {
-                var response = client.CreateExceptionPolicy(new CreateExceptionPolicyOptions(input, new Dictionary<string, ExceptionRule>()));
+                var response = client.CreateExceptionPolicy(new CreateExceptionPolicyOptions(input, new List<ExceptionRule>()));
             }
             catch (Exception e)
             {
@@ -251,7 +243,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var client = CreateMockRouterAdministrationClient(200);
             try
             {
-                var response = await client.CreateExceptionPolicyAsync(new CreateExceptionPolicyOptions(input, new Dictionary<string, ExceptionRule>()));
+                var response = await client.CreateExceptionPolicyAsync(new CreateExceptionPolicyOptions(input, new List<ExceptionRule>()));
             }
             catch (Exception e)
             {
@@ -262,7 +254,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         [Test]
         [TestCase(null, typeof(ArgumentNullException))]
         [TestCase("", typeof(ArgumentException))]
-        [TestCase("  ", typeof(ArgumentException))]
         public void NullOrEmptyIdThrowsError_GetExceptionPolicy(string? input, Type exceptionType)
         {
             var client = CreateMockRouterAdministrationClient(200);
@@ -279,7 +270,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         [Test]
         [TestCase(null, typeof(ArgumentNullException))]
         [TestCase("", typeof(ArgumentException))]
-        [TestCase("  ", typeof(ArgumentException))]
         public async Task NullOrEmptyIdThrowsError_GetExceptionPolicyAsync(string? input, Type exceptionType)
         {
             var client = CreateMockRouterAdministrationClient(200);
@@ -296,7 +286,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         [Test]
         [TestCase(null, typeof(ArgumentNullException))]
         [TestCase("", typeof(ArgumentException))]
-        [TestCase("  ", typeof(ArgumentException))]
         public void NullOrEmptyIdThrowsError_DeleteExceptionPolicy(string? input, Type exceptionType)
         {
             var client = CreateMockRouterAdministrationClient(200);
@@ -313,7 +302,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         [Test]
         [TestCase(null, typeof(ArgumentNullException))]
         [TestCase("", typeof(ArgumentException))]
-        [TestCase("  ", typeof(ArgumentException))]
         public async Task NullOrEmptyIdThrowsError_DeleteExceptionPolicyAsync(string? input, Type exceptionType)
         {
             var client = CreateMockRouterAdministrationClient(200);
@@ -380,7 +368,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         [Test]
         [TestCase(null, typeof(ArgumentNullException))]
         [TestCase("", typeof(ArgumentException))]
-        [TestCase("  ", typeof(ArgumentException))]
         public void NullOrEmptyIdThrowsError_GetQueue(string? input, Type exceptionType)
         {
             var client = CreateMockRouterAdministrationClient(200);
@@ -397,7 +384,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         [Test]
         [TestCase(null, typeof(ArgumentNullException))]
         [TestCase("", typeof(ArgumentException))]
-        [TestCase("  ", typeof(ArgumentException))]
         public async Task NullOrEmptyIdThrowsError_GetQueueAsync(string? input, Type exceptionType)
         {
             var client = CreateMockRouterAdministrationClient(200);
@@ -414,7 +400,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         [Test]
         [TestCase(null, typeof(ArgumentNullException))]
         [TestCase("", typeof(ArgumentException))]
-        [TestCase("  ", typeof(ArgumentException))]
         public void NullOrEmptyIdThrowsError_DeleteQueue(string? input, Type exceptionType)
         {
             var client = CreateMockRouterAdministrationClient(200);
@@ -431,7 +416,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         [Test]
         [TestCase(null, typeof(ArgumentNullException))]
         [TestCase("", typeof(ArgumentException))]
-        [TestCase("  ", typeof(ArgumentException))]
         public async Task NullOrEmptyIdThrowsError_DeleteQueueAsync(string? input, Type exceptionType)
         {
             var client = CreateMockRouterAdministrationClient(200);
@@ -486,7 +470,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         [Test]
         [TestCase(null, typeof(ArgumentNullException))]
         [TestCase("", typeof(ArgumentException))]
-        [TestCase("  ", typeof(ArgumentException))]
         public void NullOrEmptyIdThrowsError_GetWorker(string? input, Type exceptionType)
         {
             var client = CreateMockRouterClient(200);
@@ -503,7 +486,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         [Test]
         [TestCase(null, typeof(ArgumentNullException))]
         [TestCase("", typeof(ArgumentException))]
-        [TestCase("  ", typeof(ArgumentException))]
         public async Task NullOrEmptyIdThrowsError_GetWorkerAsync(string? input, Type exceptionType)
         {
             var client = CreateMockRouterClient(200);

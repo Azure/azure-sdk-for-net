@@ -79,7 +79,6 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='CreateOrUpdateTestRunAsync(string,RequestContent,string,RequestContext)']/*" />
         internal virtual async Task<Response> CreateOrUpdateTestRunAsync(string testRunId, RequestContent content, string oldTestRunId = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));
@@ -117,7 +116,6 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="ArgumentException"> <paramref name="testRunId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='CreateOrUpdateTestRun(string,RequestContent,string,RequestContext)']/*" />
         internal virtual Response CreateOrUpdateTestRun(string testRunId, RequestContent content, string oldTestRunId = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testRunId, nameof(testRunId));

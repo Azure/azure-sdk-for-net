@@ -2,11 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
-using Azure.Communication.JobRouter.Models;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -48,27 +46,34 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
 
             try
             {
-                updatedJob1Response = await routerClient.UpdateJobAsync(new UpdateJobOptions(jobId1)
+                updatedJob1Response = await routerClient.UpdateJobAsync(new RouterJob(jobId1)
                 {
                     Notes =
                     {
-                        new RouterJobNote { AddedAt = updateNoteTimeStamp, Message = "Fake notes attached to job with update" }
+                        new RouterJobNote("Fake notes attached to job with update") { AddedAt = updateNoteTimeStamp }
                     }
                 });
             }
             catch (Exception)
             {
-                updatedJob1Response = await routerClient.UpdateJobAsync(new UpdateJobOptions(jobId1)
+                updatedJob1Response = await routerClient.UpdateJobAsync(new RouterJob(jobId1)
                 {
                     Notes =
                     {
-                        new RouterJobNote { AddedAt = updateNoteTimeStamp, Message = "Fake notes attached to job with update" }
+                        new RouterJobNote("Fake notes attached to job with update") { AddedAt = updateNoteTimeStamp }
                     }
                 });
             }
 
             Assert.IsNotEmpty(updatedJob1Response.Notes);
             Assert.IsTrue(updatedJob1Response.Notes.Count == 1);
+
+            // in-test cleanup
+            if (Mode != RecordedTestMode.Playback)
+            {
+                await Task.Delay(TimeSpan.FromSeconds(3));
+            }
+            await routerClient.CancelJobAsync(jobId1); // other wise queue deletion will throw error
         }
 
         [Test]
@@ -90,7 +95,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                     Priority = 1,
                 });
 
-            AddForCleanup(new Task(async () => await routerClient.CancelJobAsync(new CancelJobOptions(jobId1))));
             AddForCleanup(new Task(async () => await routerClient.DeleteJobAsync(jobId1)));
             var createJob1 = createJob1Response.Value;
 
@@ -102,7 +106,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             Assert.AreEqual(RouterJobStatus.Queued, job1Result.Value.Status);
 
             // cancel job 1
-            var cancelJob1Response = await routerClient.CancelJobAsync(new CancelJobOptions(createJob1.Id));
+            var cancelJob1Response = await routerClient.CancelJobAsync(createJob1.Id);
 
             // Create job 2
             var jobId2 = GenerateUniqueId($"{IdPrefix}{nameof(GetJobsTest)}2");
@@ -111,7 +115,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 {
                     Priority = 1
                 });
-            AddForCleanup(new Task(async () => await routerClient.CancelJobAsync(new CancelJobOptions(jobId2))));
             AddForCleanup(new Task(async () => await routerClient.DeleteJobAsync(jobId2)));
             var createJob2 = createJob2Response.Value;
 
@@ -122,23 +125,23 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             Assert.AreEqual(RouterJobStatus.Queued, job2Result.Value.Status);
 
             // test get jobs
-            var getJobsResponse = routerClient.GetJobsAsync(new GetJobsOptions()
-            {
-                ChannelId = channelId,
-                QueueId = createQueue.Id,
-            });
+            var getJobsResponse = routerClient.GetJobsAsync(channelId: channelId, queueId: createQueue.Id);
             var allJobs = new List<string>();
 
             await foreach (var jobPage in getJobsResponse.AsPages(pageSizeHint: 1))
             {
                 foreach (var job in jobPage.Values)
                 {
-                    allJobs.Add(job.Job.Id);
+                    allJobs.Add(job.Id);
                 }
             }
 
             Assert.IsTrue(allJobs.Contains(createJob1.Id));
             Assert.IsTrue(allJobs.Contains(createJob2.Id));
+
+            // in-test cleanup
+            await routerClient.CancelJobAsync(jobId1); // other wise queue deletion will throw error
+            await routerClient.CancelJobAsync(jobId2); // other wise queue deletion will throw error
         }
 
         [Test]
@@ -159,30 +162,31 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 new CreateJobOptions(jobId1, channelId, createQueue.Id)
                 {
                     Priority = 1,
-                    MatchingMode = new JobMatchingMode(new ScheduleAndSuspendMode(timeToEnqueueJob)),
+                    MatchingMode = new ScheduleAndSuspendMode(timeToEnqueueJob),
                 });
 
-            AddForCleanup(new Task(async () => await routerClient.CancelJobAsync(new CancelJobOptions(jobId1))));
             AddForCleanup(new Task(async () => await routerClient.DeleteJobAsync(jobId1)));
             var createJob1 = createJob1Response.Value;
             // test get jobs
-            var getJobsResponse = routerClient.GetJobsAsync(new GetJobsOptions()
-            {
-                ChannelId = channelId,
-                QueueId = createQueue.Id,
-                ScheduledAfter = timeToEnqueueJob,
-            });
+            var getJobsResponse = routerClient.GetJobsAsync(channelId: channelId, queueId: createQueue.Id, scheduledAfter: timeToEnqueueJob);
             var allJobs = new List<string>();
 
             await foreach (var jobPage in getJobsResponse.AsPages(pageSizeHint: 1))
             {
                 foreach (var job in jobPage.Values)
                 {
-                    allJobs.Add(job.Job.Id);
+                    allJobs.Add(job.Id);
                 }
             }
 
             Assert.IsTrue(allJobs.Contains(createJob1.Id));
+
+            // in-test cleanup
+            if (Mode != RecordedTestMode.Playback)
+            {
+                await Task.Delay(TimeSpan.FromSeconds(3));
+            }
+            await routerClient.CancelJobAsync(jobId1); // other wise queue deletion will throw error
         }
 
         [Test]
@@ -226,7 +230,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 });
             var createJob = createJobResponse.Value;
 
-            AddForCleanup(new Task(async () => await routerClient.CancelJobAsync(new CancelJobOptions(jobId))));
             AddForCleanup(new Task(async () => await routerClient.DeleteJobAsync(jobId)));
 
             var queuedJob = await Poll(async () => await routerClient.GetJobAsync(createJob.Id),
@@ -236,6 +239,14 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             Assert.AreEqual(createJob.Id, queuedJob.Value.Id);
             Assert.AreEqual(10, queuedJob.Value.Priority); // from classification policy
             Assert.AreEqual(createQueue.Id, queuedJob.Value.QueueId); // from direct queue assignment
+
+            // in-test cleanup
+            if (Mode != RecordedTestMode.Playback)
+            {
+                await Task.Delay(TimeSpan.FromSeconds(5));
+            }
+            await routerClient.CancelJobAsync(createJob.Id); // other wise queue deletion will throw error
+            await routerAdministrationClient.DeleteClassificationPolicyAsync(classificationPolicyId); // other wise default queue deletion will throw error
         }
 
         [Test]
@@ -257,7 +268,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 new CreateClassificationPolicyOptions(classificationPolicyId)
                 {
                     Name = classificationPolicyName,
-                    QueueSelectors = { new StaticQueueSelectorAttachment(new RouterQueueSelector(key: "Id", LabelOperator.Equal, value: new LabelValue(createQueue2.Id))) }
+                    QueueSelectorAttachments = { new StaticQueueSelectorAttachment(new RouterQueueSelector(key: "Id", LabelOperator.Equal, value: new LabelValue(createQueue2.Id))) }
                 });
             AddForCleanup(new Task(async () => await routerAdministrationClient.DeleteClassificationPolicyAsync(classificationPolicyId)));
             var createClassificationPolicy = createClassificationPolicyResponse.Value;
@@ -271,7 +282,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 {
                     ChannelReference = "123"
                 });
-            AddForCleanup(new Task(async () => await routerClient.CancelJobAsync(new CancelJobOptions(jobId))));
             AddForCleanup(new Task(async () => await routerClient.DeleteJobAsync(jobId)));
             var createJob = createJobResponse.Value;
 
@@ -284,7 +294,11 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             Assert.AreEqual(createQueue2.Id, queuedJob.Value.QueueId); // from queue selector in classification policy
 
             // in-test cleanup
-            await routerClient.CancelJobAsync(new CancelJobOptions(createJob.Id)); // other wise queue deletion will throw error
+            if (Mode != RecordedTestMode.Playback)
+            {
+                await Task.Delay(TimeSpan.FromSeconds(5));
+            }
+            await routerClient.CancelJobAsync(createJob.Id); // other wise queue deletion will throw error
             await routerAdministrationClient.DeleteClassificationPolicyAsync(classificationPolicyId); // other wise default queue deletion will throw error
         }
 
@@ -322,7 +336,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                     ChannelReference = "123",
                     QueueId = null
                 });
-            AddForCleanup(new Task(async () => await routerClient.CancelJobAsync(new CancelJobOptions(jobId))));
             AddForCleanup(new Task(async () => await routerClient.DeleteJobAsync(jobId)));
             var createJob = createJobResponse.Value;
 
@@ -332,6 +345,10 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             Assert.AreEqual(RouterJobStatus.Queued, queuedJob.Value.Status);
             Assert.AreEqual(1, queuedJob.Value.Priority); // default priority value
             Assert.AreEqual(createQueue2.Id, queuedJob.Value.QueueId); // from fallback queue of classification policy
+
+            // in-test cleanup
+            await routerClient.CancelJobAsync(createJob.Id); // other wise queue deletion will throw error
+            await routerAdministrationClient.DeleteClassificationPolicyAsync(classificationPolicyId); // other wise default queue deletion will throw error
         }
 
         [Test]
@@ -368,7 +385,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                     QueueId = createQueue1.Id,
                 });
             var createJob = createJobResponse.Value;
-            AddForCleanup( new Task(async () => await routerClient.CancelJobAsync(new CancelJobOptions(createJob.Id))));
             AddForCleanup(new Task(async () => await routerClient.DeleteJobAsync(createJob.Id)));
 
             var queuedJob = await Poll(async () => await routerClient.GetJobAsync(createJob.Id),
@@ -378,34 +394,10 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             Assert.AreEqual(createJob.Id, queuedJob.Value.Id);
             Assert.AreEqual(1, queuedJob.Value.Priority); // default value
             Assert.AreEqual(createQueue1.Id, queuedJob.Value.QueueId); // from queue selector in classification policy
-        }
 
-        [Test]
-        public async Task CreateJobAndRemoveProperty()
-        {
-            JobRouterClient routerClient = CreateRouterClientWithConnectionString();
-            var channelId = GenerateUniqueId($"{nameof(CreateJobAndRemoveProperty)}-Channel");
-
-            // Setup queue
-            var createQueueResponse = await CreateQueueAsync(nameof(CreateJobAndRemoveProperty));
-            var createQueue = createQueueResponse.Value;
-
-            // Create 1 job
-            var jobId1 = GenerateUniqueId($"{IdPrefix}{nameof(CreateJobAndRemoveProperty)}1");
-            var createJob1Response = await routerClient.CreateJobAsync(
-                new CreateJobOptions(jobId1, channelId, createQueue.Id)
-                {
-                    Priority = 1,
-                    ChannelReference = "IncorrectValue",
-                });
-            var createJob1 = createJob1Response.Value;
-            AddForCleanup(new Task(async () => await routerClient.DeleteJobAsync(createJob1.Id)));
-
-            var updatedJob1Response = await routerClient.UpdateJobAsync(createJob1.Id, RequestContent.Create(new { ChannelReference = (string?)null }));
-
-            var retrievedJob = await routerClient.GetJobAsync(jobId1);
-
-            Assert.True(string.IsNullOrWhiteSpace(retrievedJob.Value.ChannelReference));
+            // in-test cleanup
+            await routerClient.CancelJobAsync(createJob.Id); // other wise queue deletion will throw error
+            await routerAdministrationClient.DeleteClassificationPolicyAsync(classificationPolicyId); // other wise default queue deletion will throw error
         }
 
         [Test]
@@ -425,15 +417,22 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 {
                     Priority = 1,
                     ChannelReference = "IncorrectValue",
-                    MatchingMode = new JobMatchingMode(new QueueAndMatchMode()),
+                    MatchingMode = new QueueAndMatchMode(),
                 });
             var createJob1 = createJob1Response.Value;
             AddForCleanup(new Task(async () => await routerClient.DeleteJobAsync(createJob1.Id)));
 
-            Assert.IsTrue(createJob1.MatchingMode.ModeType == JobMatchModeType.QueueAndMatchMode);
-            Assert.IsNull(createJob1.MatchingMode.ScheduleAndSuspendMode);
-            Assert.IsNull(createJob1.MatchingMode.SuspendMode);
-            Assert.IsNotNull(createJob1.MatchingMode.QueueAndMatchMode);
+            Assert.IsTrue(createJob1.MatchingMode.GetType() == typeof(QueueAndMatchMode));
+
+            var queuedJob = await Poll(async () => await routerClient.GetJobAsync(createJob1.Id),
+                job => job.Value.Status == RouterJobStatus.Queued, TimeSpan.FromSeconds(10));
+
+            // in-test cleanup
+            if (Mode != RecordedTestMode.Playback)
+            {
+                await Task.Delay(TimeSpan.FromSeconds(3));
+            }
+            await routerClient.CancelJobAsync(createJob1.Id); // other wise queue deletion will throw error
         }
 
         [Test]
@@ -453,15 +452,19 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 {
                     Priority = 1,
                     ChannelReference = "IncorrectValue",
-                    MatchingMode = new JobMatchingMode(new SuspendMode()),
+                    MatchingMode = new SuspendMode(),
                 });
             var createJob1 = createJob1Response.Value;
             AddForCleanup(new Task(async () => await routerClient.DeleteJobAsync(createJob1.Id)));
 
-            Assert.IsTrue(createJob1.MatchingMode.ModeType == JobMatchModeType.SuspendMode);
-            Assert.IsNull(createJob1.MatchingMode.ScheduleAndSuspendMode);
-            Assert.IsNotNull(createJob1.MatchingMode.SuspendMode);
-            Assert.IsNull(createJob1.MatchingMode.QueueAndMatchMode);
+            Assert.IsTrue(createJob1.MatchingMode.GetType() == typeof(SuspendMode));
+
+            // in-test cleanup
+            if (Mode != RecordedTestMode.Playback)
+            {
+                await Task.Delay(TimeSpan.FromSeconds(3));
+            }
+            await routerClient.CancelJobAsync(createJob1.Id); // other wise queue deletion will throw error
         }
 
         [Test]
@@ -476,21 +479,24 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
 
             // Create 1 job
             var jobId1 = GenerateUniqueId($"{IdPrefix}{nameof(CreateJobWithScheduleAndSuspendMode)}1");
-            var timeToEnqueueJob = GetOrSetScheduledTimeUtc(DateTimeOffset.UtcNow.AddSeconds(7));
+            var timeToEnqueueJob = GetOrSetScheduledTimeUtc(new DateTimeOffset(2100, 1, 1, 1, 1, 1, TimeSpan.Zero));
             var createJob1Response = await routerClient.CreateJobAsync(
                 new CreateJobOptions(jobId1, channelId, createQueue.Id)
                 {
                     Priority = 1,
                     ChannelReference = "IncorrectValue",
-                    MatchingMode = new JobMatchingMode(new ScheduleAndSuspendMode(timeToEnqueueJob)),
+                    MatchingMode = new ScheduleAndSuspendMode(timeToEnqueueJob),
                 });
             var createJob1 = createJob1Response.Value;
             AddForCleanup(new Task(async () => await routerClient.DeleteJobAsync(createJob1.Id)));
 
-            Assert.IsTrue(createJob1.MatchingMode.ModeType == JobMatchModeType.ScheduleAndSuspendMode);
-            Assert.IsNotNull(createJob1.MatchingMode.ScheduleAndSuspendMode);
-            Assert.IsNull(createJob1.MatchingMode.SuspendMode);
-            Assert.IsNull(createJob1.MatchingMode.QueueAndMatchMode);
+            Assert.IsTrue(createJob1.MatchingMode.GetType() == typeof(ScheduleAndSuspendMode));
+
+            var queuedJob = await Poll(async () => await routerClient.GetJobAsync(createJob1.Id),
+                job => job.Value.Status == RouterJobStatus.Scheduled, TimeSpan.FromSeconds(10));
+
+            // in-test cleanup
+            await routerClient.CancelJobAsync(createJob1.Id); // other wise queue deletion will throw error
         }
 
         [Test]
@@ -523,7 +529,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             createJobOptions.Tags.Append(tags);
 
             var createJobResponse = await routerClient.CreateJobAsync(createJobOptions);
-            AddForCleanup(new Task(async () => await routerClient.DeleteJobAsync(createJobResponse.Value.Id)));
 
             var updatedLabels = new Dictionary<string, LabelValue?>
             {
@@ -540,7 +545,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 ["Tag_4"] = new LabelValue("Value_4")
             };
 
-            var updateOptions = new UpdateJobOptions(jobId1);
+            var updateOptions = new RouterJob(jobId1);
             updateOptions.Labels.Append(updatedLabels);
             updateOptions.Tags.Append(updatedTags);
 
@@ -556,6 +561,14 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 ["Tag_3"] = new LabelValue("Value_Updated_3"),
                 ["Tag_4"] = new LabelValue("Value_4")
             });
+
+            // in-test cleanup
+            if (Mode != RecordedTestMode.Playback)
+            {
+                await Task.Delay(TimeSpan.FromSeconds(5));
+            }
+            await routerClient.CancelJobAsync(jobId1); // other wise queue deletion will throw error
+            await routerClient.DeleteJobAsync(jobId1); // other wise queue deletion will throw error
         }
 
         [Test]
@@ -586,9 +599,21 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var createJob1 = createJob1Response.Value;
             AddForCleanup(new Task(async () => await routerClient.DeleteJobAsync(createJob1.Id)));
 
-            await routerClient.ReclassifyJobAsync(jobId1);
+            if (Mode != RecordedTestMode.Playback)
+            {
+                await Task.Delay(TimeSpan.FromSeconds(5));
+            }
+
+            await routerClient.ReclassifyJobAsync(jobId1, CancellationToken.None);
 
             Assert.AreEqual(createJob1.QueueId, createQueue.Id);
+
+            // in-test cleanup
+            if (Mode != RecordedTestMode.Playback)
+            {
+                await Task.Delay(TimeSpan.FromSeconds(3));
+            }
+            await routerClient.CancelJobAsync(jobId1); // other wise queue deletion will throw error
         }
 
         #endregion Job Tests

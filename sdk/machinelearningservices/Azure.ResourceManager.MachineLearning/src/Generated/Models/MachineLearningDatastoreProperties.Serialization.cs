@@ -20,6 +20,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteObjectValue(Credentials);
             writer.WritePropertyName("datastoreType"u8);
             writer.WriteStringValue(DatastoreType.ToString());
+            if (Optional.IsDefined(IntellectualProperty))
+            {
+                if (IntellectualProperty != null)
+                {
+                    writer.WritePropertyName("intellectualProperty"u8);
+                    writer.WriteObjectValue(IntellectualProperty);
+                }
+                else
+                {
+                    writer.WriteNull("intellectualProperty");
+                }
+            }
             if (Optional.IsDefined(Description))
             {
                 if (Description != null)
@@ -85,10 +97,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     case "AzureDataLakeGen1": return MachineLearningAzureDataLakeGen1Datastore.DeserializeMachineLearningAzureDataLakeGen1Datastore(element);
                     case "AzureDataLakeGen2": return MachineLearningAzureDataLakeGen2Datastore.DeserializeMachineLearningAzureDataLakeGen2Datastore(element);
                     case "AzureFile": return MachineLearningAzureFileDatastore.DeserializeMachineLearningAzureFileDatastore(element);
+                    case "Hdfs": return HdfsDatastore.DeserializeHdfsDatastore(element);
+                    case "OneLake": return OneLakeDatastore.DeserializeOneLakeDatastore(element);
                 }
             }
             MachineLearningDatastoreCredentials credentials = default;
             DatastoreType datastoreType = default;
+            Optional<IntellectualProperty> intellectualProperty = default;
             Optional<bool> isDefault = default;
             Optional<string> description = default;
             Optional<IDictionary<string, string>> properties = default;
@@ -103,6 +118,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (property.NameEquals("datastoreType"u8))
                 {
                     datastoreType = new DatastoreType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("intellectualProperty"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        intellectualProperty = null;
+                        continue;
+                    }
+                    intellectualProperty = IntellectualProperty.DeserializeIntellectualProperty(property.Value);
                     continue;
                 }
                 if (property.NameEquals("isDefault"u8))
@@ -155,7 +180,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningDatastoreProperties(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), credentials, datastoreType, Optional.ToNullable(isDefault));
+            return new MachineLearningDatastoreProperties(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), credentials, datastoreType, intellectualProperty.Value, Optional.ToNullable(isDefault));
         }
     }
 }

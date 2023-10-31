@@ -40,7 +40,10 @@ namespace Azure.ResourceManager.Logic
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Metadata);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Metadata.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(Metadata))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WritePropertyName("agreementType"u8);

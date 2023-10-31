@@ -6,5 +6,6 @@
     <PackageId>Azure.ResourceManager.RecoveryServices</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.RecoveryServices.</Description>
     <PackageTags>azure;management;arm;resource manager;recoveryservices</PackageTags>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
   </PropertyGroup>
 </Project>

@@ -3,9 +3,11 @@
 
 using System;
 using System.IO;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Storage.DataMovement.Blobs;
 using Azure.Storage.Files.Shares;
 using Azure.Storage.Files.Shares.Models;
 
@@ -21,6 +23,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         public override Uri Uri => ShareFileClient.Uri;
 
+        public override string ProviderId => "share";
+
         protected override string ResourceId => "ShareFile";
 
         protected override DataTransferOrder TransferType => DataTransferOrder.Sequential;
@@ -34,7 +38,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             ShareFileStorageResourceOptions options = default)
         {
             ShareFileClient = fileClient;
-            _options = options;
+            _options = options ?? new ShareFileStorageResourceOptions();
         }
 
         /// <summary>
@@ -55,6 +59,32 @@ namespace Azure.Storage.DataMovement.Files.Shares
             _etagDownloadLock = etagLock;
         }
 
+        internal async Task CreateAsync(
+            bool overwrite,
+            long maxSize,
+            CancellationToken cancellationToken)
+        {
+            if (!overwrite)
+            {
+                // If overwrite is not enabled, we should check if the
+                // file exists first before creating because Create call will
+                // automatically overwrite the file if it already exists.
+                Response<bool> exists = await ShareFileClient.ExistsAsync(cancellationToken).ConfigureAwait(false);
+                if (exists.Value)
+                {
+                    throw Errors.ShareFileAlreadyExists(ShareFileClient.Path);
+                }
+            }
+            await ShareFileClient.CreateAsync(
+                    maxSize: maxSize,
+                    httpHeaders: _options.HttpHeaders,
+                    metadata: _options.FileMetadata,
+                    smbProperties: _options.SmbProperties,
+                    filePermission: _options.FilePermissions,
+                    conditions: _options.DestinationConditions,
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+        }
+
         protected override Task CompleteTransferAsync(
             bool overwrite,
             CancellationToken cancellationToken = default)
@@ -72,6 +102,16 @@ namespace Azure.Storage.DataMovement.Files.Shares
             CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+
+            if (range.Offset == 0)
+            {
+                await CreateAsync(overwrite, completeLength, cancellationToken).ConfigureAwait(false);
+                if (range.Length == 0)
+                {
+                    return;
+                }
+            }
+
             await ShareFileClient.UploadRangeFromUriAsync(
                 sourceUri: sourceResource.Uri,
                 range: range,
@@ -91,14 +131,15 @@ namespace Azure.Storage.DataMovement.Files.Shares
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
 
             long position = options?.Position != default ? options.Position.Value : 0;
-            if ((streamLength == completeLength) && position == 0)
+
+            // Create the File beforehand if it hasn't been created
+            if (position == 0)
             {
-                // Default to Upload
-                await ShareFileClient.UploadAsync(
-                    stream,
-                    _options.ToShareFileUploadOptions(),
-                    cancellationToken: cancellationToken).ConfigureAwait(false);
-                return;
+                await CreateAsync(overwrite, completeLength, cancellationToken).ConfigureAwait(false);
+                if (completeLength == 0)
+                {
+                    return;
+                }
             }
 
             // Otherwise upload the Range
@@ -117,12 +158,16 @@ namespace Azure.Storage.DataMovement.Files.Shares
             CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-            await ShareFileClient.UploadRangeFromUriAsync(
-                sourceUri: sourceResource.Uri,
-                range: new HttpRange(0, completeLength),
-                sourceRange: new HttpRange(0, completeLength),
-                options: _options.ToShareFileUploadRangeFromUriOptions(),
-                cancellationToken: cancellationToken).ConfigureAwait(false);
+            await CreateAsync(overwrite, completeLength, cancellationToken).ConfigureAwait(false);
+            if (completeLength > 0)
+            {
+                await ShareFileClient.UploadRangeFromUriAsync(
+                    sourceUri: sourceResource.Uri,
+                    range: new HttpRange(0, completeLength),
+                    sourceRange: new HttpRange(0, completeLength),
+                    options: _options.ToShareFileUploadRangeFromUriOptions(),
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
         }
 
         protected override async Task<bool> DeleteIfExistsAsync(CancellationToken cancellationToken = default)
@@ -131,18 +176,16 @@ namespace Azure.Storage.DataMovement.Files.Shares
             return await ShareFileClient.DeleteIfExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
-        protected override Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(CancellationToken cancellationToken = default)
+        protected override async Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(CancellationToken cancellationToken = default)
         {
-            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-            // TODO: This needs an update to ShareFileClient to allow getting the Copy Authorization Token
-            throw new NotImplementedException();
+            return await ShareFileClientInternals.GetCopyAuthorizationTokenAsync(ShareFileClient, cancellationToken).ConfigureAwait(false);
         }
 
         protected override async Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             Response<ShareFileProperties> response = await ShareFileClient.GetPropertiesAsync(
-                conditions: _options?.SourceConditions,
+                conditions: _options.SourceConditions,
                 cancellationToken: cancellationToken).ConfigureAwait(false);
             // TODO: should we be grabbing the ETag here even though we can't apply it to the download.
             //GrabEtag(response.GetRawResponse());
@@ -163,12 +206,20 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         protected override StorageResourceCheckpointData GetSourceCheckpointData()
         {
-            throw new NotImplementedException();
+            return new ShareFileSourceCheckpointData();
         }
 
         protected override StorageResourceCheckpointData GetDestinationCheckpointData()
         {
-            throw new NotImplementedException();
+            return new ShareFileDestinationCheckpointData(null, null);
         }
+    }
+
+#pragma warning disable SA1402 // File may only contain a single type
+    internal partial class Errors
+#pragma warning restore SA1402 // File may only contain a single type
+    {
+        public static InvalidOperationException ShareFileAlreadyExists(string pathName)
+            => new InvalidOperationException($"Share File `{pathName}` already exists. Cannot overwrite file.");
     }
 }
