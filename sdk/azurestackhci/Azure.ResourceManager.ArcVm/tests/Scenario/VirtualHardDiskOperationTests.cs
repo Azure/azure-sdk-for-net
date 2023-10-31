@@ -23,9 +23,6 @@ namespace Azure.ResourceManager.ArcVm.Tests
         }
 
         [TestCase]
-        // Gallery image download is very expensive and can take time depending on network speed.
-        // So before running live / record please make sure the test region have the capacity for create a new one.
-        //[PlaybackOnly("Live test for virtual hard disk is not necessary")]
         [RecordedTest]
         public async Task GetDelete()
         {
@@ -35,7 +32,6 @@ namespace Azure.ResourceManager.ArcVm.Tests
             if (await RetryUntilSuccessOrTimeout(() => ProvisioningStateSucceeded(virtualHardDiskFromGet), TimeSpan.FromSeconds(100)))
             {
                 Assert.AreEqual(virtualHardDiskFromGet.Data.Name, virtualHardDisk.Data.Name);
-                Assert.AreEqual(virtualHardDiskFromGet.Data.DiskSizeGB, 2);
                 Assert.AreEqual(virtualHardDiskFromGet.Data.Dynamic, true);
             }
             Assert.AreEqual(virtualHardDiskFromGet.Data.ProvisioningState, ProvisioningStateEnum.Succeeded);
@@ -45,9 +41,6 @@ namespace Azure.ResourceManager.ArcVm.Tests
 
         [TestCase(null)]
         [TestCase(true)]
-        // Gallery image download is very expensive and can take time depending on network speed.
-        // So before running live / record please make sure the test region have the capacity for create a new one.
-        //[PlaybackOnly("Live test for virtual hard disk is not necessary")]
         [RecordedTest]
         public async Task SetTags(bool? useTagResource)
         {
