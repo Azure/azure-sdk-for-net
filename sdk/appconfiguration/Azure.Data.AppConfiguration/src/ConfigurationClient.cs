@@ -146,7 +146,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// Creates a <see cref="ConfigurationSetting"/> if the setting, uniquely identified by key and label, does not already exist in the configuration store.
         /// </summary>
-        /// <param name=OTelAttributeKey>The primary identifier of the configuration setting.</param>
+        /// <param name="key">The primary identifier of the configuration setting.</param>
         /// <param name="value">The configuration setting's value.</param>
         /// <param name="label">A label used to group this configuration setting with others.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -160,7 +160,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// Creates a <see cref="ConfigurationSetting"/> if the setting, uniquely identified by key and label, does not already exist in the configuration store.
         /// </summary>
-        /// <param name=OTelAttributeKey>The primary identifier of the configuration setting.</param>
+        /// <param name="key">The primary identifier of the configuration setting.</param>
         /// <param name="value">The configuration setting's value.</param>
         /// <param name="label">A label used to group this configuration setting with others.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -253,7 +253,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// Creates a <see cref="ConfigurationSetting"/>, uniquely identified by key and label, if it doesn't exist or overwrites the existing setting in the configuration store.
         /// </summary>
-        /// <param name=OTelAttributeKey>The primary identifier of the configuration setting.</param>
+        /// <param name="key">The primary identifier of the configuration setting.</param>
         /// <param name="value">The configuration setting's value.</param>
         /// <param name="label">A label used to group this configuration setting with others.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -267,7 +267,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// Creates a <see cref="ConfigurationSetting"/>, uniquely identified by key and label, if it doesn't exist or overwrites the existing setting in the configuration store.
         /// </summary>
-        /// <param name=OTelAttributeKey>The primary identifier of the configuration setting.</param>
+        /// <param name="key">The primary identifier of the configuration setting.</param>
         /// <param name="value">The configuration setting's value.</param>
         /// <param name="label">A label used to group this configuration setting with others.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -366,7 +366,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// Delete a <see cref="ConfigurationSetting"/> from the configuration store.
         /// </summary>
-        /// <param name=OTelAttributeKey>The primary identifier of the configuration setting.</param>
+        /// <param name="key">The primary identifier of the configuration setting.</param>
         /// <param name="label">A label used to group this configuration setting with others.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A response indicating the success of the operation.</returns>
@@ -379,7 +379,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// Delete a <see cref="ConfigurationSetting"/> from the configuration store.
         /// </summary>
-        /// <param name=OTelAttributeKey>The primary identifier of the configuration setting.</param>
+        /// <param name="key">The primary identifier of the configuration setting.</param>
         /// <param name="label">A label used to group this configuration setting with others.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A response indicating the success of the operation.</returns>
@@ -484,7 +484,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// Retrieve an existing <see cref="ConfigurationSetting"/>, uniquely identified by key and label, from the configuration store.
         /// </summary>
-        /// <param name=OTelAttributeKey>The primary identifier of the configuration setting to retrieve.</param>
+        /// <param name="key">The primary identifier of the configuration setting to retrieve.</param>
         /// <param name="label">A label used to group this configuration setting with others.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A response containing the retrieved <see cref="ConfigurationSetting"/>.</returns>
@@ -497,7 +497,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// Retrieve an existing <see cref="ConfigurationSetting"/>, uniquely identified by key and label, from the configuration store.
         /// </summary>
-        /// <param name=OTelAttributeKey>The primary identifier of the configuration setting to retrieve.</param>
+        /// <param name="key">The primary identifier of the configuration setting to retrieve.</param>
         /// <param name="label">A label used to group this configuration setting with others.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A response containing the retrieved <see cref="ConfigurationSetting"/>.</returns>
@@ -570,7 +570,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// Retrieve an existing <see cref="ConfigurationSetting"/>, uniquely identified by key and label, from the configuration store.
         /// </summary>
-        /// <param name=OTelAttributeKey>The primary identifier of the configuration setting to retrieve.</param>
+        /// <param name="key">The primary identifier of the configuration setting to retrieve.</param>
         /// <param name="label">A label used to group this configuration setting with others.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <param name="acceptDateTime">The setting will be retrieved exactly as it existed at the provided time.</param>
@@ -579,7 +579,7 @@ namespace Azure.Data.AppConfiguration
         internal virtual async Task<Response<ConfigurationSetting>> GetConfigurationSettingAsync(string key, string label, DateTimeOffset? acceptDateTime, MatchConditions conditions, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(ConfigurationClient)}.{nameof(GetConfigurationSetting)}");
-            scope.AddAttribute(OTelAttributeKey), key);
+            scope.AddAttribute(OTelAttributeKey, key);
             scope.Start();
 
             try
@@ -606,7 +606,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// Retrieve an existing <see cref="ConfigurationSetting"/>, uniquely identified by key and label, from the configuration store.
         /// </summary>
-        /// <param name=OTelAttributeKey>The primary identifier of the configuration setting to retrieve.</param>
+        /// <param name="key">The primary identifier of the configuration setting to retrieve.</param>
         /// <param name="label">A label used to group this configuration setting with others.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <param name="acceptDateTime">The setting will be retrieved exactly as it existed at the provided time.</param>
@@ -1273,7 +1273,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// Sets an existing <see cref="ConfigurationSetting"/> to read only or read write state in the configuration store.
         /// </summary>
-        /// <param name=OTelAttributeKey>The primary identifier of the configuration setting.</param>
+        /// <param name="key">The primary identifier of the configuration setting.</param>
         /// <param name="isReadOnly">If true, the <see cref="ConfigurationSetting"/> will be set to read only in the configuration store. If false, it will be set to read write.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<Response<ConfigurationSetting>> SetReadOnlyAsync(string key, bool isReadOnly, CancellationToken cancellationToken = default)
@@ -1285,7 +1285,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// Sets an existing <see cref="ConfigurationSetting"/> to read only or read write state in the configuration store.
         /// </summary>
-        /// <param name=OTelAttributeKey>The primary identifier of the configuration setting.</param>
+        /// <param name="key">The primary identifier of the configuration setting.</param>
         /// <param name="isReadOnly">If true, the <see cref="ConfigurationSetting"/> will be set to read only in the configuration store. If false, it will be set to read write.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Response<ConfigurationSetting> SetReadOnly(string key, bool isReadOnly, CancellationToken cancellationToken = default)
@@ -1297,7 +1297,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// Sets an existing <see cref="ConfigurationSetting"/> to read only or read write state in the configuration store.
         /// </summary>
-        /// <param name=OTelAttributeKey>The primary identifier of the configuration setting.</param>
+        /// <param name="key">The primary identifier of the configuration setting.</param>
         /// <param name="label">A label used to group this configuration setting with others.</param>
         /// <param name="isReadOnly">If true, the <see cref="ConfigurationSetting"/> will be set to read only in the configuration store. If false, it will be set to read write.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
@@ -1310,7 +1310,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// Sets an existing <see cref="ConfigurationSetting"/> to read only or read write state in the configuration store.
         /// </summary>
-        /// <param name=OTelAttributeKey>The primary identifier of the configuration setting.</param>
+        /// <param name="key">The primary identifier of the configuration setting.</param>
         /// <param name="label">A label used to group this configuration setting with others.</param>
         /// <param name="isReadOnly">If true, the <see cref="ConfigurationSetting"/> will be set to read only in the configuration store. If false, it will be set to read write.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
