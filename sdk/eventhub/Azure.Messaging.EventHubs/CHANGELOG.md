@@ -6,6 +6,9 @@
 
 ### Breaking Changes
 
+- Change `ActivitySource` name used to report message activity from `Azure.Messaging.EventHubs.EventHubs` to `Azure.Messaging.EventHubs.Message`
+- Change `Activity` name used to report message from `EventHubs.Message` to `Message`
+
 ### Bugs Fixed
 
 - Fixed a parameter type mismatch in ETW #7 (ReceiveComplete) which caused the duration argument of the operation to be interpreted as a Unicode string and fail to render properly in the formatted message.
