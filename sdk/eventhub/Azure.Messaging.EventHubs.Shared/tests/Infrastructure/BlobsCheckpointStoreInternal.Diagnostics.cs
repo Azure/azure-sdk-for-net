@@ -97,7 +97,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                            string consumerGroup,
                                            string clientIdentifier,
                                            long sequenceNumber,
-                                           long replicationSegment,
+                                           int replicationSegment,
                                            long offset,
                                            Exception exception) =>
             Logger.UpdateCheckpointError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, sequenceNumber, replicationSegment, offset, exception.Message);
@@ -121,7 +121,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                               string consumerGroup,
                                               string clientIdentifier,
                                               long sequenceNumber,
-                                              long replicationSegment,
+                                              int replicationSegment,
                                               long offset) =>
             Logger.UpdateCheckpointComplete(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, sequenceNumber, replicationSegment, offset);
 
@@ -144,7 +144,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                            string consumerGroup,
                                            string clientIdentifier,
                                            long sequenceNumber,
-                                           long replicationSegment,
+                                           int replicationSegment,
                                            long offset) =>
             Logger.UpdateCheckpointStart(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, sequenceNumber, replicationSegment, offset);
 

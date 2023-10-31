@@ -262,7 +262,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
                                                   string consumerGroup,
                                                   string clientIdentifier,
                                                   long sequenceNumber,
-                                                  long replicationSegment,
+                                                  int replicationSegment,
                                                   long offset)
         {
             if (IsEnabled())
@@ -291,7 +291,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
                                                      string consumerGroup,
                                                      string clientIdentifier,
                                                      long sequenceNumber,
-                                                     long replicationSegment,
+                                                     int replicationSegment,
                                                      long offset)
         {
             if (IsEnabled())
@@ -321,7 +321,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
                                                   string consumerGroup,
                                                   string clientIdentifier,
                                                   long sequenceNumber,
-                                                  long replicationSegment,
+                                                  int replicationSegment,
                                                   long offset,
                                                   string errorMessage)
         {
@@ -687,6 +687,8 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
                                                                   TValue2 arg7,
                                                                   TValue3 arg8)
             where TValue1 : struct
+            where TValue2 : struct
+            where TValue3 : struct
         {
             fixed (char* arg1Ptr = arg1)
             fixed (char* arg2Ptr = arg2)
@@ -753,6 +755,8 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
                                                                   TValue2 arg8,
                                                                   TValue3 arg9)
             where TValue1 : struct
+            where TValue2 : struct
+            where TValue3 : struct
         {
             fixed (char* arg1Ptr = arg1)
             fixed (char* arg2Ptr = arg2)

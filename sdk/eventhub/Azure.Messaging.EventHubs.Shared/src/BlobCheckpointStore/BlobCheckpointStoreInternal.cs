@@ -759,7 +759,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                            string consumerGroup,
                                            string clientIdentifier,
                                            long sequenceNumber,
-                                           long replicationSegment,
+                                           int replicationSegment,
                                            long offset,
                                            Exception exception);
 
@@ -782,7 +782,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                               string consumerGroup,
                                               string clientIdentifier,
                                               long sequenceNumber,
-                                              long replicationSegment,
+                                              int replicationSegment,
                                               long offset);
 
         /// <summary>
@@ -804,7 +804,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                            string consumerGroup,
                                            string clientIdentifier,
                                            long sequenceNumber,
-                                           long replicationSegment,
+                                           int replicationSegment,
                                            long offset);
 
         /// <summary>
