@@ -4,8 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -82,7 +80,10 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             ShareDirectoryClient parentDirectory = string.IsNullOrEmpty(directoryPath) ?
                     container.GetRootDirectoryClient() :
                     container.GetDirectoryClient(directoryPath);
-            await parentDirectory.CreateIfNotExistsAsync(cancellationToken: cancellationToken);
+            if (!string.IsNullOrEmpty(directoryPath))
+            {
+                await parentDirectory.CreateIfNotExistsAsync(cancellationToken: cancellationToken);
+            }
             HashSet<string> subDirectoryNames = new() { directoryPath };
             foreach ((string filePath, long size) in fileSizes)
             {
@@ -91,13 +92,14 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 // Check if the parent subdirectory is already created,
                 // if not create it before making the files
                 int fileNameIndex = filePath.LastIndexOf('/');
-                string subDirectoryName = filePath.Substring(0, fileNameIndex);
-                string fileName = filePath.Substring(fileNameIndex + 1);
+                string subDirectoryName = fileNameIndex > 0 ? filePath.Substring(0, fileNameIndex) : "";
+                string fileName = fileNameIndex > 0 ? filePath.Substring(fileNameIndex + 1) : filePath;
 
                 // Create parent subdirectory if it does not currently exist.
                 ShareDirectoryClient subdirectory = string.IsNullOrEmpty(subDirectoryName) ?
                     container.GetRootDirectoryClient() :
                     container.GetDirectoryClient(subDirectoryName);
+
                 if (!string.IsNullOrEmpty(subDirectoryName) &&
                     !subDirectoryNames.Contains(subDirectoryName))
                 {
@@ -109,7 +111,10 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 {
                     ShareFileClient fileClient = subdirectory.GetFileClient(fileName);
                     await fileClient.CreateAsync(size, cancellationToken: cancellationToken);
-                    await fileClient.UploadAsync(data, cancellationToken: cancellationToken);
+                    if (size > 0)
+                    {
+                        await fileClient.UploadAsync(data, cancellationToken: cancellationToken);
+                    }
                 }
             }
         }

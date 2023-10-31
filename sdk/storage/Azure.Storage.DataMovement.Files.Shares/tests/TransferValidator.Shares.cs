@@ -55,7 +55,23 @@ namespace Azure.Storage.DataMovement.Tests
                         }
                         else
                         {
-                            result.Add(new ShareResourceEnumerationItem(current.GetFileClient(item.Name), item.Name));
+                            string relativePath = "";
+                            if (string.IsNullOrEmpty(current.Path))
+                            {
+                                relativePath = item.Name;
+                            }
+                            else if (string.IsNullOrEmpty(prefix))
+                            {
+                                relativePath = string.Join("/", current.Path, item.Name);
+                            }
+                            else
+                            {
+                                relativePath =
+                                    prefix != current.Name ?
+                                    string.Join("/", current.Path.Substring(prefix.Length + 1), item.Name) :
+                                    item.Name;
+                            }
+                            result.Add(new ShareResourceEnumerationItem(current.GetFileClient(item.Name), relativePath));
                         }
                     }
                 }
