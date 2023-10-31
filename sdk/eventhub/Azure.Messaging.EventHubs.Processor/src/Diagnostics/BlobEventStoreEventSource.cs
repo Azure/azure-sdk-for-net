@@ -671,13 +671,13 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private unsafe void WriteEvent<TValue1, TValue2>(int eventId,
-                                                string arg1,
-                                                string arg2,
-                                                string arg3,
-                                                string arg4,
-                                                string arg5,
-                                                TValue1 arg6,
-                                                TValue2 arg7)
+                                                         string arg1,
+                                                         string arg2,
+                                                         string arg3,
+                                                         string arg4,
+                                                         string arg5,
+                                                         TValue1 arg6,
+                                                         TValue2 arg7)
             where TValue1 : struct
         {
             fixed (char* arg1Ptr = arg1)
@@ -731,14 +731,14 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private unsafe void WriteEvent<TValue1, TValue2>(int eventId,
-                                                string arg1,
-                                                string arg2,
-                                                string arg3,
-                                                string arg4,
-                                                string arg5,
-                                                string arg6,
-                                                TValue1 arg7,
-                                                TValue2 arg8)
+                                                         string arg1,
+                                                         string arg2,
+                                                         string arg3,
+                                                         string arg4,
+                                                         string arg5,
+                                                         string arg6,
+                                                         TValue1 arg7,
+                                                         TValue2 arg8)
             where TValue1 : struct
         {
             fixed (char* arg1Ptr = arg1)
