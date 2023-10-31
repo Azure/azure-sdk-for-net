@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Web;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -19,7 +18,6 @@ namespace Azure.ResourceManager.Communication
 {
     internal partial class SuppressionListsRestOperations
     {
-        private string _skipTokenQueryParameter = "$skipToken";
         private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
