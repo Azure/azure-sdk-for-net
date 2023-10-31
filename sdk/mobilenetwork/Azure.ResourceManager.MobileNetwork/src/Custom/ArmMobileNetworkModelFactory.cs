@@ -3,17 +3,15 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Azure;
+using System.ComponentModel;
 using Azure.Core;
-using Azure.ResourceManager.MobileNetwork;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
     public static partial class ArmMobileNetworkModelFactory
-{
+    {
         /// <summary> Initializes a new instance of MobileNetworkPacketCaptureData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -28,8 +26,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="totalBytesPerSession"> Maximum size of the capture output. </param>
         /// <param name="timeLimitInSeconds"> Maximum duration of the capture session in seconds. </param>
         /// <returns> A new <see cref="MobileNetwork.MobileNetworkPacketCaptureData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static MobileNetworkPacketCaptureData MobileNetworkPacketCaptureData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MobileNetworkProvisioningState? provisioningState, MobileNetworkPacketCaptureStatus? status, string reason, DateTimeOffset? captureStartOn, IEnumerable<string> networkInterfaces, long? bytesToCapturePerPacket, long? totalBytesPerSession, int? timeLimitInSeconds)
-    => MobileNetworkPacketCaptureData(id, name, resourceType, systemData, provisioningState, status, reason, captureStartOn, networkInterfaces, bytesToCapturePerPacket, totalBytesPerSession, timeLimitInSeconds, outputFiles: default);
+            => MobileNetworkPacketCaptureData(id, name, resourceType, systemData, provisioningState, status, reason, captureStartOn, networkInterfaces, bytesToCapturePerPacket, totalBytesPerSession, timeLimitInSeconds, outputFiles: default);
 
         /// <summary> Initializes a new instance of PacketCoreControlPlaneData. </summary>
         /// <param name="id"> The id. </param>
@@ -54,8 +53,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="diagnosticsUploadStorageAccountContainerUri"> Configuration for uploading packet core diagnostics. </param>
         /// <param name="interopSettings"> Settings to allow interoperability with third party components e.g. RANs and UEs. </param>
         /// <returns> A new <see cref="MobileNetwork.PacketCoreControlPlaneData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static PacketCoreControlPlaneData PacketCoreControlPlaneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MobileNetworkManagedServiceIdentity userAssignedIdentity, MobileNetworkProvisioningState? provisioningState, MobileNetworkInstallation installation, IEnumerable<WritableSubResource> sites, MobileNetworkPlatformConfiguration platform, MobileNetworkCoreNetworkType? coreNetworkTechnology, string version, string installedVersion, string rollbackVersion, MobileNetworkInterfaceProperties controlPlaneAccessInterface, MobileNetworkBillingSku sku, int? ueMtu, MobileNetworkLocalDiagnosticsAccessConfiguration localDiagnosticsAccess, Uri diagnosticsUploadStorageAccountContainerUri, BinaryData interopSettings)
-    => PacketCoreControlPlaneData(id, name, resourceType, systemData, tags, location, userAssignedIdentity, provisioningState, installation, sites, platform, coreNetworkTechnology, version, installedVersion, rollbackVersion, controlPlaneAccessInterface, controlPlaneAccessVirtualIPv4Addresses: default, sku, ueMtu, localDiagnosticsAccess, diagnosticsUploadStorageAccountContainerUri, eventHub: default, nasRerouteMacroMmeGroupId: default, interopSettings);
+            => PacketCoreControlPlaneData(id, name, resourceType, systemData, tags, location, userAssignedIdentity, provisioningState, installation, sites, platform, coreNetworkTechnology, version, installedVersion, rollbackVersion, controlPlaneAccessInterface, controlPlaneAccessVirtualIPv4Addresses: default, sku, ueMtu, localDiagnosticsAccess, diagnosticsUploadStorageAccountContainerUri, eventHub: default, nasRerouteMacroMmeGroupId: default, interopSettings);
 
         /// <summary> Initializes a new instance of PacketCoreDataPlaneData. </summary>
         /// <param name="id"> The id. </param>
@@ -67,7 +67,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="provisioningState"> The provisioning state of the packet core data plane resource. </param>
         /// <param name="userPlaneAccessInterface"> The user plane interface on the access network. For 5G networks, this is the N3 interface. For 4G networks, this is the S1-U interface. </param>
         /// <returns> A new <see cref="MobileNetwork.PacketCoreDataPlaneData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static PacketCoreDataPlaneData PacketCoreDataPlaneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MobileNetworkProvisioningState? provisioningState, MobileNetworkInterfaceProperties userPlaneAccessInterface)
-    => PacketCoreDataPlaneData(id, name, resourceType, systemData, tags, location, provisioningState, userPlaneAccessInterface, userPlaneAccessVirtualIPv4Addresses: default);
+            => PacketCoreDataPlaneData(id, name, resourceType, systemData, tags, location, provisioningState, userPlaneAccessInterface, userPlaneAccessVirtualIPv4Addresses: default);
     }
 }
