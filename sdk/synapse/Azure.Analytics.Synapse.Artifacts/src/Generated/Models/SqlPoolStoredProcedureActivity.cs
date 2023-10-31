@@ -27,7 +27,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
             SqlPool = sqlPool;
             StoredProcedureName = storedProcedureName;
-            StoredProcedureParameters = new ChangeTrackingDictionary<string, StoredProcedureParameter>();
             Type = "SqlPoolStoredProcedure";
         }
 
@@ -43,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="sqlPool"> SQL pool stored procedure reference. </param>
         /// <param name="storedProcedureName"> Stored procedure name. Type: string (or Expression with resultType string). </param>
         /// <param name="storedProcedureParameters"> Value and type setting for stored procedure parameters. Example: "{Parameter1: {value: "1", type: "int"}}". </param>
-        internal SqlPoolStoredProcedureActivity(string name, string type, string description, ActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, SqlPoolReference sqlPool, object storedProcedureName, IDictionary<string, StoredProcedureParameter> storedProcedureParameters) : base(name, type, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties)
+        internal SqlPoolStoredProcedureActivity(string name, string type, string description, ActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, SqlPoolReference sqlPool, object storedProcedureName, object storedProcedureParameters) : base(name, type, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties)
         {
             SqlPool = sqlPool;
             StoredProcedureName = storedProcedureName;
@@ -56,6 +55,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Stored procedure name. Type: string (or Expression with resultType string). </summary>
         public object StoredProcedureName { get; set; }
         /// <summary> Value and type setting for stored procedure parameters. Example: "{Parameter1: {value: "1", type: "int"}}". </summary>
-        public IDictionary<string, StoredProcedureParameter> StoredProcedureParameters { get; }
+        public object StoredProcedureParameters { get; set; }
     }
 }

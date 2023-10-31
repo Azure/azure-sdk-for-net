@@ -121,7 +121,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="exitValue"> Output of exit command. </param>
         /// <param name="error"> Run notebook error. </param>
         /// <returns> A new <see cref="Models.RunNotebookResult"/> instance for mocking. </returns>
-        public static RunNotebookResult RunNotebookResult(string runId = null, string runStatus = null, string lastCheckedOn = null, long? sessionId = null, string sparkPool = null, object sessionDetail = null, string exitValue = null, RunNotebookError error = null)
+        public static RunNotebookResult RunNotebookResult(string runId = null, string runStatus = null, string lastCheckedOn = null, string sessionId = null, string sparkPool = null, object sessionDetail = null, string exitValue = null, RunNotebookError error = null)
         {
             return new RunNotebookResult(runId, runStatus, lastCheckedOn, sessionId, sparkPool, sessionDetail, exitValue, error);
         }
@@ -156,7 +156,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="sessionId"> Livy session id. </param>
         /// <param name="sparkPool"> SparkPool name. </param>
         /// <returns> A new <see cref="Models.RunNotebookSnapshotResult"/> instance for mocking. </returns>
-        public static RunNotebookSnapshotResult RunNotebookSnapshotResult(RunNotebookSnapshot snapshot = null, RunNotebookError error = null, string runId = null, string runStatus = null, string lastCheckedOn = null, long? sessionId = null, string sparkPool = null)
+        public static RunNotebookSnapshotResult RunNotebookSnapshotResult(RunNotebookSnapshot snapshot = null, RunNotebookError error = null, string runId = null, string runStatus = null, string lastCheckedOn = null, string sessionId = null, string sparkPool = null)
         {
             return new RunNotebookSnapshotResult(snapshot, error, runId, runStatus, lastCheckedOn, sessionId, sparkPool);
         }
@@ -172,7 +172,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="parameters"> Run notebook parameters. </param>
         /// <param name="notebookContent"> Notebook resource type. </param>
         /// <returns> A new <see cref="Models.RunNotebookSnapshot"/> instance for mocking. </returns>
-        public static RunNotebookSnapshot RunNotebookSnapshot(string exitValue = null, string id = null, string notebook = null, RunNotebookSparkSessionOptions sessionOptions = null, bool? honorSessionTimeToLive = null, long? sessionId = null, string sparkPool = null, IReadOnlyDictionary<string, RunNotebookParameter> parameters = null, NotebookResource notebookContent = null)
+        public static RunNotebookSnapshot RunNotebookSnapshot(string exitValue = null, string id = null, string notebook = null, RunNotebookSparkSessionOptions sessionOptions = null, bool? honorSessionTimeToLive = null, string sessionId = null, string sparkPool = null, IReadOnlyDictionary<string, RunNotebookParameter> parameters = null, NotebookResource notebookContent = null)
         {
             parameters ??= new Dictionary<string, RunNotebookParameter>();
 
