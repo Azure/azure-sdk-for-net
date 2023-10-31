@@ -20,7 +20,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Classification_QueueSelectionById
             // In this scenario we are going to use a classification policy while submitting a job.
-            // We are going to utilize the 'QueueSelectors' attribute on the classification policy to determine
+            // We are going to utilize the 'QueueSelectorAttachments' attribute on the classification policy to determine
             // which queue a job should be enqueued in. For this scenario, we are going to demonstrate
             // StaticLabelSelector to select a queue directly by its unique ID through the classification policy
             // Steps
@@ -55,7 +55,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 new CreateClassificationPolicyOptions(classificationPolicyId: "classification-policy-o365")
                 {
                     Name = "Classification_Policy_O365",
-                    QueueSelectors =
+                    QueueSelectorAttachments =
                     {
                         new StaticQueueSelectorAttachment(new RouterQueueSelector("Id", LabelOperator.Equal, new LabelValue(queue1.Value.Id)))
                     },
@@ -65,7 +65,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 new CreateClassificationPolicyOptions(classificationPolicyId: "classification-policy-xbox")
                 {
                     Name = "Classification_Policy_XBox",
-                    QueueSelectors =
+                    QueueSelectorAttachments =
                     {
                         new StaticQueueSelectorAttachment(new RouterQueueSelector("Id", LabelOperator.Equal, new LabelValue(queue2.Value.Id)))
                     }
@@ -121,7 +121,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
 
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Classification_QueueSelectionByConditionalLabelAttachments
             // In this scenario we are going to use a classification policy while submitting a job.
-            // We are going to utilize the 'QueueSelectors' attribute on the classification policy to determine
+            // We are going to utilize the 'QueueSelectorAttachments' attribute on the classification policy to determine
             // which queue a job should be enqueued in. For this scenario, we are going to demonstrate
             // ConditionalLabelSelector to select a queue based on labels associated with a queue
             // Steps
@@ -177,7 +177,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 new CreateClassificationPolicyOptions(classificationPolicyId: "classification-policy")
                 {
                     Name = "Classification_Policy_O365_And_XBox",
-                    QueueSelectors = {
+                    QueueSelectorAttachments = {
                         new ConditionalQueueSelectorAttachment(
                             condition: new ExpressionRouterRule("If(job.Product = \"O365\", true, false)"),
                             queueSelectors: new List<RouterQueueSelector>()
@@ -255,7 +255,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
             #region Snippet:Azure_Communication_JobRouter_Tests_Samples_Classification_QueueSelectionByPassThroughLabelAttachments
             // cSpell:ignore EMEA, Emea
             // In this scenario we are going to use a classification policy while submitting a job.
-            // We are going to utilize the 'QueueSelectors' attribute on the classification policy to determine
+            // We are going to utilize the 'QueueSelectorAttachments' attribute on the classification policy to determine
             // which queue a job should be enqueued in. For this scenario, we are going to demonstrate
             // PassThroughLabelSelector to select a queue based on labels associated with a queue and the incoming job
             // Steps
@@ -331,7 +331,7 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 new CreateClassificationPolicyOptions(classificationPolicyId: "classification-policy")
                 {
                     Name = "Classification_Policy_O365_EMEA_NA",
-                    QueueSelectors = {
+                    QueueSelectorAttachments = {
                         new PassThroughQueueSelectorAttachment("ProductDetail", LabelOperator.Equal),
                         new PassThroughQueueSelectorAttachment("Language", LabelOperator.Equal),
                         new PassThroughQueueSelectorAttachment("Region", LabelOperator.Equal),

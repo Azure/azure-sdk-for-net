@@ -22,7 +22,7 @@ namespace Azure.Communication.JobRouter
             }
             Optional<int> batchSize = default;
             Optional<IList<ScoringRuleParameterSelector>> scoringParameters = default;
-            Optional<bool> allowScoringBatchOfWorkers = default;
+            Optional<bool> isBatchScoringEnabled = default;
             Optional<bool> descendingOrder = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -49,13 +49,13 @@ namespace Azure.Communication.JobRouter
                     scoringParameters = array;
                     continue;
                 }
-                if (property.NameEquals("allowScoringBatchOfWorkers"u8))
+                if (property.NameEquals("isBatchScoringEnabled"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    allowScoringBatchOfWorkers = property.Value.GetBoolean();
+                    isBatchScoringEnabled = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("descendingOrder"u8))
@@ -68,7 +68,7 @@ namespace Azure.Communication.JobRouter
                     continue;
                 }
             }
-            return new ScoringRuleOptions(Optional.ToNullable(batchSize), Optional.ToList(scoringParameters), Optional.ToNullable(allowScoringBatchOfWorkers), Optional.ToNullable(descendingOrder));
+            return new ScoringRuleOptions(Optional.ToNullable(batchSize), Optional.ToList(scoringParameters), Optional.ToNullable(isBatchScoringEnabled), Optional.ToNullable(descendingOrder));
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

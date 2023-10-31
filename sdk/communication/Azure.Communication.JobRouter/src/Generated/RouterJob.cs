@@ -17,15 +17,16 @@ namespace Azure.Communication.JobRouter
         /// <summary> Initializes a new instance of RouterJob. </summary>
         internal RouterJob()
         {
-            _requestedWorkerSelectors = new ChangeTrackingList<RouterWorkerSelector>();
+            RequestedWorkerSelectors = new ChangeTrackingList<RouterWorkerSelector>();
             AttachedWorkerSelectors = new ChangeTrackingList<RouterWorkerSelector>();
             _labels = new ChangeTrackingDictionary<string, BinaryData>();
             Assignments = new ChangeTrackingDictionary<string, RouterJobAssignment>();
             _tags = new ChangeTrackingDictionary<string, BinaryData>();
-            _notes = new ChangeTrackingDictionary<string, string>();
+            Notes = new ChangeTrackingList<RouterJobNote>();
         }
 
         /// <summary> Initializes a new instance of RouterJob. </summary>
+        /// <param name="etag"> Concurrency Token. </param>
         /// <param name="id"> The id of the job. </param>
         /// <param name="channelReference"> Reference to an external parent context, eg. call ID. </param>
         /// <param name="status"> The status of the Job. </param>
@@ -68,8 +69,9 @@ namespace Azure.Communication.JobRouter
         /// SuspendMode: Used when matching workers
         /// to a job needs to be suspended.
         /// </param>
-        internal RouterJob(string id, string channelReference, RouterJobStatus? status, DateTimeOffset? enqueuedAt, string channelId, string classificationPolicyId, string queueId, int? priority, string dispositionCode, IList<RouterWorkerSelector> requestedWorkerSelectors, IReadOnlyList<RouterWorkerSelector> attachedWorkerSelectors, IDictionary<string, BinaryData> labels, IReadOnlyDictionary<string, RouterJobAssignment> assignments, IDictionary<string, BinaryData> tags, IDictionary<string, string> notes, DateTimeOffset? scheduledAt, JobMatchingMode matchingMode)
+        internal RouterJob(string etag, string id, string channelReference, RouterJobStatus? status, DateTimeOffset? enqueuedAt, string channelId, string classificationPolicyId, string queueId, int? priority, string dispositionCode, IList<RouterWorkerSelector> requestedWorkerSelectors, IReadOnlyList<RouterWorkerSelector> attachedWorkerSelectors, IDictionary<string, BinaryData> labels, IReadOnlyDictionary<string, RouterJobAssignment> assignments, IDictionary<string, BinaryData> tags, IList<RouterJobNote> notes, DateTimeOffset? scheduledAt, JobMatchingMode matchingMode)
         {
+            Etag = etag;
             Id = id;
             ChannelReference = channelReference;
             Status = status;
@@ -79,16 +81,18 @@ namespace Azure.Communication.JobRouter
             QueueId = queueId;
             Priority = priority;
             DispositionCode = dispositionCode;
-            _requestedWorkerSelectors = requestedWorkerSelectors;
+            RequestedWorkerSelectors = requestedWorkerSelectors;
             AttachedWorkerSelectors = attachedWorkerSelectors;
             _labels = labels;
             Assignments = assignments;
             _tags = tags;
-            _notes = notes;
+            Notes = notes;
             ScheduledAt = scheduledAt;
             MatchingMode = matchingMode;
         }
 
+        /// <summary> Concurrency Token. </summary>
+        public string Etag { get; }
         /// <summary> The id of the job. </summary>
         public string Id { get; }
         /// <summary> The status of the Job. </summary>
