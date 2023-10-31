@@ -377,6 +377,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             await mockProcessor.OnProcessErrorAsync(errorArgs);
             await mockProcessor.OnSessionInitializingAsync(processSessionArgs);
             await mockProcessor.OnSessionClosingAsync(processSessionArgs);
+            mockProcessor.UpdateConcurrency(1, 1);
 
             Assert.IsTrue(processMessageCalled);
             Assert.IsTrue(processErrorCalled);
@@ -444,6 +445,23 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             Assert.IsTrue(processMessageCalled);
             Assert.IsTrue(sessionOpenCalled);
             Assert.IsTrue(sessionCloseCalled);
+        }
+
+        [Test]
+        public void CanUpdateConcurrencyOnMockSessionProcessor()
+        {
+            var mockProcessor = new MockSessionProcessor();
+            mockProcessor.UpdateConcurrency(5, 2);
+            Assert.AreEqual(5, mockProcessor.MaxConcurrentSessions);
+            Assert.AreEqual(2, mockProcessor.MaxConcurrentCallsPerSession);
+        }
+
+        [Test]
+        public void CanUpdatePrefetchOnMockSessionProcessor()
+        {
+            var mockProcessor = new MockSessionProcessor();
+            mockProcessor.UpdatePrefetchCount(10);
+            Assert.AreEqual(10, mockProcessor.PrefetchCount);
         }
 
         [Test]
