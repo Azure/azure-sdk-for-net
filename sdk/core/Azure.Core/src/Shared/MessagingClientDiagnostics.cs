@@ -69,7 +69,7 @@ namespace Azure.Core.Shared
                 scope.AddAttribute(MessagingSystem, _messagingSystem);
                 if (operation != default)
                 {
-                    scope.AddAttribute(MessagingOperation, operation);
+                    scope.AddAttribute(MessagingOperation, operation, operation => operation.ToString());
                 }
 
                 scope.AddAttribute(ServerAddress, _fullyQualifiedNamespace);

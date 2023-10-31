@@ -23,7 +23,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         /// <summary>
         ///   The activity name associated with events.
         /// </summary>
-        public static string MessageActivityName { get; } = "Message";
+        public static string MessageActivityName { get; } = "ServiceBusMessage.Create";
 
         /// <summary>
         ///   The activity name associated with the send operation.

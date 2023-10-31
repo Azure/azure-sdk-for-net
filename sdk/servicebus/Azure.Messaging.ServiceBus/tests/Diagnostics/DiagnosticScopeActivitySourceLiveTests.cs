@@ -361,7 +361,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 messageActivities.Add(messageActivity);
                 CollectionAssert.Contains(messageActivity.Tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.DestinationName, sender.EntityPath));
                 AssertCommonTags(messageActivity, sender.EntityPath, sender.FullyQualifiedNamespace, default, 1);
-                Assert.AreEqual(DiagnosticProperty.DiagnosticNamespace + ".Message", messageActivity.Source.Name);
+                Assert.AreEqual(DiagnosticProperty.DiagnosticNamespace + ".ServiceBusMessage", messageActivity.Source.Name);
             }
 
             var sendActivity = listener.AssertAndRemoveActivity(DiagnosticProperty.SendActivityName);

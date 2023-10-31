@@ -38,7 +38,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         ///   TODO (limolkova): check it does not break appinsights SDK/visualizations
         /// </summary>
         ///
-        public static string EventActivityName { get; } = "Message";
+        public static string EventActivityName { get; } = "EventHubMessage.Create";
 
         /// <summary>
         ///   The activity name associated with Event Hub producers.
