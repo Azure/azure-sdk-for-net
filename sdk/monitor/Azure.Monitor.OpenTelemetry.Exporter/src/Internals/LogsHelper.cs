@@ -41,7 +41,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     }
                     catch (Exception ex)
                     {
-                        AzureMonitorExporterEventSource.Log.FailedToConvertScopeItem(scopeItem.Key, ex);
+                        AzureMonitorExporterEventSource.Log.FailedToAddScopeItem(scopeItem.Key, ex);
                     }
                 }
             }
@@ -117,7 +117,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     }
                     catch (Exception ex)
                     {
-                        AzureMonitorExporterEventSource.Log.FailedToConvertLogAttribute(item.Key, ex);
+                        AzureMonitorExporterEventSource.Log.FailedToAddLogAttribute(item.Key, ex);
                     }
                 }
             }
