@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of ResourcePoolResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ResourcePoolResources and their operations over a ResourcePoolResource. </returns>
-        public virtual ResourcePoolCollection GetResourcePools()
+        /// <summary> Gets a collection of VMwareResourcePoolResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of VMwareResourcePoolResources and their operations over a VMwareResourcePoolResource. </returns>
+        public virtual VMwareResourcePoolCollection GetVMwareResourcePools()
         {
-            return GetCachedClient(Client => new ResourcePoolCollection(Client, Id));
+            return GetCachedClient(Client => new VMwareResourcePoolCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of VMwareClusterResources in the ResourceGroupResource. </summary>
@@ -59,32 +59,25 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             return GetCachedClient(Client => new VMwareDatastoreCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of VCenterResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of VCenterResources and their operations over a VCenterResource. </returns>
-        public virtual VCenterCollection GetVCenters()
+        /// <summary> Gets a collection of VMwareVCenterResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of VMwareVCenterResources and their operations over a VMwareVCenterResource. </returns>
+        public virtual VMwareVCenterCollection GetVMwareVCenters()
         {
-            return GetCachedClient(Client => new VCenterCollection(Client, Id));
+            return GetCachedClient(Client => new VMwareVCenterCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of VirtualMachineResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of VirtualMachineResources and their operations over a VirtualMachineResource. </returns>
-        public virtual VirtualMachineCollection GetVirtualMachines()
+        /// <summary> Gets a collection of VMwareVmTemplateResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of VMwareVmTemplateResources and their operations over a VMwareVmTemplateResource. </returns>
+        public virtual VMwareVmTemplateCollection GetVMwareVmTemplates()
         {
-            return GetCachedClient(Client => new VirtualMachineCollection(Client, Id));
+            return GetCachedClient(Client => new VMwareVmTemplateCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of VirtualMachineTemplateResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of VirtualMachineTemplateResources and their operations over a VirtualMachineTemplateResource. </returns>
-        public virtual VirtualMachineTemplateCollection GetVirtualMachineTemplates()
+        /// <summary> Gets a collection of VMwareVirtualNetworkResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of VMwareVirtualNetworkResources and their operations over a VMwareVirtualNetworkResource. </returns>
+        public virtual VMwareVirtualNetworkCollection GetVMwareVirtualNetworks()
         {
-            return GetCachedClient(Client => new VirtualMachineTemplateCollection(Client, Id));
-        }
-
-        /// <summary> Gets a collection of VirtualNetworkResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of VirtualNetworkResources and their operations over a VirtualNetworkResource. </returns>
-        public virtual VirtualNetworkCollection GetVirtualNetworks()
-        {
-            return GetCachedClient(Client => new VirtualNetworkCollection(Client, Id));
+            return GetCachedClient(Client => new VMwareVirtualNetworkCollection(Client, Id));
         }
     }
 }

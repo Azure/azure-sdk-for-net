@@ -21,10 +21,8 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.Helpers
         protected ArmClient Client { get; private set; }
         protected SubscriptionResource DefaultSubscription { get; private set; }
         public const string EXTENDED_LOCATION_TYPE = "CustomLocation";
-        public const string CustomLocationId  = "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/service-sdk-test/providers/Microsoft.ExtendedLocation/customLocations/service-sdk-test-cl";
-        public const string VcenterId = "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/service-sdk-test/providers/Microsoft.ConnectedVMwarevSphere/VCenters/service-sdk-test-vcenter";
-        public string _resourcePoolId = "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/service-sdk-test/providers/Microsoft.ConnectedVMwarevSphere/resourcePools/azcli-test-resource-pool";
-        public string _vmTemplateId = "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/service-sdk-test/providers/Microsoft.ConnectedVMwarevSphere/virtualMachineTemplates/azcli-test-vm-template";
+        public const string CustomLocationId  = "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/azcli-test-rg/providers/Microsoft.ExtendedLocation/customLocations/azcli-test-cl";
+        public const string VcenterId = "/subscriptions/204898ee-cd13-4332-b9d4-55ca5c25496d/resourceGroups/azcli-test-rg/providers/Microsoft.ConnectedVMwarevSphere/VCenters/azcli-test-vc";
 
         public static Dictionary<string, string> DefaultTags = new Dictionary<string, string>
         {
@@ -49,7 +47,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.Helpers
 
         protected async Task<ResourceGroupResource> CreateResourceGroupAsync()
         {
-            var resourceGroupName = Recording.GenerateAssetName("testConnectedVMwareRG-");
+            var resourceGroupName = Recording.GenerateAssetName("azcli-test-rg");
             var rgOp = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 resourceGroupName,
