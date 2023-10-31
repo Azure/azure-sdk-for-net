@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 - Updated tracing attributes names to conform to OpenTelemetry semantic conventions version to 1.23.0.
+- Suppress client activity created by Azure client if it happens in scope of another activity created by Azure client.
 
 ### Bugs Fixed
 

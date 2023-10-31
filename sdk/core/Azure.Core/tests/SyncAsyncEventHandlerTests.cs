@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -289,7 +290,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public async Task Raise_DistributedTracing_AddsEventSpan()
+        public async Task Raise_DistributedTracing_SuppressesNestedSpan()
         {
             using ClientDiagnosticListener diagnosticListener =
                 new ClientDiagnosticListener(
@@ -302,7 +303,9 @@ namespace Azure.Core.Tests
                     ClientDiagnosticListener.ProducedDiagnosticScope scope =
                         diagnosticListener.Scopes.FirstOrDefault(
                             s => s.Name == $"{nameof(TestClient)}.{nameof(TestClient.Working)}");
-                    Assert.IsNotNull(scope);
+
+                    Assert.AreEqual($"{nameof(TestClient)}.{nameof(TestClient.DoWork)}", Activity.Current.OperationName);
+                    Assert.IsNull(scope);
                     return Task.CompletedTask;
                 };
             await client.DoWorkAsync();
