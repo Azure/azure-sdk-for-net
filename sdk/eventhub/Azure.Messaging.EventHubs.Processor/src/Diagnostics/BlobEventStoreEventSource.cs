@@ -252,20 +252,22 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
         /// <param name="clientIdentifier">The unique identifier of the client that authored this checkpoint.</param>
         /// <param name="sequenceNumber">The sequence number associated with this checkpoint.</param>
+        /// <param name="replicationSegment">The replication segment associated with this checkpoint.</param>
         /// <param name="offset">The offset associated with this checkpoint.</param>
         ///
-        [Event(32, Level = EventLevel.Verbose, Message = "Starting to create/update a checkpoint for partition: `{0}` of FullyQualifiedNamespace: '{1}'; EventHubName: '{2}'; ConsumerGroup: '{3}'; ClientIdentifier: '{4}'; at SequenceNumber: '{5}' Offset: '{6}'.")]
+        [Event(32, Level = EventLevel.Verbose, Message = "Starting to create/update a checkpoint for partition: `{0}` of FullyQualifiedNamespace: '{1}'; EventHubName: '{2}'; ConsumerGroup: '{3}'; ClientIdentifier: '{4}'; at SequenceNumber: '{5}' ReplicationSegment: '{6}' Offset: '{7}'.")]
         public virtual void UpdateCheckpointStart(string partitionId,
                                                   string fullyQualifiedNamespace,
                                                   string eventHubName,
                                                   string consumerGroup,
                                                   string clientIdentifier,
                                                   long sequenceNumber,
+                                                  long replicationSegment,
                                                   long offset)
         {
             if (IsEnabled())
             {
-                WriteEvent(32, partitionId ?? string.Empty, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, clientIdentifier ?? string.Empty, sequenceNumber, offset);
+                WriteEvent(32, partitionId ?? string.Empty, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, clientIdentifier ?? string.Empty, sequenceNumber, replicationSegment, offset);
             }
         }
 
@@ -279,20 +281,22 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
         /// <param name="clientIdentifier">The unique identifier of the client that authored this checkpoint.</param>
         /// <param name="sequenceNumber">The sequence number associated with this checkpoint.</param>
+        /// <param name="replicationSegment">The replication segment associated with this checkpoint.</param>
         /// <param name="offset">The offset associated with this checkpoint.</param>
         ///
-        [Event(33, Level = EventLevel.Verbose, Message = "Completed the attempt to create/update a checkpoint for partition: `{0}` of FullyQualifiedNamespace: '{1}'; EventHubName: '{2}'; ConsumerGroup: '{3}'; ClientIdentifier: `{4}`; at SequenceNumber: `{5}` Offset: `{6}`.")]
+        [Event(33, Level = EventLevel.Verbose, Message = "Completed the attempt to create/update a checkpoint for partition: `{0}` of FullyQualifiedNamespace: '{1}'; EventHubName: '{2}'; ConsumerGroup: '{3}'; ClientIdentifier: '{4}'; at SequenceNumber: '{5}' ReplicationSegment: '{6}' Offset: '{7}'.")]
         public virtual void UpdateCheckpointComplete(string partitionId,
                                                      string fullyQualifiedNamespace,
                                                      string eventHubName,
                                                      string consumerGroup,
                                                      string clientIdentifier,
                                                      long sequenceNumber,
+                                                     long replicationSegment,
                                                      long offset)
         {
             if (IsEnabled())
             {
-                WriteEvent(33, partitionId ?? string.Empty, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, clientIdentifier ?? string.Empty, sequenceNumber, offset);
+                WriteEvent(33, partitionId ?? string.Empty, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, clientIdentifier ?? string.Empty, sequenceNumber, replicationSegment, offset);
             }
         }
 
@@ -306,22 +310,24 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
         /// <param name="clientIdentifier">The unique identifier of the processor that authored this checkpoint.</param>
         /// <param name="sequenceNumber">The sequence number associated with this checkpoint.</param>
+        /// <param name="replicationSegment">The replication segment associated with this checkpoint.</param>
         /// <param name="offset">The offset associated with this checkpoint.</param>
         /// <param name="errorMessage">The message for the exception that occurred.</param>
         ///
-        [Event(34, Level = EventLevel.Error, Message = "An exception occurred when creating/updating a checkpoint for  partition: `{0}` of FullyQualifiedNamespace: '{1}'; EventHubName: '{2}'; ConsumerGroup: '{3}'; ClientIdentifier: `{5}`; at CheckpointPosition: `{6}`.  ErrorMessage: '{4}'.")]
+        [Event(34, Level = EventLevel.Error, Message = "An exception occurred when creating/updating a checkpoint for  partition: `{0}` of FullyQualifiedNamespace: '{1}'; EventHubName: '{2}'; ConsumerGroup: '{3}'; ClientIdentifier: '{5}'; at SequenceNumber: '{6}' ReplicationSegment '{7}' Offset '{8}'.  ErrorMessage: '{4}'.")]
         public virtual void UpdateCheckpointError(string partitionId,
                                                   string fullyQualifiedNamespace,
                                                   string eventHubName,
                                                   string consumerGroup,
                                                   string clientIdentifier,
                                                   long sequenceNumber,
+                                                  long replicationSegment,
                                                   long offset,
                                                   string errorMessage)
         {
             if (IsEnabled())
             {
-                WriteEvent(34, partitionId ?? string.Empty, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, errorMessage ?? string.Empty, clientIdentifier ?? string.Empty, sequenceNumber, offset);
+                WriteEvent(34, partitionId ?? string.Empty, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, errorMessage ?? string.Empty, clientIdentifier ?? string.Empty, sequenceNumber, replicationSegment, offset);
             }
         }
 
@@ -601,7 +607,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         }
 
         /// <summary>
-        ///   Writes an event with 5 string arguments and a value type argument into a stack allocated
+        ///   Writes an event with five string arguments and a value type argument into a stack allocated
         ///   <see cref="EventSource.EventData"/> struct to avoid the parameter array allocation on the WriteEvent methods.
         /// </summary>
         ///
@@ -655,7 +661,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         }
 
         /// <summary>
-        ///   Writes an event with 5 string arguments and two value type arguments into a stack allocated
+        ///   Writes an event with five string arguments and three value type arguments into a stack allocated
         ///   <see cref="EventSource.EventData"/> struct to avoid the parameter array allocation on the WriteEvent methods.
         /// </summary>
         ///
@@ -667,17 +673,19 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="arg5">The fifth argument.</param>
         /// <param name="arg6">The sixth argument.</param>
         /// <param name="arg7">The seventh argument.</param>
+        /// <param name="arg8">The eighth argument.</param>
         ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private unsafe void WriteEvent<TValue1, TValue2>(int eventId,
-                                                         string arg1,
-                                                         string arg2,
-                                                         string arg3,
-                                                         string arg4,
-                                                         string arg5,
-                                                         TValue1 arg6,
-                                                         TValue2 arg7)
+        private unsafe void WriteEvent<TValue1, TValue2, TValue3>(int eventId,
+                                                                  string arg1,
+                                                                  string arg2,
+                                                                  string arg3,
+                                                                  string arg4,
+                                                                  string arg5,
+                                                                  TValue1 arg6,
+                                                                  TValue2 arg7,
+                                                                  TValue3 arg8)
             where TValue1 : struct
         {
             fixed (char* arg1Ptr = arg1)
@@ -686,7 +694,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
             fixed (char* arg4Ptr = arg4)
             fixed (char* arg5Ptr = arg5)
             {
-                var eventPayload = stackalloc EventData[7];
+                var eventPayload = stackalloc EventData[8];
 
                 eventPayload[0].Size = (arg1.Length + 1) * sizeof(char);
                 eventPayload[0].DataPointer = (IntPtr)arg1Ptr;
@@ -709,12 +717,15 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
                 eventPayload[7].Size = Unsafe.SizeOf<TValue2>();
                 eventPayload[7].DataPointer = (IntPtr)Unsafe.AsPointer(ref arg7);
 
-                WriteEventCore(eventId, 7, eventPayload);
+                eventPayload[8].Size = Unsafe.SizeOf<TValue3>();
+                eventPayload[8].DataPointer = (IntPtr)Unsafe.AsPointer(ref arg8);
+
+                WriteEventCore(eventId, 8, eventPayload);
             }
         }
 
         /// <summary>
-        ///   Writes an event with 6 string arguments and two value type arguments into a stack allocated
+        ///   Writes an event with six string arguments and three value type arguments into a stack allocated
         ///   <see cref="EventSource.EventData"/> struct to avoid the parameter array allocation on the WriteEvent methods.
         /// </summary>
         ///
@@ -727,18 +738,20 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="arg6">The sixth argument.</param>
         /// <param name="arg7">The seventh argument.</param>
         /// <param name="arg8">The eighth argument.</param>
+        /// <param name="arg9">The ninth argument.</param>
         ///
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private unsafe void WriteEvent<TValue1, TValue2>(int eventId,
-                                                         string arg1,
-                                                         string arg2,
-                                                         string arg3,
-                                                         string arg4,
-                                                         string arg5,
-                                                         string arg6,
-                                                         TValue1 arg7,
-                                                         TValue2 arg8)
+        private unsafe void WriteEvent<TValue1, TValue2, TValue3>(int eventId,
+                                                                  string arg1,
+                                                                  string arg2,
+                                                                  string arg3,
+                                                                  string arg4,
+                                                                  string arg5,
+                                                                  string arg6,
+                                                                  TValue1 arg7,
+                                                                  TValue2 arg8,
+                                                                  TValue3 arg9)
             where TValue1 : struct
         {
             fixed (char* arg1Ptr = arg1)
@@ -748,7 +761,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
             fixed (char* arg5Ptr = arg5)
             fixed (char* arg6Ptr = arg6)
             {
-                var eventPayload = stackalloc EventData[8];
+                var eventPayload = stackalloc EventData[9];
 
                 eventPayload[0].Size = (arg1.Length + 1) * sizeof(char);
                 eventPayload[0].DataPointer = (IntPtr)arg1Ptr;
@@ -774,7 +787,10 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
                 eventPayload[7].Size = Unsafe.SizeOf<TValue2>();
                 eventPayload[7].DataPointer = (IntPtr)Unsafe.AsPointer(ref arg8);
 
-                WriteEventCore(eventId, 8, eventPayload);
+                eventPayload[8].Size = Unsafe.SizeOf<TValue3>();
+                eventPayload[8].DataPointer = (IntPtr)Unsafe.AsPointer(ref arg9);
+
+                WriteEventCore(eventId, 9, eventPayload);
             }
         }
     }

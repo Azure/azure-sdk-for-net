@@ -375,7 +375,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                          CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            UpdateCheckpointStart(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, checkpointStartingPosition.SequenceNumber, checkpointStartingPosition.Offset ?? long.MinValue);
+            UpdateCheckpointStart(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, checkpointStartingPosition.SequenceNumber, -1, checkpointStartingPosition.Offset ?? long.MinValue);
 
             var blobName = string.Format(CultureInfo.InvariantCulture, CheckpointPrefix + partitionId, fullyQualifiedNamespace.ToLowerInvariant(), eventHubName.ToLowerInvariant(), consumerGroup.ToLowerInvariant());
             var blobClient = ContainerClient.GetBlobClient(blobName);
@@ -405,17 +405,17 @@ namespace Azure.Messaging.EventHubs.Primitives
             }
             catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerNotFound)
             {
-                UpdateCheckpointError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, checkpointStartingPosition.SequenceNumber, checkpointStartingPosition.Offset ?? long.MinValue, ex);
+                UpdateCheckpointError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, checkpointStartingPosition.SequenceNumber, -1, checkpointStartingPosition.Offset ?? long.MinValue, ex);
                 throw new RequestFailedException(BlobsResourceDoesNotExist, ex);
             }
             catch (Exception ex)
             {
-                UpdateCheckpointError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, checkpointStartingPosition.SequenceNumber, checkpointStartingPosition.Offset ?? long.MinValue, ex);
+                UpdateCheckpointError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, checkpointStartingPosition.SequenceNumber, -1, checkpointStartingPosition.Offset ?? long.MinValue, ex);
                 throw;
             }
             finally
             {
-                UpdateCheckpointComplete(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, checkpointStartingPosition.SequenceNumber, checkpointStartingPosition.Offset ?? long.MinValue);
+                UpdateCheckpointComplete(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, checkpointStartingPosition.SequenceNumber, -1, checkpointStartingPosition.Offset ?? long.MinValue);
             }
         }
 
@@ -749,6 +749,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
         /// <param name="clientIdentifier">The unique identifier of the client that authored the checkpoint.</param>
         /// <param name="sequenceNumber">The sequence number associated with the checkpoint.</param>
+        /// <param name="replicationSegment">The replication segment associated with the checkpoint.</param>
         /// <param name="offset">The offset associated with the checkpoint.</param>
         /// <param name="exception">The message for the exception that occurred.</param>
         ///
@@ -758,6 +759,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                            string consumerGroup,
                                            string clientIdentifier,
                                            long sequenceNumber,
+                                           long replicationSegment,
                                            long offset,
                                            Exception exception);
 
@@ -771,6 +773,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
         /// <param name="clientIdentifier">The unique identifier of the client that authored the checkpoint.</param>
         /// <param name="sequenceNumber">The sequence number associated with the checkpoint.</param>
+        /// <param name="replicationSegment">The replication segment associated with the checkpoint.</param>
         /// <param name="offset">The offset associated with the checkpoint.</param>
         ///
         partial void UpdateCheckpointComplete(string partitionId,
@@ -779,6 +782,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                               string consumerGroup,
                                               string clientIdentifier,
                                               long sequenceNumber,
+                                              long replicationSegment,
                                               long offset);
 
         /// <summary>
@@ -791,6 +795,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
         /// <param name="clientIdentifier">The unique identifier of the client that authored this checkpoint.</param>
         /// <param name="sequenceNumber">The sequence number associated with the checkpoint.</param>
+        /// <param name="replicationSegment">The replication segment associated with the checkpoint.</param>
         /// <param name="offset">The offset associated with the checkpoint.</param>
         ///
         partial void UpdateCheckpointStart(string partitionId,
@@ -799,6 +804,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                            string consumerGroup,
                                            string clientIdentifier,
                                            long sequenceNumber,
+                                           long replicationSegment,
                                            long offset);
 
         /// <summary>

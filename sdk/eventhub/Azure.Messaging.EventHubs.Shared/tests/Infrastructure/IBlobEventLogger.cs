@@ -116,6 +116,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
         /// <param name="clientIdentifier">The unique identifier of the client that authored this checkpoint.</param>
         /// <param name="sequenceNumber">The sequence number associated with this checkpoint.</param>
+        /// <param name="replicationSegment">The replication segment associated with this checkpoint.</param>
         /// <param name="offset">The offset associated with this checkpoint.</param>
         /// <param name="exception">The exception that occurred.</param>
         ///
@@ -125,6 +126,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                    string consumerGroup,
                                    string clientIdentifier,
                                    long sequenceNumber,
+                                   long replicationSegment,
                                    long offset,
                                    string exception);
 
@@ -138,6 +140,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
         /// <param name="clientIdentifier">The unique identifier of the client that authored this checkpoint.</param>
         /// <param name="sequenceNumber">The sequence number associated with this checkpoint.</param>
+        /// <param name="replicationSegment">The replication segment associated with this checkpoint.</param>
         /// <param name="offset">The offset associated with this checkpoint.</param>
         ///
         void UpdateCheckpointComplete(string partitionId,
@@ -146,6 +149,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                       string consumerGroup,
                                       string clientIdentifier,
                                       long sequenceNumber,
+                                      long replicationSegment,
                                       long offset);
 
         /// <summary>
@@ -158,6 +162,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
         /// <param name="clientIdentifier">The unique identifier of the client that authored this checkpoint.</param>
         /// <param name="sequenceNumber">The sequence number associated with this checkpoint.</param>
+        /// <param name="replicationSegment">The replication segment associated with this checkpoint.</param>
         /// <param name="offset">The offset associated with this checkpoint.</param>
         ///
         void UpdateCheckpointStart(string partitionId,
@@ -166,6 +171,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                    string consumerGroup,
                                    string clientIdentifier,
                                    long sequenceNumber,
+                                   long replicationSegment,
                                    long offset);
 
         /// <summary>

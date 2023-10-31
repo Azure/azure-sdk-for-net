@@ -2164,7 +2164,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         {
             if (IsEnabled())
             {
-                var selectionBasedOn = checkpointUsed ? $"checkpoint made at {lastModified} by client author with unique identifier: {authorIdentifier}" : "default";
+                var selectionBasedOn = checkpointUsed ? $"checkpoint made at { lastModified } by client author with unique identifier: { authorIdentifier }" : "default";
                 WriteEvent(105, partitionId ?? string.Empty, identifier ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, startingPosition ?? string.Empty, selectionBasedOn);
             }
         }
