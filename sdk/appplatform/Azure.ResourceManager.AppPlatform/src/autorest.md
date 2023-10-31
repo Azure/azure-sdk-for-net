@@ -111,16 +111,13 @@ rename-mapping:
   BuildServiceAgentPoolResourceCollection: BuildServiceAgentPoolResourceList
   ConfigurationServiceResourceCollection: ConfigurationServiceResourceList
   ServiceRegistryResourceCollection: ServiceRegistryResourceList
-  LoadedCertificateCollection: LoadedCertificateList
   AppResourceCollection: AppResourceList
   ActiveDeploymentCollection: ActiveAppPlatformDeploymentsContent
   BindingResourceCollection: BindingResourceList
   CertificateResourceCollection: CertificateResourceList
   StorageResourceCollection: StorageResourceList
-  CustomPersistentDiskCollection: CustomPersistentDiskList
   CustomDomainResourceCollection: CustomDomainResourceList
   DeploymentResourceCollection: DeploymentResourceList
-  AvailableOperations: AvailableOperationsInfo
   ResourceSkuCollection: ResourceSkuList
   BuildpackBindingResourceCollection: BuildpackBindingResourceList
   GatewayResourceCollection: GatewayResourceList

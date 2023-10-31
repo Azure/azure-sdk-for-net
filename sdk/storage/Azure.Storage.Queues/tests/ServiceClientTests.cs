@@ -149,7 +149,7 @@ namespace Azure.Storage.Queues.Test
             QueueUriBuilder uriBuilder = new QueueUriBuilder(new Uri(Tenants.TestConfigOAuth.QueueServiceEndpoint));
 
             // Act - Create new Queue client with the OAuth Credential and Audience
-            QueueClientOptions options = GetOptionsWithAudience(QueueAudience.GetQueueServiceAccountAudience(uriBuilder.AccountName));
+            QueueClientOptions options = GetOptionsWithAudience(QueueAudience.CreateQueueServiceAccountAudience(uriBuilder.AccountName));
 
             QueueServiceClient aadService = InstrumentClient(new QueueServiceClient(
                 new Uri(Tenants.TestConfigOAuth.QueueServiceEndpoint),

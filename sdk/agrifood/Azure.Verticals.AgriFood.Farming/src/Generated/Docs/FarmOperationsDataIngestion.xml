@@ -94,7 +94,7 @@ This sample shows how to call CreateJobAsync and parse the result.
 TokenCredential credential = new DefaultAzureCredential();
 FarmOperationsDataIngestion client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     partyId = "<partyId>",
     authProviderId = "<authProviderId>",
@@ -113,11 +113,11 @@ This sample shows how to call CreateJobAsync with all parameters and request con
 TokenCredential credential = new DefaultAzureCredential();
 FarmOperationsDataIngestion client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     partyId = "<partyId>",
     authProviderId = "<authProviderId>",
-    operations = new List<object>()
+    operations = new object[]
     {
         "<operations>"
     },
@@ -162,7 +162,7 @@ This sample shows how to call CreateJob and parse the result.
 TokenCredential credential = new DefaultAzureCredential();
 FarmOperationsDataIngestion client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     partyId = "<partyId>",
     authProviderId = "<authProviderId>",
@@ -181,11 +181,11 @@ This sample shows how to call CreateJob with all parameters and request content 
 TokenCredential credential = new DefaultAzureCredential();
 FarmOperationsDataIngestion client = new FarmBeatsClient(credential).GetFarmOperationsDataIngestionClient(apiVersion: "2022-11-01-preview");
 
-RequestContent content = RequestContent.Create(new
+using RequestContent content = RequestContent.Create(new
 {
     partyId = "<partyId>",
     authProviderId = "<authProviderId>",
-    operations = new List<object>()
+    operations = new object[]
     {
         "<operations>"
     },

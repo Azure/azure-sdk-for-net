@@ -86,7 +86,10 @@ namespace Azure.ResourceManager.MobileNetwork
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(InteropSettings);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(InteropSettings.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(InteropSettings))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();

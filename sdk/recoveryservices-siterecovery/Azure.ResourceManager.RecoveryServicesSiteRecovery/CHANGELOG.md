@@ -1,11 +1,21 @@
 # Release History
 
+## 1.2.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.1.0 (2023-09-25)
 
 ### Features Added
 
 - Upgraded api-version tag from 'package-2023-04' to 'package-2023-06'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/5dd1107d5f2be8d600325d795450e1d854fbe7e8/specification/recoveryservicessiterecovery/resource-manager/readme.md
-- Changes Related to Integration of In place OS upgrade [Upgrade Windows Guideline](https://learn.microsoft.com/en-us/azure/migrate/how-to-upgrade-windows).
+- Changes Related to Integration of In place OS upgrade [Upgrade Windows Guideline](https://learn.microsoft.com/azure/migrate/how-to-upgrade-windows).
 - Changes Releated to Implementing Monitoring Flow.
 
 ### Other Changes

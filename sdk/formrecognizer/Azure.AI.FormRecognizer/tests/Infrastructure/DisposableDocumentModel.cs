@@ -23,19 +23,24 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         /// Initializes a new instance of the <see cref="DisposableDocumentModel"/> class.
         /// </summary>
         /// <param name="client">The client to use for deleting the model.</param>
-        /// <param name="value">The model to associate with this instance.</param>
+        /// <param name="operation">The operation that built the model this instance is associated with.</param>
         /// <param name="deleteOnDisposal">Whether the model should be deleted on disposal.</param>
-        private DisposableDocumentModel(DocumentModelAdministrationClient client, DocumentModelDetails value, bool deleteOnDisposal)
+        private DisposableDocumentModel(DocumentModelAdministrationClient client, BuildDocumentModelOperation operation, bool deleteOnDisposal)
         {
             _client = client;
             _deleteOnDisposal = deleteOnDisposal;
-            Value = value;
+            Operation = operation;
         }
+
+        /// <summary>
+        /// The operation that built the model this instance is associated with.
+        /// </summary>
+        public BuildDocumentModelOperation Operation { get; }
 
         /// <summary>
         /// The model this instance is associated with.
         /// </summary>
-        public DocumentModelDetails Value { get; }
+        public DocumentModelDetails Value => Operation.Value;
 
         /// <summary>
         /// The identifier of the model this instance is associated with.
@@ -57,7 +62,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         {
             BuildDocumentModelOperation operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, trainingFilesUri, buildMode, modelId, options: options);
 
-            return new DisposableDocumentModel(client, operation.Value, deleteOnDisposal);
+            return new DisposableDocumentModel(client, operation, deleteOnDisposal);
         }
 
         /// <summary>

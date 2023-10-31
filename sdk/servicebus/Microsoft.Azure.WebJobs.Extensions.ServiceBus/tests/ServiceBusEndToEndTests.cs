@@ -619,6 +619,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         public async Task BindToPoco()
         {
             var host = BuildHost<ServiceBusArgumentBindingJob>();
+            var provider = host.Services.GetService<MessagingProvider>();
+
             using (host)
             {
                 await WriteQueueMessage("{ Name: 'foo', Value: 'bar' }");
@@ -630,6 +632,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.Contains("PocoValues(foo,bar)", logs);
                 await host.StopAsync();
             }
+            Assert.AreEqual(0, provider.ClientCache.Count);
+            Assert.AreEqual(0, provider.MessageReceiverCache.Count);
+            Assert.AreEqual(0, provider.MessageSenderCache.Count);
+            Assert.AreEqual(0, provider.ActionsCache.Count);
         }
 
         [Test]
@@ -974,9 +980,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             IEnumerable<LogMessage> logMessages = host.GetTestLoggerProvider().GetAllLogMessages();
 
-            // Filter out Azure SDK and custom processor logs for easier validation.
+            // Filter out Azure SDK, hosting lifetime, and custom processor logs for easier validation.
             logMessages = logMessages.Where(
                 m => !m.Category.StartsWith("Azure.", StringComparison.InvariantCulture) &&
+                     !m.Category.StartsWith("Microsoft.Hosting.Lifetime") &&
                      m.Category != CustomMessagingProvider.CustomMessagingCategory);
 
             string[] consoleOutputLines = logMessages

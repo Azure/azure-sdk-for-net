@@ -16,6 +16,42 @@ namespace Azure.ResourceManager.MachineLearning.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(AssetName))
+            {
+                if (AssetName != null)
+                {
+                    writer.WritePropertyName("assetName"u8);
+                    writer.WriteStringValue(AssetName);
+                }
+                else
+                {
+                    writer.WriteNull("assetName");
+                }
+            }
+            if (Optional.IsDefined(AssetVersion))
+            {
+                if (AssetVersion != null)
+                {
+                    writer.WritePropertyName("assetVersion"u8);
+                    writer.WriteStringValue(AssetVersion);
+                }
+                else
+                {
+                    writer.WriteNull("assetVersion");
+                }
+            }
+            if (Optional.IsDefined(AutoDeleteSetting))
+            {
+                if (AutoDeleteSetting != null)
+                {
+                    writer.WritePropertyName("autoDeleteSetting"u8);
+                    writer.WriteObjectValue(AutoDeleteSetting);
+                }
+                else
+                {
+                    writer.WriteNull("autoDeleteSetting");
+                }
+            }
             if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
@@ -56,12 +92,45 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
+            Optional<string> assetName = default;
+            Optional<string> assetVersion = default;
+            Optional<AutoDeleteSetting> autoDeleteSetting = default;
             Optional<MachineLearningOutputDeliveryMode> mode = default;
             Optional<Uri> uri = default;
             Optional<string> description = default;
             JobOutputType jobOutputType = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("assetName"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        assetName = null;
+                        continue;
+                    }
+                    assetName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("assetVersion"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        assetVersion = null;
+                        continue;
+                    }
+                    assetVersion = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("autoDeleteSetting"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        autoDeleteSetting = null;
+                        continue;
+                    }
+                    autoDeleteSetting = AutoDeleteSetting.DeserializeAutoDeleteSetting(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("mode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -97,7 +166,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningCustomModelJobOutput(description.Value, jobOutputType, Optional.ToNullable(mode), uri.Value);
+            return new MachineLearningCustomModelJobOutput(description.Value, jobOutputType, assetName.Value, assetVersion.Value, autoDeleteSetting.Value, Optional.ToNullable(mode), uri.Value);
         }
     }
 }

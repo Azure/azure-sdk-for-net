@@ -54,6 +54,7 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
+        /// Create or update machine learning workspaces connections under the specified workspace.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -94,6 +95,7 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
+        /// Create or update machine learning workspaces connections under the specified workspace.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -134,6 +136,7 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
+        /// Lists machine learning workspaces connections by name.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -170,6 +173,7 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
+        /// Lists machine learning workspaces connections by name.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -206,6 +210,7 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
+        /// Lists all the available machine learning workspaces connections under the specified workspace.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -229,6 +234,7 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
+        /// Lists all the available machine learning workspaces connections under the specified workspace.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
