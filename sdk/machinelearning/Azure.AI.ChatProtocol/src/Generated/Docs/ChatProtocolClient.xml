@@ -101,7 +101,7 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("index").ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("message").GetProperty("content").ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("message").GetProperty("role").ToString());
-Console.WriteLine(result.GetProperty("choices")[0].GetProperty("finish_reason").ToString());
+Console.WriteLine(result.GetProperty("choices")[0].GetProperty("finishReason").ToString());
 ]]></code>
 This sample shows how to call CreateAsync with all request content and parse the result.
 <code><![CDATA[
@@ -117,11 +117,11 @@ using RequestContent content = RequestContent.Create(new
         {
             content = "<content>",
             role = "user",
-            session_state = new object(),
+            sessionState = new object(),
         }
     },
     stream = false,
-    session_state = new object(),
+    sessionState = new object(),
     context = new
     {
         key = new object(),
@@ -133,10 +133,10 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("index").ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("message").GetProperty("content").ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("message").GetProperty("role").ToString());
-Console.WriteLine(result.GetProperty("choices")[0].GetProperty("message").GetProperty("session_state").ToString());
-Console.WriteLine(result.GetProperty("choices")[0].GetProperty("session_state").ToString());
+Console.WriteLine(result.GetProperty("choices")[0].GetProperty("message").GetProperty("sessionState").ToString());
+Console.WriteLine(result.GetProperty("choices")[0].GetProperty("sessionState").ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("context").GetProperty("<key>").ToString());
-Console.WriteLine(result.GetProperty("choices")[0].GetProperty("finish_reason").ToString());
+Console.WriteLine(result.GetProperty("choices")[0].GetProperty("finishReason").ToString());
 ]]></code></example>
     </member>
     <member name="Create(RequestContent,RequestContext)">
@@ -165,7 +165,7 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("index").ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("message").GetProperty("content").ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("message").GetProperty("role").ToString());
-Console.WriteLine(result.GetProperty("choices")[0].GetProperty("finish_reason").ToString());
+Console.WriteLine(result.GetProperty("choices")[0].GetProperty("finishReason").ToString());
 ]]></code>
 This sample shows how to call Create with all request content and parse the result.
 <code><![CDATA[
@@ -181,11 +181,11 @@ using RequestContent content = RequestContent.Create(new
         {
             content = "<content>",
             role = "user",
-            session_state = new object(),
+            sessionState = new object(),
         }
     },
     stream = false,
-    session_state = new object(),
+    sessionState = new object(),
     context = new
     {
         key = new object(),
@@ -197,10 +197,10 @@ JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("index").ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("message").GetProperty("content").ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("message").GetProperty("role").ToString());
-Console.WriteLine(result.GetProperty("choices")[0].GetProperty("message").GetProperty("session_state").ToString());
-Console.WriteLine(result.GetProperty("choices")[0].GetProperty("session_state").ToString());
+Console.WriteLine(result.GetProperty("choices")[0].GetProperty("message").GetProperty("sessionState").ToString());
+Console.WriteLine(result.GetProperty("choices")[0].GetProperty("sessionState").ToString());
 Console.WriteLine(result.GetProperty("choices")[0].GetProperty("context").GetProperty("<key>").ToString());
-Console.WriteLine(result.GetProperty("choices")[0].GetProperty("finish_reason").ToString());
+Console.WriteLine(result.GetProperty("choices")[0].GetProperty("finishReason").ToString());
 ]]></code></example>
     </member>
   </members>

@@ -44,7 +44,7 @@ role = "user",
             Console.WriteLine(result.GetProperty("choices")[0].GetProperty("index").ToString());
             Console.WriteLine(result.GetProperty("choices")[0].GetProperty("message").GetProperty("content").ToString());
             Console.WriteLine(result.GetProperty("choices")[0].GetProperty("message").GetProperty("role").ToString());
-            Console.WriteLine(result.GetProperty("choices")[0].GetProperty("finish_reason").ToString());
+            Console.WriteLine(result.GetProperty("choices")[0].GetProperty("finishReason").ToString());
         }
 
         [Test]
@@ -73,7 +73,7 @@ role = "user",
             Console.WriteLine(result.GetProperty("choices")[0].GetProperty("index").ToString());
             Console.WriteLine(result.GetProperty("choices")[0].GetProperty("message").GetProperty("content").ToString());
             Console.WriteLine(result.GetProperty("choices")[0].GetProperty("message").GetProperty("role").ToString());
-            Console.WriteLine(result.GetProperty("choices")[0].GetProperty("finish_reason").ToString());
+            Console.WriteLine(result.GetProperty("choices")[0].GetProperty("finishReason").ToString());
         }
 
         [Test]
@@ -122,11 +122,11 @@ new
 {
 content = "<content>",
 role = "user",
-session_state = new object(),
+sessionState = new object(),
 }
             },
                 stream = false,
-                session_state = new object(),
+                sessionState = new object(),
                 context = new
                 {
                     key = new object(),
@@ -138,10 +138,10 @@ session_state = new object(),
             Console.WriteLine(result.GetProperty("choices")[0].GetProperty("index").ToString());
             Console.WriteLine(result.GetProperty("choices")[0].GetProperty("message").GetProperty("content").ToString());
             Console.WriteLine(result.GetProperty("choices")[0].GetProperty("message").GetProperty("role").ToString());
-            Console.WriteLine(result.GetProperty("choices")[0].GetProperty("message").GetProperty("session_state").ToString());
-            Console.WriteLine(result.GetProperty("choices")[0].GetProperty("session_state").ToString());
+            Console.WriteLine(result.GetProperty("choices")[0].GetProperty("message").GetProperty("sessionState").ToString());
+            Console.WriteLine(result.GetProperty("choices")[0].GetProperty("sessionState").ToString());
             Console.WriteLine(result.GetProperty("choices")[0].GetProperty("context").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("choices")[0].GetProperty("finish_reason").ToString());
+            Console.WriteLine(result.GetProperty("choices")[0].GetProperty("finishReason").ToString());
         }
 
         [Test]
@@ -160,11 +160,11 @@ new
 {
 content = "<content>",
 role = "user",
-session_state = new object(),
+sessionState = new object(),
 }
             },
                 stream = false,
-                session_state = new object(),
+                sessionState = new object(),
                 context = new
                 {
                     key = new object(),
@@ -176,10 +176,10 @@ session_state = new object(),
             Console.WriteLine(result.GetProperty("choices")[0].GetProperty("index").ToString());
             Console.WriteLine(result.GetProperty("choices")[0].GetProperty("message").GetProperty("content").ToString());
             Console.WriteLine(result.GetProperty("choices")[0].GetProperty("message").GetProperty("role").ToString());
-            Console.WriteLine(result.GetProperty("choices")[0].GetProperty("message").GetProperty("session_state").ToString());
-            Console.WriteLine(result.GetProperty("choices")[0].GetProperty("session_state").ToString());
+            Console.WriteLine(result.GetProperty("choices")[0].GetProperty("message").GetProperty("sessionState").ToString());
+            Console.WriteLine(result.GetProperty("choices")[0].GetProperty("sessionState").ToString());
             Console.WriteLine(result.GetProperty("choices")[0].GetProperty("context").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("choices")[0].GetProperty("finish_reason").ToString());
+            Console.WriteLine(result.GetProperty("choices")[0].GetProperty("finishReason").ToString());
         }
 
         [Test]

@@ -23,7 +23,7 @@ namespace Azure.AI.ChatProtocol
             writer.WriteStringValue(Role.ToString());
             if (Optional.IsDefined(SessionState))
             {
-                writer.WritePropertyName("session_state"u8);
+                writer.WritePropertyName("sessionState"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(SessionState);
 #else
@@ -57,7 +57,7 @@ namespace Azure.AI.ChatProtocol
                     role = new ChatRole(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("session_state"u8))
+                if (property.NameEquals("sessionState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

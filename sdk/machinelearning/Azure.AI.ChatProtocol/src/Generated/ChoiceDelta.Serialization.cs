@@ -38,7 +38,7 @@ namespace Azure.AI.ChatProtocol
                     delta = ChatMessageDelta.DeserializeChatMessageDelta(property.Value);
                     continue;
                 }
-                if (property.NameEquals("session_state"u8))
+                if (property.NameEquals("sessionState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -68,7 +68,7 @@ namespace Azure.AI.ChatProtocol
                     context = dictionary;
                     continue;
                 }
-                if (property.NameEquals("finish_reason"u8))
+                if (property.NameEquals("finishReason"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

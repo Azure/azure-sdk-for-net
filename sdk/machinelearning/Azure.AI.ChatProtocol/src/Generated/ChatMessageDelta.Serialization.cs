@@ -39,7 +39,7 @@ namespace Azure.AI.ChatProtocol
                     role = new ChatRole(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("session_state"u8))
+                if (property.NameEquals("sessionState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {

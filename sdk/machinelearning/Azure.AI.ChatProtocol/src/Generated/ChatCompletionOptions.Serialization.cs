@@ -26,7 +26,7 @@ namespace Azure.AI.ChatProtocol
             writer.WriteBooleanValue(Stream);
             if (Optional.IsDefined(SessionState))
             {
-                writer.WritePropertyName("session_state"u8);
+                writer.WritePropertyName("sessionState"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(SessionState);
 #else
