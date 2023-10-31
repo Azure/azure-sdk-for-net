@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0-beta.3 (2023-10-31)
 This release updates the Azure DevCenter library to use the 2023-04-01 GA API.
 
 ### Breaking Changes
