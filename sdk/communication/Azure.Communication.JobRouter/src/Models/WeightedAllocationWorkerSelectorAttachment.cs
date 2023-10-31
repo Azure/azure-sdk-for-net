@@ -9,7 +9,6 @@ using System.Text.Json;
 
 namespace Azure.Communication.JobRouter
 {
-    [CodeGenModel("WeightedAllocationWorkerSelectorAttachment")]
     public partial class WeightedAllocationWorkerSelectorAttachment : IUtf8JsonSerializable
     {
         /// <summary> Initializes a new instance of WeightedAllocationWorkerSelectorAttachment. </summary>

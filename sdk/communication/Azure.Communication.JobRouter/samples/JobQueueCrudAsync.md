@@ -53,7 +53,7 @@ Console.WriteLine($"Queue statistics successfully retrieved for queue: {JsonSeri
 Response<RouterQueue> updatedJobQueue = await routerAdministrationClient.UpdateQueueAsync(
     new RouterQueue(jobQueueId)
     {
-        Labels = { ["Additional-Queue-Label"] = new LabelValue("ChatQueue") }
+        Labels = { ["Additional-Queue-Label"] = new RouterValue("ChatQueue") }
     });
 ```
 

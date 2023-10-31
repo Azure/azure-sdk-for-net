@@ -16,6 +16,12 @@ namespace Azure.Communication.JobRouter
     public partial class StaticRouterRule : RouterRule
     {
         /// <summary> Initializes a new instance of StaticRouterRule. </summary>
+        internal StaticRouterRule()
+        {
+            Kind = "static-rule";
+        }
+
+        /// <summary> Initializes a new instance of StaticRouterRule. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of RouterRule. </param>
         /// <param name="value"> The static value this rule always returns. </param>
         internal StaticRouterRule(string kind, BinaryData value) : base(kind)

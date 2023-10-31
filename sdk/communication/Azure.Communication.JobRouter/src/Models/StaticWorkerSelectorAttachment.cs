@@ -7,7 +7,6 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    [CodeGenModel("StaticWorkerSelectorAttachment")]
     public partial class StaticWorkerSelectorAttachment : IUtf8JsonSerializable
     {
         /// <summary> Initializes a new instance of StaticWorkerSelectorAttachment. </summary>
