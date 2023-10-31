@@ -7,21 +7,19 @@
 
 using System.Text.Json;
 using Azure;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
-    public partial class FailedLockToken
+    public partial class BrokerProperties
     {
-        internal static FailedLockToken DeserializeFailedLockToken(JsonElement element)
+        internal static BrokerProperties DeserializeBrokerProperties(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string lockToken = default;
-            string errorCode = default;
-            string errorDescription = default;
+            int deliveryCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lockToken"u8))
@@ -29,26 +27,21 @@ namespace Azure.Messaging.EventGrid.Namespaces
                     lockToken = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("errorCode"u8))
+                if (property.NameEquals("deliveryCount"u8))
                 {
-                    errorCode = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("errorDescription"u8))
-                {
-                    errorDescription = property.Value.GetString();
+                    deliveryCount = property.Value.GetInt32();
                     continue;
                 }
             }
-            return new FailedLockToken(lockToken, errorCode, errorDescription);
+            return new BrokerProperties(lockToken, deliveryCount);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static FailedLockToken FromResponse(Response response)
+        internal static BrokerProperties FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeFailedLockToken(document.RootElement);
+            return DeserializeBrokerProperties(document.RootElement);
         }
     }
 }

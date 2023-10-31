@@ -14,20 +14,20 @@ namespace Azure.Messaging.EventGrid.Namespaces
     public partial class BrokerProperties
     {
         /// <summary> Initializes a new instance of BrokerProperties. </summary>
-        /// <param name="lockToken"> The token used to lock the event. </param>
-        /// <param name="deliveryAttemptCount"> The attempt count for deliverying the event. </param>
+        /// <param name="lockToken"> The token of the lock on the event. </param>
+        /// <param name="deliveryCount"> The attempt count for delivering the event. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="lockToken"/> is null. </exception>
-        internal BrokerProperties(string lockToken, int deliveryAttemptCount)
+        internal BrokerProperties(string lockToken, int deliveryCount)
         {
             Argument.AssertNotNull(lockToken, nameof(lockToken));
 
             LockToken = lockToken;
-            DeliveryAttemptCount = deliveryAttemptCount;
+            DeliveryCount = deliveryCount;
         }
 
-        /// <summary> The token used to lock the event. </summary>
+        /// <summary> The token of the lock on the event. </summary>
         public string LockToken { get; }
-        /// <summary> The attempt count for deliverying the event. </summary>
-        public int DeliveryAttemptCount { get; }
+        /// <summary> The attempt count for delivering the event. </summary>
+        public int DeliveryCount { get; }
     }
 }

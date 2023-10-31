@@ -8,13 +8,12 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
-    public partial class RejectResult
+    public partial class RenewCloudEventLocksResult
     {
-        internal static RejectResult DeserializeRejectResult(JsonElement element)
+        internal static RenewCloudEventLocksResult DeserializeRenewCloudEventLocksResult(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -45,15 +44,15 @@ namespace Azure.Messaging.EventGrid.Namespaces
                     continue;
                 }
             }
-            return new RejectResult(failedLockTokens, succeededLockTokens);
+            return new RenewCloudEventLocksResult(failedLockTokens, succeededLockTokens);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static RejectResult FromResponse(Response response)
+        internal static RenewCloudEventLocksResult FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeRejectResult(document.RootElement);
+            return DeserializeRenewCloudEventLocksResult(document.RootElement);
         }
     }
 }

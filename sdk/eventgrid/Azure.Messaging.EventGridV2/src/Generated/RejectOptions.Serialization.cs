@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
-    internal partial class ReleaseOptions : IUtf8JsonSerializable
+    public partial class RejectOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

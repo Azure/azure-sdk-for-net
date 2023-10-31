@@ -11,13 +11,13 @@ using Azure.Core;
 namespace Azure.Messaging.EventGrid.Namespaces
 {
     /// <summary> Receive operation details per Cloud Event. </summary>
-    public partial class ReceiveDetails
+    internal partial class ReceiveDetailsInternal
     {
-        /// <summary> Initializes a new instance of ReceiveDetails. </summary>
+        /// <summary> Initializes a new instance of ReceiveDetailsInternal. </summary>
         /// <param name="brokerProperties"> The Event Broker details. </param>
         /// <param name="event"> Cloud Event details. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="brokerProperties"/> or <paramref name="event"/> is null. </exception>
-        internal ReceiveDetails(BrokerProperties brokerProperties, CloudEvent @event)
+        internal ReceiveDetailsInternal(BrokerProperties brokerProperties, CloudEvent @event)
         {
             Argument.AssertNotNull(brokerProperties, nameof(brokerProperties));
             Argument.AssertNotNull(@event, nameof(@event));

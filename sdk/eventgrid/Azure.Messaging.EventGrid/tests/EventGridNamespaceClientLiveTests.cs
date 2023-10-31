@@ -3,9 +3,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Messaging.EventGrid.Namespaces;
+using NUnit.Framework;
 
 namespace Azure.Messaging.EventGrid.Tests
 {
@@ -109,15 +111,15 @@ namespace Azure.Messaging.EventGrid.Tests
 
             if (toRelease.Count > 0)
             {
-                ReleaseResult releaseResult = await client.ReleaseCloudEventsAsync(topicName, subscriptionName, toRelease);
+                ReleaseResult releaseResult = await client.ReleaseCloudEventsAsync(topicName, subscriptionName, new ReleaseOptions(toRelease));
 
                 // Inspect the Release result
                 Console.WriteLine($"Failed count for Release: {releaseResult.FailedLockTokens.Count}");
                 foreach (FailedLockToken failedLockToken in releaseResult.FailedLockTokens)
                 {
                     Console.WriteLine($"Lock Token: {failedLockToken.LockToken}");
-                    Console.WriteLine($"Error Code: {failedLockToken.ErrorCode}");
-                    Console.WriteLine($"Error Description: {failedLockToken.ErrorDescription}");
+                    Console.WriteLine($"Error Code: {failedLockToken.Error.Code}");
+                    Console.WriteLine($"Error Description: {failedLockToken.Error.Message}");
                 }
 
                 Console.WriteLine($"Success count for Release: {releaseResult.SucceededLockTokens.Count}");
@@ -129,15 +131,15 @@ namespace Azure.Messaging.EventGrid.Tests
 
             if (toAcknowledge.Count > 0)
             {
-                AcknowledgeResult acknowledgeResult = await client.AcknowledgeCloudEventsAsync(topicName, subscriptionName, toAcknowledge);
+                AcknowledgeResult acknowledgeResult = await client.AcknowledgeCloudEventsAsync(topicName, subscriptionName, new AcknowledgeOptions(toAcknowledge));
 
                 // Inspect the Acknowledge result
                 Console.WriteLine($"Failed count for Acknowledge: {acknowledgeResult.FailedLockTokens.Count}");
                 foreach (FailedLockToken failedLockToken in acknowledgeResult.FailedLockTokens)
                 {
                     Console.WriteLine($"Lock Token: {failedLockToken.LockToken}");
-                    Console.WriteLine($"Error Code: {failedLockToken.ErrorCode}");
-                    Console.WriteLine($"Error Description: {failedLockToken.ErrorDescription}");
+                    Console.WriteLine($"Error Code: {failedLockToken.Error.Code}");
+                    Console.WriteLine($"Error Description: {failedLockToken.Error.Message}");
                 }
 
                 Console.WriteLine($"Success count for Acknowledge: {acknowledgeResult.SucceededLockTokens.Count}");
@@ -149,15 +151,15 @@ namespace Azure.Messaging.EventGrid.Tests
 
             if (toReject.Count > 0)
             {
-                RejectResult rejectResult = await client.RejectCloudEventsAsync(topicName, subscriptionName, toReject);
+                RejectResult rejectResult = await client.RejectCloudEventsAsync(topicName, subscriptionName, new RejectOptions(toReject));
 
                 // Inspect the Reject result
                 Console.WriteLine($"Failed count for Reject: {rejectResult.FailedLockTokens.Count}");
                 foreach (FailedLockToken failedLockToken in rejectResult.FailedLockTokens)
                 {
                     Console.WriteLine($"Lock Token: {failedLockToken.LockToken}");
-                    Console.WriteLine($"Error Code: {failedLockToken.ErrorCode}");
-                    Console.WriteLine($"Error Description: {failedLockToken.ErrorDescription}");
+                    Console.WriteLine($"Error Code: {failedLockToken.Error.Code}");
+                    Console.WriteLine($"Error Description: {failedLockToken.Error.Message}");
                 }
 
                 Console.WriteLine($"Success count for Reject: {rejectResult.SucceededLockTokens.Count}");
@@ -167,6 +169,30 @@ namespace Azure.Messaging.EventGrid.Tests
                 }
             }
             #endregion
+        }
+
+        [RecordedTest]
+        public async Task RenewLocks()
+        {
+            var namespaceTopicHost = TestEnvironment.NamespaceTopicHost;
+            var namespaceKey = TestEnvironment.NamespaceKey;
+            var topicName = TestEnvironment.NamespaceTopicName;
+            var subscriptionName = TestEnvironment.NamespaceSubscriptionName;
+
+            var client = InstrumentClient(new EventGridClient(new Uri(namespaceTopicHost),
+                new AzureKeyCredential(namespaceKey), InstrumentClientOptions(new EventGridClientOptions())));
+
+            var evt = new CloudEvent("employee_source", "type", new TestModel { Name = "Bob", Age = 18 })
+            {
+                Id = Recording.Random.NewGuid().ToString(),
+                Time = Recording.Now
+            };
+            await client.PublishCloudEventAsync(topicName, evt);
+
+            ReceiveResult result = await client.ReceiveCloudEventsAsync(topicName, subscriptionName, maxEvents: 1);
+            RenewCloudEventLocksResult renewResult = await client.RenewCloudEventLocksAsync(topicName, subscriptionName,
+                new RenewLockOptions(new[] { result.Value.First().BrokerProperties.LockToken }));
+            Assert.IsEmpty(renewResult.FailedLockTokens);
         }
 
         public class TestModel

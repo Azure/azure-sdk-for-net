@@ -7,20 +7,19 @@
 
 using System.Text.Json;
 using Azure;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
-    public partial class BrokerProperties
+    public partial class FailedLockToken
     {
-        internal static BrokerProperties DeserializeBrokerProperties(JsonElement element)
+        internal static FailedLockToken DeserializeFailedLockToken(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string lockToken = default;
-            int deliveryAttemptCount = default;
+            ResponseError error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lockToken"u8))
@@ -28,21 +27,21 @@ namespace Azure.Messaging.EventGrid.Namespaces
                     lockToken = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("deliveryAttemptCount"u8))
+                if (property.NameEquals("error"u8))
                 {
-                    deliveryAttemptCount = property.Value.GetInt32();
+                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
                     continue;
                 }
             }
-            return new BrokerProperties(lockToken, deliveryAttemptCount);
+            return new FailedLockToken(lockToken, error);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static BrokerProperties FromResponse(Response response)
+        internal static FailedLockToken FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeBrokerProperties(document.RootElement);
+            return DeserializeFailedLockToken(document.RootElement);
         }
     }
 }

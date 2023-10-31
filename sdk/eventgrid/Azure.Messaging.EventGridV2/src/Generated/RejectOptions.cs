@@ -12,11 +12,11 @@ using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
-    /// <summary> Array of lock token strings for the corresponding received Cloud Events to be rejected. </summary>
-    internal partial class RejectOptions
+    /// <summary> Array of lock tokens for the corresponding received Cloud Events to be rejected. </summary>
+    public partial class RejectOptions
     {
         /// <summary> Initializes a new instance of RejectOptions. </summary>
-        /// <param name="lockTokens"> String array of lock tokens. </param>
+        /// <param name="lockTokens"> Array of lock tokens. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="lockTokens"/> is null. </exception>
         public RejectOptions(IEnumerable<string> lockTokens)
         {
@@ -25,7 +25,14 @@ namespace Azure.Messaging.EventGrid.Namespaces
             LockTokens = lockTokens.ToList();
         }
 
-        /// <summary> String array of lock tokens. </summary>
+        /// <summary> Initializes a new instance of RejectOptions. </summary>
+        /// <param name="lockTokens"> Array of lock tokens. </param>
+        internal RejectOptions(IList<string> lockTokens)
+        {
+            LockTokens = lockTokens;
+        }
+
+        /// <summary> Array of lock tokens. </summary>
         public IList<string> LockTokens { get; }
     }
 }
