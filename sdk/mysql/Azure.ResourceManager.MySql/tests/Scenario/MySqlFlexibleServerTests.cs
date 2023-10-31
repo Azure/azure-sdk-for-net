@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MySql.Tests
             string serverName = Recording.GenerateAssetName("mysqlflexserver");
             var data = new MySqlFlexibleServerData(rg.Data.Location)
             {
-                Sku = new MySqlFlexibleServerSku("Standard_B1ms", MySqlFlexibleServerSkuTier.Burstable),
+                Sku = new MySQLServerSku("Standard_B1ms", ServerSkuTier.Burstable),
                 AdministratorLogin = "testUser",
                 AdministratorLoginPassword = "testPassword1!",
                 Version = "5.7",
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.MySql.Tests
             string serverName = Recording.GenerateAssetName("mysqlflexserver");
             var data = new MySqlFlexibleServerData(rg.Data.Location)
             {
-                Sku = new MySqlFlexibleServerSku("Standard_B1ms", MySqlFlexibleServerSkuTier.Burstable),
+                Sku = new MySQLServerSku("Standard_B1ms", ServerSkuTier.Burstable),
                 AdministratorLogin = "testUser",
                 AdministratorLoginPassword = "testPassword1!",
                 Version = "5.7",
