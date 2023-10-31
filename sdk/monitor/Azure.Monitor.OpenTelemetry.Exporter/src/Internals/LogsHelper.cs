@@ -29,14 +29,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     continue;
                 }
 
-                if (scopeItem.Value != null)
+                // Note: if Key exceeds MaxLength, the entire KVP will be dropped.
+                if (scopeItem.Key.Length <= SchemaConstants.MessageData_Properties_MaxKeyLength && scopeItem.Value != null)
                 {
                     try
                     {
-                        string truncatedKey = scopeItem.Key.Truncate(SchemaConstants.MessageData_Properties_MaxKeyLength);
-                        if (!properties.ContainsKey(truncatedKey))
+                        if (!properties.ContainsKey(scopeItem.Key))
                         {
-                            properties.Add(truncatedKey, Convert.ToString(scopeItem.Value, CultureInfo.InvariantCulture)?.Truncate(SchemaConstants.MessageData_Properties_MaxValueLength)!);
+                            properties.Add(scopeItem.Key, Convert.ToString(scopeItem.Value, CultureInfo.InvariantCulture)?.Truncate(SchemaConstants.MessageData_Properties_MaxValueLength)!);
                         }
                     }
                     catch (Exception ex)
@@ -91,34 +91,33 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             foreach (KeyValuePair<string, object?> item in logRecord.Attributes ?? Enumerable.Empty<KeyValuePair<string, object?>>())
             {
-                if (item.Key.Length <= SchemaConstants.KVP_MaxKeyLength && item.Value != null)
+                // Note: if Key exceeds MaxLength, the entire KVP will be dropped.
+                if (item.Key.Length <= SchemaConstants.MessageData_Properties_MaxKeyLength && item.Value != null)
                 {
-                    // Note: if Key exceeds MaxLength, the entire KVP will be dropped.
-                    if (item.Key == "{OriginalFormat}")
+                    try
                     {
-                        if (logRecord.Exception?.Message != null)
+                        if (item.Key == "{OriginalFormat}")
                         {
-                            properties.Add("OriginalFormat", item.Value.ToString().Truncate(SchemaConstants.KVP_MaxValueLength) ?? "null");
-                        }
-                        else if (message == null)
-                        {
-                            message = item.Value.ToString();
-                        }
-                    }
-                    else
-                    {
-                        try
-                        {
-                            string truncatedKey = item.Key.Truncate(SchemaConstants.MessageData_Properties_MaxKeyLength);
-                            if (!properties.ContainsKey(truncatedKey))
+                            if (logRecord.Exception?.Message != null)
                             {
-                                properties.Add(item.Key, item.Value.ToString().Truncate(SchemaConstants.KVP_MaxValueLength)?.Truncate(SchemaConstants.MessageData_Properties_MaxValueLength)!);
+                                properties.Add("OriginalFormat", item.Value.ToString().Truncate(SchemaConstants.MessageData_Properties_MaxValueLength)!);
+                            }
+                            else if (message == null)
+                            {
+                                message = item.Value.ToString();
                             }
                         }
-                        catch (Exception ex)
+                        else
                         {
-                            AzureMonitorExporterEventSource.Log.FailedToConvertLogAttribute(item.Key, ex);
+                            if (!properties.ContainsKey(item.Key))
+                            {
+                                properties.Add(item.Key, item.Value.ToString().Truncate(SchemaConstants.MessageData_Properties_MaxValueLength)!);
+                            }
                         }
+                    }
+                    catch (Exception ex)
+                    {
+                        AzureMonitorExporterEventSource.Log.FailedToConvertLogAttribute(item.Key, ex);
                     }
                 }
             }

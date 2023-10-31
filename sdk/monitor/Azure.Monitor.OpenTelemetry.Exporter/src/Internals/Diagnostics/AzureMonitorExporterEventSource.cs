@@ -405,7 +405,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
             }
         }
 
-        [Event(40, Message = "An exception {1} occurred while converting the scope value associated with the scope key {0}.", Level = EventLevel.Warning)]
+        [Event(40, Message = "An exception {1} occurred while adding the scope value associated with the key {0}", Level = EventLevel.Warning)]
         public void FailedToConvertScopeItem(string key, string exceptionMessage) => WriteEvent(40, key, exceptionMessage);
 
         [NonEvent]
