@@ -100,11 +100,7 @@ namespace Azure.Storage.DataMovement
         }
 
         protected internal override Task CreateIfNotExistsAsync(CancellationToken cancellationToken = default)
-        {
-            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-            Directory.CreateDirectory(_uri.LocalPath);
-            return Task.CompletedTask;
-        }
+            => Task.CompletedTask;
 
         protected internal override StorageResourceContainer GetChildStorageResourceContainer(string path)
         {
