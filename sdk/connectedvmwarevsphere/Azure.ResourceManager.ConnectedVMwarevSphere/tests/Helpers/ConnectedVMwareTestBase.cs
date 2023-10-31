@@ -15,7 +15,7 @@ using System.Linq;
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.Helpers
 {
     [ClientTestFixture]
-    public class ConnectedVMwareTestBase : ManagementRecordedTestBase<ConnectedVMwareManagementTestEnvironment>
+    public class ConnectedVMwareTestBase : ManagementRecordedTestBase<ConnectedVMwarevSphereManagementTestEnvironment>
     {
         public const string DefaultLocation = "eastus";
         protected ArmClient Client { get; private set; }
