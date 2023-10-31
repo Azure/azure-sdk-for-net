@@ -377,7 +377,6 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             await mockProcessor.OnProcessErrorAsync(errorArgs);
             await mockProcessor.OnSessionInitializingAsync(processSessionArgs);
             await mockProcessor.OnSessionClosingAsync(processSessionArgs);
-            mockProcessor.UpdateConcurrency(1, 1);
 
             Assert.IsTrue(processMessageCalled);
             Assert.IsTrue(processErrorCalled);
