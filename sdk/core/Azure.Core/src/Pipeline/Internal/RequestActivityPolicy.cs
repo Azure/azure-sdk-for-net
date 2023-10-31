@@ -65,7 +65,7 @@ namespace Azure.Core.Pipeline
             scope.SetDisplayName(message.Request.Method.Method);
 
             scope.AddAttribute(isActivitySourceEnabled ? "http.request.method" : "http.method", message.Request.Method.Method);
-            scope.AddAttribute(isActivitySourceEnabled ? "url.full" : "http.url", _sanitizer.SanitizeUrl(message.Request.Uri.ToString()));
+            scope.AddAttribute(isActivitySourceEnabled ? "url.full" : "http.url", message.Request.Uri, u => _sanitizer.SanitizeUrl(u.ToString()));
             scope.AddAttribute(isActivitySourceEnabled ? "az.client_request_id": "requestId", message.Request.ClientRequestId);
             if (message.RetryNumber > 0)
             {
