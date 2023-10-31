@@ -40,14 +40,14 @@ steps:
         Write-Host "##vso[task.setvariable variable=PROXY_MANUAL_START]true"
       displayName: 'Configure Kestrel and PROXY_MANUAL_START Variables'
       condition: and(succeeded(), ${{ parameters.condition }})
-    
+
     - pwsh: |
         Start-Process $(Build.BinariesDirectory)/test-proxy/test-proxy.exe `
           -ArgumentList "--storage-location ${{ parameters.rootFolder }} -U" `
           -NoNewWindow -PassThru -RedirectStandardOutput ${{ parameters.rootFolder }}/test-proxy.log
       displayName: 'Run the testproxy - windows'
       condition: and(succeeded(), eq(variables['Agent.OS'],'Windows_NT'), ${{ parameters.condition }})
-    
+
     # nohup does NOT continue beyond the current session if you use it within powershell
     - bash: |
         nohup $(Build.BinariesDirectory)/test-proxy/test-proxy &>$(Build.SourcesDirectory)/test-proxy.log &
