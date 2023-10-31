@@ -397,27 +397,27 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         public void PartialContentResponseUnhandled(string errorStatusCode, string errorMessage) => WriteEvent(39, errorStatusCode, errorMessage);
 
         [NonEvent]
-        public void FailedToConvertScopeItem(string key, Exception ex)
+        public void FailedToAddScopeItem(string key, Exception ex)
         {
             if (IsEnabled(EventLevel.Warning))
             {
-                FailedToConvertScopeItem(key, ex.FlattenException().ToInvariantString());
+                FailedToAddScopeItem(key, ex.FlattenException().ToInvariantString());
             }
         }
 
         [Event(40, Message = "An exception {1} occurred while adding the scope value associated with the key {0}", Level = EventLevel.Warning)]
-        public void FailedToConvertScopeItem(string key, string exceptionMessage) => WriteEvent(40, key, exceptionMessage);
+        public void FailedToAddScopeItem(string key, string exceptionMessage) => WriteEvent(40, key, exceptionMessage);
 
         [NonEvent]
-        public void FailedToConvertLogAttribute(string key, Exception ex)
+        public void FailedToAddLogAttribute(string key, Exception ex)
         {
             if (IsEnabled(EventLevel.Warning))
             {
-                FailedToConvertLogAttribute(key, ex.FlattenException().ToInvariantString());
+                FailedToAddLogAttribute(key, ex.FlattenException().ToInvariantString());
             }
         }
 
         [Event(41, Message = "An exception {1} occurred while adding the log attribute associated with the key {0}", Level = EventLevel.Warning)]
-        public void FailedToConvertLogAttribute(string key, string exceptionMessage) => WriteEvent(41, key, exceptionMessage);
+        public void FailedToAddLogAttribute(string key, string exceptionMessage) => WriteEvent(41, key, exceptionMessage);
     }
 }

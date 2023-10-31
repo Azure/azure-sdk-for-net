@@ -25,14 +25,20 @@
   message fields and properties.
   ([#39308](https://github.com/Azure/azure-sdk-for-net/pull/39308))
   
-* Fixed an issue related to the processing of scopes that do not adhere to a
-  key-value pair structure. Previously, when logging a scope using a statement
-  like `logger.BeginScope("SomeScopeValue")`, the value 'SomeScopeValue' would
-  be added to the properties with a key following the pattern
-  'OriginalFormatScope_*'. With this update, such non-key-value pair scopes are
-  no longer added to the properties, as they cannot be queried, resulting in
-  cleaner and more efficient log output.
+* Fixed an issue related to the processing of scopes that do not conform to a
+  key-value pair structure.
   ([#39453](https://github.com/Azure/azure-sdk-for-net/pull/39453))
+   * **Previous Behavior**: Logging a scope with a statement like
+     `logger.BeginScope("SomeScopeValue")` would result in adding
+     'SomeScopeValue' to the properties using a key that follows the pattern
+     'scope->*'. Additionally, 'OriginalFormatScope_*' keys were used to handle
+     formatted strings within the scope.
+   * **New Behavior**: 
+     * Non-key-value pair scopes are no longer added to the properties,
+       resulting in cleaner and more efficient log output.
+     * 'OriginalFormatScope_*' keys have been removed.
+     * In case of duplicate keys within the scopes, only the first entry is
+     retained, while all subsequent duplicate entries are discarded.
 
 ### Other Changes
 
