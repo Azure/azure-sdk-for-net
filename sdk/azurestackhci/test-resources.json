@@ -2,5 +2,57 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "resources": [
-    ]
+        
+    ],
+    "parameters":{
+        "subscriptionId": {
+            "type": "string",
+            "defaultValue": "[subscription().subscriptionId]",
+            "metadata": {
+                "description": "The subscription ID to which the application and resources belong."
+            }
+        },
+        "resourceGroupPrefix": {
+            "type": "string",
+            "defaultValue": "hci-dotnet-test-rg-",
+            "metadata": {
+                "description": "The prefix to which the resource group will create its name with."
+            }
+        },
+        "extendedLocationRg": {
+            "type": "string",
+            "defaultValue": "mkclus0824-rg",
+            "metadata": {
+                "description": "The resource group to which the custom location belongs."
+            }
+        },
+        "imagePath": {
+            "type": "string",
+            "defaultValue": "C:\\test.vhdx",
+            "metadata": {
+                "description": "The imagePath to create gallery images from."
+            }
+        },
+        "imageOsType": {
+            "type": "string",
+            "defaultValue": "Linux",
+            "metadata": {
+                "description": "The os type to create gallery images with."
+            }
+        }
+    },
+    "outputs": {
+        "CUSTOM_LOCATION_ID": {
+            "type": "string",
+            "value": "[format('/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.ExtendedLocation/customLocations/myResourceBridge-cl', parameters('subscriptionId'), parameters('extendedLocationRg'))]"
+        },
+        "IMAGE_PATH": {
+            "type": "string",
+            "value": "reference(parameters('imagePath'))"
+        },
+        "IMAGE_OS_TYPE": {
+            "type": "string",
+            "value": "reference(parameters('imageOsType'))"
+        }
+    }
 }

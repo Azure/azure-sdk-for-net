@@ -5,4 +5,6 @@
     <Description>Azure Resource Manager client SDK for Azure resource provider ArcVm.</Description>
     <PackageTags>azure;management;arm;resource manager;arcvm</PackageTags>
   </PropertyGroup>
+  <ItemGroup>
+  </ItemGroup>
 </Project>

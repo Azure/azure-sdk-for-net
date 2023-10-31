@@ -12,6 +12,7 @@ pr:
     include:
     - sdk/azurestackhci/ci.mgmt.yml
     - sdk/azurestackhci/Azure.ResourceManager.Hci/
+    - sdk/azurestackhci/Azure.ResourceManager.ArcVm/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -21,3 +22,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Hci
       safeName: AzureResourceManagerHci
+    - name: Azure.ResourceManager.ArcVm
+      safeName: AzureResourceManagerArcVm

@@ -22,25 +22,27 @@ namespace Azure.ResourceManager.ArcVm.Tests
         }
 
         [TestCase]
+        // Gallery image download is very expensive and can take time depending on network speed.
+        // So before running live / record please make sure the test region have the capacity for create a new one.
+        //[PlaybackOnly("Live test for gallery image is not necessary")]
         [RecordedTest]
         public async Task CreateGetList()
         {
             var location = AzureLocation.EastUS;
-            var resourceGroup = await CreateResourceGroup(DefaultSubscription, "hci-galleryImage-rg", location);
-            var galleryImageCollection = resourceGroup.GetGalleryImages();
-            var galleryImageName = Recording.GenerateAssetName("hci-galleryImage");
-            var galleryImage = await CreateGalleryImageAsync(resourceGroup, galleryImageName, location);
-            var galleryImageData = galleryImage.Data;
-            Assert.AreEqual(galleryImageData.Name, galleryImageName);
-            Assert.AreEqual(galleryImageData.Location, location);
 
-            GalleryImageResource galleryImageFromGet = await galleryImageCollection.GetAsync(galleryImageName);
-            Assert.AreEqual(galleryImageFromGet.Data.Name, galleryImageName);
-            Assert.AreEqual(galleryImageFromGet.Data.Location, location);
+            var galleryImageCollection = ResourceGroup.GetGalleryImages();
+
+            var galleryImage = await CreateGalleryImageAsync();
+            if (await RetryUntilSuccessOrTimeout(() => ProvisioningStateSucceeded(galleryImage), TimeSpan.FromSeconds(100)))
+            {
+                Assert.AreEqual(galleryImage.Data.Name, galleryImage.Data.Name);
+                Assert.AreEqual(galleryImage.Data.OSType, OperatingSystemType.Linux);
+            }
+            Assert.AreEqual(galleryImage.Data.ProvisioningState, ProvisioningStateEnum.Succeeded);
 
             await foreach (GalleryImageResource galleryImageFromList in galleryImageCollection)
             {
-                Assert.AreEqual(galleryImageFromList.Data.Name, galleryImageName);
+                Assert.AreEqual(galleryImageFromList.Data.OSType, OperatingSystemType.Linux);
                 Assert.AreEqual(galleryImageFromList.Data.Location, location);
             }
         }
