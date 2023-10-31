@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -533,24 +534,56 @@ namespace Azure.Core.Tests
 
         [Test]
         [NonParallelizable]
-        public void FailedStopsActivityAndWritesErrorType()
+        public void FailedStopsActivityAndWritesErrorTypeException()
         {
             using var _ = SetAppConfigSwitch();
 
             using var testListener = new TestActivitySourceListener("Azure.Clients");
             DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true, false);
 
-            DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
-
+            using DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
             scope.Start();
             scope.Failed(new ArgumentException());
-            scope.Dispose();
 
-            Activity activity = testListener.Activities.Single();
-
+            Activity activity = testListener.AssertAndRemoveActivity("ActivityName");
             Assert.IsEmpty(activity.Events);
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("error.type", typeof(ArgumentException).FullName));
-            CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("az.namespace", "Microsoft.Azure.Core.Cool.Tests"));
+        }
+
+        [Test]
+        [NonParallelizable]
+        public void FailedStopsActivityAndWritesErrorTypeRequestException()
+        {
+            using var _ = SetAppConfigSwitch();
+
+            using var testListener = new TestActivitySourceListener("Azure.Clients");
+            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true, false);
+
+            using DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
+            scope.Start();
+            scope.Failed(new RequestFailedException(400, "error", "errorCode", new HttpRequestException()));
+
+            Activity activity = testListener.AssertAndRemoveActivity("ActivityName");
+            Assert.IsEmpty(activity.Events);
+            CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("error.type", "errorCode"));
+        }
+
+        [Test]
+        [NonParallelizable]
+        public void FailedStopsActivityAndWritesErrorTypeString()
+        {
+            using var _ = SetAppConfigSwitch();
+
+            using var testListener = new TestActivitySourceListener("Azure.Clients");
+            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true, false);
+
+            using DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
+            scope.Start();
+            scope.Failed("errorCode");
+
+            Activity activity = testListener.AssertAndRemoveActivity("ActivityName");
+            Assert.IsEmpty(activity.Events);
+            CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("error.type", "errorcode"));
         }
 
         private class CustomSampler : Sampler
