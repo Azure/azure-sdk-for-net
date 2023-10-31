@@ -37,7 +37,10 @@ namespace Azure.ResourceManager.Logic.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Swagger);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Swagger.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(Swagger))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsDefined(BrandColor))

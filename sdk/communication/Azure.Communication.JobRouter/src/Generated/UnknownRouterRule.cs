@@ -11,7 +11,7 @@ namespace Azure.Communication.JobRouter
     internal partial class UnknownRouterRule : RouterRule
     {
         /// <summary> Initializes a new instance of UnknownRouterRule. </summary>
-        /// <param name="kind"> Discriminator. </param>
+        /// <param name="kind"> The type discriminator describing a sub-type of RouterRule. </param>
         internal UnknownRouterRule(string kind) : base(kind)
         {
         }

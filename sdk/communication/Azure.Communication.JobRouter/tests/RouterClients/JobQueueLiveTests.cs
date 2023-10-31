@@ -65,18 +65,12 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             AddForCleanup(new Task(async () => await routerClient.DeleteQueueAsync(createQueueResponse.Value.Id)));
             AssertQueueResponseIsEqual(createQueueResponse, queueId, createDistributionPolicyResponse.Value.Id, queueName, queueLabels);
 
-            var updatedLabels = new Dictionary<string, LabelValue?>(createQueueResponse.Value.Labels.ToDictionary(x => x.Key, x => (LabelValue?)x.Value))
-            {
-                ["Label_1"] = null,
-                ["Label_2"] = new LabelValue(null),
-                ["Label_3"] = new LabelValue("Value_Updated_3"),
-                ["Label_4"] = new LabelValue("Value_4")
-            };
+            createQueueResponse.Value.Labels["Label_1"] = null;
+            createQueueResponse.Value.Labels["Label_2"] = new LabelValue(null);
+            createQueueResponse.Value.Labels["Label_3"] = new LabelValue("Value_Updated_3");
+            createQueueResponse.Value.Labels["Label_4"] = new LabelValue("Value_4");
 
-            var updateOptions = new UpdateQueueOptions(queueId);
-            updateOptions.Labels.Append(updatedLabels);
-
-            var updatedQueueResponse = await routerClient.UpdateQueueAsync(updateOptions);
+            var updatedQueueResponse = await routerClient.UpdateQueueAsync(createQueueResponse.Value);
 
             AssertQueueResponseIsEqual(updatedQueueResponse, queueId, createDistributionPolicyResponse.Value.Id, queueName, new Dictionary<string, LabelValue?>
             {

@@ -17,7 +17,7 @@ namespace Azure.Communication.JobRouter
     public partial class PassThroughQueueSelectorAttachment : QueueSelectorAttachment
     {
         /// <summary> Initializes a new instance of PassThroughQueueSelectorAttachment. </summary>
-        /// <param name="kind"> Discriminator. </param>
+        /// <param name="kind"> The type discriminator describing a sub-type of QueueSelectorAttachment. </param>
         /// <param name="key"> The label key to query against. </param>
         /// <param name="labelOperator"> Describes how the value of the label is compared to the value pass through. </param>
         internal PassThroughQueueSelectorAttachment(string kind, string key, LabelOperator labelOperator) : base(kind)

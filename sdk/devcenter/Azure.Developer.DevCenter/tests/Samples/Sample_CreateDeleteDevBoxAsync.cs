@@ -19,7 +19,7 @@ namespace Azure.Developer.DevCenter.Tests.Samples
 
             #region Snippet:Azure_DevCenter_GetProjects_Scenario
             string targetProjectName = null;
-            await foreach (BinaryData data in devCenterClient.GetProjectsAsync())
+            await foreach (BinaryData data in devCenterClient.GetProjectsAsync(null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
                 targetProjectName = result.GetProperty("name").ToString();
@@ -37,7 +37,7 @@ namespace Azure.Developer.DevCenter.Tests.Samples
             // Grab a pool
             #region Snippet:Azure_DevCenter_GetPools_Scenario
             string targetPoolName = null;
-            await foreach (BinaryData data in devBoxesClient.GetPoolsAsync(targetProjectName))
+            await foreach (BinaryData data in devBoxesClient.GetPoolsAsync(targetProjectName, null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
                 targetPoolName = result.GetProperty("name").ToString();
@@ -73,7 +73,8 @@ namespace Azure.Developer.DevCenter.Tests.Samples
             Response remoteConnectionResponse = await devBoxesClient.GetRemoteConnectionAsync(
                 targetProjectName,
                 "me",
-                "MyDevBox");
+                "MyDevBox",
+                null);
             JsonElement remoteConnectionData = JsonDocument.Parse(remoteConnectionResponse.ContentStream).RootElement;
             Console.WriteLine($"Connect using web URL {remoteConnectionData.GetProperty("webUrl")}.");
             #endregion

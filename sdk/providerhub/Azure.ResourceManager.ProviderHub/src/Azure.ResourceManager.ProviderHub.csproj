@@ -6,5 +6,6 @@
     <PackageId>Azure.ResourceManager.ProviderHub</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.ProviderHub.</Description>
     <PackageTags>azure;management;arm;resource manager;providerhub</PackageTags>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
   </PropertyGroup>
 </Project>
