@@ -320,10 +320,10 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
                                                   string eventHubName,
                                                   string consumerGroup,
                                                   string clientIdentifier,
+                                                  string errorMessage,
                                                   long sequenceNumber,
                                                   int replicationSegment,
-                                                  long offset,
-                                                  string errorMessage)
+                                                  long offset)
         {
             if (IsEnabled())
             {

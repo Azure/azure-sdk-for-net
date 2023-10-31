@@ -109,7 +109,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                            int replicationSegment,
                                            long offset,
                                            Exception exception) =>
-            Logger.UpdateCheckpointError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, sequenceNumber, replicationSegment, offset, exception.Message);
+            Logger.UpdateCheckpointError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, exception.Message, sequenceNumber, replicationSegment, offset);
 
         /// <summary>
         ///   Indicates that an attempt to update a checkpoint has completed.
