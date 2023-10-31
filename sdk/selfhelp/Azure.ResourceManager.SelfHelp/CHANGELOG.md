@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0 (2023-09-01-preview)
+## 1.1.0 (2023-11-06)
 
 ### Features Added
 Discovery
