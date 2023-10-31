@@ -40,15 +40,16 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for the account. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the account. </param>
         /// <param name="sku"> Device Update Sku. </param>
+        /// <param name="encryption"> CMK encryption at rest properties. </param>
         /// <param name="locations"> Device Update account primary and failover location details. </param>
         /// <returns> A new <see cref="DeviceUpdate.DeviceUpdateAccountData"/> instance for mocking. </returns>
-        public static DeviceUpdateAccountData DeviceUpdateAccountData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, ProvisioningState? provisioningState = null, string hostName = null, PublicNetworkAccess? publicNetworkAccess = null, IEnumerable<DeviceUpdatePrivateEndpointConnectionData> privateEndpointConnections = null, DeviceUpdateSku? sku = null, IEnumerable<DeviceUpdateAccountLocationDetail> locations = null)
+        public static DeviceUpdateAccountData DeviceUpdateAccountData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, ProvisioningState? provisioningState = null, string hostName = null, PublicNetworkAccess? publicNetworkAccess = null, IEnumerable<DeviceUpdatePrivateEndpointConnectionData> privateEndpointConnections = null, DeviceUpdateSku? sku = null, Encryption encryption = null, IEnumerable<DeviceUpdateAccountLocationDetail> locations = null)
         {
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<DeviceUpdatePrivateEndpointConnectionData>();
             locations ??= new List<DeviceUpdateAccountLocationDetail>();
 
-            return new DeviceUpdateAccountData(id, name, resourceType, systemData, tags, location, identity, provisioningState, hostName, publicNetworkAccess, privateEndpointConnections?.ToList(), sku, locations?.ToList());
+            return new DeviceUpdateAccountData(id, name, resourceType, systemData, tags, location, identity, provisioningState, hostName, publicNetworkAccess, privateEndpointConnections?.ToList(), sku, encryption, locations?.ToList());
         }
 
         /// <summary> Initializes a new instance of DeviceUpdatePrivateEndpointConnectionData. </summary>

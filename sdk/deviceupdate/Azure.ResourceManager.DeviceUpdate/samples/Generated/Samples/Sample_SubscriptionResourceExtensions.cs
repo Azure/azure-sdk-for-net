@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CheckDeviceUpdateNameAvailability_CheckNameAvailabilityAlreadyExists()
         {
-            // Generated from example definition: specification/deviceupdate/resource-manager/Microsoft.DeviceUpdate/stable/2022-10-01/examples/CheckNameAvailability_AlreadyExists.json
+            // Generated from example definition: specification/deviceupdate/resource-manager/Microsoft.DeviceUpdate/stable/2023-07-01/examples/CheckNameAvailability_AlreadyExists.json
             // this example is just showing the usage of "CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CheckDeviceUpdateNameAvailability_CheckNameAvailabilityAvailable()
         {
-            // Generated from example definition: specification/deviceupdate/resource-manager/Microsoft.DeviceUpdate/stable/2022-10-01/examples/CheckNameAvailability_Available.json
+            // Generated from example definition: specification/deviceupdate/resource-manager/Microsoft.DeviceUpdate/stable/2023-07-01/examples/CheckNameAvailability_Available.json
             // this example is just showing the usage of "CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
