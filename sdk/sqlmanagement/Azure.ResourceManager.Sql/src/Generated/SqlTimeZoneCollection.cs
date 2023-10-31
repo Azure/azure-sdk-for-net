@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of the <see cref="SqlTimeZoneCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        /// <param name="locationName"> The String to use. </param>
+        /// <param name="locationName"> The AzureLocation to use. </param>
         internal SqlTimeZoneCollection(ArmClient client, ResourceIdentifier id, AzureLocation locationName) : base(client, id)
         {
             _locationName = locationName;
