@@ -89,7 +89,6 @@ namespace Azure.Core.Pipeline
             }
 
             scope.Start();
-            if (scope.IsEnabled)
 
             try
             {

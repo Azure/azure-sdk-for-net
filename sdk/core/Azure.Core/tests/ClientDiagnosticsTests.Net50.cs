@@ -531,6 +531,28 @@ namespace Azure.Core.Tests
             Assert.AreEqual(4, activeActivityCounts); // 1 activity will be dropped due to sampler logic
         }
 
+        [Test]
+        [NonParallelizable]
+        public void FailedStopsActivityAndWritesErrorType()
+        {
+            using var _ = SetAppConfigSwitch();
+
+            using var testListener = new TestActivitySourceListener("Azure.Clients");
+            DiagnosticScopeFactory clientDiagnostics = new DiagnosticScopeFactory("Azure.Clients", "Microsoft.Azure.Core.Cool.Tests", true, false);
+
+            DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
+
+            scope.Start();
+            scope.Failed(new ArgumentException());
+            scope.Dispose();
+
+            Activity activity = testListener.Activities.Single();
+
+            Assert.IsEmpty(activity.Events);
+            CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("error.type", typeof(ArgumentException).FullName));
+            CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("az.namespace", "Microsoft.Azure.Core.Cool.Tests"));
+        }
+
         private class CustomSampler : Sampler
         {
             public override SamplingResult ShouldSample(in SamplingParameters samplingParameters)
