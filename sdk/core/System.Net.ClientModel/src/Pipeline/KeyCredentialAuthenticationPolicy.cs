@@ -8,43 +8,43 @@ namespace System.Net.ClientModel.Core;
 
 public class KeyCredentialAuthenticationPolicy : PipelinePolicy
 {
-    private readonly string _name;
+    private readonly string _headerName;
     private readonly KeyCredential _credential;
-    private readonly string? _prefix;
+    private readonly string? _keyPrefix;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="KeyCredentialAuthenticationPolicy"/> class.
     /// </summary>
     /// <param name="credential">The <see cref="KeyCredential"/> used to authenticate requests.</param>
-    /// <param name="header">The name of the request header used to send the key credential in the request.</param>
+    /// <param name="headerName">The name of the request header used to send the key credential in the request.</param>
     /// <param name="keyPrefix">A prefix to prepend before the key credential in the header value.
     /// If provided, the prefix string will be followed by a space and then the credential string.
     /// For example, setting <c>valuePrefix</c> to "SharedAccessKey" will result in the header value
     /// being set fo "SharedAccessKey {credential.Key}".</param>
-    public KeyCredentialAuthenticationPolicy(KeyCredential credential, string header, string? keyPrefix = null)
+    public KeyCredentialAuthenticationPolicy(KeyCredential credential, string headerName, string? keyPrefix = null)
     {
         ClientUtilities.AssertNotNull(credential, nameof(credential));
-        ClientUtilities.AssertNotNullOrEmpty(header, nameof(header));
+        ClientUtilities.AssertNotNullOrEmpty(headerName, nameof(headerName));
 
         _credential = credential;
-        _name = header;
-        _prefix = keyPrefix;
+        _headerName = headerName;
+        _keyPrefix = keyPrefix;
     }
 
     public override void Process(ClientMessage message, PipelineEnumerator pipeline)
     {
-        _credential.TryGetKey(out string key);
+        string key = _credential.Key;
 
-        message.Request.Headers.Set(_name, _prefix != null ? $"{_prefix} {key}" : key);
+        message.Request.Headers.Set(_headerName, _keyPrefix != null ? $"{_keyPrefix} {key}" : key);
 
         pipeline.ProcessNext();
     }
 
     public override async ValueTask ProcessAsync(ClientMessage message, PipelineEnumerator pipeline)
     {
-        _credential.TryGetKey(out string key);
+        string key = _credential.Key;
 
-        message.Request.Headers.Set(_name, _prefix != null ? $"{_prefix} {key}" : key);
+        message.Request.Headers.Set(_headerName, _keyPrefix != null ? $"{_keyPrefix} {key}" : key);
 
         await pipeline.ProcessNextAsync().ConfigureAwait(false);
     }

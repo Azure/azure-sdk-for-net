@@ -3,7 +3,7 @@ namespace System.Net.ClientModel
     public partial class KeyCredential
     {
         public KeyCredential(string key) { }
-        public bool TryGetKey(out string key) { throw null; }
+        public string Key { get { throw null; } }
         public void Update(string key) { }
     }
     public static partial class ModelReaderWriter
@@ -115,7 +115,7 @@ namespace System.Net.ClientModel.Core
     }
     public partial class KeyCredentialAuthenticationPolicy : System.Net.ClientModel.Core.PipelinePolicy
     {
-        public KeyCredentialAuthenticationPolicy(System.Net.ClientModel.KeyCredential credential, string header, string? keyPrefix = null) { }
+        public KeyCredentialAuthenticationPolicy(System.Net.ClientModel.KeyCredential credential, string headerName, string? keyPrefix = null) { }
         public override void Process(System.Net.ClientModel.Core.ClientMessage message, System.Net.ClientModel.Core.PipelineEnumerator pipeline) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(System.Net.ClientModel.Core.ClientMessage message, System.Net.ClientModel.Core.PipelineEnumerator pipeline) { throw null; }
     }
