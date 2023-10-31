@@ -254,7 +254,7 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="sequenceNumber">The sequence number associated with this checkpoint.</param>
         /// <param name="offset">The offset associated with this checkpoint.</param>
         ///
-        [Event(32, Level = EventLevel.Verbose, Message = "Starting to create/update a checkpoint for partition: `{0}` of FullyQualifiedNamespace: '{1}'; EventHubName: '{2}'; ConsumerGroup: '{3}'; ClientIdentifier: `{4}`; at SequenceNumber: `{5}` Offset: `{6}`.")]
+        [Event(32, Level = EventLevel.Verbose, Message = "Starting to create/update a checkpoint for partition: `{0}` of FullyQualifiedNamespace: '{1}'; EventHubName: '{2}'; ConsumerGroup: '{3}'; ClientIdentifier: '{4}'; at SequenceNumber: '{5}' Offset: '{6}'.")]
         public virtual void UpdateCheckpointStart(string partitionId,
                                                   string fullyQualifiedNamespace,
                                                   string eventHubName,
