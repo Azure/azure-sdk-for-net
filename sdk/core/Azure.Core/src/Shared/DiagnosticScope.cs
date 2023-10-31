@@ -143,15 +143,16 @@ namespace Azure.Core.Pipeline
             "neither does Application Insights, we can suppress the warning coming from the inner method.")]
         public void Failed(Exception exception)
         {
-            if (exception is RequestFailedException requestFailedException && requestFailedException.ErrorCode != null)
+            if (exception is RequestFailedException requestFailedException)
             {
-                _activityAdapter?.MarkFailed(requestFailedException.ErrorCode);
                 // TODO (limolkova) when we start targeting .NET 8 we should put
                 // requestFailedException.InnerException.HttpRequestError into error.type
+
+                _activityAdapter?.MarkFailed(exception, requestFailedException.ErrorCode);
             }
             else
             {
-                _activityAdapter?.MarkFailed(exception);
+                _activityAdapter?.MarkFailed(exception, null);
             }
         }
 
@@ -161,7 +162,7 @@ namespace Azure.Core.Pipeline
         /// <param name="errorCode">Error code to associate with the failed scope.</param>
         public void Failed(string errorCode)
         {
-            _activityAdapter?.MarkFailed(errorCode);
+            _activityAdapter?.MarkFailed((Exception?)null, errorCode);
         }
 
 #if NETCOREAPP2_1
@@ -519,7 +520,7 @@ namespace Azure.Core.Pipeline
             }
 
             [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = "The Exception being passed into this method has the commonly used properties being preserved with DynamicallyAccessedMemberTypes.")]
-            public void MarkFailed<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] T>(T exception)
+            public void MarkFailed<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] T>(T? exception, string? errorCode)
             {
                 if (exception != null)
                 {
@@ -533,22 +534,13 @@ namespace Azure.Core.Pipeline
                 }
 #endif
 #if NET6_0_OR_GREATER // SetStatus is only defined in NET 6 or greater
-                _currentActivity?.AddTag("error.type", exception?.GetType()?.FullName ?? "_OTHER");
-                _currentActivity?.SetStatus(ActivityStatusCode.Error, exception?.ToString());
-#endif
-            }
-
-            public void MarkFailed(string statusCode)
-            {
-#if NETCOREAPP2_1
-                if (ActivityExtensions.SupportsActivitySource())
+                if (errorCode == null && exception != null)
                 {
-                    _currentActivity?.SetErrorStatus(statusCode);
+                    errorCode = exception.GetType().FullName;
                 }
-#endif
-#if NET6_0_OR_GREATER // SetStatus is only defined in NET 6 or greater
-                _currentActivity?.AddTag("error.type", statusCode);
-                _currentActivity?.SetStatus(ActivityStatusCode.Error, null);
+
+                _currentActivity?.AddTag("error.type", errorCode ?? "_OTHER");
+                _currentActivity?.SetStatus(ActivityStatusCode.Error, exception?.ToString());
 #endif
             }
 
