@@ -14,21 +14,7 @@ namespace Azure.Communication.JobRouter
     public partial class StaticQueueSelectorAttachment : QueueSelectorAttachment
     {
         /// <summary> Initializes a new instance of StaticQueueSelectorAttachment. </summary>
-        /// <param name="queueSelector">
-        /// Describes a condition that must be met against a set of labels for queue
-        /// selection
-        /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queueSelector"/> is null. </exception>
-        internal StaticQueueSelectorAttachment(RouterQueueSelector queueSelector)
-        {
-            Argument.AssertNotNull(queueSelector, nameof(queueSelector));
-
-            Kind = "static";
-            QueueSelector = queueSelector;
-        }
-
-        /// <summary> Initializes a new instance of StaticQueueSelectorAttachment. </summary>
-        /// <param name="kind"> Discriminator. </param>
+        /// <param name="kind"> The type discriminator describing a sub-type of QueueSelectorAttachment. </param>
         /// <param name="queueSelector">
         /// Describes a condition that must be met against a set of labels for queue
         /// selection

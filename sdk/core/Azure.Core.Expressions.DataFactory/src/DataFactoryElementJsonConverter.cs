@@ -330,7 +330,7 @@ namespace Azure.Core.Expressions.DataFactory
                 return new DataFactoryElement<T?>((T)(object)new Uri(json.GetString()!));
             }
 
-            if (typeof(T) == typeof(BinaryData) && json.ValueKind == JsonValueKind.Object)
+            if (typeof(T) == typeof(BinaryData))
             {
                 return new DataFactoryElement<T?>((T)(object)BinaryData.FromString(json.GetRawText()!));
             }
