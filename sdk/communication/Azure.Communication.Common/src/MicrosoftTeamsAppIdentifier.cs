@@ -5,7 +5,7 @@ using Azure.Core;
 
 namespace Azure.Communication
 {
-    /// <summary>Represents a Microsoft Teams app.</summary>
+    /// <summary>Represents a Microsoft Teams Application.</summary>
     public class MicrosoftTeamsAppIdentifier : CommunicationIdentifier
     {
         private string _rawId;
@@ -38,17 +38,17 @@ namespace Azure.Communication
             }
         }
 
-        /// <summary>The id of the Microsoft Teams app.</summary>
+        /// <summary>The id of the Microsoft Teams Application.</summary>
         public string TeamsAppId { get; }
 
-        /// <summary> The cloud that the app belongs to. </summary>
+        /// <summary> The cloud that the application belongs to. </summary>
         public CommunicationCloudEnvironment Cloud { get; }
 
         /// <summary>
         /// Initializes a new instance of <see cref="MicrosoftTeamsAppIdentifier"/>.
         /// </summary>
-        /// <param name="teamsAppId">Id of the Microsoft teams app. The unique Microsoft app ID for Teams.</param>
-        /// <param name="cloud">The cloud that the Microsoft teams app belongs to. A null value translates to the Public cloud.</param>
+        /// <param name="teamsAppId">Id of the Microsoft Teams Application. The unique Microsoft app ID for Teams.</param>
+        /// <param name="cloud">The cloud that the Microsoft Teams Application belongs to. A null value translates to the Public cloud.</param>
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when the <paramref name="teamsAppId"/> is null.
         /// </exception>

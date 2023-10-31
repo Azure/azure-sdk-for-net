@@ -4,7 +4,7 @@
 
 ### Features Added
 - Added support for a new communication identifier `MicrosoftTeamsAppIdentifier`.
-- Removed `MicrosoftBotIdentifier`.
+- Introduction of `MicrosoftTeamsAppIdentifier` is a breaking change. It will affect code that relied on using `UnknownIdentifier` with a rawID starting with `28:orgid:`.
 
 ### Bugs Fixed
 
