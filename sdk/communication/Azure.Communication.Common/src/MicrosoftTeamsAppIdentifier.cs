@@ -47,7 +47,7 @@ namespace Azure.Communication
         /// <summary>
         /// Initializes a new instance of <see cref="MicrosoftTeamsAppIdentifier"/>.
         /// </summary>
-        /// <param name="teamsAppId">Id of the Microsoft Teams Application. The unique Microsoft app ID for Teams.</param>
+        /// <param name="teamsAppId">The unique ID of the Microsoft Teams Application.</param>
         /// <param name="cloud">The cloud that the Microsoft Teams Application belongs to. A null value translates to the Public cloud.</param>
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when the <paramref name="teamsAppId"/> is null.
