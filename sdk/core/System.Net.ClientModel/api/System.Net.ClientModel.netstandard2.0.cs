@@ -44,11 +44,12 @@ namespace System.Net.ClientModel
         public System.Net.ClientModel.ModelReaderWriterFormat Format { get { throw null; } }
         public static System.Net.ClientModel.ModelReaderWriterOptions GetOptions(System.Net.ClientModel.ModelReaderWriterFormat format) { throw null; }
     }
-    public partial class NullableResult<T> : System.Net.ClientModel.Result<T>
+    public partial class NullableResult<T> : System.Net.ClientModel.Result
     {
         internal NullableResult() { }
         public virtual bool HasValue { get { throw null; } }
-        public virtual new T? Value { get { throw null; } }
+        public virtual T? Value { get { throw null; } }
+        public override System.Net.ClientModel.Core.MessageResponse GetRawResponse() { throw null; }
     }
     public partial class RequestOptions : System.Net.ClientModel.Core.PipelineOptions
     {
