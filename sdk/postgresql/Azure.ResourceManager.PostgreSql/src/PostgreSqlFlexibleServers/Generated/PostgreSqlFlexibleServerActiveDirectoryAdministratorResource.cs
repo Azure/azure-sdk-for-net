@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
     public partial class PostgreSqlFlexibleServerActiveDirectoryAdministratorResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PostgreSqlFlexibleServerActiveDirectoryAdministratorResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="objectId"> The objectId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string objectId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/administrators/{objectId}";

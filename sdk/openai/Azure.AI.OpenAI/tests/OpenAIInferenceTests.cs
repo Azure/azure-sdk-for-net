@@ -78,6 +78,13 @@ namespace Azure.AI.OpenAI.Tests
             Assert.That(embeddingsOptions, Is.InstanceOf<EmbeddingsOptions>());
             Response<Embeddings> response = await client.GetEmbeddingsAsync(embeddingsOptions);
             Assert.That(response, Is.InstanceOf<Response<Embeddings>>());
+            Assert.That(response.Value, Is.Not.Null);
+            Assert.That(response.Value.Data, Is.Not.Null.Or.Empty);
+
+            EmbeddingItem firstItem = response.Value.Data[0];
+            Assert.That(firstItem, Is.Not.Null);
+            Assert.That(firstItem.Index, Is.EqualTo(0));
+            Assert.That(firstItem.Embedding, Is.Not.Null.Or.Empty);
         }
 
         [RecordedTest]

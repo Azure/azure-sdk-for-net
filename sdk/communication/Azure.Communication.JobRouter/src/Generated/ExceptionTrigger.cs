@@ -25,8 +25,5 @@ namespace Azure.Communication.JobRouter
         {
             Kind = kind;
         }
-
-        /// <summary> The type discriminator describing a sub-type of ExceptionTrigger. </summary>
-        internal string Kind { get; set; }
     }
 }

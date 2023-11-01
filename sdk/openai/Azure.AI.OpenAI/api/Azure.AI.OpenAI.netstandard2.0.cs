@@ -200,7 +200,7 @@ namespace Azure.AI.OpenAI
         public static Azure.AI.OpenAI.CompletionsUsage CompletionsUsage(int completionTokens = 0, int promptTokens = 0, int totalTokens = 0) { throw null; }
         public static Azure.AI.OpenAI.ContentFilterResult ContentFilterResult(Azure.AI.OpenAI.ContentFilterSeverity severity = default(Azure.AI.OpenAI.ContentFilterSeverity), bool filtered = false) { throw null; }
         public static Azure.AI.OpenAI.ContentFilterResults ContentFilterResults(Azure.AI.OpenAI.ContentFilterResult sexual = null, Azure.AI.OpenAI.ContentFilterResult violence = null, Azure.AI.OpenAI.ContentFilterResult hate = null, Azure.AI.OpenAI.ContentFilterResult selfHarm = null, Azure.ResponseError error = null) { throw null; }
-        public static Azure.AI.OpenAI.EmbeddingItem EmbeddingItem(System.Collections.Generic.IEnumerable<float> embedding = null, int index = 0) { throw null; }
+        public static Azure.AI.OpenAI.EmbeddingItem EmbeddingItem(System.ReadOnlyMemory<float> embedding = default(System.ReadOnlyMemory<float>), int index = 0) { throw null; }
         public static Azure.AI.OpenAI.Embeddings Embeddings(System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.EmbeddingItem> data = null, Azure.AI.OpenAI.EmbeddingsUsage usage = null) { throw null; }
         public static Azure.AI.OpenAI.EmbeddingsUsage EmbeddingsUsage(int promptTokens = 0, int totalTokens = 0) { throw null; }
         public static Azure.AI.OpenAI.ImageGenerations ImageGenerations(System.DateTimeOffset created = default(System.DateTimeOffset), System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.ImageLocation> data = null) { throw null; }
@@ -388,7 +388,7 @@ namespace Azure.AI.OpenAI
     public partial class EmbeddingItem
     {
         internal EmbeddingItem() { }
-        public System.Collections.Generic.IReadOnlyList<float> Embedding { get { throw null; } }
+        public System.ReadOnlyMemory<float> Embedding { get { throw null; } }
         public int Index { get { throw null; } }
     }
     public partial class Embeddings

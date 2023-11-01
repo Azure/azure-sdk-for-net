@@ -23,13 +23,13 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             var createQueueResponse = await CreateQueueAsync(nameof(CreateClassificationPolicyTest));
 
             var classificationPolicyId = GenerateUniqueId($"{IdPrefix}{nameof(CreateClassificationPolicyTest)}");
-            var prioritizationRule = new StaticRouterRule(new LabelValue(1));
+            var prioritizationRule = new StaticRouterRule(new RouterValue(1));
 
             var createClassificationPolicyResponse = await routerClient.CreateClassificationPolicyAsync(
                 new CreateClassificationPolicyOptions(classificationPolicyId)
                 {
-                    QueueSelectorAttachments = { new StaticQueueSelectorAttachment(new RouterQueueSelector("Id", LabelOperator.Equal, new LabelValue(createQueueResponse.Value.Id))) },
-                    WorkerSelectorAttachments = { new StaticWorkerSelectorAttachment(new RouterWorkerSelector("key", LabelOperator.Equal, new LabelValue("value"))) },
+                    QueueSelectorAttachments = { new StaticQueueSelectorAttachment(new RouterQueueSelector("Id", LabelOperator.Equal, new RouterValue(createQueueResponse.Value.Id))) },
+                    WorkerSelectorAttachments = { new StaticWorkerSelectorAttachment(new RouterWorkerSelector("key", LabelOperator.Equal, new RouterValue("value"))) },
                     PrioritizationRule = prioritizationRule
                 });
 
@@ -70,8 +70,8 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 new ClassificationPolicy(classificationPolicyId)
                 {
                     FallbackQueueId = createQueueResponse.Value.Id,
-                    QueueSelectorAttachments = { new StaticQueueSelectorAttachment(new RouterQueueSelector("Id", LabelOperator.Equal, new LabelValue(createQueueResponse.Value.Id))) },
-                    WorkerSelectorAttachments = { new StaticWorkerSelectorAttachment(new RouterWorkerSelector("key", LabelOperator.Equal, new LabelValue("value"))) },
+                    QueueSelectorAttachments = { new StaticQueueSelectorAttachment(new RouterQueueSelector("Id", LabelOperator.Equal, new RouterValue(createQueueResponse.Value.Id))) },
+                    WorkerSelectorAttachments = { new StaticWorkerSelectorAttachment(new RouterWorkerSelector("key", LabelOperator.Equal, new RouterValue("value"))) },
                     PrioritizationRule = prioritizationRule,
                     Name = classificationPolicyName,
                 });
@@ -148,7 +148,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
 
             var classificationPolicyId = $"{IdPrefix}-CPPri";
             var classificationPolicyName = $"Priority-ClassificationPolicy";
-            var priorityRule = new StaticRouterRule(new LabelValue(10));
+            var priorityRule = new StaticRouterRule(new RouterValue(10));
             var createClassificationPolicyResponse = await routerClient.CreateClassificationPolicyAsync(
                 new CreateClassificationPolicyOptions(classificationPolicyId)
                 {
@@ -183,7 +183,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                     QueueSelectorAttachments =
                     {
                         new StaticQueueSelectorAttachment(new RouterQueueSelector("Id", LabelOperator.Equal,
-                            new LabelValue(createQueueResponse.Value.Id)))
+                            new RouterValue(createQueueResponse.Value.Id)))
                     }
                 });
 
@@ -210,7 +210,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
                 new CreateClassificationPolicyOptions(classificationPolicyId)
                 {
                     Name = classificationPolicyName,
-                    WorkerSelectorAttachments = { new StaticWorkerSelectorAttachment(new RouterWorkerSelector("department", LabelOperator.Equal, new LabelValue("sales"))) }
+                    WorkerSelectorAttachments = { new StaticWorkerSelectorAttachment(new RouterWorkerSelector("department", LabelOperator.Equal, new RouterValue("sales"))) }
                 });
 
             AddForCleanup(new Task(async () => await routerClient.DeleteClassificationPolicyAsync(classificationPolicyId)));

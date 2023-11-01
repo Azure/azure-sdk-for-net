@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.AlertsManagement
     public partial class SmartGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SmartGroupResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="smartGroupId"> The smartGroupId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, Guid smartGroupId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/smartGroups/{smartGroupId}";

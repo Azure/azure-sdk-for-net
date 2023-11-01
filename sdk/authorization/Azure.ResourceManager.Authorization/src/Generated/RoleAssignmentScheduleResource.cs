@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.Authorization
     public partial class RoleAssignmentScheduleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="RoleAssignmentScheduleResource"/> instance. </summary>
+        /// <param name="scope"> The scope. </param>
+        /// <param name="roleAssignmentScheduleName"> The roleAssignmentScheduleName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string roleAssignmentScheduleName)
         {
             var resourceId = $"{scope}/providers/Microsoft.Authorization/roleAssignmentSchedules/{roleAssignmentScheduleName}";

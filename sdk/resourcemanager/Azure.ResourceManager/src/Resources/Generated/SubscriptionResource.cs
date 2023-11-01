@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.Resources
     public partial class SubscriptionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SubscriptionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}";

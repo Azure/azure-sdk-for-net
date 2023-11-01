@@ -27,12 +27,12 @@ namespace Azure.Communication.JobRouter
         /// <summary>
         /// A set of key/value pairs that are identifying attributes used by the rules engines to make decisions.
         /// </summary>
-        public IDictionary<string, LabelValue> Labels { get; } = new Dictionary<string, LabelValue>();
+        public IDictionary<string, RouterValue> Labels { get; } = new Dictionary<string, RouterValue>();
 
         /// <summary>
         /// A set of non-identifying attributes attached to this worker.
         /// </summary>
-        public IDictionary<string, LabelValue> Tags { get; } = new Dictionary<string, LabelValue>();
+        public IDictionary<string, RouterValue> Tags { get; } = new Dictionary<string, RouterValue>();
 
         /// <summary> The channel(s) this worker can handle and their impact on the workers capacity. </summary>
         public IList<RouterChannel> Channels { get; } = new List<RouterChannel>();
@@ -44,7 +44,7 @@ namespace Azure.Communication.JobRouter
         public int? Capacity { get; set; }
 
         /// <summary> A flag indicating this worker is open to receive offers or not. </summary>
-        public bool? AvailableForOffers { get; internal set; }
+        public bool? AvailableForOffers { get; set; }
 
         [CodeGenMember("Labels")]
         internal IDictionary<string, BinaryData> _labels
@@ -61,7 +61,7 @@ namespace Azure.Communication.JobRouter
                 {
                     foreach (var label in value)
                     {
-                        Labels[label.Key] = new LabelValue(label.Value.ToObjectFromJson());
+                        Labels[label.Key] = new RouterValue(label.Value.ToObjectFromJson());
                     }
                 }
             }
@@ -82,11 +82,27 @@ namespace Azure.Communication.JobRouter
                 {
                     foreach (var tag in value)
                     {
-                        Tags[tag.Key] = new LabelValue(tag.Value.ToObjectFromJson());
+                        Tags[tag.Key] = new RouterValue(tag.Value.ToObjectFromJson());
                     }
                 }
             }
         }
+
+        [CodeGenMember("Etag")]
+        internal string _etag
+        {
+            get
+            {
+                return ETag.ToString();
+            }
+            set
+            {
+                ETag = new ETag(value);
+            }
+        }
+
+        /// <summary> Concurrency Token. </summary>
+        public ETag ETag { get; internal set; }
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -152,6 +168,11 @@ namespace Azure.Communication.JobRouter
             {
                 writer.WritePropertyName("availableForOffers"u8);
                 writer.WriteBooleanValue(AvailableForOffers.Value);
+            }
+            if (Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.ToString());
             }
             writer.WriteEndObject();
         }

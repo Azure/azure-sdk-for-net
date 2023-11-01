@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.Support
     public partial class SubscriptionSupportTicketResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SubscriptionSupportTicketResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="supportTicketName"> The supportTicketName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string supportTicketName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}";

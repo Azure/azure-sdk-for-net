@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.Authorization
     public partial class AuthorizationProviderOperationsMetadataResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AuthorizationProviderOperationsMetadataResource"/> instance. </summary>
+        /// <param name="resourceProviderNamespace"> The resourceProviderNamespace. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string resourceProviderNamespace)
         {
             var resourceId = $"/providers/Microsoft.Authorization/providerOperations/{resourceProviderNamespace}";

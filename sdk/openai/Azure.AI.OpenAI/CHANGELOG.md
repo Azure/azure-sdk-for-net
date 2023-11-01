@@ -62,6 +62,10 @@ And *added* as replacements are:
 - `CompletionsOptions(string, IEnumerable<string>)`
 - `EmbeddingsOptions(string, IEnumerable<string>)`
 
+#### Embeddings
+
+- Changed the representation of embeddings from `IReadOnlyList<float>` to `ReadOnlyMemory<float>`.
+
 ### Bugs Fixed
 
 ### Other Changes

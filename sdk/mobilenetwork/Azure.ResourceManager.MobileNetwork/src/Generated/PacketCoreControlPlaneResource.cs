@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.MobileNetwork
     public partial class PacketCoreControlPlaneResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PacketCoreControlPlaneResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="packetCoreControlPlaneName"> The packetCoreControlPlaneName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string packetCoreControlPlaneName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/packetCoreControlPlanes/{packetCoreControlPlaneName}";

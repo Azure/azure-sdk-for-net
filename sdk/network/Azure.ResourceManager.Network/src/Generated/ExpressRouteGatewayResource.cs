@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.Network
     public partial class ExpressRouteGatewayResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ExpressRouteGatewayResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="expressRouteGatewayName"> The expressRouteGatewayName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string expressRouteGatewayName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteGateways/{expressRouteGatewayName}";

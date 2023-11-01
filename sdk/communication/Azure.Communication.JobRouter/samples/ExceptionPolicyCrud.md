@@ -35,8 +35,8 @@ var escalateJobOnQueueOverFlow = new ReclassifyExceptionAction
     ClassificationPolicyId = "escalation-on-q-over-flow",
     LabelsToUpsert =
     {
-        ["EscalateJob"] = new LabelValue(true),
-        ["EscalationReasonCode"] = new LabelValue("QueueOverFlow")
+        ["EscalateJob"] = new RouterValue(true),
+        ["EscalationReasonCode"] = new RouterValue("QueueOverFlow")
     }
 };
 
@@ -50,8 +50,8 @@ ReclassifyExceptionAction escalateJobOnWaitTimeExceeded = new()
     ClassificationPolicyId = "escalation-on-wait-time-exceeded",
     LabelsToUpsert =
     {
-        ["EscalateJob"] = new LabelValue(true),
-        ["EscalationReasonCode"] = new LabelValue("WaitTimeExceeded")
+        ["EscalateJob"] = new RouterValue(true),
+        ["EscalationReasonCode"] = new RouterValue("WaitTimeExceeded")
     }
 };
 
@@ -105,8 +105,8 @@ var escalateJobOnWaitTimeExceeded2 = new ReclassifyExceptionAction
     ClassificationPolicyId = "escalation-on-wait-time-exceeded",
     LabelsToUpsert =
     {
-        ["EscalateJob"] = new LabelValue(true),
-        ["EscalationReasonCode"] = new LabelValue("WaitTimeExceeded2Min")
+        ["EscalateJob"] = new RouterValue(true),
+        ["EscalationReasonCode"] = new RouterValue("WaitTimeExceeded2Min")
     }
 };
 

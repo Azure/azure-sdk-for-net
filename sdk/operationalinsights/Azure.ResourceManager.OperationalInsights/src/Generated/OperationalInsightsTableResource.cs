@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.OperationalInsights
     public partial class OperationalInsightsTableResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="OperationalInsightsTableResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="tableName"> The tableName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string tableName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/tables/{tableName}";

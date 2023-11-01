@@ -9,8 +9,6 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    [CodeGenModel("ReclassifyExceptionAction")]
-    // [CodeGenSuppress("ReclassifyExceptionAction")]
     public partial class ReclassifyExceptionAction : IUtf8JsonSerializable
     {
         /// <summary> Initializes a new instance of CancelExceptionAction. </summary>
@@ -35,7 +33,7 @@ namespace Azure.Communication.JobRouter
                 {
                     foreach (var label in value)
                     {
-                        LabelsToUpsert[label.Key] = new LabelValue(label.Value.ToObjectFromJson());
+                        LabelsToUpsert[label.Key] = new RouterValue(label.Value.ToObjectFromJson());
                     }
                 }
             }
@@ -44,7 +42,7 @@ namespace Azure.Communication.JobRouter
         /// <summary>
         /// (optional) Dictionary containing the labels to update (or add if not existing) in key-value pairs
         /// </summary>
-        public IDictionary<string, LabelValue> LabelsToUpsert { get; } = new Dictionary<string, LabelValue>();
+        public IDictionary<string, RouterValue> LabelsToUpsert { get; } = new Dictionary<string, RouterValue>();
 
         /// <summary>
         /// (optional) The new classification policy that will determine queue, priority

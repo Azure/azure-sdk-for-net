@@ -105,7 +105,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/openai/Azure.AI.OpenAI/tests/Samples).
 
-### Generate Chatbot Response
+### Generate chatbot response
 
 The `GenerateChatbotResponse` method authenticates using a DefaultAzureCredential, then generates text responses to input prompts.
 
@@ -124,7 +124,7 @@ string completion = completionsResponse.Value.Choices[0].Text;
 Console.WriteLine($"Chatbot: {completion}");
 ```
 
-### Generate Multiple Chatbot Responses With Subscription Key
+### Generate multiple chatbot responses with subscription key
 
 The `GenerateMultipleChatbotResponsesWithSubscriptionKey` method gives an example of generating text responses to input prompts using an Azure subscription key
 
@@ -155,7 +155,7 @@ foreach (Choice choice in completionsResponse.Value.Choices)
 }
 ```
 
-### Summarize Text with Completion
+### Summarize text with completion
 
 The `SummarizeText` method generates a summarization of the given input prompt.
 
@@ -192,7 +192,7 @@ string completion = completionsResponse.Value.Choices[0].Text;
 Console.WriteLine($"Summarization: {completion}");
 ```
 
-### Stream Chat Messages with non-Azure OpenAI
+### Stream chat messages with non-Azure OpenAI
 
 ```C# Snippet:StreamChatMessages
 string nonAzureOpenAIApiKey = "your-api-key-from-platform.openai.com";
@@ -223,7 +223,7 @@ await foreach (StreamingChatChoice choice in streamingChatCompletions.GetChoices
 }
 ```
 
-### Use Chat Functions
+### Use chat functions
 
 Chat Functions allow a caller of Chat Completions to define capabilities that the model can use to extend its
 functionality into external tools and data sources.
@@ -386,6 +386,18 @@ foreach (ChatMessage contextMessage in message.AzureExtensionsContext.Messages)
     Console.WriteLine($"{contextMessage.Role}: {contextMessage.Content}");
 }
 ```
+
+### Generate embeddings
+
+```C# Snippet:GenerateEmbeddings
+string deploymentOrModelName = "text-embedding-ada-002";
+EmbeddingsOptions embeddingsOptions = new("Your text string goes here");
+Response<Embeddings> response = await client.GetEmbeddingsAsync(deploymentOrModelName, embeddingsOptions);
+
+// The response includes the generated embedding.
+EmbeddingItem item = response.Value.Data[0];
+ReadOnlyMemory<float> embedding = item.Embedding;
+``````
 
 ### Generate images with DALL-E image generation models
 
