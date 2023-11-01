@@ -11,11 +11,6 @@ namespace Azure.Communication.JobRouter
     internal partial class UnknownDistributionMode : DistributionMode
     {
         /// <summary> Initializes a new instance of UnknownDistributionMode. </summary>
-        internal UnknownDistributionMode()
-        {
-        }
-
-        /// <summary> Initializes a new instance of UnknownDistributionMode. </summary>
         /// <param name="minConcurrentOffers"> Governs the minimum desired number of active concurrent offers a job can have. </param>
         /// <param name="maxConcurrentOffers"> Governs the maximum number of active concurrent offers a job can have. </param>
         /// <param name="bypassSelectors">

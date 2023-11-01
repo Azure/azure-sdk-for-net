@@ -73,7 +73,6 @@ namespace Azure.Communication.JobRouter
         {
             Argument.AssertNotNullOrEmpty(distributionPolicyId, nameof(distributionPolicyId));
             Argument.AssertNotNull(content, nameof(content));
-
             Argument.AssertNull(requestConditions.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
             Argument.AssertNull(requestConditions.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
 
@@ -113,7 +112,6 @@ namespace Azure.Communication.JobRouter
         {
             Argument.AssertNotNullOrEmpty(distributionPolicyId, nameof(distributionPolicyId));
             Argument.AssertNotNull(content, nameof(content));
-
             Argument.AssertNull(requestConditions.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
             Argument.AssertNull(requestConditions.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
 
@@ -335,7 +333,6 @@ namespace Azure.Communication.JobRouter
         {
             Argument.AssertNotNullOrEmpty(classificationPolicyId, nameof(classificationPolicyId));
             Argument.AssertNotNull(content, nameof(content));
-
             Argument.AssertNull(requestConditions.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
             Argument.AssertNull(requestConditions.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
 
@@ -375,7 +372,6 @@ namespace Azure.Communication.JobRouter
         {
             Argument.AssertNotNullOrEmpty(classificationPolicyId, nameof(classificationPolicyId));
             Argument.AssertNotNull(content, nameof(content));
-
             Argument.AssertNull(requestConditions.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
             Argument.AssertNull(requestConditions.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
 
@@ -597,7 +593,6 @@ namespace Azure.Communication.JobRouter
         {
             Argument.AssertNotNullOrEmpty(exceptionPolicyId, nameof(exceptionPolicyId));
             Argument.AssertNotNull(content, nameof(content));
-
             Argument.AssertNull(requestConditions.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
             Argument.AssertNull(requestConditions.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
 
@@ -637,7 +632,6 @@ namespace Azure.Communication.JobRouter
         {
             Argument.AssertNotNullOrEmpty(exceptionPolicyId, nameof(exceptionPolicyId));
             Argument.AssertNotNull(content, nameof(content));
-
             Argument.AssertNull(requestConditions.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
             Argument.AssertNull(requestConditions.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
 
@@ -859,7 +853,6 @@ namespace Azure.Communication.JobRouter
         {
             Argument.AssertNotNullOrEmpty(queueId, nameof(queueId));
             Argument.AssertNotNull(content, nameof(content));
-
             Argument.AssertNull(requestConditions.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
             Argument.AssertNull(requestConditions.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
 
@@ -899,7 +892,6 @@ namespace Azure.Communication.JobRouter
         {
             Argument.AssertNotNullOrEmpty(queueId, nameof(queueId));
             Argument.AssertNotNull(content, nameof(content));
-
             Argument.AssertNull(requestConditions.IfNoneMatch, nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
             Argument.AssertNull(requestConditions.IfModifiedSince, nameof(requestConditions), "Service does not support the If-Modified-Since header for this operation.");
 

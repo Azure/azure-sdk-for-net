@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -122,29 +123,54 @@ namespace Azure.Communication.MediaComposition
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            MediaComposition mediaComposition = new MediaComposition()
+            if (inputs == null || !inputs.Any())
             {
-                Id = id,
-                Layout = layout,
-                StreamState = streamState
-            };
-            if (inputs != null)
-            {
-                foreach (var value in inputs)
-                {
-                    mediaComposition.Inputs.Add(value);
-                }
+                inputs = new ChangeTrackingDictionary<string, MediaInput>();
             }
-            if (outputs != null)
+            if (outputs == null || !outputs.Any())
             {
-                foreach (var value in outputs)
-                {
-                    mediaComposition.Outputs.Add(value);
-                }
+                outputs = new ChangeTrackingDictionary<string, MediaOutput>();
             }
-            var model = mediaComposition;
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteStartObject();
+            if (Optional.IsDefined(id))
+            {
+                content.JsonWriter.WritePropertyName("id"u8);
+                content.JsonWriter.WriteStringValue(id);
+            }
+            if (Optional.IsDefined(layout))
+            {
+                content.JsonWriter.WritePropertyName("layout"u8);
+                content.JsonWriter.WriteObjectValue(layout);
+            }
+            if (Optional.IsCollectionDefined(inputs))
+            {
+                content.JsonWriter.WritePropertyName("inputs"u8);
+                content.JsonWriter.WriteStartObject();
+                foreach (var item in inputs)
+                {
+                    content.JsonWriter.WritePropertyName(item.Key);
+                    content.JsonWriter.WriteObjectValue(item.Value);
+                }
+                content.JsonWriter.WriteEndObject();
+            }
+            if (Optional.IsCollectionDefined(outputs))
+            {
+                content.JsonWriter.WritePropertyName("outputs"u8);
+                content.JsonWriter.WriteStartObject();
+                foreach (var item in outputs)
+                {
+                    content.JsonWriter.WritePropertyName(item.Key);
+                    content.JsonWriter.WriteObjectValue(item.Value);
+                }
+                content.JsonWriter.WriteEndObject();
+            }
+            if (Optional.IsDefined(streamState))
+            {
+                content.JsonWriter.WritePropertyName("streamState"u8);
+                content.JsonWriter.WriteObjectValue(streamState);
+            }
+            content.JsonWriter.WriteEndObject();
             request.Content = content;
             return message;
         }
@@ -226,29 +252,54 @@ namespace Azure.Communication.MediaComposition
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/merge-patch+json");
-            MediaComposition mediaComposition = new MediaComposition()
+            if (inputs == null || !inputs.Any())
             {
-                Id = id,
-                Layout = layout,
-                StreamState = streamState
-            };
-            if (inputs != null)
-            {
-                foreach (var value in inputs)
-                {
-                    mediaComposition.Inputs.Add(value);
-                }
+                inputs = new ChangeTrackingDictionary<string, MediaInput>();
             }
-            if (outputs != null)
+            if (outputs == null || !outputs.Any())
             {
-                foreach (var value in outputs)
-                {
-                    mediaComposition.Outputs.Add(value);
-                }
+                outputs = new ChangeTrackingDictionary<string, MediaOutput>();
             }
-            var model = mediaComposition;
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteStartObject();
+            if (Optional.IsDefined(id))
+            {
+                content.JsonWriter.WritePropertyName("id"u8);
+                content.JsonWriter.WriteStringValue(id);
+            }
+            if (Optional.IsDefined(layout))
+            {
+                content.JsonWriter.WritePropertyName("layout"u8);
+                content.JsonWriter.WriteObjectValue(layout);
+            }
+            if (Optional.IsCollectionDefined(inputs))
+            {
+                content.JsonWriter.WritePropertyName("inputs"u8);
+                content.JsonWriter.WriteStartObject();
+                foreach (var item in inputs)
+                {
+                    content.JsonWriter.WritePropertyName(item.Key);
+                    content.JsonWriter.WriteObjectValue(item.Value);
+                }
+                content.JsonWriter.WriteEndObject();
+            }
+            if (Optional.IsCollectionDefined(outputs))
+            {
+                content.JsonWriter.WritePropertyName("outputs"u8);
+                content.JsonWriter.WriteStartObject();
+                foreach (var item in outputs)
+                {
+                    content.JsonWriter.WritePropertyName(item.Key);
+                    content.JsonWriter.WriteObjectValue(item.Value);
+                }
+                content.JsonWriter.WriteEndObject();
+            }
+            if (Optional.IsDefined(streamState))
+            {
+                content.JsonWriter.WritePropertyName("streamState"u8);
+                content.JsonWriter.WriteObjectValue(streamState);
+            }
+            content.JsonWriter.WriteEndObject();
             request.Content = content;
             return message;
         }
