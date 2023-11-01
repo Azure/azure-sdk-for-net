@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.DnsResolver
     public partial class DnsResolverInboundEndpointResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DnsResolverInboundEndpointResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="dnsResolverName"> The dnsResolverName. </param>
+        /// <param name="inboundEndpointName"> The inboundEndpointName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string dnsResolverName, string inboundEndpointName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsResolvers/{dnsResolverName}/inboundEndpoints/{inboundEndpointName}";
