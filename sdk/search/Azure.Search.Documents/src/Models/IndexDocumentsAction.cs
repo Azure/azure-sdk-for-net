@@ -4,12 +4,9 @@
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.Reflection;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using Azure.Core;
 using Azure.Core.Serialization;
 

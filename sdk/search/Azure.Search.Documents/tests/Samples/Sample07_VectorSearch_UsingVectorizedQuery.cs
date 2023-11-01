@@ -15,7 +15,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
     public partial class VectorSearchUsingVectorizedQuery : SearchTestBase
     {
         public VectorSearchUsingVectorizedQuery(bool async, SearchClientOptions.ServiceVersion serviceVersion)
-            : base(async, SearchClientOptions.ServiceVersion.V2023_11_01, RecordedTestMode.Live /* to re-record */)
+            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
