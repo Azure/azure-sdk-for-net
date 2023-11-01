@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Logic
     public partial class IntegrationServiceEnvironmentResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="IntegrationServiceEnvironmentResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroup"> The resourceGroup. </param>
+        /// <param name="integrationServiceEnvironmentName"> The integrationServiceEnvironmentName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroup, string integrationServiceEnvironmentName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Logic/integrationServiceEnvironments/{integrationServiceEnvironmentName}";
