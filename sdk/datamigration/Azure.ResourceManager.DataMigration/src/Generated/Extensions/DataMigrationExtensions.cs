@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.DataMigration.Mocking;
 using Azure.ResourceManager.DataMigration.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,214 +20,177 @@ namespace Azure.ResourceManager.DataMigration
     /// <summary> A class to add extension methods to Azure.ResourceManager.DataMigration. </summary>
     public static partial class DataMigrationExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static MockableDataMigrationArmClient GetMockableDataMigrationArmClient(ArmClient client)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
-            });
+            return client.GetCachedClient(client0 => new MockableDataMigrationArmClient(client0));
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MockableDataMigrationResourceGroupResource GetMockableDataMigrationResourceGroupResource(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
+            return resource.GetCachedClient(client => new MockableDataMigrationResourceGroupResource(client, resource.Id));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static MockableDataMigrationSubscriptionResource GetMockableDataMigrationSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new MockableDataMigrationSubscriptionResource(client, resource.Id));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-        #region DatabaseMigrationSqlDBResource
         /// <summary>
         /// Gets an object representing a <see cref="DatabaseMigrationSqlDBResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DatabaseMigrationSqlDBResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseMigrationSqlDBResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDataMigrationArmClient.GetDatabaseMigrationSqlDBResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DatabaseMigrationSqlDBResource" /> object. </returns>
         public static DatabaseMigrationSqlDBResource GetDatabaseMigrationSqlDBResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DatabaseMigrationSqlDBResource.ValidateResourceId(id);
-                return new DatabaseMigrationSqlDBResource(client, id);
-            }
-            );
+            return GetMockableDataMigrationArmClient(client).GetDatabaseMigrationSqlDBResource(id);
         }
-        #endregion
 
-        #region DatabaseMigrationSqlMIResource
         /// <summary>
         /// Gets an object representing a <see cref="DatabaseMigrationSqlMIResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DatabaseMigrationSqlMIResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseMigrationSqlMIResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDataMigrationArmClient.GetDatabaseMigrationSqlMIResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DatabaseMigrationSqlMIResource" /> object. </returns>
         public static DatabaseMigrationSqlMIResource GetDatabaseMigrationSqlMIResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DatabaseMigrationSqlMIResource.ValidateResourceId(id);
-                return new DatabaseMigrationSqlMIResource(client, id);
-            }
-            );
+            return GetMockableDataMigrationArmClient(client).GetDatabaseMigrationSqlMIResource(id);
         }
-        #endregion
 
-        #region DatabaseMigrationSqlVmResource
         /// <summary>
         /// Gets an object representing a <see cref="DatabaseMigrationSqlVmResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DatabaseMigrationSqlVmResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseMigrationSqlVmResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDataMigrationArmClient.GetDatabaseMigrationSqlVmResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DatabaseMigrationSqlVmResource" /> object. </returns>
         public static DatabaseMigrationSqlVmResource GetDatabaseMigrationSqlVmResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DatabaseMigrationSqlVmResource.ValidateResourceId(id);
-                return new DatabaseMigrationSqlVmResource(client, id);
-            }
-            );
+            return GetMockableDataMigrationArmClient(client).GetDatabaseMigrationSqlVmResource(id);
         }
-        #endregion
 
-        #region SqlMigrationServiceResource
         /// <summary>
         /// Gets an object representing a <see cref="SqlMigrationServiceResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SqlMigrationServiceResource.CreateResourceIdentifier" /> to create a <see cref="SqlMigrationServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDataMigrationArmClient.GetSqlMigrationServiceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SqlMigrationServiceResource" /> object. </returns>
         public static SqlMigrationServiceResource GetSqlMigrationServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SqlMigrationServiceResource.ValidateResourceId(id);
-                return new SqlMigrationServiceResource(client, id);
-            }
-            );
+            return GetMockableDataMigrationArmClient(client).GetSqlMigrationServiceResource(id);
         }
-        #endregion
 
-        #region DataMigrationServiceResource
         /// <summary>
         /// Gets an object representing a <see cref="DataMigrationServiceResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DataMigrationServiceResource.CreateResourceIdentifier" /> to create a <see cref="DataMigrationServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDataMigrationArmClient.GetDataMigrationServiceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DataMigrationServiceResource" /> object. </returns>
         public static DataMigrationServiceResource GetDataMigrationServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DataMigrationServiceResource.ValidateResourceId(id);
-                return new DataMigrationServiceResource(client, id);
-            }
-            );
+            return GetMockableDataMigrationArmClient(client).GetDataMigrationServiceResource(id);
         }
-        #endregion
 
-        #region ServiceProjectTaskResource
         /// <summary>
         /// Gets an object representing a <see cref="ServiceProjectTaskResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ServiceProjectTaskResource.CreateResourceIdentifier" /> to create a <see cref="ServiceProjectTaskResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDataMigrationArmClient.GetServiceProjectTaskResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServiceProjectTaskResource" /> object. </returns>
         public static ServiceProjectTaskResource GetServiceProjectTaskResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ServiceProjectTaskResource.ValidateResourceId(id);
-                return new ServiceProjectTaskResource(client, id);
-            }
-            );
+            return GetMockableDataMigrationArmClient(client).GetServiceProjectTaskResource(id);
         }
-        #endregion
 
-        #region ServiceServiceTaskResource
         /// <summary>
         /// Gets an object representing a <see cref="ServiceServiceTaskResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ServiceServiceTaskResource.CreateResourceIdentifier" /> to create a <see cref="ServiceServiceTaskResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDataMigrationArmClient.GetServiceServiceTaskResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ServiceServiceTaskResource" /> object. </returns>
         public static ServiceServiceTaskResource GetServiceServiceTaskResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ServiceServiceTaskResource.ValidateResourceId(id);
-                return new ServiceServiceTaskResource(client, id);
-            }
-            );
+            return GetMockableDataMigrationArmClient(client).GetServiceServiceTaskResource(id);
         }
-        #endregion
 
-        #region ProjectResource
         /// <summary>
         /// Gets an object representing a <see cref="ProjectResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ProjectResource.CreateResourceIdentifier" /> to create a <see cref="ProjectResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDataMigrationArmClient.GetProjectResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ProjectResource" /> object. </returns>
         public static ProjectResource GetProjectResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ProjectResource.ValidateResourceId(id);
-                return new ProjectResource(client, id);
-            }
-            );
+            return GetMockableDataMigrationArmClient(client).GetProjectResource(id);
         }
-        #endregion
 
-        #region ProjectFileResource
         /// <summary>
         /// Gets an object representing a <see cref="ProjectFileResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ProjectFileResource.CreateResourceIdentifier" /> to create a <see cref="ProjectFileResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDataMigrationArmClient.GetProjectFileResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ProjectFileResource" /> object. </returns>
         public static ProjectFileResource GetProjectFileResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ProjectFileResource.ValidateResourceId(id);
-                return new ProjectFileResource(client, id);
-            }
-            );
+            return GetMockableDataMigrationArmClient(client).GetProjectFileResource(id);
         }
-        #endregion
 
-        /// <summary> Gets a collection of DatabaseMigrationSqlDBResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of DatabaseMigrationSqlDBResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDataMigrationResourceGroupResource.GetDatabaseMigrationSqlDBs()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DatabaseMigrationSqlDBResources and their operations over a DatabaseMigrationSqlDBResource. </returns>
         public static DatabaseMigrationSqlDBCollection GetDatabaseMigrationSqlDBs(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDatabaseMigrationSqlDBs();
+            return GetMockableDataMigrationResourceGroupResource(resourceGroupResource).GetDatabaseMigrationSqlDBs();
         }
 
         /// <summary>
@@ -241,6 +205,10 @@ namespace Azure.ResourceManager.DataMigration
         /// <description>DatabaseMigrationsSqlDb_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDataMigrationResourceGroupResource.GetDatabaseMigrationSqlDBAsync(string,string,Guid?,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="sqlDBInstanceName"> The String to use. </param>
@@ -248,12 +216,12 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
         /// <param name="expand"> Complete migration details be included in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sqlDBInstanceName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sqlDBInstanceName"/> or <paramref name="targetDBName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sqlDBInstanceName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<DatabaseMigrationSqlDBResource>> GetDatabaseMigrationSqlDBAsync(this ResourceGroupResource resourceGroupResource, string sqlDBInstanceName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetDatabaseMigrationSqlDBs().GetAsync(sqlDBInstanceName, targetDBName, migrationOperationId, expand, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDataMigrationResourceGroupResource(resourceGroupResource).GetDatabaseMigrationSqlDBAsync(sqlDBInstanceName, targetDBName, migrationOperationId, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -268,6 +236,10 @@ namespace Azure.ResourceManager.DataMigration
         /// <description>DatabaseMigrationsSqlDb_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDataMigrationResourceGroupResource.GetDatabaseMigrationSqlDB(string,string,Guid?,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="sqlDBInstanceName"> The String to use. </param>
@@ -275,20 +247,26 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
         /// <param name="expand"> Complete migration details be included in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sqlDBInstanceName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sqlDBInstanceName"/> or <paramref name="targetDBName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sqlDBInstanceName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<DatabaseMigrationSqlDBResource> GetDatabaseMigrationSqlDB(this ResourceGroupResource resourceGroupResource, string sqlDBInstanceName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetDatabaseMigrationSqlDBs().Get(sqlDBInstanceName, targetDBName, migrationOperationId, expand, cancellationToken);
+            return GetMockableDataMigrationResourceGroupResource(resourceGroupResource).GetDatabaseMigrationSqlDB(sqlDBInstanceName, targetDBName, migrationOperationId, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DatabaseMigrationSqlMIResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of DatabaseMigrationSqlMIResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDataMigrationResourceGroupResource.GetDatabaseMigrationSqlMIs()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DatabaseMigrationSqlMIResources and their operations over a DatabaseMigrationSqlMIResource. </returns>
         public static DatabaseMigrationSqlMICollection GetDatabaseMigrationSqlMIs(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDatabaseMigrationSqlMIs();
+            return GetMockableDataMigrationResourceGroupResource(resourceGroupResource).GetDatabaseMigrationSqlMIs();
         }
 
         /// <summary>
@@ -303,6 +281,10 @@ namespace Azure.ResourceManager.DataMigration
         /// <description>DatabaseMigrationsSqlMi_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDataMigrationResourceGroupResource.GetDatabaseMigrationSqlMIAsync(string,string,Guid?,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="managedInstanceName"> The String to use. </param>
@@ -310,12 +292,12 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
         /// <param name="expand"> Complete migration details be included in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> or <paramref name="targetDBName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<DatabaseMigrationSqlMIResource>> GetDatabaseMigrationSqlMIAsync(this ResourceGroupResource resourceGroupResource, string managedInstanceName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetDatabaseMigrationSqlMIs().GetAsync(managedInstanceName, targetDBName, migrationOperationId, expand, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDataMigrationResourceGroupResource(resourceGroupResource).GetDatabaseMigrationSqlMIAsync(managedInstanceName, targetDBName, migrationOperationId, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -330,6 +312,10 @@ namespace Azure.ResourceManager.DataMigration
         /// <description>DatabaseMigrationsSqlMi_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDataMigrationResourceGroupResource.GetDatabaseMigrationSqlMI(string,string,Guid?,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="managedInstanceName"> The String to use. </param>
@@ -337,20 +323,26 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
         /// <param name="expand"> Complete migration details be included in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> or <paramref name="targetDBName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<DatabaseMigrationSqlMIResource> GetDatabaseMigrationSqlMI(this ResourceGroupResource resourceGroupResource, string managedInstanceName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetDatabaseMigrationSqlMIs().Get(managedInstanceName, targetDBName, migrationOperationId, expand, cancellationToken);
+            return GetMockableDataMigrationResourceGroupResource(resourceGroupResource).GetDatabaseMigrationSqlMI(managedInstanceName, targetDBName, migrationOperationId, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DatabaseMigrationSqlVmResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of DatabaseMigrationSqlVmResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDataMigrationResourceGroupResource.GetDatabaseMigrationSqlVms()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DatabaseMigrationSqlVmResources and their operations over a DatabaseMigrationSqlVmResource. </returns>
         public static DatabaseMigrationSqlVmCollection GetDatabaseMigrationSqlVms(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDatabaseMigrationSqlVms();
+            return GetMockableDataMigrationResourceGroupResource(resourceGroupResource).GetDatabaseMigrationSqlVms();
         }
 
         /// <summary>
@@ -365,6 +357,10 @@ namespace Azure.ResourceManager.DataMigration
         /// <description>DatabaseMigrationsSqlVm_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDataMigrationResourceGroupResource.GetDatabaseMigrationSqlVmAsync(string,string,Guid?,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="sqlVirtualMachineName"> The String to use. </param>
@@ -372,12 +368,12 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
         /// <param name="expand"> Complete migration details be included in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sqlVirtualMachineName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sqlVirtualMachineName"/> or <paramref name="targetDBName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sqlVirtualMachineName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<DatabaseMigrationSqlVmResource>> GetDatabaseMigrationSqlVmAsync(this ResourceGroupResource resourceGroupResource, string sqlVirtualMachineName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetDatabaseMigrationSqlVms().GetAsync(sqlVirtualMachineName, targetDBName, migrationOperationId, expand, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDataMigrationResourceGroupResource(resourceGroupResource).GetDatabaseMigrationSqlVmAsync(sqlVirtualMachineName, targetDBName, migrationOperationId, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -392,6 +388,10 @@ namespace Azure.ResourceManager.DataMigration
         /// <description>DatabaseMigrationsSqlVm_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDataMigrationResourceGroupResource.GetDatabaseMigrationSqlVm(string,string,Guid?,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="sqlVirtualMachineName"> The String to use. </param>
@@ -399,20 +399,26 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
         /// <param name="expand"> Complete migration details be included in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sqlVirtualMachineName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sqlVirtualMachineName"/> or <paramref name="targetDBName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sqlVirtualMachineName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<DatabaseMigrationSqlVmResource> GetDatabaseMigrationSqlVm(this ResourceGroupResource resourceGroupResource, string sqlVirtualMachineName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetDatabaseMigrationSqlVms().Get(sqlVirtualMachineName, targetDBName, migrationOperationId, expand, cancellationToken);
+            return GetMockableDataMigrationResourceGroupResource(resourceGroupResource).GetDatabaseMigrationSqlVm(sqlVirtualMachineName, targetDBName, migrationOperationId, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SqlMigrationServiceResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of SqlMigrationServiceResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDataMigrationResourceGroupResource.GetSqlMigrationServices()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of SqlMigrationServiceResources and their operations over a SqlMigrationServiceResource. </returns>
         public static SqlMigrationServiceCollection GetSqlMigrationServices(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetSqlMigrationServices();
+            return GetMockableDataMigrationResourceGroupResource(resourceGroupResource).GetSqlMigrationServices();
         }
 
         /// <summary>
@@ -427,16 +433,20 @@ namespace Azure.ResourceManager.DataMigration
         /// <description>SqlMigrationServices_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDataMigrationResourceGroupResource.GetSqlMigrationServiceAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="sqlMigrationServiceName"> Name of the SQL Migration Service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sqlMigrationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sqlMigrationServiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sqlMigrationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<SqlMigrationServiceResource>> GetSqlMigrationServiceAsync(this ResourceGroupResource resourceGroupResource, string sqlMigrationServiceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetSqlMigrationServices().GetAsync(sqlMigrationServiceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDataMigrationResourceGroupResource(resourceGroupResource).GetSqlMigrationServiceAsync(sqlMigrationServiceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -451,24 +461,34 @@ namespace Azure.ResourceManager.DataMigration
         /// <description>SqlMigrationServices_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDataMigrationResourceGroupResource.GetSqlMigrationService(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="sqlMigrationServiceName"> Name of the SQL Migration Service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sqlMigrationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sqlMigrationServiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sqlMigrationServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<SqlMigrationServiceResource> GetSqlMigrationService(this ResourceGroupResource resourceGroupResource, string sqlMigrationServiceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetSqlMigrationServices().Get(sqlMigrationServiceName, cancellationToken);
+            return GetMockableDataMigrationResourceGroupResource(resourceGroupResource).GetSqlMigrationService(sqlMigrationServiceName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DataMigrationServiceResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of DataMigrationServiceResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDataMigrationResourceGroupResource.GetDataMigrationServices()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DataMigrationServiceResources and their operations over a DataMigrationServiceResource. </returns>
         public static DataMigrationServiceCollection GetDataMigrationServices(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDataMigrationServices();
+            return GetMockableDataMigrationResourceGroupResource(resourceGroupResource).GetDataMigrationServices();
         }
 
         /// <summary>
@@ -483,16 +503,20 @@ namespace Azure.ResourceManager.DataMigration
         /// <description>Services_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDataMigrationResourceGroupResource.GetDataMigrationServiceAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="serviceName"> Name of the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<DataMigrationServiceResource>> GetDataMigrationServiceAsync(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetDataMigrationServices().GetAsync(serviceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDataMigrationResourceGroupResource(resourceGroupResource).GetDataMigrationServiceAsync(serviceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -507,16 +531,20 @@ namespace Azure.ResourceManager.DataMigration
         /// <description>Services_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDataMigrationResourceGroupResource.GetDataMigrationService(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="serviceName"> Name of the service. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<DataMigrationServiceResource> GetDataMigrationService(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetDataMigrationServices().Get(serviceName, cancellationToken);
+            return GetMockableDataMigrationResourceGroupResource(resourceGroupResource).GetDataMigrationService(serviceName, cancellationToken);
         }
 
         /// <summary>
@@ -531,13 +559,17 @@ namespace Azure.ResourceManager.DataMigration
         /// <description>SqlMigrationServices_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDataMigrationSubscriptionResource.GetSqlMigrationServices(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SqlMigrationServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SqlMigrationServiceResource> GetSqlMigrationServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSqlMigrationServicesAsync(cancellationToken);
+            return GetMockableDataMigrationSubscriptionResource(subscriptionResource).GetSqlMigrationServicesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -552,13 +584,17 @@ namespace Azure.ResourceManager.DataMigration
         /// <description>SqlMigrationServices_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDataMigrationSubscriptionResource.GetSqlMigrationServices(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SqlMigrationServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SqlMigrationServiceResource> GetSqlMigrationServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSqlMigrationServices(cancellationToken);
+            return GetMockableDataMigrationSubscriptionResource(subscriptionResource).GetSqlMigrationServices(cancellationToken);
         }
 
         /// <summary>
@@ -573,13 +609,17 @@ namespace Azure.ResourceManager.DataMigration
         /// <description>ResourceSkus_ListSkus</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDataMigrationSubscriptionResource.GetSkusResourceSkus(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ResourceSku" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ResourceSku> GetSkusResourceSkusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSkusResourceSkusAsync(cancellationToken);
+            return GetMockableDataMigrationSubscriptionResource(subscriptionResource).GetSkusResourceSkusAsync(cancellationToken);
         }
 
         /// <summary>
@@ -594,13 +634,17 @@ namespace Azure.ResourceManager.DataMigration
         /// <description>ResourceSkus_ListSkus</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDataMigrationSubscriptionResource.GetSkusResourceSkus(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceSku" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ResourceSku> GetSkusResourceSkus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetSkusResourceSkus(cancellationToken);
+            return GetMockableDataMigrationSubscriptionResource(subscriptionResource).GetSkusResourceSkus(cancellationToken);
         }
 
         /// <summary>
@@ -615,13 +659,17 @@ namespace Azure.ResourceManager.DataMigration
         /// <description>Services_List</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDataMigrationSubscriptionResource.GetDataMigrationServices(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DataMigrationServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DataMigrationServiceResource> GetDataMigrationServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDataMigrationServicesAsync(cancellationToken);
+            return GetMockableDataMigrationSubscriptionResource(subscriptionResource).GetDataMigrationServicesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -636,13 +684,17 @@ namespace Azure.ResourceManager.DataMigration
         /// <description>Services_List</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDataMigrationSubscriptionResource.GetDataMigrationServices(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataMigrationServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DataMigrationServiceResource> GetDataMigrationServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDataMigrationServices(cancellationToken);
+            return GetMockableDataMigrationSubscriptionResource(subscriptionResource).GetDataMigrationServices(cancellationToken);
         }
 
         /// <summary>
@@ -657,6 +709,10 @@ namespace Azure.ResourceManager.DataMigration
         /// <description>Services_CheckNameAvailability</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDataMigrationSubscriptionResource.CheckNameAvailabilityService(AzureLocation,NameAvailabilityRequest,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The Azure region of the operation. </param>
@@ -665,9 +721,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="nameAvailabilityRequest"/> is null. </exception>
         public static async Task<Response<NameAvailabilityResponse>> CheckNameAvailabilityServiceAsync(this SubscriptionResource subscriptionResource, AzureLocation location, NameAvailabilityRequest nameAvailabilityRequest, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nameAvailabilityRequest, nameof(nameAvailabilityRequest));
-
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).CheckNameAvailabilityServiceAsync(location, nameAvailabilityRequest, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDataMigrationSubscriptionResource(subscriptionResource).CheckNameAvailabilityServiceAsync(location, nameAvailabilityRequest, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -682,6 +736,10 @@ namespace Azure.ResourceManager.DataMigration
         /// <description>Services_CheckNameAvailability</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDataMigrationSubscriptionResource.CheckNameAvailabilityService(AzureLocation,NameAvailabilityRequest,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The Azure region of the operation. </param>
@@ -690,9 +748,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="nameAvailabilityRequest"/> is null. </exception>
         public static Response<NameAvailabilityResponse> CheckNameAvailabilityService(this SubscriptionResource subscriptionResource, AzureLocation location, NameAvailabilityRequest nameAvailabilityRequest, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nameAvailabilityRequest, nameof(nameAvailabilityRequest));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).CheckNameAvailabilityService(location, nameAvailabilityRequest, cancellationToken);
+            return GetMockableDataMigrationSubscriptionResource(subscriptionResource).CheckNameAvailabilityService(location, nameAvailabilityRequest, cancellationToken);
         }
 
         /// <summary>
@@ -707,6 +763,10 @@ namespace Azure.ResourceManager.DataMigration
         /// <description>Usages_List</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDataMigrationSubscriptionResource.GetUsages(AzureLocation,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The Azure region of the operation. </param>
@@ -714,7 +774,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> An async collection of <see cref="Quota" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<Quota> GetUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUsagesAsync(location, cancellationToken);
+            return GetMockableDataMigrationSubscriptionResource(subscriptionResource).GetUsagesAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -729,6 +789,10 @@ namespace Azure.ResourceManager.DataMigration
         /// <description>Usages_List</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableDataMigrationSubscriptionResource.GetUsages(AzureLocation,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The Azure region of the operation. </param>
@@ -736,7 +800,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> A collection of <see cref="Quota" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<Quota> GetUsages(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUsages(location, cancellationToken);
+            return GetMockableDataMigrationSubscriptionResource(subscriptionResource).GetUsages(location, cancellationToken);
         }
     }
 }
