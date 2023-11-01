@@ -69,12 +69,7 @@ namespace System.Net.ClientModel.Core
         /// <param name="cancellationToken">To cancellation token to use.</param>
         public abstract void WriteTo(Stream stream, CancellationToken cancellationToken);
 
-        public static implicit operator BinaryData(MessageBody body)
-            => body.ToBinaryData();
-
-        // This one is needed to allow JsonDocument.Parse(MessageBody) to succeed
-        // without a cast through BinaryData.
-        public static implicit operator ReadOnlyMemory<byte>(MessageBody body)
+        public static explicit operator BinaryData(MessageBody body)
             => body.ToBinaryData();
 
         public static explicit operator Stream(MessageBody body)
@@ -89,9 +84,6 @@ namespace System.Net.ClientModel.Core
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
             => ToBinaryDataSyncOrAsync(cancellationToken, async: false).GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
-
-        //protected virtual async Task<BinaryData> ToBinaryDataAsync(CancellationToken cancellationToken = default)
-        //    => await ToBinaryDataSyncOrAsync(cancellationToken, async: true).ConfigureAwait(false);
 
         private async Task<BinaryData> ToBinaryDataSyncOrAsync(CancellationToken cancellationToken, bool async)
         {
@@ -135,9 +127,6 @@ namespace System.Net.ClientModel.Core
             => ToStreamSyncOrAsync(cancellationToken, async: false).GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
 
-        //protected virtual async Task<Stream> ToStreamAsync(CancellationToken cancellationToken = default)
-        //    => await ToStreamSyncOrAsync(cancellationToken, async: true).ConfigureAwait(false);
-
         private async Task<Stream> ToStreamSyncOrAsync(CancellationToken cancellationToken, bool async)
         {
             MemoryStream stream;
@@ -170,11 +159,6 @@ namespace System.Net.ClientModel.Core
             return stream;
         }
 
-        /// <inheritdoc/>
-        public abstract void Dispose();
-
-        // TODO: Note, this is copied from RequestContent.  When we can remove the corresponding
-        // shared source file, we should make sure there is only one copy of this moving forward.
         private sealed class JsonModelMessageBody : MessageBody
         {
             private readonly IJsonModel<object> _model;
@@ -290,9 +274,6 @@ namespace System.Net.ClientModel.Core
             protected override Stream ToStream(CancellationToken cancellationToken = default)
                 => _stream;
 
-            //protected override Task<Stream> ToStreamAsync(CancellationToken cancellationToken = default)
-            //    => Task.FromResult(_stream);
-
             public override void Dispose()
             {
                 var stream = _stream;
@@ -331,10 +312,10 @@ namespace System.Net.ClientModel.Core
             protected override BinaryData ToBinaryData(CancellationToken cancellationToken = default)
                 => BinaryData.FromBytes(_bytes);
 
-            //protected override Task<BinaryData> ToBinaryDataAsync(CancellationToken cancellationToken = default)
-            //    => Task.FromResult(BinaryData.FromBytes(_bytes));
-
             public override void Dispose() { }
         }
+
+        /// <inheritdoc/>
+        public abstract void Dispose();
     }
 }

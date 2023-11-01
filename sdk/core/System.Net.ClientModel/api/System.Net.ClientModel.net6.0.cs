@@ -127,9 +127,8 @@ namespace System.Net.ClientModel.Core
         public static System.Net.ClientModel.Core.MessageBody Create(System.Net.ClientModel.Core.IJsonModel<object> model, System.Net.ClientModel.ModelReaderWriterOptions? options = null) { throw null; }
         public static System.Net.ClientModel.Core.MessageBody Create(System.Net.ClientModel.Core.IModel<object> model, System.Net.ClientModel.ModelReaderWriterOptions? options = null) { throw null; }
         public abstract void Dispose();
+        public static explicit operator System.BinaryData (System.Net.ClientModel.Core.MessageBody body) { throw null; }
         public static explicit operator System.IO.Stream (System.Net.ClientModel.Core.MessageBody body) { throw null; }
-        public static implicit operator System.BinaryData (System.Net.ClientModel.Core.MessageBody body) { throw null; }
-        public static implicit operator System.ReadOnlyMemory<byte> (System.Net.ClientModel.Core.MessageBody body) { throw null; }
         protected virtual System.BinaryData ToBinaryData(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         protected virtual System.IO.Stream ToStream(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public abstract bool TryComputeLength(out long length);
