@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> An object representing collection of PeeringRegisteredAsnResources and their operations over a PeeringRegisteredAsnResource. </returns>
         public virtual PeeringRegisteredAsnCollection GetPeeringRegisteredAsns()
         {
-            return GetCachedClient(Client => new PeeringRegisteredAsnCollection(Client, Id));
+            return GetCachedClient(client => new PeeringRegisteredAsnCollection(client, Id));
         }
 
         /// <summary>
@@ -120,8 +120,8 @@ namespace Azure.ResourceManager.Peering
         /// </summary>
         /// <param name="registeredAsnName"> The name of the registered ASN. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="registeredAsnName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="registeredAsnName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="registeredAsnName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<PeeringRegisteredAsnResource>> GetPeeringRegisteredAsnAsync(string registeredAsnName, CancellationToken cancellationToken = default)
         {
@@ -143,8 +143,8 @@ namespace Azure.ResourceManager.Peering
         /// </summary>
         /// <param name="registeredAsnName"> The name of the registered ASN. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="registeredAsnName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="registeredAsnName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="registeredAsnName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<PeeringRegisteredAsnResource> GetPeeringRegisteredAsn(string registeredAsnName, CancellationToken cancellationToken = default)
         {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> An object representing collection of PeeringRegisteredPrefixResources and their operations over a PeeringRegisteredPrefixResource. </returns>
         public virtual PeeringRegisteredPrefixCollection GetPeeringRegisteredPrefixes()
         {
-            return GetCachedClient(Client => new PeeringRegisteredPrefixCollection(Client, Id));
+            return GetCachedClient(client => new PeeringRegisteredPrefixCollection(client, Id));
         }
 
         /// <summary>
@@ -173,8 +173,8 @@ namespace Azure.ResourceManager.Peering
         /// </summary>
         /// <param name="registeredPrefixName"> The name of the registered prefix. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="registeredPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="registeredPrefixName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="registeredPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<PeeringRegisteredPrefixResource>> GetPeeringRegisteredPrefixAsync(string registeredPrefixName, CancellationToken cancellationToken = default)
         {
@@ -196,8 +196,8 @@ namespace Azure.ResourceManager.Peering
         /// </summary>
         /// <param name="registeredPrefixName"> The name of the registered prefix. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="registeredPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="registeredPrefixName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="registeredPrefixName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<PeeringRegisteredPrefixResource> GetPeeringRegisteredPrefix(string registeredPrefixName, CancellationToken cancellationToken = default)
         {

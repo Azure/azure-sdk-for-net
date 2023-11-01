@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.NetworkAnalytics.Mocking;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.NetworkAnalytics
@@ -18,81 +19,65 @@ namespace Azure.ResourceManager.NetworkAnalytics
     /// <summary> A class to add extension methods to Azure.ResourceManager.NetworkAnalytics. </summary>
     public static partial class NetworkAnalyticsExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static MockableNetworkAnalyticsArmClient GetMockableNetworkAnalyticsArmClient(ArmClient client)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
-            });
+            return client.GetCachedClient(client0 => new MockableNetworkAnalyticsArmClient(client0));
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MockableNetworkAnalyticsResourceGroupResource GetMockableNetworkAnalyticsResourceGroupResource(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
+            return resource.GetCachedClient(client => new MockableNetworkAnalyticsResourceGroupResource(client, resource.Id));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static MockableNetworkAnalyticsSubscriptionResource GetMockableNetworkAnalyticsSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new MockableNetworkAnalyticsSubscriptionResource(client, resource.Id));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-        #region DataProductResource
         /// <summary>
         /// Gets an object representing a <see cref="DataProductResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DataProductResource.CreateResourceIdentifier" /> to create a <see cref="DataProductResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkAnalyticsArmClient.GetDataProductResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DataProductResource" /> object. </returns>
         public static DataProductResource GetDataProductResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DataProductResource.ValidateResourceId(id);
-                return new DataProductResource(client, id);
-            }
-            );
+            return GetMockableNetworkAnalyticsArmClient(client).GetDataProductResource(id);
         }
-        #endregion
 
-        #region DataProductsCatalogResource
         /// <summary>
         /// Gets an object representing a <see cref="DataProductsCatalogResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DataProductsCatalogResource.CreateResourceIdentifier" /> to create a <see cref="DataProductsCatalogResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkAnalyticsArmClient.GetDataProductsCatalogResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DataProductsCatalogResource" /> object. </returns>
         public static DataProductsCatalogResource GetDataProductsCatalogResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DataProductsCatalogResource.ValidateResourceId(id);
-                return new DataProductsCatalogResource(client, id);
-            }
-            );
+            return GetMockableNetworkAnalyticsArmClient(client).GetDataProductsCatalogResource(id);
         }
-        #endregion
 
-        /// <summary> Gets a collection of DataProductResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of DataProductResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkAnalyticsResourceGroupResource.GetDataProducts()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DataProductResources and their operations over a DataProductResource. </returns>
         public static DataProductCollection GetDataProducts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDataProducts();
+            return GetMockableNetworkAnalyticsResourceGroupResource(resourceGroupResource).GetDataProducts();
         }
 
         /// <summary>
@@ -107,16 +92,20 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <description>DataProducts_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkAnalyticsResourceGroupResource.GetDataProductAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="dataProductName"> The data product resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataProductName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataProductName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataProductName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<DataProductResource>> GetDataProductAsync(this ResourceGroupResource resourceGroupResource, string dataProductName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetDataProducts().GetAsync(dataProductName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableNetworkAnalyticsResourceGroupResource(resourceGroupResource).GetDataProductAsync(dataProductName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -131,24 +120,34 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <description>DataProducts_Get</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkAnalyticsResourceGroupResource.GetDataProduct(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="dataProductName"> The data product resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataProductName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataProductName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataProductName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public static Response<DataProductResource> GetDataProduct(this ResourceGroupResource resourceGroupResource, string dataProductName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetDataProducts().Get(dataProductName, cancellationToken);
+            return GetMockableNetworkAnalyticsResourceGroupResource(resourceGroupResource).GetDataProduct(dataProductName, cancellationToken);
         }
 
-        /// <summary> Gets an object representing a DataProductsCatalogResource along with the instance operations that can be performed on it in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets an object representing a DataProductsCatalogResource along with the instance operations that can be performed on it in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkAnalyticsResourceGroupResource.GetDataProductsCatalog()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> Returns a <see cref="DataProductsCatalogResource" /> object. </returns>
         public static DataProductsCatalogResource GetDataProductsCatalog(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDataProductsCatalog();
+            return GetMockableNetworkAnalyticsResourceGroupResource(resourceGroupResource).GetDataProductsCatalog();
         }
 
         /// <summary>
@@ -163,13 +162,17 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <description>DataProducts_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkAnalyticsSubscriptionResource.GetDataProducts(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DataProductResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DataProductResource> GetDataProductsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDataProductsAsync(cancellationToken);
+            return GetMockableNetworkAnalyticsSubscriptionResource(subscriptionResource).GetDataProductsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -184,13 +187,17 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <description>DataProducts_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkAnalyticsSubscriptionResource.GetDataProducts(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataProductResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DataProductResource> GetDataProducts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDataProducts(cancellationToken);
+            return GetMockableNetworkAnalyticsSubscriptionResource(subscriptionResource).GetDataProducts(cancellationToken);
         }
 
         /// <summary>
@@ -205,13 +212,17 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <description>DataProductsCatalogs_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkAnalyticsSubscriptionResource.GetDataProductsCatalogs(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="DataProductsCatalogResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DataProductsCatalogResource> GetDataProductsCatalogsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDataProductsCatalogsAsync(cancellationToken);
+            return GetMockableNetworkAnalyticsSubscriptionResource(subscriptionResource).GetDataProductsCatalogsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -226,13 +237,17 @@ namespace Azure.ResourceManager.NetworkAnalytics
         /// <description>DataProductsCatalogs_ListBySubscription</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkAnalyticsSubscriptionResource.GetDataProductsCatalogs(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DataProductsCatalogResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DataProductsCatalogResource> GetDataProductsCatalogs(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDataProductsCatalogs(cancellationToken);
+            return GetMockableNetworkAnalyticsSubscriptionResource(subscriptionResource).GetDataProductsCatalogs(cancellationToken);
         }
     }
 }
