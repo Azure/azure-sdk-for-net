@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An object representing collection of CaCertificateResources and their operations over a CaCertificateResource. </returns>
         public virtual CaCertificateCollection GetCaCertificates()
         {
-            return GetCachedClient(Client => new CaCertificateCollection(Client, Id));
+            return GetCachedClient(client => new CaCertificateCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.EventGrid
         /// </summary>
         /// <param name="caCertificateName"> Name of the CA certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="caCertificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="caCertificateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="caCertificateName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<CaCertificateResource>> GetCaCertificateAsync(string caCertificateName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +134,8 @@ namespace Azure.ResourceManager.EventGrid
         /// </summary>
         /// <param name="caCertificateName"> Name of the CA certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="caCertificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="caCertificateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="caCertificateName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<CaCertificateResource> GetCaCertificate(string caCertificateName, CancellationToken cancellationToken = default)
         {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An object representing collection of EventGridNamespaceClientGroupResources and their operations over a EventGridNamespaceClientGroupResource. </returns>
         public virtual EventGridNamespaceClientGroupCollection GetEventGridNamespaceClientGroups()
         {
-            return GetCachedClient(Client => new EventGridNamespaceClientGroupCollection(Client, Id));
+            return GetCachedClient(client => new EventGridNamespaceClientGroupCollection(client, Id));
         }
 
         /// <summary>
@@ -164,8 +164,8 @@ namespace Azure.ResourceManager.EventGrid
         /// </summary>
         /// <param name="clientGroupName"> Name of the client group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clientGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clientGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clientGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<EventGridNamespaceClientGroupResource>> GetEventGridNamespaceClientGroupAsync(string clientGroupName, CancellationToken cancellationToken = default)
         {
@@ -187,8 +187,8 @@ namespace Azure.ResourceManager.EventGrid
         /// </summary>
         /// <param name="clientGroupName"> Name of the client group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clientGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clientGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clientGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<EventGridNamespaceClientGroupResource> GetEventGridNamespaceClientGroup(string clientGroupName, CancellationToken cancellationToken = default)
         {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An object representing collection of EventGridNamespaceClientResources and their operations over a EventGridNamespaceClientResource. </returns>
         public virtual EventGridNamespaceClientCollection GetEventGridNamespaceClients()
         {
-            return GetCachedClient(Client => new EventGridNamespaceClientCollection(Client, Id));
+            return GetCachedClient(client => new EventGridNamespaceClientCollection(client, Id));
         }
 
         /// <summary>
@@ -217,8 +217,8 @@ namespace Azure.ResourceManager.EventGrid
         /// </summary>
         /// <param name="clientName"> Name of the client. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clientName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clientName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clientName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<EventGridNamespaceClientResource>> GetEventGridNamespaceClientAsync(string clientName, CancellationToken cancellationToken = default)
         {
@@ -240,8 +240,8 @@ namespace Azure.ResourceManager.EventGrid
         /// </summary>
         /// <param name="clientName"> Name of the client. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clientName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="clientName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="clientName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<EventGridNamespaceClientResource> GetEventGridNamespaceClient(string clientName, CancellationToken cancellationToken = default)
         {
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An object representing collection of NamespaceTopicResources and their operations over a NamespaceTopicResource. </returns>
         public virtual NamespaceTopicCollection GetNamespaceTopics()
         {
-            return GetCachedClient(Client => new NamespaceTopicCollection(Client, Id));
+            return GetCachedClient(client => new NamespaceTopicCollection(client, Id));
         }
 
         /// <summary>
@@ -270,8 +270,8 @@ namespace Azure.ResourceManager.EventGrid
         /// </summary>
         /// <param name="topicName"> Name of the namespace topic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NamespaceTopicResource>> GetNamespaceTopicAsync(string topicName, CancellationToken cancellationToken = default)
         {
@@ -293,8 +293,8 @@ namespace Azure.ResourceManager.EventGrid
         /// </summary>
         /// <param name="topicName"> Name of the namespace topic. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NamespaceTopicResource> GetNamespaceTopic(string topicName, CancellationToken cancellationToken = default)
         {
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An object representing collection of EventGridNamespacePermissionBindingResources and their operations over a EventGridNamespacePermissionBindingResource. </returns>
         public virtual EventGridNamespacePermissionBindingCollection GetEventGridNamespacePermissionBindings()
         {
-            return GetCachedClient(Client => new EventGridNamespacePermissionBindingCollection(Client, Id));
+            return GetCachedClient(client => new EventGridNamespacePermissionBindingCollection(client, Id));
         }
 
         /// <summary>
@@ -323,8 +323,8 @@ namespace Azure.ResourceManager.EventGrid
         /// </summary>
         /// <param name="permissionBindingName"> Name of the permission binding. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="permissionBindingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="permissionBindingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="permissionBindingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<EventGridNamespacePermissionBindingResource>> GetEventGridNamespacePermissionBindingAsync(string permissionBindingName, CancellationToken cancellationToken = default)
         {
@@ -346,8 +346,8 @@ namespace Azure.ResourceManager.EventGrid
         /// </summary>
         /// <param name="permissionBindingName"> Name of the permission binding. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="permissionBindingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="permissionBindingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="permissionBindingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<EventGridNamespacePermissionBindingResource> GetEventGridNamespacePermissionBinding(string permissionBindingName, CancellationToken cancellationToken = default)
         {
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An object representing collection of TopicSpaceResources and their operations over a TopicSpaceResource. </returns>
         public virtual TopicSpaceCollection GetTopicSpaces()
         {
-            return GetCachedClient(Client => new TopicSpaceCollection(Client, Id));
+            return GetCachedClient(client => new TopicSpaceCollection(client, Id));
         }
 
         /// <summary>
@@ -376,8 +376,8 @@ namespace Azure.ResourceManager.EventGrid
         /// </summary>
         /// <param name="topicSpaceName"> Name of the Topic space. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="topicSpaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="topicSpaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="topicSpaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<TopicSpaceResource>> GetTopicSpaceAsync(string topicSpaceName, CancellationToken cancellationToken = default)
         {
@@ -399,8 +399,8 @@ namespace Azure.ResourceManager.EventGrid
         /// </summary>
         /// <param name="topicSpaceName"> Name of the Topic space. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="topicSpaceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="topicSpaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="topicSpaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<TopicSpaceResource> GetTopicSpace(string topicSpaceName, CancellationToken cancellationToken = default)
         {
