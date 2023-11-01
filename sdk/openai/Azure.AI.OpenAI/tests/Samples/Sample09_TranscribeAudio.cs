@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.OpenAI.Tests.Samples
 {
-    public partial class StreamingChat
+    public partial class AudioSamples
     {
         [Test]
         [Ignore("Only verifying that the sample builds")]
@@ -23,13 +23,13 @@ namespace Azure.AI.OpenAI.Tests.Samples
 
             var transcriptionOptions = new AudioTranscriptionOptions()
             {
+                DeploymentName = "my-whisper-deployment", // whisper-1 as model name for non-Azure OpenAI
                 AudioData = BinaryData.FromStream(audioStreamFromFile),
                 ResponseFormat = AudioTranscriptionFormat.Verbose,
             };
 
-            Response<AudioTranscription> transcriptionResponse = await client.GetAudioTranscriptionAsync(
-                deploymentId: "my-whisper-deployment", // whisper-1 as model name for non-Azure OpenAI
-                transcriptionOptions);
+            Response<AudioTranscription> transcriptionResponse
+                = await client.GetAudioTranscriptionAsync(transcriptionOptions);
             AudioTranscription transcription = transcriptionResponse.Value;
 
             // When using Simple, SRT, or VTT formats, only transcription.Text will be populated

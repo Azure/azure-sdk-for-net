@@ -7,11 +7,12 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    [CodeGenModel("RouterRule")]
-    [CodeGenSuppress("RouterRule")]
     [JsonConverter(typeof(PolymorphicWriteOnlyJsonConverter<RouterRule>))]
     public abstract partial class RouterRule : IUtf8JsonSerializable
     {
+        /// <summary> The type discriminator describing a sub-type of RouterRule. </summary>
+        public string Kind { get; protected set; }
+
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();

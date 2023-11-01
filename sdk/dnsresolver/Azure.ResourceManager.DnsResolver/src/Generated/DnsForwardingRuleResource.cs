@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.DnsResolver
     public partial class DnsForwardingRuleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DnsForwardingRuleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="rulesetName"> The rulesetName. </param>
+        /// <param name="forwardingRuleName"> The forwardingRuleName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string rulesetName, string forwardingRuleName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsForwardingRulesets/{rulesetName}/forwardingRules/{forwardingRuleName}";

@@ -7,12 +7,10 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    [CodeGenModel("WebhookRouterRule")]
-    [CodeGenSuppress("WebhookRouterRule")]
     public partial class WebhookRouterRule : IUtf8JsonSerializable
     {
         /// <summary> Initializes a new instance of WebhookRouterRule. </summary>
-        public WebhookRouterRule(Uri authorizationServerUri, Oauth2ClientCredential clientCredential, Uri webhookUri)
+        public WebhookRouterRule(Uri authorizationServerUri, OAuth2WebhookClientCredential clientCredential, Uri webhookUri)
             : this("webhook-rule", authorizationServerUri, clientCredential, webhookUri)
         {
         }

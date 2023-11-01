@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.Network
     public partial class ApplicationGatewayWafDynamicManifestResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ApplicationGatewayWafDynamicManifestResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="location"> The location. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/applicationGatewayWafDynamicManifests/dafault";

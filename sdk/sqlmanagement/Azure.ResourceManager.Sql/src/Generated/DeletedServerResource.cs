@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Sql
     public partial class DeletedServerResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DeletedServerResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="locationName"> The locationName. </param>
+        /// <param name="deletedServerName"> The deletedServerName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation locationName, string deletedServerName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/deletedServers/{deletedServerName}";

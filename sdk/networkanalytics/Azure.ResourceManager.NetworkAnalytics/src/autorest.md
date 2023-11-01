@@ -32,7 +32,7 @@ rename-mapping:
   AccountSas: AccountSasContent
   ControlState: DataProductControlState
   DataType: DataProductDataType
-  DataTypeState: DataProducDataTypeState
+  DataTypeState: DataProductDataTypeState
   DefaultAction: NetworkAclDefaultAction
   ListRoleAssignments: RoleAssignmentListResult
 
@@ -72,5 +72,5 @@ directive:
   - remove-operation: 'DataTypes_Update'
   - remove-operation: 'DataTypes_Delete'
   - remove-operation: 'DataTypes_DeleteData'
-  - remove-operation: 'DataTypes_GenerateStorageContainerSasToken'  
+  - remove-operation: 'DataTypes_GenerateStorageContainerSasToken'
 ```

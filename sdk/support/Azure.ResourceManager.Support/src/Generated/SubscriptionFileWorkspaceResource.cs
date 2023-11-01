@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.Support
     public partial class SubscriptionFileWorkspaceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SubscriptionFileWorkspaceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="fileWorkspaceName"> The fileWorkspaceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string fileWorkspaceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}";

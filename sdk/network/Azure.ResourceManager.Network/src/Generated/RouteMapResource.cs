@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Network
     public partial class RouteMapResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="RouteMapResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="virtualHubName"> The virtualHubName. </param>
+        /// <param name="routeMapName"> The routeMapName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualHubName, string routeMapName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routeMaps/{routeMapName}";

@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.AlertsManagement
     public partial class AlertProcessingRuleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AlertProcessingRuleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="alertProcessingRuleName"> The alertProcessingRuleName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string alertProcessingRuleName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AlertsManagement/actionRules/{alertProcessingRuleName}";

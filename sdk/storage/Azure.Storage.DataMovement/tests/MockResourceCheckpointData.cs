@@ -32,7 +32,7 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        public override void Serialize(Stream stream)
+        protected internal override void Serialize(Stream stream)
         {
             stream.Write(Bytes, 0, Bytes.Length);
         }

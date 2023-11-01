@@ -39,11 +39,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(HubProfile))
-            {
-                writer.WritePropertyName("hubProfile"u8);
-                writer.WriteObjectValue(HubProfile);
-            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -63,7 +58,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<FleetProvisioningState> provisioningState = default;
-            Optional<FleetHubProfile> hubProfile = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eTag"u8))
@@ -145,20 +139,11 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                             provisioningState = new FleetProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("hubProfile"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            hubProfile = FleetHubProfile.DeserializeFleetHubProfile(property0.Value);
-                            continue;
-                        }
                     }
                     continue;
                 }
             }
-            return new ContainerServiceFleetData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(eTag), identity, Optional.ToNullable(provisioningState), hubProfile.Value);
+            return new ContainerServiceFleetData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(eTag), identity, Optional.ToNullable(provisioningState));
         }
     }
 }

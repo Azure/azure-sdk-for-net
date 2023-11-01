@@ -27,6 +27,9 @@ namespace Azure.ResourceManager.CosmosDB
     public partial class RestorableCosmosDBAccountResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="RestorableCosmosDBAccountResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="instanceId"> The instanceId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, Guid instanceId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/restorableDatabaseAccounts/{instanceId}";

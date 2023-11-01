@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.EventGrid
     public partial class EventGridNamespaceClientResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="EventGridNamespaceClientResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="namespaceName"> The namespaceName. </param>
+        /// <param name="clientName"> The clientName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, string clientName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/namespaces/{namespaceName}/clients/{clientName}";

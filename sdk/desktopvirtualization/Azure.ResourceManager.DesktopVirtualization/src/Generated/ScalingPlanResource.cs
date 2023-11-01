@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
     public partial class ScalingPlanResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ScalingPlanResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="scalingPlanName"> The scalingPlanName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string scalingPlanName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}";
@@ -140,6 +143,59 @@ namespace Azure.ResourceManager.DesktopVirtualization
         public virtual Response<ScalingPlanPooledScheduleResource> GetScalingPlanPooledSchedule(string scalingPlanScheduleName, CancellationToken cancellationToken = default)
         {
             return GetScalingPlanPooledSchedules().Get(scalingPlanScheduleName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ScalingPlanPersonalScheduleResources in the ScalingPlan. </summary>
+        /// <returns> An object representing collection of ScalingPlanPersonalScheduleResources and their operations over a ScalingPlanPersonalScheduleResource. </returns>
+        public virtual ScalingPlanPersonalScheduleCollection GetScalingPlanPersonalSchedules()
+        {
+            return GetCachedClient(Client => new ScalingPlanPersonalScheduleCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Get a ScalingPlanPersonalSchedule.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}/personalSchedules/{scalingPlanScheduleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScalingPlanPersonalSchedules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scalingPlanScheduleName"> The name of the ScalingPlanSchedule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="scalingPlanScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanScheduleName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ScalingPlanPersonalScheduleResource>> GetScalingPlanPersonalScheduleAsync(string scalingPlanScheduleName, CancellationToken cancellationToken = default)
+        {
+            return await GetScalingPlanPersonalSchedules().GetAsync(scalingPlanScheduleName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a ScalingPlanPersonalSchedule.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}/personalSchedules/{scalingPlanScheduleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ScalingPlanPersonalSchedules_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scalingPlanScheduleName"> The name of the ScalingPlanSchedule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="scalingPlanScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanScheduleName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ScalingPlanPersonalScheduleResource> GetScalingPlanPersonalSchedule(string scalingPlanScheduleName, CancellationToken cancellationToken = default)
+        {
+            return GetScalingPlanPersonalSchedules().Get(scalingPlanScheduleName, cancellationToken);
         }
 
         /// <summary>

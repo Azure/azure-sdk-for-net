@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.DataShare
     public partial class ProviderShareSubscriptionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ProviderShareSubscriptionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="shareName"> The shareName. </param>
+        /// <param name="providerShareSubscriptionId"> The providerShareSubscriptionId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string shareName, string providerShareSubscriptionId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shares/{shareName}/providerShareSubscriptions/{providerShareSubscriptionId}";
