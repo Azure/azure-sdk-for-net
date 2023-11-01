@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> An object representing collection of ScalingPlanPooledScheduleResources and their operations over a ScalingPlanPooledScheduleResource. </returns>
         public virtual ScalingPlanPooledScheduleCollection GetScalingPlanPooledSchedules()
         {
-            return GetCachedClient(Client => new ScalingPlanPooledScheduleCollection(Client, Id));
+            return GetCachedClient(client => new ScalingPlanPooledScheduleCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="scalingPlanScheduleName"> The name of the ScalingPlanSchedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scalingPlanScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanScheduleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scalingPlanScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ScalingPlanPooledScheduleResource>> GetScalingPlanPooledScheduleAsync(string scalingPlanScheduleName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +134,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="scalingPlanScheduleName"> The name of the ScalingPlanSchedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scalingPlanScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanScheduleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scalingPlanScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ScalingPlanPooledScheduleResource> GetScalingPlanPooledSchedule(string scalingPlanScheduleName, CancellationToken cancellationToken = default)
         {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> An object representing collection of ScalingPlanPersonalScheduleResources and their operations over a ScalingPlanPersonalScheduleResource. </returns>
         public virtual ScalingPlanPersonalScheduleCollection GetScalingPlanPersonalSchedules()
         {
-            return GetCachedClient(Client => new ScalingPlanPersonalScheduleCollection(Client, Id));
+            return GetCachedClient(client => new ScalingPlanPersonalScheduleCollection(client, Id));
         }
 
         /// <summary>
@@ -164,8 +164,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="scalingPlanScheduleName"> The name of the ScalingPlanSchedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scalingPlanScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanScheduleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scalingPlanScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ScalingPlanPersonalScheduleResource>> GetScalingPlanPersonalScheduleAsync(string scalingPlanScheduleName, CancellationToken cancellationToken = default)
         {
@@ -187,8 +187,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="scalingPlanScheduleName"> The name of the ScalingPlanSchedule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scalingPlanScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scalingPlanScheduleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scalingPlanScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ScalingPlanPersonalScheduleResource> GetScalingPlanPersonalSchedule(string scalingPlanScheduleName, CancellationToken cancellationToken = default)
         {

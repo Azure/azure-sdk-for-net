@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <returns> An object representing collection of FrontendEndpointResources and their operations over a FrontendEndpointResource. </returns>
         public virtual FrontendEndpointCollection GetFrontendEndpoints()
         {
-            return GetCachedClient(Client => new FrontendEndpointCollection(Client, Id));
+            return GetCachedClient(client => new FrontendEndpointCollection(client, Id));
         }
 
         /// <summary>
@@ -115,8 +115,8 @@ namespace Azure.ResourceManager.FrontDoor
         /// </summary>
         /// <param name="frontendEndpointName"> Name of the Frontend endpoint which is unique within the Front Door. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="frontendEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="frontendEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="frontendEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<FrontendEndpointResource>> GetFrontendEndpointAsync(string frontendEndpointName, CancellationToken cancellationToken = default)
         {
@@ -138,8 +138,8 @@ namespace Azure.ResourceManager.FrontDoor
         /// </summary>
         /// <param name="frontendEndpointName"> Name of the Frontend endpoint which is unique within the Front Door. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="frontendEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="frontendEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="frontendEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<FrontendEndpointResource> GetFrontendEndpoint(string frontendEndpointName, CancellationToken cancellationToken = default)
         {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <returns> An object representing collection of FrontDoorRulesEngineResources and their operations over a FrontDoorRulesEngineResource. </returns>
         public virtual FrontDoorRulesEngineCollection GetFrontDoorRulesEngines()
         {
-            return GetCachedClient(Client => new FrontDoorRulesEngineCollection(Client, Id));
+            return GetCachedClient(client => new FrontDoorRulesEngineCollection(client, Id));
         }
 
         /// <summary>
@@ -168,8 +168,8 @@ namespace Azure.ResourceManager.FrontDoor
         /// </summary>
         /// <param name="rulesEngineName"> Name of the Rules Engine which is unique within the Front Door. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="rulesEngineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="rulesEngineName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="rulesEngineName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<FrontDoorRulesEngineResource>> GetFrontDoorRulesEngineAsync(string rulesEngineName, CancellationToken cancellationToken = default)
         {
@@ -191,8 +191,8 @@ namespace Azure.ResourceManager.FrontDoor
         /// </summary>
         /// <param name="rulesEngineName"> Name of the Rules Engine which is unique within the Front Door. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="rulesEngineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="rulesEngineName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="rulesEngineName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<FrontDoorRulesEngineResource> GetFrontDoorRulesEngine(string rulesEngineName, CancellationToken cancellationToken = default)
         {
