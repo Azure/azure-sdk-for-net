@@ -268,8 +268,12 @@ namespace Azure.Core.TestFramework
         {
             foreach (var tag in activity.TagObjects)
             {
-                if (tag.Key == "kind" || tag.Key.StartsWith("otel.") || tag.Key == "requestId" || tag.Key == "serverRequestId")
+                if (tag.Key == "kind" || tag.Key.StartsWith("otel.") || tag.Key == "requestId" || tag.Key == "serviceRequestId")
+                {
+                    // TODO: these are populated on DiagnosticSource path. We should rewrite this to ActivitySource and remove those.
                     continue;
+                }
+
                 if (!Regex.IsMatch(tag.Key, @"^[a-z\._]+$"))
                 {
                     throw new InvalidOperationException("Attribute name can only have lowercase letters, dot (`.`), and underscore (`_`). " +
