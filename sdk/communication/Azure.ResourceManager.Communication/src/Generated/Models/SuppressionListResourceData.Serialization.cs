@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -38,8 +39,8 @@ namespace Azure.ResourceManager.Communication
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> listName = default;
-            Optional<string> lastUpdatedTimeStamp = default;
-            Optional<string> createdTimeStamp = default;
+            Optional<DateTimeOffset> lastUpdatedTimeStamp = default;
+            Optional<DateTimeOffset> createdTimeStamp = default;
             Optional<string> dataLocation = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -83,12 +84,20 @@ namespace Azure.ResourceManager.Communication
                         }
                         if (property0.NameEquals("lastUpdatedTimeStamp"u8))
                         {
-                            lastUpdatedTimeStamp = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            lastUpdatedTimeStamp = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("createdTimeStamp"u8))
                         {
-                            createdTimeStamp = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            createdTimeStamp = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("dataLocation"u8))
@@ -100,7 +109,7 @@ namespace Azure.ResourceManager.Communication
                     continue;
                 }
             }
-            return new SuppressionListResourceData(id, name, type, systemData.Value, listName.Value, lastUpdatedTimeStamp.Value, createdTimeStamp.Value, dataLocation.Value);
+            return new SuppressionListResourceData(id, name, type, systemData.Value, listName.Value, Optional.ToNullable(lastUpdatedTimeStamp), Optional.ToNullable(createdTimeStamp), dataLocation.Value);
         }
     }
 }

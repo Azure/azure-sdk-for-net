@@ -74,9 +74,9 @@ rename-mapping:
   DnsRecord: VerificationDnsRecord
   DomainsProvisioningState: DomainProvisioningState
   ProvisioningState: CommunicationServiceProvisioningState
-  SuppressionListProperties.createdTimeStamp: -|date-time
-  SuppressionListProperties.lastUpdatedTimeStamp: -|date-time
-
+  SuppressionListResource.properties.createdTimeStamp: -|date-time
+  SuppressionListResource.properties.lastUpdatedTimeStamp: -|date-time
+  
 directive:
  - from: types.json
    where: $.parameters.SubscriptionIdParameter

@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Communication.Models
         /// <param name="createdTimeStamp"> The date the resource was created. </param>
         /// <param name="dataLocation"> The location where the SuppressionListAddress data is stored at rest. This value is inherited from the parent Domains resource. </param>
         /// <returns> A new <see cref="Communication.SuppressionListResourceData"/> instance for mocking. </returns>
-        public static SuppressionListResourceData SuppressionListResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string listName = null, string lastUpdatedTimeStamp = null, string createdTimeStamp = null, string dataLocation = null)
+        public static SuppressionListResourceData SuppressionListResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string listName = null, DateTimeOffset? lastUpdatedTimeStamp = null, DateTimeOffset? createdTimeStamp = null, string dataLocation = null)
         {
             return new SuppressionListResourceData(id, name, resourceType, systemData, listName, lastUpdatedTimeStamp, createdTimeStamp, dataLocation);
         }

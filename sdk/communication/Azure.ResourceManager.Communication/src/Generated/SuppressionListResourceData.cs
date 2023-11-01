@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.Communication
         /// <param name="lastUpdatedTimeStamp"> The date the resource was last updated. </param>
         /// <param name="createdTimeStamp"> The date the resource was created. </param>
         /// <param name="dataLocation"> The location where the SuppressionListAddress data is stored at rest. This value is inherited from the parent Domains resource. </param>
-        internal SuppressionListResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string listName, string lastUpdatedTimeStamp, string createdTimeStamp, string dataLocation) : base(id, name, resourceType, systemData)
+        internal SuppressionListResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string listName, DateTimeOffset? lastUpdatedTimeStamp, DateTimeOffset? createdTimeStamp, string dataLocation) : base(id, name, resourceType, systemData)
         {
             ListName = listName;
             LastUpdatedTimeStamp = lastUpdatedTimeStamp;
@@ -41,9 +42,9 @@ namespace Azure.ResourceManager.Communication
         /// <summary> The the name of the suppression list. This value must match one of the valid sender usernames of the sending domain. </summary>
         public string ListName { get; set; }
         /// <summary> The date the resource was last updated. </summary>
-        public string LastUpdatedTimeStamp { get; }
+        public DateTimeOffset? LastUpdatedTimeStamp { get; }
         /// <summary> The date the resource was created. </summary>
-        public string CreatedTimeStamp { get; }
+        public DateTimeOffset? CreatedTimeStamp { get; }
         /// <summary> The location where the SuppressionListAddress data is stored at rest. This value is inherited from the parent Domains resource. </summary>
         public string DataLocation { get; }
     }
