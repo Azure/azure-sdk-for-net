@@ -24,9 +24,9 @@ namespace Azure.Security.KeyVault.Certificates
     {
         internal const string CertificatesPath = "/certificates/";
         internal const string DeletedCertificatesPath = "/deletedcertificates/";
-        private const string OTelCertificateNameKey = "az.key_vault.certificate.name";
-        private const string OTelCertificateVersionKey = "az.key_vault.certificate.version";
-        private const string OTelCertificateIssuerNameKey = "az.key_vault.certificate.issuer.name";
+        private const string OTelCertificateNameKey = "az.keyvault.certificate.name";
+        private const string OTelCertificateVersionKey = "az.keyvault.certificate.version";
+        private const string OTelCertificateIssuerNameKey = "az.keyvault.certificate.issuer.name";
         private const string IssuersPath = "/certificates/issuers/";
         private const string ContactsPath = "/certificates/contacts/";
 

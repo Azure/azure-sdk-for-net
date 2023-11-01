@@ -19,7 +19,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     public class CryptographyClient : IKeyEncryptionKey
     {
         private const string GetOperation = "get";
-        private const string OTelKeyIdKey = "az.key_vault.key.id";
+        private const string OTelKeyIdKey = "az.keyvault.key.id";
         private readonly string _keyId;
         private readonly KeyVaultPipeline _pipeline;
         private readonly RemoteCryptographyClient _remoteProvider;

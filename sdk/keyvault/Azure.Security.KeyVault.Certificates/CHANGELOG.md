@@ -9,6 +9,11 @@
 
 ### Breaking Changes
 
+- Renamed tags reported on `CertificateClient` activities to following OpenTelemetry attribute naming conventions:
+  - `certificate` to `az.keyvault.certificate.name` 
+  - `version` to `az.keyvault.certificate.version` 
+  - `issuer` to `az.keyvault.certificate.issuer.name`
+
 ### Bugs Fixed
 
 - When a Key Vault is moved to another tenant, the client is reauthenticated.

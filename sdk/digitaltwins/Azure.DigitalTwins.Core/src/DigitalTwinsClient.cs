@@ -800,7 +800,7 @@ namespace Azure.DigitalTwins.Core
             {
                 if (digitalTwinId == null)
                 {
-                    throw new ArgumentNullException(OTelTwinIdKey);
+                    throw new ArgumentNullException(nameof(digitalTwinId));
                 }
 
                 async Task<Page<T>> FirstPageFunc(int? pageSizeHint)
@@ -877,7 +877,7 @@ namespace Azure.DigitalTwins.Core
             {
                 if (digitalTwinId == null)
                 {
-                    throw new ArgumentNullException(OTelTwinIdKey);
+                    throw new ArgumentNullException(nameof(digitalTwinId));
                 }
 
                 Page<T> FirstPageFunc(int? pageSizeHint)

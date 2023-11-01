@@ -6,6 +6,8 @@
 
 ### Breaking Changes
 
+- Renamed `projectName` and `deploymentName` tags reported on `QuestionAnsweringClient` activities to `az.question_answering.project.name` and `az.question_answering.deployment.name` following OpenTelemetry attribute naming conventions.
+
 ### Bugs Fixed
 
 ### Other Changes
