@@ -41,7 +41,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         /// </summary>
         public ObjectSerializer? JsonObjectSerializer { get; set; }
 
+        /// <summary>
+        /// Gets or sets the retry options.
+        /// </summary>
         public ServiceManagerRetryOptions? RetryOptions { get; set; }
+
+        /// <summary>
+        /// Gets or sets the timespan for HttpClient timeout.
+        /// </summary>
+        public TimeSpan? HttpClientTimeout { get; set; }
 
         /// <summary>
         /// Gets or sets the MessagePack hub <see cref="IHubProtocol"/>. Defaults to null and MessagePack hub protocol is not used.

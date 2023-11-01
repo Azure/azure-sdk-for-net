@@ -12,6 +12,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         public static string AzureSignalRMessagePackHubProtocolEnabled = $"{AzureSignalRHubProtocol}:MessagePack:Enabled";
         public const string ServiceTransportTypeName = "AzureSignalRServiceTransportType";
         public const string AzureSignalRRetry = "AzureSignalRRetry";
+        public const string AzureSignalRHttpClientTimeout = "AzureSignalRHttpClientTimeout";
         public const string AsrsHeaderPrefix = "X-ASRS-";
         public const string AsrsConnectionIdHeader = AsrsHeaderPrefix + "Connection-Id";
         public const string AsrsUserClaims = AsrsHeaderPrefix + "User-Claims";

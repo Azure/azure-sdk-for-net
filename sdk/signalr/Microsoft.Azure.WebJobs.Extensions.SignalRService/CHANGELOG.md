@@ -1,11 +1,13 @@
 # Release History
 
-## 1.11.3 (Unreleased)
+## 1.12.0 (Unreleased)
 ### Features Added
-* Added `RetryOptions` to `SignalROptions` to configure retry policy for SignalR Service REST API calls.
+* Added `RetryOptions` to `SignalROptions` to configure retry policy for SignalR Service REST API calls. For more infomation about cutomize retry options, see samples.
+* Added `HttpClientTimeout` to `SignalROptions` to configure HTTP client timeout for SignalR Service REST API calls. The default value is 100 seconds. User can also set "AzureSignalRHttpClientTimeout" in the app settings to override the default value.
 
 ### Bugs Fixed
 * Fixed the issue when using customized server endpoint with Azure AD credential.
+* Fixed the issue that SignalR trigger is not working with secondary connection string.
 
 ### Other Changes
 * Upgraded  `Microsoft.Azure.SignalR`, `Microsoft.Azure.SignalR.Management`, `Microsoft.Azure.SignalR.Protocols` from 1.21.6 to 1.22.0

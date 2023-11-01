@@ -127,5 +127,26 @@ namespace SignalRServiceExtension.Tests.Config
             Assert.Equal(TimeSpan.FromMinutes(2), options.RetryOptions.MaxDelay);
             Assert.Equal(ServiceManagerRetryMode.Exponential, options.RetryOptions.Mode);
         }
+
+        [Fact]
+        public void TestConfigreHttpClientTimeoutViaCode()
+        {
+            var configuration = new ConfigurationBuilder().AddInMemoryCollection().Build();
+            var options = new ServiceManagerOptions();
+            var setup = new OptionsSetup(configuration, SingletonAzureComponentFactory.Instance, "key", new() { HttpClientTimeout = TimeSpan.FromSeconds(10) });
+            setup.Configure(options);
+            Assert.Equal(TimeSpan.FromSeconds(10), options.HttpClientTimeout);
+        }
+
+        [Fact]
+        public void TestConfigureHttpClientTimeoutViaConfiguration()
+        {
+            var configuration = new ConfigurationBuilder().AddInMemoryCollection().Build();
+            configuration[Constants.AzureSignalRHttpClientTimeout] = "00:00:10";
+            var options = new ServiceManagerOptions();
+            var setup = new OptionsSetup(configuration, SingletonAzureComponentFactory.Instance, "key", new());
+            setup.Configure(options);
+            Assert.Equal(TimeSpan.FromSeconds(10), options.HttpClientTimeout);
+        }
     }
 }
