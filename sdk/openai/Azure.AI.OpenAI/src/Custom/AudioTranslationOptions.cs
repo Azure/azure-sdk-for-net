@@ -31,7 +31,7 @@ namespace Azure.AI.OpenAI
         public BinaryData AudioData { get; set; }
 
         /// <summary>
-        /// Gets or sets the deployment name to use for a chat completions request.
+        /// Gets or sets the deployment name to use for a translation request.
         /// </summary>
         /// <remarks>
         /// <para>
