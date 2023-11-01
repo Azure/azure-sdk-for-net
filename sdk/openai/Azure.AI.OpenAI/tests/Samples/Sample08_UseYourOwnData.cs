@@ -23,6 +23,7 @@ namespace Azure.AI.OpenAI.Tests.Samples
             #region Snippet:ChatUsingYourOwnData
             var chatCompletionsOptions = new ChatCompletionsOptions()
             {
+                DeploymentName = "gpt-35-turbo-0613",
                 Messages =
                 {
                     new ChatMessage(
@@ -46,9 +47,7 @@ namespace Azure.AI.OpenAI.Tests.Samples
                     }
                 }
             };
-            Response<ChatCompletions> response = await client.GetChatCompletionsAsync(
-                "gpt-35-turbo-0613",
-                chatCompletionsOptions);
+            Response<ChatCompletions> response = await client.GetChatCompletionsAsync(chatCompletionsOptions);
             ChatMessage message = response.Value.Choices[0].Message;
             // The final, data-informed response still appears in the ChatMessages as usual
             Console.WriteLine($"{message.Role}: {message.Content}");

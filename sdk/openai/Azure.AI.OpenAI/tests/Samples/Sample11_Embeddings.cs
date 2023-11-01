@@ -18,9 +18,12 @@ namespace Azure.AI.OpenAI.Tests.Samples
             var client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential());
 
             #region Snippet:GenerateEmbeddings
-            string deploymentOrModelName = "text-embedding-ada-002";
-            EmbeddingsOptions embeddingsOptions = new("Your text string goes here");
-            Response<Embeddings> response = await client.GetEmbeddingsAsync(deploymentOrModelName, embeddingsOptions);
+            EmbeddingsOptions embeddingsOptions = new()
+            {
+                DeploymentName = "text-embedding-ada-002",
+                Input = { "Your text string goes here" },
+            };
+            Response<Embeddings> response = await client.GetEmbeddingsAsync(embeddingsOptions);
 
             // The response includes the generated embedding.
             EmbeddingItem item = response.Value.Data[0];

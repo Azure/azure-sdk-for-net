@@ -31,8 +31,9 @@ namespace Azure.AI.OpenAI
     public partial class AudioTranscriptionOptions
     {
         public AudioTranscriptionOptions() { }
-        public AudioTranscriptionOptions(System.BinaryData audioData) { }
+        public AudioTranscriptionOptions(string deploymentName, System.BinaryData audioData) { }
         public System.BinaryData AudioData { get { throw null; } set { } }
+        public string DeploymentName { get { throw null; } set { } }
         public string Language { get { throw null; } set { } }
         public string Prompt { get { throw null; } set { } }
         public Azure.AI.OpenAI.AudioTranscriptionFormat? ResponseFormat { get { throw null; } set { } }
@@ -83,8 +84,9 @@ namespace Azure.AI.OpenAI
     public partial class AudioTranslationOptions
     {
         public AudioTranslationOptions() { }
-        public AudioTranslationOptions(System.BinaryData audioData) { }
+        public AudioTranslationOptions(string deploymentName, System.BinaryData audioData) { }
         public System.BinaryData AudioData { get { throw null; } set { } }
+        public string DeploymentName { get { throw null; } set { } }
         public string Prompt { get { throw null; } set { } }
         public Azure.AI.OpenAI.AudioTranslationFormat? ResponseFormat { get { throw null; } set { } }
         public float? Temperature { get { throw null; } set { } }
@@ -229,9 +231,10 @@ namespace Azure.AI.OpenAI
     public partial class ChatCompletionsOptions
     {
         public ChatCompletionsOptions() { }
-        public ChatCompletionsOptions(System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.ChatMessage> messages) { }
+        public ChatCompletionsOptions(string deploymentName, System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.ChatMessage> messages) { }
         public Azure.AI.OpenAI.AzureChatExtensionsOptions AzureExtensionsOptions { get { throw null; } set { } }
         public int? ChoiceCount { get { throw null; } set { } }
+        public string DeploymentName { get { throw null; } set { } }
         public float? FrequencyPenalty { get { throw null; } set { } }
         public Azure.AI.OpenAI.FunctionDefinition FunctionCall { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.OpenAI.FunctionDefinition> Functions { get { throw null; } set { } }
@@ -324,8 +327,9 @@ namespace Azure.AI.OpenAI
     public partial class CompletionsOptions
     {
         public CompletionsOptions() { }
-        public CompletionsOptions(System.Collections.Generic.IEnumerable<string> prompts) { }
+        public CompletionsOptions(string deploymentName, System.Collections.Generic.IEnumerable<string> prompts) { }
         public int? ChoicesPerPrompt { get { throw null; } set { } }
+        public string DeploymentName { get { throw null; } set { } }
         public bool? Echo { get { throw null; } set { } }
         public float? FrequencyPenalty { get { throw null; } set { } }
         public int? GenerationSampleCount { get { throw null; } set { } }
@@ -396,9 +400,9 @@ namespace Azure.AI.OpenAI
     public partial class EmbeddingsOptions
     {
         public EmbeddingsOptions() { }
-        public EmbeddingsOptions(System.Collections.Generic.IEnumerable<string> input) { }
-        public EmbeddingsOptions(string input) { }
-        public System.Collections.Generic.IList<string> Input { get { throw null; } }
+        public EmbeddingsOptions(string deploymentName, System.Collections.Generic.IEnumerable<string> input) { }
+        public string DeploymentName { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Input { get { throw null; } set { } }
         public string User { get { throw null; } set { } }
     }
     public partial class EmbeddingsUsage
@@ -472,22 +476,20 @@ namespace Azure.AI.OpenAI
         public OpenAIClient(System.Uri endpoint, Azure.Core.TokenCredential tokenCredential) { }
         public OpenAIClient(System.Uri endpoint, Azure.Core.TokenCredential tokenCredential, Azure.AI.OpenAI.OpenAIClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response<Azure.AI.OpenAI.AudioTranscription> GetAudioTranscription(string deploymentId, Azure.AI.OpenAI.AudioTranscriptionOptions audioTranscriptionOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.AudioTranscription>> GetAudioTranscriptionAsync(string deploymentId, Azure.AI.OpenAI.AudioTranscriptionOptions audioTranscriptionOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.OpenAI.AudioTranslation> GetAudioTranslation(string deploymentId, Azure.AI.OpenAI.AudioTranslationOptions audioTranslationOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.AudioTranslation>> GetAudioTranslationAsync(string deploymentId, Azure.AI.OpenAI.AudioTranslationOptions audioTranslationOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.OpenAI.ChatCompletions> GetChatCompletions(string deploymentOrModelName, Azure.AI.OpenAI.ChatCompletionsOptions chatCompletionsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.ChatCompletions>> GetChatCompletionsAsync(string deploymentOrModelName, Azure.AI.OpenAI.ChatCompletionsOptions chatCompletionsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.OpenAI.StreamingChatCompletions> GetChatCompletionsStreaming(string deploymentOrModelName, Azure.AI.OpenAI.ChatCompletionsOptions chatCompletionsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.StreamingChatCompletions>> GetChatCompletionsStreamingAsync(string deploymentOrModelName, Azure.AI.OpenAI.ChatCompletionsOptions chatCompletionsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.OpenAI.Completions> GetCompletions(string deploymentOrModelName, Azure.AI.OpenAI.CompletionsOptions completionsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.OpenAI.Completions> GetCompletions(string deploymentOrModelName, string prompt, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Completions>> GetCompletionsAsync(string deploymentOrModelName, Azure.AI.OpenAI.CompletionsOptions completionsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Completions>> GetCompletionsAsync(string deploymentOrModelName, string prompt, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.OpenAI.StreamingCompletions> GetCompletionsStreaming(string deploymentOrModelName, Azure.AI.OpenAI.CompletionsOptions completionsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.StreamingCompletions>> GetCompletionsStreamingAsync(string deploymentOrModelName, Azure.AI.OpenAI.CompletionsOptions completionsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.OpenAI.Embeddings> GetEmbeddings(string deploymentOrModelName, Azure.AI.OpenAI.EmbeddingsOptions embeddingsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Embeddings>> GetEmbeddingsAsync(string deploymentOrModelName, Azure.AI.OpenAI.EmbeddingsOptions embeddingsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.OpenAI.AudioTranscription> GetAudioTranscription(Azure.AI.OpenAI.AudioTranscriptionOptions audioTranscriptionOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.AudioTranscription>> GetAudioTranscriptionAsync(Azure.AI.OpenAI.AudioTranscriptionOptions audioTranscriptionOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.OpenAI.AudioTranslation> GetAudioTranslation(Azure.AI.OpenAI.AudioTranslationOptions audioTranslationOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.AudioTranslation>> GetAudioTranslationAsync(Azure.AI.OpenAI.AudioTranslationOptions audioTranslationOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.OpenAI.ChatCompletions> GetChatCompletions(Azure.AI.OpenAI.ChatCompletionsOptions chatCompletionsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.ChatCompletions>> GetChatCompletionsAsync(Azure.AI.OpenAI.ChatCompletionsOptions chatCompletionsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.OpenAI.StreamingChatCompletions> GetChatCompletionsStreaming(Azure.AI.OpenAI.ChatCompletionsOptions chatCompletionsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.StreamingChatCompletions>> GetChatCompletionsStreamingAsync(Azure.AI.OpenAI.ChatCompletionsOptions chatCompletionsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.OpenAI.Completions> GetCompletions(Azure.AI.OpenAI.CompletionsOptions completionsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Completions>> GetCompletionsAsync(Azure.AI.OpenAI.CompletionsOptions completionsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.OpenAI.StreamingCompletions> GetCompletionsStreaming(Azure.AI.OpenAI.CompletionsOptions completionsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.StreamingCompletions>> GetCompletionsStreamingAsync(Azure.AI.OpenAI.CompletionsOptions completionsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.OpenAI.Embeddings> GetEmbeddings(Azure.AI.OpenAI.EmbeddingsOptions embeddingsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Embeddings>> GetEmbeddingsAsync(Azure.AI.OpenAI.EmbeddingsOptions embeddingsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.OpenAI.ImageGenerations> GetImageGenerations(Azure.AI.OpenAI.ImageGenerationOptions imageGenerationOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.ImageGenerations>> GetImageGenerationsAsync(Azure.AI.OpenAI.ImageGenerationOptions imageGenerationOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
