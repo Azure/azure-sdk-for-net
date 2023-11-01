@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.Orbital
     public partial class AvailableGroundStationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AvailableGroundStationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="groundStationName"> The groundStationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string groundStationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Orbital/availableGroundStations/{groundStationName}";

@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
     public partial class CosmosDBForPostgreSqlCoordinatorConfigurationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CosmosDBForPostgreSqlCoordinatorConfigurationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="clusterName"> The clusterName. </param>
+        /// <param name="configurationName"> The configurationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string configurationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/coordinatorConfigurations/{configurationName}";

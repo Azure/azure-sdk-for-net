@@ -27,6 +27,9 @@ namespace Azure.ResourceManager.SecurityCenter
     public partial class SecurityConnectorResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SecurityConnectorResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="securityConnectorName"> The securityConnectorName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string securityConnectorName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}";

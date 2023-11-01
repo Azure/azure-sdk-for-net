@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.Resources
     public partial class ArmDeploymentScriptResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ArmDeploymentScriptResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="scriptName"> The scriptName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string scriptName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Resources/deploymentScripts/{scriptName}";

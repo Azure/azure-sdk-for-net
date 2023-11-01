@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.SecurityCenter
     public partial class SecurityAlertsSuppressionRuleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SecurityAlertsSuppressionRuleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="alertsSuppressionRuleName"> The alertsSuppressionRuleName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string alertsSuppressionRuleName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Security/alertsSuppressionRules/{alertsSuppressionRuleName}";

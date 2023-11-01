@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.SecurityDevOps
     public partial class GitHubRepoResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="GitHubRepoResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="gitHubConnectorName"> The gitHubConnectorName. </param>
+        /// <param name="gitHubOwnerName"> The gitHubOwnerName. </param>
+        /// <param name="gitHubRepoName"> The gitHubRepoName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string gitHubConnectorName, string gitHubOwnerName, string gitHubRepoName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityDevOps/gitHubConnectors/{gitHubConnectorName}/owners/{gitHubOwnerName}/repos/{gitHubRepoName}";

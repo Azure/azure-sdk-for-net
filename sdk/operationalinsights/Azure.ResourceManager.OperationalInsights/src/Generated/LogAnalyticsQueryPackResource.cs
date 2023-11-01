@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.OperationalInsights
     public partial class LogAnalyticsQueryPackResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="LogAnalyticsQueryPackResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="queryPackName"> The queryPackName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string queryPackName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/queryPacks/{queryPackName}";
