@@ -6,6 +6,64 @@
 
 ### Breaking Changes
 
+This update includes a number of version-to-version breaking changes to the API.
+
+#### `deploymentOrModelName` moved to `*Options.DeploymentName`
+
+`deploymentOrModelName` and related method parameters on `OpenAIClient` have been moved to `DeploymentName`
+properties in the corresponding method options. This is intended to promote consistency across scenario,
+language, and Azure/non-Azure OpenAI use.
+
+As an example, the following:
+
+```csharp
+ChatCompletionsOptions chatCompletionsOptions = new()
+{
+    Messages = { new(ChatRole.User, "Hello, assistant!") },
+};
+Response<ChatCompletions> response = client.GetChatCompletions("gpt-4", chatCompletionsOptions);
+```
+
+...is now re-written as:
+
+```csharp
+ChatCompletionsOptions chatCompletionsOptions = new()
+{
+    DeploymentName = "gpt-4",
+    Messages = { new(ChatRole.User, "Hello, assistant!") },
+};
+Response<ChatCompletions> response = client.GetChatCompletions(chatCompletionsOptions);
+```
+
+#### Consistency in complex method options type constructors
+
+With the migration of `DeploymentName` into method complex options types, these options types have now been snapped to
+follow a common pattern: each complex options type will feature a default constructor that allows `init`-style setting
+of properties as well as a single additional constructor that accepts *all* required parameters for the corresponding
+method. Existing constructors that no longer meet that "all" requirement, including those impacted by the addition of
+`DeploymentName`, have been removed. The "convenience" constructors that represented required parameter data
+differently -- for example, `EmbeddingsOptions(string)`, have also been removed in favor of the consistent "set of
+directly provide" choice.
+
+More exhaustively, *removed* are:
+
+- `AudioTranscriptionOptions(BinaryData)`
+- `AudioTranslationOptions(BinaryData)`
+- `ChatCompletionsOptions(IEnumerable<ChatMessage>)`
+- `CompletionsOptions(IEnumerable<string>)`
+- `EmbeddingsOptions(string)`
+- `EmbeddingsOptions(IEnumerable<string>)`
+
+And *added* as replacements are:
+
+- `AudioTranscriptionOptions(string, BinaryData)`
+- `AudioTranslationOptions(string, BinaryData)`
+- `ChatCompletionsOptions(string, IEnumerable<ChatMessage>)`
+- `CompletionsOptions(string, IEnumerable<string>)`
+- `EmbeddingsOptions(string, IEnumerable<string>)`
+
+#### Embeddings
+
 - Changed the representation of embeddings from `IReadOnlyList<float>` to `ReadOnlyMemory<float>`.
 
 ### Bugs Fixed

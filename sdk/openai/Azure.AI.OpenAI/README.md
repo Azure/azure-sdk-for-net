@@ -74,9 +74,11 @@ OpenAIClient client = useAzureOpenAI
         new AzureKeyCredential("your-azure-openai-resource-api-key"))
     : new OpenAIClient("your-api-key-from-platform.openai.com");
 
-Response<Completions> response = await client.GetCompletionsAsync(
-    "text-davinci-003", // assumes a matching model deployment or model name
-    "Hello, world!");
+Response<Completions> response = await client.GetCompletionsAsync(new CompletionsOptions()
+{
+    DeploymentName = "text-davinci-003", // assumes a matching model deployment or model name
+    Prompts = { "Hello, world!" },
+});
 
 foreach (Choice choice in response.Value.Choices)
 {
@@ -111,11 +113,13 @@ The `GenerateChatbotResponse` method authenticates using a DefaultAzureCredentia
 string endpoint = "https://myaccount.openai.azure.com/";
 var client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential());
 
-string deploymentName = "text-davinci-003";
-string prompt = "What is Azure OpenAI?";
-Console.Write($"Input: {prompt}");
+CompletionsOptions completionsOptions = new()
+{
+    DeploymentName = "text-davinci-003",
+    Prompts = { "What is Azure OpenAI?" },
+};
 
-Response<Completions> completionsResponse = client.GetCompletions(deploymentName, prompt);
+Response<Completions> completionsResponse = client.GetCompletions(completionsOptions);
 string completion = completionsResponse.Value.Choices[0].Text;
 Console.WriteLine($"Chatbot: {completion}");
 ```
@@ -130,25 +134,24 @@ string key = "YOUR_AZURE_OPENAI_KEY";
 string endpoint = "https://myaccount.openai.azure.com/";
 var client = new OpenAIClient(new Uri(endpoint), new AzureKeyCredential(key));
 
-List<string> examplePrompts = new(){
-    "How are you today?",
-    "What is Azure OpenAI?",
-    "Why do children love dinosaurs?",
-    "Generate a proof of Euler's identity",
-    "Describe in single words only the good things that come into your mind about your mother.",
+CompletionsOptions completionsOptions = new()
+{
+    DeploymentName = "text-davinci-003",
+    Prompts =
+    {
+        "How are you today?",
+        "What is Azure OpenAI?",
+        "Why do children love dinosaurs?",
+        "Generate a proof of Euler's identity",
+        "Describe in single words only the good things that come into your mind about your mother."
+    },
 };
 
-string deploymentName = "text-davinci-003";
+Response<Completions> completionsResponse = client.GetCompletions(completionsOptions);
 
-foreach (string prompt in examplePrompts)
+foreach (Choice choice in completionsResponse.Value.Choices)
 {
-    Console.Write($"Input: {prompt}");
-    CompletionsOptions completionsOptions = new CompletionsOptions();
-    completionsOptions.Prompts.Add(prompt);
-
-    Response<Completions> completionsResponse = client.GetCompletions(deploymentName, completionsOptions);
-    string completion = completionsResponse.Value.Choices[0].Text;
-    Console.WriteLine($"Chatbot: {completion}");
+    Console.WriteLine($"Response for prompt {choice.Index}: {choice.Text}");
 }
 ```
 
@@ -180,12 +183,11 @@ string summarizationPrompt = @$"
 Console.Write($"Input: {summarizationPrompt}");
 var completionsOptions = new CompletionsOptions()
 {
+    DeploymentName = "text-davinci-003",
     Prompts = { summarizationPrompt },
 };
 
-string deploymentName = "text-davinci-003";
-
-Response<Completions> completionsResponse = client.GetCompletions(deploymentName, completionsOptions);
+Response<Completions> completionsResponse = client.GetCompletions(completionsOptions);
 string completion = completionsResponse.Value.Choices[0].Text;
 Console.WriteLine($"Summarization: {completion}");
 ```
@@ -197,6 +199,7 @@ string nonAzureOpenAIApiKey = "your-api-key-from-platform.openai.com";
 var client = new OpenAIClient(nonAzureOpenAIApiKey, new OpenAIClientOptions());
 var chatCompletionsOptions = new ChatCompletionsOptions()
 {
+    DeploymentName = "gpt-3.5-turbo", // Use DeploymentName for "model" with non-Azure clients
     Messages =
     {
         new ChatMessage(ChatRole.System, "You are a helpful assistant. You will talk like a pirate."),
@@ -206,9 +209,8 @@ var chatCompletionsOptions = new ChatCompletionsOptions()
     }
 };
 
-Response<StreamingChatCompletions> response = await client.GetChatCompletionsStreamingAsync(
-    deploymentOrModelName: "gpt-3.5-turbo",
-    chatCompletionsOptions);
+Response<StreamingChatCompletions> response
+    = await client.GetChatCompletionsStreamingAsync(chatCompletionsOptions);
 using StreamingChatCompletions streamingChatCompletions = response.Value;
 
 await foreach (StreamingChatChoice choice in streamingChatCompletions.GetChoicesStreaming())
@@ -274,16 +276,17 @@ var conversationMessages = new List<ChatMessage>()
     new(ChatRole.User, "What is the weather like in Boston?"),
 };
 
-var chatCompletionsOptions = new ChatCompletionsOptions();
+var chatCompletionsOptions = new ChatCompletionsOptions()
+{
+    DeploymentName = "gpt-35-turbo-0613",
+};
 foreach (ChatMessage chatMessage in conversationMessages)
 {
     chatCompletionsOptions.Messages.Add(chatMessage);
 }
 chatCompletionsOptions.Functions.Add(getWeatherFuntionDefinition);
 
-Response<ChatCompletions> response = await client.GetChatCompletionsAsync(
-    "gpt-35-turbo-0613",
-    chatCompletionsOptions);
+Response<ChatCompletions> response = await client.GetChatCompletionsAsync(chatCompletionsOptions);
 ```
 
 If the model determines that it should call a Chat Function, a finish reason of 'FunctionCall' will be populated on
@@ -345,6 +348,7 @@ See [the Azure OpenAI using your own data quickstart](https://learn.microsoft.co
 ```C# Snippet:ChatUsingYourOwnData
 var chatCompletionsOptions = new ChatCompletionsOptions()
 {
+    DeploymentName = "gpt-35-turbo-0613",
     Messages =
     {
         new ChatMessage(
@@ -368,9 +372,7 @@ var chatCompletionsOptions = new ChatCompletionsOptions()
         }
     }
 };
-Response<ChatCompletions> response = await client.GetChatCompletionsAsync(
-    "gpt-35-turbo-0613",
-    chatCompletionsOptions);
+Response<ChatCompletions> response = await client.GetChatCompletionsAsync(chatCompletionsOptions);
 ChatMessage message = response.Value.Choices[0].Message;
 // The final, data-informed response still appears in the ChatMessages as usual
 Console.WriteLine($"{message.Role}: {message.Content}");
@@ -388,9 +390,12 @@ foreach (ChatMessage contextMessage in message.AzureExtensionsContext.Messages)
 ### Generate embeddings
 
 ```C# Snippet:GenerateEmbeddings
-string deploymentOrModelName = "text-embedding-ada-002";
-EmbeddingsOptions embeddingsOptions = new("Your text string goes here");
-Response<Embeddings> response = await client.GetEmbeddingsAsync(deploymentOrModelName, embeddingsOptions);
+EmbeddingsOptions embeddingsOptions = new()
+{
+    DeploymentName = "text-embedding-ada-002",
+    Input = { "Your text string goes here" },
+};
+Response<Embeddings> response = await client.GetEmbeddingsAsync(embeddingsOptions);
 
 // The response includes the generated embedding.
 EmbeddingItem item = response.Value.Data[0];
@@ -418,13 +423,13 @@ using Stream audioStreamFromFile = File.OpenRead("myAudioFile.mp3");
 
 var transcriptionOptions = new AudioTranscriptionOptions()
 {
+    DeploymentName = "my-whisper-deployment", // whisper-1 as model name for non-Azure OpenAI
     AudioData = BinaryData.FromStream(audioStreamFromFile),
     ResponseFormat = AudioTranscriptionFormat.Verbose,
 };
 
-Response<AudioTranscription> transcriptionResponse = await client.GetAudioTranscriptionAsync(
-    deploymentId: "my-whisper-deployment", // whisper-1 as model name for non-Azure OpenAI
-    transcriptionOptions);
+Response<AudioTranscription> transcriptionResponse
+    = await client.GetAudioTranscriptionAsync(transcriptionOptions);
 AudioTranscription transcription = transcriptionResponse.Value;
 
 // When using Simple, SRT, or VTT formats, only transcription.Text will be populated
@@ -439,13 +444,12 @@ using Stream audioStreamFromFile = File.OpenRead("mySpanishAudioFile.mp3");
 
 var translationOptions = new AudioTranslationOptions()
 {
+    DeploymentName = "my-whisper-deployment", // whisper-1 as model name for non-Azure OpenAI
     AudioData = BinaryData.FromStream(audioStreamFromFile),
     ResponseFormat = AudioTranslationFormat.Verbose,
 };
 
-Response<AudioTranslation> translationResponse = await client.GetAudioTranslationAsync(
-    deploymentId: "my-whisper-deployment", // whisper-1 as model name for non-Azure OpenAI
-    translationOptions);
+Response<AudioTranslation> translationResponse = await client.GetAudioTranslationAsync(translationOptions);
 AudioTranslation translation = translationResponse.Value;
 
 // When using Simple, SRT, or VTT formats, only translation.Text will be populated
