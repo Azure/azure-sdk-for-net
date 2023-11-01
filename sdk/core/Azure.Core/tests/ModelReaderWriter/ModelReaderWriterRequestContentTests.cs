@@ -32,7 +32,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests
 
             //use IModelJsonSerializable
             var jsonContent = RequestContent.Create((IJsonModel<ModelX>)_modelX);
-            AssertContentType(jsonContent, "ModelMessageBody");
+            AssertContentType(jsonContent, "JsonModelMessageBody");
             content.TryComputeLength(out long lengthJson);
             Assert.Greater(lengthJson, 0);
 
@@ -40,7 +40,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests
 
             //use default
             jsonContent = RequestContent.Create(_modelX);
-            AssertContentType(jsonContent, "ModelMessageBody");
+            AssertContentType(jsonContent, "JsonModelMessageBody");
             content.TryComputeLength(out lengthJson);
             Assert.Greater(lengthJson, 0);
 

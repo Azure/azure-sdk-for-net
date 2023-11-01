@@ -93,6 +93,15 @@ namespace Azure.Core
             => new MessageBodyContent(MessageBody.Create(model, options ?? ModelReaderWriterOptions.DefaultWireOptions));
 
         /// <summary>
+        /// Creates an instance of <see cref="RequestContent"/> that wraps a <see cref="IJsonModel{T}"/>.
+        /// </summary>
+        /// <param name="model">The <see cref="IJsonModel{T}"/> to write.</param>
+        /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
+        /// <returns>An instance of <see cref="RequestContent"/> that wraps a <see cref="IJsonModel{T}"/>.</returns>
+        public static new RequestContent Create(IJsonModel<object> model, ModelReaderWriterOptions? options = default)
+            => new MessageBodyContent(MessageBody.Create(model, options ?? ModelReaderWriterOptions.DefaultWireOptions));
+
+        /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.
         /// </summary>
         /// <param name="serializable">The <see cref="object"/> to serialize.</param>

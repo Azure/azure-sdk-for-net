@@ -29,7 +29,7 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
 
             //use IModelJsonSerializable
             var jsonContent = MessageBody.Create((IJsonModel<ModelX>)_modelX!);
-            AssertContentType(jsonContent, "ModelMessageBody");
+            AssertContentType(jsonContent, "JsonModelMessageBody");
             content.TryComputeLength(out long lengthJson);
             Assert.Greater(lengthJson, 0);
 
@@ -37,7 +37,7 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
 
             //use default
             jsonContent = MessageBody.Create(_modelX!);
-            AssertContentType(jsonContent, "ModelMessageBody");
+            AssertContentType(jsonContent, "JsonModelMessageBody");
             content.TryComputeLength(out lengthJson);
             Assert.Greater(lengthJson, 0);
 
