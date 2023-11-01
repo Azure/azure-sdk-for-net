@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.Monitor
     public partial class DataCollectionRuleAssociationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DataCollectionRuleAssociationResource"/> instance. </summary>
+        /// <param name="resourceUri"> The resourceUri. </param>
+        /// <param name="associationName"> The associationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string resourceUri, string associationName)
         {
             var resourceId = $"{resourceUri}/providers/Microsoft.Insights/dataCollectionRuleAssociations/{associationName}";

@@ -28,6 +28,8 @@ namespace Azure.ResourceManager.Monitor
     public partial class LogProfileResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="LogProfileResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="logProfileName"> The logProfileName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string logProfileName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}";

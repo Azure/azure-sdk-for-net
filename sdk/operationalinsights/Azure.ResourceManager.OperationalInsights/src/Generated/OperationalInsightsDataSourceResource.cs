@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.OperationalInsights
     public partial class OperationalInsightsDataSourceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="OperationalInsightsDataSourceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="dataSourceName"> The dataSourceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string dataSourceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/dataSources/{dataSourceName}";

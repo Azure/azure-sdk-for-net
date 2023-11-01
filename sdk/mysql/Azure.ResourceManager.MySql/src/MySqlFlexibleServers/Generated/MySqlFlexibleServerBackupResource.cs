@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
     public partial class MySqlFlexibleServerBackupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MySqlFlexibleServerBackupResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="backupName"> The backupName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string backupName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/backups/{backupName}";
