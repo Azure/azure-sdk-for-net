@@ -10,14 +10,14 @@ namespace System.Net.ClientModel
     /// </summary>
     public readonly partial struct ModelReaderWriterFormat : IEquatable<ModelReaderWriterFormat>
     {
-        internal const string JsonValue = "J";
-        internal const string WireValue = "W";
+        private const string JsonValue = "J";
+        private const string WireValue = "W";
 
         /// <summary>
         /// Default format which will write all properties including read-only and additional properties.
         /// The format will always be JSON.
         /// </summary>
-        public static readonly ModelReaderWriterFormat Json = new ModelReaderWriterFormat(JsonValue);
+        public static ModelReaderWriterFormat Json { get; } = new ModelReaderWriterFormat(JsonValue);
 
         /// <summary>
         /// Format used to write this model when sending as a request to a service.
@@ -27,7 +27,7 @@ namespace System.Net.ClientModel
         /// Most use cases should prefer a more complete format like <see cref="ModelReaderWriterFormat.Json"/> that includes
         /// read-only and additional properties.
         /// </summary>
-        public static readonly ModelReaderWriterFormat Wire = new ModelReaderWriterFormat(WireValue);
+        public static ModelReaderWriterFormat Wire { get; } = new ModelReaderWriterFormat(WireValue);
 
         private readonly string _value;
 
