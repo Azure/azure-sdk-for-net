@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.AppContainers
     public partial class ContainerAppReplicaResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ContainerAppReplicaResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="containerAppName"> The containerAppName. </param>
+        /// <param name="revisionName"> The revisionName. </param>
+        /// <param name="replicaName"> The replicaName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string containerAppName, string revisionName, string replicaName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/revisions/{revisionName}/replicas/{replicaName}";
