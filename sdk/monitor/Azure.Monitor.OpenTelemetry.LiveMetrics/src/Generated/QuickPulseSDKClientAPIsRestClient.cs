@@ -120,7 +120,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                         CollectionConfigurationInfo value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                         value = CollectionConfigurationInfo.DeserializeCollectionConfigurationInfo(document.RootElement);
-                        return ResponseWithHeaders.FromValue<object, QuickPulseSDKClientAPIsPingHeaders>(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue<object>(value, headers, message.Response);
                     }
                 case 400:
                 case 401:
@@ -132,7 +132,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                         ServiceError value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                         value = ServiceError.DeserializeServiceError(document.RootElement);
-                        return ResponseWithHeaders.FromValue<object, QuickPulseSDKClientAPIsPingHeaders>(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue<object>(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -169,7 +169,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                         CollectionConfigurationInfo value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = CollectionConfigurationInfo.DeserializeCollectionConfigurationInfo(document.RootElement);
-                        return ResponseWithHeaders.FromValue<object, QuickPulseSDKClientAPIsPingHeaders>(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue<object>(value, headers, message.Response);
                     }
                 case 400:
                 case 401:
@@ -181,7 +181,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                         ServiceError value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = ServiceError.DeserializeServiceError(document.RootElement);
-                        return ResponseWithHeaders.FromValue<object, QuickPulseSDKClientAPIsPingHeaders>(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue<object>(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -251,7 +251,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                         CollectionConfigurationInfo value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                         value = CollectionConfigurationInfo.DeserializeCollectionConfigurationInfo(document.RootElement);
-                        return ResponseWithHeaders.FromValue<object, QuickPulseSDKClientAPIsPostHeaders>(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue<object>(value, headers, message.Response);
                     }
                 case 400:
                 case 401:
@@ -263,7 +263,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                         ServiceError value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
                         value = ServiceError.DeserializeServiceError(document.RootElement);
-                        return ResponseWithHeaders.FromValue<object, QuickPulseSDKClientAPIsPostHeaders>(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue<object>(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -295,7 +295,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                         CollectionConfigurationInfo value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = CollectionConfigurationInfo.DeserializeCollectionConfigurationInfo(document.RootElement);
-                        return ResponseWithHeaders.FromValue<object, QuickPulseSDKClientAPIsPostHeaders>(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue<object>(value, headers, message.Response);
                     }
                 case 400:
                 case 401:
@@ -307,7 +307,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                         ServiceError value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
                         value = ServiceError.DeserializeServiceError(document.RootElement);
-                        return ResponseWithHeaders.FromValue<object, QuickPulseSDKClientAPIsPostHeaders>(value, headers, message.Response);
+                        return ResponseWithHeaders.FromValue<object>(value, headers, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);

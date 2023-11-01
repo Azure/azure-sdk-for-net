@@ -260,14 +260,14 @@ namespace Azure.Analytics.Purview.Scanning
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="classificationRuleVersion"> The Int32 to use. </param>
-        /// <param name="action"> The ClassificationAction to use. Allowed values: "Keep" | "Delete". </param>
+        /// <param name="classificationRuleVersion"> The int to use. </param>
+        /// <param name="action"> The String to use. Allowed values: "Keep" | "Delete". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewClassificationRuleClient.xml" path="doc/members/member[@name='TagVersionAsync(int,string,RequestContext)']/*" />
-        public virtual async Task<Response> TagVersionAsync(int classificationRuleVersion, string action, RequestContext context)
+        public virtual async Task<Response> TagVersionAsync(int classificationRuleVersion, string action, RequestContext context = null)
         {
             Argument.AssertNotNull(action, nameof(action));
 
@@ -295,14 +295,14 @@ namespace Azure.Analytics.Purview.Scanning
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="classificationRuleVersion"> The Int32 to use. </param>
-        /// <param name="action"> The ClassificationAction to use. Allowed values: "Keep" | "Delete". </param>
+        /// <param name="classificationRuleVersion"> The int to use. </param>
+        /// <param name="action"> The String to use. Allowed values: "Keep" | "Delete". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="action"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewClassificationRuleClient.xml" path="doc/members/member[@name='TagVersion(int,string,RequestContext)']/*" />
-        public virtual Response TagVersion(int classificationRuleVersion, string action, RequestContext context)
+        public virtual Response TagVersion(int classificationRuleVersion, string action, RequestContext context = null)
         {
             Argument.AssertNotNull(action, nameof(action));
 
