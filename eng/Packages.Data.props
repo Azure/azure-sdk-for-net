@@ -103,7 +103,7 @@
     <PackageReference Update="Azure.Storage.Blobs" Version="12.16.0" />
     <PackageReference Update="Azure.Storage.Queues" Version="12.14.0" />
     <PackageReference Update="Azure.AI.OpenAI" Version="1.0.0-beta.5" />
-    <PackageReference Update="Azure.ResourceManager" Version="1.8.0" />
+    <PackageReference Update="Azure.ResourceManager" Version="1.7.0" />
 
     <!-- Other approved packages -->
     <PackageReference Update="Microsoft.Azure.Amqp" Version="2.6.3" />
