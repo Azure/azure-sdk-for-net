@@ -7,7 +7,6 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    [CodeGenModel("PassThroughQueueSelectorAttachment")]
     public partial class PassThroughQueueSelectorAttachment : IUtf8JsonSerializable
     {
         /// <summary> Describes how the value of the label is compared to the value pass through. </summary>

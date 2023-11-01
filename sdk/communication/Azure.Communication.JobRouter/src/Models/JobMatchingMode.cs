@@ -6,10 +6,11 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    [CodeGenModel("JobMatchingMode")]
-    [CodeGenSuppress("JobMatchingMode")]
-    public partial class JobMatchingMode : IUtf8JsonSerializable
+    public abstract partial class JobMatchingMode : IUtf8JsonSerializable
     {
+        /// <summary> The type discriminator describing a sub-type of JobMatchingMode. </summary>
+        public string Kind { get; protected set; }
+
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();

@@ -9,7 +9,7 @@ namespace Azure.Communication.JobRouter
     /// <summary>
     /// Generic value wrapper.
     /// </summary>
-    public class LabelValue : IEquatable<LabelValue>
+    public class RouterValue : IEquatable<RouterValue>
     {
         /// <summary>
         /// Primitive value.
@@ -20,7 +20,7 @@ namespace Azure.Communication.JobRouter
         /// Set value of <see cref="int"/> type.
         /// </summary>
         /// <param name="value"></param>
-        public LabelValue(int value)
+        public RouterValue(int value)
         {
             Value = value;
         }
@@ -29,7 +29,7 @@ namespace Azure.Communication.JobRouter
         /// Set value of <see cref="long"/> type.
         /// </summary>
         /// <param name="value"></param>
-        public LabelValue(long value)
+        public RouterValue(long value)
         {
             Value = value;
         }
@@ -38,7 +38,7 @@ namespace Azure.Communication.JobRouter
         /// Set value of <see cref="float"/> type.
         /// </summary>
         /// <param name="value"></param>
-        public LabelValue(float value)
+        public RouterValue(float value)
         {
             Value = value;
         }
@@ -47,7 +47,7 @@ namespace Azure.Communication.JobRouter
         /// Set value of <see cref="double"/> type.
         /// </summary>
         /// <param name="value"></param>
-        public LabelValue(double value)
+        public RouterValue(double value)
         {
             Value = value;
         }
@@ -56,7 +56,7 @@ namespace Azure.Communication.JobRouter
         /// Set value of <see cref="string"/> type.
         /// </summary>
         /// <param name="value"></param>
-        public LabelValue(string value)
+        public RouterValue(string value)
         {
             Value = value;
         }
@@ -65,7 +65,7 @@ namespace Azure.Communication.JobRouter
         /// Set value of <see cref="decimal"/> type.
         /// </summary>
         /// <param name="value"></param>
-        public LabelValue(decimal value)
+        public RouterValue(decimal value)
         {
             Value = value;
         }
@@ -74,18 +74,18 @@ namespace Azure.Communication.JobRouter
         /// Set value of <see cref="bool"/> type.
         /// </summary>
         /// <param name="value"></param>
-        public LabelValue(bool value)
+        public RouterValue(bool value)
         {
             Value = value;
         }
 
-        internal LabelValue(object value)
+        internal RouterValue(object value)
         {
             Value = value;
         }
 
         /// <inheritdoc />
-        public bool Equals(LabelValue other)
+        public bool Equals(RouterValue other)
         {
             if (Value == null)
             {
@@ -98,7 +98,7 @@ namespace Azure.Communication.JobRouter
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is LabelValue other && Equals(other);
+        public override bool Equals(object obj) => obj is RouterValue other && Equals(other);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -110,9 +110,9 @@ namespace Azure.Communication.JobRouter
             return Value.ToString();
         }
 
-        /// <summary> Determines if two <see cref="LabelValue"/> values are the same. </summary>
-        public static bool operator ==(LabelValue left, LabelValue right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="LabelValue"/> values are not the same. </summary>
-        public static bool operator !=(LabelValue left, LabelValue right) => !left.Equals(right);
+        /// <summary> Determines if two <see cref="RouterValue"/> values are the same. </summary>
+        public static bool operator ==(RouterValue left, RouterValue right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="RouterValue"/> values are not the same. </summary>
+        public static bool operator !=(RouterValue left, RouterValue right) => !left.Equals(right);
     }
 }

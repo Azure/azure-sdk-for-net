@@ -34,15 +34,15 @@ Response<RouterWorker> worker = await routerClient.CreateWorkerAsync(
         },
         Labels =
         {
-            ["Location"] = new LabelValue("NA"),
-            ["English"] = new LabelValue(7),
-            ["O365"] = new LabelValue(true),
-            ["Xbox_Support"] = new LabelValue(false)
+            ["Location"] = new RouterValue("NA"),
+            ["English"] = new RouterValue(7),
+            ["O365"] = new RouterValue(true),
+            ["Xbox_Support"] = new RouterValue(false)
         },
         Tags =
         {
-            ["Name"] = new LabelValue("John Doe"),
-            ["Department"] = new LabelValue("IT_HelpDesk")
+            ["Name"] = new RouterValue("John Doe"),
+            ["Department"] = new RouterValue("IT_HelpDesk")
         }
     }
 );
@@ -76,9 +76,9 @@ Response<RouterWorker> updateWorker = await routerClient.UpdateWorkerAsync(
         Channels = { new RouterChannel("WebChatEscalated", 50), },
         Labels =
         {
-            ["O365"] = new LabelValue("Supported"),
-            ["Xbox_Support"] = new LabelValue(null),
-            ["Xbox_Support_EN"] = new LabelValue(true),
+            ["O365"] = new RouterValue("Supported"),
+            ["Xbox_Support"] = new RouterValue(null),
+            ["Xbox_Support_EN"] = new RouterValue(true),
         }
     });
 

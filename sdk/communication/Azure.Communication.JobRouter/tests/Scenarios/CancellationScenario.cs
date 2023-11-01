@@ -36,6 +36,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
                 {
                     Name = "test",
                 });
+            AddForCleanup(new Task(async () => await administrationClient.DeleteQueueAsync(queueResponse.Value.Id)));
 
             var jobId = $"JobId-{IdPrefix}-{nameof(CancellationScenario)}";
             var createJob = await client.CreateJobAsync(

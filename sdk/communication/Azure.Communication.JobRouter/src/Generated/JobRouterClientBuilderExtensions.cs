@@ -6,13 +6,12 @@
 #nullable disable
 
 using System;
-using Azure.Communication.JobRouter;
 using Azure.Core.Extensions;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     /// <summary> Extension methods to add <see cref="JobRouterAdministrationClient"/>, <see cref="JobRouterClient"/> to client builder. </summary>
-    public static partial class JobRouterClientBuilderExtensions
+    internal static partial class JobRouterClientBuilderExtensions
     {
         /// <summary> Registers a <see cref="JobRouterAdministrationClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
