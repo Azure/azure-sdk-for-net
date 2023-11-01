@@ -1,12 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable
+#nullable enable
 
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,64 +15,50 @@ using Azure.Core;
 
 namespace Azure.AI.ChatProtocol;
 
+internal static class StreamReaderExtensions
+{
+    internal static bool TryReadLine(this StreamReader reader, out string line)
+    {
+        line = reader.ReadLine();
+        return line != null;
+    }
+
+    internal static async Task<string?> ReadLineAsync(this StreamReader reader, CancellationToken cancellationToken = default)
+    {
+        return await reader.ReadLineAsync()
+            .ContinueWith(t => t.Result, cancellationToken)
+            .ConfigureAwait(false);
+    }
+}
+
 public partial class ChatProtocolClient
 {
-    private static async IAsyncEnumerable<ChatCompletionChunk> GetStreamingEnumerableAsync(Response response)
+    private static async IAsyncEnumerable<ChatCompletionChunk> GetStreamingEnumerableAsync(Response response, [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        using SseReader reader = new(response.ContentStream);
-        while (true)
+        using (response)
         {
-            SseLine? sseEvent = await reader.TryReadSingleFieldEventAsync().ConfigureAwait(false);
-            if (sseEvent == null)
+            using StreamReader reader = new(response.ContentStream);
+            string? line;
+            while ((line = await reader.ReadLineAsync(cancellationToken).ConfigureAwait(false)) != null)
             {
-                break;
+                using JsonDocument json = JsonDocument.Parse(line);
+                ChatCompletionChunk item = ChatCompletionChunk.DeserializeChatCompletionChunk(json.RootElement);
+                yield return item;
             }
-
-            ReadOnlyMemory<char> name = sseEvent.Value.FieldName;
-
-            if (!name.Span.SequenceEqual("data".AsSpan()))
-            {
-                throw new InvalidDataException();
-            }
-
-            ReadOnlyMemory<char> value = sseEvent.Value.FieldValue;
-            if (value.Span.SequenceEqual("[DONE]".AsSpan()))
-            {
-                break;
-            }
-
-            using JsonDocument sseMessageJson = JsonDocument.Parse(sseEvent.Value.FieldValue);
-            ChatCompletionChunk item = ChatCompletionChunk.DeserializeChatCompletionChunk(sseMessageJson.RootElement);
-            yield return item;
         }
     }
 
     private static IEnumerable<ChatCompletionChunk> GetStreamingEnumerable(Response response)
     {
-        using SseReader reader = new(response.ContentStream);
-        while (true)
+        using (response)
         {
-            SseLine? sseEvent = reader.TryReadSingleFieldEvent();
-            if (sseEvent == null)
+            using StreamReader reader = new(response.ContentStream);
+            while (reader.TryReadLine(out var line))
             {
-                break;
+                using JsonDocument json = JsonDocument.Parse(line);
+                ChatCompletionChunk item = ChatCompletionChunk.DeserializeChatCompletionChunk(json.RootElement);
+                yield return item;
             }
-
-            ReadOnlyMemory<char> name = sseEvent.Value.FieldName;
-            if (!name.Span.SequenceEqual("data".AsSpan()))
-            {
-                throw new InvalidDataException();
-            }
-
-            ReadOnlyMemory<char> value = sseEvent.Value.FieldValue;
-            if (value.Span.SequenceEqual("[DONE]".AsSpan()))
-            {
-                break;
-            }
-
-            using JsonDocument sseMessageJson = JsonDocument.Parse(sseEvent.Value.FieldValue);
-            ChatCompletionChunk item = ChatCompletionChunk.DeserializeChatCompletionChunk(sseMessageJson.RootElement);
-            yield return item;
         }
     }
 
