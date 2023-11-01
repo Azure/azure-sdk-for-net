@@ -8,11 +8,11 @@ Please refer the [documentation](https://learn.microsoft.com/azure/search/vector
 
 Here's the list of samples that will show you how to index the vector fields and perform vector search using .NET SDK.
 
-* [Vector Search Using Vector Query](./Sample07_VectorSearch_UsingVectorizedQuery.md#vector-search-using-vector-query)
-     * [Single Vector Search](./Sample07_VectorSearch_UsingFieldBuilder.md/#single-vector-search)
-     * [Single Vector Search With Filter](./Sample07_VectorSearch_UsingVectorizedQuery.md#single-vector-search-with-filter)
-     * [Hybrid Search](./Sample07_VectorSearch_UsingVectorizedQuery.md#hybrid-search)
-     * [Multi-vector Search](./Sample07_VectorSearch_UsingVectorizedQuery.md#multi-vector-search)
-     * [Multi-field Vector Search](./Sample07_VectorSearch_UsingVectorizedQuery.md#multi-field-vector-search)
-* [Vector Semantic Hybrid Search](./Sample07_VectorSearch_UsingSemanticHybridQuery.md)
-* [Vector Search Using Field Builder](./Sample07_VectorSearch_UsingFieldBuilder.md)
+* [Vector Search Using Vector Query](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch_UsingVectorizedQuery.md#vector-search-using-vector-query)
+     * [Single Vector Search](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch_UsingVectorizedQuery.md#single-vector-search)
+     * [Single Vector Search With Filter](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch_UsingVectorizedQuery.md#single-vector-search-with-filter)
+     * [Hybrid Search](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch_UsingVectorizedQuery.md#hybrid-search)
+     * [Multi-vector Search](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch_UsingVectorizedQuery.md#multi-vector-search)
+     * [Multi-field Vector Search](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch_UsingVectorizedQuery.md#multi-field-vector-search)
+* [Vector Semantic Hybrid Search](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch_UsingSemanticHybridQuery.md)
+* [Vector Search Using Field Builder](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample07_VectorSearch_UsingFieldBuilder.md)
