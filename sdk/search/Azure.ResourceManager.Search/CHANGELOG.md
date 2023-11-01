@@ -7,12 +7,6 @@
 - Added support for '2023-11-01' management plane API version.
 - Enable the [semantic search](https://learn.microsoft.com/azure/search/semantic-search-overview) feature
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.2.0-beta.1 (2023-05-31)
 
 ### Features Added
