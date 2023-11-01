@@ -27,6 +27,12 @@ namespace Azure.ResourceManager.Chaos
     public partial class TargetResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="TargetResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="parentProviderNamespace"> The parentProviderNamespace. </param>
+        /// <param name="parentResourceType"> The parentResourceType. </param>
+        /// <param name="parentResourceName"> The parentResourceName. </param>
+        /// <param name="targetName"> The targetName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{parentProviderNamespace}/{parentResourceType}/{parentResourceName}/providers/Microsoft.Chaos/targets/{targetName}";
