@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An object representing collection of ApiIssueCommentResources and their operations over a ApiIssueCommentResource. </returns>
         public virtual ApiIssueCommentCollection GetApiIssueComments()
         {
-            return GetCachedClient(Client => new ApiIssueCommentCollection(Client, Id));
+            return GetCachedClient(client => new ApiIssueCommentCollection(client, Id));
         }
 
         /// <summary>
@@ -114,8 +114,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="commentId"> Comment identifier within an Issue. Must be unique in the current Issue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="commentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="commentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="commentId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ApiIssueCommentResource>> GetApiIssueCommentAsync(string commentId, CancellationToken cancellationToken = default)
         {
@@ -137,8 +137,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="commentId"> Comment identifier within an Issue. Must be unique in the current Issue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="commentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="commentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="commentId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ApiIssueCommentResource> GetApiIssueComment(string commentId, CancellationToken cancellationToken = default)
         {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An object representing collection of ApiIssueAttachmentResources and their operations over a ApiIssueAttachmentResource. </returns>
         public virtual ApiIssueAttachmentCollection GetApiIssueAttachments()
         {
-            return GetCachedClient(Client => new ApiIssueAttachmentCollection(Client, Id));
+            return GetCachedClient(client => new ApiIssueAttachmentCollection(client, Id));
         }
 
         /// <summary>
@@ -167,8 +167,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="attachmentId"> Attachment identifier within an Issue. Must be unique in the current Issue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="attachmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ApiIssueAttachmentResource>> GetApiIssueAttachmentAsync(string attachmentId, CancellationToken cancellationToken = default)
         {
@@ -190,8 +190,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="attachmentId"> Attachment identifier within an Issue. Must be unique in the current Issue. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="attachmentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ApiIssueAttachmentResource> GetApiIssueAttachment(string attachmentId, CancellationToken cancellationToken = default)
         {
