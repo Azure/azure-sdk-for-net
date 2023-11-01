@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.HybridContainerService
     public partial class StorageSpaceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="StorageSpaceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="storageSpacesName"> The storageSpacesName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string storageSpacesName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/storageSpaces/{storageSpacesName}";

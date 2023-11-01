@@ -35,7 +35,7 @@ namespace Azure.Communication.JobRouter
                 {
                     foreach (var label in value)
                     {
-                        Labels[label.Key] = new LabelValue(label.Value);
+                        Labels[label.Key] = new RouterValue(label.Value);
                     }
                 }
             }
@@ -44,7 +44,7 @@ namespace Azure.Communication.JobRouter
         /// <summary>
         /// A set of key/value pairs that are identifying attributes used by the rules engines to make decisions.
         /// </summary>
-        public IDictionary<string, LabelValue> Labels { get; } = new Dictionary<string, LabelValue>();
+        public IDictionary<string, RouterValue> Labels { get; } = new Dictionary<string, RouterValue>();
 
         /// <summary> The name of this queue. </summary>
         public string Name { get; set; }
@@ -54,6 +54,22 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> (Optional) The ID of the exception policy that determines various job escalation rules. </summary>
         public string ExceptionPolicyId { get; set; }
+
+        [CodeGenMember("Etag")]
+        internal string _etag
+        {
+            get
+            {
+                return ETag.ToString();
+            }
+            set
+            {
+                ETag = new ETag(value);
+            }
+        }
+
+        /// <summary> Concurrency Token. </summary>
+        public ETag ETag { get; internal set; }
 
         /// <summary> Initializes a new instance of JobQueue. </summary>
         internal RouterQueue()
@@ -94,6 +110,11 @@ namespace Azure.Communication.JobRouter
             {
                 writer.WritePropertyName("exceptionPolicyId"u8);
                 writer.WriteStringValue(ExceptionPolicyId);
+            }
+            if (Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.ToString());
             }
             writer.WriteEndObject();
         }

@@ -27,13 +27,15 @@ namespace Azure.Communication.JobRouter
     public abstract partial class RouterRule
     {
         /// <summary> Initializes a new instance of RouterRule. </summary>
+        protected RouterRule()
+        {
+        }
+
+        /// <summary> Initializes a new instance of RouterRule. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of RouterRule. </param>
         internal RouterRule(string kind)
         {
             Kind = kind;
         }
-
-        /// <summary> The type discriminator describing a sub-type of RouterRule. </summary>
-        internal string Kind { get; set; }
     }
 }

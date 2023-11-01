@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Network
     public partial class ExpressRouteCircuitAuthorizationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ExpressRouteCircuitAuthorizationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="circuitName"> The circuitName. </param>
+        /// <param name="authorizationName"> The authorizationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string circuitName, string authorizationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCircuits/{circuitName}/authorizations/{authorizationName}";

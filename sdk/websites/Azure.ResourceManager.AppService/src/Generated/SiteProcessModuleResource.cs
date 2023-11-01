@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.AppService
     public partial class SiteProcessModuleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SiteProcessModuleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="processId"> The processId. </param>
+        /// <param name="baseAddress"> The baseAddress. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string processId, string baseAddress)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/processes/{processId}/modules/{baseAddress}";

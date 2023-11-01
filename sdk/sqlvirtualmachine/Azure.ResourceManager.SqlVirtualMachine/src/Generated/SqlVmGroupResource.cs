@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine
     public partial class SqlVmGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SqlVmGroupResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="sqlVmGroupName"> The sqlVmGroupName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string sqlVmGroupName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/{sqlVmGroupName}";

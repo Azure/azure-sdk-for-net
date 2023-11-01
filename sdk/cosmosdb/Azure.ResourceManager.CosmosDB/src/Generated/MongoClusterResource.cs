@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.CosmosDB
     public partial class MongoClusterResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MongoClusterResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="mongoClusterName"> The mongoClusterName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string mongoClusterName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}";

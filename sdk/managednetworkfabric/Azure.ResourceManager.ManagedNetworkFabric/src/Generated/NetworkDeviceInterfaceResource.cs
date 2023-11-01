@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     public partial class NetworkDeviceInterfaceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkDeviceInterfaceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="networkDeviceName"> The networkDeviceName. </param>
+        /// <param name="networkInterfaceName"> The networkInterfaceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkDeviceName, string networkInterfaceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkDevices/{networkDeviceName}/networkInterfaces/{networkInterfaceName}";

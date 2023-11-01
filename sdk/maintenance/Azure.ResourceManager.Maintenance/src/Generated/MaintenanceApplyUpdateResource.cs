@@ -27,6 +27,12 @@ namespace Azure.ResourceManager.Maintenance
     public partial class MaintenanceApplyUpdateResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MaintenanceApplyUpdateResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="providerName"> The providerName. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        /// <param name="applyUpdateName"> The applyUpdateName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string providerName, string resourceType, string resourceName, string applyUpdateName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/applyUpdates/{applyUpdateName}";

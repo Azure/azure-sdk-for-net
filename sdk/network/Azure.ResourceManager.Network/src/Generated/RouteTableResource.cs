@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.Network
     public partial class RouteTableResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="RouteTableResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="routeTableName"> The routeTableName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string routeTableName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeTables/{routeTableName}";

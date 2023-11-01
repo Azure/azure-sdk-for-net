@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.AppService
     public partial class SiteDiagnosticResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SiteDiagnosticResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="siteName"> The siteName. </param>
+        /// <param name="diagnosticCategory"> The diagnosticCategory. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string diagnosticCategory)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/diagnostics/{diagnosticCategory}";

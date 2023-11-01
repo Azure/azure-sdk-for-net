@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.Compute
     public partial class SharedGalleryImageVersionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SharedGalleryImageVersionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="galleryUniqueName"> The galleryUniqueName. </param>
+        /// <param name="galleryImageName"> The galleryImageName. </param>
+        /// <param name="galleryImageVersionName"> The galleryImageVersionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string galleryUniqueName, string galleryImageName, string galleryImageVersionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}/images/{galleryImageName}/versions/{galleryImageVersionName}";
