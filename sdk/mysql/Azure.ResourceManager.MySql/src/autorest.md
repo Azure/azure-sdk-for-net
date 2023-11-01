@@ -13,7 +13,7 @@ library-name: MySql
 
 batch:
   - tag: package-2020-01-01
-  - tag: package-flexibleserver-2023-06-01-preview-net
+  - tag: package-flexibleserver-2023-06-01-preview
 ```
 
 ``` yaml $(tag) == 'package-2020-01-01'
@@ -183,11 +183,11 @@ directive:
 
 ```
 
-``` yaml $(tag) == 'package-flexibleserver-2023-06-01-preview-net'
+``` yaml $(tag) == 'package-flexibleserver-2023-06-01-preview'
 input-file:
 - https://github.com/Azure/azure-rest-api-specs/blob/4c38cb9966cd6afbb03c7e9b14997720a728baee/specification/common-types/resource-management/v5/privatelinks.json
 namespace: Azure.ResourceManager.MySql.FlexibleServers
-require: https://github.com/Azure/azure-rest-api-specs/blob/99bdb48d40f70fb1cc25545af964c35c2ce632c9/specification/mysql/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/2264262e0c7575a794cc395609d2342c7e598149/specification/mysql/resource-manager/readme.md
 output-folder: $(this-folder)/MySqlFlexibleServers/Generated
 sample-gen:
   output-folder: $(this-folder)/../samples/Generated

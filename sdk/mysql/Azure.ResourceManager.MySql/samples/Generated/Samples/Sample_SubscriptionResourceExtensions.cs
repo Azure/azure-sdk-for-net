@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetLocationBasedCapabilities_CapabilitiesList()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/ServiceOperations/preview/2021-12-01-preview/examples/CapabilitiesByLocationList.json
+            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/ServiceOperations/preview/2023-06-01-preview/examples/CapabilitiesByLocationList.json
             // this example is just showing the usage of "LocationBasedCapabilities_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task ExecuteCheckVirtualNetworkSubnetUsage_CheckVirtualNetworkSubnetUsage()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/ServiceOperations/preview/2021-12-01-preview/examples/CheckVirtualNetworkSubnetUsage.json
+            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/ServiceOperations/preview/2023-06-01-preview/examples/CheckVirtualNetworkSubnetUsage.json
             // this example is just showing the usage of "CheckVirtualNetworkSubnetUsage_Execute" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CheckMySqlFlexibleServerNameAvailability_CheckNameAvailability()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/ServiceOperations/preview/2021-12-01-preview/examples/CheckNameAvailability.json
+            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/ServiceOperations/preview/2023-06-01-preview/examples/CheckNameAvailability.json
             // this example is just showing the usage of "CheckNameAvailability_Execute" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CheckMySqlFlexibleServerNameAvailabilityWithoutLocation_CheckNameAvailability()
         {
-            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/ServiceOperations/preview/2021-12-01-preview/examples/CheckNameAvailability.json
+            // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/ServiceOperations/preview/2023-06-01-preview/examples/CheckNameAvailability.json
             // this example is just showing the usage of "CheckNameAvailabilityWithoutLocation_Execute" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

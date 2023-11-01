@@ -180,6 +180,25 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         }
         #endregion
 
+        #region CapabilityResource
+        /// <summary>
+        /// Gets an object representing a <see cref="CapabilityResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CapabilityResource.CreateResourceIdentifier" /> to create a <see cref="CapabilityResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="CapabilityResource" /> object. </returns>
+        public static CapabilityResource GetCapabilityResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                CapabilityResource.ValidateResourceId(id);
+                return new CapabilityResource(client, id);
+            }
+            );
+        }
+        #endregion
+
         /// <summary> Gets a collection of MySqlFlexibleServerResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of MySqlFlexibleServerResources and their operations over a MySqlFlexibleServerResource. </returns>
@@ -234,6 +253,65 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         public static Response<MySqlFlexibleServerResource> GetMySqlFlexibleServer(this ResourceGroupResource resourceGroupResource, string serverName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetMySqlFlexibleServers().Get(serverName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of CapabilityResources in the SubscriptionResource. </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="locationName"> The name of the location. </param>
+        /// <returns> An object representing collection of CapabilityResources and their operations over a CapabilityResource. </returns>
+        public static CapabilityCollection GetCapabilities(this SubscriptionResource subscriptionResource, AzureLocation locationName)
+        {
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCapabilities(locationName);
+        }
+
+        /// <summary>
+        /// Get capabilities at specified location in a given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/locations/{locationName}/capabilitySets/{capabilitySetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LocationBasedCapabilitySet_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="locationName"> The name of the location. </param>
+        /// <param name="capabilitySetName"> Name of capability set. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="capabilitySetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="capabilitySetName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<CapabilityResource>> GetCapabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, string capabilitySetName, CancellationToken cancellationToken = default)
+        {
+            return await subscriptionResource.GetCapabilities(locationName).GetAsync(capabilitySetName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get capabilities at specified location in a given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/locations/{locationName}/capabilitySets/{capabilitySetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LocationBasedCapabilitySet_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="locationName"> The name of the location. </param>
+        /// <param name="capabilitySetName"> Name of capability set. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="capabilitySetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="capabilitySetName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<CapabilityResource> GetCapability(this SubscriptionResource subscriptionResource, AzureLocation locationName, string capabilitySetName, CancellationToken cancellationToken = default)
+        {
+            return subscriptionResource.GetCapabilities(locationName).Get(capabilitySetName, cancellationToken);
         }
 
         /// <summary>
