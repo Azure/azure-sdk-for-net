@@ -137,35 +137,6 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        public async Task CreateIfNotExistsAsync_NotExists()
-        {
-            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
-            string folderPath = test.DirectoryPath;
-
-            string testPath = Path.Combine(folderPath, "testPath");
-
-            StorageResourceContainer container = new LocalDirectoryStorageResourceContainer(testPath);
-            await container.CreateIfNotExistsAsync();
-
-            Assert.IsTrue(Directory.Exists(testPath));
-        }
-
-        [Test]
-        public async Task CreateIfNotExistsAsync_Exists()
-        {
-            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
-            string folderPath = test.DirectoryPath;
-
-            string testPath = Path.Combine(folderPath, "testPath");
-            Directory.CreateDirectory(testPath);
-
-            StorageResourceContainer container = new LocalDirectoryStorageResourceContainer(testPath);
-            await container.CreateIfNotExistsAsync();
-
-            Assert.IsTrue(Directory.Exists(testPath));
-        }
-
-        [Test]
         public void GetChildStorageResourceContainer()
         {
             using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
