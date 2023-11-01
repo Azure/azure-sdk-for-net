@@ -10,12 +10,10 @@ using System.Net.ClientModel.Core;
 using System.Net.ClientModel.Internal;
 using System.Text.Json;
 
-namespace System.Net.ClientModel.Tests.Client.ResourceManager.Compute.Models
+namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Compute
 {
-    public partial class InstanceViewStatus : IUtf8JsonContentWriteable, IJsonModel<InstanceViewStatus>
+    public partial class InstanceViewStatus : IJsonModel<InstanceViewStatus>
     {
-        void IUtf8JsonContentWriteable.Write(Utf8JsonWriter writer) => ((IJsonModel<InstanceViewStatus>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
-
         void IJsonModel<InstanceViewStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => Serialize(writer, options);
 
         private void Serialize(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -166,7 +164,9 @@ namespace System.Net.ClientModel.Tests.Client.ResourceManager.Compute.Models
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
-            return ModelReaderWriter.WriteCore(this, options);
+            return ModelReaderWriter.Write(this, options);
         }
+
+        ModelReaderWriterFormat IModel<InstanceViewStatus>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

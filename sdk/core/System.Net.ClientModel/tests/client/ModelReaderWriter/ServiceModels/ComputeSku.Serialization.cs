@@ -9,12 +9,10 @@ using System.Net.ClientModel.Core;
 using System.Net.ClientModel.Internal;
 using System.Text.Json;
 
-namespace System.Net.ClientModel.Tests.Client.ResourceManager.Compute.Models
+namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Compute
 {
-    public partial class ComputeSku : IUtf8JsonContentWriteable, IJsonModel<ComputeSku>
+    public partial class ComputeSku : IJsonModel<ComputeSku>
     {
-        void IUtf8JsonContentWriteable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeSku>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
-
         void IJsonModel<ComputeSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => Serialize(writer, options);
 
         private void Serialize(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -123,7 +121,9 @@ namespace System.Net.ClientModel.Tests.Client.ResourceManager.Compute.Models
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
-            return ModelReaderWriter.WriteCore(this, options);
+            return ModelReaderWriter.Write(this, options);
         }
+
+        ModelReaderWriterFormat IModel<ComputeSku>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

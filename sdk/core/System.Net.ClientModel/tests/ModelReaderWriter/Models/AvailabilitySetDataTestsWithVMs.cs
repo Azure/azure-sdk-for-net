@@ -4,21 +4,16 @@
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.IO;
-using System.Net.ClientModel.Core;
 using System.Net.ClientModel.Tests.Client;
 using System.Net.ClientModel.Tests.Client.Models.ResourceManager.Compute;
 
-namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
+namespace System.Net.ClientModel.Tests.ModelReaderWriterTests.Models
 {
     internal class AvailabilitySetDataTestsWithVMs : ModelJsonTests<AvailabilitySetData>
     {
         protected override string WirePayload => File.ReadAllText(TestData.GetLocation("AvailabilitySetData/AvailabilitySetDataWithVMsWireFormat.json")).TrimEnd();
 
         protected override string JsonPayload => WirePayload;
-
-        protected override Func<AvailabilitySetData?, MessageBody> ToPipelineContent => model => model;
-
-        protected override Func<Result?, AvailabilitySetData> FromResult => response => (AvailabilitySetData)response;
 
         protected override string GetExpectedResult(ModelReaderWriterFormat format)
         {

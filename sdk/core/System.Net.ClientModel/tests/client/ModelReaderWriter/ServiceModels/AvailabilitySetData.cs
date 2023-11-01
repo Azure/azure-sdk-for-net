@@ -6,14 +6,11 @@
 #nullable disable
 
 using System.Collections.Generic;
-using System.Net.ClientModel.Core;
 using System.Net.ClientModel.Internal;
-using System.Net.ClientModel.Tests.Client.ResourceManager.Compute.Models;
-using System.Net.ClientModel.Tests.Client.ResourceManager.Models;
-using System.Net.ClientModel.Tests.Client.ResourceManager.Resources.Models;
-using System.Text.Json;
+using System.Net.ClientModel.Tests.Client.Models.ResourceManager;
+using System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources;
 
-namespace System.Net.ClientModel.Tests.Client.ResourceManager.Compute
+namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Compute
 {
     /// <summary>
     /// A class representing the AvailabilitySet data model.
@@ -22,24 +19,6 @@ namespace System.Net.ClientModel.Tests.Client.ResourceManager.Compute
     public partial class AvailabilitySetData : TrackedResourceData
     {
         internal AvailabilitySetData() { }
-
-        public static implicit operator MessageBody(AvailabilitySetData availabilitySetData)
-        {
-            if (availabilitySetData is null)
-            {
-                return null;
-            }
-
-            return MessageBody.Create(availabilitySetData, ModelReaderWriterOptions.DefaultWireOptions);
-        }
-
-        public static explicit operator AvailabilitySetData(Result result)
-        {
-            ClientUtilities.AssertNotNull(result, nameof(result));
-
-            using JsonDocument jsonDocument = JsonDocument.Parse((BinaryData)result.GetRawResponse().Body);
-            return DeserializeAvailabilitySetData(jsonDocument.RootElement, ModelReaderWriterOptions.DefaultWireOptions);
-        }
 
         /// <summary> Initializes a new instance of AvailabilitySetData. </summary>
         /// <param name="location"> The location. </param>

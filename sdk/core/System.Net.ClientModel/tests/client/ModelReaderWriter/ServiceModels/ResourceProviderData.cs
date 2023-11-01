@@ -6,12 +6,9 @@
 #nullable disable
 
 using System.Collections.Generic;
-using System.Net.ClientModel.Core;
 using System.Net.ClientModel.Internal;
-using System.Net.ClientModel.Tests.Client.ResourceManager.Resources.Models;
-using System.Text.Json;
 
-namespace System.Net.ClientModel.Tests.Client.ResourceManager.Resources
+namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
 {
     /// <summary>
     /// A class representing the ResourceProvider data model.
@@ -19,24 +16,6 @@ namespace System.Net.ClientModel.Tests.Client.ResourceManager.Resources
     /// </summary>
     public partial class ResourceProviderData
     {
-        public static implicit operator MessageBody(ResourceProviderData resourceProviderData)
-        {
-            if (resourceProviderData == null)
-            {
-                return null;
-            }
-
-            return MessageBody.Create(resourceProviderData, ModelReaderWriterOptions.DefaultWireOptions);
-        }
-
-        public static explicit operator ResourceProviderData(Result result)
-        {
-            ClientUtilities.AssertNotNull(result, nameof(result));
-
-            using JsonDocument jsonDocument = JsonDocument.Parse((BinaryData)result.GetRawResponse().Body);
-            return DeserializeResourceProviderData(jsonDocument.RootElement, ModelReaderWriterOptions.DefaultWireOptions);
-        }
-
         /// <summary> Initializes a new instance of ProviderData. </summary>
         public ResourceProviderData()
         {

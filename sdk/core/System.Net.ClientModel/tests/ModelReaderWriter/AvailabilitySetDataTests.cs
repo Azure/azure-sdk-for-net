@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net.ClientModel.Core;
 using System.Net.ClientModel.Tests.Client;
-using System.Net.ClientModel.Tests.Client.ResourceManager.Compute;
+using System.Net.ClientModel.Tests.Client.Models.ResourceManager.Compute;
 
 namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
 {

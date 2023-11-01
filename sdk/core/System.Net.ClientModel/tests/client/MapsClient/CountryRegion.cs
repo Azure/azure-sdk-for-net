@@ -38,6 +38,9 @@ public class CountryRegion : IJsonModel<CountryRegion>
         return new CountryRegion(isoCode);
     }
 
+    public ModelReaderWriterFormat GetWireFormat(ModelReaderWriterOptions options)
+        => ModelReaderWriterFormat.Json;
+
     public CountryRegion Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
     {
         using var document = JsonDocument.ParseValue(ref reader);

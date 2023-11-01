@@ -11,13 +11,11 @@ using System.Net.ClientModel.Internal;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace System.Net.ClientModel.Tests.Client.ResourceManager.Models
+namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager
 {
     [JsonConverter(typeof(SystemDataConverter))]
-    public partial class SystemData : IUtf8JsonContentWriteable, IJsonModel<SystemData>
+    public partial class SystemData : IJsonModel<SystemData>
     {
-        void IUtf8JsonContentWriteable.Write(Utf8JsonWriter writer) => ((IJsonModel<SystemData>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
-
         void IJsonModel<SystemData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => Serialize(writer, options);
 
         private void Serialize(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -178,7 +176,9 @@ namespace System.Net.ClientModel.Tests.Client.ResourceManager.Models
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
-            return ModelReaderWriter.WriteCore(this, options);
+            return ModelReaderWriter.Write(this, options);
         }
+
+        ModelReaderWriterFormat IModel<SystemData>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

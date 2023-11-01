@@ -6,7 +6,7 @@ using System.IO;
 using System.Net.ClientModel.Core;
 using System.Net.ClientModel.Tests.Client;
 using System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
-using System.Net.ClientModel.Tests.Client.ResourceManager.Resources;
+using System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources;
 using System.Reflection;
 using System.Text.Json;
 using System.Threading;
@@ -24,10 +24,15 @@ namespace System.Net.ClientModel.Tests.Internal.ModelReaderWriterTests
         private static readonly string _json = File.ReadAllText(TestData.GetLocation("ResourceProviderData/ResourceProviderData.json"));
         private static readonly ResourceProviderData _resourceProviderData = ModelReaderWriter.Read<ResourceProviderData>(BinaryData.FromString(_json))!;
 
+        private static FieldInfo? GetSequenceBuilder(ModelWriter writer)
+        {
+            return writer.GetType().BaseType!.GetField("_sequenceBuilder", BindingFlags.NonPublic | BindingFlags.Instance);
+        }
+
         [Test]
         public void ThrowsIfUnsupportedFormat()
         {
-            ModelX? model = ModelReaderWriter.Read<ModelX>(BinaryData.FromString(File.ReadAllText(TestData.GetLocation("ModelX/ModelX.json"))));
+            ModelX? model = ClientModel.ModelReaderWriter.Read<ModelX>(BinaryData.FromString(File.ReadAllText(TestData.GetLocation("ModelX/ModelX.json"))));
             Assert.IsNotNull(model);
             ModelWriter writer = new ModelWriter(model!, new ModelReaderWriterOptions("x"));
             Assert.Throws<FormatException>(() => writer.ToBinaryData());
@@ -55,7 +60,7 @@ namespace System.Net.ClientModel.Tests.Internal.ModelReaderWriterTests
         public async Task DisposeWhileConvertToBinaryData()
         {
             ModelWriter writer = new ModelWriter(_resourceProviderData, ModelReaderWriterOptions.DefaultWireOptions);
-            FieldInfo? sequenceField = writer.GetType().GetField("_sequenceBuilder", BindingFlags.NonPublic | BindingFlags.Instance);
+            FieldInfo? sequenceField = GetSequenceBuilder(writer);
             Assert.IsNotNull(sequenceField);
             object? sequenceBuilder = sequenceField!.GetValue(writer);
             Assert.IsNull(sequenceBuilder);
@@ -91,7 +96,7 @@ namespace System.Net.ClientModel.Tests.Internal.ModelReaderWriterTests
         public async Task DisposeWhileCopyAsync()
         {
             ModelWriter writer = new ModelWriter(_resourceProviderData, ModelReaderWriterOptions.DefaultWireOptions);
-            FieldInfo? sequenceField = writer.GetType().GetField("_sequenceBuilder", BindingFlags.NonPublic | BindingFlags.Instance);
+            FieldInfo? sequenceField = GetSequenceBuilder(writer);
             Assert.IsNotNull(sequenceField);
             object? sequenceBuilder = sequenceField!.GetValue(writer);
             Assert.IsNull(sequenceBuilder);
@@ -139,7 +144,7 @@ namespace System.Net.ClientModel.Tests.Internal.ModelReaderWriterTests
         public async Task DisposeWhileCopy()
         {
             ModelWriter writer = new ModelWriter(_resourceProviderData, ModelReaderWriterOptions.DefaultWireOptions);
-            FieldInfo? sequenceField = writer.GetType().GetField("_sequenceBuilder", BindingFlags.NonPublic | BindingFlags.Instance);
+            FieldInfo? sequenceField = GetSequenceBuilder(writer);
             Assert.IsNotNull(sequenceField);
             object? sequenceBuilder = sequenceField!.GetValue(writer);
             Assert.IsNull(sequenceBuilder);
@@ -175,7 +180,7 @@ namespace System.Net.ClientModel.Tests.Internal.ModelReaderWriterTests
         public async Task DisposeWhileGettingLength()
         {
             ModelWriter writer = new ModelWriter(_resourceProviderData, ModelReaderWriterOptions.DefaultWireOptions);
-            FieldInfo? sequenceField = writer.GetType().GetField("_sequenceBuilder", BindingFlags.NonPublic | BindingFlags.Instance);
+            FieldInfo? sequenceField = GetSequenceBuilder(writer);
             Assert.IsNotNull(sequenceField);
             object? sequenceBuilder = sequenceField!.GetValue(writer);
             Assert.IsNull(sequenceBuilder);
@@ -241,13 +246,13 @@ namespace System.Net.ClientModel.Tests.Internal.ModelReaderWriterTests
             writer.TryComputeLength(out var length);
             Assert.AreEqual(_modelSize, length);
 
-            object? sequenceBuilder = writer.GetType().GetField("_sequenceBuilder", BindingFlags.NonPublic | BindingFlags.Instance)?.GetValue(writer);
+            object? sequenceBuilder = GetSequenceBuilder(writer)?.GetValue(writer);
             Assert.IsNotNull(sequenceBuilder);
 
             writer.Dispose();
 
             // sequenceBuilder should be null because the writer was disposed
-            sequenceBuilder = writer.GetType().GetField("_sequenceBuilder", BindingFlags.NonPublic | BindingFlags.Instance)?.GetValue(writer);
+            sequenceBuilder = GetSequenceBuilder(writer)?.GetValue(writer);
             Assert.IsNull(sequenceBuilder);
         }
 
@@ -259,7 +264,7 @@ namespace System.Net.ClientModel.Tests.Internal.ModelReaderWriterTests
             writer.Dispose();
 
             // sequenceBuilder should be null because the writer was disposed
-            object? sequenceBuilder = writer.GetType().GetField("_sequenceBuilder", BindingFlags.NonPublic | BindingFlags.Instance)?.GetValue(writer);
+            object? sequenceBuilder = GetSequenceBuilder(writer)?.GetValue(writer);
             Assert.IsNull(sequenceBuilder);
         }
 
@@ -318,6 +323,11 @@ namespace System.Net.ClientModel.Tests.Internal.ModelReaderWriterTests
 
         private class ExplodingModel : IJsonModel<ExplodingModel>
         {
+            ModelReaderWriterFormat IModel<ExplodingModel>.GetWireFormat(ModelReaderWriterOptions options)
+            {
+                throw new NotImplementedException();
+            }
+
             ExplodingModel IJsonModel<ExplodingModel>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
             {
                 throw new NotImplementedException();
