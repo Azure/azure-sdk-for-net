@@ -17,6 +17,9 @@ public class Result<T> : Result
         _value = value;
         _response = response!;
 
+        // TODO: note this will throw in the current implementation
+        // And we do want to keep this validation for correctness of this type.
+
         // Null values are required to use NullableResult<T>
         if (value is null)
         {
