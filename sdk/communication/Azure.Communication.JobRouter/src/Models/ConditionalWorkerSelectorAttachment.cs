@@ -7,7 +7,6 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    [CodeGenModel("ConditionalWorkerSelectorAttachment")]
     public partial class ConditionalWorkerSelectorAttachment : IUtf8JsonSerializable
     {
         /// <summary> Initializes a new instance of ConditionalWorkerSelectorAttachment. </summary>

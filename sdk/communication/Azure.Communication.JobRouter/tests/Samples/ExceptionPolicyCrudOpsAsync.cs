@@ -39,8 +39,8 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 ClassificationPolicyId = "escalation-on-q-over-flow",
                 LabelsToUpsert =
                 {
-                    ["EscalateJob"] = new LabelValue(true),
-                    ["EscalationReasonCode"] = new LabelValue("QueueOverFlow")
+                    ["EscalateJob"] = new RouterValue(true),
+                    ["EscalationReasonCode"] = new RouterValue("QueueOverFlow")
                 }
             };
 
@@ -54,8 +54,8 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 ClassificationPolicyId = "escalation-on-wait-time-exceeded",
                 LabelsToUpsert =
                 {
-                    ["EscalateJob"] = new LabelValue(true),
-                    ["EscalationReasonCode"] = new LabelValue("WaitTimeExceeded")
+                    ["EscalateJob"] = new RouterValue(true),
+                    ["EscalationReasonCode"] = new RouterValue("WaitTimeExceeded")
                 }
             };
 
@@ -109,8 +109,8 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 ClassificationPolicyId = "escalation-on-wait-time-exceeded",
                 LabelsToUpsert =
                 {
-                    ["EscalateJob"] = new LabelValue(true),
-                    ["EscalationReasonCode"] = new LabelValue("WaitTimeExceeded2Min")
+                    ["EscalateJob"] = new RouterValue(true),
+                    ["EscalationReasonCode"] = new RouterValue("WaitTimeExceeded2Min")
                 }
             };
 

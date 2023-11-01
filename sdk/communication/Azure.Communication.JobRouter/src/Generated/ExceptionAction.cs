@@ -30,7 +30,5 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Unique Id of the exception action. </summary>
         public string Id { get; }
-        /// <summary> The type discriminator describing a sub-type of ExceptionAction. </summary>
-        internal string Kind { get; set; }
     }
 }

@@ -26,8 +26,5 @@ namespace Azure.Communication.JobRouter
         {
             Kind = kind;
         }
-
-        /// <summary> The type discriminator describing a sub-type of QueueSelectorAttachment. </summary>
-        internal string Kind { get; set; }
     }
 }

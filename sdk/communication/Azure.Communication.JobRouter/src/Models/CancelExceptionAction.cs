@@ -7,7 +7,6 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    [CodeGenModel("CancelExceptionAction")]
     public partial class CancelExceptionAction: IUtf8JsonSerializable
     {
         /// <summary> Initializes a new instance of CancelExceptionAction. </summary>

@@ -9,7 +9,6 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    [CodeGenModel("ExceptionRule")]
     public partial class ExceptionRule : IUtf8JsonSerializable
     {
         /// <summary> Initializes a new instance of ExceptionRule. </summary>

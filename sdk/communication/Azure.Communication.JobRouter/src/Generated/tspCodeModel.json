@@ -75,8 +75,8 @@
     },
     {
      "$id": "11",
-     "Name": "lessThanEqual",
-     "Value": "lessThanEqual",
+     "Name": "lessThanOrEqual",
+     "Value": "lessThanOrEqual",
      "Description": "Less than or equal"
     },
     {
@@ -87,8 +87,8 @@
     },
     {
      "$id": "13",
-     "Name": "greaterThanEqual",
-     "Value": "greaterThanEqual",
+     "Name": "greaterThanOrEqual",
+     "Value": "greaterThanOrEqual",
      "Description": "Greater than or equal"
     }
    ],
@@ -6652,8 +6652,8 @@
       },
       {
        "$id": "750",
-       "Name": "reclassifyJobOptions",
-       "NameInRequest": "reclassifyJobOptions",
+       "Name": "options",
+       "NameInRequest": "options",
        "Description": "Request object for reclassifying a job.",
        "Type": {
         "$id": "751",
@@ -6795,8 +6795,8 @@
       },
       {
        "$id": "764",
-       "Name": "cancelJobOptions",
-       "NameInRequest": "cancelJobOptions",
+       "Name": "options",
+       "NameInRequest": "options",
        "Description": "Request model for cancelling job.",
        "Type": {
         "$ref": "350"
@@ -6924,8 +6924,8 @@
       },
       {
        "$id": "775",
-       "Name": "completeJobOptions",
-       "NameInRequest": "completeJobOptions",
+       "Name": "options",
+       "NameInRequest": "options",
        "Description": "Request model for completing job.",
        "Type": {
         "$ref": "355"
@@ -7053,8 +7053,8 @@
       },
       {
        "$id": "786",
-       "Name": "closeJobOptions",
-       "NameInRequest": "closeJobOptions",
+       "Name": "options",
+       "NameInRequest": "options",
        "Description": "Request model for closing job.",
        "Type": {
         "$ref": "360"
@@ -7508,8 +7508,8 @@
       },
       {
        "$id": "826",
-       "Name": "unassignJobOptions",
-       "NameInRequest": "unassignJobOptions",
+       "Name": "options",
+       "NameInRequest": "options",
        "Description": "Request body for unassign route.",
        "Type": {
         "$ref": "385"
@@ -7766,8 +7766,8 @@
       },
       {
        "$id": "848",
-       "Name": "declineJobOfferOptions",
-       "NameInRequest": "declineJobOfferOptions",
+       "Name": "options",
+       "NameInRequest": "options",
        "Description": "Request model for declining offer.",
        "Type": {
         "$ref": "400"
