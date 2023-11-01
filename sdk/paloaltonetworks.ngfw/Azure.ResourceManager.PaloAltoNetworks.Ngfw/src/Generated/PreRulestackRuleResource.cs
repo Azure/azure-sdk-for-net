@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
     public partial class PreRulestackRuleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PreRulestackRuleResource"/> instance. </summary>
+        /// <param name="globalRulestackName"> The globalRulestackName. </param>
+        /// <param name="priority"> The priority. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string globalRulestackName, string priority)
         {
             var resourceId = $"/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}/preRules/{priority}";
