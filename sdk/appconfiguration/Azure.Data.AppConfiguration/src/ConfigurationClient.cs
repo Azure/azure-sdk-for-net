@@ -16,7 +16,7 @@ namespace Azure.Data.AppConfiguration
     /// </summary>
     public partial class ConfigurationClient
     {
-        private const string OTelAttributeKey = "az.app_configuration.key"
+        private const string OTelAttributeKey = "az.app_configuration.key";
         private readonly SyncTokenPolicy _syncTokenPolicy;
 
         /// <summary>

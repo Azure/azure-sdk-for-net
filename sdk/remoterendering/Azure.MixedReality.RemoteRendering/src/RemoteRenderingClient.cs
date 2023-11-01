@@ -15,8 +15,8 @@ namespace Azure.MixedReality.RemoteRendering
     /// </summary>
     public class RemoteRenderingClient
     {
-        private const string OTelConversionIdKey = "az.remote_rendering.conversion.id"
-        private const string OTelSessionIdKey = "az.remote_rendering.session.id"
+        private const string OTelConversionIdKey = "az.remote_rendering.conversion.id";
+        private const string OTelSessionIdKey = "az.remote_rendering.session.id";
         private readonly Guid _accountId;
 
         private readonly ClientDiagnostics _clientDiagnostics;
@@ -107,7 +107,7 @@ namespace Azure.MixedReality.RemoteRendering
         public virtual AssetConversionOperation StartConversion(string conversionId, AssetConversionOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(StartConversion)}");
-            scope.AddAttribute(nameof(conversionId), conversionId);
+            scope.AddAttribute(OTelConversionIdKey, conversionId);
             scope.Start();
             try
             {
@@ -135,7 +135,7 @@ namespace Azure.MixedReality.RemoteRendering
         public virtual async Task<AssetConversionOperation> StartConversionAsync(string conversionId, AssetConversionOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(StartConversion)}");
-            scope.AddAttribute(nameof(conversionId), conversionId);
+            scope.AddAttribute(OTelConversionIdKey, conversionId);
             scope.Start();
             try
             {
@@ -252,7 +252,7 @@ namespace Azure.MixedReality.RemoteRendering
         public virtual StartRenderingSessionOperation StartSession(string sessionId, RenderingSessionOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(StartSession)}");
-            scope.AddAttribute(nameof(sessionId), sessionId);
+            scope.AddAttribute(OTelSessionIdKey, sessionId);
             scope.Start();
             try
             {
@@ -274,7 +274,7 @@ namespace Azure.MixedReality.RemoteRendering
         public virtual async Task<StartRenderingSessionOperation> StartSessionAsync(string sessionId, RenderingSessionOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(StartSession)}");
-            scope.AddAttribute(nameof(sessionId), sessionId);
+            scope.AddAttribute(OTelSessionIdKey, sessionId);
             scope.Start();
             try
             {
@@ -314,7 +314,7 @@ namespace Azure.MixedReality.RemoteRendering
         public virtual Response<RenderingSession> UpdateSession(string sessionId, UpdateSessionOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(UpdateSession)}");
-            scope.AddAttribute(nameof(sessionId), sessionId);
+            scope.AddAttribute(OTelSessionIdKey, sessionId);
             scope.Start();
             try
             {
@@ -336,7 +336,7 @@ namespace Azure.MixedReality.RemoteRendering
         public virtual async Task<Response<RenderingSession>> UpdateSessionAsync(string sessionId, UpdateSessionOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(UpdateSession)}");
-            scope.AddAttribute(nameof(sessionId), sessionId);
+            scope.AddAttribute(OTelSessionIdKey, sessionId);
             scope.Start();
             try
             {
@@ -357,7 +357,7 @@ namespace Azure.MixedReality.RemoteRendering
         public virtual Response StopSession(string sessionId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(StopSession)}");
-            scope.AddAttribute(nameof(sessionId), sessionId);
+            scope.AddAttribute(OTelSessionIdKey, sessionId);
             scope.Start();
             try
             {
@@ -377,7 +377,7 @@ namespace Azure.MixedReality.RemoteRendering
         public virtual async Task<Response> StopSessionAsync(string sessionId, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(RemoteRenderingClient)}.{nameof(StopSession)}");
-            scope.AddAttribute(nameof(sessionId), sessionId);
+            scope.AddAttribute(OTelSessionIdKey, sessionId);
             scope.Start();
 
             try
@@ -479,7 +479,7 @@ namespace Azure.MixedReality.RemoteRendering
         internal Response<AssetConversion> GetConversionInternal(string conversionId, string diagnosticScopeName, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope(diagnosticScopeName);
-            scope.AddAttribute(nameof(conversionId), conversionId);
+            scope.AddAttribute(OTelConversionIdKey, conversionId);
             scope.Start();
             try
             {
@@ -501,7 +501,7 @@ namespace Azure.MixedReality.RemoteRendering
         internal async Task<Response<AssetConversion>> GetConversionInternalAsync(string conversionId, string diagnosticScopeName, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope(diagnosticScopeName);
-            scope.AddAttribute(nameof(conversionId), conversionId);
+            scope.AddAttribute(OTelConversionIdKey, conversionId);
             scope.Start();
             try
             {
@@ -523,7 +523,7 @@ namespace Azure.MixedReality.RemoteRendering
         internal Response<RenderingSession> GetSessionInternal(string sessionId, string diagnosticScopeName, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope(diagnosticScopeName);
-            scope.AddAttribute(nameof(sessionId), sessionId);
+            scope.AddAttribute(OTelSessionIdKey, sessionId);
             scope.Start();
             try
             {
@@ -545,7 +545,7 @@ namespace Azure.MixedReality.RemoteRendering
         internal async Task<Response<RenderingSession>> GetSessionInternalAsync(string sessionId, string diagnosticScopeName, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope(diagnosticScopeName);
-            scope.AddAttribute(nameof(sessionId), sessionId);
+            scope.AddAttribute(OTelSessionIdKey, sessionId);
             scope.Start();
             try
             {

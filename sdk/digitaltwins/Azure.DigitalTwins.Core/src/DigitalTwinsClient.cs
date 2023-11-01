@@ -16,15 +16,15 @@ using static Azure.DigitalTwins.Core.StreamHelper;
 
 namespace Azure.DigitalTwins.Core
 {
-    private const string OTelTwinIdKey = "az.digital_twins.twin.id"
-    private const string OTelModelIdKey = "az.digital_twins.model.id"
-    private const string OTelComponentNameKey = "az.digital_twins.component.name"
-    private const string OTelRelationshipNameKey = "az.digital_twins.relationship.name"
-    private const string OTelRelationshipIdKey = "az.digital_twins.relationship.id"
-    private const string OTelMessageIdKey = "az.digital_twins.message.id"
-    private const string OTelJobIdKey = "az.digital_twins.job.id"
-    private const string OTeQueryKey = "az.digital_twins.query"
-    private const string OTelEventRouteIdKey = "az.digital_twins.event_route.id"    
+    private const string OTelTwinIdKey = "az.digital_twins.twin.id";
+    private const string OTelModelIdKey = "az.digital_twins.model.id";
+    private const string OTelComponentNameKey = "az.digital_twins.component.name";
+    private const string OTelRelationshipNameKey = "az.digital_twins.relationship.name";
+    private const string OTelRelationshipIdKey = "az.digital_twins.relationship.id";
+    private const string OTelMessageIdKey = "az.digital_twins.message.id";
+    private const string OTelJobIdKey = "az.digital_twins.job.id";
+    private const string OTeQueryKey = "az.digital_twins.query";
+    private const string OTelEventRouteIdKey = "az.digital_twins.event_route.id";
     /// <summary>
     /// The Digital Twins Service Client contains methods to retrieve digital twin information, like models, components, and relationships.
     /// </summary>

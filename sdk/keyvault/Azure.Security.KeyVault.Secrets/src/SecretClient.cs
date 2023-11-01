@@ -18,8 +18,8 @@ namespace Azure.Security.KeyVault.Secrets
     {
         internal const string SecretsPath = "/secrets/";
         internal const string DeletedSecretsPath = "/deletedsecrets/";
-        private const string OTelSecretNameKey = "az.key_vault.secret.name"
-        private const string OTelSecretVersionKey = "az.key_vault.secret.version"
+        private const string OTelSecretNameKey = "az.key_vault.secret.name";
+        private const string OTelSecretVersionKey = "az.key_vault.secret.version";
         private readonly KeyVaultPipeline _pipeline;
 
         /// <summary>

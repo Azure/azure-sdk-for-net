@@ -21,8 +21,8 @@ namespace Azure.Security.KeyVault.Keys
         internal const string KeysPath = "/keys/";
         internal const string DeletedKeysPath = "/deletedkeys/";
         internal const string RngPath = "/rng";
-        private const string OTelKeyNameKey = "az.key_vault.key.name"
-        private const string OTelKeyVersionKey = "az.key_vault.key.version"
+        private const string OTelKeyNameKey = "az.key_vault.key.name";
+        private const string OTelKeyVersionKey = "az.key_vault.key.version";
         private readonly KeyVaultPipeline _pipeline;
 
         private readonly ClientDiagnostics _clientDiagnostics;

@@ -21,7 +21,7 @@ namespace Azure.AI.TextAnalytics.ServiceClients
     ///
     internal class LanguageServiceClient : ServiceClient
     {
-        private const string OTelDocumentKey = "az.text_analytics.document.id"
+        private const string OTelDocumentKey = "az.text_analytics.document.id";
         private readonly MicrosoftCognitiveLanguageServiceTextAnalysisRestClient _languageRestClient;
         private readonly ClientDiagnostics _clientDiagnostics;
         private readonly Uri _baseUri;
