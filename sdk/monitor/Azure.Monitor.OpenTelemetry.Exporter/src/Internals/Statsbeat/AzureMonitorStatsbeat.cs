@@ -189,11 +189,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                 return;
             }
 
-            var kubernetesSrvHost = platform.GetEnvironmentVariable(EnvironmentVariableConstants.KUBERNETES_SERVICE_HOST);
-            if (kubernetesSrvHost != null)
+            var aksArmNamespaceId = platform.GetEnvironmentVariable(EnvironmentVariableConstants.AKS_ARM_NAMESPACE_ID);
+            if (aksArmNamespaceId != null)
             {
                 _resourceProvider = "aks";
-                _resourceProviderId = platform.GetEnvironmentVariable(EnvironmentVariableConstants.AKS_ARM_NAMESPACE_ID) ?? "unknown";
+                _resourceProviderId = aksArmNamespaceId;
 
                 return;
             }
