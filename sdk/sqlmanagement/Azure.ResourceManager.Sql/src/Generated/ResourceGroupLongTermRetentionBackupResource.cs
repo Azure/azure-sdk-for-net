@@ -27,6 +27,12 @@ namespace Azure.ResourceManager.Sql
     public partial class ResourceGroupLongTermRetentionBackupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ResourceGroupLongTermRetentionBackupResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="locationName"> The locationName. </param>
+        /// <param name="longTermRetentionServerName"> The longTermRetentionServerName. </param>
+        /// <param name="longTermRetentionDatabaseName"> The longTermRetentionDatabaseName. </param>
+        /// <param name="backupName"> The backupName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, AzureLocation locationName, string longTermRetentionServerName, string longTermRetentionDatabaseName, string backupName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionDatabases/{longTermRetentionDatabaseName}/longTermRetentionBackups/{backupName}";

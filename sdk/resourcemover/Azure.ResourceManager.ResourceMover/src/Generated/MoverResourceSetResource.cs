@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.ResourceMover
     public partial class MoverResourceSetResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MoverResourceSetResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="moverResourceSetName"> The moverResourceSetName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string moverResourceSetName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moverResourceSetName}";
