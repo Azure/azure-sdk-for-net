@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
     public partial class MySqlFlexibleServerFirewallRuleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MySqlFlexibleServerFirewallRuleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="firewallRuleName"> The firewallRuleName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string firewallRuleName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforMySQL/flexibleServers/{serverName}/firewallRules/{firewallRuleName}";

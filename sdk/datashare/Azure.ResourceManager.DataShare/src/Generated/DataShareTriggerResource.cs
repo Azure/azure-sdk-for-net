@@ -26,6 +26,11 @@ namespace Azure.ResourceManager.DataShare
     public partial class DataShareTriggerResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DataShareTriggerResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="shareSubscriptionName"> The shareSubscriptionName. </param>
+        /// <param name="triggerName"> The triggerName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string shareSubscriptionName, string triggerName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataShare/accounts/{accountName}/shareSubscriptions/{shareSubscriptionName}/triggers/{triggerName}";

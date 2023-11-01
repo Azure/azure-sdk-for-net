@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
     public partial class GlobalRulestackResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="GlobalRulestackResource"/> instance. </summary>
+        /// <param name="globalRulestackName"> The globalRulestackName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string globalRulestackName)
         {
             var resourceId = $"/providers/PaloAltoNetworks.Cloudngfw/globalRulestacks/{globalRulestackName}";

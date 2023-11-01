@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.Compute
     public partial class RestorePointGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="RestorePointGroupResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="restorePointGroupName"> The restorePointGroupName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string restorePointGroupName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/restorePointCollections/{restorePointGroupName}";

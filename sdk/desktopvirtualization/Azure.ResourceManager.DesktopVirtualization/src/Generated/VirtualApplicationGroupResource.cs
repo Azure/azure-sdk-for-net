@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
     public partial class VirtualApplicationGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="VirtualApplicationGroupResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="applicationGroupName"> The applicationGroupName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string applicationGroupName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}";

@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.Compute
     public partial class VirtualMachineScaleSetExtensionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="VirtualMachineScaleSetExtensionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="virtualMachineScaleSetName"> The virtualMachineScaleSetName. </param>
+        /// <param name="vmssExtensionName"> The vmssExtensionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualMachineScaleSetName, string vmssExtensionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{virtualMachineScaleSetName}/extensions/{vmssExtensionName}";

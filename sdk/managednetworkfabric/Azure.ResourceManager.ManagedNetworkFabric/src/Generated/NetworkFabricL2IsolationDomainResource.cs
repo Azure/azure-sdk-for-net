@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     public partial class NetworkFabricL2IsolationDomainResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkFabricL2IsolationDomainResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="l2IsolationDomainName"> The l2IsolationDomainName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string l2IsolationDomainName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l2IsolationDomains/{l2IsolationDomainName}";

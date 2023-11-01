@@ -27,6 +27,11 @@ namespace Azure.ResourceManager.EventGrid
     public partial class DomainTopicEventSubscriptionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DomainTopicEventSubscriptionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="domainName"> The domainName. </param>
+        /// <param name="topicName"> The topicName. </param>
+        /// <param name="eventSubscriptionName"> The eventSubscriptionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string domainName, string topicName, string eventSubscriptionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{topicName}/eventSubscriptions/{eventSubscriptionName}";

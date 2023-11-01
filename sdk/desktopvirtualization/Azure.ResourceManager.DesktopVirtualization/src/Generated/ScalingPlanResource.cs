@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
     public partial class ScalingPlanResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ScalingPlanResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="scalingPlanName"> The scalingPlanName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string scalingPlanName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/scalingPlans/{scalingPlanName}";

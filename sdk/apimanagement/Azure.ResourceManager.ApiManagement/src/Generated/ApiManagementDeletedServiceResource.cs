@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.ApiManagement
     public partial class ApiManagementDeletedServiceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ApiManagementDeletedServiceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="serviceName"> The serviceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string serviceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/locations/{location}/deletedservices/{serviceName}";

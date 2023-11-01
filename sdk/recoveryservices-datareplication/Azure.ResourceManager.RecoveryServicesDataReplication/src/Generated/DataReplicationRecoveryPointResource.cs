@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
     public partial class DataReplicationRecoveryPointResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DataReplicationRecoveryPointResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="vaultName"> The vaultName. </param>
+        /// <param name="protectedItemName"> The protectedItemName. </param>
+        /// <param name="recoveryPointName"> The recoveryPointName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName, string protectedItemName, string recoveryPointName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/protectedItems/{protectedItemName}/recoveryPoints/{recoveryPointName}";

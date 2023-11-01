@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.CostManagement
     public partial class TenantScheduledActionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="TenantScheduledActionResource"/> instance. </summary>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string name)
         {
             var resourceId = $"/providers/Microsoft.CostManagement/scheduledActions/{name}";

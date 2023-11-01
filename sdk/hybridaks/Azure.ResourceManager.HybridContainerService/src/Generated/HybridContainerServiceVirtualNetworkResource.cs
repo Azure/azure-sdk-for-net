@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.HybridContainerService
     public partial class HybridContainerServiceVirtualNetworkResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="HybridContainerServiceVirtualNetworkResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="virtualNetworksName"> The virtualNetworksName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualNetworksName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/virtualNetworks/{virtualNetworksName}";

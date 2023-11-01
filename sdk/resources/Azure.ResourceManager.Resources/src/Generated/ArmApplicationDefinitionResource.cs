@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.Resources
     public partial class ArmApplicationDefinitionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ArmApplicationDefinitionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="applicationDefinitionName"> The applicationDefinitionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string applicationDefinitionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Solutions/applicationDefinitions/{applicationDefinitionName}";

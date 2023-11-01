@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.ApiManagement
     public partial class ApiManagementEmailTemplateResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ApiManagementEmailTemplateResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="templateName"> The templateName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, TemplateName templateName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/templates/{templateName}";

@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.ContainerRegistry
     public partial class ContainerRegistryRunResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ContainerRegistryRunResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="registryName"> The registryName. </param>
+        /// <param name="runId"> The runId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string registryName, string runId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/runs/{runId}";
