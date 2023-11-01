@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Maps
         /// <returns> An object representing collection of MapsCreatorResources and their operations over a MapsCreatorResource. </returns>
         public virtual MapsCreatorCollection GetMapsCreators()
         {
-            return GetCachedClient(Client => new MapsCreatorCollection(Client, Id));
+            return GetCachedClient(client => new MapsCreatorCollection(client, Id));
         }
 
         /// <summary>
@@ -114,8 +114,8 @@ namespace Azure.ResourceManager.Maps
         /// </summary>
         /// <param name="creatorName"> The name of the Maps Creator instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="creatorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="creatorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="creatorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MapsCreatorResource>> GetMapsCreatorAsync(string creatorName, CancellationToken cancellationToken = default)
         {
@@ -137,8 +137,8 @@ namespace Azure.ResourceManager.Maps
         /// </summary>
         /// <param name="creatorName"> The name of the Maps Creator instance. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="creatorName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="creatorName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="creatorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MapsCreatorResource> GetMapsCreator(string creatorName, CancellationToken cancellationToken = default)
         {

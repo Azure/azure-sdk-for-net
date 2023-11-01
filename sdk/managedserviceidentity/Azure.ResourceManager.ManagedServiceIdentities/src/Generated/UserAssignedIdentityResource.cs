@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <returns> An object representing collection of FederatedIdentityCredentialResources and their operations over a FederatedIdentityCredentialResource. </returns>
         public virtual FederatedIdentityCredentialCollection GetFederatedIdentityCredentials()
         {
-            return GetCachedClient(Client => new FederatedIdentityCredentialCollection(Client, Id));
+            return GetCachedClient(client => new FederatedIdentityCredentialCollection(client, Id));
         }
 
         /// <summary>
@@ -114,8 +114,8 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// </summary>
         /// <param name="federatedIdentityCredentialResourceName"> The name of the federated identity credential resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="federatedIdentityCredentialResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="federatedIdentityCredentialResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="federatedIdentityCredentialResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<FederatedIdentityCredentialResource>> GetFederatedIdentityCredentialAsync(string federatedIdentityCredentialResourceName, CancellationToken cancellationToken = default)
         {
@@ -137,8 +137,8 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// </summary>
         /// <param name="federatedIdentityCredentialResourceName"> The name of the federated identity credential resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="federatedIdentityCredentialResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="federatedIdentityCredentialResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="federatedIdentityCredentialResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<FederatedIdentityCredentialResource> GetFederatedIdentityCredential(string federatedIdentityCredentialResourceName, CancellationToken cancellationToken = default)
         {
