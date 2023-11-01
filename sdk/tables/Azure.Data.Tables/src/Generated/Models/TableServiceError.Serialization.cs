@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using System.Xml.Linq;
+using Azure;
 using Azure.Core;
 
 namespace Azure.Data.Tables.Models
@@ -39,6 +40,14 @@ namespace Azure.Data.Tables.Models
                 }
             }
             return new TableServiceError(message.Value);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TableServiceError FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTableServiceError(document.RootElement);
         }
     }
 }
