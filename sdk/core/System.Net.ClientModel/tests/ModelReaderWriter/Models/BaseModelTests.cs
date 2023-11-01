@@ -3,10 +3,9 @@
 
 using NUnit.Framework;
 using System.Linq;
-using System.Net.ClientModel.Core;
 using System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
 
-namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
+namespace System.Net.ClientModel.Tests.ModelReaderWriterTests.Models
 {
     internal class BaseModelTests : ModelJsonTests<BaseModel>
     {
@@ -19,10 +18,6 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
         protected override string JsonPayload => WirePayload;
 
         protected override string WirePayload => "{\"kind\":\"X\",\"name\":\"xmodel\",\"xProperty\":100,\"extra\":\"stuff\"}";
-
-        protected override Func<BaseModel?, MessageBody> ToPipelineContent => model => model;
-
-        protected override Func<Result?, BaseModel> FromResult => response => (BaseModel)response;
 
         protected override void CompareModels(BaseModel model, BaseModel model2, ModelReaderWriterFormat format)
         {

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.Net.ClientModel.Core;
 using System.Reflection;
 using NUnit.Framework;
 

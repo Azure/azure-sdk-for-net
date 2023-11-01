@@ -4,7 +4,7 @@
 using System.Net.ClientModel.Core;
 using NUnit.Framework;
 
-namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
+namespace System.Net.ClientModel.Tests.ModelReaderWriterTests.Models
 {
     internal abstract class ModelJsonTests<T> : ModelTests<T> where T : IJsonModel<T>
     {
@@ -16,7 +16,7 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
         [TestCase("J")]
         [TestCase("W")]
         public void RoundTripWithJsonInterfaceNonGeneric(string format)
-              => RoundTripTest(format, new JsonInterfaceNonGenericStrategy<T>());
+              => RoundTripTest(format, new JsonInterfaceAsObjectStrategy<T>());
 
         [TestCase("J")]
         [TestCase("W")]
@@ -26,7 +26,7 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
         [TestCase("J")]
         [TestCase("W")]
         public void RoundTripWithJsonInterfaceUtf8ReaderNonGeneric(string format)
-            => RoundTripTest(format, new JsonInterfaceUtf8ReaderNonGenericStrategy<T>());
+            => RoundTripTest(format, new JsonInterfaceUtf8ReaderAsObjectStrategy<T>());
 
         [TestCase("J")]
         [TestCase("W")]
