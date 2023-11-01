@@ -2415,7 +2415,7 @@ namespace Azure.DigitalTwins.Core
         /// <seealso cref="Query(string, CancellationToken)"/>
         public virtual AsyncPageable<T> QueryAsync<T>(string query, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{OTeQueryKey}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(Query)}");
             scope.AddAttribute(OTeQueryKey, query);
             scope.Start();
 
@@ -2425,7 +2425,7 @@ namespace Azure.DigitalTwins.Core
                 // Cannot remove the parameter as the function signature in Azure.Core helper needs it.
                 async Task<Page<T>> FirstPageFunc(int? pageSizeHint)
                 {
-                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{OTeQueryKey}");
+                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(Query)}");
                     scope.Start();
                     try
                     {
@@ -2459,7 +2459,7 @@ namespace Azure.DigitalTwins.Core
 
                 async Task<Page<T>> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{OTeQueryKey}");
+                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(Query)}");
                     scope.Start();
                     try
                     {
@@ -2522,7 +2522,7 @@ namespace Azure.DigitalTwins.Core
         /// <seealso cref="QueryAsync(string, CancellationToken)"/>
         public virtual Pageable<T> Query<T>(string query, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{OTeQueryKey}");
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(Query)}");
             scope.AddAttribute(OTeQueryKey, query);
             scope.Start();
 
@@ -2532,7 +2532,7 @@ namespace Azure.DigitalTwins.Core
                 // Cannot remove the parameter as the function signature in Azure.Core helper needs it.
                 Page<T> FirstPageFunc(int? pageSizeHint)
                 {
-                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{OTeQueryKey}");
+                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(Query)}");
                     scope.Start();
                     try
                     {
@@ -2565,7 +2565,7 @@ namespace Azure.DigitalTwins.Core
 
                 Page<T> NextPageFunc(string nextLink, int? pageSizeHint)
                 {
-                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{OTeQueryKey}");
+                    using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(DigitalTwinsClient)}.{nameof(Query)}");
                     scope.Start();
                     try
                     {
