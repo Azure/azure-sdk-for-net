@@ -9,12 +9,10 @@ using System.Net.ClientModel.Core;
 using System.Net.ClientModel.Internal;
 using System.Text.Json;
 
-namespace System.Net.ClientModel.Tests.Client.ResourceManager.Resources.Models
+namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
 {
-    public partial class ResourceTypeAliasPattern : IUtf8JsonContentWriteable, IJsonModel<ResourceTypeAliasPattern>
+    public partial class ResourceTypeAliasPattern : IJsonModel<ResourceTypeAliasPattern>
     {
-        void IUtf8JsonContentWriteable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceTypeAliasPattern>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
-
         internal static ResourceTypeAliasPattern DeserializeResourceTypeAliasPattern(JsonElement element, ModelReaderWriterOptions options = default)
         {
             options ??= ModelReaderWriterOptions.DefaultWireOptions;
@@ -123,7 +121,9 @@ namespace System.Net.ClientModel.Tests.Client.ResourceManager.Resources.Models
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
-            return ModelReaderWriter.WriteCore(this, options);
+            return ModelReaderWriter.Write(this, options);
         }
+
+        ModelReaderWriterFormat IModel<ResourceTypeAliasPattern>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

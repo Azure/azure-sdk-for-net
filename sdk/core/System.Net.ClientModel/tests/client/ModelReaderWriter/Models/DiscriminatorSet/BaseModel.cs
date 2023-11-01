@@ -9,7 +9,7 @@ using System.Text.Json;
 namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 {
     [ModelReaderProxy(typeof(UnknownBaseModel))]
-    public abstract class BaseModel : IUtf8JsonContentWriteable, IJsonModel<BaseModel>
+    public abstract class BaseModel : IJsonModel<BaseModel>
     {
         private Dictionary<string, BinaryData> _rawData;
 
@@ -52,8 +52,6 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 #endif
             }
         }
-
-        void IUtf8JsonContentWriteable.Write(Utf8JsonWriter writer) => ((IJsonModel<BaseModel>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
 
         void IJsonModel<BaseModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -145,7 +143,9 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
-            return ModelReaderWriter.WriteCore(this, options);
+            return ModelReaderWriter.Write(this, options);
         }
+
+        ModelReaderWriterFormat IModel<BaseModel>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

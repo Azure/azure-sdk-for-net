@@ -8,10 +8,9 @@
 using System.Collections.Generic;
 using System.Net.ClientModel.Core;
 using System.Net.ClientModel.Internal;
-using System.Net.ClientModel.Tests.Client.ResourceManager.Resources.Models;
 using System.Text.Json;
 
-namespace System.Net.ClientModel.Tests.Client.ResourceManager.Resources
+namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
 {
     /// <summary>
     /// A class representing the ResourceProvider data model.

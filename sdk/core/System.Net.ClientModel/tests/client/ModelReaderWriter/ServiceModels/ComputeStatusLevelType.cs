@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace System.Net.ClientModel.Tests.Client.ResourceManager.Compute.Models
+namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Compute
 {
     /// <summary> The level code. </summary>
     public enum ComputeStatusLevelType

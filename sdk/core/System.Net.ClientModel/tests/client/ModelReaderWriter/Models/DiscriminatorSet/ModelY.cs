@@ -8,7 +8,7 @@ using System.Text.Json;
 
 namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 {
-    public class ModelY : BaseModel, IUtf8JsonContentWriteable, IJsonModel<ModelY>
+    public class ModelY : BaseModel, IJsonModel<ModelY>
     {
         public ModelY()
             : base(null)
@@ -25,8 +25,6 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
         }
 
         public string YProperty { get; private set; }
-
-        void IUtf8JsonContentWriteable.Write(Utf8JsonWriter writer) => ((IJsonModel<ModelY>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
 
         void IJsonModel<ModelY>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => Serialize(writer, options);
 
@@ -105,7 +103,9 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
-            return ModelReaderWriter.WriteCore(this, options);
+            return ModelReaderWriter.Write(this, options);
         }
+
+        ModelReaderWriterFormat IModel<ModelY>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

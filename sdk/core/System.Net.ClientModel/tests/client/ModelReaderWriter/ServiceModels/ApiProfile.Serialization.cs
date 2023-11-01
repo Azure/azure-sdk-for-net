@@ -9,12 +9,10 @@ using System.Net.ClientModel.Core;
 using System.Net.ClientModel.Internal;
 using System.Text.Json;
 
-namespace System.Net.ClientModel.Tests.Client.ResourceManager.Resources.Models
+namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
 {
-    public partial class ApiProfile : IUtf8JsonContentWriteable, IJsonModel<ApiProfile>
+    public partial class ApiProfile : IJsonModel<ApiProfile>
     {
-        void IUtf8JsonContentWriteable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiProfile>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
-
         internal static ApiProfile DeserializeApiProfile(JsonElement element, ModelReaderWriterOptions options = default)
         {
             options ??= ModelReaderWriterOptions.DefaultWireOptions;
@@ -100,7 +98,9 @@ namespace System.Net.ClientModel.Tests.Client.ResourceManager.Resources.Models
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
-            return ModelReaderWriter.WriteCore(this, options);
+            return ModelReaderWriter.Write(this, options);
         }
+
+        ModelReaderWriterFormat IModel<ApiProfile>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

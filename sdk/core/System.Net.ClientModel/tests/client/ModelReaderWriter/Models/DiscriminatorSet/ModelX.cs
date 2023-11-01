@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 {
-    public class ModelX : BaseModel, IUtf8JsonContentWriteable, IJsonModel<ModelX>
+    public class ModelX : BaseModel, IJsonModel<ModelX>
     {
         public ModelX()
             : base(null)
@@ -32,8 +32,6 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
         public IList<string> Fields { get; }
         public int? NullProperty = null;
         public IDictionary<string, string> KeyValuePairs { get; }
-
-        void IUtf8JsonContentWriteable.Write(Utf8JsonWriter writer) => ((IJsonModel<ModelX>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
 
         public static implicit operator MessageBody(ModelX modelX)
         {
@@ -187,12 +185,6 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             return DeserializeModelX(JsonDocument.Parse(data.ToString()).RootElement, options);
         }
 
-        //public method to serialize with internal interface
-        public void Serialize(Utf8JsonWriter writer)
-        {
-            ((IUtf8JsonContentWriteable)this).Write(writer);
-        }
-
         ModelX IJsonModel<ModelX>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
@@ -205,7 +197,9 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
-            return ModelReaderWriter.WriteCore(this, options);
+            return ModelReaderWriter.Write(this, options);
         }
+
+        ModelReaderWriterFormat IModel<ModelX>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

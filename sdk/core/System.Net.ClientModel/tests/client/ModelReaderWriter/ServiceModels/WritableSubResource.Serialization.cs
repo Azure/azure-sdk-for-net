@@ -6,16 +6,14 @@ using System.Net.ClientModel.Internal;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace System.Net.ClientModel.Tests.Client.ResourceManager.Resources.Models
+namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
 {
     /// <summary>
     /// A class representing a sub-resource that contains only the ID.
     /// </summary>
     [JsonConverter(typeof(WritableSubResourceConverter))]
-    public partial class WritableSubResource : IUtf8JsonContentWriteable, IJsonModel<WritableSubResource>
+    public partial class WritableSubResource : IJsonModel<WritableSubResource>
     {
-        void IUtf8JsonContentWriteable.Write(Utf8JsonWriter writer) => ((IJsonModel<WritableSubResource>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
-
         void IJsonModel<WritableSubResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => Serialize(writer, options);
 
         /// <summary>
@@ -109,7 +107,9 @@ namespace System.Net.ClientModel.Tests.Client.ResourceManager.Resources.Models
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
-            return ModelReaderWriter.WriteCore(this, options);
+            return ModelReaderWriter.Write(this, options);
         }
+
+        ModelReaderWriterFormat IModel<WritableSubResource>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

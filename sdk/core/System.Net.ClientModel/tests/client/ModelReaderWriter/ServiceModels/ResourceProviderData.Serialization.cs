@@ -8,12 +8,11 @@
 using System.Collections.Generic;
 using System.Net.ClientModel.Core;
 using System.Net.ClientModel.Internal;
-using System.Net.ClientModel.Tests.Client.ResourceManager.Resources.Models;
 using System.Text.Json;
 
-namespace System.Net.ClientModel.Tests.Client.ResourceManager.Resources
+namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
 {
-    public partial class ResourceProviderData : IUtf8JsonContentWriteable, IJsonModel<ResourceProviderData>
+    public partial class ResourceProviderData : IJsonModel<ResourceProviderData>
     {
         public static ResourceProviderData DeserializeResourceProviderData(JsonElement element, ModelReaderWriterOptions options = default)
         {
@@ -90,11 +89,6 @@ namespace System.Net.ClientModel.Tests.Client.ResourceManager.Resources
             return DeserializeResourceProviderData(doc.RootElement, options);
         }
 
-        void IUtf8JsonContentWriteable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceProviderData>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
-
-        // only used for public access to internal serialize
-        public void Serialize(Utf8JsonWriter writer) => ((IUtf8JsonContentWriteable)this).Write(writer);
-
         void IJsonModel<ResourceProviderData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
@@ -165,7 +159,9 @@ namespace System.Net.ClientModel.Tests.Client.ResourceManager.Resources
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
-            return ModelReaderWriter.WriteCore(this, options);
+            return ModelReaderWriter.Write(this, options);
         }
+
+        ModelReaderWriterFormat IModel<ResourceProviderData>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

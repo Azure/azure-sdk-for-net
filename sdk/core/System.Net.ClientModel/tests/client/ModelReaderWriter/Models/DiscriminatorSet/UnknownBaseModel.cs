@@ -8,7 +8,7 @@ using System.Text.Json;
 
 namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 {
-    internal class UnknownBaseModel : BaseModel, IUtf8JsonContentWriteable, IJsonModel<BaseModel>
+    internal class UnknownBaseModel : BaseModel, IJsonModel<BaseModel>
     {
         public UnknownBaseModel()
             : base(null)
@@ -22,8 +22,6 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             Kind = kind;
             Name = name;
         }
-
-        void IUtf8JsonContentWriteable.Write(Utf8JsonWriter writer) => Serialize(writer, ModelReaderWriterOptions.DefaultWireOptions);
 
         void IJsonModel<BaseModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
@@ -70,7 +68,7 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
-            return ModelReaderWriter.WriteCore(this, options);
+            return ModelReaderWriter.Write(this, options);
         }
     }
 }
