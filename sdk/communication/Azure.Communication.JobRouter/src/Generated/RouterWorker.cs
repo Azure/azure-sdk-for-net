@@ -46,7 +46,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="availableForOffers"> A flag indicating this worker is open to receive offers or not. </param>
         internal RouterWorker(string etag, string id, RouterWorkerState? state, IList<string> queues, int? capacity, IDictionary<string, BinaryData> labels, IDictionary<string, BinaryData> tags, IList<RouterChannel> channels, IReadOnlyList<RouterJobOffer> offers, IReadOnlyList<RouterWorkerAssignment> assignedJobs, double? loadRatio, bool? availableForOffers)
         {
-            Etag = etag;
+            _etag = etag;
             Id = id;
             State = state;
             Queues = queues;
@@ -59,9 +59,6 @@ namespace Azure.Communication.JobRouter
             LoadRatio = loadRatio;
             AvailableForOffers = availableForOffers;
         }
-
-        /// <summary> Concurrency Token. </summary>
-        public string Etag { get; }
         /// <summary> Id of the worker. </summary>
         public string Id { get; }
         /// <summary> The current state of the worker. </summary>

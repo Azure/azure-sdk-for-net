@@ -26,13 +26,15 @@ namespace Azure.Communication.JobRouter
     public abstract partial class JobMatchingMode
     {
         /// <summary> Initializes a new instance of JobMatchingMode. </summary>
+        protected JobMatchingMode()
+        {
+        }
+
+        /// <summary> Initializes a new instance of JobMatchingMode. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of JobMatchingMode. </param>
         internal JobMatchingMode(string kind)
         {
             Kind = kind;
         }
-
-        /// <summary> The type discriminator describing a sub-type of JobMatchingMode. </summary>
-        internal string Kind { get; set; }
     }
 }

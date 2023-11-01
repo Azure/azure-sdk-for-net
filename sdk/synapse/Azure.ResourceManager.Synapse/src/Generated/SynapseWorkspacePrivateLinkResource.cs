@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Synapse
     public partial class SynapseWorkspacePrivateLinkResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SynapseWorkspacePrivateLinkResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="privateLinkResourceName"> The privateLinkResourceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string privateLinkResourceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/privateLinkResources/{privateLinkResourceName}";

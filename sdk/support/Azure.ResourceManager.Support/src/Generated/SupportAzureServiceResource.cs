@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.Support
     public partial class SupportAzureServiceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SupportAzureServiceResource"/> instance. </summary>
+        /// <param name="serviceName"> The serviceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string serviceName)
         {
             var resourceId = $"/providers/Microsoft.Support/services/{serviceName}";

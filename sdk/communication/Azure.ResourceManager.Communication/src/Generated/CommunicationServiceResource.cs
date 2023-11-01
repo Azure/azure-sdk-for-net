@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.Communication
     public partial class CommunicationServiceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CommunicationServiceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="communicationServiceName"> The communicationServiceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string communicationServiceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}";

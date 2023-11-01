@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.OperationalInsights
     public partial class OperationalInsightsLinkedStorageAccountsResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="OperationalInsightsLinkedStorageAccountsResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="dataSourceType"> The dataSourceType. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, OperationalInsightsDataSourceType dataSourceType)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/linkedStorageAccounts/{dataSourceType}";

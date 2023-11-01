@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
     public partial class VirtualDesktopResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="VirtualDesktopResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="applicationGroupName"> The applicationGroupName. </param>
+        /// <param name="desktopName"> The desktopName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string applicationGroupName, string desktopName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/applicationGroups/{applicationGroupName}/desktops/{desktopName}";

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.StreamAnalytics
     public partial class StreamAnalyticsClusterResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="StreamAnalyticsClusterResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="clusterName"> The clusterName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StreamAnalytics/clusters/{clusterName}";

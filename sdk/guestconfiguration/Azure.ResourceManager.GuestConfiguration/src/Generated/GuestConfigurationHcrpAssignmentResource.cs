@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.GuestConfiguration
     public partial class GuestConfigurationHcrpAssignmentResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="GuestConfigurationHcrpAssignmentResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="machineName"> The machineName. </param>
+        /// <param name="guestConfigurationAssignmentName"> The guestConfigurationAssignmentName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string machineName, string guestConfigurationAssignmentName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridCompute/machines/{machineName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}";

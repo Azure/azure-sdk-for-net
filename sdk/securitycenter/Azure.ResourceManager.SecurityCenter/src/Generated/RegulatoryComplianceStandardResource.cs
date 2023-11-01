@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.SecurityCenter
     public partial class RegulatoryComplianceStandardResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="RegulatoryComplianceStandardResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="regulatoryComplianceStandardName"> The regulatoryComplianceStandardName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string regulatoryComplianceStandardName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}";

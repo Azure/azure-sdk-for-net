@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.Resources
     public partial class TenantPolicyDefinitionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="TenantPolicyDefinitionResource"/> instance. </summary>
+        /// <param name="policyDefinitionName"> The policyDefinitionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string policyDefinitionName)
         {
             var resourceId = $"/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}";

@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.SecurityCenter
     public partial class TenantAssessmentMetadataResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="TenantAssessmentMetadataResource"/> instance. </summary>
+        /// <param name="assessmentMetadataName"> The assessmentMetadataName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string assessmentMetadataName)
         {
             var resourceId = $"/providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}";
