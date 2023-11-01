@@ -5,13 +5,15 @@
       <example>
 This sample shows how to call GetJobAsync.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response<RouterJob> response = await client.GetJobAsync("<jobId>");
 ]]></code>
 This sample shows how to call GetJobAsync with all parameters.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response<RouterJob> response = await client.GetJobAsync("<jobId>");
 ]]></code></example>
@@ -20,13 +22,15 @@ Response<RouterJob> response = await client.GetJobAsync("<jobId>");
       <example>
 This sample shows how to call GetJob.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response<RouterJob> response = client.GetJob("<jobId>");
 ]]></code>
 This sample shows how to call GetJob with all parameters.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response<RouterJob> response = client.GetJob("<jobId>");
 ]]></code></example>
@@ -35,7 +39,8 @@ Response<RouterJob> response = client.GetJob("<jobId>");
       <example>
 This sample shows how to call GetJobAsync and parse the result.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response response = await client.GetJobAsync("<jobId>", null);
 
@@ -45,7 +50,8 @@ Console.WriteLine(result.GetProperty("id").ToString());
 ]]></code>
 This sample shows how to call GetJobAsync with all parameters and parse the result.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response response = await client.GetJobAsync("<jobId>", null);
 
@@ -91,7 +97,8 @@ Console.WriteLine(result.GetProperty("matchingMode").GetProperty("kind").ToStrin
       <example>
 This sample shows how to call GetJob and parse the result.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response response = client.GetJob("<jobId>", null);
 
@@ -101,7 +108,8 @@ Console.WriteLine(result.GetProperty("id").ToString());
 ]]></code>
 This sample shows how to call GetJob with all parameters and parse the result.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response response = client.GetJob("<jobId>", null);
 
@@ -147,7 +155,8 @@ Console.WriteLine(result.GetProperty("matchingMode").GetProperty("kind").ToStrin
       <example>
 This sample shows how to call DeleteJobAsync.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response response = await client.DeleteJobAsync("<jobId>");
 
@@ -155,7 +164,8 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteJobAsync with all parameters.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response response = await client.DeleteJobAsync("<jobId>");
 
@@ -166,7 +176,8 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DeleteJob.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response response = client.DeleteJob("<jobId>");
 
@@ -174,7 +185,8 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteJob with all parameters.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response response = client.DeleteJob("<jobId>");
 
@@ -185,13 +197,15 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call CancelJobAsync.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response response = await client.CancelJobAsync("<jobId>");
 ]]></code>
 This sample shows how to call CancelJobAsync with all parameters.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 CancelJobOptions options = new CancelJobOptions
 {
@@ -205,13 +219,15 @@ Response response = await client.CancelJobAsync("<jobId>", options: options);
       <example>
 This sample shows how to call CancelJob.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response response = client.CancelJob("<jobId>");
 ]]></code>
 This sample shows how to call CancelJob with all parameters.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 CancelJobOptions options = new CancelJobOptions
 {
@@ -225,7 +241,8 @@ Response response = client.CancelJob("<jobId>", options: options);
       <example>
 This sample shows how to call CancelJobAsync.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 using RequestContent content = null;
 Response response = await client.CancelJobAsync("<jobId>", content);
@@ -234,7 +251,8 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call CancelJobAsync with all parameters and request content.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -250,7 +268,8 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call CancelJob.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 using RequestContent content = null;
 Response response = client.CancelJob("<jobId>", content);
@@ -259,7 +278,8 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call CancelJob with all parameters and request content.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -275,14 +295,16 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call CompleteJobAsync.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 CompleteJobOptions options = new CompleteJobOptions("<assignmentId>");
 Response response = await client.CompleteJobAsync("<jobId>", options);
 ]]></code>
 This sample shows how to call CompleteJobAsync with all parameters.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 CompleteJobOptions options = new CompleteJobOptions("<assignmentId>")
 {
@@ -295,14 +317,16 @@ Response response = await client.CompleteJobAsync("<jobId>", options);
       <example>
 This sample shows how to call CompleteJob.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 CompleteJobOptions options = new CompleteJobOptions("<assignmentId>");
 Response response = client.CompleteJob("<jobId>", options);
 ]]></code>
 This sample shows how to call CompleteJob with all parameters.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 CompleteJobOptions options = new CompleteJobOptions("<assignmentId>")
 {
@@ -315,7 +339,8 @@ Response response = client.CompleteJob("<jobId>", options);
       <example>
 This sample shows how to call CompleteJobAsync.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -327,7 +352,8 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call CompleteJobAsync with all parameters and request content.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -343,7 +369,8 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call CompleteJob.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -355,7 +382,8 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call CompleteJob with all parameters and request content.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -371,14 +399,16 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call CloseJobAsync.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 CloseJobOptions options = new CloseJobOptions("<assignmentId>");
 Response response = await client.CloseJobAsync("<jobId>", options);
 ]]></code>
 This sample shows how to call CloseJobAsync with all parameters.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 CloseJobOptions options = new CloseJobOptions("<assignmentId>")
 {
@@ -393,14 +423,16 @@ Response response = await client.CloseJobAsync("<jobId>", options);
       <example>
 This sample shows how to call CloseJob.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 CloseJobOptions options = new CloseJobOptions("<assignmentId>");
 Response response = client.CloseJob("<jobId>", options);
 ]]></code>
 This sample shows how to call CloseJob with all parameters.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 CloseJobOptions options = new CloseJobOptions("<assignmentId>")
 {
@@ -415,7 +447,8 @@ Response response = client.CloseJob("<jobId>", options);
       <example>
 This sample shows how to call CloseJobAsync.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -427,7 +460,8 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call CloseJobAsync with all parameters and request content.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -445,7 +479,8 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call CloseJob.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -457,7 +492,8 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call CloseJob with all parameters and request content.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -475,13 +511,15 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call GetQueuePositionAsync.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response<RouterJobPositionDetails> response = await client.GetQueuePositionAsync("<jobId>");
 ]]></code>
 This sample shows how to call GetQueuePositionAsync with all parameters.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response<RouterJobPositionDetails> response = await client.GetQueuePositionAsync("<jobId>");
 ]]></code></example>
@@ -490,13 +528,15 @@ Response<RouterJobPositionDetails> response = await client.GetQueuePositionAsync
       <example>
 This sample shows how to call GetQueuePosition.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response<RouterJobPositionDetails> response = client.GetQueuePosition("<jobId>");
 ]]></code>
 This sample shows how to call GetQueuePosition with all parameters.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response<RouterJobPositionDetails> response = client.GetQueuePosition("<jobId>");
 ]]></code></example>
@@ -505,7 +545,8 @@ Response<RouterJobPositionDetails> response = client.GetQueuePosition("<jobId>")
       <example>
 This sample shows how to call GetQueuePositionAsync and parse the result.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response response = await client.GetQueuePositionAsync("<jobId>", null);
 
@@ -518,7 +559,8 @@ Console.WriteLine(result.GetProperty("estimatedWaitTimeMinutes").ToString());
 ]]></code>
 This sample shows how to call GetQueuePositionAsync with all parameters and parse the result.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response response = await client.GetQueuePositionAsync("<jobId>", null);
 
@@ -534,7 +576,8 @@ Console.WriteLine(result.GetProperty("estimatedWaitTimeMinutes").ToString());
       <example>
 This sample shows how to call GetQueuePosition and parse the result.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response response = client.GetQueuePosition("<jobId>", null);
 
@@ -547,7 +590,8 @@ Console.WriteLine(result.GetProperty("estimatedWaitTimeMinutes").ToString());
 ]]></code>
 This sample shows how to call GetQueuePosition with all parameters and parse the result.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response response = client.GetQueuePosition("<jobId>", null);
 
@@ -563,13 +607,15 @@ Console.WriteLine(result.GetProperty("estimatedWaitTimeMinutes").ToString());
       <example>
 This sample shows how to call UnassignJobAsync.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response<UnassignJobResult> response = await client.UnassignJobAsync("<jobId>", "<assignmentId>");
 ]]></code>
 This sample shows how to call UnassignJobAsync with all parameters.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 UnassignJobOptions options = new UnassignJobOptions
 {
@@ -582,13 +628,15 @@ Response<UnassignJobResult> response = await client.UnassignJobAsync("<jobId>", 
       <example>
 This sample shows how to call UnassignJob.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response<UnassignJobResult> response = client.UnassignJob("<jobId>", "<assignmentId>");
 ]]></code>
 This sample shows how to call UnassignJob with all parameters.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 UnassignJobOptions options = new UnassignJobOptions
 {
@@ -601,7 +649,8 @@ Response<UnassignJobResult> response = client.UnassignJob("<jobId>", "<assignmen
       <example>
 This sample shows how to call UnassignJobAsync and parse the result.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 using RequestContent content = null;
 Response response = await client.UnassignJobAsync("<jobId>", "<assignmentId>", content);
@@ -612,7 +661,8 @@ Console.WriteLine(result.GetProperty("unassignmentCount").ToString());
 ]]></code>
 This sample shows how to call UnassignJobAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -629,7 +679,8 @@ Console.WriteLine(result.GetProperty("unassignmentCount").ToString());
       <example>
 This sample shows how to call UnassignJob and parse the result.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 using RequestContent content = null;
 Response response = client.UnassignJob("<jobId>", "<assignmentId>", content);
@@ -640,7 +691,8 @@ Console.WriteLine(result.GetProperty("unassignmentCount").ToString());
 ]]></code>
 This sample shows how to call UnassignJob with all parameters and request content and parse the result.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -657,13 +709,15 @@ Console.WriteLine(result.GetProperty("unassignmentCount").ToString());
       <example>
 This sample shows how to call AcceptJobOfferAsync.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response<AcceptJobOfferResult> response = await client.AcceptJobOfferAsync("<workerId>", "<offerId>");
 ]]></code>
 This sample shows how to call AcceptJobOfferAsync with all parameters.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response<AcceptJobOfferResult> response = await client.AcceptJobOfferAsync("<workerId>", "<offerId>");
 ]]></code></example>
@@ -672,13 +726,15 @@ Response<AcceptJobOfferResult> response = await client.AcceptJobOfferAsync("<wor
       <example>
 This sample shows how to call AcceptJobOffer.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response<AcceptJobOfferResult> response = client.AcceptJobOffer("<workerId>", "<offerId>");
 ]]></code>
 This sample shows how to call AcceptJobOffer with all parameters.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response<AcceptJobOfferResult> response = client.AcceptJobOffer("<workerId>", "<offerId>");
 ]]></code></example>
@@ -687,7 +743,8 @@ Response<AcceptJobOfferResult> response = client.AcceptJobOffer("<workerId>", "<
       <example>
 This sample shows how to call AcceptJobOfferAsync and parse the result.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response response = await client.AcceptJobOfferAsync("<workerId>", "<offerId>", null);
 
@@ -698,7 +755,8 @@ Console.WriteLine(result.GetProperty("workerId").ToString());
 ]]></code>
 This sample shows how to call AcceptJobOfferAsync with all parameters and parse the result.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response response = await client.AcceptJobOfferAsync("<workerId>", "<offerId>", null);
 
@@ -712,7 +770,8 @@ Console.WriteLine(result.GetProperty("workerId").ToString());
       <example>
 This sample shows how to call AcceptJobOffer and parse the result.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response response = client.AcceptJobOffer("<workerId>", "<offerId>", null);
 
@@ -723,7 +782,8 @@ Console.WriteLine(result.GetProperty("workerId").ToString());
 ]]></code>
 This sample shows how to call AcceptJobOffer with all parameters and parse the result.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response response = client.AcceptJobOffer("<workerId>", "<offerId>", null);
 
@@ -737,13 +797,15 @@ Console.WriteLine(result.GetProperty("workerId").ToString());
       <example>
 This sample shows how to call DeclineJobOfferAsync.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response response = await client.DeclineJobOfferAsync("<workerId>", "<offerId>");
 ]]></code>
 This sample shows how to call DeclineJobOfferAsync with all parameters.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 DeclineJobOfferOptions options = new DeclineJobOfferOptions
 {
@@ -756,13 +818,15 @@ Response response = await client.DeclineJobOfferAsync("<workerId>", "<offerId>",
       <example>
 This sample shows how to call DeclineJobOffer.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response response = client.DeclineJobOffer("<workerId>", "<offerId>");
 ]]></code>
 This sample shows how to call DeclineJobOffer with all parameters.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 DeclineJobOfferOptions options = new DeclineJobOfferOptions
 {
@@ -775,7 +839,8 @@ Response response = client.DeclineJobOffer("<workerId>", "<offerId>", options: o
       <example>
 This sample shows how to call DeclineJobOfferAsync.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 using RequestContent content = null;
 Response response = await client.DeclineJobOfferAsync("<workerId>", "<offerId>", content);
@@ -784,7 +849,8 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeclineJobOfferAsync with all parameters and request content.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -799,7 +865,8 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DeclineJobOffer.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 using RequestContent content = null;
 Response response = client.DeclineJobOffer("<workerId>", "<offerId>", content);
@@ -808,7 +875,8 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeclineJobOffer with all parameters and request content.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -823,13 +891,15 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call GetQueueStatisticsAsync.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response<RouterQueueStatistics> response = await client.GetQueueStatisticsAsync("<queueId>");
 ]]></code>
 This sample shows how to call GetQueueStatisticsAsync with all parameters.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response<RouterQueueStatistics> response = await client.GetQueueStatisticsAsync("<queueId>");
 ]]></code></example>
@@ -838,13 +908,15 @@ Response<RouterQueueStatistics> response = await client.GetQueueStatisticsAsync(
       <example>
 This sample shows how to call GetQueueStatistics.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response<RouterQueueStatistics> response = client.GetQueueStatistics("<queueId>");
 ]]></code>
 This sample shows how to call GetQueueStatistics with all parameters.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response<RouterQueueStatistics> response = client.GetQueueStatistics("<queueId>");
 ]]></code></example>
@@ -853,7 +925,8 @@ Response<RouterQueueStatistics> response = client.GetQueueStatistics("<queueId>"
       <example>
 This sample shows how to call GetQueueStatisticsAsync and parse the result.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response response = await client.GetQueueStatisticsAsync("<queueId>", null);
 
@@ -863,7 +936,8 @@ Console.WriteLine(result.GetProperty("length").ToString());
 ]]></code>
 This sample shows how to call GetQueueStatisticsAsync with all parameters and parse the result.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response response = await client.GetQueueStatisticsAsync("<queueId>", null);
 
@@ -878,7 +952,8 @@ Console.WriteLine(result.GetProperty("longestJobWaitTimeMinutes").ToString());
       <example>
 This sample shows how to call GetQueueStatistics and parse the result.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response response = client.GetQueueStatistics("<queueId>", null);
 
@@ -888,7 +963,8 @@ Console.WriteLine(result.GetProperty("length").ToString());
 ]]></code>
 This sample shows how to call GetQueueStatistics with all parameters and parse the result.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response response = client.GetQueueStatistics("<queueId>", null);
 
@@ -903,13 +979,15 @@ Console.WriteLine(result.GetProperty("longestJobWaitTimeMinutes").ToString());
       <example>
 This sample shows how to call GetWorkerAsync.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response<RouterWorker> response = await client.GetWorkerAsync("<workerId>");
 ]]></code>
 This sample shows how to call GetWorkerAsync with all parameters.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response<RouterWorker> response = await client.GetWorkerAsync("<workerId>");
 ]]></code></example>
@@ -918,13 +996,15 @@ Response<RouterWorker> response = await client.GetWorkerAsync("<workerId>");
       <example>
 This sample shows how to call GetWorker.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response<RouterWorker> response = client.GetWorker("<workerId>");
 ]]></code>
 This sample shows how to call GetWorker with all parameters.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response<RouterWorker> response = client.GetWorker("<workerId>");
 ]]></code></example>
@@ -933,7 +1013,8 @@ Response<RouterWorker> response = client.GetWorker("<workerId>");
       <example>
 This sample shows how to call GetWorkerAsync and parse the result.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response response = await client.GetWorkerAsync("<workerId>", null);
 
@@ -943,7 +1024,8 @@ Console.WriteLine(result.GetProperty("id").ToString());
 ]]></code>
 This sample shows how to call GetWorkerAsync with all parameters and parse the result.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response response = await client.GetWorkerAsync("<workerId>", null);
 
@@ -975,7 +1057,8 @@ Console.WriteLine(result.GetProperty("availableForOffers").ToString());
       <example>
 This sample shows how to call GetWorker and parse the result.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response response = client.GetWorker("<workerId>", null);
 
@@ -985,7 +1068,8 @@ Console.WriteLine(result.GetProperty("id").ToString());
 ]]></code>
 This sample shows how to call GetWorker with all parameters and parse the result.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response response = client.GetWorker("<workerId>", null);
 
@@ -1017,7 +1101,8 @@ Console.WriteLine(result.GetProperty("availableForOffers").ToString());
       <example>
 This sample shows how to call DeleteWorkerAsync.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response response = await client.DeleteWorkerAsync("<workerId>");
 
@@ -1025,7 +1110,8 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteWorkerAsync with all parameters.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response response = await client.DeleteWorkerAsync("<workerId>");
 
@@ -1036,7 +1122,8 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call DeleteWorker.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response response = client.DeleteWorker("<workerId>");
 
@@ -1044,7 +1131,8 @@ Console.WriteLine(response.Status);
 ]]></code>
 This sample shows how to call DeleteWorker with all parameters.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 Response response = client.DeleteWorker("<workerId>");
 
@@ -1055,7 +1143,8 @@ Console.WriteLine(response.Status);
       <example>
 This sample shows how to call GetJobsAsync.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 await foreach (RouterJob item in client.GetJobsAsync())
 {
@@ -1063,7 +1152,8 @@ await foreach (RouterJob item in client.GetJobsAsync())
 ]]></code>
 This sample shows how to call GetJobsAsync with all parameters.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 await foreach (RouterJob item in client.GetJobsAsync(maxpagesize: 1234, status: RouterJobStatusSelector.All, queueId: "<queueId>", channelId: "<channelId>", classificationPolicyId: "<classificationPolicyId>", scheduledBefore: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), scheduledAfter: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00")))
 {
@@ -1074,7 +1164,8 @@ await foreach (RouterJob item in client.GetJobsAsync(maxpagesize: 1234, status: 
       <example>
 This sample shows how to call GetJobs.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 foreach (RouterJob item in client.GetJobs())
 {
@@ -1082,7 +1173,8 @@ foreach (RouterJob item in client.GetJobs())
 ]]></code>
 This sample shows how to call GetJobs with all parameters.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 foreach (RouterJob item in client.GetJobs(maxpagesize: 1234, status: RouterJobStatusSelector.All, queueId: "<queueId>", channelId: "<channelId>", classificationPolicyId: "<classificationPolicyId>", scheduledBefore: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), scheduledAfter: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00")))
 {
@@ -1093,7 +1185,8 @@ foreach (RouterJob item in client.GetJobs(maxpagesize: 1234, status: RouterJobSt
       <example>
 This sample shows how to call GetJobsAsync and parse the result.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 await foreach (BinaryData item in client.GetJobsAsync(null, null, null, null, null, null, null, null))
 {
@@ -1104,7 +1197,8 @@ await foreach (BinaryData item in client.GetJobsAsync(null, null, null, null, nu
 ]]></code>
 This sample shows how to call GetJobsAsync with all parameters and parse the result.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 await foreach (BinaryData item in client.GetJobsAsync(1234, "all", "<queueId>", "<channelId>", "<classificationPolicyId>", DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), null))
 {
@@ -1151,7 +1245,8 @@ await foreach (BinaryData item in client.GetJobsAsync(1234, "all", "<queueId>", 
       <example>
 This sample shows how to call GetJobs and parse the result.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 foreach (BinaryData item in client.GetJobs(null, null, null, null, null, null, null, null))
 {
@@ -1162,7 +1257,8 @@ foreach (BinaryData item in client.GetJobs(null, null, null, null, null, null, n
 ]]></code>
 This sample shows how to call GetJobs with all parameters and parse the result.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 foreach (BinaryData item in client.GetJobs(1234, "all", "<queueId>", "<channelId>", "<classificationPolicyId>", DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), null))
 {
@@ -1209,7 +1305,8 @@ foreach (BinaryData item in client.GetJobs(1234, "all", "<queueId>", "<channelId
       <example>
 This sample shows how to call GetWorkersAsync.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 await foreach (RouterWorker item in client.GetWorkersAsync())
 {
@@ -1217,7 +1314,8 @@ await foreach (RouterWorker item in client.GetWorkersAsync())
 ]]></code>
 This sample shows how to call GetWorkersAsync with all parameters.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 await foreach (RouterWorker item in client.GetWorkersAsync(maxpagesize: 1234, state: RouterWorkerStateSelector.Active, channelId: "<channelId>", queueId: "<queueId>", hasCapacity: true))
 {
@@ -1228,7 +1326,8 @@ await foreach (RouterWorker item in client.GetWorkersAsync(maxpagesize: 1234, st
       <example>
 This sample shows how to call GetWorkers.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 foreach (RouterWorker item in client.GetWorkers())
 {
@@ -1236,7 +1335,8 @@ foreach (RouterWorker item in client.GetWorkers())
 ]]></code>
 This sample shows how to call GetWorkers with all parameters.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 foreach (RouterWorker item in client.GetWorkers(maxpagesize: 1234, state: RouterWorkerStateSelector.Active, channelId: "<channelId>", queueId: "<queueId>", hasCapacity: true))
 {
@@ -1247,7 +1347,8 @@ foreach (RouterWorker item in client.GetWorkers(maxpagesize: 1234, state: Router
       <example>
 This sample shows how to call GetWorkersAsync and parse the result.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 await foreach (BinaryData item in client.GetWorkersAsync(null, null, null, null, null, null))
 {
@@ -1258,7 +1359,8 @@ await foreach (BinaryData item in client.GetWorkersAsync(null, null, null, null,
 ]]></code>
 This sample shows how to call GetWorkersAsync with all parameters and parse the result.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 await foreach (BinaryData item in client.GetWorkersAsync(1234, "active", "<channelId>", "<queueId>", true, null))
 {
@@ -1291,7 +1393,8 @@ await foreach (BinaryData item in client.GetWorkersAsync(1234, "active", "<chann
       <example>
 This sample shows how to call GetWorkers and parse the result.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 foreach (BinaryData item in client.GetWorkers(null, null, null, null, null, null))
 {
@@ -1302,7 +1405,8 @@ foreach (BinaryData item in client.GetWorkers(null, null, null, null, null, null
 ]]></code>
 This sample shows how to call GetWorkers with all parameters and parse the result.
 <code><![CDATA[
-JobRouterClient client = new JobRouterClient(null);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+JobRouterClient client = new JobRouterClient(endpoint);
 
 foreach (BinaryData item in client.GetWorkers(1234, "active", "<channelId>", "<queueId>", true, null))
 {
