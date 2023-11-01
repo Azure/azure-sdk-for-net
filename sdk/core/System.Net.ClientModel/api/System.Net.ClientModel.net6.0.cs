@@ -208,13 +208,8 @@ namespace System.Net.ClientModel.Core
     public partial class PipelineOptions
     {
         public PipelineOptions() { }
-        public static System.Net.ClientModel.Core.PipelinePolicy? DefaultLoggingPolicy { get { throw null; } set { } }
-        public static System.Net.ClientModel.Core.MessageClassifier DefaultMessageClassifier { get { throw null; } set { } }
-        public static System.TimeSpan DefaultNetworkTimeout { get { throw null; } set { } }
-        public static System.Net.ClientModel.Core.PipelinePolicy? DefaultRetryPolicy { get { throw null; } set { } }
-        public static System.Net.ClientModel.Core.PipelineTransport? DefaultTransport { get { throw null; } set { } }
         public System.Net.ClientModel.Core.PipelinePolicy? LoggingPolicy { get { throw null; } set { } }
-        public virtual System.Net.ClientModel.Core.MessageClassifier MessageClassifier { get { throw null; } set { } }
+        public virtual System.Net.ClientModel.Core.MessageClassifier? MessageClassifier { get { throw null; } set { } }
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
         public System.Net.ClientModel.Core.PipelinePolicy[]? PerCallPolicies { get { throw null; } set { } }
         public System.Net.ClientModel.Core.PipelinePolicy[]? PerTryPolicies { get { throw null; } set { } }

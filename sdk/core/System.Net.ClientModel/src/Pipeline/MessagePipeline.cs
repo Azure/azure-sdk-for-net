@@ -74,7 +74,7 @@ public class MessagePipeline
             pipeline[index++] = options.LoggingPolicy;
         }
 
-        TimeSpan networkTimeout = options.NetworkTimeout ?? PipelineOptions.DefaultNetworkTimeout;
+        TimeSpan networkTimeout = options.NetworkTimeout ?? ResponseBufferingPolicy.DefaultNetworkTimeout;
         ResponseBufferingPolicy bufferingPolicy = new(networkTimeout);
         pipeline[index++] = bufferingPolicy;
 

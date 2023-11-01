@@ -16,6 +16,8 @@ public class ResponseBufferingPolicy : PipelinePolicy
     // Same value as Stream.CopyTo uses by default
     private const int DefaultCopyBufferSize = 81920;
 
+    internal static TimeSpan DefaultNetworkTimeout { get; } = TimeSpan.FromSeconds(100);
+
     private readonly TimeSpan _networkTimeout;
 
     public ResponseBufferingPolicy(TimeSpan networkTimeout)
