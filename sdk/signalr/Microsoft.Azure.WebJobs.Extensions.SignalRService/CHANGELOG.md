@@ -1,6 +1,6 @@
 # Release History
 
-## 1.12.0 (Unreleased)
+## 1.12.0 (2023-11-07)
 ### Features Added
 * Added `RetryOptions` to `SignalROptions` to configure retry policy for SignalR Service REST API calls. For more infomation about cutomize retry options, see samples.
 * Added `HttpClientTimeout` to `SignalROptions` to configure HTTP client timeout for SignalR Service REST API calls. The default value is 100 seconds. User can also set "AzureSignalRHttpClientTimeout" in the app settings to override the default value.
