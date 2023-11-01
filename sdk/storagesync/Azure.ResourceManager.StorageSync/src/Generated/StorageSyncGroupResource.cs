@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <returns> An object representing collection of CloudEndpointResources and their operations over a CloudEndpointResource. </returns>
         public virtual CloudEndpointCollection GetCloudEndpoints()
         {
-            return GetCachedClient(Client => new CloudEndpointCollection(Client, Id));
+            return GetCachedClient(client => new CloudEndpointCollection(client, Id));
         }
 
         /// <summary>
@@ -113,8 +113,8 @@ namespace Azure.ResourceManager.StorageSync
         /// </summary>
         /// <param name="cloudEndpointName"> Name of Cloud Endpoint object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="cloudEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cloudEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<CloudEndpointResource>> GetCloudEndpointAsync(string cloudEndpointName, CancellationToken cancellationToken = default)
         {
@@ -136,8 +136,8 @@ namespace Azure.ResourceManager.StorageSync
         /// </summary>
         /// <param name="cloudEndpointName"> Name of Cloud Endpoint object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="cloudEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cloudEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<CloudEndpointResource> GetCloudEndpoint(string cloudEndpointName, CancellationToken cancellationToken = default)
         {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <returns> An object representing collection of StorageSyncServerEndpointResources and their operations over a StorageSyncServerEndpointResource. </returns>
         public virtual StorageSyncServerEndpointCollection GetStorageSyncServerEndpoints()
         {
-            return GetCachedClient(Client => new StorageSyncServerEndpointCollection(Client, Id));
+            return GetCachedClient(client => new StorageSyncServerEndpointCollection(client, Id));
         }
 
         /// <summary>
@@ -166,8 +166,8 @@ namespace Azure.ResourceManager.StorageSync
         /// </summary>
         /// <param name="serverEndpointName"> Name of Server Endpoint object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serverEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serverEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<StorageSyncServerEndpointResource>> GetStorageSyncServerEndpointAsync(string serverEndpointName, CancellationToken cancellationToken = default)
         {
@@ -189,8 +189,8 @@ namespace Azure.ResourceManager.StorageSync
         /// </summary>
         /// <param name="serverEndpointName"> Name of Server Endpoint object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serverEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serverEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<StorageSyncServerEndpointResource> GetStorageSyncServerEndpoint(string serverEndpointName, CancellationToken cancellationToken = default)
         {
