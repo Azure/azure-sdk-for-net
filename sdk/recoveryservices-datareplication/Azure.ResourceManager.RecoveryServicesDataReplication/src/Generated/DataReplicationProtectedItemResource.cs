@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <returns> An object representing collection of DataReplicationRecoveryPointResources and their operations over a DataReplicationRecoveryPointResource. </returns>
         public virtual DataReplicationRecoveryPointCollection GetDataReplicationRecoveryPoints()
         {
-            return GetCachedClient(Client => new DataReplicationRecoveryPointCollection(Client, Id));
+            return GetCachedClient(client => new DataReplicationRecoveryPointCollection(client, Id));
         }
 
         /// <summary>
@@ -109,8 +109,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </summary>
         /// <param name="recoveryPointName"> The recovery point name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="recoveryPointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recoveryPointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataReplicationRecoveryPointResource>> GetDataReplicationRecoveryPointAsync(string recoveryPointName, CancellationToken cancellationToken = default)
         {
@@ -132,8 +132,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </summary>
         /// <param name="recoveryPointName"> The recovery point name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="recoveryPointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recoveryPointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataReplicationRecoveryPointResource> GetDataReplicationRecoveryPoint(string recoveryPointName, CancellationToken cancellationToken = default)
         {
