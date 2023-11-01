@@ -234,9 +234,8 @@ var chatCompletionsOptions = new ChatCompletionsOptions()
     ChoiceCount = 4
 };
 
-await foreach (StreamingChatCompletionsUpdate chatUpdate in client.GetChatCompletionsStreaming(
-    deploymentOrModelName: "gpt-3.5-turbo",
-    chatCompletionsOptions))
+await foreach (StreamingChatCompletionsUpdate chatUpdate
+    in client.GetChatCompletionsStreaming(chatCompletionsOptions))
 {
     // Choice-specific information like Role and ContentUpdate will also provide a ChoiceIndex that allows
     // StreamingChatCompletionsUpdate data for independent choices to be appropriately separated.
@@ -381,11 +380,8 @@ StringBuilder functionArgumentsBuilder = new();
 ChatRole streamedRole = default;
 CompletionsFinishReason finishReason = default;
 
-using StreamingResponse<StreamingChatCompletionsUpdate> streamingResponse
-    = client.GetChatCompletionsStreaming(
-        "gpt-35-turbo-0613",
-        chatCompletionsOptions);
-await foreach (StreamingChatCompletionsUpdate update in streamingResponse)
+await foreach (StreamingChatCompletionsUpdate update
+    in client.GetChatCompletionsStreaming(chatCompletionsOptions))
 {
     contentBuilder.Append(update.ContentUpdate);
     functionName ??= update.FunctionName;
