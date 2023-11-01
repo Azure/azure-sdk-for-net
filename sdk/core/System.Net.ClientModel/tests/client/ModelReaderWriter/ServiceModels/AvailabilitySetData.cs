@@ -37,7 +37,7 @@ namespace System.Net.ClientModel.Tests.Client.ResourceManager.Compute
         {
             ClientUtilities.AssertNotNull(result, nameof(result));
 
-            using JsonDocument jsonDocument = JsonDocument.Parse(result.GetRawResponse().Body);
+            using JsonDocument jsonDocument = JsonDocument.Parse((BinaryData)result.GetRawResponse().Body);
             return DeserializeAvailabilitySetData(jsonDocument.RootElement, ModelReaderWriterOptions.DefaultWireOptions);
         }
 

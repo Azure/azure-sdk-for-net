@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Net.ClientModel.Core;
 using System.Text.Json;
 
@@ -46,7 +47,7 @@ public partial class CompletionsUsage
     /// <param name="response"> The response to deserialize the model from. </param>
     internal static CompletionsUsage FromResponse(MessageResponse response)
     {
-        using var document = JsonDocument.Parse(response.Body);
+        using var document = JsonDocument.Parse((BinaryData)response.Body);
         return DeserializeCompletionsUsage(document.RootElement);
     }
 }

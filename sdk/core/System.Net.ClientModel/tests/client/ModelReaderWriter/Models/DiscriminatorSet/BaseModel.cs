@@ -27,7 +27,7 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
         {
             ClientUtilities.AssertNotNull(result, nameof(result));
 
-            using JsonDocument jsonDocument = JsonDocument.Parse(result.GetRawResponse().Body);
+            using JsonDocument jsonDocument = JsonDocument.Parse((BinaryData)result.GetRawResponse().Body);
             return DeserializeBaseModel(jsonDocument.RootElement, ModelReaderWriterOptions.DefaultWireOptions);
         }
 

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Net.ClientModel.Core;
 using System.Net.ClientModel.Internal;
 using System.Text.Json;
@@ -69,7 +70,7 @@ public partial class ContentFilterResults
     /// <param name="response"> The response to deserialize the model from. </param>
     internal static ContentFilterResults FromResponse(MessageResponse response)
     {
-        using var document = JsonDocument.Parse(response.Body);
+        using var document = JsonDocument.Parse((BinaryData)response.Body);
         return DeserializeContentFilterResults(document.RootElement);
     }
 }
