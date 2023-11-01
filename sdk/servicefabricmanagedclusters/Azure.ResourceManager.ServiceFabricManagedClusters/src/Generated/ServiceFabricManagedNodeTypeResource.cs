@@ -28,6 +28,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
     public partial class ServiceFabricManagedNodeTypeResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ServiceFabricManagedNodeTypeResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="clusterName"> The clusterName. </param>
+        /// <param name="nodeTypeName"> The nodeTypeName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string nodeTypeName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedClusters/{clusterName}/nodeTypes/{nodeTypeName}";

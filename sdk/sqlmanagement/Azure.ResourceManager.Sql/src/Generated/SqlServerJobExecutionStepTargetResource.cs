@@ -25,6 +25,14 @@ namespace Azure.ResourceManager.Sql
     public partial class SqlServerJobExecutionStepTargetResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SqlServerJobExecutionStepTargetResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="jobAgentName"> The jobAgentName. </param>
+        /// <param name="jobName"> The jobName. </param>
+        /// <param name="jobExecutionId"> The jobExecutionId. </param>
+        /// <param name="stepName"> The stepName. </param>
+        /// <param name="targetId"> The targetId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string jobAgentName, string jobName, Guid jobExecutionId, string stepName, Guid targetId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/jobAgents/{jobAgentName}/jobs/{jobName}/executions/{jobExecutionId}/steps/{stepName}/targets/{targetId}";

@@ -25,6 +25,9 @@ namespace Azure.ResourceManager.SecurityCenter
     public partial class GovernanceAssignmentResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="GovernanceAssignmentResource"/> instance. </summary>
+        /// <param name="scope"> The scope. </param>
+        /// <param name="assessmentName"> The assessmentName. </param>
+        /// <param name="assignmentKey"> The assignmentKey. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string assessmentName, string assignmentKey)
         {
             var resourceId = $"{scope}/providers/Microsoft.Security/assessments/{assessmentName}/governanceAssignments/{assignmentKey}";

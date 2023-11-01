@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.Resources
     public partial class ManagementGroupPolicySetDefinitionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagementGroupPolicySetDefinitionResource"/> instance. </summary>
+        /// <param name="managementGroupId"> The managementGroupId. </param>
+        /// <param name="policySetDefinitionName"> The policySetDefinitionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string managementGroupId, string policySetDefinitionName)
         {
             var resourceId = $"/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}";

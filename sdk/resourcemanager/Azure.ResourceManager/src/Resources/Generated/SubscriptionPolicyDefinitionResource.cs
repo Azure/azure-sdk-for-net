@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.Resources
     public partial class SubscriptionPolicyDefinitionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SubscriptionPolicyDefinitionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="policyDefinitionName"> The policyDefinitionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string policyDefinitionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}";
