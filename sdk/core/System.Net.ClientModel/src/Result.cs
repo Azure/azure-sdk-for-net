@@ -13,7 +13,7 @@ public abstract class Result
     public static Result FromResponse(MessageResponse response)
         => new NoModelResult(response);
 
-    public static Result<T> FromValue<T>(T value, MessageResponse response)
+    public static Result<T> FromValue<T>(T value, MessageResponse response) where T : notnull
     {
         // Null values are required to use NullableResult<T>
         if (value is null)
