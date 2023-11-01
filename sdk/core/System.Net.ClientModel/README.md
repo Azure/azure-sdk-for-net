@@ -38,8 +38,8 @@ A rudimentary client implementation is as follows:
 ```csharp
 KeyCredential credential = new KeyCredential(key);
 MessagePipeline pipeline = MessagePipeline.Create(options, new KeyCredentialAuthenticationPolicy(credential, "Authorization", "Bearer"));
-PipelineMessage message = pipeline.CreateMessage(options, new ResponseStatusClassifier(stackalloc ushort[] { 200 }));
-var request = message.Request;
+ClientMessage message = pipeline.CreateMessage(options, new ResponseStatusClassifier(stackalloc ushort[] { 200 }));
+MessageRequest request = message.Request;
 request.SetMethod("POST");
 var uri = new RequestUri();
 uri.Reset(new Uri("https://www.example.com/"));
