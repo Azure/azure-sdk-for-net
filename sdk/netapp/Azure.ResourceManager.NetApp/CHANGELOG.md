@@ -3,7 +3,7 @@
 ## 1.4.1 (Unreleased)
 
 ### Bugs Fixed
-- Fixed serialization when VolumeSnapshotProperties was empty string 
+- Fixed serialization issue when VolumeSnapshotProperties.SnapshotPolicyId is empty string 
 
 ## 1.4.0 (2023-10-19)
 - Updated to support ANF api-version 2023-05-01
