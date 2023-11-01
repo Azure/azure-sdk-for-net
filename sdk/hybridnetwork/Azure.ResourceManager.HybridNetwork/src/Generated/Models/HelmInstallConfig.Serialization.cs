@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    public partial class HelmInstallOptions : IUtf8JsonSerializable
+    public partial class HelmInstallConfig : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             writer.WriteEndObject();
         }
 
-        internal static HelmInstallOptions DeserializeHelmInstallOptions(JsonElement element)
+        internal static HelmInstallConfig DeserializeHelmInstallConfig(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     continue;
                 }
             }
-            return new HelmInstallOptions(atomic.Value, wait.Value, timeout.Value);
+            return new HelmInstallConfig(atomic.Value, wait.Value, timeout.Value);
         }
     }
 }

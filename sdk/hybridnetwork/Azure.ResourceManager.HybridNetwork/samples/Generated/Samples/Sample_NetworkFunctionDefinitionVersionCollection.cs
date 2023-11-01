@@ -80,15 +80,15 @@ ReleaseNamespace = "{deployParameters.namesapce}",
 ReleaseName = "{deployParameters.releaseName}",
 HelmPackageVersion = "2.1.3",
 Values = "",
-Options = new HelmMappingRuleProfileOptions()
+Options = new HelmMappingRuleProfileConfig()
 {
-InstallOptions = new HelmInstallOptions()
+InstallOptions = new HelmInstallConfig()
 {
 Atomic = "true",
 Wait = "waitValue",
 Timeout = "30",
 },
-UpgradeOptions = new HelmUpgradeOptions()
+UpgradeOptions = new HelmUpgradeConfig()
 {
 Atomic = "true",
 Wait = "waitValue",

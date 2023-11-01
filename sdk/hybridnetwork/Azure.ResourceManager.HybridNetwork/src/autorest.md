@@ -53,6 +53,9 @@ acronym-mapping:
   Etag: ETag|etag
 
 rename-mapping:
+  HelmInstallOptions: HelmInstallConfig
+  HelmUpgradeOptions: HelmUpgradeConfig
+  HelmMappingRuleProfileOptions: HelmMappingRuleProfileConfig 
   Resources: ComponentKubernetesResources
   Status: ComponentStatus
   DaemonSet: KubernetesDaemonSet

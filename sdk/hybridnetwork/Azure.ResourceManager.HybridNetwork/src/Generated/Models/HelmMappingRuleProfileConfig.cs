@@ -8,25 +8,25 @@
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> The helm deployment options. </summary>
-    public partial class HelmMappingRuleProfileOptions
+    public partial class HelmMappingRuleProfileConfig
     {
-        /// <summary> Initializes a new instance of HelmMappingRuleProfileOptions. </summary>
-        public HelmMappingRuleProfileOptions()
+        /// <summary> Initializes a new instance of HelmMappingRuleProfileConfig. </summary>
+        public HelmMappingRuleProfileConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of HelmMappingRuleProfileOptions. </summary>
+        /// <summary> Initializes a new instance of HelmMappingRuleProfileConfig. </summary>
         /// <param name="installOptions"> The helm deployment install options. </param>
         /// <param name="upgradeOptions"> The helm deployment upgrade options. </param>
-        internal HelmMappingRuleProfileOptions(HelmInstallOptions installOptions, HelmUpgradeOptions upgradeOptions)
+        internal HelmMappingRuleProfileConfig(HelmInstallConfig installOptions, HelmUpgradeConfig upgradeOptions)
         {
             InstallOptions = installOptions;
             UpgradeOptions = upgradeOptions;
         }
 
         /// <summary> The helm deployment install options. </summary>
-        public HelmInstallOptions InstallOptions { get; set; }
+        public HelmInstallConfig InstallOptions { get; set; }
         /// <summary> The helm deployment upgrade options. </summary>
-        public HelmUpgradeOptions UpgradeOptions { get; set; }
+        public HelmUpgradeConfig UpgradeOptions { get; set; }
     }
 }

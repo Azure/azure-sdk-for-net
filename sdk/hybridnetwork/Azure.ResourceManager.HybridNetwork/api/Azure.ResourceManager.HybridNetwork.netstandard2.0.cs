@@ -1117,9 +1117,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public System.Collections.Generic.IList<string> ImagePullSecretsValuesPaths { get { throw null; } }
         public System.Collections.Generic.IList<string> RegistryValuesPaths { get { throw null; } }
     }
-    public partial class HelmInstallOptions
+    public partial class HelmInstallConfig
     {
-        public HelmInstallOptions() { }
+        public HelmInstallConfig() { }
         public string Atomic { get { throw null; } set { } }
         public string Timeout { get { throw null; } set { } }
         public string Wait { get { throw null; } set { } }
@@ -1128,20 +1128,20 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     {
         public HelmMappingRuleProfile() { }
         public string HelmPackageVersion { get { throw null; } set { } }
-        public Azure.ResourceManager.HybridNetwork.Models.HelmMappingRuleProfileOptions Options { get { throw null; } set { } }
+        public Azure.ResourceManager.HybridNetwork.Models.HelmMappingRuleProfileConfig Options { get { throw null; } set { } }
         public string ReleaseName { get { throw null; } set { } }
         public string ReleaseNamespace { get { throw null; } set { } }
         public string Values { get { throw null; } set { } }
     }
-    public partial class HelmMappingRuleProfileOptions
+    public partial class HelmMappingRuleProfileConfig
     {
-        public HelmMappingRuleProfileOptions() { }
-        public Azure.ResourceManager.HybridNetwork.Models.HelmInstallOptions InstallOptions { get { throw null; } set { } }
-        public Azure.ResourceManager.HybridNetwork.Models.HelmUpgradeOptions UpgradeOptions { get { throw null; } set { } }
+        public HelmMappingRuleProfileConfig() { }
+        public Azure.ResourceManager.HybridNetwork.Models.HelmInstallConfig InstallOptions { get { throw null; } set { } }
+        public Azure.ResourceManager.HybridNetwork.Models.HelmUpgradeConfig UpgradeOptions { get { throw null; } set { } }
     }
-    public partial class HelmUpgradeOptions
+    public partial class HelmUpgradeConfig
     {
-        public HelmUpgradeOptions() { }
+        public HelmUpgradeConfig() { }
         public string Atomic { get { throw null; } set { } }
         public string Timeout { get { throw null; } set { } }
         public string Wait { get { throw null; } set { } }

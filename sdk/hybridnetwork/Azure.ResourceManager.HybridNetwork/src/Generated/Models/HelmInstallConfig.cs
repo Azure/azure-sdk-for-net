@@ -8,18 +8,18 @@
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> The helm deployment install options. </summary>
-    public partial class HelmInstallOptions
+    public partial class HelmInstallConfig
     {
-        /// <summary> Initializes a new instance of HelmInstallOptions. </summary>
-        public HelmInstallOptions()
+        /// <summary> Initializes a new instance of HelmInstallConfig. </summary>
+        public HelmInstallConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of HelmInstallOptions. </summary>
+        /// <summary> Initializes a new instance of HelmInstallConfig. </summary>
         /// <param name="atomic"> The helm deployment atomic options. </param>
         /// <param name="wait"> The helm deployment wait options. </param>
         /// <param name="timeout"> The helm deployment timeout options. </param>
-        internal HelmInstallOptions(string atomic, string wait, string timeout)
+        internal HelmInstallConfig(string atomic, string wait, string timeout)
         {
             Atomic = atomic;
             Wait = wait;

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             Optional<string> releaseName = default;
             Optional<string> helmPackageVersion = default;
             Optional<string> values = default;
-            Optional<HelmMappingRuleProfileOptions> options = default;
+            Optional<HelmMappingRuleProfileConfig> options = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("releaseNamespace"u8))
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    options = HelmMappingRuleProfileOptions.DeserializeHelmMappingRuleProfileOptions(property.Value);
+                    options = HelmMappingRuleProfileConfig.DeserializeHelmMappingRuleProfileConfig(property.Value);
                     continue;
                 }
             }

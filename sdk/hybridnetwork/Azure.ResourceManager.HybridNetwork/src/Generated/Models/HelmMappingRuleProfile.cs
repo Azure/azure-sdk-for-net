@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="helmPackageVersion"> Helm package version. </param>
         /// <param name="values"> Helm release values. </param>
         /// <param name="options"> The helm deployment options. </param>
-        internal HelmMappingRuleProfile(string releaseNamespace, string releaseName, string helmPackageVersion, string values, HelmMappingRuleProfileOptions options)
+        internal HelmMappingRuleProfile(string releaseNamespace, string releaseName, string helmPackageVersion, string values, HelmMappingRuleProfileConfig options)
         {
             ReleaseNamespace = releaseNamespace;
             ReleaseName = releaseName;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <summary> Helm release values. </summary>
         public string Values { get; set; }
         /// <summary> The helm deployment options. </summary>
-        public HelmMappingRuleProfileOptions Options { get; set; }
+        public HelmMappingRuleProfileConfig Options { get; set; }
     }
 }

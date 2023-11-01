@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    public partial class HelmMappingRuleProfileOptions : IUtf8JsonSerializable
+    public partial class HelmMappingRuleProfileConfig : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             writer.WriteEndObject();
         }
 
-        internal static HelmMappingRuleProfileOptions DeserializeHelmMappingRuleProfileOptions(JsonElement element)
+        internal static HelmMappingRuleProfileConfig DeserializeHelmMappingRuleProfileConfig(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<HelmInstallOptions> installOptions = default;
-            Optional<HelmUpgradeOptions> upgradeOptions = default;
+            Optional<HelmInstallConfig> installOptions = default;
+            Optional<HelmUpgradeConfig> upgradeOptions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("installOptions"u8))
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    installOptions = HelmInstallOptions.DeserializeHelmInstallOptions(property.Value);
+                    installOptions = HelmInstallConfig.DeserializeHelmInstallConfig(property.Value);
                     continue;
                 }
                 if (property.NameEquals("upgradeOptions"u8))
@@ -53,11 +53,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    upgradeOptions = HelmUpgradeOptions.DeserializeHelmUpgradeOptions(property.Value);
+                    upgradeOptions = HelmUpgradeConfig.DeserializeHelmUpgradeConfig(property.Value);
                     continue;
                 }
             }
-            return new HelmMappingRuleProfileOptions(installOptions.Value, upgradeOptions.Value);
+            return new HelmMappingRuleProfileConfig(installOptions.Value, upgradeOptions.Value);
         }
     }
 }

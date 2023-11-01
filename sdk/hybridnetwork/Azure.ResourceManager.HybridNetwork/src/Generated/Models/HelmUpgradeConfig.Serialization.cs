@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    public partial class HelmUpgradeOptions : IUtf8JsonSerializable
+    public partial class HelmUpgradeConfig : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             writer.WriteEndObject();
         }
 
-        internal static HelmUpgradeOptions DeserializeHelmUpgradeOptions(JsonElement element)
+        internal static HelmUpgradeConfig DeserializeHelmUpgradeConfig(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     continue;
                 }
             }
-            return new HelmUpgradeOptions(atomic.Value, wait.Value, timeout.Value);
+            return new HelmUpgradeConfig(atomic.Value, wait.Value, timeout.Value);
         }
     }
 }
