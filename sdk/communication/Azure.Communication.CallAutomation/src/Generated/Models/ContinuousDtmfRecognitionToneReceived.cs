@@ -16,15 +16,17 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary> Initializes a new instance of ContinuousDtmfRecognitionToneReceived. </summary>
-        /// <param name="toneInfo"> Information about Tone. </param>
+        /// <param name="sequenceId"> The sequence id which can be used to determine if the same tone was played multiple times or if any tones were missed. </param>
+        /// <param name="tone"></param>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId or skype chain ID. </param>
         /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        internal ContinuousDtmfRecognitionToneReceived(ToneInfo toneInfo, string callConnectionId, string serverCallId, string correlationId, ResultInformation resultInformation, string operationContext)
+        internal ContinuousDtmfRecognitionToneReceived(int? sequenceId, DtmfTone? tone, string callConnectionId, string serverCallId, string correlationId, ResultInformation resultInformation, string operationContext)
         {
-            ToneInfo = toneInfo;
+            SequenceId = sequenceId;
+            Tone = tone;
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
             CorrelationId = correlationId;
@@ -32,7 +34,9 @@ namespace Azure.Communication.CallAutomation
             OperationContext = operationContext;
         }
 
-        /// <summary> Information about Tone. </summary>
-        public ToneInfo ToneInfo { get; }
+        /// <summary> The sequence id which can be used to determine if the same tone was played multiple times or if any tones were missed. </summary>
+        public int? SequenceId { get; }
+        /// <summary> Gets the tone. </summary>
+        public DtmfTone? Tone { get; }
     }
 }
