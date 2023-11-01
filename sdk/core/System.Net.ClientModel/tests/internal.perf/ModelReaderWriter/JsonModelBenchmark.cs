@@ -1,68 +1,27 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.IO;
-using System.Net.ClientModel.Core;
-using System.Reflection;
-using System.Text;
-using System.Text.Json;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Configs;
+using System.IO;
+using System.Net.ClientModel.Core;
+using System.Net.ClientModel.Tests.Client.Models;
+using System.Reflection;
+using System.Text.Json;
 
 namespace System.Net.ClientModel.Tests.Internal.Perf
 {
     [GroupBenchmarksBy(BenchmarkLogicalGroupRule.ByCategory)]
-    public abstract class JsonModelBenchmark<T> where T : class, IJsonModel<T>
+    public abstract class JsonModelBenchmark<T>
+        where T : class, IJsonModel<T>
     {
-        private class MockPipelineResponse : MessageResponse
-        {
-            public MockPipelineResponse(int status, BinaryData content)
-            {
-                Status = status;
-                Body = MessageBody.Create(content);
-            }
-
-            public override int Status { get; }
-
-            public override string ReasonPhrase => throw new NotImplementedException();
-
-            public override MessageHeaders Headers => throw new NotImplementedException();
-
-            public override MessageBody Body { get; protected internal set; }
-
-            public override void Dispose()
-            {
-                Body?.Dispose();
-            }
-        }
-
-        private class MockResult : Result
-        {
-            private MessageResponse _response;
-
-            public MockResult(int status, BinaryData content)
-            {
-                _response = new MockPipelineResponse(status, content);
-            }
-
-            public override MessageResponse GetRawResponse() => _response;
-        }
-
         private string _json;
         protected T _model;
-        protected Result _result;
         protected ModelReaderWriterOptions _options;
         private BinaryData _data;
-        private JsonDocument _jsonDocument;
         private BinaryData _jsonSerializerResult;
 
         protected abstract T Read(JsonElement jsonElement);
-
-        protected abstract void Write(Utf8JsonWriter writer);
-
-        protected abstract MessageBody CastToPipelineContent();
-
-        protected abstract T CastFromResponse();
 
         protected abstract string JsonFileName { get; }
 
@@ -72,45 +31,8 @@ namespace System.Net.ClientModel.Tests.Internal.Perf
             _json = File.ReadAllText(Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName, "TestData", JsonFileName));
             _data = BinaryData.FromString(_json);
             _model = ModelReaderWriter.Read<T>(_data);
-            _result = new MockResult(200, new BinaryData(Encoding.UTF8.GetBytes(_json)));
             _options = ModelReaderWriterOptions.DefaultWireOptions;
-            _jsonDocument = JsonDocument.Parse(_json);
             _jsonSerializerResult = BinaryData.FromString(JsonSerializer.Serialize(_model));
-        }
-
-        [Benchmark]
-        [BenchmarkCategory("Internal")]
-        public void Write_Internal()
-        {
-            using var stream = new MemoryStream();
-            using var writer = new Utf8JsonWriter(stream);
-            Write(writer);
-            writer.Flush();
-        }
-
-        [Benchmark]
-        [BenchmarkCategory("Cast")]
-        public void Write_ImplicitCast()
-        {
-            using var x = CastToPipelineContent();
-        }
-
-        [Benchmark]
-        [BenchmarkCategory("Cast")]
-        public bool Write_ImplicitCastWithSerialize()
-        {
-            using var x = CastToPipelineContent();
-            return x.TryComputeLength(out var length);
-        }
-
-        [Benchmark]
-        [BenchmarkCategory("Cast")]
-        public void Write_ImplicitCastWithUsage()
-        {
-            using var x = CastToPipelineContent();
-            x.TryComputeLength(out var length);
-            using var stream = new MemoryStream((int)length);
-            x.WriteTo(stream, default);
         }
 
         [Benchmark]
@@ -118,6 +40,17 @@ namespace System.Net.ClientModel.Tests.Internal.Perf
         public string Write_JsonSerializer()
         {
             return JsonSerializer.Serialize(_model);
+        }
+
+        [Benchmark]
+        [BenchmarkCategory("JsonSerializer")]
+        public string Write_JsonSerializer_SourceGenerated()
+        {
+#if NET6_0_OR_GREATER
+            return JsonSerializer.Serialize(_model, _model.GetType(), SourceGenerationContext.Default);
+#else
+            return Write_JsonSerializer();
+#endif
         }
 
         [Benchmark]
@@ -138,10 +71,10 @@ namespace System.Net.ClientModel.Tests.Internal.Perf
 
         [Benchmark]
         [BenchmarkCategory("ModelReaderWriter")]
-        public BinaryData Write_ModelWriter()
+        public bool Write_ModelWriter()
         {
             using var writer = new ModelWriter(_model, _options);
-            return writer.ToBinaryData();
+            return writer.TryComputeLength(out var length);
         }
 
         [Benchmark]
@@ -162,26 +95,23 @@ namespace System.Net.ClientModel.Tests.Internal.Perf
         }
 
         [Benchmark]
-        [BenchmarkCategory("Internal")]
-        public T Read_Internal()
-        {
-            return Read(_jsonDocument.RootElement);
-        }
-
-        [Benchmark]
-        [BenchmarkCategory("Cast")]
-        public T Read_ExplicitCast()
-        {
-            T result = CastFromResponse();
-            return result;
-        }
-
-        [Benchmark]
         [BenchmarkCategory("JsonSerializer")]
         public object Read_JsonSerializer()
         {
             using var stream = new MemoryStream();
             return JsonSerializer.Deserialize(_jsonSerializerResult, _model.GetType());
+        }
+
+        [Benchmark]
+        [BenchmarkCategory("JsonSerializer")]
+        public object Read_JsonSerializer_SourceGeneration()
+        {
+#if NET6_0_OR_GREATER
+            using var stream = new MemoryStream();
+            return JsonSerializer.Deserialize(_jsonSerializerResult, _model.GetType(), SourceGenerationContext.Default);
+#else
+            return Read_JsonSerializer();
+#endif
         }
 
         [Benchmark]
@@ -220,21 +150,6 @@ namespace System.Net.ClientModel.Tests.Internal.Perf
         {
             Utf8JsonReader reader = new Utf8JsonReader(_data);
             return _model.Read(ref reader, _options);
-        }
-
-        [Benchmark]
-        [BenchmarkCategory("JsonDocument")]
-        public void JsonDocumentFromReader()
-        {
-            Utf8JsonReader reader = new Utf8JsonReader(_data);
-            using var doc = JsonDocument.ParseValue(ref reader);
-        }
-
-        [Benchmark]
-        [BenchmarkCategory("JsonDocument")]
-        public void JsonDocumentFromBinaryData()
-        {
-            using var doc = JsonDocument.Parse(_data);
         }
     }
 }
