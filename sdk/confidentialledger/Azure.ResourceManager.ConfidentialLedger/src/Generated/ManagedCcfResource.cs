@@ -27,6 +27,9 @@ namespace Azure.ResourceManager.ConfidentialLedger
     public partial class ManagedCcfResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagedCcfResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="appName"> The appName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string appName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConfidentialLedger/managedCCFs/{appName}";

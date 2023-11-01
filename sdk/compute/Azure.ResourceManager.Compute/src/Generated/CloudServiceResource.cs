@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Compute
     public partial class CloudServiceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CloudServiceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="cloudServiceName"> The cloudServiceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string cloudServiceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}";

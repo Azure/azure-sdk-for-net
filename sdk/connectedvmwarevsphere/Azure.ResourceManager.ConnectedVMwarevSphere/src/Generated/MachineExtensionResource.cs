@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     public partial class MachineExtensionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MachineExtensionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="extensionName"> The extensionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string extensionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachines/{name}/extensions/{extensionName}";
