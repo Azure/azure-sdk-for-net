@@ -49,9 +49,9 @@ public static class PipelineProtocolExtensions
         switch (response.Status)
         {
             case >= 200 and < 300:
-                return Result.FromNullableValue(true, response);
+                return Result.FromValue(true, response);
             case >= 400 and < 500:
-                return Result.FromNullableValue(false, response);
+                return Result.FromValue(false, response);
             default:
                 return new ErrorResult<bool>(response, new UnsuccessfulRequestException(response));
         }
@@ -63,9 +63,9 @@ public static class PipelineProtocolExtensions
         switch (response.Status)
         {
             case >= 200 and < 300:
-                return Result.FromNullableValue(true, response);
+                return Result.FromValue(true, response);
             case >= 400 and < 500:
-                return Result.FromNullableValue(false, response);
+                return Result.FromValue(false, response);
             default:
                 return new ErrorResult<bool>(response, new UnsuccessfulRequestException(response));
         }
@@ -83,10 +83,9 @@ public static class PipelineProtocolExtensions
             _exception = exception;
         }
 
-        public override T? Value { get => throw _exception; }
+        public override T Value { get => throw _exception; }
 
-        // TODO: come back to as we decide what to do when ErrorBehavior=NoThrow.
-        //public override bool HasValue => false;
+        public override bool HasValue => false;
 
         public override MessageResponse GetRawResponse() => _response;
     }
