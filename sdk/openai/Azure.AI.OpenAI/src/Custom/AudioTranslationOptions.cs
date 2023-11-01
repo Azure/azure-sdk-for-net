@@ -51,11 +51,11 @@ namespace Azure.AI.OpenAI
         /// </summary>
         /// <param name="deploymentName"> The deployment name to use for audio translation. </param>
         /// <param name="audioData"> The audio data to translate. </param>
-        /// <exception cref="ArgumentException">
-        ///     <paramref name="deploymentName"/> is null or empty.
-        /// </exception>
         /// <exception cref="ArgumentNullException">
-        ///     <paramref name="audioData"/> is null.
+        ///     <paramref name="deploymentName"/> or <paramref name="audioData"/> is null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        ///     <paramref name="deploymentName"/> is an empty string.
         /// </exception>
         public AudioTranslationOptions(string deploymentName, BinaryData audioData)
         {

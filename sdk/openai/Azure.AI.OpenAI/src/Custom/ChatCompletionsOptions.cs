@@ -103,11 +103,11 @@ namespace Azure.AI.OpenAI
         /// the behavior of the assistant, followed by alternating messages between the User and
         /// Assistant roles.
         /// </param>
-        /// <exception cref="ArgumentException">
-        ///     <paramref name="deploymentName"/> is null or empty.
-        /// </exception>
         /// <exception cref="ArgumentNullException">
-        ///     <paramref name="messages"/> is null.
+        ///     <paramref name="deploymentName"/> or <paramref name="messages"/> is null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        ///     <paramref name="deploymentName"/> is an empty string.
         /// </exception>
         public ChatCompletionsOptions(string deploymentName, IEnumerable<ChatMessage> messages) : this()
         {

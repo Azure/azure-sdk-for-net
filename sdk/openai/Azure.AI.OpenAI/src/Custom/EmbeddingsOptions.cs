@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
@@ -42,8 +43,17 @@ namespace Azure.AI.OpenAI
         /// </summary>
         /// <param name="deploymentName"> The deployment name to use for embeddings. </param>
         /// <param name="input"> The collection of inputs to run an embeddings operation across. </param>
+        /// <exception cref="ArgumentNullException">
+        ///     <paramref name="deploymentName"/> or <paramref name="input"/> is null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        ///     <paramref name="deploymentName"/> is an empty string.
+        /// </exception>
         public EmbeddingsOptions(string deploymentName, IEnumerable<string> input)
         {
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNull(input, nameof(input));
+
             DeploymentName = deploymentName;
             Input = input.ToList();
         }

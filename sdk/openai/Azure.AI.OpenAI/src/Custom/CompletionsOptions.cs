@@ -168,11 +168,16 @@ namespace Azure.AI.OpenAI
         /// <summary> Initializes a new instance of CompletionsOptions. </summary>
         /// <param name="deploymentName"> The deployment name to use for this request. </param>
         /// <param name="prompts"> The prompts to generate completions from. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="prompts"/> is null. </exception>
+        /// <exception cref="ArgumentException">
+        ///     <paramref name="deploymentName"/> is an empty string.
+        /// </exception>
+        /// <exception cref="ArgumentNullException">
+        ///     <paramref name="deploymentName"/> or <paramref name="prompts"/> is null.
+        /// </exception>
         public CompletionsOptions(string deploymentName, IEnumerable<string> prompts)
             : this()
         {
-            Argument.AssertNotNull(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
             Argument.AssertNotNull(prompts, nameof(prompts));
 
             Prompts = prompts.ToList();
