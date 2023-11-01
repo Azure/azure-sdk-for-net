@@ -25,6 +25,22 @@ namespace Azure.AI.OpenAI
         public int? ChoicesPerPrompt { get; set; }
 
         /// <summary>
+        /// Gets or sets the deployment name to use for a completions request.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// When making a request against Azure OpenAI, this should be the customizable name of the "model deployment"
+        /// (example: my-gpt4-deployment) and not the name of the model itself (example: gpt-4).
+        /// </para>
+        /// <para>
+        /// When using non-Azure OpenAI, this corresponds to "model" in the request options and should use the
+        /// appropriate name of the model (example: gpt-4).
+        /// </para>
+        /// </remarks>
+        [CodeGenMember("InternalNonAzureModelName")]
+        public string DeploymentName { get; set; }
+
+        /// <summary>
         ///     Gets or sets a value specifying whether a completion should include its input prompt as a prefix to
         ///     its generated output.
         /// </summary>
@@ -131,8 +147,6 @@ namespace Azure.AI.OpenAI
         /// </remarks>
         public float? Temperature { get; set; }
 
-        internal IDictionary<string, int> InternalStringKeyedTokenSelectionBiases { get; }
-
         /// <summary>
         ///     Gets a dictionary of modifications to the likelihood of specified GPT tokens appearing in a completions
         ///     result. Maps token IDs to associated bias scores from -100 to 100, with minimum and maximum values
@@ -147,26 +161,31 @@ namespace Azure.AI.OpenAI
         public IDictionary<int, int> TokenSelectionBiases { get; }
 
         internal bool? InternalShouldStreamResponse { get; set; }
-        internal string InternalNonAzureModelName { get; set; }
+
+        internal IDictionary<string, int> InternalStringKeyedTokenSelectionBiases { get; }
 
         /// <summary> Initializes a new instance of CompletionsOptions. </summary>
+        /// <param name="deploymentName"> The deployment name to use for this request. </param>
         /// <param name="prompts"> The prompts to generate completions from. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="prompts"/> is null. </exception>
-        public CompletionsOptions(IEnumerable<string> prompts)
+        public CompletionsOptions(string deploymentName, IEnumerable<string> prompts)
+            : this()
         {
+            Argument.AssertNotNull(deploymentName, nameof(deploymentName));
             Argument.AssertNotNull(prompts, nameof(prompts));
 
             Prompts = prompts.ToList();
-            TokenSelectionBiases = new ChangeTrackingDictionary<int, int>();
-            StopSequences = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of CompletionsOptions. </summary>
         public CompletionsOptions()
-            : this(new ChangeTrackingList<string>())
         {
             // CUSTOM CODE NOTE: Empty constructors are added to options classes to facilitate property-only use; this
             //                      may be reconsidered for required payload constituents in the future.
+            Prompts = new ChangeTrackingList<string>();
+            InternalStringKeyedTokenSelectionBiases = new ChangeTrackingDictionary<string, int>();
+            TokenSelectionBiases = new ChangeTrackingDictionary<int, int>();
+            StopSequences = new ChangeTrackingList<string>();
         }
     }
 }

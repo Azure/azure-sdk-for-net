@@ -46,15 +46,15 @@ namespace Azure.AI.OpenAI
         /// Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.
         /// If set to 0, the model will use log probability to automatically increase the temperature until certain thresholds are hit.
         /// </param>
-        /// <param name="internalNonAzureModelName"> The model to use for this transcription request. </param>
-        internal AudioTranscriptionOptions(BinaryData audioData, AudioTranscriptionFormat? responseFormat, string language, string prompt, float? temperature, string internalNonAzureModelName)
+        /// <param name="deploymentName"> The model to use for this transcription request. </param>
+        internal AudioTranscriptionOptions(BinaryData audioData, AudioTranscriptionFormat? responseFormat, string language, string prompt, float? temperature, string deploymentName)
         {
             AudioData = audioData;
             ResponseFormat = responseFormat;
             Language = language;
             Prompt = prompt;
             Temperature = temperature;
-            InternalNonAzureModelName = internalNonAzureModelName;
+            DeploymentName = deploymentName;
         }
         /// <summary> The requested format of the transcription response data, which will influence the content and detail of the result. </summary>
         public AudioTranscriptionFormat? ResponseFormat { get; set; }

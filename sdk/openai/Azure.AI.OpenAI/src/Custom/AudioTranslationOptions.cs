@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
@@ -29,7 +30,21 @@ namespace Azure.AI.OpenAI
         /// </summary>
         public BinaryData AudioData { get; set; }
 
-        internal string InternalNonAzureModelName { get; set; }
+        /// <summary>
+        /// Gets or sets the deployment name to use for a chat completions request.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// When making a request against Azure OpenAI, this should be the customizable name of the "model deployment"
+        /// (example: my-gpt4-deployment) and not the name of the model itself (example: gpt-4).
+        /// </para>
+        /// <para>
+        /// When using non-Azure OpenAI, this corresponds to "model" in the request options and should use the
+        /// appropriate name of the model (example: gpt-4).
+        /// </para>
+        /// </remarks>
+        [CodeGenMember("InternalNonAzureModelName")]
+        public string DeploymentName { get; set; }
 
         /// <summary>
         /// Initializes a new instance of AudioTranslationOptions.

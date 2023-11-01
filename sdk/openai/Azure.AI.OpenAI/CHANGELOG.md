@@ -6,6 +6,35 @@
 
 ### Breaking Changes
 
+This update includes a number of version-to-version breaking changes to the API.
+
+**`deploymentOrModelName` moved to `*Options.DeploymentName`**
+
+`deploymentOrModelName` and related method parameters on `OpenAIClient` have been moved to `DeploymentName`
+properties in the corresponding method options. This is intended to promote consistency across scenario,
+language, and Azure/non-Azure OpenAI use.
+
+As an example, the following:
+
+```csharp
+ChatCompletionsOptions chatCompletionsOptions = new()
+{
+    Messages = { new(ChatRole.User, "Hello, assistant!") },
+};
+Response<ChatCompletions> response = client.GetChatCompletions("gpt-4", chatCompletionsOptions);
+```
+
+...is now re-written as:
+
+```csharp
+ChatCompletionsOptions chatCompletionsOptions = new()
+{
+    DeploymentName = "gpt-4",
+    Messages = { new(ChatRole.User, "Hello, assistant!") },
+};
+Response<ChatCompletions> response = client.GetChatCompletions(chatCompletionsOptions);
+```
+
 ### Bugs Fixed
 
 ### Other Changes
