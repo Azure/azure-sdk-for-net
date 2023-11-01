@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of SqlServerJobCredentialResources and their operations over a SqlServerJobCredentialResource. </returns>
         public virtual SqlServerJobCredentialCollection GetSqlServerJobCredentials()
         {
-            return GetCachedClient(Client => new SqlServerJobCredentialCollection(Client, Id));
+            return GetCachedClient(client => new SqlServerJobCredentialCollection(client, Id));
         }
 
         /// <summary>
@@ -120,8 +120,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="credentialName"> The name of the credential. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SqlServerJobCredentialResource>> GetSqlServerJobCredentialAsync(string credentialName, CancellationToken cancellationToken = default)
         {
@@ -143,8 +143,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="credentialName"> The name of the credential. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SqlServerJobCredentialResource> GetSqlServerJobCredential(string credentialName, CancellationToken cancellationToken = default)
         {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of SqlServerJobResources and their operations over a SqlServerJobResource. </returns>
         public virtual SqlServerJobCollection GetSqlServerJobs()
         {
-            return GetCachedClient(Client => new SqlServerJobCollection(Client, Id));
+            return GetCachedClient(client => new SqlServerJobCollection(client, Id));
         }
 
         /// <summary>
@@ -173,8 +173,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="jobName"> The name of the job to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SqlServerJobResource>> GetSqlServerJobAsync(string jobName, CancellationToken cancellationToken = default)
         {
@@ -196,8 +196,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="jobName"> The name of the job to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SqlServerJobResource> GetSqlServerJob(string jobName, CancellationToken cancellationToken = default)
         {
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of SqlServerJobTargetGroupResources and their operations over a SqlServerJobTargetGroupResource. </returns>
         public virtual SqlServerJobTargetGroupCollection GetSqlServerJobTargetGroups()
         {
-            return GetCachedClient(Client => new SqlServerJobTargetGroupCollection(Client, Id));
+            return GetCachedClient(client => new SqlServerJobTargetGroupCollection(client, Id));
         }
 
         /// <summary>
@@ -226,8 +226,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="targetGroupName"> The name of the target group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="targetGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="targetGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="targetGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SqlServerJobTargetGroupResource>> GetSqlServerJobTargetGroupAsync(string targetGroupName, CancellationToken cancellationToken = default)
         {
@@ -249,8 +249,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="targetGroupName"> The name of the target group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="targetGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="targetGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="targetGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SqlServerJobTargetGroupResource> GetSqlServerJobTargetGroup(string targetGroupName, CancellationToken cancellationToken = default)
         {
