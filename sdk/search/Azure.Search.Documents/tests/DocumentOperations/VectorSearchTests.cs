@@ -42,7 +42,7 @@ namespace Azure.Search.Documents.Tests
                    {
                        VectorSearch = new()
                        {
-                           Queries = { new VectorQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } }
+                           Queries = { new VectorizedQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } }
                        },
                        Select = { "hotelId", "hotelName" }
                    });
@@ -65,7 +65,7 @@ namespace Azure.Search.Documents.Tests
                     {
                         VectorSearch = new()
                         {
-                            Queries = { new VectorQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } }
+                            Queries = { new VectorizedQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } }
                         },
                         Filter = "category eq 'Budget'",
                         Select = { "hotelId", "hotelName", "category" }
@@ -90,7 +90,7 @@ namespace Azure.Search.Documents.Tests
                     {
                         VectorSearch = new()
                         {
-                            Queries = { new VectorQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } }
+                            Queries = { new VectorizedQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } }
                         },
                         Select = { "hotelId", "hotelName" },
                     });
@@ -115,7 +115,7 @@ namespace Azure.Search.Documents.Tests
                     {
                         VectorSearch = new()
                         {
-                            Queries = { new VectorQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } }
+                            Queries = { new VectorizedQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } }
                         },
                         SemanticSearch = new()
                         {
@@ -127,19 +127,19 @@ namespace Azure.Search.Documents.Tests
                         Select = { "hotelId", "hotelName", "description", "category" },
                     });
 
-            Assert.NotNull(response.SemanticSearch.QueryAnswers);
-            Assert.AreEqual(1, response.SemanticSearch.QueryAnswers.Count);
-            Assert.AreEqual("9", response.SemanticSearch.QueryAnswers[0].Key);
-            Assert.NotNull(response.SemanticSearch.QueryAnswers[0].Highlights);
-            Assert.NotNull(response.SemanticSearch.QueryAnswers[0].Text);
+            Assert.NotNull(response.SemanticSearch.Answers);
+            Assert.AreEqual(1, response.SemanticSearch.Answers.Count);
+            Assert.AreEqual("9", response.SemanticSearch.Answers[0].Key);
+            Assert.NotNull(response.SemanticSearch.Answers[0].Highlights);
+            Assert.NotNull(response.SemanticSearch.Answers[0].Text);
 
             await foreach (SearchResult<Hotel> result in response.GetResultsAsync())
             {
                 Hotel doc = result.Document;
 
-                Assert.NotNull(result.SemanticSearch.QueryCaptions);
+                Assert.NotNull(result.SemanticSearch.Captions);
 
-                var caption = result.SemanticSearch.QueryCaptions.FirstOrDefault();
+                var caption = result.SemanticSearch.Captions.FirstOrDefault();
                 Assert.NotNull(caption.Highlights, "Caption highlight is null");
                 Assert.NotNull(caption.Text, "Caption text is null");
             }

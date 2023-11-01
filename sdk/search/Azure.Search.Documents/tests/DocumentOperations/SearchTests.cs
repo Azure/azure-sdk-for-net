@@ -1041,7 +1041,7 @@ namespace Azure.Search.Documents.Tests
             };
             source.VectorSearch = new VectorSearchOptions()
             {
-                Queries = { new VectorQuery(VectorSearchEmbeddings.SearchVectorizeDescription) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector", "CategoryVector" } } },
+                Queries = { new VectorizedQuery(VectorSearchEmbeddings.SearchVectorizeDescription) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector", "CategoryVector" } } },
                 FilterMode = VectorFilterMode.PostFilter
             };
             SearchOptions clonedSearchOptions = source.Clone();

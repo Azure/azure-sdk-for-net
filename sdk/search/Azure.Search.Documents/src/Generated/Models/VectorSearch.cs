@@ -23,7 +23,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Initializes a new instance of VectorSearch. </summary>
         /// <param name="profiles"> Defines combinations of configurations to use with vector search. </param>
         /// <param name="algorithms">
-        /// Contains configuration options specific to the algorithm used during indexing and/or querying.
+        /// Contains configuration options specific to the algorithm used during indexing or querying.
         /// Please note <see cref="VectorSearchAlgorithmConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ExhaustiveKnnAlgorithmConfiguration"/> and <see cref="HnswAlgorithmConfiguration"/>.
         /// </param>
@@ -36,7 +36,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary> Defines combinations of configurations to use with vector search. </summary>
         public IList<VectorSearchProfile> Profiles { get; }
         /// <summary>
-        /// Contains configuration options specific to the algorithm used during indexing and/or querying.
+        /// Contains configuration options specific to the algorithm used during indexing or querying.
         /// Please note <see cref="VectorSearchAlgorithmConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ExhaustiveKnnAlgorithmConfiguration"/> and <see cref="HnswAlgorithmConfiguration"/>.
         /// </summary>

@@ -51,7 +51,7 @@ namespace Azure.Search.Documents.Tests.Samples
                 Console.WriteLine($"Semantic Search Results:");
 
                 Console.WriteLine($"\nQuery Answer:");
-                foreach (QueryAnswerResult result in response.SemanticSearch.QueryAnswers)
+                foreach (QueryAnswerResult result in response.SemanticSearch.Answers)
                 {
                     Console.WriteLine($"Answer Highlights: {result.Highlights}");
                     Console.WriteLine($"Answer Text: {result.Text}");
@@ -63,9 +63,9 @@ namespace Azure.Search.Documents.Tests.Samples
                     Hotel doc = result.Document;
                     Console.WriteLine($"{doc.HotelId}: {doc.HotelName}");
 
-                    if (result.SemanticSearch.QueryCaptions != null)
+                    if (result.SemanticSearch.Captions != null)
                     {
-                        var caption = result.SemanticSearch.QueryCaptions.FirstOrDefault();
+                        var caption = result.SemanticSearch.Captions.FirstOrDefault();
                         if (caption.Highlights != null && caption.Highlights != "")
                         {
                             Console.WriteLine($"Caption Highlights: {caption.Highlights}");
@@ -113,7 +113,7 @@ namespace Azure.Search.Documents.Tests.Samples
                             {
                                 new SemanticField("Description")
                             },
-                            KeywordFields =
+                            KeywordsFields =
                             {
                                 new SemanticField("Category")
                             }

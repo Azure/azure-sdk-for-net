@@ -256,7 +256,7 @@ namespace Azure.Search.Documents.Models
                     {
                         answerResults.Add(QueryAnswerResult.DeserializeQueryAnswerResult(answerValue));
                     }
-                    results.SemanticSearch.QueryAnswers = answerResults;
+                    results.SemanticSearch.Answers = answerResults;
                 }
                 else if (prop.NameEquals(Constants.ValueKeyJson.EncodedUtf8Bytes))
                 {
@@ -284,7 +284,7 @@ namespace Azure.Search.Documents.Models
     {
         /// <summary> The answers query results for the search operation;
         /// <c>null</c> if the <see cref="QueryAnswer.AnswerType"/> parameter was not specified or set to <see cref="QueryAnswerType.None"/>. </summary>
-        public IReadOnlyList<QueryAnswerResult> QueryAnswers { get; internal set; }
+        public IReadOnlyList<QueryAnswerResult> Answers { get; internal set; }
 
         /// <summary> Reason that a partial response was returned for a semantic search request. </summary>
         public SemanticErrorReason? ErrorReason { get; internal set; }

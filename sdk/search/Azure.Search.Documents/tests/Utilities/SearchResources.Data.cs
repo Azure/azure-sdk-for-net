@@ -96,7 +96,7 @@ namespace Azure.Search.Documents.Tests
                            {
                                new SemanticField("description")
                            },
-                           KeywordFields =
+                           KeywordsFields =
                            {
                                new SemanticField("category")
                            }
@@ -360,7 +360,7 @@ namespace Azure.Search.Documents.Tests
         public string DescriptionFr { get; set; }
 
         [JsonPropertyName("descriptionVector")]
-        public IReadOnlyList<float> DescriptionVector { get; set; } = VectorSearchEmbeddings.DefaultVectorizeDescription; // Default DescriptionVector: "Hotel"
+        public ReadOnlyMemory<float> DescriptionVector { get; set; } = VectorSearchEmbeddings.DefaultVectorizeDescription; // Default DescriptionVector: "Hotel"
 
         [JsonPropertyName("category")]
         public string Category { get; set; }
@@ -401,7 +401,7 @@ namespace Azure.Search.Documents.Tests
             HotelName == other.HotelName &&
             Description == other.Description &&
             DescriptionFr == other.DescriptionFr &&
-            DescriptionVector.SequenceEqualsNullSafe(other.DescriptionVector) &&
+            DescriptionVector.Span.SequenceEqual(other.DescriptionVector.Span) &&
             Category == other.Category &&
             Tags.SequenceEqualsNullSafe(other.Tags) &&
             ParkingIncluded == other.ParkingIncluded &&

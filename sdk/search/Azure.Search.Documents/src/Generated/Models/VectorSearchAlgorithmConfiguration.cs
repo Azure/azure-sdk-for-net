@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary>
-    /// Contains configuration options specific to the algorithm used during indexing and/or querying.
+    /// Contains configuration options specific to the algorithm used during indexing or querying.
     /// Please note <see cref="VectorSearchAlgorithmConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ExhaustiveKnnAlgorithmConfiguration"/> and <see cref="HnswAlgorithmConfiguration"/>.
     /// </summary>

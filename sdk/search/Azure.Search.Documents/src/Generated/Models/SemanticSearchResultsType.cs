@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> Type of partial response that was returned for a semantic search request. </summary>
+    /// <summary> Type of partial response that was returned for a semantic ranking request. </summary>
     public readonly partial struct SemanticSearchResultsType : IEquatable<SemanticSearchResultsType>
     {
         private readonly string _value;

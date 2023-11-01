@@ -20,8 +20,8 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class SearchIndexerSkill
     {
         /// <summary> Initializes a new instance of SearchIndexerSkill. </summary>
-        /// <param name="oDataType"> Identifies the concrete type of the skill. </param>
-        /// <param name="name"> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character '#'. </param>
+        /// <param name="oDataType"> A URI fragment specifying the type of skill. </param>
+        /// <param name="name"> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character `#`. </param>
         /// <param name="description"> The description of the skill which describes the inputs, outputs, and usage of the skill. </param>
         /// <param name="context"> Represents the level at which operations take place, such as the document root or document content (for example, /document or /document/content). The default is /document. </param>
         /// <param name="inputs"> Inputs of the skills could be a column in the source data set, or the output of an upstream skill. </param>
@@ -36,7 +36,7 @@ namespace Azure.Search.Documents.Indexes.Models
             Outputs = outputs;
         }
 
-        /// <summary> Identifies the concrete type of the skill. </summary>
+        /// <summary> A URI fragment specifying the type of skill. </summary>
         internal string ODataType { get; set; }
         /// <summary> The description of the skill which describes the inputs, outputs, and usage of the skill. </summary>
         public string Description { get; set; }

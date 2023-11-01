@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using Azure.Search.Documents.Models;
 using NUnit.Framework;
@@ -259,16 +260,16 @@ namespace Azure.Search.Documents.Tests.Models
             Assert.IsNull(searchOptions.VectorSearch);
 
             searchOptions.VectorSearch = new();
-            IReadOnlyList<float> vectors = new List<float> { -0.011113605f, -0.01902812f, 0.047524072f };
-            searchOptions.VectorSearch.Queries = new[] { new VectorQuery(vectors) };
+            ReadOnlyMemory<float> vectors = new float[] { -0.011113605f, -0.01902812f, 0.047524072f };
+            searchOptions.VectorSearch.Queries = new[] { new VectorizedQuery(vectors) };
 
             Assert.AreEqual(1, searchOptions.VectorSearch.Queries.Count);
-            Assert.AreEqual(vectors, (searchOptions.VectorSearch.Queries[0] as VectorQuery).Vector);
+            Assert.AreEqual(vectors, (searchOptions.VectorSearch.Queries[0] as VectorizedQuery).Vector);
             Assert.IsNull(searchOptions.VectorSearch.FilterMode);
 
             searchOptions.VectorSearch.FilterMode = VectorFilterMode.PostFilter;
             Assert.AreEqual(1, searchOptions.VectorSearch.Queries.Count);
-            Assert.AreEqual(vectors, (searchOptions.VectorSearch.Queries[0] as VectorQuery).Vector);
+            Assert.AreEqual(vectors, (searchOptions.VectorSearch.Queries[0] as VectorizedQuery).Vector);
             Assert.AreEqual(VectorFilterMode.PostFilter, searchOptions.VectorSearch.FilterMode);
         }
     }

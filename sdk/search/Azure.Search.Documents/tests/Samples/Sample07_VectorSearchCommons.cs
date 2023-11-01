@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 #pragma warning disable SA1402 // File may only contain a single type
 
@@ -77,9 +78,9 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
         public string HotelId { get; set; }
         public string HotelName { get; set; }
         public string Description { get; set; }
-        public IReadOnlyList<float> DescriptionVector { get; set; }
+        public ReadOnlyMemory<float> DescriptionVector { get; set; }
         public string Category { get; set; }
-        public IReadOnlyList<float> CategoryVector { get; set; }
+        public ReadOnlyMemory<float> CategoryVector { get; set; }
     }
     #endregion
 }

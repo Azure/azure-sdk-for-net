@@ -36,7 +36,7 @@ SearchIndex searchIndex = new(indexName)
                 {
                     new SemanticField("Description")
                 },
-                KeywordFields =
+                KeywordsFields =
                 {
                     new SemanticField("Category")
                 }
@@ -130,7 +130,7 @@ int count = 0;
 Console.WriteLine($"Semantic Search Results:");
 
 Console.WriteLine($"\nQuery Answer:");
-foreach (QueryAnswerResult result in response.SemanticSearch.QueryAnswers)
+foreach (QueryAnswerResult result in response.SemanticSearch.Answers)
 {
     Console.WriteLine($"Answer Highlights: {result.Highlights}");
     Console.WriteLine($"Answer Text: {result.Text}");
@@ -142,9 +142,9 @@ await foreach (SearchResult<Hotel> result in response.GetResultsAsync())
     Hotel doc = result.Document;
     Console.WriteLine($"{doc.HotelId}: {doc.HotelName}");
 
-    if (result.SemanticSearch.QueryCaptions != null)
+    if (result.SemanticSearch.Captions != null)
     {
-        var caption = result.SemanticSearch.QueryCaptions.FirstOrDefault();
+        var caption = result.SemanticSearch.Captions.FirstOrDefault();
         if (caption.Highlights != null && caption.Highlights != "")
         {
             Console.WriteLine($"Caption Highlights: {caption.Highlights}");

@@ -11,8 +11,8 @@ See the [Contributing guidelines](https://github.com/Azure/azure-sdk-for-net/blo
 ```yaml
 title: SearchServiceClient
 input-file:
- - https://github.com/Azure/azure-rest-api-specs/blob/d52c50c22ec7f573d49fc3b4c6c931491d92ec8b/specification/search/data-plane/Azure.Search/stable/2023-11-01/searchindex.json
- - https://github.com/Azure/azure-rest-api-specs/blob/d52c50c22ec7f573d49fc3b4c6c931491d92ec8b/specification/search/data-plane/Azure.Search/stable/2023-11-01/searchservice.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/58e92dd03733bc175e6a9540f4bc53703b57fcc9/specification/search/data-plane/Azure.Search/stable/2023-11-01/searchindex.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/58e92dd03733bc175e6a9540f4bc53703b57fcc9/specification/search/data-plane/Azure.Search/stable/2023-11-01/searchservice.json
 generation1-convenience-client: true
 deserialize-null-collection-as-null-value: true
 ```
@@ -92,42 +92,13 @@ directive:
   transform: $["x-ms-client-name"] = "SearchServiceError"
 ```
 
-### Rename `Dimensions`
-
- To ensure alignment with `VectorSearchConfiguration` in intellisense and documentation, rename the `Dimensions` to `VectorSearchDimensions`.
-
-```yaml
-directive:
-- from: searchservice.json
-  where: $.definitions.SearchField.properties.dimensions
-  transform: $["x-ms-client-name"] = "vectorSearchDimensions";
-```
-
-### Rename `VectorSearchProfile`
-
-```yaml
-directive:
-- from: searchservice.json
-  where: $.definitions.SearchField.properties.vectorSearchProfile
-  transform: $["x-ms-client-name"] = "vectorSearchProfileName";
-```
-
-### Make `RawVectorQuery.vector` field Required
+### Enable `RawVectorQuery.vector` as embedding field
 
 ```yaml
 directive:
 - from: searchindex.json
-  where: $.definitions.RawVectorQuery
-  transform: $["required"] = ["vector"]
-```
-
-### Make `SemanticField.fieldName` field Required
-
-```yaml
-directive:
-- from: searchservice.json
-  where: $.definitions.SemanticField
-  transform: $["required"] = ["fieldName"]
+  where: $.definitions.RawVectorQuery.properties.vector
+  transform: $["x-ms-embedding-vector"] = true;
 ```
 
 ### Make `VectorSearchAlgorithmKind` internal
@@ -148,170 +119,22 @@ directive:
   transform: $["x-accessibility"] = "internal"
 ```
 
-### Rename `PrioritizedFields` to `SemanticPrioritizedFields`
-
-```yaml
-directive:
-- from: searchservice.json
-  where: $.definitions.PrioritizedFields
-  transform: $["x-ms-client-name"] = "SemanticPrioritizedFields";
-```
-
-### Rename `SemanticErrorHandling` to `SemanticErrorMode`
-
-```yaml
-directive:
-- from: searchindex.json
-  where: $.definitions.SemanticErrorHandling
-  transform: $["x-ms-enum"].name = "SemanticErrorMode";
-```
-
-### Rename `SemanticPartialResponseReason` to `SemanticErrorReason`
-
-```yaml
-directive:
-- from: searchindex.json
-  where: $.definitions.SemanticPartialResponseReason
-  transform: $["x-ms-enum"].name = "SemanticErrorReason";
-```
-
-### Rename `SemanticPartialResponseType` to `SemanticSearchResultsType`
-
-```yaml
-directive:
-- from: searchindex.json
-  where: $.definitions.SemanticPartialResponseType
-  transform: $["x-ms-enum"].name = "SemanticSearchResultsType";
-```
-
-### Rename `VectorQuery` to `VectorizableQuery`
-
-```yaml
-directive:
-- from: searchindex.json
-  where: $.definitions.VectorQuery
-  transform: $["x-ms-client-name"] = "VectorizableQuery";
-```
-
-
-### Rename `VectorSearchProfile.algorithm` to `VectorSearchProfile.algorithmConfigurationName`
-
-```yaml
-directive:
-- from: searchservice.json
-  where: $.definitions.VectorSearchProfile.properties.algorithm
-  transform: $["x-ms-client-name"] = "algorithmConfigurationName";
-```
-
-### Rename `RawVectorQuery` to `VectorQuery`
+### Rename `RawVectorQuery` to `VectorizedQuery`
 
 ```yaml
 directive:
 - from: searchindex.json
   where: $.definitions.RawVectorQuery
-  transform: $["x-ms-client-name"] = "VectorQuery";
+  transform: $["x-ms-client-name"] = "VectorizedQuery";
 ```
 
-### Rename `ExhaustiveKnnVectorSearchAlgorithmConfiguration` to `ExhaustiveKnnAlgorithmConfiguration`
-
-```yaml
-directive:
-- from: searchservice.json
-  where: $.definitions.ExhaustiveKnnVectorSearchAlgorithmConfiguration
-  transform: $["x-ms-client-name"] = "ExhaustiveKnnAlgorithmConfiguration";
-```
-
-### Rename `HnswVectorSearchAlgorithmConfiguration` to `HnswAlgorithmConfiguration`
-
-```yaml
-directive:
-- from: searchservice.json
-  where: $.definitions.HnswVectorSearchAlgorithmConfiguration
-  transform: $["x-ms-client-name"] = "HnswAlgorithmConfiguration";
-```
-
-### Rename `SemanticSettings` to `SemanticSearch`
-
-```yaml
-directive:
-  - from: searchservice.json
-    where: $.definitions.SemanticSettings
-    transform: $["x-ms-client-name"] = "SemanticSearch";
-```
-
-### Rename `SearchIndex.semanticSettings` to `SearchIndex.SemanticSearch`
-
-```yaml
-directive:
-  - from: searchservice.json
-    where: $.definitions.SearchIndex.properties.semantic
-    transform: $["x-ms-client-name"] = "SemanticSearch";
-```
-
-### Rename `SemanticSettings.defaultConfiguration` to `SemanticSettings.DefaultConfigurationName`
-
-```yaml
-directive:
-  - from: searchservice.json
-    where: $.definitions.SemanticSettings.properties.defaultConfiguration
-    transform: $["x-ms-client-name"] = "DefaultConfigurationName";
-```
-
-### Rename `PIIDetectionSkill.maskingCharacter` to `PIIDetectionSkill.mask`
+### Rename `PIIDetectionSkill.minimumPrecision` to `PIIDetectionSkill.MinPrecision`
 
 ```yaml
 directive:
   - from: searchservice.json
     where: $.definitions.PIIDetectionSkill
-    transform: >
-      $.properties.maskingCharacter["x-ms-client-name"] = "mask";
-      $.properties.minimumPrecision["x-ms-client-name"] = "MinPrecision";
-```
-
-### Rename `AnswerResult` to `QueryAnswerResult`
-
-```yaml
-directive:
-- from: searchindex.json
-  where: $.definitions.AnswerResult
-  transform: $["x-ms-client-name"] = "QueryAnswerResult";
-```
-
-### Rename `CaptionResult` to `QueryCaptionResult`
-
-```yaml
-directive:
-- from: searchindex.json
-  where: $.definitions.CaptionResult
-  transform: $["x-ms-client-name"] = "QueryCaptionResult";
-```
-
-### Add `Edm.Single` in `SearchFieldDataType`
-
-In the case of a vector field, the `Edm.Single` data type was missing. Therefore, it is now being added to the `SearchFieldDataType`.
-
-```yaml
-directive:
-- from: swagger-document
-  where: $.definitions.SearchFieldDataType
-  transform: >
-    $.enum.push("Edm.Single");
-    $["x-ms-enum"].values.push({
-      "value": "Edm.Single",
-      "name": "Single",
-      "description": "Indicates that a field contains a single-precision floating point number. This is only valid when used with Collection(Edm.Single)."
-    });  
-```
-
-### Add `arm-id` format for `AuthResourceId`
-
- Add `"format": "arm-id"` for `AuthResourceId` to generate as [Azure.Core.ResourceIdentifier](https://learn.microsoft.com/dotnet/api/azure.core.resourceidentifier?view=azure-dotnet).
-
-```yaml
-directive:
-- from: searchservice.json
-  where: $.definitions.WebApiSkill.properties.authResourceId
-  transform: $["x-ms-format"] = "arm-id";
+    transform: $.properties.minimumPrecision["x-ms-client-name"] = "MinPrecision";
 ```
 
 ### Rename `VectorQuery` property `K`

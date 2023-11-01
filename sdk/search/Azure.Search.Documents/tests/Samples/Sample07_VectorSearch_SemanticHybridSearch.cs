@@ -34,7 +34,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                 SearchClient searchClient = await UploadDocuments(resources, indexName);
 
                 #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Semantic_Hybrid_Search
-                IReadOnlyList<float> vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
+                ReadOnlyMemory<float> vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
 #if !SNIPPET
                 await Task.Delay(TimeSpan.FromSeconds(1));
 #endif
@@ -45,7 +45,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                      {
                          VectorSearch = new()
                          {
-                             Queries = { new VectorQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } }
+                             Queries = { new VectorizedQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } }
                          },
                          SemanticSearch = new()
                          {
@@ -60,7 +60,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                 Console.WriteLine($"Semantic Hybrid Search Results:");
 
                 Console.WriteLine($"\nQuery Answer:");
-                foreach (QueryAnswerResult result in response.SemanticSearch.QueryAnswers)
+                foreach (QueryAnswerResult result in response.SemanticSearch.Answers)
                 {
                     Console.WriteLine($"Answer Highlights: {result.Highlights}");
                     Console.WriteLine($"Answer Text: {result.Text}");
@@ -72,9 +72,9 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                     Hotel doc = result.Document;
                     Console.WriteLine($"{doc.HotelId}: {doc.HotelName}");
 
-                    if (result.SemanticSearch.QueryCaptions != null)
+                    if (result.SemanticSearch.Captions != null)
                     {
-                        var caption = result.SemanticSearch.QueryCaptions.FirstOrDefault();
+                        var caption = result.SemanticSearch.Captions.FirstOrDefault();
                         if (caption.Highlights != null && caption.Highlights != "")
                         {
                             Console.WriteLine($"Caption Highlights: {caption.Highlights}");
@@ -139,7 +139,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                             {
                                 new SemanticField("Description")
                             },
-                            KeywordFields =
+                            KeywordsFields =
                             {
                                 new SemanticField("Category")
                             }

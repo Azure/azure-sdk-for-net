@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="QueryCaption"/> class.
         /// </summary>
-        /// <param name="captionType">A value that specifies whether <see cref="SemanticSearchResult.QueryCaptions"/> should be returned as part of the search response.</param>
+        /// <param name="captionType">A value that specifies whether <see cref="SemanticSearchResult.Captions"/> should be returned as part of the search response.</param>
         public QueryCaption(QueryCaptionType captionType)
         {
             Argument.AssertNotNull(captionType, nameof(captionType));
@@ -26,10 +26,10 @@ namespace Azure.Search.Documents.Models
         }
 
         /// <summary>
-        /// A value that specifies whether <see cref="SemanticSearchResult.QueryCaptions"/> should be returned as part of the search response.
+        /// A value that specifies whether <see cref="SemanticSearchResult.Captions"/> should be returned as part of the search response.
         /// <para>The default value is <see cref="QueryCaptionType.None"/>.</para>
         /// </summary>
-        public QueryCaptionType CaptionType { get; set; }
+        public QueryCaptionType CaptionType { get; internal set; }
 
         /// <summary>
         /// If <see cref="CaptionType"/> is set to <see cref="QueryCaptionType.Extractive"/>, setting this to <c>true</c> enables highlighting of the returned captions.

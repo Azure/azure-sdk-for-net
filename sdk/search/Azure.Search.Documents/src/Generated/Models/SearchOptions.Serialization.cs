@@ -154,11 +154,11 @@ namespace Azure.Search.Documents
                 writer.WritePropertyName("captions"u8);
                 writer.WriteStringValue(QueryCaptionRaw);
             }
-            if (Optional.IsCollectionDefined(VectorizableQueries))
+            if (Optional.IsCollectionDefined(VectorQueries))
             {
                 writer.WritePropertyName("vectorQueries"u8);
                 writer.WriteStartArray();
-                foreach (var item in VectorizableQueries)
+                foreach (var item in VectorQueries)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -202,7 +202,7 @@ namespace Azure.Search.Documents
             Optional<int?> semanticMaxWaitInMilliseconds = default;
             Optional<string> answers = default;
             Optional<string> captions = default;
-            Optional<IList<VectorizableQuery>> vectorQueries = default;
+            Optional<IList<VectorQuery>> vectorQueries = default;
             Optional<VectorFilterMode> vectorFilterMode = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -387,10 +387,10 @@ namespace Azure.Search.Documents
                     {
                         continue;
                     }
-                    List<VectorizableQuery> array = new List<VectorizableQuery>();
+                    List<VectorQuery> array = new List<VectorQuery>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VectorizableQuery.DeserializeVectorizableQuery(item));
+                        array.Add(VectorQuery.DeserializeVectorQuery(item));
                     }
                     vectorQueries = array;
                     continue;

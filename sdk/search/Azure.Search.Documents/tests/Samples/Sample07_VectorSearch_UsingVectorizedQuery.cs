@@ -8,13 +8,14 @@ using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Models;
 using NUnit.Framework;
+using Azure.Core.TestFramework;
 
 namespace Azure.Search.Documents.Tests.Samples.VectorSearch
 {
-    public partial class VectorSearchUsingVectorQuery : SearchTestBase
+    public partial class VectorSearchUsingVectorizedQuery : SearchTestBase
     {
-        public VectorSearchUsingVectorQuery(bool async, SearchClientOptions.ServiceVersion serviceVersion)
-            : base(async, SearchClientOptions.ServiceVersion.V2023_11_01, null /* RecordedTestMode.Record /* to re-record */)
+        public VectorSearchUsingVectorizedQuery(bool async, SearchClientOptions.ServiceVersion serviceVersion)
+            : base(async, SearchClientOptions.ServiceVersion.V2023_11_01, RecordedTestMode.Live /* to re-record */)
         {
         }
 
@@ -30,8 +31,8 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
 
                 SearchClient searchClient = await UploadDocuments(resources, indexName);
 
-                #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Single_Vector_Search_UsingVectorQuery
-                IReadOnlyList<float> vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
+                #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Single_Vector_Search_UsingVectorizedQuery
+                ReadOnlyMemory<float> vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
 #if !SNIPPET
                 await Task.Delay(TimeSpan.FromSeconds(1));
 #endif
@@ -41,7 +42,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                     {
                         VectorSearch = new()
                         {
-                            Queries = { new VectorQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } }
+                            Queries = { new VectorizedQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } }
                         }
                     });
 
@@ -75,8 +76,8 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
 
                 SearchClient searchClient = await UploadDocuments(resources, indexName);
 
-                #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Filter_UsingVectorQuery
-                IReadOnlyList<float> vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
+                #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Filter_UsingVectorizedQuery
+                ReadOnlyMemory<float> vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
 #if !SNIPPET
                 await Task.Delay(TimeSpan.FromSeconds(1));
 #endif
@@ -86,7 +87,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                     {
                         VectorSearch = new()
                         {
-                            Queries = { new VectorQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } }
+                            Queries = { new VectorizedQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } }
                         },
                         Filter = "Category eq 'Luxury'"
                     });
@@ -121,8 +122,8 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
 
                 SearchClient searchClient = await UploadDocuments(resources, indexName);
 
-                #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Simple_Hybrid_Search_UsingVectorQuery
-                IReadOnlyList<float> vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
+                #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Simple_Hybrid_Search_UsingVectorizedQuery
+                ReadOnlyMemory<float> vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
 #if !SNIPPET
                 await Task.Delay(TimeSpan.FromSeconds(1));
 #endif
@@ -133,7 +134,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                         {
                             VectorSearch = new()
                             {
-                                Queries = { new VectorQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } }
+                                Queries = { new VectorizedQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } }
                             },
                         });
 
@@ -167,9 +168,9 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
 
                 SearchClient searchClient = await UploadDocuments(resources, indexName);
 
-                #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Multi_Vector_Search_UsingVectorQuery
-                IReadOnlyList<float> vectorizedDescriptionQuery = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
-                IReadOnlyList<float> vectorizedCategoryQuery = VectorSearchEmbeddings.SearchVectorizeCategory; // "Luxury hotels in town"
+                #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Multi_Vector_Search_UsingVectorizedQuery
+                ReadOnlyMemory<float> vectorizedDescriptionQuery = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
+                ReadOnlyMemory<float> vectorizedCategoryQuery = VectorSearchEmbeddings.SearchVectorizeCategory; // "Luxury hotels in town"
 #if !SNIPPET
                 await Task.Delay(TimeSpan.FromSeconds(1));
 #endif
@@ -180,8 +181,8 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                         VectorSearch = new()
                         {
                             Queries = {
-                                new VectorQuery(vectorizedDescriptionQuery) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } },
-                                new VectorQuery(vectorizedCategoryQuery) { KNearestNeighborsCount = 3, Fields = { "CategoryVector" } } }
+                                new VectorizedQuery(vectorizedDescriptionQuery) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } },
+                                new VectorizedQuery(vectorizedCategoryQuery) { KNearestNeighborsCount = 3, Fields = { "CategoryVector" } } }
                         },
                     });
 
@@ -215,8 +216,8 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
 
                 SearchClient searchClient = await UploadDocuments(resources, indexName);
 
-                #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Multi_Fields_Vector_Search_UsingVectorQuery
-                IReadOnlyList<float> vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
+                #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Multi_Fields_Vector_Search_UsingVectorizedQuery
+                ReadOnlyMemory<float> vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
 #if !SNIPPET
                 await Task.Delay(TimeSpan.FromSeconds(1));
 #endif
@@ -226,7 +227,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                     {
                         VectorSearch = new()
                         {
-                            Queries = { new VectorQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector", "CategoryVector" } } }
+                            Queries = { new VectorizedQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector", "CategoryVector" } } }
                         }
                     });
 
@@ -250,7 +251,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
 
         private async Task<SearchIndexClient> CreateIndex(SearchResources resources, string name)
         {
-            #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Index_UsingVectorQuery
+            #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Index_UsingVectorizedQuery
             string vectorSearchProfileName = "my-vector-profile";
             string vectorSearchHnswConfig = "my-hsnw-vector-config";
             int modelDimensions = 1536;
@@ -287,7 +288,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
             Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
 
-            #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Create_Index_UsingVectorQuery
+            #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Create_Index_UsingVectorizedQuery
             Uri endpoint = new(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
             string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
             AzureKeyCredential credential = new(key);
@@ -308,7 +309,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
             string key = resources.PrimaryApiKey;
             AzureKeyCredential credential = new AzureKeyCredential(key);
 
-            #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Upload_Documents_UsingVectorQuery
+            #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Upload_Documents_UsingVectorizedQuery
             SearchClient searchClient = new(endpoint, indexName, credential);
 #if !SNIPPET
             searchClient = InstrumentClient(new SearchClient(endpoint, indexName, credential, GetSearchClientOptions()));

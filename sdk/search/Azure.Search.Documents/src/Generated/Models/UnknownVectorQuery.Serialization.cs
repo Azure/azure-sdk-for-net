@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
-    internal partial class UnknownVectorizableQuery : IUtf8JsonSerializable
+    internal partial class UnknownVectorQuery : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -35,7 +35,7 @@ namespace Azure.Search.Documents.Models
             writer.WriteEndObject();
         }
 
-        internal static UnknownVectorizableQuery DeserializeUnknownVectorizableQuery(JsonElement element)
+        internal static UnknownVectorQuery DeserializeUnknownVectorQuery(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -76,7 +76,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new UnknownVectorizableQuery(kind, Optional.ToNullable(k), fields.Value, Optional.ToNullable(exhaustive));
+            return new UnknownVectorQuery(kind, Optional.ToNullable(k), fields.Value, Optional.ToNullable(exhaustive));
         }
     }
 }

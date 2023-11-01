@@ -234,10 +234,9 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> The query parameters for multi-vector search queries. </summary>
-        [CodeGenMember("VectorQueries")]
-        private IList<VectorizableQuery> VectorizableQueries
+        private IList<VectorQuery> VectorQueries
         {
-            get { return VectorSearch?.Queries != null? VectorSearch.Queries : new ChangeTrackingList<VectorizableQuery>(); }
+            get { return VectorSearch?.Queries != null? VectorSearch.Queries : new ChangeTrackingList<VectorQuery>(); }
             set
             {
                 if (VectorSearch?.Queries != null)

@@ -7,7 +7,7 @@
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> An empty object that represents the default cognitive service resource for a skillset. </summary>
+    /// <summary> An empty object that represents the default Azure AI service resource for a skillset. </summary>
     public partial class DefaultCognitiveServicesAccount : CognitiveServicesAccount
     {
         /// <summary> Initializes a new instance of DefaultCognitiveServicesAccount. </summary>
@@ -17,8 +17,8 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> Initializes a new instance of DefaultCognitiveServicesAccount. </summary>
-        /// <param name="oDataType"> Identifies the concrete type of the cognitive service resource attached to a skillset. </param>
-        /// <param name="description"> Description of the cognitive service resource attached to a skillset. </param>
+        /// <param name="oDataType"> A URI fragment specifying the type of Azure AI service resource attached to a skillset. </param>
+        /// <param name="description"> Description of the Azure AI service resource attached to a skillset. </param>
         internal DefaultCognitiveServicesAccount(string oDataType, string description) : base(oDataType, description)
         {
             ODataType = oDataType ?? "#Microsoft.Azure.Search.DefaultCognitiveServices";

@@ -14,11 +14,11 @@ namespace Azure.Search.Documents.Models
         /// <summary> Initializes a new instance of VectorSearchOptions. </summary>
         public VectorSearchOptions()
         {
-            Queries = new ChangeTrackingList<VectorizableQuery>();
+            Queries = new ChangeTrackingList<VectorQuery>();
         }
 
         /// <summary> The query parameters for multi-vector search queries. </summary>
-        public IList<VectorizableQuery> Queries { get; internal set; }
+        public IList<VectorQuery> Queries { get; internal set; }
 
         /// <summary> Determines whether or not filters are applied before or after the vector search is performed. Default is <see cref="VectorFilterMode.PreFilter" /> for new indexes. </summary>
         public VectorFilterMode? FilterMode { get; set; }

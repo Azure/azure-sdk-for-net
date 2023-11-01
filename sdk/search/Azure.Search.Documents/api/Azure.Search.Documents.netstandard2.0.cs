@@ -2106,7 +2106,7 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         public SemanticPrioritizedFields() { }
         public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.SemanticField> ContentFields { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.SemanticField> KeywordFields { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Search.Documents.Indexes.Models.SemanticField> KeywordsFields { get { throw null; } }
         public Azure.Search.Documents.Indexes.Models.SemanticField TitleField { get { throw null; } set { } }
     }
     public partial class SemanticSearch
@@ -2253,15 +2253,39 @@ namespace Azure.Search.Documents.Indexes.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public SplitSkillLanguage(string value) { throw null; }
+        public static Azure.Search.Documents.Indexes.Models.SplitSkillLanguage Am { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.SplitSkillLanguage Bs { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.SplitSkillLanguage Cs { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.SplitSkillLanguage Da { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.SplitSkillLanguage De { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.SplitSkillLanguage En { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.SplitSkillLanguage Es { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.SplitSkillLanguage Et { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.SplitSkillLanguage Fi { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.SplitSkillLanguage Fr { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.SplitSkillLanguage He { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.SplitSkillLanguage Hi { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.SplitSkillLanguage Hr { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.SplitSkillLanguage Hu { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.SplitSkillLanguage Id { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.SplitSkillLanguage Is { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.SplitSkillLanguage It { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.SplitSkillLanguage Ja { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.SplitSkillLanguage Ko { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.SplitSkillLanguage Lv { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.SplitSkillLanguage Nb { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.SplitSkillLanguage Nl { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.SplitSkillLanguage Pl { get { throw null; } }
         public static Azure.Search.Documents.Indexes.Models.SplitSkillLanguage Pt { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.SplitSkillLanguage PtBr { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.SplitSkillLanguage Ru { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.SplitSkillLanguage Sk { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.SplitSkillLanguage Sl { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.SplitSkillLanguage Sr { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.SplitSkillLanguage Sv { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.SplitSkillLanguage Tr { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.SplitSkillLanguage Ur { get { throw null; } }
+        public static Azure.Search.Documents.Indexes.Models.SplitSkillLanguage Zh { get { throw null; } }
         public bool Equals(Azure.Search.Documents.Indexes.Models.SplitSkillLanguage other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -2806,7 +2830,7 @@ namespace Azure.Search.Documents.Models
     public partial class QueryAnswer
     {
         public QueryAnswer(Azure.Search.Documents.Models.QueryAnswerType answerType) { }
-        public Azure.Search.Documents.Models.QueryAnswerType AnswerType { get { throw null; } set { } }
+        public Azure.Search.Documents.Models.QueryAnswerType AnswerType { get { throw null; } }
         public int? Count { get { throw null; } set { } }
         public double? Threshold { get { throw null; } set { } }
     }
@@ -2840,7 +2864,7 @@ namespace Azure.Search.Documents.Models
     public partial class QueryCaption
     {
         public QueryCaption(Azure.Search.Documents.Models.QueryCaptionType captionType) { }
-        public Azure.Search.Documents.Models.QueryCaptionType CaptionType { get { throw null; } set { } }
+        public Azure.Search.Documents.Models.QueryCaptionType CaptionType { get { throw null; } }
         public bool HighlightEnabled { get { throw null; } set { } }
     }
     public partial class QueryCaptionResult
@@ -3061,14 +3085,14 @@ namespace Azure.Search.Documents.Models
     public partial class SemanticSearchResult
     {
         public SemanticSearchResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Models.QueryCaptionResult> QueryCaptions { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Models.QueryCaptionResult> Captions { get { throw null; } }
         public double? RerankerScore { get { throw null; } }
     }
     public partial class SemanticSearchResults
     {
         public SemanticSearchResults() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Models.QueryAnswerResult> Answers { get { throw null; } }
         public Azure.Search.Documents.Models.SemanticErrorReason? ErrorReason { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Models.QueryAnswerResult> QueryAnswers { get { throw null; } }
         public Azure.Search.Documents.Models.SemanticSearchResultsType? ResultsType { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -3119,23 +3143,23 @@ namespace Azure.Search.Documents.Models
         public static bool operator !=(Azure.Search.Documents.Models.VectorFilterMode left, Azure.Search.Documents.Models.VectorFilterMode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public abstract partial class VectorizableQuery
+    public partial class VectorizedQuery : Azure.Search.Documents.Models.VectorQuery
     {
-        protected VectorizableQuery() { }
+        public VectorizedQuery(System.ReadOnlyMemory<float> vector) { }
+        public System.ReadOnlyMemory<float> Vector { get { throw null; } }
+    }
+    public abstract partial class VectorQuery
+    {
+        protected VectorQuery() { }
         public bool? Exhaustive { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Fields { get { throw null; } }
         public int? KNearestNeighborsCount { get { throw null; } set { } }
-    }
-    public partial class VectorQuery : Azure.Search.Documents.Models.VectorizableQuery
-    {
-        public VectorQuery(System.Collections.Generic.IReadOnlyList<float> vector) { }
-        public System.Collections.Generic.IReadOnlyList<float> Vector { get { throw null; } }
     }
     public partial class VectorSearchOptions
     {
         public VectorSearchOptions() { }
         public Azure.Search.Documents.Models.VectorFilterMode? FilterMode { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.Search.Documents.Models.VectorizableQuery> Queries { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Search.Documents.Models.VectorQuery> Queries { get { throw null; } }
     }
 }
 namespace Microsoft.Extensions.Azure

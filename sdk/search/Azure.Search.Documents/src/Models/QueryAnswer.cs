@@ -20,7 +20,7 @@ namespace Azure.Search.Documents.Models
         /// <summary>
         /// Initializes a new instance of the <see cref="QueryAnswer"/> class.
         /// </summary>
-        /// <param name="answerType">A value that specifies whether <see cref="SemanticSearchResults.QueryAnswers"/> should be returned as part of the search response.</param>
+        /// <param name="answerType">A value that specifies whether <see cref="SemanticSearchResults.Answers"/> should be returned as part of the search response.</param>
         public QueryAnswer(QueryAnswerType answerType)
         {
             Argument.AssertNotNull(answerType, nameof(answerType));
@@ -28,13 +28,13 @@ namespace Azure.Search.Documents.Models
             AnswerType = answerType;
         }
 
-        /// <summary> A value that specifies whether <see cref="SemanticSearchResults.QueryAnswers"/> should be returned as part of the search response. </summary>
-        public QueryAnswerType AnswerType { get; set; }
+        /// <summary> A value that specifies whether <see cref="SemanticSearchResults.Answers"/> should be returned as part of the search response. </summary>
+        public QueryAnswerType AnswerType { get; internal set; }
 
-        /// <summary> A value that specifies the number of <see cref="SemanticSearchResults.QueryAnswers"/> that should be returned as part of the search response and will default to 1. </summary>
+        /// <summary> A value that specifies the number of <see cref="SemanticSearchResults.Answers"/> that should be returned as part of the search response and will default to 1. </summary>
         public int? Count { get; set; }
 
-        /// <summary> A value that specifies the threshold of <see cref="SemanticSearchResults.QueryAnswers"/> that should be returned as part of the search response. The threshold is optional and will default to 0.7.
+        /// <summary> A value that specifies the threshold of <see cref="SemanticSearchResults.Answers"/> that should be returned as part of the search response. The threshold is optional and will default to 0.7.
         /// </summary>
         public double? Threshold { get; set; }
 

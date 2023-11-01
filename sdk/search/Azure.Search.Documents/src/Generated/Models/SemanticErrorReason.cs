@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> Reason that a partial response was returned for a semantic search request. </summary>
+    /// <summary> Reason that a partial response was returned for a semantic ranking request. </summary>
     public readonly partial struct SemanticErrorReason : IEquatable<SemanticErrorReason>
     {
         private readonly string _value;
@@ -26,7 +26,7 @@ namespace Azure.Search.Documents.Models
         private const string CapacityOverloadedValue = "capacityOverloaded";
         private const string TransientValue = "transient";
 
-        /// <summary> If 'semanticMaxWaitInMilliseconds' was set and the semantic processing duration exceeded that value. Only the base results were returned. </summary>
+        /// <summary> If `semanticMaxWaitInMilliseconds` was set and the semantic processing duration exceeded that value. Only the base results were returned. </summary>
         public static SemanticErrorReason MaxWaitExceeded { get; } = new SemanticErrorReason(MaxWaitExceededValue);
         /// <summary> The request was throttled. Only the base results were returned. </summary>
         public static SemanticErrorReason CapacityOverloaded { get; } = new SemanticErrorReason(CapacityOverloadedValue);

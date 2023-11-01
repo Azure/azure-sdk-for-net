@@ -47,7 +47,7 @@ SearchIndex searchIndex = new(indexName)
                 {
                     new SemanticField("Description")
                 },
-                KeywordFields =
+                KeywordsFields =
                 {
                     new SemanticField("Category")
                 }
@@ -78,9 +78,9 @@ public class Hotel
     public string HotelId { get; set; }
     public string HotelName { get; set; }
     public string Description { get; set; }
-    public IReadOnlyList<float> DescriptionVector { get; set; }
+    public ReadOnlyMemory<float> DescriptionVector { get; set; }
     public string Category { get; set; }
-    public IReadOnlyList<float> CategoryVector { get; set; }
+    public ReadOnlyMemory<float> CategoryVector { get; set; }
 }
 ```
 
@@ -144,7 +144,7 @@ await searchClient.IndexDocumentsAsync(IndexDocumentsBatch.Upload(hotelDocuments
 
 ## Query Vector Data
 
-When using `VectorQuery`, the query for a vector field must also be a vector. To convert a text query string provided by a user into a vector representation, your application must call an embedding library that provides this capability. Use the same embedding library that you used to generate embeddings in the source documents. For more details on how to generate embeddings, please refer to the [documentation](https://learn.microsoft.com/azure/search/vector-search-how-to-generate-embeddings). In the sample codes below, we are using hardcoded embeddings to query vector field.
+When using `VectorizedQuery`, the query for a vector field must also be a vector. To convert a text query string provided by a user into a vector representation, your application must call an embedding library that provides this capability. Use the same embedding library that you used to generate embeddings in the source documents. For more details on how to generate embeddings, please refer to the [documentation](https://learn.microsoft.com/azure/search/vector-search-how-to-generate-embeddings). In the sample codes below, we are using hardcoded embeddings to query vector field.
 
 Let's query the index and make sure everything works as implemented. You can also refer to the [documentation](https://learn.microsoft.com/azure/search/vector-search-how-to-query?tabs=portal-vector-query#query-syntax-for-hybrid-search) for more information on querying vector data.
 
@@ -157,7 +157,7 @@ For semantic search, we will specify `SemanticSearch.SemanticConfigurationName` 
 With these settings in place, we're ready to execute a vector semantic hybrid query:
 
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Semantic_Hybrid_Search
-IReadOnlyList<float> vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
+ReadOnlyMemory<float> vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
 
 SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
     "Is there any hotel located on the main commercial artery of the city in the heart of New York?",
@@ -165,7 +165,7 @@ SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
      {
          VectorSearch = new()
          {
-             Queries = { new VectorQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } }
+             Queries = { new VectorizedQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } }
          },
          SemanticSearch = new()
          {
@@ -180,7 +180,7 @@ int count = 0;
 Console.WriteLine($"Semantic Hybrid Search Results:");
 
 Console.WriteLine($"\nQuery Answer:");
-foreach (QueryAnswerResult result in response.SemanticSearch.QueryAnswers)
+foreach (QueryAnswerResult result in response.SemanticSearch.Answers)
 {
     Console.WriteLine($"Answer Highlights: {result.Highlights}");
     Console.WriteLine($"Answer Text: {result.Text}");
@@ -192,9 +192,9 @@ await foreach (SearchResult<Hotel> result in response.GetResultsAsync())
     Hotel doc = result.Document;
     Console.WriteLine($"{doc.HotelId}: {doc.HotelName}");
 
-    if (result.SemanticSearch.QueryCaptions != null)
+    if (result.SemanticSearch.Captions != null)
     {
-        var caption = result.SemanticSearch.QueryCaptions.FirstOrDefault();
+        var caption = result.SemanticSearch.Captions.FirstOrDefault();
         if (caption.Highlights != null && caption.Highlights != "")
         {
             Console.WriteLine($"Caption Highlights: {caption.Highlights}");

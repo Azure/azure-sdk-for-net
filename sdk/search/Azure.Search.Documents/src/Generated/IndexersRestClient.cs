@@ -424,7 +424,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Lists all indexers available for a search service. </summary>
-        /// <param name="select"> Selects which top-level properties of the indexers to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
+        /// <param name="select"> Selects which top-level properties of the indexers to retrieve. Specified as a comma-separated list of JSON property names, or `*` for all properties. The default is all properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public async Task<Response<ListIndexersResult>> ListAsync(string select = null, CancellationToken cancellationToken = default)
         {
@@ -445,7 +445,7 @@ namespace Azure.Search.Documents
         }
 
         /// <summary> Lists all indexers available for a search service. </summary>
-        /// <param name="select"> Selects which top-level properties of the indexers to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
+        /// <param name="select"> Selects which top-level properties of the indexers to retrieve. Specified as a comma-separated list of JSON property names, or `*` for all properties. The default is all properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public Response<ListIndexersResult> List(string select = null, CancellationToken cancellationToken = default)
         {

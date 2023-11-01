@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,13 +15,6 @@ namespace Azure.Search.Documents.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("vector"u8);
-            writer.WriteStartArray();
-            foreach (var item in Vector)
-            {
-                writer.WriteNumberValue(item);
-            }
-            writer.WriteEndArray();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(KNearestNeighborsCount))
@@ -49,53 +41,14 @@ namespace Azure.Search.Documents.Models
             {
                 return null;
             }
-            IReadOnlyList<float> vector = default;
-            VectorQueryKind kind = default;
-            Optional<int> k = default;
-            Optional<string> fields = default;
-            Optional<bool> exhaustive = default;
-            foreach (var property in element.EnumerateObject())
+            if (element.TryGetProperty("kind", out JsonElement discriminator))
             {
-                if (property.NameEquals("vector"u8))
+                switch (discriminator.GetString())
                 {
-                    List<float> array = new List<float>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetSingle());
-                    }
-                    vector = array;
-                    continue;
-                }
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = new VectorQueryKind(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("k"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    k = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("fields"u8))
-                {
-                    fields = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("exhaustive"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    exhaustive = property.Value.GetBoolean();
-                    continue;
+                    case "vector": return VectorizedQuery.DeserializeVectorizedQuery(element);
                 }
             }
-            return new VectorQuery(kind, Optional.ToNullable(k), fields.Value, Optional.ToNullable(exhaustive), vector);
+            return UnknownVectorQuery.DeserializeUnknownVectorQuery(element);
         }
     }
 }

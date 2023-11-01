@@ -116,7 +116,7 @@ namespace Azure.Search.Documents.Models
                     {
                         captionResults.Add(QueryCaptionResult.DeserializeQueryCaptionResult(captionValue));
                     }
-                    result.SemanticSearch.QueryCaptions = captionResults;
+                    result.SemanticSearch.Captions = captionResults;
                 }
             }
 
@@ -162,9 +162,9 @@ namespace Azure.Search.Documents.Models
 
         /// <summary>
         /// Captions are the most representative passages from the document relatively to the search query.
-        /// <para>They are often used as document summary. <see cref="QueryCaptions"/> are only returned for queries of type <see cref="SearchQueryType.Semantic"/>.</para>
+        /// <para>They are often used as document summary. <see cref="Captions"/> are only returned for queries of type <see cref="SearchQueryType.Semantic"/>.</para>
         /// </summary>
-        public IReadOnlyList<QueryCaptionResult> QueryCaptions { get; internal set; }
+        public IReadOnlyList<QueryCaptionResult> Captions { get; internal set; }
     }
 
     public static partial class SearchModelFactory
