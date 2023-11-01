@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.SecurityCenter
     public partial class IotSecurityAggregatedRecommendationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="IotSecurityAggregatedRecommendationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="solutionName"> The solutionName. </param>
+        /// <param name="aggregatedRecommendationName"> The aggregatedRecommendationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string solutionName, string aggregatedRecommendationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}/analyticsModels/default/aggregatedRecommendations/{aggregatedRecommendationName}";

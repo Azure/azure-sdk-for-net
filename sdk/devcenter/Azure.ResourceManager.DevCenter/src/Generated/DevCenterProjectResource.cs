@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.DevCenter
     public partial class DevCenterProjectResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DevCenterProjectResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="projectName"> The projectName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string projectName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}";

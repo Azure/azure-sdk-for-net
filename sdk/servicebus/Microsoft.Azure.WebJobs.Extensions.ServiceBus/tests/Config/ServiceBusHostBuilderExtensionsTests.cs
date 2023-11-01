@@ -31,6 +31,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
 
             Assert.AreEqual(123, options.PrefetchCount);
             Assert.AreEqual(123, options.MaxConcurrentCalls);
+            Assert.AreEqual(123, options.MaxMessageBatchSize);
             Assert.False(options.AutoCompleteMessages);
             Assert.AreEqual(TimeSpan.FromSeconds(15), options.MaxAutoLockRenewalDuration);
         }

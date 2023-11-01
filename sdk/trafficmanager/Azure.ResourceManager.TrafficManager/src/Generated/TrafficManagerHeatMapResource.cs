@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.TrafficManager
     public partial class TrafficManagerHeatMapResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="TrafficManagerHeatMapResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="profileName"> The profileName. </param>
+        /// <param name="heatMapType"> The heatMapType. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, TrafficManagerHeatMapType heatMapType)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficmanagerprofiles/{profileName}/heatMaps/{heatMapType}";

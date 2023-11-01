@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed a parameter type mismatch in ETW #7 (ReceiveComplete) which caused the duration argument of the operation to be interpreted as a Unicode string and fail to render properly in the formatted message.
+
 ### Other Changes
 
 ## 5.9.3 (2023-09-12)

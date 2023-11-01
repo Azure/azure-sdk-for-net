@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0-beta.4 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,28 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.3 (2023-10-25)
+
+### Features Added
+
+- Updated to Fleet GA API version `2023-10-15`.
+
+### Breaking Changes
+
+- Remove preview features (hubprofile, private fleet)
+
+## 1.0.0-beta.2 (2023-10-13)
+
+### Features Added
+
+- Updated to Fleet API `2023-08-15`.
+- Add `FleetUpdateStrategy` support.
+
+### Bugs Fixed
+
+- Fix `SubnetResourceId` null check.
+- Fix LRO async call issues.
 
 ## 1.0.0-beta.1 (2023-10-05)
 

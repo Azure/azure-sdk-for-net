@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Kusto
     public partial class KustoAttachedDatabaseConfigurationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="KustoAttachedDatabaseConfigurationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="clusterName"> The clusterName. </param>
+        /// <param name="attachedDatabaseConfigurationName"> The attachedDatabaseConfigurationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string attachedDatabaseConfigurationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/attachedDatabaseConfigurations/{attachedDatabaseConfigurationName}";

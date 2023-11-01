@@ -52,7 +52,7 @@ namespace Azure.Communication.CallAutomation
         /// The caller ID number to appear on target PSTN callee.
         /// </summary>
         /// <value></value>
-        public PhoneNumberIdentifier SourceCallerIdNumber { get; }
+        public PhoneNumberIdentifier SourceCallerIdNumber { get; set;  }
 
         /// <summary>
         /// The display name to appear on target callee.

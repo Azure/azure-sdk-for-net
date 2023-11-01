@@ -27,6 +27,9 @@ namespace Azure.ResourceManager.Network
     public partial class VirtualRouterResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="VirtualRouterResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="virtualRouterName"> The virtualRouterName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualRouterName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualRouters/{virtualRouterName}";

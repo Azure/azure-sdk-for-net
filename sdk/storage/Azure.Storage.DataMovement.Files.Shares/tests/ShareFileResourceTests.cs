@@ -8,11 +8,13 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Storage.Files.Shares;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Test;
 using Moq;
+using Moq.Protected;
 using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Files.Shares.Tests
@@ -311,6 +313,22 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                         contentHash: default,
                         isServerEncrypted: false),
                     new MockResponse(200))));
+            mockDestination.Setup(b => b.ExistsAsync(It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(Response.FromValue(false, new MockResponse(200))));
+            mockDestination.Setup(b => b.CreateAsync(It.IsAny<long>(), It.IsAny<ShareFileHttpHeaders>(), It.IsAny<Dictionary<string, string>>(), It.IsAny<FileSmbProperties>(), It.IsAny<string>(), It.IsAny<ShareFileRequestConditions>(), It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(Response.FromValue(
+                    FilesModelFactory.StorageFileInfo(
+                        eTag: new ETag("eTag"),
+                        lastModified: DateTimeOffset.UtcNow,
+                        isServerEncrypted: false,
+                        filePermissionKey: "rw",
+                        fileAttributes: "Archive|ReadOnly",
+                        fileCreationTime: DateTimeOffset.UtcNow,
+                        fileLastWriteTime: DateTimeOffset.UtcNow,
+                        fileChangeTime: DateTimeOffset.UtcNow,
+                        fileId: "48903841",
+                        fileParentId: "93024923"),
+                    new MockResponse(200))));
             ShareFileStorageResource destinationResource = new ShareFileStorageResource(mockDestination.Object);
 
             int length = 1024;
@@ -323,6 +341,18 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 new HttpRange(0, length),
                 new HttpRange(0, length),
                 It.IsAny<ShareFileUploadRangeFromUriOptions>(),
+                It.IsAny<CancellationToken>()),
+                Times.Once());
+            mockDestination.Verify(b => b.CreateAsync(
+                length,
+                It.IsAny<ShareFileHttpHeaders>(),
+                It.IsAny<Dictionary<string, string>>(),
+                It.IsAny<FileSmbProperties>(),
+                It.IsAny<string>(),
+                It.IsAny<ShareFileRequestConditions>(),
+                It.IsAny<CancellationToken>()),
+                Times.Once());
+            mockDestination.Verify(b => b.ExistsAsync(
                 It.IsAny<CancellationToken>()),
                 Times.Once());
             mockDestination.VerifyNoOtherCalls();
@@ -340,28 +370,24 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 new Uri("https://storageaccount.file.core.windows.net/container/destinationfile"),
                 new ShareClientOptions());
 
-            mockDestination.Setup(b => b.UploadRangeFromUriAsync(It.IsAny<Uri>(), It.IsAny<HttpRange>(), It.IsAny<HttpRange>(), It.IsAny<ShareFileUploadRangeFromUriOptions>(), It.IsAny<CancellationToken>()))
-                .Throws(new RequestFailedException(status: 404, message: "The specified resource does not exist.", errorCode: "ResourceNotFound", default));
+            mockDestination.Setup(b => b.ExistsAsync(It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(Response.FromValue(true, new MockResponse(200))));
             ShareFileStorageResource destinationResource = new ShareFileStorageResource(mockDestination.Object);
 
             // Act
             int length = 1024;
-            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                destinationResource.CopyFromUriInternalAsync(sourceResource.Object, false, length),
+            await TestHelper.AssertExpectedExceptionAsync<InvalidOperationException>(
+                destinationResource.CopyBlockFromUriInternalAsync(sourceResource.Object, new HttpRange(0, length), false, length),
                 e =>
                 {
-                    Assert.AreEqual("ResourceNotFound", e.ErrorCode);
+                    Assert.IsTrue(e.Message.Contains("Cannot overwrite file."));
                 });
 
-            sourceResource.Verify(b => b.Uri, Times.Once());
             sourceResource.VerifyNoOtherCalls();
-            mockDestination.Verify(b => b.UploadRangeFromUriAsync(
-                sourceResource.Object.Uri,
-                new HttpRange(0, length),
-                new HttpRange(0, length),
-                It.IsAny<ShareFileUploadRangeFromUriOptions>(),
+            mockDestination.Verify(b => b.ExistsAsync(
                 It.IsAny<CancellationToken>()),
                 Times.Once());
+            mockDestination.Verify(b => b.Path, Times.Once());
             mockDestination.VerifyNoOtherCalls();
         }
 
@@ -543,6 +569,38 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             mock.Verify(b => b.GetPropertiesAsync(It.IsAny<ShareFileRequestConditions>(), It.IsAny<CancellationToken>()),
                 Times.Once());
             mock.VerifyNoOtherCalls();
+        }
+
+        [Test]
+        public async Task GetCopyAuthorizationHeaderAsync()
+        {
+            CancellationToken cancellationToken = new();
+            string expectedToken = "foo";
+            AccessToken accessToken = new(expectedToken, DateTimeOffset.UtcNow);
+
+            Mock<TokenCredential> tokenCred = new();
+            tokenCred.Setup(t => t.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
+                .Returns(new ValueTask<AccessToken>(Task.FromResult(accessToken)));
+
+            ShareFileClient client = new(new Uri("https://example.file.core.windows.net/share/file"), tokenCred.Object);
+            ShareFileStorageResource resource = new(client);
+
+            // Act - Get access token
+            HttpAuthorization authorization = await resource.GetCopyAuthorizationHeaderInternalAsync(cancellationToken);
+
+            // Assert
+            Assert.That(authorization.Parameter, Is.EqualTo(expectedToken));
+            tokenCred.Verify(t => t.GetTokenAsync(It.IsAny<TokenRequestContext>(), cancellationToken), Times.Once());
+            tokenCred.VerifyNoOtherCalls();
+        }
+
+        [Test]
+        public async Task GetCopyAuthorizationHeaderAsync_NoOAuth()
+        {
+            ShareFileClient nonOAuthClient = new(new Uri("https://example.file.core.windows.net/share/file"));
+            ShareFileStorageResource resource = new(nonOAuthClient);
+
+            Assert.That(await resource.GetCopyAuthorizationHeaderInternalAsync(), Is.Null);
         }
     }
 }

@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.ManagedNetwork
     public partial class ManagedNetworkGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagedNetworkGroupResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="managedNetworkName"> The managedNetworkName. </param>
+        /// <param name="managedNetworkGroupName"> The managedNetworkGroupName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedNetworkName, string managedNetworkGroupName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetwork/managedNetworks/{managedNetworkName}/managedNetworkGroups/{managedNetworkGroupName}";

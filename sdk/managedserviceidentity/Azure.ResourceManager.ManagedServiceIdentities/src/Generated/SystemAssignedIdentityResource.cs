@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
     public partial class SystemAssignedIdentityResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SystemAssignedIdentityResource"/> instance. </summary>
+        /// <param name="scope"> The scope. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string scope)
         {
             var resourceId = $"{scope}/providers/Microsoft.ManagedIdentity/identities/default";

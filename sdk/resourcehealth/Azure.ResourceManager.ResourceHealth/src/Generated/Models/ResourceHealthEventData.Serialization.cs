@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.ResourceHealth
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<ResourceHealthEventTypeValue> eventType = default;
+            Optional<EventSubTypeValue> eventSubType = default;
             Optional<ResourceHealthEventSourceValue> eventSource = default;
             Optional<ResourceHealthEventStatusValue> status = default;
             Optional<string> title = default;
@@ -54,6 +55,9 @@ namespace Azure.ResourceManager.ResourceHealth
             Optional<ResourceHealthEventAdditionalInformation> additionalInformation = default;
             Optional<int> duration = default;
             Optional<string> impactType = default;
+            Optional<string> maintenanceId = default;
+            Optional<string> maintenanceType = default;
+            Optional<string> argQuery = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -96,6 +100,15 @@ namespace Azure.ResourceManager.ResourceHealth
                                 continue;
                             }
                             eventType = new ResourceHealthEventTypeValue(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("eventSubType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            eventSubType = new EventSubTypeValue(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("eventSource"u8))
@@ -324,11 +337,26 @@ namespace Azure.ResourceManager.ResourceHealth
                             impactType = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("maintenanceId"u8))
+                        {
+                            maintenanceId = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("maintenanceType"u8))
+                        {
+                            maintenanceType = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("argQuery"u8))
+                        {
+                            argQuery = property0.Value.GetString();
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new ResourceHealthEventData(id, name, type, systemData.Value, Optional.ToNullable(eventType), Optional.ToNullable(eventSource), Optional.ToNullable(status), title.Value, summary.Value, header.Value, Optional.ToNullable(level), Optional.ToNullable(eventLevel), externalIncidentId.Value, reason.Value, article.Value, Optional.ToList(links), Optional.ToNullable(impactStartTime), Optional.ToNullable(impactMitigationTime), Optional.ToList(impact), recommendedActions.Value, Optional.ToList(faqs), Optional.ToNullable(isHIR), Optional.ToNullable(enableMicrosoftSupport), description.Value, Optional.ToNullable(platformInitiated), Optional.ToNullable(enableChatWithUs), Optional.ToNullable(priority), Optional.ToNullable(lastUpdateTime), hirStage.Value, additionalInformation.Value, Optional.ToNullable(duration), impactType.Value);
+            return new ResourceHealthEventData(id, name, type, systemData.Value, Optional.ToNullable(eventType), Optional.ToNullable(eventSubType), Optional.ToNullable(eventSource), Optional.ToNullable(status), title.Value, summary.Value, header.Value, Optional.ToNullable(level), Optional.ToNullable(eventLevel), externalIncidentId.Value, reason.Value, article.Value, Optional.ToList(links), Optional.ToNullable(impactStartTime), Optional.ToNullable(impactMitigationTime), Optional.ToList(impact), recommendedActions.Value, Optional.ToList(faqs), Optional.ToNullable(isHIR), Optional.ToNullable(enableMicrosoftSupport), description.Value, Optional.ToNullable(platformInitiated), Optional.ToNullable(enableChatWithUs), Optional.ToNullable(priority), Optional.ToNullable(lastUpdateTime), hirStage.Value, additionalInformation.Value, Optional.ToNullable(duration), impactType.Value, maintenanceId.Value, maintenanceType.Value, argQuery.Value);
         }
     }
 }

@@ -57,6 +57,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         public const string WEBSITE_SITE_NAME = "WEBSITE_SITE_NAME";
 
         /// <summary>
+        /// INTERNAL ONLY. Used by Statsbeat to get the Kubernetes Service Host.
+        /// </summary>
+        public const string KUBERNETES_SERVICE_HOST = "KUBERNETES_SERVICE_HOST";
+
+        /// <summary>
+        /// INTERNAL ONLY. Used by Statsbeat to get the AKS ARM Namespace ID.
+        /// </summary>
+        public const string AKS_ARM_NAMESPACE_ID = "AKS_ARM_NAMESPACE_ID";
+
+        /// <summary>
         /// When set to true, exporter will emit resources as metric telemetry.
         /// </summary>
         public const string EXPORT_RESOURCE_METRIC = "OTEL_DOTNET_AZURE_MONITOR_ENABLE_RESOURCE_METRICS";

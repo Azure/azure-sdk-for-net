@@ -7,8 +7,8 @@ azure-arm: true
 csharp: true
 library-name: ContainerServiceFleet
 namespace: Azure.ResourceManager.ContainerServiceFleet
-require: https://github.com/Azure/azure-rest-api-specs/blob/de06c42bd985fb66b6a49c907aaf5baee693bc7b/specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/readme.md
-#tag: package-2023-06-preview
+require: https://github.com/Azure/azure-rest-api-specs/blob/9837baba3ca259b4f2a3f736593311f445c35c63/specification/containerservice/resource-manager/Microsoft.ContainerService/fleet/readme.md
+#tag: package-2023-10
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -77,4 +77,18 @@ acronym-mapping:
   URI: Uri
   Etag: ETag|etag
 
+operations-to-lro-api-version-override:
+  Fleets_CreateOrUpdate: "2016-03-30"
+  Fleets_Update: "2016-03-30"
+  Fleets_Delete: "2016-03-30"
+  FleetMembers_Create: "2016-03-30"
+  FleetMembers_Update: "2016-03-30"
+  FleetMembers_Delete: "2016-03-30"
+  UpdateRuns_CreateOrUpdate: "2016-03-30"
+  UpdateRuns_Delete: "2016-03-30"
+  FleetUpdateStrategies_CreateOrUpdate: "2016-03-30"
+  FleetUpdateStrategies_Delete: "2016-03-30"
+  
+models-to-treat-empty-string-as-null:
+- SubnetResourceId
 ```

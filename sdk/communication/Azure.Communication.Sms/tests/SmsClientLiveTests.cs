@@ -76,7 +76,7 @@ namespace Azure.Communication.Sms.Tests
         [TestCase("+15550000000", Description = "Fake number")]
         public async Task SendingSmsMessageFromUnauthorizedNumber(string from)
         {
-            SmsClient client = CreateSmsClient();
+            SmsClient client = CreateSmsClientWithNullOptions();
             try
             {
                 SmsSendResult result = await client.SendAsync(
@@ -167,7 +167,7 @@ namespace Azure.Communication.Sms.Tests
         [Test]
         public async Task SendingSmsFromNullNumberShouldThrow()
         {
-            SmsClient client = CreateSmsClient();
+            SmsClient client = CreateSmsClientWithoutOptions();
             try
             {
                 SmsSendResult result = await client.SendAsync(

@@ -37,11 +37,11 @@ namespace Azure.Identity
         /// <summary>
         /// Creates an instance of the ClientSecretCredential with the details needed to authenticate against Microsoft Entra ID with a prefetched authorization code.
         /// </summary>
-        /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
+        /// <param name="tenantId">The Microsoft Entra tenant (directory) ID of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal</param>
         /// <param name="clientSecret">A client secret that was generated for the App Registration used to authenticate the client.</param>
         /// <param name="authorizationCode">The authorization code obtained from a call to authorize. The code should be obtained with all required scopes.
-        /// See https://docs.microsoft.com/azure/active-directory/develop/v2-oauth2-auth-code-flow for more information.</param>
+        /// See https://learn.microsoft.com/azure/active-directory/develop/v2-oauth2-auth-code-flow for more information.</param>
         public AuthorizationCodeCredential(string tenantId, string clientId, string clientSecret, string authorizationCode)
             : this(tenantId, clientId, clientSecret, authorizationCode, null)
         {
@@ -50,12 +50,12 @@ namespace Azure.Identity
         /// <summary>
         /// Creates an instance of the ClientSecretCredential with the details needed to authenticate against Microsoft Entra ID with a prefetched authorization code.
         /// </summary>
-        /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
+        /// <param name="tenantId">The Microsoft Entra tenant (directory) ID of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal</param>
         /// <param name="clientSecret">A client secret that was generated for the App Registration used to authenticate the client.</param>
         /// <param name="authorizationCode">The authorization code obtained from a call to authorize. The code should be obtained with all required scopes.
-        /// See https://docs.microsoft.com/azure/active-directory/develop/v2-oauth2-auth-code-flow for more information.</param>
-        /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
+        /// See https://learn.microsoft.com/azure/active-directory/develop/v2-oauth2-auth-code-flow for more information.</param>
+        /// <param name="options">Options that allow to configure the management of the requests sent to Microsoft Entra ID.</param>
         public AuthorizationCodeCredential(
             string tenantId,
             string clientId,
@@ -67,12 +67,12 @@ namespace Azure.Identity
         /// <summary>
         /// Creates an instance of the ClientSecretCredential with the details needed to authenticate against Microsoft Entra ID with a prefetched authorization code.
         /// </summary>
-        /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
+        /// <param name="tenantId">The Microsoft Entra tenant (directory) ID of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal</param>
         /// <param name="clientSecret">A client secret that was generated for the App Registration used to authenticate the client.</param>
         /// <param name="authorizationCode">The authorization code obtained from a call to authorize. The code should be obtained with all required scopes.
-        /// See https://docs.microsoft.com/azure/active-directory/develop/v2-oauth2-auth-code-flow for more information.</param>
-        /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
+        /// See https://learn.microsoft.com/azure/active-directory/develop/v2-oauth2-auth-code-flow for more information.</param>
+        /// <param name="options">Options that allow to configure the management of the requests sent to Microsoft Entra ID.</param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public AuthorizationCodeCredential(string tenantId, string clientId, string clientSecret, string authorizationCode, TokenCredentialOptions options)
             : this(tenantId, clientId, clientSecret, authorizationCode, options, null)
