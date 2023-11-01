@@ -25,10 +25,12 @@ namespace Azure.Storage.DataMovement.Files.Shares
             };
 
         internal static ShareFileUploadRangeFromUriOptions ToShareFileUploadRangeFromUriOptions(
-            this ShareFileStorageResourceOptions options)
+            this ShareFileStorageResourceOptions options,
+            HttpAuthorization sourceAuthorization)
             => new()
             {
                 Conditions = options?.DestinationConditions,
+                SourceAuthentication = sourceAuthorization
             };
 
         internal static StorageResourceProperties ToStorageResourceProperties(

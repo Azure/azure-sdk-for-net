@@ -523,7 +523,7 @@ namespace Azure.Storage.Files.Shares
             if (client.ClientConfiguration.TokenCredential != default)
             {
                 AccessToken accessToken = await client.ClientConfiguration.TokenCredential.GetTokenAsync(
-                    new TokenRequestContext(new string[] { client.ClientConfiguration.Audience.ToString() }),
+                    new TokenRequestContext(new string[] { client.ClientConfiguration.Audience.CreateDefaultScope() }),
                     cancellationToken).ConfigureAwait(false);
                 return new HttpAuthorization(
                     Constants.CopyHttpAuthorization.BearerScheme,
