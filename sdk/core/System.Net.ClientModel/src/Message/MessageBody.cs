@@ -171,6 +171,16 @@ namespace System.Net.ClientModel.Core
 
             // Used when _model is an IJsonModel
             private ModelWriter? _writer;
+
+            // Used when _model is an IModel
+            private BinaryData? _data;
+
+            public ModelMessageBody(IModel<object> model, ModelReaderWriterOptions options)
+            {
+                _model = model;
+                _options = options;
+            }
+
             private ModelWriter Writer
             {
                 get
@@ -185,8 +195,6 @@ namespace System.Net.ClientModel.Core
                 }
             }
 
-            // Used when _model is an IModel
-            private BinaryData? _data;
             private BinaryData Data
             {
                 get
@@ -199,12 +207,6 @@ namespace System.Net.ClientModel.Core
                     _data ??= _model.Write(_options);
                     return _data;
                 }
-            }
-
-            public ModelMessageBody(IModel<object> model, ModelReaderWriterOptions options)
-            {
-                _model = model;
-                _options = options;
             }
 
             public override bool TryComputeLength(out long length)
