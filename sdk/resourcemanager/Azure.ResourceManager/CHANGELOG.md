@@ -1,14 +1,10 @@
 # Release History
 
-## 1.8.0-beta.2 (Unreleased)
+## 1.8.0 (2023-11-02)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Add a new method `GetCachedClient` in `ArmClient` class to unify the mocking experience.
 
 ## 1.8.0-beta.1 (2023-08-09)
 
