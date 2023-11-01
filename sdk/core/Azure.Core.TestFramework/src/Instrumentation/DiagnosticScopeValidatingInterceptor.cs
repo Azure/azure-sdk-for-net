@@ -197,11 +197,10 @@ namespace Azure.Core.TestFramework
             T result;
 
             using ClientDiagnosticListener diagnosticListener = new ClientDiagnosticListener(s => s.StartsWith("Azure."), asyncLocal: true);
-            Activity current = Activity.Current;
             try
             {
-                // activities may be suppressed if they are called in scope of other activities create by other SDK methods. Unsuppress them by cleaning up the Activity.Current.
-                Activity.Current = null;
+                // activities may be suppressed if they are called in scope of other activities create by other SDK methods. Let's unsuppress them.
+                Activity.Current?.SetCustomProperty("az.sdk.scope", null);
                 (result, skipChecks) = await action();
             }
             catch (Exception ex)
@@ -218,7 +217,6 @@ namespace Azure.Core.TestFramework
             }
             finally
             {
-                Activity.Current = current;
                 // Remove subscribers before enumerating events.
                 diagnosticListener.Dispose();
                 var skipOverrideProperty = forwardAttribute is not null ? forwardAttribute.GetType().GetProperty("SkipChecks") : null;
