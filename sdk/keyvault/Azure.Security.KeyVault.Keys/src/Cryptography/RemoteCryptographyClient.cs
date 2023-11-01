@@ -14,7 +14,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         private const string OTelKeyIdKey = "az.key_vault.key.id";
         private readonly Uri _keyId;
         private readonly string _keyIdStr;
-        
+
         protected RemoteCryptographyClient()
         {
         }

@@ -16,21 +16,21 @@ using static Azure.DigitalTwins.Core.StreamHelper;
 
 namespace Azure.DigitalTwins.Core
 {
-    private const string OTelTwinIdKey = "az.digital_twins.twin.id";
-    private const string OTelModelIdKey = "az.digital_twins.model.id";
-    private const string OTelComponentNameKey = "az.digital_twins.component.name";
-    private const string OTelRelationshipNameKey = "az.digital_twins.relationship.name";
-    private const string OTelRelationshipIdKey = "az.digital_twins.relationship.id";
-    private const string OTelMessageIdKey = "az.digital_twins.message.id";
-    private const string OTelJobIdKey = "az.digital_twins.job.id";
-    private const string OTeQueryKey = "az.digital_twins.query";
-    private const string OTelEventRouteIdKey = "az.digital_twins.event_route.id";
     /// <summary>
     /// The Digital Twins Service Client contains methods to retrieve digital twin information, like models, components, and relationships.
     /// </summary>
     public class DigitalTwinsClient
     {
         private const bool IncludeModelDefinition = true;
+        private const string OTelTwinIdKey = "az.digital_twins.twin.id";
+        private const string OTelModelIdKey = "az.digital_twins.model.id";
+        private const string OTelComponentNameKey = "az.digital_twins.component.name";
+        private const string OTelRelationshipNameKey = "az.digital_twins.relationship.name";
+        private const string OTelRelationshipIdKey = "az.digital_twins.relationship.id";
+        private const string OTelMessageIdKey = "az.digital_twins.message.id";
+        private const string OTelJobIdKey = "az.digital_twins.job.id";
+        private const string OTeQueryKey = "az.digital_twins.query";
+        private const string OTelEventRouteIdKey = "az.digital_twins.event_route.id";
 
         // Vanity representation for azure digital twin app Id "0b07f429-9f4b-4714-9392-cc5e8e80c8b0" in the public cloud
         // and shared by other clouds.

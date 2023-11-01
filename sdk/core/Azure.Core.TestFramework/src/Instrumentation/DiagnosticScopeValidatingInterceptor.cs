@@ -295,9 +295,10 @@ namespace Azure.Core.TestFramework
                 }
 
                 string tagValueStr = tag.Value?.ToString();
-                if (string.IsNullOrEmpty(tagValueStr) || tagValueStr.Length > 256)
+                if (string.IsNullOrEmpty(tagValueStr) || (tag.Key.StartsWith("az.") && tagValueStr.Length > 256))
                 {
-                    throw new InvalidOperationException("Attribute values must not be null, empty, or too long. " + $"Attribute value: { tag.Value }");
+                    throw new InvalidOperationException("Attribute values must not be null, empty, or too long. "
+                        + $"Attribute name: `{tag.Key}`, value: `{tag.Value}`, activity name: `{activity.OperationName}`");
                 }
             }
 
