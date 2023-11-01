@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of VirtualApplianceSiteResources and their operations over a VirtualApplianceSiteResource. </returns>
         public virtual VirtualApplianceSiteCollection GetVirtualApplianceSites()
         {
-            return GetCachedClient(Client => new VirtualApplianceSiteCollection(Client, Id));
+            return GetCachedClient(client => new VirtualApplianceSiteCollection(client, Id));
         }
 
         /// <summary>
@@ -118,8 +118,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="siteName"> The name of the site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<VirtualApplianceSiteResource>> GetVirtualApplianceSiteAsync(string siteName, CancellationToken cancellationToken = default)
         {
@@ -141,8 +141,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="siteName"> The name of the site. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="siteName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="siteName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<VirtualApplianceSiteResource> GetVirtualApplianceSite(string siteName, CancellationToken cancellationToken = default)
         {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of NetworkVirtualApplianceConnectionResources and their operations over a NetworkVirtualApplianceConnectionResource. </returns>
         public virtual NetworkVirtualApplianceConnectionCollection GetNetworkVirtualApplianceConnections()
         {
-            return GetCachedClient(Client => new NetworkVirtualApplianceConnectionCollection(Client, Id));
+            return GetCachedClient(client => new NetworkVirtualApplianceConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -171,8 +171,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="connectionName"> The name of the NVA connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkVirtualApplianceConnectionResource>> GetNetworkVirtualApplianceConnectionAsync(string connectionName, CancellationToken cancellationToken = default)
         {
@@ -194,8 +194,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="connectionName"> The name of the NVA connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkVirtualApplianceConnectionResource> GetNetworkVirtualApplianceConnection(string connectionName, CancellationToken cancellationToken = default)
         {

@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <returns> An object representing collection of PostgreSqlFirewallRuleResources and their operations over a PostgreSqlFirewallRuleResource. </returns>
         public virtual PostgreSqlFirewallRuleCollection GetPostgreSqlFirewallRules()
         {
-            return GetCachedClient(Client => new PostgreSqlFirewallRuleCollection(Client, Id));
+            return GetCachedClient(client => new PostgreSqlFirewallRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -131,8 +131,8 @@ namespace Azure.ResourceManager.PostgreSql
         /// </summary>
         /// <param name="firewallRuleName"> The name of the server firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<PostgreSqlFirewallRuleResource>> GetPostgreSqlFirewallRuleAsync(string firewallRuleName, CancellationToken cancellationToken = default)
         {
@@ -154,8 +154,8 @@ namespace Azure.ResourceManager.PostgreSql
         /// </summary>
         /// <param name="firewallRuleName"> The name of the server firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<PostgreSqlFirewallRuleResource> GetPostgreSqlFirewallRule(string firewallRuleName, CancellationToken cancellationToken = default)
         {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <returns> An object representing collection of PostgreSqlVirtualNetworkRuleResources and their operations over a PostgreSqlVirtualNetworkRuleResource. </returns>
         public virtual PostgreSqlVirtualNetworkRuleCollection GetPostgreSqlVirtualNetworkRules()
         {
-            return GetCachedClient(Client => new PostgreSqlVirtualNetworkRuleCollection(Client, Id));
+            return GetCachedClient(client => new PostgreSqlVirtualNetworkRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -184,8 +184,8 @@ namespace Azure.ResourceManager.PostgreSql
         /// </summary>
         /// <param name="virtualNetworkRuleName"> The name of the virtual network rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<PostgreSqlVirtualNetworkRuleResource>> GetPostgreSqlVirtualNetworkRuleAsync(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
         {
@@ -207,8 +207,8 @@ namespace Azure.ResourceManager.PostgreSql
         /// </summary>
         /// <param name="virtualNetworkRuleName"> The name of the virtual network rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<PostgreSqlVirtualNetworkRuleResource> GetPostgreSqlVirtualNetworkRule(string virtualNetworkRuleName, CancellationToken cancellationToken = default)
         {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <returns> An object representing collection of PostgreSqlDatabaseResources and their operations over a PostgreSqlDatabaseResource. </returns>
         public virtual PostgreSqlDatabaseCollection GetPostgreSqlDatabases()
         {
-            return GetCachedClient(Client => new PostgreSqlDatabaseCollection(Client, Id));
+            return GetCachedClient(client => new PostgreSqlDatabaseCollection(client, Id));
         }
 
         /// <summary>
@@ -237,8 +237,8 @@ namespace Azure.ResourceManager.PostgreSql
         /// </summary>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<PostgreSqlDatabaseResource>> GetPostgreSqlDatabaseAsync(string databaseName, CancellationToken cancellationToken = default)
         {
@@ -260,8 +260,8 @@ namespace Azure.ResourceManager.PostgreSql
         /// </summary>
         /// <param name="databaseName"> The name of the database. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<PostgreSqlDatabaseResource> GetPostgreSqlDatabase(string databaseName, CancellationToken cancellationToken = default)
         {
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <returns> An object representing collection of PostgreSqlConfigurationResources and their operations over a PostgreSqlConfigurationResource. </returns>
         public virtual PostgreSqlConfigurationCollection GetPostgreSqlConfigurations()
         {
-            return GetCachedClient(Client => new PostgreSqlConfigurationCollection(Client, Id));
+            return GetCachedClient(client => new PostgreSqlConfigurationCollection(client, Id));
         }
 
         /// <summary>
@@ -290,8 +290,8 @@ namespace Azure.ResourceManager.PostgreSql
         /// </summary>
         /// <param name="configurationName"> The name of the server configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<PostgreSqlConfigurationResource>> GetPostgreSqlConfigurationAsync(string configurationName, CancellationToken cancellationToken = default)
         {
@@ -313,8 +313,8 @@ namespace Azure.ResourceManager.PostgreSql
         /// </summary>
         /// <param name="configurationName"> The name of the server configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<PostgreSqlConfigurationResource> GetPostgreSqlConfiguration(string configurationName, CancellationToken cancellationToken = default)
         {
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <returns> An object representing collection of PostgreSqlServerSecurityAlertPolicyResources and their operations over a PostgreSqlServerSecurityAlertPolicyResource. </returns>
         public virtual PostgreSqlServerSecurityAlertPolicyCollection GetPostgreSqlServerSecurityAlertPolicies()
         {
-            return GetCachedClient(Client => new PostgreSqlServerSecurityAlertPolicyCollection(Client, Id));
+            return GetCachedClient(client => new PostgreSqlServerSecurityAlertPolicyCollection(client, Id));
         }
 
         /// <summary>
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <returns> An object representing collection of PostgreSqlPrivateEndpointConnectionResources and their operations over a PostgreSqlPrivateEndpointConnectionResource. </returns>
         public virtual PostgreSqlPrivateEndpointConnectionCollection GetPostgreSqlPrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new PostgreSqlPrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new PostgreSqlPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -399,8 +399,8 @@ namespace Azure.ResourceManager.PostgreSql
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<PostgreSqlPrivateEndpointConnectionResource>> GetPostgreSqlPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -422,8 +422,8 @@ namespace Azure.ResourceManager.PostgreSql
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<PostgreSqlPrivateEndpointConnectionResource> GetPostgreSqlPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <returns> An object representing collection of PostgreSqlPrivateLinkResources and their operations over a PostgreSqlPrivateLinkResource. </returns>
         public virtual PostgreSqlPrivateLinkResourceCollection GetPostgreSqlPrivateLinkResources()
         {
-            return GetCachedClient(Client => new PostgreSqlPrivateLinkResourceCollection(Client, Id));
+            return GetCachedClient(client => new PostgreSqlPrivateLinkResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -452,8 +452,8 @@ namespace Azure.ResourceManager.PostgreSql
         /// </summary>
         /// <param name="groupName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<PostgreSqlPrivateLinkResource>> GetPostgreSqlPrivateLinkResourceAsync(string groupName, CancellationToken cancellationToken = default)
         {
@@ -475,8 +475,8 @@ namespace Azure.ResourceManager.PostgreSql
         /// </summary>
         /// <param name="groupName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<PostgreSqlPrivateLinkResource> GetPostgreSqlPrivateLinkResource(string groupName, CancellationToken cancellationToken = default)
         {
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <returns> An object representing collection of PostgreSqlServerKeyResources and their operations over a PostgreSqlServerKeyResource. </returns>
         public virtual PostgreSqlServerKeyCollection GetPostgreSqlServerKeys()
         {
-            return GetCachedClient(Client => new PostgreSqlServerKeyCollection(Client, Id));
+            return GetCachedClient(client => new PostgreSqlServerKeyCollection(client, Id));
         }
 
         /// <summary>
@@ -505,8 +505,8 @@ namespace Azure.ResourceManager.PostgreSql
         /// </summary>
         /// <param name="keyName"> The name of the PostgreSQL Server key to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<PostgreSqlServerKeyResource>> GetPostgreSqlServerKeyAsync(string keyName, CancellationToken cancellationToken = default)
         {
@@ -528,8 +528,8 @@ namespace Azure.ResourceManager.PostgreSql
         /// </summary>
         /// <param name="keyName"> The name of the PostgreSQL Server key to be retrieved. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="keyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<PostgreSqlServerKeyResource> GetPostgreSqlServerKey(string keyName, CancellationToken cancellationToken = default)
         {

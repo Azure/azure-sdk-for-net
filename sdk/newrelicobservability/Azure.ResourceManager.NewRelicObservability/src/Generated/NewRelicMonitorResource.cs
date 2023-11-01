@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// <returns> An object representing collection of NewRelicObservabilityTagRuleResources and their operations over a NewRelicObservabilityTagRuleResource. </returns>
         public virtual NewRelicObservabilityTagRuleCollection GetNewRelicObservabilityTagRules()
         {
-            return GetCachedClient(Client => new NewRelicObservabilityTagRuleCollection(Client, Id));
+            return GetCachedClient(client => new NewRelicObservabilityTagRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -115,8 +115,8 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </summary>
         /// <param name="ruleSetName"> Name of the TagRule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NewRelicObservabilityTagRuleResource>> GetNewRelicObservabilityTagRuleAsync(string ruleSetName, CancellationToken cancellationToken = default)
         {
@@ -138,8 +138,8 @@ namespace Azure.ResourceManager.NewRelicObservability
         /// </summary>
         /// <param name="ruleSetName"> Name of the TagRule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleSetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NewRelicObservabilityTagRuleResource> GetNewRelicObservabilityTagRule(string ruleSetName, CancellationToken cancellationToken = default)
         {
