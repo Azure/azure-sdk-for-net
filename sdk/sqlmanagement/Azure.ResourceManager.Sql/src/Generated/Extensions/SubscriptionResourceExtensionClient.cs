@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Gets a collection of SqlTimeZoneResources in the SubscriptionResource. </summary>
-        /// <param name="locationName"> The String to use. </param>
+        /// <param name="locationName"> The AzureLocation to use. </param>
         /// <returns> An object representing collection of SqlTimeZoneResources and their operations over a SqlTimeZoneResource. </returns>
         public virtual SqlTimeZoneCollection GetSqlTimeZones(AzureLocation locationName)
         {
