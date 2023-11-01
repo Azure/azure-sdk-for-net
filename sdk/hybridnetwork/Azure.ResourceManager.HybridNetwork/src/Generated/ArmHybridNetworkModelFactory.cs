@@ -170,18 +170,18 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="statefulSets"> Stateful sets related to component resource. </param>
         /// <param name="daemonSets"> Daemonsets related to component resource. </param>
         /// <returns> A new <see cref="Models.ComponentKubernetesResources"/> instance for mocking. </returns>
-        public static ComponentKubernetesResources ComponentKubernetesResources(IEnumerable<Deployment> deployments = null, IEnumerable<Pod> pods = null, IEnumerable<ReplicaSet> replicaSets = null, IEnumerable<StatefulSet> statefulSets = null, IEnumerable<DaemonSet> daemonSets = null)
+        public static ComponentKubernetesResources ComponentKubernetesResources(IEnumerable<KubernetesDeployment> deployments = null, IEnumerable<KubernetesPod> pods = null, IEnumerable<KubernetesReplicaSet> replicaSets = null, IEnumerable<KubernetesStatefulSet> statefulSets = null, IEnumerable<KubernetesDaemonSet> daemonSets = null)
         {
-            deployments ??= new List<Deployment>();
-            pods ??= new List<Pod>();
-            replicaSets ??= new List<ReplicaSet>();
-            statefulSets ??= new List<StatefulSet>();
-            daemonSets ??= new List<DaemonSet>();
+            deployments ??= new List<KubernetesDeployment>();
+            pods ??= new List<KubernetesPod>();
+            replicaSets ??= new List<KubernetesReplicaSet>();
+            statefulSets ??= new List<KubernetesStatefulSet>();
+            daemonSets ??= new List<KubernetesDaemonSet>();
 
             return new ComponentKubernetesResources(deployments?.ToList(), pods?.ToList(), replicaSets?.ToList(), statefulSets?.ToList(), daemonSets?.ToList());
         }
 
-        /// <summary> Initializes a new instance of Deployment. </summary>
+        /// <summary> Initializes a new instance of KubernetesDeployment. </summary>
         /// <param name="name"> The name of the deployment. </param>
         /// <param name="namespace"> The namespace of the deployment. </param>
         /// <param name="desiredNumberOfPods"> Desired number of pods. </param>
@@ -189,13 +189,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="upToDateNumberOfPods"> Number of upto date pods. </param>
         /// <param name="availableNumberOfPods"> Number of available pods. </param>
         /// <param name="createdOn"> Creation Time of deployment. </param>
-        /// <returns> A new <see cref="Models.Deployment"/> instance for mocking. </returns>
-        public static Deployment Deployment(string name = null, string @namespace = null, int? desiredNumberOfPods = null, int? readyNumberOfPods = null, int? upToDateNumberOfPods = null, int? availableNumberOfPods = null, DateTimeOffset? createdOn = null)
+        /// <returns> A new <see cref="Models.KubernetesDeployment"/> instance for mocking. </returns>
+        public static KubernetesDeployment KubernetesDeployment(string name = null, string @namespace = null, int? desiredNumberOfPods = null, int? readyNumberOfPods = null, int? upToDateNumberOfPods = null, int? availableNumberOfPods = null, DateTimeOffset? createdOn = null)
         {
-            return new Deployment(name, @namespace, desiredNumberOfPods, readyNumberOfPods, upToDateNumberOfPods, availableNumberOfPods, createdOn);
+            return new KubernetesDeployment(name, @namespace, desiredNumberOfPods, readyNumberOfPods, upToDateNumberOfPods, availableNumberOfPods, createdOn);
         }
 
-        /// <summary> Initializes a new instance of Pod. </summary>
+        /// <summary> Initializes a new instance of KubernetesPod. </summary>
         /// <param name="name"> The name of the Pod. </param>
         /// <param name="namespace"> The namespace of the Pod. </param>
         /// <param name="desiredNumberOfContainers"> Desired number of containers. </param>
@@ -203,12 +203,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="status"> The status of a pod. </param>
         /// <param name="createdOn"> Creation Time of Pod. </param>
         /// <param name="events"> Last 5 Pod events. </param>
-        /// <returns> A new <see cref="Models.Pod"/> instance for mocking. </returns>
-        public static Pod Pod(string name = null, string @namespace = null, int? desiredNumberOfContainers = null, int? readyNumberOfContainers = null, PodStatus? status = null, DateTimeOffset? createdOn = null, IEnumerable<PodEvent> events = null)
+        /// <returns> A new <see cref="Models.KubernetesPod"/> instance for mocking. </returns>
+        public static KubernetesPod KubernetesPod(string name = null, string @namespace = null, int? desiredNumberOfContainers = null, int? readyNumberOfContainers = null, PodStatus? status = null, DateTimeOffset? createdOn = null, IEnumerable<PodEvent> events = null)
         {
             events ??= new List<PodEvent>();
 
-            return new Pod(name, @namespace, desiredNumberOfContainers, readyNumberOfContainers, status, createdOn, events?.ToList());
+            return new KubernetesPod(name, @namespace, desiredNumberOfContainers, readyNumberOfContainers, status, createdOn, events?.ToList());
         }
 
         /// <summary> Initializes a new instance of PodEvent. </summary>
@@ -222,32 +222,32 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new PodEvent(eventType, reason, message, lastSeenOn);
         }
 
-        /// <summary> Initializes a new instance of ReplicaSet. </summary>
+        /// <summary> Initializes a new instance of KubernetesReplicaSet. </summary>
         /// <param name="name"> The name of the replicaSet. </param>
         /// <param name="namespace"> The namespace of the replicaSet. </param>
         /// <param name="desiredNumberOfPods"> Desired number of pods. </param>
         /// <param name="readyNumberOfPods"> Number of ready pods. </param>
         /// <param name="currentNumberOfPods"> Number of current pods. </param>
         /// <param name="createdOn"> Creation Time of replicaSet. </param>
-        /// <returns> A new <see cref="Models.ReplicaSet"/> instance for mocking. </returns>
-        public static ReplicaSet ReplicaSet(string name = null, string @namespace = null, int? desiredNumberOfPods = null, int? readyNumberOfPods = null, int? currentNumberOfPods = null, DateTimeOffset? createdOn = null)
+        /// <returns> A new <see cref="Models.KubernetesReplicaSet"/> instance for mocking. </returns>
+        public static KubernetesReplicaSet KubernetesReplicaSet(string name = null, string @namespace = null, int? desiredNumberOfPods = null, int? readyNumberOfPods = null, int? currentNumberOfPods = null, DateTimeOffset? createdOn = null)
         {
-            return new ReplicaSet(name, @namespace, desiredNumberOfPods, readyNumberOfPods, currentNumberOfPods, createdOn);
+            return new KubernetesReplicaSet(name, @namespace, desiredNumberOfPods, readyNumberOfPods, currentNumberOfPods, createdOn);
         }
 
-        /// <summary> Initializes a new instance of StatefulSet. </summary>
+        /// <summary> Initializes a new instance of KubernetesStatefulSet. </summary>
         /// <param name="name"> The name of the statefulset. </param>
         /// <param name="namespace"> The namespace of the statefulset. </param>
         /// <param name="desiredNumberOfPods"> Desired number of pods. </param>
         /// <param name="readyNumberOfPods"> Number of ready pods. </param>
         /// <param name="createdOn"> Creation Time of statefulset. </param>
-        /// <returns> A new <see cref="Models.StatefulSet"/> instance for mocking. </returns>
-        public static StatefulSet StatefulSet(string name = null, string @namespace = null, int? desiredNumberOfPods = null, int? readyNumberOfPods = null, DateTimeOffset? createdOn = null)
+        /// <returns> A new <see cref="Models.KubernetesStatefulSet"/> instance for mocking. </returns>
+        public static KubernetesStatefulSet KubernetesStatefulSet(string name = null, string @namespace = null, int? desiredNumberOfPods = null, int? readyNumberOfPods = null, DateTimeOffset? createdOn = null)
         {
-            return new StatefulSet(name, @namespace, desiredNumberOfPods, readyNumberOfPods, createdOn);
+            return new KubernetesStatefulSet(name, @namespace, desiredNumberOfPods, readyNumberOfPods, createdOn);
         }
 
-        /// <summary> Initializes a new instance of DaemonSet. </summary>
+        /// <summary> Initializes a new instance of KubernetesDaemonSet. </summary>
         /// <param name="name"> The name of the daemonSet. </param>
         /// <param name="namespace"> The namespace of the daemonSet. </param>
         /// <param name="desiredNumberOfPods"> Desired number of pods. </param>
@@ -256,10 +256,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="upToDateNumberOfPods"> Number of  upto date pods. </param>
         /// <param name="availableNumberOfPods"> Number of available pods. </param>
         /// <param name="createdOn"> Creation Time of daemonSet. </param>
-        /// <returns> A new <see cref="Models.DaemonSet"/> instance for mocking. </returns>
-        public static DaemonSet DaemonSet(string name = null, string @namespace = null, int? desiredNumberOfPods = null, int? currentNumberOfPods = null, int? readyNumberOfPods = null, int? upToDateNumberOfPods = null, int? availableNumberOfPods = null, DateTimeOffset? createdOn = null)
+        /// <returns> A new <see cref="Models.KubernetesDaemonSet"/> instance for mocking. </returns>
+        public static KubernetesDaemonSet KubernetesDaemonSet(string name = null, string @namespace = null, int? desiredNumberOfPods = null, int? currentNumberOfPods = null, int? readyNumberOfPods = null, int? upToDateNumberOfPods = null, int? availableNumberOfPods = null, DateTimeOffset? createdOn = null)
         {
-            return new DaemonSet(name, @namespace, desiredNumberOfPods, currentNumberOfPods, readyNumberOfPods, upToDateNumberOfPods, availableNumberOfPods, createdOn);
+            return new KubernetesDaemonSet(name, @namespace, desiredNumberOfPods, currentNumberOfPods, readyNumberOfPods, upToDateNumberOfPods, availableNumberOfPods, createdOn);
         }
 
         /// <summary> Initializes a new instance of NetworkFunctionDefinitionGroupData. </summary>

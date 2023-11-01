@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <summary> Initializes a new instance of ComponentKubernetesResources. </summary>
         internal ComponentKubernetesResources()
         {
-            Deployments = new ChangeTrackingList<Deployment>();
-            Pods = new ChangeTrackingList<Pod>();
-            ReplicaSets = new ChangeTrackingList<ReplicaSet>();
-            StatefulSets = new ChangeTrackingList<StatefulSet>();
-            DaemonSets = new ChangeTrackingList<DaemonSet>();
+            Deployments = new ChangeTrackingList<KubernetesDeployment>();
+            Pods = new ChangeTrackingList<KubernetesPod>();
+            ReplicaSets = new ChangeTrackingList<KubernetesReplicaSet>();
+            StatefulSets = new ChangeTrackingList<KubernetesStatefulSet>();
+            DaemonSets = new ChangeTrackingList<KubernetesDaemonSet>();
         }
 
         /// <summary> Initializes a new instance of ComponentKubernetesResources. </summary>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="replicaSets"> Replica sets related to component resource. </param>
         /// <param name="statefulSets"> Stateful sets related to component resource. </param>
         /// <param name="daemonSets"> Daemonsets related to component resource. </param>
-        internal ComponentKubernetesResources(IReadOnlyList<Deployment> deployments, IReadOnlyList<Pod> pods, IReadOnlyList<ReplicaSet> replicaSets, IReadOnlyList<StatefulSet> statefulSets, IReadOnlyList<DaemonSet> daemonSets)
+        internal ComponentKubernetesResources(IReadOnlyList<KubernetesDeployment> deployments, IReadOnlyList<KubernetesPod> pods, IReadOnlyList<KubernetesReplicaSet> replicaSets, IReadOnlyList<KubernetesStatefulSet> statefulSets, IReadOnlyList<KubernetesDaemonSet> daemonSets)
         {
             Deployments = deployments;
             Pods = pods;
@@ -39,14 +39,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Deployments that are related to component resource. </summary>
-        public IReadOnlyList<Deployment> Deployments { get; }
+        public IReadOnlyList<KubernetesDeployment> Deployments { get; }
         /// <summary> Pods related to component resource. </summary>
-        public IReadOnlyList<Pod> Pods { get; }
+        public IReadOnlyList<KubernetesPod> Pods { get; }
         /// <summary> Replica sets related to component resource. </summary>
-        public IReadOnlyList<ReplicaSet> ReplicaSets { get; }
+        public IReadOnlyList<KubernetesReplicaSet> ReplicaSets { get; }
         /// <summary> Stateful sets related to component resource. </summary>
-        public IReadOnlyList<StatefulSet> StatefulSets { get; }
+        public IReadOnlyList<KubernetesStatefulSet> StatefulSets { get; }
         /// <summary> Daemonsets related to component resource. </summary>
-        public IReadOnlyList<DaemonSet> DaemonSets { get; }
+        public IReadOnlyList<KubernetesDaemonSet> DaemonSets { get; }
     }
 }

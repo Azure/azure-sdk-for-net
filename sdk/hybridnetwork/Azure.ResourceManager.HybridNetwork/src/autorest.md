@@ -55,21 +55,26 @@ acronym-mapping:
 rename-mapping:
   Resources: ComponentKubernetesResources
   Status: ComponentStatus
+  DaemonSet: KubernetesDaemonSet
   DaemonSet.desired: DesiredNumberOfPods
   DaemonSet.ready: ReadyNumberOfPods
   DaemonSet.current: CurrentNumberOfPods
   DaemonSet.upToDate: UpToDateNumberOfPods
   DaemonSet.available: AvailableNumberOfPods
+  Deployment: KubernetesDeployment
   Deployment.desired: DesiredNumberOfPods
   Deployment.ready: ReadyNumberOfPods
   Deployment.current: CurrentNumberOfPods
   Deployment.upToDate: UpToDateNumberOfPods
   Deployment.available: AvailableNumberOfPods
+  Pod: KubernetesPod
   Pod.desired: DesiredNumberOfContainers
   Pod.ready: ReadyNumberOfContainers
+  ReplicaSet: KubernetesReplicaSet
   ReplicaSet.desired: DesiredNumberOfPods
   ReplicaSet.ready: ReadyNumberOfPods
   ReplicaSet.current: CurrentNumberOfPods
+  StatefulSet: KubernetesStatefulSet
   StatefulSet.desired: DesiredNumberOfPods
   StatefulSet.ready: ReadyNumberOfPods
 

@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public static Azure.ResourceManager.HybridNetwork.Models.AzureStorageAccountContainerCredential AzureStorageAccountContainerCredential(string containerName = null, System.Uri containerSasUri = null) { throw null; }
         public static Azure.ResourceManager.HybridNetwork.Models.AzureStorageAccountCredential AzureStorageAccountCredential(Azure.Core.ResourceIdentifier storageAccountId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridNetwork.Models.AzureStorageAccountContainerCredential> containerCredentials = null, System.DateTimeOffset? expiry = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.HybridNetwork.ComponentData ComponentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.HybridNetwork.Models.ComponentProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.HybridNetwork.Models.ComponentKubernetesResources ComponentKubernetesResources(System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridNetwork.Models.Deployment> deployments = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridNetwork.Models.Pod> pods = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridNetwork.Models.ReplicaSet> replicaSets = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridNetwork.Models.StatefulSet> statefulSets = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridNetwork.Models.DaemonSet> daemonSets = null) { throw null; }
+        public static Azure.ResourceManager.HybridNetwork.Models.ComponentKubernetesResources ComponentKubernetesResources(System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridNetwork.Models.KubernetesDeployment> deployments = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridNetwork.Models.KubernetesPod> pods = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridNetwork.Models.KubernetesReplicaSet> replicaSets = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridNetwork.Models.KubernetesStatefulSet> statefulSets = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridNetwork.Models.KubernetesDaemonSet> daemonSets = null) { throw null; }
         public static Azure.ResourceManager.HybridNetwork.Models.ComponentProperties ComponentProperties(Azure.ResourceManager.HybridNetwork.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.HybridNetwork.Models.ProvisioningState?), string deploymentProfile = null, Azure.ResourceManager.HybridNetwork.Models.DeploymentStatusProperties deploymentStatus = null) { throw null; }
         public static Azure.ResourceManager.HybridNetwork.ConfigurationGroupSchemaData ConfigurationGroupSchemaData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HybridNetwork.Models.ConfigurationGroupSchemaPropertiesFormat properties = null) { throw null; }
         public static Azure.ResourceManager.HybridNetwork.Models.ConfigurationGroupSchemaPropertiesFormat ConfigurationGroupSchemaPropertiesFormat(Azure.ResourceManager.HybridNetwork.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.HybridNetwork.Models.ProvisioningState?), Azure.ResourceManager.HybridNetwork.Models.VersionState? versionState = default(Azure.ResourceManager.HybridNetwork.Models.VersionState?), string description = null, string schemaDefinition = null) { throw null; }
@@ -663,10 +663,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public static Azure.ResourceManager.HybridNetwork.Models.ConfigurationValueWithoutSecrets ConfigurationValueWithoutSecrets(Azure.ResourceManager.HybridNetwork.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.HybridNetwork.Models.ProvisioningState?), string publisherName = null, Azure.ResourceManager.HybridNetwork.Models.PublisherScope? publisherScope = default(Azure.ResourceManager.HybridNetwork.Models.PublisherScope?), string configurationGroupSchemaName = null, string configurationGroupSchemaOfferingLocation = null, Azure.ResourceManager.HybridNetwork.Models.DeploymentResourceIdReference configurationGroupSchemaResourceReference = null, string configurationValue = null) { throw null; }
         public static Azure.ResourceManager.HybridNetwork.Models.ConfigurationValueWithSecrets ConfigurationValueWithSecrets(Azure.ResourceManager.HybridNetwork.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.HybridNetwork.Models.ProvisioningState?), string publisherName = null, Azure.ResourceManager.HybridNetwork.Models.PublisherScope? publisherScope = default(Azure.ResourceManager.HybridNetwork.Models.PublisherScope?), string configurationGroupSchemaName = null, string configurationGroupSchemaOfferingLocation = null, Azure.ResourceManager.HybridNetwork.Models.DeploymentResourceIdReference configurationGroupSchemaResourceReference = null, string secretConfigurationValue = null) { throw null; }
         public static Azure.ResourceManager.HybridNetwork.Models.ContainerizedNetworkFunctionDefinitionVersion ContainerizedNetworkFunctionDefinitionVersion(Azure.ResourceManager.HybridNetwork.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.HybridNetwork.Models.ProvisioningState?), Azure.ResourceManager.HybridNetwork.Models.VersionState? versionState = default(Azure.ResourceManager.HybridNetwork.Models.VersionState?), string description = null, string deployParameters = null, Azure.ResourceManager.HybridNetwork.Models.ContainerizedNetworkFunctionTemplate networkFunctionTemplate = null) { throw null; }
-        public static Azure.ResourceManager.HybridNetwork.Models.DaemonSet DaemonSet(string name = null, string @namespace = null, int? desiredNumberOfPods = default(int?), int? currentNumberOfPods = default(int?), int? readyNumberOfPods = default(int?), int? upToDateNumberOfPods = default(int?), int? availableNumberOfPods = default(int?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.ResourceManager.HybridNetwork.Models.Deployment Deployment(string name = null, string @namespace = null, int? desiredNumberOfPods = default(int?), int? readyNumberOfPods = default(int?), int? upToDateNumberOfPods = default(int?), int? availableNumberOfPods = default(int?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.HybridNetwork.Models.DeploymentStatusProperties DeploymentStatusProperties(Azure.ResourceManager.HybridNetwork.Models.ComponentStatus? status = default(Azure.ResourceManager.HybridNetwork.Models.ComponentStatus?), Azure.ResourceManager.HybridNetwork.Models.ComponentKubernetesResources resources = null, System.DateTimeOffset? nextExpectedUpdateOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.HybridNetwork.Models.HybridNetworkSku HybridNetworkSku(Azure.ResourceManager.HybridNetwork.Models.HybridNetworkSkuName name = default(Azure.ResourceManager.HybridNetwork.Models.HybridNetworkSkuName), Azure.ResourceManager.HybridNetwork.Models.HybridNetworkSkuTier? tier = default(Azure.ResourceManager.HybridNetwork.Models.HybridNetworkSkuTier?)) { throw null; }
+        public static Azure.ResourceManager.HybridNetwork.Models.KubernetesDaemonSet KubernetesDaemonSet(string name = null, string @namespace = null, int? desiredNumberOfPods = default(int?), int? currentNumberOfPods = default(int?), int? readyNumberOfPods = default(int?), int? upToDateNumberOfPods = default(int?), int? availableNumberOfPods = default(int?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.HybridNetwork.Models.KubernetesDeployment KubernetesDeployment(string name = null, string @namespace = null, int? desiredNumberOfPods = default(int?), int? readyNumberOfPods = default(int?), int? upToDateNumberOfPods = default(int?), int? availableNumberOfPods = default(int?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.HybridNetwork.Models.KubernetesPod KubernetesPod(string name = null, string @namespace = null, int? desiredNumberOfContainers = default(int?), int? readyNumberOfContainers = default(int?), Azure.ResourceManager.HybridNetwork.Models.PodStatus? status = default(Azure.ResourceManager.HybridNetwork.Models.PodStatus?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridNetwork.Models.PodEvent> events = null) { throw null; }
+        public static Azure.ResourceManager.HybridNetwork.Models.KubernetesReplicaSet KubernetesReplicaSet(string name = null, string @namespace = null, int? desiredNumberOfPods = default(int?), int? readyNumberOfPods = default(int?), int? currentNumberOfPods = default(int?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.HybridNetwork.Models.KubernetesStatefulSet KubernetesStatefulSet(string name = null, string @namespace = null, int? desiredNumberOfPods = default(int?), int? readyNumberOfPods = default(int?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.HybridNetwork.NetworkFunctionData NetworkFunctionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HybridNetwork.Models.NetworkFunctionPropertiesFormat properties = null, Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.HybridNetwork.NetworkFunctionDefinitionGroupData NetworkFunctionDefinitionGroupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HybridNetwork.Models.NetworkFunctionDefinitionGroupPropertiesFormat properties = null) { throw null; }
         public static Azure.ResourceManager.HybridNetwork.Models.NetworkFunctionDefinitionGroupPropertiesFormat NetworkFunctionDefinitionGroupPropertiesFormat(Azure.ResourceManager.HybridNetwork.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.HybridNetwork.Models.ProvisioningState?), string description = null) { throw null; }
@@ -679,19 +682,16 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public static Azure.ResourceManager.HybridNetwork.Models.NetworkServiceDesignGroupPropertiesFormat NetworkServiceDesignGroupPropertiesFormat(Azure.ResourceManager.HybridNetwork.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.HybridNetwork.Models.ProvisioningState?), string description = null) { throw null; }
         public static Azure.ResourceManager.HybridNetwork.NetworkServiceDesignVersionData NetworkServiceDesignVersionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HybridNetwork.Models.NetworkServiceDesignVersionPropertiesFormat properties = null) { throw null; }
         public static Azure.ResourceManager.HybridNetwork.Models.NetworkServiceDesignVersionPropertiesFormat NetworkServiceDesignVersionPropertiesFormat(Azure.ResourceManager.HybridNetwork.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.HybridNetwork.Models.ProvisioningState?), Azure.ResourceManager.HybridNetwork.Models.VersionState? versionState = default(Azure.ResourceManager.HybridNetwork.Models.VersionState?), string description = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Resources.Models.WritableSubResource> configurationGroupSchemaReferences = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.HybridNetwork.Models.NfviDetails> nfvisFromSite = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridNetwork.Models.ResourceElementTemplate> resourceElementTemplates = null) { throw null; }
-        public static Azure.ResourceManager.HybridNetwork.Models.Pod Pod(string name = null, string @namespace = null, int? desiredNumberOfContainers = default(int?), int? readyNumberOfContainers = default(int?), Azure.ResourceManager.HybridNetwork.Models.PodStatus? status = default(Azure.ResourceManager.HybridNetwork.Models.PodStatus?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridNetwork.Models.PodEvent> events = null) { throw null; }
         public static Azure.ResourceManager.HybridNetwork.Models.PodEvent PodEvent(Azure.ResourceManager.HybridNetwork.Models.PodEventType? eventType = default(Azure.ResourceManager.HybridNetwork.Models.PodEventType?), string reason = null, string message = null, System.DateTimeOffset? lastSeenOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.HybridNetwork.Models.ProxyArtifactListOverview ProxyArtifactListOverview(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null) { throw null; }
         public static Azure.ResourceManager.HybridNetwork.Models.ProxyArtifactOverviewPropertiesValue ProxyArtifactOverviewPropertiesValue(Azure.ResourceManager.HybridNetwork.Models.ArtifactType? artifactType = default(Azure.ResourceManager.HybridNetwork.Models.ArtifactType?), string artifactVersion = null, Azure.ResourceManager.HybridNetwork.Models.ArtifactState? artifactState = default(Azure.ResourceManager.HybridNetwork.Models.ArtifactState?)) { throw null; }
         public static Azure.ResourceManager.HybridNetwork.Models.ProxyArtifactVersionsListOverview ProxyArtifactVersionsListOverview(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.HybridNetwork.Models.ProxyArtifactOverviewPropertiesValue properties = null) { throw null; }
         public static Azure.ResourceManager.HybridNetwork.PublisherData PublisherData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HybridNetwork.Models.PublisherPropertiesFormat properties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.HybridNetwork.Models.PublisherPropertiesFormat PublisherPropertiesFormat(Azure.ResourceManager.HybridNetwork.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.HybridNetwork.Models.ProvisioningState?), Azure.ResourceManager.HybridNetwork.Models.PublisherScope? scope = default(Azure.ResourceManager.HybridNetwork.Models.PublisherScope?)) { throw null; }
-        public static Azure.ResourceManager.HybridNetwork.Models.ReplicaSet ReplicaSet(string name = null, string @namespace = null, int? desiredNumberOfPods = default(int?), int? readyNumberOfPods = default(int?), int? currentNumberOfPods = default(int?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.HybridNetwork.SiteData SiteData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HybridNetwork.Models.SitePropertiesFormat properties = null) { throw null; }
         public static Azure.ResourceManager.HybridNetwork.SiteNetworkServiceData SiteNetworkServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HybridNetwork.Models.SiteNetworkServicePropertiesFormat properties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.HybridNetwork.Models.HybridNetworkSku sku = null) { throw null; }
         public static Azure.ResourceManager.HybridNetwork.Models.SiteNetworkServicePropertiesFormat SiteNetworkServicePropertiesFormat(Azure.ResourceManager.HybridNetwork.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.HybridNetwork.Models.ProvisioningState?), Azure.ResourceManager.HybridNetwork.Models.ManagedResourceGroupConfiguration managedResourceGroupConfiguration = null, Azure.Core.ResourceIdentifier siteReferenceId = null, string publisherName = null, Azure.ResourceManager.HybridNetwork.Models.PublisherScope? publisherScope = default(Azure.ResourceManager.HybridNetwork.Models.PublisherScope?), string networkServiceDesignGroupName = null, string networkServiceDesignVersionName = null, string networkServiceDesignVersionOfferingLocation = null, Azure.ResourceManager.HybridNetwork.Models.DeploymentResourceIdReference networkServiceDesignVersionResourceReference = null, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Resources.Models.WritableSubResource> desiredStateConfigurationGroupValueReferences = null, string lastStateNetworkServiceDesignVersionName = null, System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.Resources.Models.WritableSubResource> lastStateConfigurationGroupValueReferences = null) { throw null; }
         public static Azure.ResourceManager.HybridNetwork.Models.SitePropertiesFormat SitePropertiesFormat(Azure.ResourceManager.HybridNetwork.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.HybridNetwork.Models.ProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridNetwork.Models.NFVIs> nfvis = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> siteNetworkServiceReferences = null) { throw null; }
-        public static Azure.ResourceManager.HybridNetwork.Models.StatefulSet StatefulSet(string name = null, string @namespace = null, int? desiredNumberOfPods = default(int?), int? readyNumberOfPods = default(int?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.HybridNetwork.Models.VirtualNetworkFunctionDefinitionVersion VirtualNetworkFunctionDefinitionVersion(Azure.ResourceManager.HybridNetwork.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.HybridNetwork.Models.ProvisioningState?), Azure.ResourceManager.HybridNetwork.Models.VersionState? versionState = default(Azure.ResourceManager.HybridNetwork.Models.VersionState?), string description = null, string deployParameters = null, Azure.ResourceManager.HybridNetwork.Models.VirtualNetworkFunctionTemplate networkFunctionTemplate = null) { throw null; }
     }
     public partial class ArmResourceDefinitionResourceElementTemplate
@@ -1000,11 +1000,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     public partial class ComponentKubernetesResources
     {
         internal ComponentKubernetesResources() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HybridNetwork.Models.DaemonSet> DaemonSets { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HybridNetwork.Models.Deployment> Deployments { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HybridNetwork.Models.Pod> Pods { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HybridNetwork.Models.ReplicaSet> ReplicaSets { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HybridNetwork.Models.StatefulSet> StatefulSets { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HybridNetwork.Models.KubernetesDaemonSet> DaemonSets { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HybridNetwork.Models.KubernetesDeployment> Deployments { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HybridNetwork.Models.KubernetesPod> Pods { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HybridNetwork.Models.KubernetesReplicaSet> ReplicaSets { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HybridNetwork.Models.KubernetesStatefulSet> StatefulSets { get { throw null; } }
     }
     public partial class ComponentProperties
     {
@@ -1085,35 +1085,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     {
         protected ContainerizedNetworkFunctionTemplate() { }
     }
-    public partial class DaemonSet
-    {
-        internal DaemonSet() { }
-        public int? AvailableNumberOfPods { get { throw null; } }
-        public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public int? CurrentNumberOfPods { get { throw null; } }
-        public int? DesiredNumberOfPods { get { throw null; } }
-        public string Name { get { throw null; } }
-        public string Namespace { get { throw null; } }
-        public int? ReadyNumberOfPods { get { throw null; } }
-        public int? UpToDateNumberOfPods { get { throw null; } }
-    }
     public partial class DependsOnProfile
     {
         public DependsOnProfile() { }
         public System.Collections.Generic.IList<string> InstallDependsOn { get { throw null; } }
         public System.Collections.Generic.IList<string> UninstallDependsOn { get { throw null; } }
         public System.Collections.Generic.IList<string> UpdateDependsOn { get { throw null; } }
-    }
-    public partial class Deployment
-    {
-        internal Deployment() { }
-        public int? AvailableNumberOfPods { get { throw null; } }
-        public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public int? DesiredNumberOfPods { get { throw null; } }
-        public string Name { get { throw null; } }
-        public string Namespace { get { throw null; } }
-        public int? ReadyNumberOfPods { get { throw null; } }
-        public int? UpToDateNumberOfPods { get { throw null; } }
     }
     public abstract partial class DeploymentResourceIdReference
     {
@@ -1238,6 +1215,59 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public ImageArtifactProfile() { }
         public string ImageName { get { throw null; } set { } }
         public string ImageVersion { get { throw null; } set { } }
+    }
+    public partial class KubernetesDaemonSet
+    {
+        internal KubernetesDaemonSet() { }
+        public int? AvailableNumberOfPods { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public int? CurrentNumberOfPods { get { throw null; } }
+        public int? DesiredNumberOfPods { get { throw null; } }
+        public string Name { get { throw null; } }
+        public string Namespace { get { throw null; } }
+        public int? ReadyNumberOfPods { get { throw null; } }
+        public int? UpToDateNumberOfPods { get { throw null; } }
+    }
+    public partial class KubernetesDeployment
+    {
+        internal KubernetesDeployment() { }
+        public int? AvailableNumberOfPods { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public int? DesiredNumberOfPods { get { throw null; } }
+        public string Name { get { throw null; } }
+        public string Namespace { get { throw null; } }
+        public int? ReadyNumberOfPods { get { throw null; } }
+        public int? UpToDateNumberOfPods { get { throw null; } }
+    }
+    public partial class KubernetesPod
+    {
+        internal KubernetesPod() { }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public int? DesiredNumberOfContainers { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HybridNetwork.Models.PodEvent> Events { get { throw null; } }
+        public string Name { get { throw null; } }
+        public string Namespace { get { throw null; } }
+        public int? ReadyNumberOfContainers { get { throw null; } }
+        public Azure.ResourceManager.HybridNetwork.Models.PodStatus? Status { get { throw null; } }
+    }
+    public partial class KubernetesReplicaSet
+    {
+        internal KubernetesReplicaSet() { }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public int? CurrentNumberOfPods { get { throw null; } }
+        public int? DesiredNumberOfPods { get { throw null; } }
+        public string Name { get { throw null; } }
+        public string Namespace { get { throw null; } }
+        public int? ReadyNumberOfPods { get { throw null; } }
+    }
+    public partial class KubernetesStatefulSet
+    {
+        internal KubernetesStatefulSet() { }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public int? DesiredNumberOfPods { get { throw null; } }
+        public string Name { get { throw null; } }
+        public string Namespace { get { throw null; } }
+        public int? ReadyNumberOfPods { get { throw null; } }
     }
     public partial class ManagedResourceGroupConfiguration
     {
@@ -1376,17 +1406,6 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public OpenDeploymentResourceReference() { }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
     }
-    public partial class Pod
-    {
-        internal Pod() { }
-        public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public int? DesiredNumberOfContainers { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HybridNetwork.Models.PodEvent> Events { get { throw null; } }
-        public string Name { get { throw null; } }
-        public string Namespace { get { throw null; } }
-        public int? ReadyNumberOfContainers { get { throw null; } }
-        public Azure.ResourceManager.HybridNetwork.Models.PodStatus? Status { get { throw null; } }
-    }
     public partial class PodEvent
     {
         internal PodEvent() { }
@@ -1500,16 +1519,6 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public static bool operator !=(Azure.ResourceManager.HybridNetwork.Models.PublisherScope left, Azure.ResourceManager.HybridNetwork.Models.PublisherScope right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ReplicaSet
-    {
-        internal ReplicaSet() { }
-        public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public int? CurrentNumberOfPods { get { throw null; } }
-        public int? DesiredNumberOfPods { get { throw null; } }
-        public string Name { get { throw null; } }
-        public string Namespace { get { throw null; } }
-        public int? ReadyNumberOfPods { get { throw null; } }
-    }
     public partial class RequestMetadata
     {
         public RequestMetadata(string relativePath, Azure.ResourceManager.HybridNetwork.Models.HttpMethod httpMethod, string serializedBody) { }
@@ -1551,15 +1560,6 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.HybridNetwork.Models.NFVIs> Nfvis { get { throw null; } }
         public Azure.ResourceManager.HybridNetwork.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> SiteNetworkServiceReferences { get { throw null; } }
-    }
-    public partial class StatefulSet
-    {
-        internal StatefulSet() { }
-        public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public int? DesiredNumberOfPods { get { throw null; } }
-        public string Name { get { throw null; } }
-        public string Namespace { get { throw null; } }
-        public int? ReadyNumberOfPods { get { throw null; } }
     }
     public partial class TagsObject
     {

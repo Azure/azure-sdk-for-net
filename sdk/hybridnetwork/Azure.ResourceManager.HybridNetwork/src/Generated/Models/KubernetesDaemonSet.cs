@@ -10,14 +10,14 @@ using System;
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> Helm DaemonSet status properties. </summary>
-    public partial class DaemonSet
+    public partial class KubernetesDaemonSet
     {
-        /// <summary> Initializes a new instance of DaemonSet. </summary>
-        internal DaemonSet()
+        /// <summary> Initializes a new instance of KubernetesDaemonSet. </summary>
+        internal KubernetesDaemonSet()
         {
         }
 
-        /// <summary> Initializes a new instance of DaemonSet. </summary>
+        /// <summary> Initializes a new instance of KubernetesDaemonSet. </summary>
         /// <param name="name"> The name of the daemonSet. </param>
         /// <param name="namespace"> The namespace of the daemonSet. </param>
         /// <param name="desiredNumberOfPods"> Desired number of pods. </param>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="upToDateNumberOfPods"> Number of  upto date pods. </param>
         /// <param name="availableNumberOfPods"> Number of available pods. </param>
         /// <param name="createdOn"> Creation Time of daemonSet. </param>
-        internal DaemonSet(string name, string @namespace, int? desiredNumberOfPods, int? currentNumberOfPods, int? readyNumberOfPods, int? upToDateNumberOfPods, int? availableNumberOfPods, DateTimeOffset? createdOn)
+        internal KubernetesDaemonSet(string name, string @namespace, int? desiredNumberOfPods, int? currentNumberOfPods, int? readyNumberOfPods, int? upToDateNumberOfPods, int? availableNumberOfPods, DateTimeOffset? createdOn)
         {
             Name = name;
             Namespace = @namespace;

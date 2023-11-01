@@ -10,21 +10,21 @@ using System;
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> Helm ReplicaSet status properties. </summary>
-    public partial class ReplicaSet
+    public partial class KubernetesReplicaSet
     {
-        /// <summary> Initializes a new instance of ReplicaSet. </summary>
-        internal ReplicaSet()
+        /// <summary> Initializes a new instance of KubernetesReplicaSet. </summary>
+        internal KubernetesReplicaSet()
         {
         }
 
-        /// <summary> Initializes a new instance of ReplicaSet. </summary>
+        /// <summary> Initializes a new instance of KubernetesReplicaSet. </summary>
         /// <param name="name"> The name of the replicaSet. </param>
         /// <param name="namespace"> The namespace of the replicaSet. </param>
         /// <param name="desiredNumberOfPods"> Desired number of pods. </param>
         /// <param name="readyNumberOfPods"> Number of ready pods. </param>
         /// <param name="currentNumberOfPods"> Number of current pods. </param>
         /// <param name="createdOn"> Creation Time of replicaSet. </param>
-        internal ReplicaSet(string name, string @namespace, int? desiredNumberOfPods, int? readyNumberOfPods, int? currentNumberOfPods, DateTimeOffset? createdOn)
+        internal KubernetesReplicaSet(string name, string @namespace, int? desiredNumberOfPods, int? readyNumberOfPods, int? currentNumberOfPods, DateTimeOffset? createdOn)
         {
             Name = name;
             Namespace = @namespace;

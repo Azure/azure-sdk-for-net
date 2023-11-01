@@ -10,14 +10,14 @@ using System;
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> Helm Deployment status properties. </summary>
-    public partial class Deployment
+    public partial class KubernetesDeployment
     {
-        /// <summary> Initializes a new instance of Deployment. </summary>
-        internal Deployment()
+        /// <summary> Initializes a new instance of KubernetesDeployment. </summary>
+        internal KubernetesDeployment()
         {
         }
 
-        /// <summary> Initializes a new instance of Deployment. </summary>
+        /// <summary> Initializes a new instance of KubernetesDeployment. </summary>
         /// <param name="name"> The name of the deployment. </param>
         /// <param name="namespace"> The namespace of the deployment. </param>
         /// <param name="desiredNumberOfPods"> Desired number of pods. </param>
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="upToDateNumberOfPods"> Number of upto date pods. </param>
         /// <param name="availableNumberOfPods"> Number of available pods. </param>
         /// <param name="createdOn"> Creation Time of deployment. </param>
-        internal Deployment(string name, string @namespace, int? desiredNumberOfPods, int? readyNumberOfPods, int? upToDateNumberOfPods, int? availableNumberOfPods, DateTimeOffset? createdOn)
+        internal KubernetesDeployment(string name, string @namespace, int? desiredNumberOfPods, int? readyNumberOfPods, int? upToDateNumberOfPods, int? availableNumberOfPods, DateTimeOffset? createdOn)
         {
             Name = name;
             Namespace = @namespace;

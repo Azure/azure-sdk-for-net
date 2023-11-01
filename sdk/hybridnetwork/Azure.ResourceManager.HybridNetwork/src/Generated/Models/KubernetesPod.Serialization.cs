@@ -6,14 +6,15 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    public partial class Deployment
+    public partial class KubernetesPod
     {
-        internal static Deployment DeserializeDeployment(JsonElement element)
+        internal static KubernetesPod DeserializeKubernetesPod(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -23,9 +24,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             Optional<string> @namespace = default;
             Optional<int> desired = default;
             Optional<int> ready = default;
-            Optional<int> upToDate = default;
-            Optional<int> available = default;
+            Optional<PodStatus> status = default;
             Optional<DateTimeOffset> creationTime = default;
+            Optional<IReadOnlyList<PodEvent>> events = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -56,22 +57,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     ready = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("upToDate"u8))
+                if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    upToDate = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("available"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    available = property.Value.GetInt32();
+                    status = new PodStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("creationTime"u8))
@@ -83,8 +75,22 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     creationTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (property.NameEquals("events"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<PodEvent> array = new List<PodEvent>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(PodEvent.DeserializePodEvent(item));
+                    }
+                    events = array;
+                    continue;
+                }
             }
-            return new Deployment(name.Value, @namespace.Value, Optional.ToNullable(desired), Optional.ToNullable(ready), Optional.ToNullable(upToDate), Optional.ToNullable(available), Optional.ToNullable(creationTime));
+            return new KubernetesPod(name.Value, @namespace.Value, Optional.ToNullable(desired), Optional.ToNullable(ready), Optional.ToNullable(status), Optional.ToNullable(creationTime), Optional.ToList(events));
         }
     }
 }

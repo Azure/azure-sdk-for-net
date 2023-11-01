@@ -10,20 +10,20 @@ using System;
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> Helm StatefulSet status properties. </summary>
-    public partial class StatefulSet
+    public partial class KubernetesStatefulSet
     {
-        /// <summary> Initializes a new instance of StatefulSet. </summary>
-        internal StatefulSet()
+        /// <summary> Initializes a new instance of KubernetesStatefulSet. </summary>
+        internal KubernetesStatefulSet()
         {
         }
 
-        /// <summary> Initializes a new instance of StatefulSet. </summary>
+        /// <summary> Initializes a new instance of KubernetesStatefulSet. </summary>
         /// <param name="name"> The name of the statefulset. </param>
         /// <param name="namespace"> The namespace of the statefulset. </param>
         /// <param name="desiredNumberOfPods"> Desired number of pods. </param>
         /// <param name="readyNumberOfPods"> Number of ready pods. </param>
         /// <param name="createdOn"> Creation Time of statefulset. </param>
-        internal StatefulSet(string name, string @namespace, int? desiredNumberOfPods, int? readyNumberOfPods, DateTimeOffset? createdOn)
+        internal KubernetesStatefulSet(string name, string @namespace, int? desiredNumberOfPods, int? readyNumberOfPods, DateTimeOffset? createdOn)
         {
             Name = name;
             Namespace = @namespace;

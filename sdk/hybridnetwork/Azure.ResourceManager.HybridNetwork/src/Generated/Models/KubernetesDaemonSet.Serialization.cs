@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    public partial class ReplicaSet
+    public partial class KubernetesDaemonSet
     {
-        internal static ReplicaSet DeserializeReplicaSet(JsonElement element)
+        internal static KubernetesDaemonSet DeserializeKubernetesDaemonSet(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -22,8 +22,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             Optional<string> name = default;
             Optional<string> @namespace = default;
             Optional<int> desired = default;
-            Optional<int> ready = default;
             Optional<int> current = default;
+            Optional<int> ready = default;
+            Optional<int> upToDate = default;
+            Optional<int> available = default;
             Optional<DateTimeOffset> creationTime = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -46,6 +48,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     desired = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("current"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    current = property.Value.GetInt32();
+                    continue;
+                }
                 if (property.NameEquals("ready"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -55,13 +66,22 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     ready = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("current"u8))
+                if (property.NameEquals("upToDate"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    current = property.Value.GetInt32();
+                    upToDate = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("available"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    available = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("creationTime"u8))
@@ -74,7 +94,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     continue;
                 }
             }
-            return new ReplicaSet(name.Value, @namespace.Value, Optional.ToNullable(desired), Optional.ToNullable(ready), Optional.ToNullable(current), Optional.ToNullable(creationTime));
+            return new KubernetesDaemonSet(name.Value, @namespace.Value, Optional.ToNullable(desired), Optional.ToNullable(current), Optional.ToNullable(ready), Optional.ToNullable(upToDate), Optional.ToNullable(available), Optional.ToNullable(creationTime));
         }
     }
 }

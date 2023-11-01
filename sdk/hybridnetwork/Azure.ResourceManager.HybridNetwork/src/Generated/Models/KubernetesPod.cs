@@ -12,15 +12,15 @@ using Azure.Core;
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> Helm Pod status properties. </summary>
-    public partial class Pod
+    public partial class KubernetesPod
     {
-        /// <summary> Initializes a new instance of Pod. </summary>
-        internal Pod()
+        /// <summary> Initializes a new instance of KubernetesPod. </summary>
+        internal KubernetesPod()
         {
             Events = new ChangeTrackingList<PodEvent>();
         }
 
-        /// <summary> Initializes a new instance of Pod. </summary>
+        /// <summary> Initializes a new instance of KubernetesPod. </summary>
         /// <param name="name"> The name of the Pod. </param>
         /// <param name="namespace"> The namespace of the Pod. </param>
         /// <param name="desiredNumberOfContainers"> Desired number of containers. </param>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="status"> The status of a pod. </param>
         /// <param name="createdOn"> Creation Time of Pod. </param>
         /// <param name="events"> Last 5 Pod events. </param>
-        internal Pod(string name, string @namespace, int? desiredNumberOfContainers, int? readyNumberOfContainers, PodStatus? status, DateTimeOffset? createdOn, IReadOnlyList<PodEvent> events)
+        internal KubernetesPod(string name, string @namespace, int? desiredNumberOfContainers, int? readyNumberOfContainers, PodStatus? status, DateTimeOffset? createdOn, IReadOnlyList<PodEvent> events)
         {
             Name = name;
             Namespace = @namespace;

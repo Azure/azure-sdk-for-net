@@ -19,11 +19,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<Deployment>> deployments = default;
-            Optional<IReadOnlyList<Pod>> pods = default;
-            Optional<IReadOnlyList<ReplicaSet>> replicaSets = default;
-            Optional<IReadOnlyList<StatefulSet>> statefulSets = default;
-            Optional<IReadOnlyList<DaemonSet>> daemonSets = default;
+            Optional<IReadOnlyList<KubernetesDeployment>> deployments = default;
+            Optional<IReadOnlyList<KubernetesPod>> pods = default;
+            Optional<IReadOnlyList<KubernetesReplicaSet>> replicaSets = default;
+            Optional<IReadOnlyList<KubernetesStatefulSet>> statefulSets = default;
+            Optional<IReadOnlyList<KubernetesDaemonSet>> daemonSets = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deployments"u8))
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    List<Deployment> array = new List<Deployment>();
+                    List<KubernetesDeployment> array = new List<KubernetesDeployment>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Deployment.DeserializeDeployment(item));
+                        array.Add(KubernetesDeployment.DeserializeKubernetesDeployment(item));
                     }
                     deployments = array;
                     continue;
@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    List<Pod> array = new List<Pod>();
+                    List<KubernetesPod> array = new List<KubernetesPod>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Pod.DeserializePod(item));
+                        array.Add(KubernetesPod.DeserializeKubernetesPod(item));
                     }
                     pods = array;
                     continue;
@@ -60,10 +60,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    List<ReplicaSet> array = new List<ReplicaSet>();
+                    List<KubernetesReplicaSet> array = new List<KubernetesReplicaSet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReplicaSet.DeserializeReplicaSet(item));
+                        array.Add(KubernetesReplicaSet.DeserializeKubernetesReplicaSet(item));
                     }
                     replicaSets = array;
                     continue;
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    List<StatefulSet> array = new List<StatefulSet>();
+                    List<KubernetesStatefulSet> array = new List<KubernetesStatefulSet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StatefulSet.DeserializeStatefulSet(item));
+                        array.Add(KubernetesStatefulSet.DeserializeKubernetesStatefulSet(item));
                     }
                     statefulSets = array;
                     continue;
@@ -88,10 +88,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    List<DaemonSet> array = new List<DaemonSet>();
+                    List<KubernetesDaemonSet> array = new List<KubernetesDaemonSet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DaemonSet.DeserializeDaemonSet(item));
+                        array.Add(KubernetesDaemonSet.DeserializeKubernetesDaemonSet(item));
                     }
                     daemonSets = array;
                     continue;

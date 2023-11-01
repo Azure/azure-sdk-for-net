@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    public partial class StatefulSet
+    public partial class KubernetesReplicaSet
     {
-        internal static StatefulSet DeserializeStatefulSet(JsonElement element)
+        internal static KubernetesReplicaSet DeserializeKubernetesReplicaSet(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             Optional<string> @namespace = default;
             Optional<int> desired = default;
             Optional<int> ready = default;
+            Optional<int> current = default;
             Optional<DateTimeOffset> creationTime = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -54,6 +55,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     ready = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("current"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    current = property.Value.GetInt32();
+                    continue;
+                }
                 if (property.NameEquals("creationTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -64,7 +74,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     continue;
                 }
             }
-            return new StatefulSet(name.Value, @namespace.Value, Optional.ToNullable(desired), Optional.ToNullable(ready), Optional.ToNullable(creationTime));
+            return new KubernetesReplicaSet(name.Value, @namespace.Value, Optional.ToNullable(desired), Optional.ToNullable(ready), Optional.ToNullable(current), Optional.ToNullable(creationTime));
         }
     }
 }
