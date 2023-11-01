@@ -131,10 +131,10 @@ namespace Azure.AI.OpenAI
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException">
-        ///     <paramref name="completionsOptions"/> is null.
+        ///     <paramref name="completionsOptions"/> or <paramref name="completionsOptions.DeploymentName"/> is null.
         /// </exception>
         /// <exception cref="ArgumentException">
-        ///     <paramref name="completionsOptions.DeploymentName"/> is null or empty.
+        ///     <paramref name="completionsOptions.DeploymentName"/> is an empty string.
         /// </exception>
         public virtual Response<Completions> GetCompletions(
             CompletionsOptions completionsOptions,
@@ -170,10 +170,10 @@ namespace Azure.AI.OpenAI
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException">
-        ///     <paramref name="completionsOptions"/> is null.
+        ///     <paramref name="completionsOptions"/> or <paramref name="completionsOptions.DeploymentName"/> is null.
         /// </exception>
         /// <exception cref="ArgumentException">
-        ///     <paramref name="completionsOptions.DeploymentName"/> is null or empty.
+        ///     <paramref name="completionsOptions.DeploymentName"/> is an empty string.
         /// </exception>
         public virtual async Task<Response<Completions>> GetCompletionsAsync(
             CompletionsOptions completionsOptions,
@@ -212,10 +212,10 @@ namespace Azure.AI.OpenAI
         ///     a cancellation token that can be used to cancel the initial request or ongoing streaming operation.
         /// </param>
         /// <exception cref="ArgumentNullException">
-        ///     <paramref name="completionsOptions"/> is null.
+        ///     <paramref name="completionsOptions"/> or <paramref name="completionsOptions.DeploymentName"/> is null.
         /// </exception>
         /// <exception cref="ArgumentException">
-        ///     <paramref name="completionsOptions.DeploymentName"/> is null or empty.
+        ///     <paramref name="completionsOptions.DeploymentName"/> is an empty string.
         /// </exception>
         /// <returns>
         /// A response that, if the request was successful, includes a <see cref="StreamingCompletions"/> instance.
@@ -258,10 +258,10 @@ namespace Azure.AI.OpenAI
         ///     a cancellation token that can be used to cancel the initial request or ongoing streaming operation.
         /// </param>
         /// <exception cref="ArgumentNullException">
-        ///     <paramref name="completionsOptions"/> is null.
+        ///     <paramref name="completionsOptions"/> or <paramref name="completionsOptions.DeploymentName"/> is null.
         /// </exception>
         /// <exception cref="ArgumentException">
-        ///     <paramref name="completionsOptions.DeploymentName"/> is null or empty.
+        ///     <paramref name="completionsOptions.DeploymentName"/> is an empty string.
         /// </exception>
         /// <returns>
         /// A response that, if the request was successful, includes a <see cref="StreamingCompletions"/> instance.
@@ -301,10 +301,10 @@ namespace Azure.AI.OpenAI
         /// <param name="chatCompletionsOptions"> The options for this chat completions request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException">
-        ///     <paramref name="chatCompletionsOptions"/> is null.
+        ///     <paramref name="chatCompletionsOptions"/> or <paramref name="chatCompletionsOptions.DeploymentName"/> is null.
         /// </exception>
         /// <exception cref="ArgumentException">
-        ///     <paramref name="chatCompletionsOptions.DeploymentName"/> is null or empty.
+        ///     <paramref name="chatCompletionsOptions.DeploymentName"/> is an empty string.
         /// </exception>
         public virtual Response<ChatCompletions> GetChatCompletions(
             ChatCompletionsOptions chatCompletionsOptions,
@@ -338,10 +338,10 @@ namespace Azure.AI.OpenAI
         /// <param name="chatCompletionsOptions"> The options for this chat completions request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException">
-        ///     <paramref name="chatCompletionsOptions"/> is null.
+        ///     <paramref name="chatCompletionsOptions"/> or <paramref name="chatCompletionsOptions.DeploymentName"/> is null.
         /// </exception>
         /// <exception cref="ArgumentException">
-        ///     <paramref name="chatCompletionsOptions.DeploymentName"/> is null or empty.
+        ///     <paramref name="chatCompletionsOptions.DeploymentName"/> is an empty string.
         /// </exception>
         public virtual async Task<Response<ChatCompletions>> GetChatCompletionsAsync(
             ChatCompletionsOptions chatCompletionsOptions,
@@ -383,10 +383,10 @@ namespace Azure.AI.OpenAI
         ///     a cancellation token that can be used to cancel the initial request or ongoing streaming operation.
         /// </param>
         /// <exception cref="ArgumentNullException">
-        ///     <paramref name="chatCompletionsOptions"/> is null.
+        ///     <paramref name="chatCompletionsOptions"/> or <paramref name="chatCompletionsOptions.DeploymentName"/> is null.
         /// </exception>
         /// <exception cref="ArgumentException">
-        ///     <paramref name="chatCompletionsOptions.DeploymentName"/> is null or empty.
+        ///     <paramref name="chatCompletionsOptions.DeploymentName"/> is an empty string.
         /// </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response<StreamingChatCompletions> GetChatCompletionsStreaming(
@@ -430,10 +430,10 @@ namespace Azure.AI.OpenAI
         ///     a cancellation token that can be used to cancel the initial request or ongoing streaming operation.
         /// </param>
         /// <exception cref="ArgumentNullException">
-        ///     <paramref name="chatCompletionsOptions"/> is null.
+        ///     <paramref name="chatCompletionsOptions"/> or <paramref name="chatCompletionsOptions.DeploymentName"/> is null.
         /// </exception>
         /// <exception cref="ArgumentException">
-        ///     <paramref name="chatCompletionsOptions.DeploymentName"/> is null or empty.
+        ///     <paramref name="chatCompletionsOptions.DeploymentName"/> is an empty string.
         /// </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response<StreamingChatCompletions>> GetChatCompletionsStreamingAsync(
@@ -473,10 +473,10 @@ namespace Azure.AI.OpenAI
         /// <param name="embeddingsOptions"> The options for this embeddings request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException">
-        ///     <paramref name="embeddingsOptions"/> is null.
+        ///     <paramref name="embeddingsOptions"/> or <paramref name="embeddingsOptions.DeploymentName"/> is null.
         /// </exception>
         /// <exception cref="ArgumentException">
-        ///     <paramref name="embeddingsOptions.DeploymentName"/> is null or empty.
+        ///     <paramref name="embeddingsOptions.DeploymentName"/> is an empty string.
         /// </exception>
         public virtual Response<Embeddings> GetEmbeddings(
             EmbeddingsOptions embeddingsOptions,
@@ -508,10 +508,10 @@ namespace Azure.AI.OpenAI
         /// <param name="embeddingsOptions"> The options for this embeddings request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException">
-        ///     <paramref name="embeddingsOptions"/> is null.
+        ///     <paramref name="embeddingsOptions"/> or <paramref name="embeddingsOptions.DeploymentName"/> is null.
         /// </exception>
         /// <exception cref="ArgumentException">
-        ///     <paramref name="embeddingsOptions.DeploymentName"/> is null or empty.
+        ///     <paramref name="embeddingsOptions.DeploymentName"/> is an empty string.
         /// </exception>
         public virtual async Task<Response<Embeddings>> GetEmbeddingsAsync(
             EmbeddingsOptions embeddingsOptions,
@@ -550,6 +550,9 @@ namespace Azure.AI.OpenAI
         /// <param name="cancellationToken">
         ///     An optional cancellation token that may be used to abort an ongoing request.
         /// </param>
+        /// <exception cref="ArgumentNullException">
+        ///     <paramref name="imageGenerationOptions"/> is null.
+        /// </exception>
         /// <returns>
         ///     The response information for the image generations request.
         /// </returns>
@@ -609,6 +612,9 @@ namespace Azure.AI.OpenAI
         /// <param name="cancellationToken">
         ///     An optional cancellation token that may be used to abort an ongoing request.
         /// </param>
+        /// <exception cref="ArgumentNullException">
+        ///     <paramref name="imageGenerationOptions"/> is null.
+        /// </exception>
         /// <returns>
         ///     The response information for the image generations request.
         /// </returns>
@@ -668,10 +674,10 @@ namespace Azure.AI.OpenAI
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException">
-        ///     <paramref name="audioTranscriptionOptions"/> is null.
+        ///     <paramref name="audioTranscriptionOptions"/> or <paramref name="audioTranscriptionOptions.DeploymentName"/> is null.
         /// </exception>
         /// <exception cref="ArgumentException">
-        ///     <paramref name="audioTranscriptionOptions.DeploymentName"/> is null or empty.
+        ///     <paramref name="audioTranscriptionOptions.DeploymentName"/> is an empty string.
         /// </exception>
         public virtual async Task<Response<AudioTranscription>> GetAudioTranscriptionAsync(
             AudioTranscriptionOptions audioTranscriptionOptions,
@@ -709,10 +715,10 @@ namespace Azure.AI.OpenAI
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException">
-        ///     <paramref name="audioTranscriptionOptions"/> is null.
+        ///     <paramref name="audioTranscriptionOptions"/> or <paramref name="audioTranscriptionOptions.DeploymentName"/> is null.
         /// </exception>
         /// <exception cref="ArgumentException">
-        ///     <paramref name="audioTranscriptionOptions.DeploymentName"/> is null or empty.
+        ///     <paramref name="audioTranscriptionOptions.DeploymentName"/> is an empty string.
         /// </exception>
         public virtual Response<AudioTranscription> GetAudioTranscription(
             AudioTranscriptionOptions audioTranscriptionOptions,
@@ -750,10 +756,10 @@ namespace Azure.AI.OpenAI
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException">
-        ///     <paramref name="audioTranslationOptions"/> is null.
+        ///     <paramref name="audioTranslationOptions"/> or <paramref name="audioTranslationOptions.DeploymentName"/> is null.
         /// </exception>
         /// <exception cref="ArgumentException">
-        ///     <paramref name="audioTranslationOptions.DeploymentName"/> is null or empty.
+        ///     <paramref name="audioTranslationOptions.DeploymentName"/> is an empty string.
         /// </exception>
         public virtual async Task<Response<AudioTranslation>> GetAudioTranslationAsync(
             AudioTranslationOptions audioTranslationOptions,
@@ -791,10 +797,10 @@ namespace Azure.AI.OpenAI
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException">
-        ///     <paramref name="audioTranslationOptions"/> is null.
+        ///     <paramref name="audioTranslationOptions"/> or <paramref name="audioTranslationOptions.DeploymentName"/> is null.
         /// </exception>
         /// <exception cref="ArgumentException">
-        ///     <paramref name="audioTranslationOptions.DeploymentName"/> is null or empty.
+        ///     <paramref name="audioTranslationOptions.DeploymentName"/> is an empty string.
         /// </exception>
         public virtual Response<AudioTranslation> GetAudioTranslation(
             AudioTranslationOptions audioTranslationOptions,
