@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace System.Net.ClientModel.Core
 {
-    internal sealed partial class ModelWriter : IDisposable
+    internal partial class ModelWriter<T> : IDisposable
     {
         private sealed class SequenceBuilder : IBufferWriter<byte>, IDisposable
         {

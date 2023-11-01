@@ -12,12 +12,18 @@ namespace System.Net.ClientModel
     {
         private const string JsonValue = "J";
         private const string WireValue = "W";
+        private const string XmlValue = "X";
 
         /// <summary>
         /// Default format which will write all properties including read-only and additional properties.
         /// The format will always be JSON.
         /// </summary>
         public static ModelReaderWriterFormat Json { get; } = new ModelReaderWriterFormat(JsonValue);
+
+        /// <summary>
+        /// Xml format which will write all properties including read-only and additional properties.
+        /// </summary>
+        public static ModelReaderWriterFormat Xml { get; } = new ModelReaderWriterFormat(XmlValue);
 
         /// <summary>
         /// Format used to write this model when sending as a request to a service.
