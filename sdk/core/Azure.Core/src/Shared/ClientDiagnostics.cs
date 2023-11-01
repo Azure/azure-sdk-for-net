@@ -3,14 +3,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 #nullable enable
 
@@ -32,7 +26,8 @@ namespace Azure.Core.Pipeline
                     : this(options.GetType().Namespace!,
                     GetResourceProviderNamespace(options.GetType().Assembly),
                     options.Diagnostics,
-                    suppressNestedClientActivities)
+                    suppressNestedClientActivities,
+                    IsTracingStable(options.GetType().Assembly))
         {
         }
 
@@ -48,8 +43,10 @@ namespace Azure.Core.Pipeline
         ///  for backward compatibility reasons, or set it to false to explicitly disable suppression for specific cases.
         ///  The default value could change in the future, the flag should be only set to false if suppression for the client
         ///  should never be enabled.</param>
-        public ClientDiagnostics(string optionsNamespace, string? providerNamespace, DiagnosticsOptions diagnosticsOptions, bool? suppressNestedClientActivities = null)
-            : base(optionsNamespace, providerNamespace, diagnosticsOptions.IsDistributedTracingEnabled, suppressNestedClientActivities.GetValueOrDefault(true))
+        /// <param name="isStable">Flag controlling if experimental tracing features are enabled. It's recommended to not change the default
+        ///  value until the client is ready to declare tracing support as stable.</param>
+        public ClientDiagnostics(string optionsNamespace, string? providerNamespace, DiagnosticsOptions diagnosticsOptions, bool? suppressNestedClientActivities = null, bool isStable = false)
+            : base(optionsNamespace, providerNamespace, diagnosticsOptions.IsDistributedTracingEnabled, suppressNestedClientActivities.GetValueOrDefault(true), isStable)
         {
         }
 
@@ -74,6 +71,23 @@ namespace Azure.Core.Pipeline
             }
 
             return null;
+        }
+
+        internal static bool IsTracingStable(Assembly assembly)
+        {
+            foreach (var customAttribute in assembly.GetCustomAttributesData())
+            {
+                // Weak bind internal shared type
+                Type attributeType = customAttribute.AttributeType!;
+                if (attributeType.FullName == ("Azure.Core.StableTracingAttribute"))
+                {
+                    IList<CustomAttributeTypedArgument> namedArguments = customAttribute.ConstructorArguments;
+                    bool? stable = namedArguments.Single().Value as bool?;
+                    return stable == true;
+                }
+            }
+
+            return false;
         }
     }
 }

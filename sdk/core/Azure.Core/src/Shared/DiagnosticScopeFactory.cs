@@ -20,6 +20,7 @@ namespace Azure.Core.Pipeline
         private readonly string? _resourceProviderNamespace;
         private readonly DiagnosticListener? _source;
         private readonly bool _suppressNestedClientActivities;
+        private readonly bool _isStable;
 
 #if NETCOREAPP2_1
         private static readonly ConcurrentDictionary<string, object?> ActivitySources = new();
@@ -27,11 +28,12 @@ namespace Azure.Core.Pipeline
         private static readonly ConcurrentDictionary<string, ActivitySource?> ActivitySources = new();
 #endif
 
-        public DiagnosticScopeFactory(string clientNamespace, string? resourceProviderNamespace, bool isActivityEnabled, bool suppressNestedClientActivities = true)
+        public DiagnosticScopeFactory(string clientNamespace, string? resourceProviderNamespace, bool isActivityEnabled, bool suppressNestedClientActivities, bool isStable)
         {
             _resourceProviderNamespace = resourceProviderNamespace;
             IsActivityEnabled = isActivityEnabled;
             _suppressNestedClientActivities = suppressNestedClientActivities;
+            _isStable = isStable;
 
             if (IsActivityEnabled)
             {
@@ -85,15 +87,15 @@ namespace Azure.Core.Pipeline
         ///     result Azure.Storage.Blobs.BlobClient
         /// </summary>
 #if NETCOREAPP2_1
-        private static object? GetActivitySource(string ns, string name)
+        private object? GetActivitySource(string ns, string name)
 #else
-        private static ActivitySource? GetActivitySource(string ns, string name)
+        private ActivitySource? GetActivitySource(string ns, string name)
 #endif
         {
 #if NETCOREAPP2_1
-            if (!ActivityExtensions.SupportsActivitySource())
+            if (!_isStable && !ActivityExtensions.SupportsActivitySource())
 #else
-            if (!ActivityExtensions.SupportsActivitySource)
+            if (!_isStable && !ActivityExtensions.SupportsActivitySource)
 #endif
             {
                 return null;

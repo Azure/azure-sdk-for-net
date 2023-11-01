@@ -50,7 +50,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventGrid.Config
             _collectorFactory = collectorFactory;
             _httpRequestProcessor = httpRequestProcessor;
             _loggerFactory = loggerFactory;
+<<<<<<< HEAD
             _diagnosticScopeFactory = new DiagnosticScopeFactory(DiagnosticScopeNamespace, ResourceProviderNamespace, true);
+=======
+            _diagnosticScopeFactory = new DiagnosticScopeFactory(DiagnosticScopeNamespace, ResourceProviderNamespace, true, false, false);
+>>>>>>> 9e7a9312aa0 (Remove tracing feature-flag from HTTP spans and add option for libs to mark tracing as stable)
         }
 
         public void Initialize(ExtensionConfigContext context)
