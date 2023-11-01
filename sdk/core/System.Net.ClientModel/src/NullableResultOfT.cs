@@ -6,21 +6,14 @@ using System.Net.ClientModel.Core;
 
 namespace System.Net.ClientModel;
 
-public class NullableResult<T> : Result
+public class NullableResult<T> : Result<T>
 {
-    private T? _value;
-    private MessageResponse _response;
-
-    internal NullableResult(T? value, MessageResponse response)
+    internal NullableResult(T? value, MessageResponse response) : base(value!, response)
     {
         Debug.Assert(response != null);
-        _response = response!;
-        _value = value;
     }
 
-    public virtual T? Value => _value;
+    public virtual new T? Value => base.Value;
 
-    public virtual bool HasValue => _value != null;
-
-    public override MessageResponse GetRawResponse() => _response;
+    public virtual bool HasValue => base.Value != null;
 }

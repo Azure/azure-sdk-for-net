@@ -7,12 +7,15 @@ using System.Net.ClientModel.Core;
 
 namespace System.Net.ClientModel;
 
-public class Result<T> : NullableResult<T>
+public class Result<T> : Result
 {
-    internal Result(T value, MessageResponse response) : base(value, response)
+    private T _value;
+    private MessageResponse _response;
+
+    internal Result(T value, MessageResponse response)// : base(value, response)
     {
-        Debug.Assert(value != null);
-        Debug.Assert(response != null);
+        _value = value;
+        _response = response!;
 
         // Null values are required to use NullableResult<T>
         if (value is null)
@@ -21,8 +24,7 @@ public class Result<T> : NullableResult<T>
         }
     }
 
-    public override T Value => base.Value!;
+    public T Value => _value;
 
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public override bool HasValue => true;
+    public override MessageResponse GetRawResponse() => _response;
 }
