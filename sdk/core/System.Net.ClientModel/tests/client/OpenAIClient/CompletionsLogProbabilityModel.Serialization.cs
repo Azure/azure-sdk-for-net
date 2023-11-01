@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Net.ClientModel.Core;
 using System.Text.Json;
@@ -99,7 +100,7 @@ public partial class CompletionsLogProbabilityModel
     /// <param name="response"> The response to deserialize the model from. </param>
     internal static CompletionsLogProbabilityModel FromResponse(MessageResponse response)
     {
-        using var document = JsonDocument.Parse(response.Body);
+        using var document = JsonDocument.Parse((BinaryData)response.Body);
         return DeserializeCompletionsLogProbabilityModel(document.RootElement);
     }
 }

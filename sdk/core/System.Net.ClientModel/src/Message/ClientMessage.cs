@@ -49,10 +49,18 @@ public class ClientMessage : IDisposable
     public void SetProperty(Type type, object value) =>
         _propertyBag.Set((ulong)type.TypeHandle.Value, value);
 
-    private MessageClassifier _messageClassifer = RequestOptions.DefaultMessageClassifier;
+    private MessageClassifier? _messageClassifer;
     public virtual MessageClassifier MessageClassifier
     {
-        get => _messageClassifer;
+        get
+        {
+            if (_messageClassifer is null)
+            {
+                throw new InvalidOperationException("MessageClassifer cannot be accessed before it is set on the message.");
+            }
+            return _messageClassifer;
+        }
+
         set => _messageClassifer = value;
     }
 

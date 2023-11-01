@@ -35,7 +35,7 @@ public class HttpMessageRequest : MessageRequest, IDisposable
         {
             if (_uri is null)
             {
-                throw new InvalidOperationException("Uri has not be set on HttpPipelineRequest instance.");
+                throw new InvalidOperationException("Uri has not be set on HttpMessageRequest instance.");
             }
 
             return _uri;
@@ -84,7 +84,7 @@ public class HttpMessageRequest : MessageRequest, IDisposable
         Uri uri = Uri;
         HttpRequestMessage httpRequest = new HttpRequestMessage(method, uri);
 
-        PipelineContentAdapter? httpContent = _content != null ? new PipelineContentAdapter(_content, cancellationToken) : null;
+        MessageBodyAdapter? httpContent = _content != null ? new MessageBodyAdapter(_content, cancellationToken) : null;
         httpRequest.Content = httpContent;
 #if NETSTANDARD
         httpRequest.Headers.ExpectContinue = false;
@@ -128,12 +128,12 @@ public class HttpMessageRequest : MessageRequest, IDisposable
         return httpRequest;
     }
 
-    private sealed class PipelineContentAdapter : HttpContent
+    private sealed class MessageBodyAdapter : HttpContent
     {
         private readonly MessageBody _content;
         private readonly CancellationToken _cancellationToken;
 
-        public PipelineContentAdapter(MessageBody content, CancellationToken cancellationToken)
+        public MessageBodyAdapter(MessageBody content, CancellationToken cancellationToken)
         {
             ClientUtilities.AssertNotNull(content, nameof(content));
 

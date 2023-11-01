@@ -5,6 +5,8 @@ namespace System.Net.ClientModel.Core
 {
     public class MessageClassifier
     {
+        internal static MessageClassifier Default { get; } = new MessageClassifier();
+
         protected internal MessageClassifier() { }
 
         /// <summary>

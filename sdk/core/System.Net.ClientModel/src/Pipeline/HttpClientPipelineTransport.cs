@@ -159,7 +159,7 @@ public class HttpClientPipelineTransport : PipelineTransport, IDisposable
         //   2. Make any necessary modifications based on the System.Net.Http.HttpResponseMessage.
         OnReceivedResponse(message, responseMessage);
 
-        // We set derived values on the PipelineResponse here, including Content and IsError
+        // We set derived values on the MessageResponse here, including Content and IsError
         // to ensure these things happen in the transport.  If derived implementations need
         // to override these default transport values, they can do so in pipeline policies.
 
@@ -191,12 +191,12 @@ public class HttpClientPipelineTransport : PipelineTransport, IDisposable
 
     private static HttpRequestMessage BuildRequestMessage(ClientMessage message)
     {
-        if (message.Request is not HttpMessageRequest pipelineRequest)
+        if (message.Request is not HttpMessageRequest messageRequest)
         {
             throw new InvalidOperationException($"The request type is not compatible with the transport: '{message.Request?.GetType()}'.");
         }
 
-        return pipelineRequest.BuildRequestMessage(message.CancellationToken);
+        return messageRequest.BuildRequestMessage(message.CancellationToken);
     }
 
     #region IDisposable

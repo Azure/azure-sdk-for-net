@@ -3,7 +3,7 @@ namespace System.Net.ClientModel
     public partial class KeyCredential
     {
         public KeyCredential(string key) { }
-        public bool TryGetKey(out string key) { throw null; }
+        public string Key { get { throw null; } }
         public void Update(string key) { }
     }
     public static partial class ModelReaderWriter
@@ -115,7 +115,7 @@ namespace System.Net.ClientModel.Core
     }
     public partial class KeyCredentialAuthenticationPolicy : System.Net.ClientModel.Core.PipelinePolicy
     {
-        public KeyCredentialAuthenticationPolicy(System.Net.ClientModel.KeyCredential credential, string header, string? keyPrefix = null) { }
+        public KeyCredentialAuthenticationPolicy(System.Net.ClientModel.KeyCredential credential, string headerName, string? keyPrefix = null) { }
         public override void Process(System.Net.ClientModel.Core.ClientMessage message, System.Net.ClientModel.Core.PipelineEnumerator pipeline) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(System.Net.ClientModel.Core.ClientMessage message, System.Net.ClientModel.Core.PipelineEnumerator pipeline) { throw null; }
     }
@@ -127,9 +127,8 @@ namespace System.Net.ClientModel.Core
         public static System.Net.ClientModel.Core.MessageBody Create(System.Net.ClientModel.Core.IJsonModel<object> model, System.Net.ClientModel.ModelReaderWriterOptions? options = null) { throw null; }
         public static System.Net.ClientModel.Core.MessageBody Create(System.Net.ClientModel.Core.IModel<object> model, System.Net.ClientModel.ModelReaderWriterOptions? options = null) { throw null; }
         public abstract void Dispose();
+        public static explicit operator System.BinaryData (System.Net.ClientModel.Core.MessageBody body) { throw null; }
         public static explicit operator System.IO.Stream (System.Net.ClientModel.Core.MessageBody body) { throw null; }
-        public static implicit operator System.BinaryData (System.Net.ClientModel.Core.MessageBody body) { throw null; }
-        public static implicit operator System.ReadOnlyMemory<byte> (System.Net.ClientModel.Core.MessageBody body) { throw null; }
         protected virtual System.BinaryData ToBinaryData(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         protected virtual System.IO.Stream ToStream(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public abstract bool TryComputeLength(out long length);
@@ -208,13 +207,8 @@ namespace System.Net.ClientModel.Core
     public partial class PipelineOptions
     {
         public PipelineOptions() { }
-        public static System.Net.ClientModel.Core.PipelinePolicy? DefaultLoggingPolicy { get { throw null; } set { } }
-        public static System.Net.ClientModel.Core.MessageClassifier DefaultMessageClassifier { get { throw null; } set { } }
-        public static System.TimeSpan DefaultNetworkTimeout { get { throw null; } set { } }
-        public static System.Net.ClientModel.Core.PipelinePolicy? DefaultRetryPolicy { get { throw null; } set { } }
-        public static System.Net.ClientModel.Core.PipelineTransport? DefaultTransport { get { throw null; } set { } }
         public System.Net.ClientModel.Core.PipelinePolicy? LoggingPolicy { get { throw null; } set { } }
-        public virtual System.Net.ClientModel.Core.MessageClassifier MessageClassifier { get { throw null; } set { } }
+        public virtual System.Net.ClientModel.Core.MessageClassifier? MessageClassifier { get { throw null; } set { } }
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
         public System.Net.ClientModel.Core.PipelinePolicy[]? PerCallPolicies { get { throw null; } set { } }
         public System.Net.ClientModel.Core.PipelinePolicy[]? PerTryPolicies { get { throw null; } set { } }

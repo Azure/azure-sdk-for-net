@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Net.ClientModel.Core;
 using System.Text.Json;
 namespace OpenAI;
@@ -39,7 +40,7 @@ public partial class ContentFilterResult
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static ContentFilterResult FromResponse(MessageResponse response)
         {
-            using var document = JsonDocument.Parse(response.Body);
+            using var document = JsonDocument.Parse((BinaryData)response.Body);
             return DeserializeContentFilterResult(document.RootElement);
         }
     }
