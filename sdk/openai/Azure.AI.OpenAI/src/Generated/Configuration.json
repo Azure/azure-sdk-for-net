@@ -1,0 +1,11 @@
+{
+  "output-folder": ".",
+  "namespace": "Azure.AI.OpenAI",
+  "library-name": "Azure.AI.OpenAI",
+  "shared-source-folders": [
+    "../../TempTypeSpecFiles/OpenAI.Inference/node_modules/@autorest/csharp/Generator.Shared",
+    "../../TempTypeSpecFiles/OpenAI.Inference/node_modules/@autorest/csharp/Azure.Core.Shared"
+  ],
+  "use-overloads-between-protocol-and-convenience": true,
+  "model-namespace": false
+}
