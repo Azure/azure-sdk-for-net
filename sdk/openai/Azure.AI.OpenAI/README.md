@@ -390,9 +390,12 @@ foreach (ChatMessage contextMessage in message.AzureExtensionsContext.Messages)
 ### Generate embeddings
 
 ```C# Snippet:GenerateEmbeddings
-string deploymentOrModelName = "text-embedding-ada-002";
-EmbeddingsOptions embeddingsOptions = new("Your text string goes here");
-Response<Embeddings> response = await client.GetEmbeddingsAsync(deploymentOrModelName, embeddingsOptions);
+EmbeddingsOptions embeddingsOptions = new()
+{
+    DeploymentName = "text-embedding-ada-002",
+    Input = { "Your text string goes here" },
+};
+Response<Embeddings> response = await client.GetEmbeddingsAsync(embeddingsOptions);
 
 // The response includes the generated embedding.
 EmbeddingItem item = response.Value.Data[0];
