@@ -20,7 +20,12 @@ public class NullableResult<T> : Result
 
     public virtual T? Value => _value;
 
-    public virtual bool HasValue => _value != null;
+    // TODO: Note that HasValue is needed if we decide we want to give callers
+    // a way to check whether Value is null without actually calling the Value
+    // getter.  We would want this if we decide to use an exploding response,
+    // but if we decide not to use an exploding response, HasValue is not strictly
+    // required because callers can always to do `response.Value is null` to check.
+    //public virtual bool HasValue => _value != null;
 
     public override MessageResponse GetRawResponse() => _response;
 }

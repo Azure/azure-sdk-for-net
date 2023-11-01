@@ -5,7 +5,7 @@ using System.Net.ClientModel.Core;
 
 namespace System.Net.ClientModel;
 
-public class Result<T> : Result
+public class Result<T> : Result where T : notnull
 {
     private readonly T _value;
     private readonly MessageResponse _response;

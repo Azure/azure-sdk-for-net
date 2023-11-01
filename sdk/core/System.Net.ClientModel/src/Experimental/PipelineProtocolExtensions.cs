@@ -83,9 +83,10 @@ public static class PipelineProtocolExtensions
             _exception = exception;
         }
 
-        public override T Value { get => throw _exception; }
+        public override T? Value { get => throw _exception; }
 
-        public override bool HasValue => false;
+        // TODO: come back to as we decide what to do when ErrorBehavior=NoThrow.
+        //public override bool HasValue => false;
 
         public override MessageResponse GetRawResponse() => _response;
     }
