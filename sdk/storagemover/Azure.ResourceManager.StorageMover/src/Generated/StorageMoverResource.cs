@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <returns> An object representing collection of StorageMoverAgentResources and their operations over a StorageMoverAgentResource. </returns>
         public virtual StorageMoverAgentCollection GetStorageMoverAgents()
         {
-            return GetCachedClient(Client => new StorageMoverAgentCollection(Client, Id));
+            return GetCachedClient(client => new StorageMoverAgentCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.StorageMover
         /// </summary>
         /// <param name="agentName"> The name of the Agent resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<StorageMoverAgentResource>> GetStorageMoverAgentAsync(string agentName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +134,8 @@ namespace Azure.ResourceManager.StorageMover
         /// </summary>
         /// <param name="agentName"> The name of the Agent resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="agentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<StorageMoverAgentResource> GetStorageMoverAgent(string agentName, CancellationToken cancellationToken = default)
         {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <returns> An object representing collection of StorageMoverEndpointResources and their operations over a StorageMoverEndpointResource. </returns>
         public virtual StorageMoverEndpointCollection GetStorageMoverEndpoints()
         {
-            return GetCachedClient(Client => new StorageMoverEndpointCollection(Client, Id));
+            return GetCachedClient(client => new StorageMoverEndpointCollection(client, Id));
         }
 
         /// <summary>
@@ -164,8 +164,8 @@ namespace Azure.ResourceManager.StorageMover
         /// </summary>
         /// <param name="endpointName"> The name of the Endpoint resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<StorageMoverEndpointResource>> GetStorageMoverEndpointAsync(string endpointName, CancellationToken cancellationToken = default)
         {
@@ -187,8 +187,8 @@ namespace Azure.ResourceManager.StorageMover
         /// </summary>
         /// <param name="endpointName"> The name of the Endpoint resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<StorageMoverEndpointResource> GetStorageMoverEndpoint(string endpointName, CancellationToken cancellationToken = default)
         {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <returns> An object representing collection of StorageMoverProjectResources and their operations over a StorageMoverProjectResource. </returns>
         public virtual StorageMoverProjectCollection GetStorageMoverProjects()
         {
-            return GetCachedClient(Client => new StorageMoverProjectCollection(Client, Id));
+            return GetCachedClient(client => new StorageMoverProjectCollection(client, Id));
         }
 
         /// <summary>
@@ -217,8 +217,8 @@ namespace Azure.ResourceManager.StorageMover
         /// </summary>
         /// <param name="projectName"> The name of the Project resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<StorageMoverProjectResource>> GetStorageMoverProjectAsync(string projectName, CancellationToken cancellationToken = default)
         {
@@ -240,8 +240,8 @@ namespace Azure.ResourceManager.StorageMover
         /// </summary>
         /// <param name="projectName"> The name of the Project resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<StorageMoverProjectResource> GetStorageMoverProject(string projectName, CancellationToken cancellationToken = default)
         {

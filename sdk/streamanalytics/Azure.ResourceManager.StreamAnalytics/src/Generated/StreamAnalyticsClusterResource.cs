@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> An object representing collection of StreamAnalyticsPrivateEndpointResources and their operations over a StreamAnalyticsPrivateEndpointResource. </returns>
         public virtual StreamAnalyticsPrivateEndpointCollection GetStreamAnalyticsPrivateEndpoints()
         {
-            return GetCachedClient(Client => new StreamAnalyticsPrivateEndpointCollection(Client, Id));
+            return GetCachedClient(client => new StreamAnalyticsPrivateEndpointCollection(client, Id));
         }
 
         /// <summary>
@@ -112,8 +112,8 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </summary>
         /// <param name="privateEndpointName"> The name of the private endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<StreamAnalyticsPrivateEndpointResource>> GetStreamAnalyticsPrivateEndpointAsync(string privateEndpointName, CancellationToken cancellationToken = default)
         {
@@ -135,8 +135,8 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </summary>
         /// <param name="privateEndpointName"> The name of the private endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<StreamAnalyticsPrivateEndpointResource> GetStreamAnalyticsPrivateEndpoint(string privateEndpointName, CancellationToken cancellationToken = default)
         {
