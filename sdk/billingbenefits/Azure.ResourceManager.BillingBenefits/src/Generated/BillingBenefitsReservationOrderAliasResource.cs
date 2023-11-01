@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.BillingBenefits
     public partial class BillingBenefitsReservationOrderAliasResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="BillingBenefitsReservationOrderAliasResource"/> instance. </summary>
+        /// <param name="reservationOrderAliasName"> The reservationOrderAliasName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string reservationOrderAliasName)
         {
             var resourceId = $"/providers/Microsoft.BillingBenefits/reservationOrderAliases/{reservationOrderAliasName}";

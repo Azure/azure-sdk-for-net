@@ -26,6 +26,11 @@ namespace Azure.ResourceManager.ApiManagement
     public partial class ApiOperationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ApiOperationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="apiId"> The apiId. </param>
+        /// <param name="operationId"> The operationId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string operationId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/operations/{operationId}";

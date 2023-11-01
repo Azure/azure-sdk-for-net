@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.Hci
     public partial class OfferResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="OfferResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="clusterName"> The clusterName. </param>
+        /// <param name="publisherName"> The publisherName. </param>
+        /// <param name="offerName"> The offerName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string publisherName, string offerName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/publishers/{publisherName}/offers/{offerName}";
