@@ -28,6 +28,7 @@ The main shared concepts of `System.Net.ClientModel` include:
 - Configuring service clients (`RequestOptions`).
 - Accessing HTTP response details (`Result`, `Result<T>`).
 - Exceptions for reporting errors from service requests in a consistent fashion (`MessageFailedException`).
+- Providing APIs to read and write models in different formats.
 
 ## Examples
 

@@ -26,5 +26,12 @@ namespace System.Net.ClientModel.Core
         /// <returns>A <typeparamref name="T"/> representation of the data.</returns>
         /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelReaderWriterOptions.Format"/>.</exception>
         T Read(BinaryData data, ModelReaderWriterOptions options);
+
+        /// <summary>
+        /// Gets the data interchange format (JSON, Xml, etc) that the model uses for its wire format.
+        /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
+        /// </summary>
+        /// <returns>The <see cref="ModelReaderWriterFormat"/> that the model uses for its wire format.</returns>
+        ModelReaderWriterFormat GetWireFormat(ModelReaderWriterOptions options);
     }
 }
