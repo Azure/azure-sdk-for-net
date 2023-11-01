@@ -60,7 +60,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task EventHubProducerCreatesDiagnosticScopeOnSend()
         {
             using var _ = SetAppConfigSwitch();
-            using var testListener = new TestActivitySourceListener(DiagnosticProperty.DiagnosticNamespace);
+            using var testListener = new TestActivitySourceListener(source => source.Name.StartsWith(DiagnosticProperty.DiagnosticNamespace));
 
             var activity = new Activity("SomeActivity").Start();
 
@@ -105,7 +105,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task EventHubProducerCreatesDiagnosticScopeOnBatchSend()
         {
             using var _ = SetAppConfigSwitch();
-            using var testListener = new TestActivitySourceListener(DiagnosticProperty.DiagnosticNamespace);
+            using var testListener = new TestActivitySourceListener(source => source.Name.StartsWith(DiagnosticProperty.DiagnosticNamespace));
 
             var activity = new Activity("SomeActivity").Start();
 
@@ -272,7 +272,7 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             using var _ = SetAppConfigSwitch();
 
-            using var testListener = new TestActivitySourceListener(DiagnosticProperty.DiagnosticNamespace);
+            using var testListener = new TestActivitySourceListener(source => source.Name.StartsWith(DiagnosticProperty.DiagnosticNamespace));
             var diagnosticId1 = "00-0af7651916cd43dd8448eb211c80319c-b9c7c989f97918e1-01";
             var diagnosticId2 = "00-0af7651916cd43dd8448eb211c80319c-c9c7c989f97918e1-01";
 
@@ -313,7 +313,7 @@ namespace Azure.Messaging.EventHubs.Tests
         public async Task EventHubProducerLinksSendScopeToMessageScopesOnBatchSend()
         {
             using var _ = SetAppConfigSwitch();
-            using var testListener = new TestActivitySourceListener(DiagnosticProperty.DiagnosticNamespace);
+            using var testListener = new TestActivitySourceListener(source => source.Name.StartsWith(DiagnosticProperty.DiagnosticNamespace));
 
             var diagnosticId1 = "00-0af7651916cd43dd8448eb211c80319c-b9c7c989f97918e1-01";
             var diagnosticId2 = "00-0af7651916cd43dd8448eb211c80319c-c9c7c989f97918e1-01";
@@ -381,7 +381,7 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
 
             using var _ = SetAppConfigSwitch();
-            using var listener = new TestActivitySourceListener(DiagnosticProperty.DiagnosticNamespace);
+            using var listener = new TestActivitySourceListener(source => source.Name.StartsWith(DiagnosticProperty.DiagnosticNamespace));
 
             var diagnosticId1 = "00-0af7651916cd43dd8448eb211c80319c-b9c7c989f97918e1-01";
             var diagnosticId2 = "00-0af7651916cd43dd8448eb211c80319c-c9c7c989f97918e1-01";
@@ -434,7 +434,7 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
 
             using var _ = SetAppConfigSwitch();
-            using var listener = new TestActivitySourceListener(DiagnosticProperty.DiagnosticNamespace);
+            using var listener = new TestActivitySourceListener(source => source.Name.StartsWith(DiagnosticProperty.DiagnosticNamespace));
 
             var enqueuedTime = DateTimeOffset.UtcNow;
             var diagnosticId = "00-0af7651916cd43dd8448eb211c80319c-b9c7c989f97918e1-01";
@@ -481,7 +481,7 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
 
             using var _ = SetAppConfigSwitch();
-            using var listener = new TestActivitySourceListener(DiagnosticProperty.DiagnosticNamespace);
+            using var listener = new TestActivitySourceListener(source => source.Name.StartsWith(DiagnosticProperty.DiagnosticNamespace));
 
             var enqueuedTime = DateTimeOffset.UtcNow;
             var diagnosticId = "00-0af7651916cd43dd8448eb211c80319c-b9c7c989f97918e1-01";
