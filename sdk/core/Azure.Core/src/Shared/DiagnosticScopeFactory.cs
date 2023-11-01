@@ -70,7 +70,10 @@ namespace Azure.Core.Pipeline
                                 kind: kind,
                                 suppressNestedClientActivities: _suppressNestedClientActivities);
 
-            scope.AddAttribute("az.namespace", _resourceProviderNamespace);
+            if (_resourceProviderNamespace != null)
+            {
+                scope.AddAttribute("az.namespace", _resourceProviderNamespace);
+            }
             return scope;
         }
 

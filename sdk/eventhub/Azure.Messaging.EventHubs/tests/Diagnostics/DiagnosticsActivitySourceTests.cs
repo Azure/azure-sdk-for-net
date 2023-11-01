@@ -82,7 +82,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Activity messageActivity = testListener.AssertAndRemoveActivity(DiagnosticProperty.EventActivityName);
             AssertCommonTags(messageActivity, eventHubName, endpoint, default, 1);
-            Assert.AreEqual(DiagnosticProperty.DiagnosticNamespace + ".EventHubMessage", messageActivity.Source.Name);
+            Assert.AreEqual(DiagnosticProperty.DiagnosticNamespace + ".Message", messageActivity.Source.Name);
 
             Activity sendActivity = testListener.AssertAndRemoveActivity(DiagnosticProperty.ProducerActivityName);
             AssertCommonTags(sendActivity, eventHubName, endpoint, MessagingDiagnosticOperation.Publish, 1);

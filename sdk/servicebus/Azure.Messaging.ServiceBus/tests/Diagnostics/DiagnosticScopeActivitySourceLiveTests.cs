@@ -144,7 +144,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     Assert.AreEqual(state.ToArray(), getState.ToArray());
                     var getStateActivity = listener.AssertAndRemoveActivity(DiagnosticProperty.GetSessionStateActivityName);
                     AssertCommonTags(getStateActivity, sessionReceiver.EntityPath, sessionReceiver.FullyQualifiedNamespace, default, 1);
-                    Assert.AreEqual(DiagnosticProperty.DiagnosticNamespace + ".ServiceBusSessionReceiver", getState.Source.Name);
+                    Assert.AreEqual(DiagnosticProperty.DiagnosticNamespace + ".ServiceBusSessionReceiver", getStateActivity.Source.Name);
                 }
                 else
                 {
@@ -361,7 +361,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 messageActivities.Add(messageActivity);
                 CollectionAssert.Contains(messageActivity.Tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.DestinationName, sender.EntityPath));
                 AssertCommonTags(messageActivity, sender.EntityPath, sender.FullyQualifiedNamespace, default, 1);
-                Assert.AreEqual(DiagnosticProperty.DiagnosticNamespace + ".ServiceBusMessage", messageActivity.Source.Name);
+                Assert.AreEqual(DiagnosticProperty.DiagnosticNamespace + ".Message", messageActivity.Source.Name);
             }
 
             var sendActivity = listener.AssertAndRemoveActivity(DiagnosticProperty.SendActivityName);
@@ -381,21 +381,14 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
         {
             var tags = activity.TagObjects.ToList();
             CollectionAssert.Contains(tags, new KeyValuePair<string, string>(DiagnosticScope.OpenTelemetrySchemaAttribute, DiagnosticScope.OpenTelemetrySchemaVersion));
-            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.NetPeerName, fullyQualifiedNamespace));
-
+            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.ServerAddress, fullyQualifiedNamespace));
+            CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.DestinationName, entityName));
             CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.MessagingSystem, DiagnosticProperty.ServiceBusServiceContext));
+
             if (operation != default)
             {
                 CollectionAssert.Contains(tags,
                     new KeyValuePair<string, string>(MessagingClientDiagnostics.MessagingOperation, operation.ToString()));
-                var entityKey = operation == MessagingDiagnosticOperation.Receive || operation == MessagingDiagnosticOperation.Process
-                    ? MessagingClientDiagnostics.SourceName
-                    : MessagingClientDiagnostics.DestinationName;
-                CollectionAssert.Contains(tags, new KeyValuePair<string, string>(entityKey, entityName));
-            }
-            else
-            {
-                CollectionAssert.Contains(tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.DestinationName, entityName));
             }
 
             if (messageCount > 1)

@@ -6,8 +6,7 @@
 
 ### Breaking Changes
 
-- Change `ActivitySource` name used to report message activity from `Azure.Messaging.ServiceBus` to `Azure.Messaging.ServiceBus.ServiceBusMessage`
-  and messaage `Activity` name from `Message` to `ServiceBusMessage.Create`.
+- Change `ActivitySource` name used to report message activity from `Azure.Messaging.ServiceBus` to `Azure.Messaging.ServiceBus.Message`.
 
 ### Bugs Fixed
 

@@ -27,7 +27,7 @@ namespace Azure.Core.Tests
 
             scope.AddAttribute("Attribute1", "Value1");
             scope.AddAttribute("Attribute2", 2, i => i.ToString());
-            scope.AddIntegerAttribute("Attribute3", 3);
+            scope.AddAttribute("Attribute3", 3);
 
             scope.Start();
 
@@ -47,9 +47,7 @@ namespace Azure.Core.Tests
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("kind", "internal"));
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("Attribute1", "Value1"));
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("Attribute2", "2"));
-
-            // int attributes not supported
-            CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, object>("Attribute3", "3"));
+            CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("Attribute3", "3"));
             CollectionAssert.Contains(activity.Tags, new KeyValuePair<string, string>("az.namespace", "Microsoft.Azure.Core.Cool.Tests"));
         }
 
