@@ -27,7 +27,7 @@ namespace System.Net.ClientModel
         /// The <see cref="ModelReaderWriterOptions"/> are frozen to avoid accidental modification.
         /// </summary>
         /// <param name="format">The <see cref="ModelReaderWriterFormat"/> the options should represent.</param>
-        public static ModelReaderWriterOptions GetOptions(ModelReaderWriterFormat format)
+        internal static ModelReaderWriterOptions GetOptions(ModelReaderWriterFormat format)
             => _singletonMap.TryGetValue(format, out ModelReaderWriterOptions? options) ? options! : new ModelReaderWriterOptions(format);
 
         private bool _isFrozen;
