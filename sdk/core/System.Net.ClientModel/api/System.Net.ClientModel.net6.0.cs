@@ -44,12 +44,11 @@ namespace System.Net.ClientModel
         public System.Net.ClientModel.ModelReaderWriterFormat Format { get { throw null; } }
         public static System.Net.ClientModel.ModelReaderWriterOptions GetOptions(System.Net.ClientModel.ModelReaderWriterFormat format) { throw null; }
     }
-    public partial class NullableResult<T> : System.Net.ClientModel.Result
+    public partial class NullableResult<T> : System.Net.ClientModel.Result<T>
     {
         internal NullableResult() { }
         public virtual bool HasValue { get { throw null; } }
-        public virtual T? Value { get { throw null; } }
-        public override System.Net.ClientModel.Core.MessageResponse GetRawResponse() { throw null; }
+        public virtual new T? Value { get { throw null; } }
     }
     public partial class RequestOptions : System.Net.ClientModel.Core.PipelineOptions
     {
@@ -67,12 +66,11 @@ namespace System.Net.ClientModel
         public static System.Net.ClientModel.Result<T> FromValue<T>(T value, System.Net.ClientModel.Core.MessageResponse response) { throw null; }
         public abstract System.Net.ClientModel.Core.MessageResponse GetRawResponse();
     }
-    public partial class Result<T> : System.Net.ClientModel.NullableResult<T>
+    public partial class Result<T> : System.Net.ClientModel.Result
     {
         internal Result() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool HasValue { get { throw null; } }
-        public override T Value { get { throw null; } }
+        public T Value { get { throw null; } }
+        public override System.Net.ClientModel.Core.MessageResponse GetRawResponse() { throw null; }
     }
     public partial class UnsuccessfulRequestException : System.Exception
     {
