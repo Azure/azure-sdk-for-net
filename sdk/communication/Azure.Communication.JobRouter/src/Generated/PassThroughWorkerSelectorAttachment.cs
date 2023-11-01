@@ -30,7 +30,7 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Initializes a new instance of PassThroughWorkerSelectorAttachment. </summary>
-        /// <param name="kind"> Discriminator. </param>
+        /// <param name="kind"> The type discriminator describing a sub-type of WorkerSelectorAttachment. </param>
         /// <param name="key"> The label key to query against. </param>
         /// <param name="labelOperator"> Describes how the value of the label is compared to the value pass through. </param>
         /// <param name="expiresAfterSeconds"> Describes how long the attached label selector is valid in seconds. </param>

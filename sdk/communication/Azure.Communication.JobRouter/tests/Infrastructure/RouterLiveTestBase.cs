@@ -43,6 +43,8 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
             var mode = TestEnvironment.Mode ?? Mode;
             if (mode != RecordedTestMode.Playback)
             {
+                await Task.Delay(TimeSpan.FromSeconds(3));
+
                 var testName = TestContext.CurrentContext.Test.FullName;
 
                 var popTestResources = _testCleanupTasks.TryRemove(testName, out var cleanupTasks);
@@ -52,8 +54,19 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
                     {
                         while (cleanupTasks.Count > 0)
                         {
+                            await Task.Delay(TimeSpan.FromSeconds(1));
+
                             var executableTask = cleanupTasks.Pop();
-                            await Task.Run(() => executableTask.Start());
+                            try
+                            {
+                                await Task.Run(() => executableTask.Start());
+                            }
+                            catch (Exception)
+                            {
+                                // Retry after delay
+                                await Task.Delay(TimeSpan.FromSeconds(3));
+                                await Task.Run(() => executableTask.Start());
+                            }
                         }
                     }
                 }
@@ -108,7 +121,7 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
                 {
                     Name = classificationPolicyName,
                     FallbackQueueId = createQueueResponse.Value.Id,
-                    QueueSelectors =
+                    QueueSelectorAttachments =
                     {
                         new StaticQueueSelectorAttachment(new RouterQueueSelector("Id", LabelOperator.Equal, new LabelValue(createQueueResponse.Value.Id)))
                     }
@@ -186,16 +199,16 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
         }
 
         protected void AssertRegisteredWorkerIsValid(Response<RouterWorker> routerWorkerResponse, string workerId,
-            IDictionary<string, RouterQueueAssignment?> queueAssignments, int? totalCapacity,
+            IList<string> queues, int? capacity,
             IDictionary<string, LabelValue?>? workerLabels = default,
-            IDictionary<string, ChannelConfiguration?>? channelConfigList = default,
+            IList<RouterChannel>? channelsList = default,
             IDictionary<string, LabelValue?>? workerTags = default)
         {
             var response = routerWorkerResponse.Value;
 
             Assert.AreEqual(workerId, response.Id);
-            Assert.AreEqual(queueAssignments.Count(), response.QueueAssignments.Count);
-            Assert.AreEqual(totalCapacity, response.TotalCapacity);
+            Assert.AreEqual(queues.Count(), response.Queues.Count);
+            Assert.AreEqual(capacity, response.Capacity);
 
             if (workerLabels != default)
             {
@@ -210,9 +223,9 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
                 Assert.AreEqual(tags, response.Tags);
             }
 
-            if (channelConfigList != default)
+            if (channelsList != default)
             {
-                Assert.AreEqual(channelConfigList.Count, response.ChannelConfigurations.Count);
+                Assert.AreEqual(channelsList.Count, response.Channels.Count);
             }
         }
 
