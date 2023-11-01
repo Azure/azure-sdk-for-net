@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.AppService
     public partial class StaticSiteUserProvidedFunctionAppResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="StaticSiteUserProvidedFunctionAppResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="functionAppName"> The functionAppName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string functionAppName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/userProvidedFunctionApps/{functionAppName}";

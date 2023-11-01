@@ -27,6 +27,7 @@ namespace Azure.AI.OpenAI.Tests
             Assert.That(client, Is.InstanceOf<OpenAIClient>());
             CompletionsOptions requestOptions = new()
             {
+                DeploymentName = deploymentOrModelName,
                 Prompts =
                 {
                     "Hello world",
@@ -34,7 +35,7 @@ namespace Azure.AI.OpenAI.Tests
                 },
             };
             Assert.That(requestOptions, Is.InstanceOf<CompletionsOptions>());
-            Response<Completions> response = await client.GetCompletionsAsync(deploymentOrModelName, requestOptions);
+            Response<Completions> response = await client.GetCompletionsAsync(requestOptions);
             Assert.That(response, Is.Not.Null);
             Assert.That(response, Is.InstanceOf<Response<Completions>>());
             Assert.That(response.Value, Is.Not.Null);
@@ -45,29 +46,18 @@ namespace Azure.AI.OpenAI.Tests
 
         [RecordedTest]
         [TestCase(OpenAIClientServiceTarget.Azure)]
-        [TestCase(OpenAIClientServiceTarget.NonAzure)]
-        public async Task SimpleCompletions(OpenAIClientServiceTarget serviceTarget)
-        {
-            OpenAIClient client = GetTestClient(serviceTarget);
-            string deploymentOrModelName = OpenAITestBase.GetDeploymentOrModelName(
-                serviceTarget,
-                OpenAIClientScenario.LegacyCompletions);
-            Response<Completions> response = await client.GetCompletionsAsync(deploymentOrModelName, "Hello world!");
-            Assert.That(response, Is.InstanceOf<Response<Completions>>());
-        }
-
-        [RecordedTest]
-        [TestCase(OpenAIClientServiceTarget.Azure)]
         [TestCase(OpenAIClientServiceTarget.NonAzure, Ignore = "Tokens not supported for non-Azure")]
         public async Task CompletionsWithTokenCredential(OpenAIClientServiceTarget serviceTarget)
         {
             OpenAIClient client = GetTestClient(serviceTarget, OpenAIClientAuthenticationType.Token);
             string deploymentName = OpenAITestBase.GetDeploymentOrModelName(serviceTarget, OpenAIClientScenario.LegacyCompletions);
-            var requestOptions = new CompletionsOptions();
-            requestOptions.Prompts.Add("Hello, world!");
-            requestOptions.Prompts.Add("I can have multiple prompts");
+            var requestOptions = new CompletionsOptions()
+            {
+                DeploymentName = deploymentName,
+                Prompts = { "Hello, world!", "I can have multiple prompts" },
+            };
             Assert.That(requestOptions, Is.InstanceOf<CompletionsOptions>());
-            Response<Completions> response = await client.GetCompletionsAsync(deploymentName, requestOptions);
+            Response<Completions> response = await client.GetCompletionsAsync(requestOptions);
             Assert.That(response, Is.InstanceOf<Response<Completions>>());
             Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
             Assert.That(response.Value.Choices.Count, Is.EqualTo(2));
@@ -80,10 +70,21 @@ namespace Azure.AI.OpenAI.Tests
         {
             OpenAIClient client = GetTestClient(serviceTarget);
             string deploymentOrModelName = OpenAITestBase.GetDeploymentOrModelName(serviceTarget, OpenAIClientScenario.Embeddings);
-            var embeddingsRequest = new EmbeddingsOptions("Your text string goes here");
-            Assert.That(embeddingsRequest, Is.InstanceOf<EmbeddingsOptions>());
-            Response<Embeddings> response = await client.GetEmbeddingsAsync(deploymentOrModelName, embeddingsRequest);
+            var embeddingsOptions = new EmbeddingsOptions()
+            {
+                DeploymentName = deploymentOrModelName,
+                Input = { "Your text string goes here" },
+            };
+            Assert.That(embeddingsOptions, Is.InstanceOf<EmbeddingsOptions>());
+            Response<Embeddings> response = await client.GetEmbeddingsAsync(embeddingsOptions);
             Assert.That(response, Is.InstanceOf<Response<Embeddings>>());
+            Assert.That(response.Value, Is.Not.Null);
+            Assert.That(response.Value.Data, Is.Not.Null.Or.Empty);
+
+            EmbeddingItem firstItem = response.Value.Data[0];
+            Assert.That(firstItem, Is.Not.Null);
+            Assert.That(firstItem.Index, Is.EqualTo(0));
+            Assert.That(firstItem.Embedding, Is.Not.Null.Or.Empty);
         }
 
         [RecordedTest]
@@ -95,6 +96,7 @@ namespace Azure.AI.OpenAI.Tests
             string deploymentOrModelName = OpenAITestBase.GetDeploymentOrModelName(serviceTarget, OpenAIClientScenario.LegacyCompletions);
             var requestOptions = new CompletionsOptions()
             {
+                DeploymentName = deploymentOrModelName,
                 Prompts =
                 {
                     "Hello world",
@@ -105,7 +107,7 @@ namespace Azure.AI.OpenAI.Tests
                 LogProbabilityCount = 1,
             };
             int expectedChoiceCount = (requestOptions.ChoicesPerPrompt ?? 1) * requestOptions.Prompts.Count;
-            Response<Completions> response = await client.GetCompletionsAsync(deploymentOrModelName, requestOptions);
+            Response<Completions> response = await client.GetCompletionsAsync(requestOptions);
             Assert.That(response.GetRawResponse(), Is.Not.Null.Or.Empty);
             Assert.That(response.Value, Is.Not.Null);
             Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
@@ -140,6 +142,7 @@ namespace Azure.AI.OpenAI.Tests
                 OpenAIClientScenario.ChatCompletions);
             var requestOptions = new ChatCompletionsOptions()
             {
+                DeploymentName = deploymentOrModelName,
                 Messages =
                 {
                     new ChatMessage(ChatRole.System, "You are a helpful assistant."),
@@ -148,9 +151,7 @@ namespace Azure.AI.OpenAI.Tests
                     new ChatMessage(ChatRole.User, "What temperature should I bake pizza at?"),
                 },
             };
-            Response<ChatCompletions> response = await client.GetChatCompletionsAsync(
-                deploymentOrModelName,
-                requestOptions);
+            Response<ChatCompletions> response = await client.GetChatCompletionsAsync(requestOptions);
             Assert.That(response, Is.Not.Null);
             Assert.That(response.Value, Is.InstanceOf<ChatCompletions>());
             Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
@@ -173,12 +174,13 @@ namespace Azure.AI.OpenAI.Tests
             string deploymentOrModelName = OpenAITestBase.GetDeploymentOrModelName(serviceTarget, OpenAIClientScenario.ChatCompletions);
             var requestOptions = new ChatCompletionsOptions()
             {
+                DeploymentName = deploymentOrModelName,
                 Messages =
                 {
                     new ChatMessage(ChatRole.User, "How do I cook a bell pepper?"),
                 },
             };
-            Response<ChatCompletions> response = await client.GetChatCompletionsAsync(deploymentOrModelName, requestOptions);
+            Response<ChatCompletions> response = await client.GetChatCompletionsAsync(requestOptions);
 
             Assert.That(response, Is.Not.Null);
             Assert.That(response.Value, Is.Not.Null);
@@ -204,10 +206,11 @@ namespace Azure.AI.OpenAI.Tests
                 = OpenAITestBase.GetDeploymentOrModelName(serviceTarget, OpenAIClientScenario.LegacyCompletions);
             var requestOptions = new CompletionsOptions()
             {
+                DeploymentName = deploymentOrModelName,
                 Prompts = { "How do I cook a bell pepper?" },
                 Temperature = 0
             };
-            Response<Completions> response = await client.GetCompletionsAsync(deploymentOrModelName, requestOptions);
+            Response<Completions> response = await client.GetCompletionsAsync(requestOptions);
 
             Assert.That(response, Is.Not.Null);
             Assert.That(response.Value, Is.Not.Null);
@@ -234,6 +237,7 @@ namespace Azure.AI.OpenAI.Tests
                 OpenAIClientScenario.ChatCompletions);
             var requestOptions = new ChatCompletionsOptions()
             {
+                DeploymentName = deploymentOrModelName,
                 Messages =
                 {
                     new ChatMessage(ChatRole.System, "You are a helpful assistant."),
@@ -243,8 +247,9 @@ namespace Azure.AI.OpenAI.Tests
                 },
                 MaxTokens = 512,
             };
+
             StreamingResponse<StreamingChatCompletionsUpdate> response
-                = await client.GetChatCompletionsStreamingAsync(deploymentOrModelName, requestOptions);
+                = await client.GetChatCompletionsStreamingAsync(requestOptions);
             Assert.That(response, Is.Not.Null);
 
             StringBuilder contentBuilder = new();
@@ -304,6 +309,7 @@ namespace Azure.AI.OpenAI.Tests
             string promptText = "Are bananas especially radioactive?";
             var requestOptions = new CompletionsOptions()
             {
+                DeploymentName = deploymentOrModelName,
                 Prompts = { promptText },
                 GenerationSampleCount = 3,
                 Temperature = 0.75f,
@@ -319,7 +325,7 @@ namespace Azure.AI.OpenAI.Tests
                     [15991] = -100, // 'anas'
                 },
             };
-            Response<Completions> response = await client.GetCompletionsAsync(deploymentOrModelName, requestOptions);
+            Response<Completions> response = await client.GetCompletionsAsync(requestOptions);
 
             Assert.That(response, Is.Not.Null);
             string rawResponse = response.GetRawResponse().Content.ToString();
@@ -348,11 +354,14 @@ namespace Azure.AI.OpenAI.Tests
         public void BadDeploymentFails(OpenAIClientServiceTarget serviceTarget)
         {
             OpenAIClient client = GetTestClient(serviceTarget);
-            var completionsRequest = new CompletionsOptions();
-            completionsRequest.Prompts.Add("Hello world");
+            var completionsRequest = new CompletionsOptions()
+            {
+                DeploymentName = "BAD_DEPLOYMENT_ID",
+                Prompts = { "Hello world" },
+            };
             RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
-                await client.GetCompletionsAsync("BAD_DEPLOYMENT_ID", completionsRequest);
+                await client.GetCompletionsAsync(completionsRequest);
             });
             Assert.AreEqual(404, exception.Status);
             Assert.That(exception.ErrorCode, Is.EqualTo("DeploymentNotFound"));
@@ -367,6 +376,7 @@ namespace Azure.AI.OpenAI.Tests
             string deploymentOrModelName = OpenAITestBase.GetDeploymentOrModelName(serviceTarget, OpenAIClientScenario.LegacyCompletions);
             var requestOptions = new CompletionsOptions()
             {
+                DeploymentName = deploymentOrModelName,
                 Prompts =
                 {
                     "How long would it take an unladen swallow to travel between Seattle, WA"
@@ -374,7 +384,7 @@ namespace Azure.AI.OpenAI.Tests
                 },
                 MaxTokens = 3,
             };
-            Response<Completions> response = await client.GetCompletionsAsync(deploymentOrModelName, requestOptions);
+            Response<Completions> response = await client.GetCompletionsAsync(requestOptions);
             Assert.That(response, Is.Not.Null);
             Assert.That(response.Value, Is.Not.Null);
             Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
@@ -393,6 +403,7 @@ namespace Azure.AI.OpenAI.Tests
             string deploymentOrModelName = OpenAITestBase.GetDeploymentOrModelName(serviceTarget, OpenAIClientScenario.LegacyCompletions);
             var requestOptions = new CompletionsOptions()
             {
+                DeploymentName = deploymentOrModelName,
                 Prompts =
                 {
                     "Tell me some jokes about mangos",
@@ -402,9 +413,7 @@ namespace Azure.AI.OpenAI.Tests
                 LogProbabilityCount = 1,
             };
 
-            using StreamingResponse<Completions> response = await client.GetCompletionsStreamingAsync(
-                deploymentOrModelName,
-                requestOptions);
+            using StreamingResponse<Completions> response = await client.GetCompletionsStreamingAsync(requestOptions);
             Assert.That(response, Is.Not.Null);
 
             Dictionary<int, PromptFilterResult> promptFilterResultsByPromptIndex = new();

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DevCenter
     public partial class DevCenterNetworkConnectionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DevCenterNetworkConnectionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="networkConnectionName"> The networkConnectionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkConnectionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/networkConnections/{networkConnectionName}";

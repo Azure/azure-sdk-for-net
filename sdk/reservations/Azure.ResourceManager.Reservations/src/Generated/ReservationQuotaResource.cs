@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.Reservations
     public partial class ReservationQuotaResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ReservationQuotaResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="providerId"> The providerId. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="resourceName"> The resourceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string providerId, AzureLocation location, string resourceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Capacity/resourceProviders/{providerId}/locations/{location}/serviceLimits/{resourceName}";

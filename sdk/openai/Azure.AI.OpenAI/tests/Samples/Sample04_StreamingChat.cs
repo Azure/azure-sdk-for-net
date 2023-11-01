@@ -18,6 +18,7 @@ namespace Azure.AI.OpenAI.Tests.Samples
             var client = new OpenAIClient(nonAzureOpenAIApiKey, new OpenAIClientOptions());
             var chatCompletionsOptions = new ChatCompletionsOptions()
             {
+                DeploymentName = "gpt-3.5-turbo", // Use DeploymentName for "model" with non-Azure clients
                 Messages =
                 {
                     new ChatMessage(ChatRole.System, "You are a helpful assistant. You will talk like a pirate."),
@@ -27,9 +28,7 @@ namespace Azure.AI.OpenAI.Tests.Samples
                 }
             };
 
-            await foreach (StreamingChatCompletionsUpdate chatUpdate in client.GetChatCompletionsStreaming(
-                deploymentOrModelName: "gpt-3.5-turbo",
-                chatCompletionsOptions))
+            await foreach (StreamingChatCompletionsUpdate chatUpdate in client.GetChatCompletionsStreaming(chatCompletionsOptions))
             {
                 if (chatUpdate.Role.HasValue)
                 {
@@ -60,9 +59,8 @@ namespace Azure.AI.OpenAI.Tests.Samples
                 ChoiceCount = 4
             };
 
-            await foreach (StreamingChatCompletionsUpdate chatUpdate in client.GetChatCompletionsStreaming(
-                deploymentOrModelName: "gpt-3.5-turbo",
-                chatCompletionsOptions))
+            await foreach (StreamingChatCompletionsUpdate chatUpdate
+                in client.GetChatCompletionsStreaming(chatCompletionsOptions))
             {
                 // Choice-specific information like Role and ContentUpdate will also provide a ChoiceIndex that allows
                 // StreamingChatCompletionsUpdate data for independent choices to be appropriately separated.

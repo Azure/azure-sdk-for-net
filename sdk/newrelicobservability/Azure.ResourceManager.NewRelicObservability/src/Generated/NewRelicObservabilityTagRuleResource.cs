@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.NewRelicObservability
     public partial class NewRelicObservabilityTagRuleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NewRelicObservabilityTagRuleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="monitorName"> The monitorName. </param>
+        /// <param name="ruleSetName"> The ruleSetName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string monitorName, string ruleSetName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/NewRelic.Observability/monitors/{monitorName}/tagRules/{ruleSetName}";

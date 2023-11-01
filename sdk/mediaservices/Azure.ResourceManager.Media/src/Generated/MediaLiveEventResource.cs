@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.Media
     public partial class MediaLiveEventResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MediaLiveEventResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="liveEventName"> The liveEventName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string liveEventName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}";

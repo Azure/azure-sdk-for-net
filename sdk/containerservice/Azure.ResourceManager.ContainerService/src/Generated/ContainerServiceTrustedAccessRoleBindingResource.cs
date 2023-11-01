@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.ContainerService
     public partial class ContainerServiceTrustedAccessRoleBindingResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ContainerServiceTrustedAccessRoleBindingResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        /// <param name="trustedAccessRoleBindingName"> The trustedAccessRoleBindingName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string trustedAccessRoleBindingName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}/trustedAccessRoleBindings/{trustedAccessRoleBindingName}";

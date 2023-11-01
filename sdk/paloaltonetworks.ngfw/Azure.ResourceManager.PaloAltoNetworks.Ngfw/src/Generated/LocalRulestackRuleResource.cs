@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
     public partial class LocalRulestackRuleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="LocalRulestackRuleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="localRulestackName"> The localRulestackName. </param>
+        /// <param name="priority"> The priority. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string localRulestackName, string priority)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/localRulestacks/{localRulestackName}/localRules/{priority}";

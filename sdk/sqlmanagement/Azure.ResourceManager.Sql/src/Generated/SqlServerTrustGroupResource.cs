@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.Sql
     public partial class SqlServerTrustGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SqlServerTrustGroupResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="locationName"> The locationName. </param>
+        /// <param name="serverTrustGroupName"> The serverTrustGroupName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, AzureLocation locationName, string serverTrustGroupName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/locations/{locationName}/serverTrustGroups/{serverTrustGroupName}";

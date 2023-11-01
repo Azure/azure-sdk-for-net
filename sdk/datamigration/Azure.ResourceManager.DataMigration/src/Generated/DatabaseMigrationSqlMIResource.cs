@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.DataMigration
     public partial class DatabaseMigrationSqlMIResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DatabaseMigrationSqlMIResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="managedInstanceName"> The managedInstanceName. </param>
+        /// <param name="targetDBName"> The targetDBName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string targetDBName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDBName}";

@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.DataMigration
     public partial class SqlMigrationServiceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SqlMigrationServiceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="sqlMigrationServiceName"> The sqlMigrationServiceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string sqlMigrationServiceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataMigration/sqlMigrationServices/{sqlMigrationServiceName}";

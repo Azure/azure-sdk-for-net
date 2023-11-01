@@ -692,25 +692,6 @@ namespace Azure.ResourceManager.CosmosDB
         }
         #endregion
 
-        #region CassandraClusterBackupResource
-        /// <summary>
-        /// Gets an object representing a <see cref="CassandraClusterBackupResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CassandraClusterBackupResource.CreateResourceIdentifier" /> to create a <see cref="CassandraClusterBackupResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CassandraClusterBackupResource" /> object. </returns>
-        public static CassandraClusterBackupResource GetCassandraClusterBackupResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                CassandraClusterBackupResource.ValidateResourceId(id);
-                return new CassandraClusterBackupResource(client, id);
-            }
-            );
-        }
-        #endregion
-
         #region CassandraDataCenterResource
         /// <summary>
         /// Gets an object representing a <see cref="CassandraDataCenterResource" /> along with the instance operations that can be performed on it but with no data.

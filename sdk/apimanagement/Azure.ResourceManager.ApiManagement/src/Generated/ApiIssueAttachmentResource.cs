@@ -25,6 +25,12 @@ namespace Azure.ResourceManager.ApiManagement
     public partial class ApiIssueAttachmentResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ApiIssueAttachmentResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="apiId"> The apiId. </param>
+        /// <param name="issueId"> The issueId. </param>
+        /// <param name="attachmentId"> The attachmentId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string issueId, string attachmentId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/issues/{issueId}/attachments/{attachmentId}";

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.5 (Unreleased)
+## 1.2.0-beta.6 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0-beta.5 (2023-10-31)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2023-04' to 'package-preview-2023-09'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/13aec7f115c01ba6986ebf32488537392c0df6f5/specification/maintenance/resource-manager/readme.md
 
 ## 1.2.0-beta.4 (2023-09-15)
 

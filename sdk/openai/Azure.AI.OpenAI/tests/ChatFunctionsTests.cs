@@ -29,6 +29,7 @@ public class ChatFunctionsTests : OpenAITestBase
 
         var requestOptions = new ChatCompletionsOptions()
         {
+            DeploymentName = deploymentOrModelName,
             Functions = { s_futureTemperatureFunction },
             Messages =
             {
@@ -38,7 +39,7 @@ public class ChatFunctionsTests : OpenAITestBase
             MaxTokens = 512,
         };
 
-        Response<ChatCompletions> response = await client.GetChatCompletionsAsync(deploymentOrModelName, requestOptions);
+        Response<ChatCompletions> response = await client.GetChatCompletionsAsync(requestOptions);
         Assert.That(response, Is.Not.Null);
 
         Assert.That(response.Value, Is.Not.Null);
@@ -52,6 +53,7 @@ public class ChatFunctionsTests : OpenAITestBase
 
         ChatCompletionsOptions followupOptions = new()
         {
+            DeploymentName = deploymentOrModelName,
             Functions = { s_futureTemperatureFunction },
             MaxTokens = 512,
         };
@@ -72,7 +74,7 @@ public class ChatFunctionsTests : OpenAITestBase
             new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }),
         });
 
-        Response<ChatCompletions> followupResponse = await client.GetChatCompletionsAsync(deploymentOrModelName, followupOptions);
+        Response<ChatCompletions> followupResponse = await client.GetChatCompletionsAsync(followupOptions);
         Assert.That(followupResponse, Is.Not.Null);
         Assert.That(followupResponse.Value, Is.Not.Null);
         Assert.That(followupResponse.Value.Choices, Is.Not.Null.Or.Empty);
@@ -92,7 +94,8 @@ public class ChatFunctionsTests : OpenAITestBase
 
         var requestOptions = new ChatCompletionsOptions()
         {
-            Functions = { s_futureTemperatureFunction, s_wordOfTheDayFunction },
+            DeploymentName = deploymentOrModelName,
+            Functions = { s_futureTemperatureFunction },
             Messages =
             {
                 new ChatMessage(ChatRole.System, "You are a helpful assistant."),
@@ -102,7 +105,7 @@ public class ChatFunctionsTests : OpenAITestBase
         };
 
         StreamingResponse<StreamingChatCompletionsUpdate> response
-            = await client.GetChatCompletionsStreamingAsync(deploymentOrModelName, requestOptions);
+            = await client.GetChatCompletionsStreamingAsync(requestOptions);
         Assert.That(response, Is.Not.Null);
 
         ChatRole? streamedRole = default;

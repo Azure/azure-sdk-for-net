@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.PowerBIDedicated
     public partial class AutoScaleVCoreResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AutoScaleVCoreResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="vcoreName"> The vcoreName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vcoreName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.PowerBIDedicated/autoScaleVCores/{vcoreName}";

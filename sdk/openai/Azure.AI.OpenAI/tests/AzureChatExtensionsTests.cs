@@ -63,6 +63,7 @@ public class AzureChatExtensionsTests : OpenAITestBase
 
         var requestOptions = new ChatCompletionsOptions()
         {
+            DeploymentName = deploymentOrModelName,
             Messages =
             {
                 new ChatMessage(ChatRole.User, "What does PR complete mean?"),
@@ -71,7 +72,7 @@ public class AzureChatExtensionsTests : OpenAITestBase
             AzureExtensionsOptions = extensionsOptions,
         };
 
-        Response<ChatCompletions> response = await client.GetChatCompletionsAsync(deploymentOrModelName, requestOptions);
+        Response<ChatCompletions> response = await client.GetChatCompletionsAsync(requestOptions);
         Assert.That(response, Is.Not.Null);
         Assert.That(response.Value, Is.Not.Null);
         Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
@@ -100,6 +101,7 @@ public class AzureChatExtensionsTests : OpenAITestBase
 
         var requestOptions = new ChatCompletionsOptions()
         {
+            DeploymentName = deploymentOrModelName,
             Messages =
             {
                 new ChatMessage(ChatRole.User, "What does PR complete mean?"),
@@ -125,7 +127,7 @@ public class AzureChatExtensionsTests : OpenAITestBase
         };
 
         using StreamingResponse<StreamingChatCompletionsUpdate> response
-            = await client.GetChatCompletionsStreamingAsync(deploymentOrModelName, requestOptions);
+            = await client.GetChatCompletionsStreamingAsync(requestOptions);
         Assert.That(response, Is.Not.Null);
         Assert.That(response.GetRawResponse(), Is.Not.Null);
 

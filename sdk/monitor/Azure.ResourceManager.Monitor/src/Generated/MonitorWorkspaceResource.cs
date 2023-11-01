@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.Monitor
     public partial class MonitorWorkspaceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MonitorWorkspaceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="azureMonitorWorkspaceName"> The azureMonitorWorkspaceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string azureMonitorWorkspaceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Monitor/accounts/{azureMonitorWorkspaceName}";
