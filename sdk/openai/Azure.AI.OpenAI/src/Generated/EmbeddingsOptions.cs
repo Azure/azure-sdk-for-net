@@ -20,22 +20,6 @@ namespace Azure.AI.OpenAI
     public partial class EmbeddingsOptions
     {
         /// <summary> Initializes a new instance of EmbeddingsOptions. </summary>
-        /// <param name="input">
-        /// Input texts to get embeddings for, encoded as a an array of strings.
-        /// Each input must not exceed 2048 tokens in length.
-        ///
-        /// Unless you are embedding code, we suggest replacing newlines (\n) in your input with a single space,
-        /// as we have observed inferior results when newlines are present.
-        /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
-        public EmbeddingsOptions(IEnumerable<string> input)
-        {
-            Argument.AssertNotNull(input, nameof(input));
-
-            Input = input.ToList();
-        }
-
-        /// <summary> Initializes a new instance of EmbeddingsOptions. </summary>
         /// <param name="user">
         /// An identifier for the caller or end user of the operation. This may be used for tracking
         /// or rate-limiting purposes.

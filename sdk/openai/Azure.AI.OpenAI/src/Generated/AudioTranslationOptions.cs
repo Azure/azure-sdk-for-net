@@ -18,19 +18,6 @@ namespace Azure.AI.OpenAI
         /// The audio data to translate. This must be the binary content of a file in one of the supported media formats:
         /// flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, webm.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="audioData"/> is null. </exception>
-        public AudioTranslationOptions(BinaryData audioData)
-        {
-            Argument.AssertNotNull(audioData, nameof(audioData));
-
-            AudioData = audioData;
-        }
-
-        /// <summary> Initializes a new instance of AudioTranslationOptions. </summary>
-        /// <param name="audioData">
-        /// The audio data to translate. This must be the binary content of a file in one of the supported media formats:
-        /// flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, webm.
-        /// </param>
         /// <param name="responseFormat"> The requested format of the translation response data, which will influence the content and detail of the result. </param>
         /// <param name="prompt">
         /// An optional hint to guide the model's style or continue from a prior audio segment. The written language of the

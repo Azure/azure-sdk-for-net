@@ -8,6 +8,7 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
+    [CodeGenSuppress("AudioTranscriptionOptions", typeof(BinaryData))]
     public partial class AudioTranscriptionOptions
     {
         /// <summary>
@@ -44,6 +45,26 @@ namespace Azure.AI.OpenAI
         /// </remarks>
         [CodeGenMember("InternalNonAzureModelName")]
         public string DeploymentName { get; set; }
+
+        /// <summary>
+        /// Creates a new instance of <see cref="AudioTranscriptionOptions"/>.
+        /// </summary>
+        /// <param name="deploymentName"> The deployment name to use for audio transcription. </param>
+        /// <param name="audioData"> The audio data to transcribe. </param>
+        /// <exception cref="ArgumentException">
+        ///     <paramref name="deploymentName"/> is null or empty.
+        /// </exception>
+        /// <exception cref="ArgumentNullException">
+        ///     <paramref name="audioData"/> is null.
+        /// </exception>
+        public AudioTranscriptionOptions(string deploymentName, BinaryData audioData)
+        {
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNull(audioData, nameof(audioData));
+
+            DeploymentName = deploymentName;
+            AudioData = audioData;
+        }
 
         /// <summary> Initializes a new instance of AudioTranscriptionOptions. </summary>
         public AudioTranscriptionOptions()

@@ -9,9 +9,7 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    /// <summary>
-    /// The configuration information used for a chat completions request.
-    /// </summary>
+    [CodeGenSuppress("ChatCompletionsOptions", typeof(IEnumerable<ChatMessage>))]
     public partial class ChatCompletionsOptions
     {
         /// <inheritdoc cref="CompletionsOptions.ChoicesPerPrompt"/>
@@ -98,16 +96,25 @@ namespace Azure.AI.OpenAI
         internal IDictionary<string, int> InternalStringKeyedTokenSelectionBiases { get; }
 
         /// <summary> Initializes a new instance of ChatCompletionsOptions. </summary>
+        /// <param name="deploymentName"> The deployment name to use for chat completions. </param>
         /// <param name="messages">
         /// The collection of context messages associated with this chat completions request.
         /// Typical usage begins with a chat message for the System role that provides instructions for
         /// the behavior of the assistant, followed by alternating messages between the User and
         /// Assistant roles.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="messages"/> is null. </exception>
-        public ChatCompletionsOptions(IEnumerable<ChatMessage> messages) : this()
+        /// <exception cref="ArgumentException">
+        ///     <paramref name="deploymentName"/> is null or empty.
+        /// </exception>
+        /// <exception cref="ArgumentNullException">
+        ///     <paramref name="messages"/> is null.
+        /// </exception>
+        public ChatCompletionsOptions(string deploymentName, IEnumerable<ChatMessage> messages) : this()
         {
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
             Argument.AssertNotNull(messages, nameof(messages));
+
+            DeploymentName = deploymentName;
 
             foreach (ChatMessage chatMessage in messages)
             {
@@ -115,7 +122,7 @@ namespace Azure.AI.OpenAI
             }
         }
 
-        /// <inheritdoc cref="ChatCompletionsOptions(IEnumerable{ChatMessage})"/>
+        /// <summary> Initializes a new instance of ChatCompletionsOptions. </summary>
         public ChatCompletionsOptions()
         {
             // CUSTOM CODE NOTE: Empty constructors are added to options classes to facilitate property-only use; this

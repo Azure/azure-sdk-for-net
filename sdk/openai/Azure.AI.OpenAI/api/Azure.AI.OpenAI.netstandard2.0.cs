@@ -31,7 +31,7 @@ namespace Azure.AI.OpenAI
     public partial class AudioTranscriptionOptions
     {
         public AudioTranscriptionOptions() { }
-        public AudioTranscriptionOptions(System.BinaryData audioData) { }
+        public AudioTranscriptionOptions(string deploymentName, System.BinaryData audioData) { }
         public System.BinaryData AudioData { get { throw null; } set { } }
         public string DeploymentName { get { throw null; } set { } }
         public string Language { get { throw null; } set { } }
@@ -84,7 +84,7 @@ namespace Azure.AI.OpenAI
     public partial class AudioTranslationOptions
     {
         public AudioTranslationOptions() { }
-        public AudioTranslationOptions(System.BinaryData audioData) { }
+        public AudioTranslationOptions(string deploymentName, System.BinaryData audioData) { }
         public System.BinaryData AudioData { get { throw null; } set { } }
         public string DeploymentName { get { throw null; } set { } }
         public string Prompt { get { throw null; } set { } }
@@ -231,7 +231,7 @@ namespace Azure.AI.OpenAI
     public partial class ChatCompletionsOptions
     {
         public ChatCompletionsOptions() { }
-        public ChatCompletionsOptions(System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.ChatMessage> messages) { }
+        public ChatCompletionsOptions(string deploymentName, System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.ChatMessage> messages) { }
         public Azure.AI.OpenAI.AzureChatExtensionsOptions AzureExtensionsOptions { get { throw null; } set { } }
         public int? ChoiceCount { get { throw null; } set { } }
         public string DeploymentName { get { throw null; } set { } }
@@ -400,7 +400,7 @@ namespace Azure.AI.OpenAI
     public partial class EmbeddingsOptions
     {
         public EmbeddingsOptions() { }
-        public EmbeddingsOptions(System.Collections.Generic.IEnumerable<string> input) { }
+        public EmbeddingsOptions(string deploymentName, System.Collections.Generic.IEnumerable<string> input) { }
         public string DeploymentName { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Input { get { throw null; } set { } }
         public string User { get { throw null; } set { } }

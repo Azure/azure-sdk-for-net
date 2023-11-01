@@ -3,13 +3,13 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    /// <summary> Schema to create a prompt completion from a deployment. </summary>
+    [CodeGenSuppress("EmbeddingsOptions", typeof(IEnumerable<string>))]
     public partial class EmbeddingsOptions
     {
         /// <summary>
@@ -36,6 +36,17 @@ namespace Azure.AI.OpenAI
         /// as we have observed inferior results when newlines are present.
         /// </summary>
         public IList<string> Input { get; set; } = new ChangeTrackingList<string>();
+
+        /// <summary>
+        /// Creates a new instance of <see cref="EmbeddingsOptions"/>.
+        /// </summary>
+        /// <param name="deploymentName"> The deployment name to use for embeddings. </param>
+        /// <param name="input"> The collection of inputs to run an embeddings operation across. </param>
+        public EmbeddingsOptions(string deploymentName, IEnumerable<string> input)
+        {
+            DeploymentName = deploymentName;
+            Input = input.ToList();
+        }
 
         /// <summary>
         /// Creates a new instance of <see cref="EmbeddingsOptions"/>.

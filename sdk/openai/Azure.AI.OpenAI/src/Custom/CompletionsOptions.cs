@@ -10,6 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
+    [CodeGenSuppress("CompletionsOptions", typeof(IEnumerable<string>))]
     public partial class CompletionsOptions
     {
         /// <summary>

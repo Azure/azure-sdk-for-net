@@ -8,7 +8,7 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    /// <summary> The configuration information for an audio translation request. </summary>
+    [CodeGenSuppress("AudioTranslationOptions", typeof(BinaryData))]
     public partial class AudioTranslationOptions
     {
         /// <summary>
@@ -45,6 +45,26 @@ namespace Azure.AI.OpenAI
         /// </remarks>
         [CodeGenMember("InternalNonAzureModelName")]
         public string DeploymentName { get; set; }
+
+        /// <summary>
+        /// Creates a new instance of <see cref="AudioTranslationOptions"/>.
+        /// </summary>
+        /// <param name="deploymentName"> The deployment name to use for audio translation. </param>
+        /// <param name="audioData"> The audio data to translate. </param>
+        /// <exception cref="ArgumentException">
+        ///     <paramref name="deploymentName"/> is null or empty.
+        /// </exception>
+        /// <exception cref="ArgumentNullException">
+        ///     <paramref name="audioData"/> is null.
+        /// </exception>
+        public AudioTranslationOptions(string deploymentName, BinaryData audioData)
+        {
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNull(audioData, nameof(audioData));
+
+            DeploymentName = deploymentName;
+            AudioData = audioData;
+        }
 
         /// <summary>
         /// Initializes a new instance of AudioTranslationOptions.
