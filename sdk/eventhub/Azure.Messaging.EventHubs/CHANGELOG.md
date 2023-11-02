@@ -12,6 +12,8 @@
 
 ### Other Changes
 
+- When an Event Hub is disabled, it will now be detected and result in a terminal `EventHubsException` with its reason set to `FailureReason.ResourceNotFound`.
+
 ## 5.9.3 (2023-09-12)
 
 ### Bugs Fixed
