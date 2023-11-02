@@ -28,7 +28,7 @@ namespace Azure.Storage.DataMovement
                   partNumber: partNumber,
                   sourceResource: job._sourceResource,
                   destinationResource: job._destinationResource,
-                  maximumTransferChunkSize: job._maximumTransferChunkSize,
+                  transferChunkSize: job._maximumTransferChunkSize,
                   initialTransferSize: job._initialTransferSize,
                   errorHandling: job._errorMode,
                   createMode: job._creationPreference,
@@ -54,12 +54,14 @@ namespace Azure.Storage.DataMovement
             StorageResourceItem sourceResource,
             StorageResourceItem destinationResource,
             DataTransferStatus jobPartStatus = default,
-            long? length = default)
+            long? length = default,
+            long? initialTransferSize = default,
+            long? transferChunkSize = default)
             : base(dataTransfer: job._dataTransfer,
                   partNumber: partNumber,
                   sourceResource: sourceResource,
                   destinationResource: destinationResource,
-                  maximumTransferChunkSize: job._maximumTransferChunkSize,
+                  transferChunkSize: job._maximumTransferChunkSize,
                   initialTransferSize: job._initialTransferSize,
                   errorHandling: job._errorMode,
                   createMode: job._creationPreference,
@@ -76,6 +78,16 @@ namespace Azure.Storage.DataMovement
                   jobPartStatus: jobPartStatus,
                   length: length)
         {
+            // If transfer sizes were provided override ones from job.
+            // This will be the case when resuming from a checkpoint file.
+            if (initialTransferSize.HasValue)
+            {
+                _initialTransferSize = initialTransferSize.Value;
+            }
+            if (transferChunkSize.HasValue)
+            {
+                _transferChunkSize = transferChunkSize.Value;
+            }
         }
 
         public async ValueTask DisposeAsync()
@@ -83,6 +95,9 @@ namespace Azure.Storage.DataMovement
             await DisposeHandlers().ConfigureAwait(false);
         }
 
+        /// <summary>
+        /// Called when creating a job part from a single transfer.
+        /// </summary>
         public static async Task<StreamToUriJobPart> CreateJobPartAsync(
             StreamToUriTransferJob job,
             int partNumber)
@@ -93,28 +108,47 @@ namespace Azure.Storage.DataMovement
             return part;
         }
 
+        /// <summary>
+        /// Called when creating a job part from a container transfer.
+        /// </summary>
         public static async Task<StreamToUriJobPart> CreateJobPartAsync(
             StreamToUriTransferJob job,
             int partNumber,
             StorageResourceItem sourceResource,
             StorageResourceItem destinationResource,
-            DataTransferStatus jobPartStatus = default,
-            long? length = default,
-            bool partPlanFileExists = false)
+            long? length = default)
         {
             // Create Job Part file as we're initializing the job part
             StreamToUriJobPart part = new StreamToUriJobPart(
                 job: job,
                 partNumber: partNumber,
-                jobPartStatus: jobPartStatus,
                 sourceResource: sourceResource,
                 destinationResource: destinationResource,
                 length: length);
-            if (!partPlanFileExists)
-            {
-                await part.AddJobPartToCheckpointerAsync().ConfigureAwait(false);
-            }
+            await part.AddJobPartToCheckpointerAsync().ConfigureAwait(false);
             return part;
+        }
+
+        /// <summary>
+        /// Called when creating a job part from a checkpoint file on resume.
+        /// </summary>
+        public static StreamToUriJobPart CreateJobPartFromCheckpoint(
+            StreamToUriTransferJob job,
+            int partNumber,
+            StorageResourceItem sourceResource,
+            StorageResourceItem destinationResource,
+            DataTransferStatus jobPartStatus,
+            long initialTransferSize,
+            long transferChunkSize)
+        {
+            return new StreamToUriJobPart(
+                job: job,
+                partNumber: partNumber,
+                sourceResource: sourceResource,
+                destinationResource: destinationResource,
+                jobPartStatus: jobPartStatus,
+                initialTransferSize: initialTransferSize,
+                transferChunkSize: transferChunkSize);
         }
 
         /// <summary>
@@ -147,7 +181,7 @@ namespace Azure.Storage.DataMovement
                                 singleCall: true).ConfigureAwait(false)).ConfigureAwait(false);
                         return;
                     }
-                    long blockSize = CalculateBlockSize(length);
+                    long blockSize = _transferChunkSize;
 
                     _commitBlockHandler = GetCommitController(
                         expectedLength: length,
