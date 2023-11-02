@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.ElasticSan
     public partial class ElasticSanVolumeGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ElasticSanVolumeGroupResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="elasticSanName"> The elasticSanName. </param>
+        /// <param name="volumeGroupName"> The volumeGroupName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string elasticSanName, string volumeGroupName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}";

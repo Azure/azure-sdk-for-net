@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.Network
     public partial class ServiceEndpointPolicyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ServiceEndpointPolicyResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serviceEndpointPolicyName"> The serviceEndpointPolicyName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceEndpointPolicyName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/serviceEndpointPolicies/{serviceEndpointPolicyName}";

@@ -27,6 +27,11 @@ namespace Azure.ResourceManager.Logic
     public partial class LogicWorkflowRunActionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="LogicWorkflowRunActionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workflowName"> The workflowName. </param>
+        /// <param name="runName"> The runName. </param>
+        /// <param name="actionName"> The actionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workflowName, string runName, string actionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/runs/{runName}/actions/{actionName}";

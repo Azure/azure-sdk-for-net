@@ -129,6 +129,8 @@ namespace Azure.Storage.DataMovement
     {
         protected StorageResourceContainer() { }
         protected internal override bool IsContainer { get { throw null; } }
+        protected internal abstract System.Threading.Tasks.Task CreateIfNotExistsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        protected internal abstract Azure.Storage.DataMovement.StorageResourceContainer GetChildStorageResourceContainer(string path);
         protected internal abstract Azure.Storage.DataMovement.StorageResourceItem GetStorageResourceReference(string path);
         protected internal abstract System.Collections.Generic.IAsyncEnumerable<Azure.Storage.DataMovement.StorageResource> GetStorageResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }

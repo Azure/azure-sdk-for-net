@@ -1,5 +1,15 @@
 # Release History
 
+## 1.0.0-preview.20 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.0.0-preview.19 (2023-10-30)
 - Fix runNotebook sessionId from int to string
 - Fix placeholder links causing 404s

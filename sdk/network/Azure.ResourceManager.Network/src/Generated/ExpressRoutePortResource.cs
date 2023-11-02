@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.Network
     public partial class ExpressRoutePortResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ExpressRoutePortResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="expressRoutePortName"> The expressRoutePortName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string expressRoutePortName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/ExpressRoutePorts/{expressRoutePortName}";

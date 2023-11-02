@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.EventGrid
     public partial class EventSubscriptionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="EventSubscriptionResource"/> instance. </summary>
+        /// <param name="scope"> The scope. </param>
+        /// <param name="eventSubscriptionName"> The eventSubscriptionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string eventSubscriptionName)
         {
             var resourceId = $"{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}";

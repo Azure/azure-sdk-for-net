@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.Nginx
     public partial class NginxDeploymentResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NginxDeploymentResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="deploymentName"> The deploymentName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deploymentName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}";

@@ -25,6 +25,12 @@ namespace Azure.ResourceManager.Sql
     public partial class SqlDatabaseTableResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SqlDatabaseTableResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="databaseName"> The databaseName. </param>
+        /// <param name="schemaName"> The schemaName. </param>
+        /// <param name="tableName"> The tableName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string schemaName, string tableName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}";

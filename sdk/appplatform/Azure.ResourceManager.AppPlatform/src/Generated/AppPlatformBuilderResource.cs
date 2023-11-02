@@ -26,6 +26,11 @@ namespace Azure.ResourceManager.AppPlatform
     public partial class AppPlatformBuilderResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AppPlatformBuilderResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="buildServiceName"> The buildServiceName. </param>
+        /// <param name="builderName"> The builderName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, string builderName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}/builders/{builderName}";

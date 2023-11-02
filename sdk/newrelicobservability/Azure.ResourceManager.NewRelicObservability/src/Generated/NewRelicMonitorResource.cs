@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.NewRelicObservability
     public partial class NewRelicMonitorResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NewRelicMonitorResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="monitorName"> The monitorName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string monitorName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/NewRelic.Observability/monitors/{monitorName}";

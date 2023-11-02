@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Sphere
     public partial class SphereCatalogResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SphereCatalogResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="catalogName"> The catalogName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string catalogName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureSphere/catalogs/{catalogName}";

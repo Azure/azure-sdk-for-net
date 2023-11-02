@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.NetworkCloud
     public partial class NetworkCloudVirtualMachineConsoleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkCloudVirtualMachineConsoleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="virtualMachineName"> The virtualMachineName. </param>
+        /// <param name="consoleName"> The consoleName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualMachineName, string consoleName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/virtualMachines/{virtualMachineName}/consoles/{consoleName}";

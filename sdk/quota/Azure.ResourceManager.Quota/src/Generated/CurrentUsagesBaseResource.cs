@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.Quota
     public partial class CurrentUsagesBaseResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CurrentUsagesBaseResource"/> instance. </summary>
+        /// <param name="scope"> The scope. </param>
+        /// <param name="resourceName"> The resourceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string resourceName)
         {
             var resourceId = $"{scope}/providers/Microsoft.Quota/usages/{resourceName}";

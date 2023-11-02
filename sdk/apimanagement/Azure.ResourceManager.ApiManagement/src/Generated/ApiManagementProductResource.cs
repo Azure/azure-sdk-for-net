@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.ApiManagement
     public partial class ApiManagementProductResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ApiManagementProductResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="productId"> The productId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string productId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}";

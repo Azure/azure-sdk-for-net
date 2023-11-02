@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.HealthcareApis
     public partial class HealthcareApisIotConnectorResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="HealthcareApisIotConnectorResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="iotConnectorName"> The iotConnectorName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string iotConnectorName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/iotconnectors/{iotConnectorName}";

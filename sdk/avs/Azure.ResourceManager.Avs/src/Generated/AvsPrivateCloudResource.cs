@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.Avs
     public partial class AvsPrivateCloudResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AvsPrivateCloudResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="privateCloudName"> The privateCloudName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateCloudName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}";

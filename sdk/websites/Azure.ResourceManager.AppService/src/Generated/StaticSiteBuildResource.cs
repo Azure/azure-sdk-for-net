@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.AppService
     public partial class StaticSiteBuildResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="StaticSiteBuildResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="environmentName"> The environmentName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string environmentName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/staticSites/{name}/builds/{environmentName}";

@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.SecurityCenter
     public partial class SecurityComplianceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SecurityComplianceResource"/> instance. </summary>
+        /// <param name="scope"> The scope. </param>
+        /// <param name="complianceName"> The complianceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string complianceName)
         {
             var resourceId = $"{scope}/providers/Microsoft.Security/compliances/{complianceName}";

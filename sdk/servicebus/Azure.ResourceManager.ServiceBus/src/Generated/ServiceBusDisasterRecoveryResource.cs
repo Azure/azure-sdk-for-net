@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.ServiceBus
     public partial class ServiceBusDisasterRecoveryResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ServiceBusDisasterRecoveryResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="namespaceName"> The namespaceName. </param>
+        /// <param name="alias"> The alias. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, string @alias)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{@alias}";

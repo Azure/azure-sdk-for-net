@@ -28,6 +28,8 @@ namespace Azure.ResourceManager.SecurityCenter
     public partial class SecurityCenterLocationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SecurityCenterLocationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="ascLocation"> The ascLocation. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation ascLocation)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}";

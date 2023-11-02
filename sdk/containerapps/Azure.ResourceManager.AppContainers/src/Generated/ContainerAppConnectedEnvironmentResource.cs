@@ -27,6 +27,9 @@ namespace Azure.ResourceManager.AppContainers
     public partial class ContainerAppConnectedEnvironmentResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ContainerAppConnectedEnvironmentResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="connectedEnvironmentName"> The connectedEnvironmentName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string connectedEnvironmentName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}";

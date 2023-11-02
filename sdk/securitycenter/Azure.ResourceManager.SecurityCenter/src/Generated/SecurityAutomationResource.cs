@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.SecurityCenter
     public partial class SecurityAutomationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SecurityAutomationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="automationName"> The automationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string automationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/automations/{automationName}";

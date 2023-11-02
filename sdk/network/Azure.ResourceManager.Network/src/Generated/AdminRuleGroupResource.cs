@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.Network
     public partial class AdminRuleGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AdminRuleGroupResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="networkManagerName"> The networkManagerName. </param>
+        /// <param name="configurationName"> The configurationName. </param>
+        /// <param name="ruleCollectionName"> The ruleCollectionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkManagerName, string configurationName, string ruleCollectionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/securityAdminConfigurations/{configurationName}/ruleCollections/{ruleCollectionName}";

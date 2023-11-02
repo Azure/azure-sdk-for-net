@@ -40,7 +40,5 @@ namespace Azure.Communication.JobRouter
             BypassSelectors = bypassSelectors;
             Kind = kind;
         }
-        /// <summary> The type discriminator describing a sub-type of DistributionMode. </summary>
-        internal string Kind { get; set; }
     }
 }

@@ -7,8 +7,6 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    [CodeGenModel("FunctionRouterRule")]
-    [CodeGenSuppress("FunctionRouterRule")]
     public partial class FunctionRouterRule : IUtf8JsonSerializable
     {
         /// <summary> Initializes a new instance of AzureFunctionRule. </summary>

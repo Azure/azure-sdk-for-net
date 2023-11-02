@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.Compute
     public partial class CapacityReservationGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CapacityReservationGroupResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="capacityReservationGroupName"> The capacityReservationGroupName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string capacityReservationGroupName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/capacityReservationGroups/{capacityReservationGroupName}";

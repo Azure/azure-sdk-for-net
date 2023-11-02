@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     public partial class NetworkFabricResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkFabricResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="networkFabricName"> The networkFabricName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkFabricName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabrics/{networkFabricName}";

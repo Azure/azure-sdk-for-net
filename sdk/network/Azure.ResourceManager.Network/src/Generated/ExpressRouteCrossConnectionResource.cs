@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.Network
     public partial class ExpressRouteCrossConnectionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ExpressRouteCrossConnectionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="crossConnectionName"> The crossConnectionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string crossConnectionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/expressRouteCrossConnections/{crossConnectionName}";

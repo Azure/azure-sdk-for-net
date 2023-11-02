@@ -27,6 +27,9 @@ namespace Azure.ResourceManager.Network
     public partial class PrivateEndpointResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PrivateEndpointResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="privateEndpointName"> The privateEndpointName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateEndpointName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateEndpoints/{privateEndpointName}";

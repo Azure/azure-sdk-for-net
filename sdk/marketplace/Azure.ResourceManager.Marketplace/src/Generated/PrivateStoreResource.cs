@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.Marketplace
     public partial class PrivateStoreResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PrivateStoreResource"/> instance. </summary>
+        /// <param name="privateStoreId"> The privateStoreId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(Guid privateStoreId)
         {
             var resourceId = $"/providers/Microsoft.Marketplace/privateStores/{privateStoreId}";

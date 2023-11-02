@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.Resources
     public partial class ResourceProviderResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ResourceProviderResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceProviderNamespace"> The resourceProviderNamespace. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceProviderNamespace)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}";

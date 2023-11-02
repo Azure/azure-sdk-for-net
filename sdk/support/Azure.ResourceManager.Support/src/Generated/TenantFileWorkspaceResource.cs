@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.Support
     public partial class TenantFileWorkspaceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="TenantFileWorkspaceResource"/> instance. </summary>
+        /// <param name="fileWorkspaceName"> The fileWorkspaceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string fileWorkspaceName)
         {
             var resourceId = $"/providers/Microsoft.Support/fileWorkspaces/{fileWorkspaceName}";

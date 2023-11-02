@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Peering
     public partial class PeeringResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PeeringResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="peeringName"> The peeringName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string peeringName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Peering/peerings/{peeringName}";

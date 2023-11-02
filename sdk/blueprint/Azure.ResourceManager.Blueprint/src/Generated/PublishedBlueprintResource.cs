@@ -25,6 +25,9 @@ namespace Azure.ResourceManager.Blueprint
     public partial class PublishedBlueprintResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PublishedBlueprintResource"/> instance. </summary>
+        /// <param name="resourceScope"> The resourceScope. </param>
+        /// <param name="blueprintName"> The blueprintName. </param>
+        /// <param name="versionId"> The versionId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string resourceScope, string blueprintName, string versionId)
         {
             var resourceId = $"{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/versions/{versionId}";

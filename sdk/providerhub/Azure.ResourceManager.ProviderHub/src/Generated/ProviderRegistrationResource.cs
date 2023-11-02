@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.ProviderHub
     public partial class ProviderRegistrationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ProviderRegistrationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="providerNamespace"> The providerNamespace. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string providerNamespace)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}";

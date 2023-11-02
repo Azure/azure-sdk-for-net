@@ -27,6 +27,9 @@ namespace Azure.ResourceManager.DataLakeStore
     public partial class DataLakeStoreAccountResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DataLakeStoreAccountResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataLakeStore/accounts/{accountName}";

@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.MachineLearning
     public partial class MachineLearningRegistryEnvironmentContainerResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MachineLearningRegistryEnvironmentContainerResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="registryName"> The registryName. </param>
+        /// <param name="environmentName"> The environmentName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string registryName, string environmentName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/registries/{registryName}/environments/{environmentName}";

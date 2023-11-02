@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.Communication
     public partial class EmailServiceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="EmailServiceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="emailServiceName"> The emailServiceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string emailServiceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/emailServices/{emailServiceName}";

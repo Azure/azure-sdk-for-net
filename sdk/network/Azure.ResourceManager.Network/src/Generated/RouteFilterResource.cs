@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.Network
     public partial class RouteFilterResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="RouteFilterResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="routeFilterName"> The routeFilterName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string routeFilterName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/routeFilters/{routeFilterName}";

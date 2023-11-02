@@ -96,9 +96,17 @@
 #### OAuth2WebhookClientCredential
 - Removed property `ClientSecret`
 
+#### RouterQueueStatistics
+- Changed `IReadOnlyDictionary<string, double> EstimatedWaitTimeMinutes` to `IDictionary<int, TimeSpan> EstimatedWaitTimes`
+
+#### LabelOperator
+- Renamed `GreaterThanEqual` to `GreaterThanOrEqual`
+- Renamed `LessThanEqual` to `LessThanOrEqual`
+
 #### Renames
 - `ChannelConfiguration` -> `RouterChannel`
 - `Oauth2ClientCredential` -> `OAuth2WebhookClientCredential`
+- `LabelValue` -> `RouterValue`
 
 #### Deletions
 - `ClassificationPolicyItem`
@@ -118,17 +126,17 @@
 ### Other Changes
 
 #### ClassificationPolicy
-- Add `Etag`
+- Add `ETag`
 - Added constructor `ClassificationPolicy(string classificationPolicyId)`
 - Added setters to `FallbackQueueId`, `Name`, and `PrioritizationRule`
 
 #### DistributionPolicy
-- Add `Etag`
+- Add `ETag`
 - Added constructor `DistributionPolicy(string distributionPolicyId)`
 - Added setters to `Mode` and `Name`
 
 #### ExceptionPolicy
-- Added `Etag`
+- Added `ETag`
 - Added constructor `ExceptionPolicy(string exceptionPolicyId)`
 - Added setter to `Name`
 
@@ -145,17 +153,17 @@
 - Added `ChannelId`
 
 #### RouterJob
-- Added `Etag`
+- Added `ETag`
 - Added constructor `RouterJob(string jobId)`
 - Added setters for `ChannelId`, `ChannelReference`, `ClassificationPolicyId`, `DispositionCode`, `MatchingMode`, `Priority`, `QueueId`
 
 #### RouterQueue
-- Added `Etag`
+- Added `ETag`
 - Added constructor `RouterQueue(string queueId)`
 - Added setters for `DistributionPolicyId`, `ExceptionPolicyId` and `Name`
 
 #### RouterWorker
-- Added `Etag`
+- Added `ETag`
 - Added constructor `RouterWorker(string workerId)`
 
 #### BestWorkerMode

@@ -25,6 +25,9 @@ namespace Azure.ResourceManager.SecurityCenter
     public partial class IotSecuritySolutionAnalyticsModelResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="IotSecuritySolutionAnalyticsModelResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="solutionName"> The solutionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string solutionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/iotSecuritySolutions/{solutionName}/analyticsModels/default";

@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.DataMigration
     public partial class ProjectResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ProjectResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="groupName"> The groupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="projectName"> The projectName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string groupName, string serviceName, string projectName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}";

@@ -26,6 +26,13 @@ namespace Azure.ResourceManager.WorkloadMonitor
     public partial class HealthMonitorStateChangeResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="HealthMonitorStateChangeResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="providerName"> The providerName. </param>
+        /// <param name="resourceCollectionName"> The resourceCollectionName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        /// <param name="monitorId"> The monitorId. </param>
+        /// <param name="timestampUnix"> The timestampUnix. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string providerName, string resourceCollectionName, string resourceName, string monitorId, string timestampUnix)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors/{monitorId}/history/{timestampUnix}";

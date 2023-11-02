@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.Workloads
     public partial class SapVirtualInstanceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SapVirtualInstanceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="sapVirtualInstanceName"> The sapVirtualInstanceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/sapVirtualInstances/{sapVirtualInstanceName}";

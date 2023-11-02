@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
     public partial class ReportResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ReportResource"/> instance. </summary>
+        /// <param name="reportName"> The reportName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string reportName)
         {
             var resourceId = $"/providers/Microsoft.AppComplianceAutomation/reports/{reportName}";

@@ -26,6 +26,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
     public partial class UserSessionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="UserSessionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="hostPoolName"> The hostPoolName. </param>
+        /// <param name="sessionHostName"> The sessionHostName. </param>
+        /// <param name="userSessionId"> The userSessionId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string hostPoolName, string sessionHostName, string userSessionId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}/userSessions/{userSessionId}";

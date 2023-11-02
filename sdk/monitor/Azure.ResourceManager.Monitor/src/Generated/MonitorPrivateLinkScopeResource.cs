@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.Monitor
     public partial class MonitorPrivateLinkScopeResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MonitorPrivateLinkScopeResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="scopeName"> The scopeName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string scopeName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/microsoft.insights/privateLinkScopes/{scopeName}";

@@ -20,11 +20,13 @@ namespace Azure.AI.OpenAI.Tests.Samples
             var client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential());
             #endregion
 
-            string deploymentName = "text-davinci-003";
-            string prompt = "What is Azure OpenAI?";
-            Console.Write($"Input: {prompt}");
+            CompletionsOptions completionsOptions = new()
+            {
+                DeploymentName = "text-davinci-003",
+                Prompts = { "What is Azure OpenAI?" },
+            };
 
-            Response<Completions> completionsResponse = client.GetCompletions(deploymentName, prompt);
+            Response<Completions> completionsResponse = client.GetCompletions(completionsOptions);
             string completion = completionsResponse.Value.Choices[0].Text;
             Console.WriteLine($"Chatbot: {completion}");
             #endregion

@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.CognitiveServices
     public partial class CognitiveServicesDeletedAccountResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CognitiveServicesDeletedAccountResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string resourceGroupName, string accountName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/resourceGroups/{resourceGroupName}/deletedAccounts/{accountName}";
