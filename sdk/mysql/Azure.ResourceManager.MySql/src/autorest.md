@@ -249,7 +249,7 @@ rename-mapping:
   MaintenanceWindow: MySqlFlexibleServerMaintenanceWindow
   Backup: MySqlFlexibleServerBackupProperties
   Storage: MySqlFlexibleServerStorage
-  Sku: MySqlServerSku
+  MySQLServerSku: MySqlFlexibleServerSku
   Network: MySqlFlexibleServerNetwork
   HighAvailability: MySqlFlexibleServerHighAvailability
   HighAvailabilityMode: MySqlFlexibleServerHighAvailabilityMode
@@ -282,7 +282,7 @@ rename-mapping:
   NameAvailability: MySqlFlexibleServerNameAvailabilityResult
   CreateMode: MySqlFlexibleServerCreateMode
   DataEncryptionType: MySqlFlexibleServerDataEncryptionType
-  SkuTier: MySqlFlexibleMySqlFlexibleServerSkuTier
+  ServerSkuTier: MySqlFlexibleServerSkuTier
   IsReadOnly: MySqlFlexibleServerConfigReadOnlyState
   IsDynamicConfig: MySqlFlexibleServerConfigDynamicState
   IsConfigPendingRestart: MySqlFlexibleServerConfigPendingRestartState

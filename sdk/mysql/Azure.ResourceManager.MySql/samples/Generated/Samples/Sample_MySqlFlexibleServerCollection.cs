@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             string serverName = "mysqltestserver";
             MySqlFlexibleServerData data = new MySqlFlexibleServerData(new AzureLocation("southeastasia"))
             {
-                Sku = new MySQLServerSku("Standard_D2ds_v4", MySqlFlexibleServerSkuTier.GeneralPurpose),
+                Sku = new MySqlFlexibleServerSku("Standard_D2ds_v4", MySqlFlexibleServerSkuTier.GeneralPurpose),
                 AdministratorLogin = "cloudsa",
                 AdministratorLoginPassword = "your_password",
                 Version = MySqlFlexibleServerVersion.Ver5_7,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             string serverName = "targetserver";
             MySqlFlexibleServerData data = new MySqlFlexibleServerData(new AzureLocation("SoutheastAsia"))
             {
-                Sku = new MySQLServerSku("Standard_D14_v2", MySqlFlexibleServerSkuTier.GeneralPurpose),
+                Sku = new MySqlFlexibleServerSku("Standard_D14_v2", MySqlFlexibleServerSkuTier.GeneralPurpose),
                 CreateMode = MySqlFlexibleServerCreateMode.PointInTimeRestore,
                 SourceServerResourceId = new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/SourceResourceGroup/providers/Microsoft.DBforMySQL/flexibleServers/sourceserver"),
                 RestorePointInTime = DateTimeOffset.Parse("2021-06-24T00:00:37.467Z"),
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
 [new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/testrg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test-identity")] = new UserAssignedIdentity(),
 },
                 },
-                Sku = new MySQLServerSku("Standard_D2ds_v4", MySqlFlexibleServerSkuTier.GeneralPurpose),
+                Sku = new MySqlFlexibleServerSku("Standard_D2ds_v4", MySqlFlexibleServerSkuTier.GeneralPurpose),
                 AdministratorLogin = "cloudsa",
                 AdministratorLoginPassword = "your_password",
                 Version = MySqlFlexibleServerVersion.Ver5_7,
