@@ -1482,6 +1482,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public string Name { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSkuCapability> SupportedSkus { get { throw null; } }
     }
+    public partial class MySqlFlexibleServerSku
+    {
+        public MySqlFlexibleServerSku(string name, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSkuTier tier) { }
+        public string Name { get { throw null; } set { } }
+        public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSkuTier Tier { get { throw null; } set { } }
+    }
     public partial class MySqlFlexibleServerSkuCapability
     {
         internal MySqlFlexibleServerSkuCapability() { }
@@ -1489,6 +1495,25 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public long? SupportedIops { get { throw null; } }
         public long? SupportedMemoryPerVCoreInMB { get { throw null; } }
         public long? VCores { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MySqlFlexibleServerSkuTier : System.IEquatable<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSkuTier>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MySqlFlexibleServerSkuTier(string value) { throw null; }
+        public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSkuTier Burstable { get { throw null; } }
+        public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSkuTier GeneralPurpose { get { throw null; } }
+        public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSkuTier MemoryOptimized { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSkuTier other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSkuTier left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSkuTier right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSkuTier (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSkuTier left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSkuTier right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class MySqlFlexibleServersPrivateEndpointConnection : Azure.ResourceManager.Models.ResourceData
     {
@@ -1621,12 +1646,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public string SubscriptionId { get { throw null; } }
     }
-    public partial class MySqlFlexibleServerSku
-    {
-        public MySqlFlexibleServerSku(string name, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSkuTier tier) { }
-        public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSkuTier Tier { get { throw null; } set { } }
-    }
     public partial class OperationStatusExtendedResult : Azure.ResourceManager.MySql.FlexibleServers.Models.OperationStatusResult
     {
         internal OperationStatusExtendedResult() { }
@@ -1653,25 +1672,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public string Name { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MySql.FlexibleServers.Models.SkuCapabilityV2> SupportedSkus { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerStorageEditionCapability> SupportedStorageEditions { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MySqlFlexibleServerSkuTier : System.IEquatable<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSkuTier>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MySqlFlexibleServerSkuTier(string value) { throw null; }
-        public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSkuTier Burstable { get { throw null; } }
-        public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSkuTier GeneralPurpose { get { throw null; } }
-        public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSkuTier MemoryOptimized { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSkuTier other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSkuTier left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSkuTier right) { throw null; }
-        public static implicit operator Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSkuTier (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSkuTier left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSkuTier right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class ServerVersionCapabilityV2
     {
