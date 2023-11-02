@@ -23,15 +23,5 @@ namespace Azure.AI.ChatProtocol
         }
 
         internal string Version { get; }
-
-        /// <summary> Initializes new instance of ChatProtocolClientOptions. </summary>
-        public ChatProtocolClientOptions(ServiceVersion version = LatestVersion)
-        {
-            Version = version switch
-            {
-                ServiceVersion.V2023_10_01_Preview => "2023-10-01-preview",
-                _ => throw new NotSupportedException()
-            };
-        }
     }
 }

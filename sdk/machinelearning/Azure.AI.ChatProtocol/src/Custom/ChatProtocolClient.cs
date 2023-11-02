@@ -5,13 +5,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.AI.ChatProtocol;
 
@@ -31,8 +31,52 @@ internal static class StreamReaderExtensions
     }
 }
 
+[CodeGenSuppress("CreateStreamingAsync", typeof(string), typeof(StreamingChatCompletionOptions), typeof(CancellationToken))]
+[CodeGenSuppress("CreateStreaming", typeof(string), typeof(StreamingChatCompletionOptions), typeof(CancellationToken))]
+[CodeGenSuppress("CreateAsync", typeof(string), typeof(ChatCompletionOptions), typeof(CancellationToken))]
+[CodeGenSuppress("Create", typeof(string), typeof(ChatCompletionOptions), typeof(CancellationToken))]
 public partial class ChatProtocolClient
 {
+    private readonly string _chatRoute;
+
+    /// <summary> Initializes a new instance of ChatProtocolClient. </summary>
+    /// <param name="endpoint"> The Uri to use. </param>
+    /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+    /// <param name="options"> The options for configuring the client. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+    public ChatProtocolClient(Uri endpoint, AzureKeyCredential credential, ChatProtocolClientOptions options)
+    {
+        Argument.AssertNotNull(endpoint, nameof(endpoint));
+        Argument.AssertNotNull(credential, nameof(credential));
+        options ??= new ChatProtocolClientOptions();
+
+        ClientDiagnostics = new ClientDiagnostics(options, true);
+        _keyCredential = credential;
+        _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) }, new ResponseClassifier());
+        _endpoint = endpoint;
+        _apiVersion = options.Version;
+        _chatRoute = options.ChatRoute;
+    }
+
+    /// <summary> Initializes a new instance of ChatProtocolClient. </summary>
+    /// <param name="endpoint"> The Uri to use. </param>
+    /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+    /// <param name="options"> The options for configuring the client. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+    public ChatProtocolClient(Uri endpoint, TokenCredential credential, ChatProtocolClientOptions options)
+    {
+        Argument.AssertNotNull(endpoint, nameof(endpoint));
+        Argument.AssertNotNull(credential, nameof(credential));
+        options ??= new ChatProtocolClientOptions();
+
+        ClientDiagnostics = new ClientDiagnostics(options, true);
+        _tokenCredential = credential;
+        _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, options.AuthorizationScopes ?? AuthorizationScopes) }, new ResponseClassifier());
+        _endpoint = endpoint;
+        _apiVersion = options.Version;
+        _chatRoute = options.ChatRoute;
+    }
+
     private static async IAsyncEnumerable<ChatCompletionChunk> GetStreamingEnumerableAsync(Response response, [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
         using (response)
@@ -71,7 +115,7 @@ public partial class ChatProtocolClient
         Argument.AssertNotNull(streamingChatCompletionOptions, nameof(streamingChatCompletionOptions));
 
         RequestContext context = FromCancellationToken(cancellationToken);
-        Response response = await CreateStreamingAsync(streamingChatCompletionOptions.ToRequestContent(), context).ConfigureAwait(false);
+        Response response = await CreateStreamingAsync(_chatRoute, streamingChatCompletionOptions.ToRequestContent(), context).ConfigureAwait(false);
         IAsyncEnumerable<ChatCompletionChunk> value = GetStreamingEnumerableAsync(response);
         // IAsyncEnumerable<ChatCompletionChunk> value = new SSEStream<ChatCompletionChunk>(response, ChatCompletionChunk.DeserializeChatCompletionChunk);
         return Response.FromValue(value, response);
@@ -86,7 +130,7 @@ public partial class ChatProtocolClient
         Argument.AssertNotNull(streamingChatCompletionOptions, nameof(streamingChatCompletionOptions));
 
         RequestContext context = FromCancellationToken(cancellationToken);
-        Response response = CreateStreaming(streamingChatCompletionOptions.ToRequestContent(), context);
+        Response response = CreateStreaming(_chatRoute, streamingChatCompletionOptions.ToRequestContent(), context);
         IEnumerable<ChatCompletionChunk> value = GetStreamingEnumerable(response);
         return Response.FromValue(value, response);
     }
@@ -102,7 +146,7 @@ public partial class ChatProtocolClient
 
         RequestContext context = FromCancellationToken(cancellationToken);
         using RequestContent content = chatCompletionOptions.ToRequestContent();
-        Response response = await CreateAsync(content, context).ConfigureAwait(false);
+        Response response = await CreateAsync(_chatRoute, content, context).ConfigureAwait(false);
         return Response.FromValue(ChatCompletion.FromResponse(response), response);
     }
 
@@ -117,7 +161,7 @@ public partial class ChatProtocolClient
 
         RequestContext context = FromCancellationToken(cancellationToken);
         using RequestContent content = chatCompletionOptions.ToRequestContent();
-        Response response = Create(content, context);
+        Response response = Create(_chatRoute, content, context);
         return Response.FromValue(ChatCompletion.FromResponse(response), response);
     }
 }

@@ -53,42 +53,6 @@ namespace Azure.AI.ChatProtocol
         {
         }
 
-        /// <summary> Initializes a new instance of ChatProtocolClient. </summary>
-        /// <param name="endpoint"> The Uri to use. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ChatProtocolClient(Uri endpoint, AzureKeyCredential credential, ChatProtocolClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new ChatProtocolClientOptions();
-
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-            _keyCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) }, new ResponseClassifier());
-            _endpoint = endpoint;
-            _apiVersion = options.Version;
-        }
-
-        /// <summary> Initializes a new instance of ChatProtocolClient. </summary>
-        /// <param name="endpoint"> The Uri to use. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ChatProtocolClient(Uri endpoint, TokenCredential credential, ChatProtocolClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new ChatProtocolClientOptions();
-
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-            _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
-            _endpoint = endpoint;
-            _apiVersion = options.Version;
-        }
-
         /// <summary>
         /// [Protocol Method] Creates a new streaming chat completion.
         /// <list type="bullet">
@@ -104,20 +68,23 @@ namespace Azure.AI.ChatProtocol
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="operationRoute"> The route where the endpoint exposes the chat operations. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationRoute"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationRoute"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> CreateStreamingAsync(RequestContent content, RequestContext context = null)
+        internal virtual async Task<Response> CreateStreamingAsync(string operationRoute, RequestContent content, RequestContext context = null)
         {
+            Argument.AssertNotNullOrEmpty(operationRoute, nameof(operationRoute));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("ChatProtocolClient.CreateStreaming");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateStreamingRequest(content, context);
+                using HttpMessage message = CreateCreateStreamingRequest(operationRoute, content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -142,20 +109,23 @@ namespace Azure.AI.ChatProtocol
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="operationRoute"> The route where the endpoint exposes the chat operations. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationRoute"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationRoute"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response CreateStreaming(RequestContent content, RequestContext context = null)
+        internal virtual Response CreateStreaming(string operationRoute, RequestContent content, RequestContext context = null)
         {
+            Argument.AssertNotNullOrEmpty(operationRoute, nameof(operationRoute));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("ChatProtocolClient.CreateStreaming");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateStreamingRequest(content, context);
+                using HttpMessage message = CreateCreateStreamingRequest(operationRoute, content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -173,28 +143,25 @@ namespace Azure.AI.ChatProtocol
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="CreateAsync(ChatCompletionOptions,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
         /// </list>
         /// </summary>
+        /// <param name="operationRoute"> The route where the endpoint exposes the chat operations. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationRoute"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationRoute"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ChatProtocolClient.xml" path="doc/members/member[@name='CreateAsync(RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> CreateAsync(RequestContent content, RequestContext context = null)
+        internal virtual async Task<Response> CreateAsync(string operationRoute, RequestContent content, RequestContext context = null)
         {
+            Argument.AssertNotNullOrEmpty(operationRoute, nameof(operationRoute));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("ChatProtocolClient.Create");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateRequest(content, context);
+                using HttpMessage message = CreateCreateRequest(operationRoute, content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -212,28 +179,25 @@ namespace Azure.AI.ChatProtocol
         /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
         /// </description>
         /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="Create(ChatCompletionOptions,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
         /// </list>
         /// </summary>
+        /// <param name="operationRoute"> The route where the endpoint exposes the chat operations. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationRoute"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationRoute"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ChatProtocolClient.xml" path="doc/members/member[@name='Create(RequestContent,RequestContext)']/*" />
-        public virtual Response Create(RequestContent content, RequestContext context = null)
+        internal virtual Response Create(string operationRoute, RequestContent content, RequestContext context = null)
         {
+            Argument.AssertNotNullOrEmpty(operationRoute, nameof(operationRoute));
             Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("ChatProtocolClient.Create");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateRequest(content, context);
+                using HttpMessage message = CreateCreateRequest(operationRoute, content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -243,7 +207,7 @@ namespace Azure.AI.ChatProtocol
             }
         }
 
-        internal HttpMessage CreateCreateStreamingRequest(RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateStreamingRequest(string operationRoute, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -251,6 +215,7 @@ namespace Azure.AI.ChatProtocol
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
+            uri.AppendPath(operationRoute, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -259,7 +224,7 @@ namespace Azure.AI.ChatProtocol
             return message;
         }
 
-        internal HttpMessage CreateCreateRequest(RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateRequest(string operationRoute, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -267,6 +232,7 @@ namespace Azure.AI.ChatProtocol
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
+            uri.AppendPath(operationRoute, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
