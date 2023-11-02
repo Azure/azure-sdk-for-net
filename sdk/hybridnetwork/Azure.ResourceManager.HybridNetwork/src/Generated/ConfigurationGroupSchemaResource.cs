@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.HybridNetwork
     public partial class ConfigurationGroupSchemaResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ConfigurationGroupSchemaResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="publisherName"> The publisherName. </param>
+        /// <param name="configurationGroupSchemaName"> The configurationGroupSchemaName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string publisherName, string configurationGroupSchemaName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/configurationGroupSchemas/{configurationGroupSchemaName}";

@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.HybridNetwork
     public partial class SiteNetworkServiceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SiteNetworkServiceResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="siteNetworkServiceName"> The siteNetworkServiceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteNetworkServiceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/siteNetworkServices/{siteNetworkServiceName}";
