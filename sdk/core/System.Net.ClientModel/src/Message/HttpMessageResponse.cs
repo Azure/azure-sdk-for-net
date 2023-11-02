@@ -139,7 +139,7 @@ public class HttpMessageResponse : MessageResponse, IDisposable
             //if (content is not null && !content.IsBuffered)
             if (contentStream is not null)
             {
-                if (contentStream is MemoryStream)
+                if (contentStream is not MemoryStream)
                 {
                     contentStream?.Dispose();
                     _contentStream = null;
