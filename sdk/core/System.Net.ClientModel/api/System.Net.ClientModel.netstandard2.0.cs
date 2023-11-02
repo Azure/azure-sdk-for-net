@@ -119,12 +119,11 @@ namespace System.Net.ClientModel.Core
         public override void Process(System.Net.ClientModel.Core.ClientMessage message, System.Net.ClientModel.Core.PipelineEnumerator pipeline) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(System.Net.ClientModel.Core.ClientMessage message, System.Net.ClientModel.Core.PipelineEnumerator pipeline) { throw null; }
     }
-    public abstract partial class MessageBody : System.IDisposable
+    public abstract partial class MessageBody
     {
         protected MessageBody() { }
         public static System.Net.ClientModel.Core.MessageBody Create(System.BinaryData value) { throw null; }
         public static System.Net.ClientModel.Core.MessageBody Create(System.IO.Stream stream) { throw null; }
-        public static System.Net.ClientModel.Core.MessageBody Create(System.Net.ClientModel.Core.IJsonModel<object> model, System.Net.ClientModel.ModelReaderWriterOptions? options = null) { throw null; }
         public static System.Net.ClientModel.Core.MessageBody Create(System.Net.ClientModel.Core.IModel<object> model, System.Net.ClientModel.ModelReaderWriterOptions? options = null) { throw null; }
         public abstract void Dispose();
         public static explicit operator System.BinaryData (System.Net.ClientModel.Core.MessageBody body) { throw null; }

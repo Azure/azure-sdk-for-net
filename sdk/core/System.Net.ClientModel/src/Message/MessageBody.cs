@@ -11,10 +11,10 @@ namespace System.Net.ClientModel.Core
 {
     // I wish we could have the name MessageContent, but there is already
     // Azure.Messaging.MessageContent.
-    public abstract class MessageBody : IDisposable
+    public abstract class MessageBody
     {
         // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
-        private static BinaryData EmptyBinaryData = new(Array.Empty<byte>());
+        private static readonly BinaryData EmptyBinaryData = new(Array.Empty<byte>());
         internal static MessageBody Empty = Create(EmptyBinaryData);
 
         /// <summary>
@@ -39,15 +39,6 @@ namespace System.Net.ClientModel.Core
         /// <returns>An instance of <see cref="MessageBody"/> that wraps a <see cref="IModel{T}"/>.</returns>
         public static MessageBody Create(IModel<object> model, ModelReaderWriterOptions? options = default)
             => new ModelMessageBody(model, options ?? ModelReaderWriterOptions.DefaultWireOptions);
-
-        /// <summary>
-        /// Creates an instance of <see cref="MessageBody"/> that wraps a <see cref="IJsonModel{T}"/>.
-        /// </summary>
-        /// <param name="model">The <see cref="IJsonModel{T}"/> to write.</param>
-        /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
-        /// <returns>An instance of <see cref="MessageBody"/> that wraps a <see cref="IJsonModel{T}"/>.</returns>
-        public static MessageBody Create(IJsonModel<object> model, ModelReaderWriterOptions? options = default)
-            => new JsonModelMessageBody(model, options ?? ModelReaderWriterOptions.DefaultWireOptions);
 
         /// <summary>
         /// Attempts to compute the length of the underlying body content, if available.
@@ -159,33 +150,42 @@ namespace System.Net.ClientModel.Core
             return stream;
         }
 
-        private sealed class JsonModelMessageBody : MessageBody
-        {
-            private readonly IJsonModel<object> _model;
-            private readonly ModelReaderWriterOptions _options;
-
-            public JsonModelMessageBody(IJsonModel<object> model, ModelReaderWriterOptions options)
-            {
-                _model = model;
-                _options = options;
-            }
-
-            private ModelWriter? _writer;
-            private ModelWriter Writer => _writer ??= new ModelWriter(_model, _options);
-
-            public override void Dispose() => _writer?.Dispose();
-
-            public override void WriteTo(Stream stream, CancellationToken cancellation) => Writer.CopyTo(stream, cancellation);
-
-            public override async Task WriteToAsync(Stream stream, CancellationToken cancellation) => await Writer.CopyToAsync(stream, cancellation).ConfigureAwait(false);
-
-            public override bool TryComputeLength(out long length) => Writer.TryComputeLength(out length);
-        }
-
         private sealed class ModelMessageBody : MessageBody
         {
             private readonly IModel<object> _model;
             private readonly ModelReaderWriterOptions _options;
+
+            // Used when _model is an IJsonModel
+            private ModelWriter? _writer;
+            private ModelWriter Writer
+            {
+                get
+                {
+                    if (_model is not IJsonModel<object> jsonModel)
+                    {
+                        throw new InvalidOperationException("Cannot use Writer with non-IJsonModel model type.");
+                    }
+
+                    _writer ??= new ModelWriter(jsonModel, _options);
+                    return _writer;
+                }
+            }
+
+            // Used when _model is an IModel
+            private BinaryData? _data;
+            private BinaryData Data
+            {
+                get
+                {
+                    if (_model is IJsonModel<object>)
+                    {
+                        throw new InvalidOperationException("Should use ModelWriter instead of _model.Write with IJsonModel.");
+                    }
+
+                    _data ??= _model.Write(_options);
+                    return _data;
+                }
+            }
 
             public ModelMessageBody(IModel<object> model, ModelReaderWriterOptions options)
             {
@@ -193,27 +193,57 @@ namespace System.Net.ClientModel.Core
                 _options = options;
             }
 
-            public override void Dispose() { }
-
-            private BinaryData? _data;
-            private BinaryData Data => _data ??= _model.Write(_options);
-
-#if NETFRAMEWORK || NETSTANDARD2_0
-            private byte[]? _bytes;
-            private byte[] Bytes => _bytes ??= Data.ToArray();
-
-            public override void WriteTo(Stream stream, CancellationToken cancellation) => stream.Write(Bytes, 0, Bytes.Length);
-#else
-            public override void WriteTo(Stream stream, CancellationToken cancellation) => stream.Write(Data.ToMemory().Span);
-#endif
-
             public override bool TryComputeLength(out long length)
             {
+                if (_model is IJsonModel<object>)
+                {
+                    return Writer.TryComputeLength(out length);
+                }
+
                 length = Data.ToMemory().Length;
                 return true;
             }
 
-            public override async Task WriteToAsync(Stream stream, CancellationToken cancellation) => await stream.WriteAsync(Data.ToMemory(), cancellation).ConfigureAwait(false);
+#if NETFRAMEWORK || NETSTANDARD2_0
+            private byte[]? _bytes;
+            private byte[] Bytes => _bytes ??= Data.ToArray();
+#endif
+
+            public override void WriteTo(Stream stream, CancellationToken cancellation)
+            {
+                if (_model is IJsonModel<object>)
+                {
+                    Writer.CopyTo(stream, cancellation);
+                    return;
+                }
+
+#if NETFRAMEWORK || NETSTANDARD2_0
+                stream.Write(Bytes, 0, Bytes.Length);
+#else
+                stream.Write(Data.ToMemory().Span);
+#endif
+            }
+
+            public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
+            {
+                if (_model is IJsonModel<object>)
+                {
+                    await Writer.CopyToAsync(stream, cancellation).ConfigureAwait(false);
+                    return;
+                }
+
+                await stream.WriteAsync(Data.ToMemory(), cancellation).ConfigureAwait(false);
+            }
+
+            public override void Dispose()
+            {
+                var writer = _writer;
+                if (writer != null)
+                {
+                    _writer = null;
+                    writer.Dispose();
+                }
+            }
         }
 
         private sealed class StreamMessageBody : MessageBody
