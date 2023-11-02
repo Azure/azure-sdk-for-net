@@ -18,13 +18,6 @@ namespace System.Net.ClientModel.Core
         internal static MessageBody Empty = Create(EmptyBinaryData);
 
         /// <summary>
-        /// Creates an instance of <see cref="MessageBody"/> that wraps a <see cref="Stream"/>.
-        /// </summary>
-        /// <param name="stream">The <see cref="Stream"/> to use.</param>
-        /// <returns>An instance of <see cref="MessageBody"/> that wraps a <see cref="Stream"/>.</returns>
-        public static MessageBody Create(Stream stream) => new StreamMessageBody(stream);
-
-        /// <summary>
         /// Creates an instance of <see cref="MessageBody"/> that wraps a <see cref="BinaryData"/>.
         /// </summary>
         /// <param name="value">The <see cref="BinaryData"/> to use.</param>
@@ -62,9 +55,6 @@ namespace System.Net.ClientModel.Core
 
         public static explicit operator BinaryData(MessageBody body)
             => body.ToBinaryData();
-
-        public static explicit operator Stream(MessageBody body)
-            => body.ToStream();
 
         internal virtual bool IsBuffered { get; }
 
@@ -111,43 +101,6 @@ namespace System.Net.ClientModel.Core
             stream.Position = 0;
 
             return BinaryData.FromStream(stream);
-        }
-
-        protected virtual Stream ToStream(CancellationToken cancellationToken = default)
-#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
-            => ToStreamSyncOrAsync(cancellationToken, async: false).GetAwaiter().GetResult();
-#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
-
-        private async Task<Stream> ToStreamSyncOrAsync(CancellationToken cancellationToken, bool async)
-        {
-            MemoryStream stream;
-
-            if (TryComputeLength(out long length))
-            {
-                if (length >= int.MaxValue)
-                {
-                    throw new InvalidOperationException("Cannot create MemoryStream from body with length > int.MaxLength.");
-                }
-
-                stream = new MemoryStream((int)length);
-            }
-            else
-            {
-                stream = new MemoryStream();
-            }
-
-            if (async)
-            {
-                await WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
-            }
-            else
-            {
-                WriteTo(stream, cancellationToken);
-            }
-
-            stream.Position = 0;
-
-            return stream;
         }
 
         private sealed class ModelMessageBody : MessageBody, IDisposable
@@ -243,71 +196,6 @@ namespace System.Net.ClientModel.Core
                     _writer = null;
                     writer.Dispose();
                 }
-            }
-        }
-
-        private sealed class StreamMessageBody : MessageBody, IDisposable
-        {
-            private const int CopyToBufferSize = 81920;
-            private readonly Stream _stream;
-
-            public StreamMessageBody(Stream stream)
-            {
-                _stream = stream;
-            }
-
-            internal override bool IsBuffered => _stream is MemoryStream;
-
-            public override bool TryComputeLength(out long length)
-            {
-                if (_stream.CanSeek)
-                {
-                    length = _stream.Length;
-                    return true;
-                }
-
-                length = default;
-                return false;
-            }
-
-            public override void WriteTo(Stream stream, CancellationToken cancellationToken)
-            {
-                // This is not using CopyTo so that we can honor cancellations.
-                byte[] buffer = ArrayPool<byte>.Shared.Rent(CopyToBufferSize);
-                try
-                {
-                    while (true)
-                    {
-                        ClientUtilities.ThrowIfCancellationRequested(cancellationToken);
-
-                        var read = _stream.Read(buffer, 0, buffer.Length);
-                        if (read == 0)
-                        {
-                            break;
-                        }
-
-                        ClientUtilities.ThrowIfCancellationRequested(cancellationToken);
-
-                        stream.Write(buffer, 0, read);
-                    }
-                }
-                finally
-                {
-                    stream.Flush();
-                    ArrayPool<byte>.Shared.Return(buffer, true);
-                }
-            }
-
-            public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
-                => await _stream.CopyToAsync(stream, CopyToBufferSize, cancellation).ConfigureAwait(false);
-
-            protected override Stream ToStream(CancellationToken cancellationToken = default)
-                => _stream;
-
-            public void Dispose()
-            {
-                var stream = _stream;
-                stream?.Dispose();
             }
         }
 
