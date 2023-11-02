@@ -52,7 +52,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "..\core\Azure
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Monitor.OpenTelemetry.Exporter.AotCompatibilityTestApp", "Azure.Monitor.OpenTelemetry.Exporter\tests\Azure.Monitor.OpenTelemetry.Exporter.AotCompatibilityTestApp\Azure.Monitor.OpenTelemetry.Exporter.AotCompatibilityTestApp.csproj", "{D2174A00-93CF-4337-8600-4CE758C7D4AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Monitor.OpenTelemetry.LiveMetrics", "Azure.Monitor.OpenTelemetry.LiveMetrics\src\Azure.Monitor.OpenTelemetry.LiveMetrics.csproj", "{C13C8648-2B37-4334-97DC-322344E8EE8C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Monitor.OpenTelemetry.LiveMetrics", "Azure.Monitor.OpenTelemetry.LiveMetrics\src\Azure.Monitor.OpenTelemetry.LiveMetrics.csproj", "{C13C8648-2B37-4334-97DC-322344E8EE8C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Monitor.OpenTelemetry.LiveMetrics.Tests", "Azure.Monitor.OpenTelemetry.LiveMetrics\test\Azure.Monitor.OpenTelemetry.LiveMetrics.Tests\Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.csproj", "{7A7BA503-ADE7-4D2E-B7D8-E5F785424FFB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -120,6 +122,10 @@ Global
 		{C13C8648-2B37-4334-97DC-322344E8EE8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C13C8648-2B37-4334-97DC-322344E8EE8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C13C8648-2B37-4334-97DC-322344E8EE8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A7BA503-ADE7-4D2E-B7D8-E5F785424FFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A7BA503-ADE7-4D2E-B7D8-E5F785424FFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A7BA503-ADE7-4D2E-B7D8-E5F785424FFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A7BA503-ADE7-4D2E-B7D8-E5F785424FFB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
