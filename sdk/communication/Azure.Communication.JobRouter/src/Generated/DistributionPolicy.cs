@@ -26,15 +26,12 @@ namespace Azure.Communication.JobRouter
         /// <param name="mode"> Abstract base class for defining a distribution mode. </param>
         internal DistributionPolicy(string etag, string id, string name, double? offerExpiresAfterSeconds, DistributionMode mode)
         {
-            Etag = etag;
+            _etag = etag;
             Id = id;
             Name = name;
             _offerExpiresAfterSeconds = offerExpiresAfterSeconds;
             Mode = mode;
         }
-
-        /// <summary> Concurrency Token. </summary>
-        public string Etag { get; }
         /// <summary> The unique identifier of the policy. </summary>
         public string Id { get; }
     }

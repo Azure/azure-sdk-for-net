@@ -4,10 +4,11 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    /// <summary> The configuration information for an audio translation request. </summary>
+    [CodeGenSuppress("AudioTranslationOptions", typeof(BinaryData))]
     public partial class AudioTranslationOptions
     {
         /// <summary>
@@ -29,7 +30,41 @@ namespace Azure.AI.OpenAI
         /// </summary>
         public BinaryData AudioData { get; set; }
 
-        internal string InternalNonAzureModelName { get; set; }
+        /// <summary>
+        /// Gets or sets the deployment name to use for a translation request.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// When making a request against Azure OpenAI, this should be the customizable name of the "model deployment"
+        /// (example: my-gpt4-deployment) and not the name of the model itself (example: gpt-4).
+        /// </para>
+        /// <para>
+        /// When using non-Azure OpenAI, this corresponds to "model" in the request options and should use the
+        /// appropriate name of the model (example: gpt-4).
+        /// </para>
+        /// </remarks>
+        [CodeGenMember("InternalNonAzureModelName")]
+        public string DeploymentName { get; set; }
+
+        /// <summary>
+        /// Creates a new instance of <see cref="AudioTranslationOptions"/>.
+        /// </summary>
+        /// <param name="deploymentName"> The deployment name to use for audio translation. </param>
+        /// <param name="audioData"> The audio data to translate. </param>
+        /// <exception cref="ArgumentNullException">
+        ///     <paramref name="deploymentName"/> or <paramref name="audioData"/> is null.
+        /// </exception>
+        /// <exception cref="ArgumentException">
+        ///     <paramref name="deploymentName"/> is an empty string.
+        /// </exception>
+        public AudioTranslationOptions(string deploymentName, BinaryData audioData)
+        {
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNull(audioData, nameof(audioData));
+
+            DeploymentName = deploymentName;
+            AudioData = audioData;
+        }
 
         /// <summary>
         /// Initializes a new instance of AudioTranslationOptions.

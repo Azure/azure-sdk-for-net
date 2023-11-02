@@ -27,6 +27,12 @@ namespace Azure.ResourceManager.WorkloadMonitor
     public partial class HealthMonitorResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="HealthMonitorResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="providerName"> The providerName. </param>
+        /// <param name="resourceCollectionName"> The resourceCollectionName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        /// <param name="monitorId"> The monitorId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string providerName, string resourceCollectionName, string resourceName, string monitorId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors/{monitorId}";

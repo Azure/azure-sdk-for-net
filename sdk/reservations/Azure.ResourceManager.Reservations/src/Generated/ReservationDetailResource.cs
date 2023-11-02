@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.Reservations
     public partial class ReservationDetailResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ReservationDetailResource"/> instance. </summary>
+        /// <param name="reservationOrderId"> The reservationOrderId. </param>
+        /// <param name="reservationId"> The reservationId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(Guid reservationOrderId, Guid reservationId)
         {
             var resourceId = $"/providers/Microsoft.Capacity/reservationOrders/{reservationOrderId}/reservations/{reservationId}";

@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.NetworkCloud
     public partial class NetworkCloudCloudServicesNetworkResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkCloudCloudServicesNetworkResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="cloudServicesNetworkName"> The cloudServicesNetworkName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string cloudServicesNetworkName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/cloudServicesNetworks/{cloudServicesNetworkName}";

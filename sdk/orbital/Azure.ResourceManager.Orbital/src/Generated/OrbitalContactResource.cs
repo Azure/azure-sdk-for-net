@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Orbital
     public partial class OrbitalContactResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="OrbitalContactResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="spacecraftName"> The spacecraftName. </param>
+        /// <param name="contactName"> The contactName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string spacecraftName, string contactName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Orbital/spacecrafts/{spacecraftName}/contacts/{contactName}";

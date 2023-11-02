@@ -233,12 +233,12 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     Queues = { queueId },
                     Labels =
                     {
-                        ["Location"] = new LabelValue("United States"),
-                        ["Language"] = new LabelValue("en-us"),
-                        ["Region"] = new LabelValue("NA"),
-                        ["Hardware_Support"] = new LabelValue(true),
-                        ["Hardware_Support_SurfaceLaptop"] = new LabelValue(true),
-                        ["Language_Skill_Level_EN_US"] = new LabelValue(10),
+                        ["Location"] = new RouterValue("United States"),
+                        ["Language"] = new RouterValue("en-us"),
+                        ["Region"] = new RouterValue("NA"),
+                        ["Hardware_Support"] = new RouterValue(true),
+                        ["Hardware_Support_SurfaceLaptop"] = new RouterValue(true),
+                        ["Language_Skill_Level_EN_US"] = new RouterValue(10),
                     }
                 });
 
@@ -249,12 +249,12 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     Queues = { queueId },
                     Labels =
                     {
-                        ["Location"] = new LabelValue("United States"),
-                        ["Language"] = new LabelValue("en-us"),
-                        ["Region"] = new LabelValue("NA"),
-                        ["Hardware_Support"] = new LabelValue(true),
-                        ["Hardware_Support_SurfaceLaptop"] = new LabelValue(true),
-                        ["Language_Skill_Level_EN_US"] = new LabelValue(20),
+                        ["Location"] = new RouterValue("United States"),
+                        ["Language"] = new RouterValue("en-us"),
+                        ["Region"] = new RouterValue("NA"),
+                        ["Hardware_Support"] = new RouterValue(true),
+                        ["Hardware_Support_SurfaceLaptop"] = new RouterValue(true),
+                        ["Language_Skill_Level_EN_US"] = new RouterValue(20),
                     }
                 });
 
@@ -265,12 +265,12 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                     Queues = { queueId },
                     Labels =
                     {
-                        ["Location"] = new LabelValue("United States"),
-                        ["Language"] = new LabelValue("en-us"),
-                        ["Region"] = new LabelValue("NA"),
-                        ["Hardware_Support"] = new LabelValue(true),
-                        ["Hardware_Support_SurfaceLaptop"] = new LabelValue(false),
-                        ["Language_Skill_Level_EN_US"] = new LabelValue(1),
+                        ["Location"] = new RouterValue("United States"),
+                        ["Language"] = new RouterValue("en-us"),
+                        ["Region"] = new RouterValue("NA"),
+                        ["Hardware_Support"] = new RouterValue(true),
+                        ["Hardware_Support_SurfaceLaptop"] = new RouterValue(false),
+                        ["Language_Skill_Level_EN_US"] = new RouterValue(1),
                     }
                 });
 
@@ -280,15 +280,15 @@ namespace Azure.Communication.JobRouter.Tests.Samples
                 {
                     Labels =
                     {
-                        ["Location"] = new LabelValue("United States"),
-                        ["Language"] = new LabelValue("en-us"),
-                        ["Region"] = new LabelValue("NA"),
-                        ["Hardware_Support"] = new LabelValue(true),
-                        ["Hardware_Support_SurfaceLaptop"] = new LabelValue(true),
+                        ["Location"] = new RouterValue("United States"),
+                        ["Language"] = new RouterValue("en-us"),
+                        ["Region"] = new RouterValue("NA"),
+                        ["Hardware_Support"] = new RouterValue(true),
+                        ["Hardware_Support_SurfaceLaptop"] = new RouterValue(true),
                     },
                     RequestedWorkerSelectors =
                     {
-                        new RouterWorkerSelector("Language_Skill_Level_EN_US", LabelOperator.GreaterThanEqual, new LabelValue(0)),
+                        new RouterWorkerSelector("Language_Skill_Level_EN_US", LabelOperator.GreaterThanOrEqual, new RouterValue(0)),
                     }
                 });
 

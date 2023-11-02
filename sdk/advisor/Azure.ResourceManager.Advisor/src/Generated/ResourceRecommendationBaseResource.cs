@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.Advisor
     public partial class ResourceRecommendationBaseResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ResourceRecommendationBaseResource"/> instance. </summary>
+        /// <param name="resourceUri"> The resourceUri. </param>
+        /// <param name="recommendationId"> The recommendationId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string resourceUri, string recommendationId)
         {
             var resourceId = $"{resourceUri}/providers/Microsoft.Advisor/recommendations/{recommendationId}";

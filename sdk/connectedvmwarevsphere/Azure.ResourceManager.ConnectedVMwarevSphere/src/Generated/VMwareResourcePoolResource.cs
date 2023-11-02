@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     public partial class VMwareResourcePoolResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="VMwareResourcePoolResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourcePoolName"> The resourcePoolName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourcePoolName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/resourcePools/{resourcePoolName}";

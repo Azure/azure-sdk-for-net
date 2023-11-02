@@ -29,6 +29,9 @@ namespace Azure.ResourceManager.LoadTesting
     public partial class LoadTestingResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="LoadTestingResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="loadTestName"> The loadTestName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string loadTestName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LoadTestService/loadTests/{loadTestName}";

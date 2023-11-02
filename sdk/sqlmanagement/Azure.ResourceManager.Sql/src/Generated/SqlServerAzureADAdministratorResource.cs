@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.Sql
     public partial class SqlServerAzureADAdministratorResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SqlServerAzureADAdministratorResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="administratorName"> The administratorName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, SqlAdministratorName administratorName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/administrators/{administratorName}";

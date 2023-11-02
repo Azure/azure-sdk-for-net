@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.SecurityInsights
     public partial class SecurityInsightsIncidentRelationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SecurityInsightsIncidentRelationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="incidentId"> The incidentId. </param>
+        /// <param name="relationName"> The relationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string incidentId, string relationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/relations/{relationName}";

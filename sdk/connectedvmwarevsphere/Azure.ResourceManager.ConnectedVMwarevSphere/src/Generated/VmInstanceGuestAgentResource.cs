@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     public partial class VmInstanceGuestAgentResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="VmInstanceGuestAgentResource"/> instance. </summary>
+        /// <param name="resourceUri"> The resourceUri. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string resourceUri)
         {
             var resourceId = $"{resourceUri}/providers/Microsoft.ConnectedVMwarevSphere/virtualMachineInstances/default/guestAgents/default";

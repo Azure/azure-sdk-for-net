@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.PolicyInsights
     public partial class PolicyMetadataResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PolicyMetadataResource"/> instance. </summary>
+        /// <param name="resourceName"> The resourceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string resourceName)
         {
             var resourceId = $"/providers/Microsoft.PolicyInsights/policyMetadata/{resourceName}";

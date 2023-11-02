@@ -17,6 +17,11 @@ namespace Azure.AI.OpenAI
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(DeploymentName))
+            {
+                writer.WritePropertyName("model"u8);
+                writer.WriteStringValue(DeploymentName);
+            }
             writer.WritePropertyName("messages"u8);
             writer.WriteStartArray();
             foreach (var item in Messages)
@@ -166,11 +171,6 @@ namespace Azure.AI.OpenAI
                 {
                     writer.WriteNull("stream");
                 }
-            }
-            if (Optional.IsDefined(InternalNonAzureModelName))
-            {
-                writer.WritePropertyName("model"u8);
-                writer.WriteStringValue(InternalNonAzureModelName);
             }
             if (AzureExtensionsOptions != null)
             {

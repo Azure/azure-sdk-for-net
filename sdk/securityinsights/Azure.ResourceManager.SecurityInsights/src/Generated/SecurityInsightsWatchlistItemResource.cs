@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.SecurityInsights
     public partial class SecurityInsightsWatchlistItemResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SecurityInsightsWatchlistItemResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="watchlistAlias"> The watchlistAlias. </param>
+        /// <param name="watchlistItemId"> The watchlistItemId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string watchlistAlias, string watchlistItemId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/watchlists/{watchlistAlias}/watchlistItems/{watchlistItemId}";

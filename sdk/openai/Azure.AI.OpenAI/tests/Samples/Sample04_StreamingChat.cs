@@ -20,6 +20,7 @@ namespace Azure.AI.OpenAI.Tests.Samples
             var client = new OpenAIClient(nonAzureOpenAIApiKey, new OpenAIClientOptions());
             var chatCompletionsOptions = new ChatCompletionsOptions()
             {
+                DeploymentName = "gpt-3.5-turbo", // Use DeploymentName for "model" with non-Azure clients
                 Messages =
                 {
                     new ChatMessage(ChatRole.System, "You are a helpful assistant. You will talk like a pirate."),
@@ -29,9 +30,8 @@ namespace Azure.AI.OpenAI.Tests.Samples
                 }
             };
 
-            Response<StreamingChatCompletions> response = await client.GetChatCompletionsStreamingAsync(
-                deploymentOrModelName: "gpt-3.5-turbo",
-                chatCompletionsOptions);
+            Response<StreamingChatCompletions> response
+                = await client.GetChatCompletionsStreamingAsync(chatCompletionsOptions);
             using StreamingChatCompletions streamingChatCompletions = response.Value;
 
             await foreach (StreamingChatChoice choice in streamingChatCompletions.GetChoicesStreaming())

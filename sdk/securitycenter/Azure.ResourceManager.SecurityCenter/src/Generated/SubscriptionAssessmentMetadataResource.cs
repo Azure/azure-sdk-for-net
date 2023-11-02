@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.SecurityCenter
     public partial class SubscriptionAssessmentMetadataResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SubscriptionAssessmentMetadataResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="assessmentMetadataName"> The assessmentMetadataName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string assessmentMetadataName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}";

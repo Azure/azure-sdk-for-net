@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.MobileNetwork
     public partial class MobileNetworkSimPolicyResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MobileNetworkSimPolicyResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="mobileNetworkName"> The mobileNetworkName. </param>
+        /// <param name="simPolicyName"> The simPolicyName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string mobileNetworkName, string simPolicyName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/simPolicies/{simPolicyName}";

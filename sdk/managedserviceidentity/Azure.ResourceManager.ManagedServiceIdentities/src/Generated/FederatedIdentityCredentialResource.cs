@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
     public partial class FederatedIdentityCredentialResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="FederatedIdentityCredentialResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        /// <param name="federatedIdentityCredentialResourceName"> The federatedIdentityCredentialResourceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string federatedIdentityCredentialResourceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{resourceName}/federatedIdentityCredentials/{federatedIdentityCredentialResourceName}";
