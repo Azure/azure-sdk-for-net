@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of BackendAddressPoolResources and their operations over a BackendAddressPoolResource. </returns>
         public virtual BackendAddressPoolCollection GetBackendAddressPools()
         {
-            return GetCachedClient(Client => new BackendAddressPoolCollection(Client, Id));
+            return GetCachedClient(client => new BackendAddressPoolCollection(client, Id));
         }
 
         /// <summary>
@@ -119,8 +119,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="backendAddressPoolName"> The name of the backend address pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backendAddressPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backendAddressPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backendAddressPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<BackendAddressPoolResource>> GetBackendAddressPoolAsync(string backendAddressPoolName, CancellationToken cancellationToken = default)
         {
@@ -142,8 +142,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="backendAddressPoolName"> The name of the backend address pool. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="backendAddressPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="backendAddressPoolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="backendAddressPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<BackendAddressPoolResource> GetBackendAddressPool(string backendAddressPoolName, CancellationToken cancellationToken = default)
         {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of FrontendIPConfigurationResources and their operations over a FrontendIPConfigurationResource. </returns>
         public virtual FrontendIPConfigurationCollection GetFrontendIPConfigurations()
         {
-            return GetCachedClient(Client => new FrontendIPConfigurationCollection(Client, Id));
+            return GetCachedClient(client => new FrontendIPConfigurationCollection(client, Id));
         }
 
         /// <summary>
@@ -172,8 +172,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="frontendIPConfigurationName"> The name of the frontend IP configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="frontendIPConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="frontendIPConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="frontendIPConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<FrontendIPConfigurationResource>> GetFrontendIPConfigurationAsync(string frontendIPConfigurationName, CancellationToken cancellationToken = default)
         {
@@ -195,8 +195,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="frontendIPConfigurationName"> The name of the frontend IP configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="frontendIPConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="frontendIPConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="frontendIPConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<FrontendIPConfigurationResource> GetFrontendIPConfiguration(string frontendIPConfigurationName, CancellationToken cancellationToken = default)
         {
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of InboundNatRuleResources and their operations over a InboundNatRuleResource. </returns>
         public virtual InboundNatRuleCollection GetInboundNatRules()
         {
-            return GetCachedClient(Client => new InboundNatRuleCollection(Client, Id));
+            return GetCachedClient(client => new InboundNatRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -226,8 +226,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="inboundNatRuleName"> The name of the inbound NAT rule. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="inboundNatRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inboundNatRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="inboundNatRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<InboundNatRuleResource>> GetInboundNatRuleAsync(string inboundNatRuleName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -250,8 +250,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="inboundNatRuleName"> The name of the inbound NAT rule. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="inboundNatRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="inboundNatRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="inboundNatRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<InboundNatRuleResource> GetInboundNatRule(string inboundNatRuleName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of LoadBalancingRuleResources and their operations over a LoadBalancingRuleResource. </returns>
         public virtual LoadBalancingRuleCollection GetLoadBalancingRules()
         {
-            return GetCachedClient(Client => new LoadBalancingRuleCollection(Client, Id));
+            return GetCachedClient(client => new LoadBalancingRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -280,8 +280,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="loadBalancingRuleName"> The name of the load balancing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="loadBalancingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="loadBalancingRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="loadBalancingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<LoadBalancingRuleResource>> GetLoadBalancingRuleAsync(string loadBalancingRuleName, CancellationToken cancellationToken = default)
         {
@@ -303,8 +303,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="loadBalancingRuleName"> The name of the load balancing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="loadBalancingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="loadBalancingRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="loadBalancingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<LoadBalancingRuleResource> GetLoadBalancingRule(string loadBalancingRuleName, CancellationToken cancellationToken = default)
         {
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of OutboundRuleResources and their operations over a OutboundRuleResource. </returns>
         public virtual OutboundRuleCollection GetOutboundRules()
         {
-            return GetCachedClient(Client => new OutboundRuleCollection(Client, Id));
+            return GetCachedClient(client => new OutboundRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -333,8 +333,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="outboundRuleName"> The name of the outbound rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="outboundRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="outboundRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<OutboundRuleResource>> GetOutboundRuleAsync(string outboundRuleName, CancellationToken cancellationToken = default)
         {
@@ -356,8 +356,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="outboundRuleName"> The name of the outbound rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="outboundRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="outboundRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="outboundRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<OutboundRuleResource> GetOutboundRule(string outboundRuleName, CancellationToken cancellationToken = default)
         {
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of ProbeResources and their operations over a ProbeResource. </returns>
         public virtual ProbeCollection GetProbes()
         {
-            return GetCachedClient(Client => new ProbeCollection(Client, Id));
+            return GetCachedClient(client => new ProbeCollection(client, Id));
         }
 
         /// <summary>
@@ -386,8 +386,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="probeName"> The name of the probe. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="probeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="probeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="probeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ProbeResource>> GetProbeAsync(string probeName, CancellationToken cancellationToken = default)
         {
@@ -409,8 +409,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="probeName"> The name of the probe. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="probeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="probeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="probeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ProbeResource> GetProbe(string probeName, CancellationToken cancellationToken = default)
         {
