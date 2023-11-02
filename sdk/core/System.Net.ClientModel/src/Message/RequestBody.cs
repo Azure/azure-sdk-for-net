@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace System.Net.ClientModel.Core
 {
-    public abstract class RequestBody
+    public abstract class RequestBody : IDisposable
     {
         // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
         internal static readonly BinaryData EmptyBinaryData = new(Array.Empty<byte>());
@@ -49,8 +49,9 @@ namespace System.Net.ClientModel.Core
         /// <param name="stream">The stream to write to.</param>
         /// <param name="cancellationToken">To cancellation token to use.</param>
         public abstract void WriteTo(Stream stream, CancellationToken cancellationToken);
+        public abstract void Dispose();
 
-        private sealed class ModelMessageBody : RequestBody, IDisposable
+        private sealed class ModelMessageBody : RequestBody
         {
             private readonly IModel<object> _model;
             private readonly ModelReaderWriterOptions _options;
@@ -135,7 +136,7 @@ namespace System.Net.ClientModel.Core
                 await stream.WriteAsync(Data.ToMemory(), cancellation).ConfigureAwait(false);
             }
 
-            public void Dispose()
+            public override void Dispose()
             {
                 var writer = _writer;
                 if (writer != null)
@@ -169,6 +170,8 @@ namespace System.Net.ClientModel.Core
 
             public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
                 => await stream.WriteAsync(_bytes, cancellation).ConfigureAwait(false);
+
+            public override void Dispose() { }
         }
     }
 }

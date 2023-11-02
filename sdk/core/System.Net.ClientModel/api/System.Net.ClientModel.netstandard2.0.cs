@@ -213,11 +213,12 @@ namespace System.Net.ClientModel.Core
         public abstract System.Threading.Tasks.ValueTask ProcessAsync(System.Net.ClientModel.Core.ClientMessage message);
         public override System.Threading.Tasks.ValueTask ProcessAsync(System.Net.ClientModel.Core.ClientMessage message, System.Net.ClientModel.Core.PipelineEnumerator pipeline) { throw null; }
     }
-    public abstract partial class RequestBody
+    public abstract partial class RequestBody : System.IDisposable
     {
         protected RequestBody() { }
         public static System.Net.ClientModel.Core.RequestBody Create(System.BinaryData value) { throw null; }
         public static System.Net.ClientModel.Core.RequestBody Create(System.Net.ClientModel.Core.IModel<object> model, System.Net.ClientModel.ModelReaderWriterOptions? options = null) { throw null; }
+        public abstract void Dispose();
         public abstract bool TryComputeLength(out long length);
         public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken);
         public abstract System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken);

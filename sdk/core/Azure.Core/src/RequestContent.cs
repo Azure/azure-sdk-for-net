@@ -19,7 +19,7 @@ namespace Azure.Core
     /// <summary>
     /// Represents the content sent as part of the <see cref="Request"/>.
     /// </summary>
-    public abstract class RequestContent : RequestBody, IDisposable
+    public abstract class RequestContent : RequestBody
     {
         internal const string SerializationRequiresUnreferencedCode = "This method uses reflection-based serialization which is incompatible with trimming. Try using one of the 'Create' overloads that doesn't wrap a serialized version of an object.";
         private static readonly Encoding s_UTF8NoBomEncoding = new UTF8Encoding(false);
@@ -150,11 +150,6 @@ namespace Azure.Core
         /// <param name="content">The <see cref="DynamicData"/> to use.</param>
         public static implicit operator RequestContent(DynamicData content) => Create(content);
 
-        /// <summary>
-        /// Frees resources held by the <see cref="RequestContent"/> object.
-        /// </summary>
-        public abstract void Dispose();
-
         private sealed class MessageBodyContent : RequestContent
         {
             private readonly RequestBody _content;
@@ -165,8 +160,7 @@ namespace Azure.Core
 
             public override void Dispose()
             {
-                // TODO: figure out what to do here.
-                //_content?.Dispose();
+                _content?.Dispose();
             }
 
             public override bool TryComputeLength(out long length)
