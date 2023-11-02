@@ -4,6 +4,7 @@
 using System.Buffers;
 using System.IO;
 using System.Net.ClientModel.Internal;
+using System.Net.ClientModel.Internal.Core;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -87,7 +88,12 @@ public class ResponseBufferingPolicy : PipelinePolicy
             return;
         }
 
-        Stream? responseContentStream = message.Response.ContentStream;
+        if (message.Response is not HttpMessageResponse response)
+        {
+            throw new InvalidOperationException("Expect response type of 'HttpMessgeResponse'");
+        }
+
+        Stream? responseContentStream = response.ContentStream;
         if (responseContentStream == null || responseContentStream.CanSeek)
         {
             // There is either no content on the response, or the content has already
@@ -117,7 +123,7 @@ public class ResponseBufferingPolicy : PipelinePolicy
 
             responseContentStream.Dispose();
             bufferedStream.Position = 0;
-            message.Response.ContentStream = bufferedStream;
+            response.ContentStream = bufferedStream;
         }
         // We dispose stream on timeout or user cancellation so catch and check if cancellation token was cancelled
         catch (Exception ex)

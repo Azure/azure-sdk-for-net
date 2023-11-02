@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
 using System.Net.ClientModel.Core;
 using System.Net.ClientModel.Internal.Core;
 using System.Net.Http;
@@ -30,7 +31,7 @@ namespace Azure.Core.Pipeline
             }
 
             /// <inheritdoc />
-            protected override void OnReceivedResponse(ClientMessage message, HttpResponseMessage httpResponse)
+            protected override void OnReceivedResponse(ClientMessage message, HttpResponseMessage httpResponse, Stream? contentStream)
             {
                 if (message is not HttpMessage httpMessage)
                 {
@@ -38,7 +39,7 @@ namespace Azure.Core.Pipeline
                 }
 
                 string clientRequestId = httpMessage.Request.ClientRequestId;
-                httpMessage.Response = new ResponseAdapter(new HttpClientTransportResponse(clientRequestId, httpResponse));
+                httpMessage.Response = new ResponseAdapter(new HttpClientTransportResponse(clientRequestId, httpResponse, contentStream));
             }
         }
     }

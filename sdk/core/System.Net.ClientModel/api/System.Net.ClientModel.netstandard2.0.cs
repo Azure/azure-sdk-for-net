@@ -156,8 +156,7 @@ namespace System.Net.ClientModel.Core
     public abstract partial class MessageResponse : System.IDisposable
     {
         protected MessageResponse() { }
-        public virtual System.BinaryData Body { get { throw null; } }
-        public abstract System.IO.Stream? ContentStream { get; set; }
+        public abstract System.BinaryData Body { get; }
         public abstract System.Net.ClientModel.Core.MessageHeaders Headers { get; }
         public bool IsError { get { throw null; } }
         public abstract string ReasonPhrase { get; }
@@ -376,7 +375,7 @@ namespace System.Net.ClientModel.Internal.Core
         public override System.Net.ClientModel.Core.ClientMessage CreateMessage() { throw null; }
         public virtual void Dispose() { }
         protected virtual void Dispose(bool disposing) { }
-        protected virtual void OnReceivedResponse(System.Net.ClientModel.Core.ClientMessage message, System.Net.Http.HttpResponseMessage httpResponse) { }
+        protected virtual void OnReceivedResponse(System.Net.ClientModel.Core.ClientMessage message, System.Net.Http.HttpResponseMessage httpResponse, System.IO.Stream? contentStream) { }
         protected virtual void OnSendingRequest(System.Net.ClientModel.Core.ClientMessage message, System.Net.Http.HttpRequestMessage httpRequest) { }
         public override void Process(System.Net.ClientModel.Core.ClientMessage message) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(System.Net.ClientModel.Core.ClientMessage message) { throw null; }
@@ -393,8 +392,8 @@ namespace System.Net.ClientModel.Internal.Core
     }
     public partial class HttpMessageResponse : System.Net.ClientModel.Core.MessageResponse, System.IDisposable
     {
-        protected internal HttpMessageResponse(System.Net.Http.HttpResponseMessage httpResponse) { }
-        public override System.IO.Stream? ContentStream { get { throw null; } set { } }
+        protected internal HttpMessageResponse(System.Net.Http.HttpResponseMessage httpResponse, System.IO.Stream? contentStream) { }
+        public override System.BinaryData Body { get { throw null; } }
         public override System.Net.ClientModel.Core.MessageHeaders Headers { get { throw null; } }
         public override string ReasonPhrase { get { throw null; } }
         public override int Status { get { throw null; } }
