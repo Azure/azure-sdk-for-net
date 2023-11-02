@@ -89,7 +89,11 @@ namespace Azure
 
             public override int Status => _status;
 
-            public override BinaryData Body => throw new NotImplementedException();
+            public override Stream? ContentStream
+            {
+                get => throw new NotImplementedException();
+                set => throw new NotImplementedException();
+            }
 
             public override string ReasonPhrase => throw new NotSupportedException();
 

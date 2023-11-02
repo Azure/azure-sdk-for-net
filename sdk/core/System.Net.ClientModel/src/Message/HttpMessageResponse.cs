@@ -22,11 +22,10 @@ public class HttpMessageResponse : MessageResponse, IDisposable
 
     private bool _disposed;
 
-    protected internal HttpMessageResponse(HttpResponseMessage httpResponse, Stream? contentStream)
+    protected internal HttpMessageResponse(HttpResponseMessage httpResponse)
     {
         _httpResponse = httpResponse ?? throw new ArgumentNullException(nameof(httpResponse));
         _httpResponseContent = _httpResponse.Content;
-        _contentStream = contentStream;
     }
 
     public override int Status => (int)_httpResponse.StatusCode;
@@ -65,7 +64,7 @@ public class HttpMessageResponse : MessageResponse, IDisposable
     //    }
     //}
 
-    internal Stream? ContentStream
+    public override Stream? ContentStream
     {
         get => _contentStream;
         set
@@ -74,33 +73,6 @@ public class HttpMessageResponse : MessageResponse, IDisposable
             _httpResponse.Content = null;
 
             _contentStream = value;
-        }
-    }
-
-    public override BinaryData Body
-    {
-        get
-        {
-            if (ContentStream == null)
-            {
-                // TODO: move EmptyBinaryData somewhere reasonable.
-                return RequestBody.EmptyBinaryData;
-            }
-
-            // TODO: Keep this?
-            // Questions: what assumptions is this making and/or dependencies
-            // is it mandating?
-            MemoryStream? memoryContent = ContentStream as MemoryStream ??
-                throw new InvalidOperationException($"The response is not fully buffered.");
-
-            if (memoryContent.TryGetBuffer(out ArraySegment<byte> segment))
-            {
-                return new BinaryData(segment.AsMemory());
-            }
-            else
-            {
-                return new BinaryData(memoryContent.ToArray());
-            }
         }
     }
 

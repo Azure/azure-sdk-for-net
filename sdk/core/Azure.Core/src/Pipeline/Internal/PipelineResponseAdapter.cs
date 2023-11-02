@@ -24,7 +24,11 @@ namespace Azure.Core
         // TODO: implement
         public override MessageHeaders Headers => throw new NotSupportedException();
 
-        public override BinaryData Body => _response.Content;
+        public override Stream? ContentStream
+        {
+            get => _response.ContentStream;
+            set => _response.ContentStream = value;
+        }
 
         public override void Dispose()
         {

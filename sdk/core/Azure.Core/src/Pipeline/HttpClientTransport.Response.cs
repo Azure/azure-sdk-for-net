@@ -31,8 +31,8 @@ namespace Azure.Core.Pipeline
 
         private sealed class HttpClientTransportResponse : HttpMessageResponse
         {
-            public HttpClientTransportResponse(string requestId, HttpResponseMessage httpResponse, Stream? contentStream)
-                : base(httpResponse, contentStream)
+            public HttpClientTransportResponse(string requestId, HttpResponseMessage httpResponse)
+                : base(httpResponse)
             {
                 ClientRequestId = requestId ?? throw new ArgumentNullException(nameof(requestId));
             }

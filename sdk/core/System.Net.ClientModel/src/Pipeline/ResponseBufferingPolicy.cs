@@ -88,12 +88,7 @@ public class ResponseBufferingPolicy : PipelinePolicy
             return;
         }
 
-        if (message.Response is not HttpMessageResponse response)
-        {
-            throw new InvalidOperationException("Expect response type of 'HttpMessgeResponse'");
-        }
-
-        Stream? responseContentStream = response.ContentStream;
+        Stream? responseContentStream = message.Response.ContentStream;
         if (responseContentStream == null || responseContentStream.CanSeek)
         {
             // There is either no content on the response, or the content has already
@@ -123,7 +118,7 @@ public class ResponseBufferingPolicy : PipelinePolicy
 
             responseContentStream.Dispose();
             bufferedStream.Position = 0;
-            response.ContentStream = bufferedStream;
+            message.Response.ContentStream = bufferedStream;
         }
         // We dispose stream on timeout or user cancellation so catch and check if cancellation token was cancelled
         catch (Exception ex)

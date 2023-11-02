@@ -157,7 +157,7 @@ public class HttpClientPipelineTransport : PipelineTransport, IDisposable
         // This extensibility point lets derived types do the following:
         //   1. Set message.Response to an implementation-specific type, e.g. Azure.Core.Response.
         //   2. Make any necessary modifications based on the System.Net.Http.HttpResponseMessage.
-        OnReceivedResponse(message, responseMessage, contentStream);
+        OnReceivedResponse(message, responseMessage);
 
         // We set derived values on the MessageResponse here, including Content and IsError
         // to ensure these things happen in the transport.  If derived implementations need
@@ -166,10 +166,10 @@ public class HttpClientPipelineTransport : PipelineTransport, IDisposable
         // TODO: a possible alternative is to make instantiating the Response a specific
         // extensibilty point and let OnReceivedResponse enable transport-specific logic.
         // Consider which is preferred as part of holistic extensibility-point review.
-        //if (contentStream is not null)
-        //{
-        //    message.Response.ContentStream = contentStream;
-        //}
+        if (contentStream is not null)
+        {
+            message.Response.ContentStream = contentStream;
+        }
 
         message.Response.IsError = message.MessageClassifier.IsError(message);
     }
@@ -186,9 +186,8 @@ public class HttpClientPipelineTransport : PipelineTransport, IDisposable
     /// </summary>
     /// <param name="message"></param>
     /// <param name="httpResponse"></param>
-    /// <param name="contentStream"></param>
-    protected virtual void OnReceivedResponse(ClientMessage message, HttpResponseMessage httpResponse, Stream? contentStream)
-        => message.Response = new HttpMessageResponse(httpResponse, contentStream);
+    protected virtual void OnReceivedResponse(ClientMessage message, HttpResponseMessage httpResponse)
+        => message.Response = new HttpMessageResponse(httpResponse);
 
     private static HttpRequestMessage BuildRequestMessage(ClientMessage message)
     {

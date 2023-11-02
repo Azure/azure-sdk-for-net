@@ -13,32 +13,34 @@ public abstract class MessageResponse : IDisposable
 
     public abstract MessageHeaders Headers { get; }
 
-    public abstract BinaryData Body { get; }
-    //{
-    //    get
-    //    {
-    //        if (ContentStream == null)
-    //        {
-    //            // TODO: move EmptyBinaryData somewhere reasonable.
-    //            return RequestBody.EmptyBinaryData;
-    //        }
+    public BinaryData Body
+    {
+        get
+        {
+            if (ContentStream == null)
+            {
+                // TODO: move EmptyBinaryData somewhere reasonable.
+                return RequestBody.EmptyBinaryData;
+            }
 
-    //        // TODO: Keep this?
-    //        // Questions: what assumptions is this making and/or dependencies
-    //        // is it mandating?
-    //        MemoryStream? memoryContent = ContentStream as MemoryStream ??
-    //            throw new InvalidOperationException($"The response is not fully buffered.");
+            // TODO: Keep this?
+            // Questions: what assumptions is this making and/or dependencies
+            // is it mandating?
+            MemoryStream? memoryContent = ContentStream as MemoryStream ??
+                throw new InvalidOperationException($"The response is not fully buffered.");
 
-    //        if (memoryContent.TryGetBuffer(out ArraySegment<byte> segment))
-    //        {
-    //            return new BinaryData(segment.AsMemory());
-    //        }
-    //        else
-    //        {
-    //            return new BinaryData(memoryContent.ToArray());
-    //        }
-    //    }
-    //}
+            if (memoryContent.TryGetBuffer(out ArraySegment<byte> segment))
+            {
+                return new BinaryData(segment.AsMemory());
+            }
+            else
+            {
+                return new BinaryData(memoryContent.ToArray());
+            }
+        }
+    }
+
+    public abstract Stream? ContentStream { get; set; }
 
     #region Meta-data properties set by the pipeline.
 
