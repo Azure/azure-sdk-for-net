@@ -4,6 +4,7 @@
 using System;
 using System.IO;
 using System.Runtime.InteropServices;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage
@@ -68,7 +69,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage
 
             // these names need to be separate to use the correct OS specific DirectorySeparatorChar.
             createdDirectoryPath = Path.Combine(path, "Microsoft", "AzureMonitor");
-            return platform.CreateDirectory(createdDirectoryPath);
+            try
+            {
+                platform.CreateDirectory(createdDirectoryPath);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                AzureMonitorExporterEventSource.Log.ErrorCreatingStorageFolder(path, ex);
+                return false;
+            }
         }
     }
 }

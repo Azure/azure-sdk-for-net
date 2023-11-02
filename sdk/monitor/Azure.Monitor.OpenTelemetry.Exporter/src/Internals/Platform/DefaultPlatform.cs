@@ -7,7 +7,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
+
+#if AZURE_MONITOR_EXPORTER
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
+#endif
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
 {
@@ -23,7 +26,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
             }
             catch (Exception ex)
             {
+#if AZURE_MONITOR_EXPORTER
                 AzureMonitorExporterEventSource.Log.FailedToReadEnvironmentVariables(ex);
+#endif
                 _environmentVariables = new Dictionary<string, object>();
             }
         }
@@ -50,19 +55,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
 
         public bool IsOSPlatform(OSPlatform osPlatform) => RuntimeInformation.IsOSPlatform(osPlatform);
 
-        public bool CreateDirectory(string path)
-        {
-            try
-            {
-                Directory.CreateDirectory(path);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                AzureMonitorExporterEventSource.Log.ErrorCreatingStorageFolder(path, ex);
-                return false;
-            }
-        }
+        public void CreateDirectory(string path) => Directory.CreateDirectory(path);
 
         public string GetEnvironmentUserName() => Environment.UserName;
 
