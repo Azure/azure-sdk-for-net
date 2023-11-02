@@ -42,7 +42,6 @@ namespace System.Net.ClientModel
         public ModelReaderWriterOptions(System.Net.ClientModel.ModelReaderWriterFormat format) { }
         public static System.Net.ClientModel.ModelReaderWriterOptions DefaultWireOptions { get { throw null; } }
         public System.Net.ClientModel.ModelReaderWriterFormat Format { get { throw null; } }
-        public static System.Net.ClientModel.ModelReaderWriterOptions GetOptions(System.Net.ClientModel.ModelReaderWriterFormat format) { throw null; }
     }
     public partial class NullableResult<T> : System.Net.ClientModel.Result
     {
