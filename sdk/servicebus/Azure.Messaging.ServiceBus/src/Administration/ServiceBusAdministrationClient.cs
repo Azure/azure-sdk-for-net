@@ -17,7 +17,7 @@ namespace Azure.Messaging.ServiceBus.Administration
     /// </summary>
     /// <remarks>
     /// The <see cref="ServiceBusAdministrationClient"/> operates against an entity management endpoint
-    /// without performance gaurantees.  It is not recommended for use in performance-critical
+    /// without performance guarantees.  It is not recommended for use in performance-critical
     /// scenarios.
     /// </remarks>
     public class ServiceBusAdministrationClient
