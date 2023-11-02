@@ -51,6 +51,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
         public MySqlFlexibleServersPrivateLinkServiceConnectionState ConnectionState { get; set; }
         /// <summary> The provisioning state of the private endpoint connection resource. </summary>
-        public MySqlFlexibleServersPrivateEndpointConnectionProvisioningState? ProvisioningState { get; set; }
+        public MySqlFlexibleServersPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
     }
 }
