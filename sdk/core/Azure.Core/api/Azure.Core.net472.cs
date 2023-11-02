@@ -535,7 +535,7 @@ namespace Azure.Core
         protected internal abstract bool TryGetHeader(string name, out string? value);
         protected internal abstract bool TryGetHeaderValues(string name, out System.Collections.Generic.IEnumerable<string>? values);
     }
-    public abstract partial class RequestContent : System.Net.ClientModel.Core.RequestBody
+    public abstract partial class RequestContent : System.Net.ClientModel.Core.MessageBody
     {
         protected RequestContent() { }
         public static Azure.Core.RequestContent Create(Azure.Core.Serialization.DynamicData content) { throw null; }

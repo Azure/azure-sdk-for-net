@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.IO;
 using System.Net.ClientModel.Core;
 using System.Net.Http;
 
@@ -18,7 +17,7 @@ public class HttpMessageResponse : MessageResponse, IDisposable
     // references to network resources.
     private readonly HttpContent _httpResponseContent;
 
-    private Stream? _contentStream;
+    private MessageBody? _content;
 
     private bool _disposed;
 
@@ -36,45 +35,33 @@ public class HttpMessageResponse : MessageResponse, IDisposable
     public override MessageHeaders Headers
         => new MessageResponseHeaders(_httpResponse, _httpResponseContent);
 
-    public override Stream? ContentStream
+    public override MessageBody? Body
     {
-        get => _contentStream;
-        set
+        get
         {
-            // Make sure we don't dispose the content if the stream was replaced
-            _httpResponse.Content = null;
+            _content ??= MessageBody.Empty;
+            return _content;
+        }
 
-            _contentStream = value;
+        protected internal set
+        {
+            _content = value;
+
+            // Setting _httpResponse.Content to null makes it so when this type
+            // disposes _httpResponse later, the content is not also disposed.
+            // This works because the transport sets _content to the value of
+            // _httpResponse.Content initially, so if this object is disposed
+            // without its content being buffered, calling dispose on _content will
+            // dispose the network stream.
+
+            // TODO: We could feasibly leak a network resource if this setter
+            // is called without the caller taking ownership of and disposing the
+            // network stream, since at that point, no one is holding a reference
+            // to it anymore.  Today, ResponseBufferingPolicy takes care of this.
+
+            _httpResponse.Content = null;
         }
     }
-
-    //public override RequestBody? Body
-    //{
-    //    get
-    //    {
-    //        _content ??= RequestBody.Empty;
-    //        return _content;
-    //    }
-
-    //    protected internal set
-    //    {
-    //        _content = value;
-
-    //        // Setting _httpResponse.Content to null makes it so when this type
-    //        // disposes _httpResponse later, the content is not also disposed.
-    //        // This works because the transport sets _content to the value of
-    //        // _httpResponse.Content initially, so if this object is disposed
-    //        // without its content being buffered, calling dispose on _content will
-    //        // dispose the network stream.
-
-    //        // TODO: We could feasibly leak a network resource if this setter
-    //        // is called without the caller taking ownership of and disposing the
-    //        // network stream, since at that point, no one is holding a reference
-    //        // to it anymore.  Today, ResponseBufferingPolicy takes care of this.
-
-    //        _httpResponse.Content = null;
-    //    }
-    //}
 
     #region IDisposable
 
@@ -107,11 +94,11 @@ public class HttpMessageResponse : MessageResponse, IDisposable
             // not disposed, because the entity that replaced the response content
             // intentionally left the network stream undisposed.
 
-            var contentStream = _contentStream;
-            if (contentStream is not null && !ContentIsBuffered)
+            var content = _content;
+            if (content is not null && !content.IsBuffered)
             {
-                contentStream?.Dispose();
-                _contentStream = null;
+                content?.Dispose();
+                _content = null;
             }
 
             _disposed = true;

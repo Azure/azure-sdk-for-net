@@ -119,6 +119,22 @@ namespace System.Net.ClientModel.Core
         public override void Process(System.Net.ClientModel.Core.ClientMessage message, System.Net.ClientModel.Core.PipelineEnumerator pipeline) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(System.Net.ClientModel.Core.ClientMessage message, System.Net.ClientModel.Core.PipelineEnumerator pipeline) { throw null; }
     }
+    public abstract partial class MessageBody : System.IDisposable
+    {
+        protected MessageBody() { }
+        public static System.Net.ClientModel.Core.MessageBody Create(System.BinaryData value) { throw null; }
+        public static System.Net.ClientModel.Core.MessageBody Create(System.IO.Stream stream) { throw null; }
+        public static System.Net.ClientModel.Core.MessageBody Create(System.Net.ClientModel.Core.IJsonModel<object> model, System.Net.ClientModel.ModelReaderWriterOptions? options = null) { throw null; }
+        public static System.Net.ClientModel.Core.MessageBody Create(System.Net.ClientModel.Core.IModel<object> model, System.Net.ClientModel.ModelReaderWriterOptions? options = null) { throw null; }
+        public abstract void Dispose();
+        public static explicit operator System.BinaryData (System.Net.ClientModel.Core.MessageBody body) { throw null; }
+        public static explicit operator System.IO.Stream (System.Net.ClientModel.Core.MessageBody body) { throw null; }
+        protected virtual System.BinaryData ToBinaryData(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected virtual System.IO.Stream ToStream(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public abstract bool TryComputeLength(out long length);
+        public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken);
+        public abstract System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken);
+    }
     public partial class MessageClassifier
     {
         protected internal MessageClassifier() { }
@@ -147,7 +163,7 @@ namespace System.Net.ClientModel.Core
     public abstract partial class MessageRequest : System.IDisposable
     {
         protected MessageRequest() { }
-        public abstract System.Net.ClientModel.Core.RequestBody? Body { get; set; }
+        public abstract System.Net.ClientModel.Core.MessageBody? Body { get; set; }
         public abstract System.Net.ClientModel.Core.MessageHeaders Headers { get; }
         public abstract string Method { get; set; }
         public abstract System.Uri Uri { get; set; }
@@ -156,7 +172,7 @@ namespace System.Net.ClientModel.Core
     public abstract partial class MessageResponse : System.IDisposable
     {
         protected MessageResponse() { }
-        public abstract System.Net.ClientModel.Core.RequestBody? Body { get; protected internal set; }
+        public abstract System.Net.ClientModel.Core.MessageBody? Body { get; protected internal set; }
         public abstract System.Net.ClientModel.Core.MessageHeaders Headers { get; }
         public bool IsError { get { throw null; } }
         public abstract string ReasonPhrase { get; }
@@ -211,22 +227,6 @@ namespace System.Net.ClientModel.Core
         public override void Process(System.Net.ClientModel.Core.ClientMessage message, System.Net.ClientModel.Core.PipelineEnumerator pipeline) { }
         public abstract System.Threading.Tasks.ValueTask ProcessAsync(System.Net.ClientModel.Core.ClientMessage message);
         public override System.Threading.Tasks.ValueTask ProcessAsync(System.Net.ClientModel.Core.ClientMessage message, System.Net.ClientModel.Core.PipelineEnumerator pipeline) { throw null; }
-    }
-    public abstract partial class RequestBody : System.IDisposable
-    {
-        protected RequestBody() { }
-        public static System.Net.ClientModel.Core.RequestBody Create(System.BinaryData value) { throw null; }
-        public static System.Net.ClientModel.Core.RequestBody Create(System.IO.Stream stream) { throw null; }
-        public static System.Net.ClientModel.Core.RequestBody Create(System.Net.ClientModel.Core.IJsonModel<object> model, System.Net.ClientModel.ModelReaderWriterOptions? options = null) { throw null; }
-        public static System.Net.ClientModel.Core.RequestBody Create(System.Net.ClientModel.Core.IModel<object> model, System.Net.ClientModel.ModelReaderWriterOptions? options = null) { throw null; }
-        public abstract void Dispose();
-        public static explicit operator System.BinaryData (System.Net.ClientModel.Core.RequestBody body) { throw null; }
-        public static explicit operator System.IO.Stream (System.Net.ClientModel.Core.RequestBody body) { throw null; }
-        protected virtual System.BinaryData ToBinaryData(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        protected virtual System.IO.Stream ToStream(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public abstract bool TryComputeLength(out long length);
-        public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken);
-        public abstract System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken);
     }
     public partial class ResponseBufferingPolicy : System.Net.ClientModel.Core.PipelinePolicy
     {
@@ -390,7 +390,7 @@ namespace System.Net.ClientModel.Internal.Core
     public partial class HttpMessageRequest : System.Net.ClientModel.Core.MessageRequest, System.IDisposable
     {
         protected internal HttpMessageRequest() { }
-        public override System.Net.ClientModel.Core.RequestBody? Body { get { throw null; } set { } }
+        public override System.Net.ClientModel.Core.MessageBody? Body { get { throw null; } set { } }
         public override System.Net.ClientModel.Core.MessageHeaders Headers { get { throw null; } }
         public override string Method { get { throw null; } set { } }
         public override System.Uri Uri { get { throw null; } set { } }
@@ -400,7 +400,7 @@ namespace System.Net.ClientModel.Internal.Core
     public partial class HttpMessageResponse : System.Net.ClientModel.Core.MessageResponse, System.IDisposable
     {
         protected internal HttpMessageResponse(System.Net.Http.HttpResponseMessage httpResponse) { }
-        public override System.Net.ClientModel.Core.RequestBody? Body { get { throw null; } protected internal set { } }
+        public override System.Net.ClientModel.Core.MessageBody? Body { get { throw null; } protected internal set { } }
         public override System.Net.ClientModel.Core.MessageHeaders Headers { get { throw null; } }
         public override string ReasonPhrase { get { throw null; } }
         public override int Status { get { throw null; } }

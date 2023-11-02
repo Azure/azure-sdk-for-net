@@ -61,9 +61,9 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             return ModelReaderWriter.Write(this, options);
         }
 
-        public static implicit operator RequestBody(ModelAsStruct model)
+        public static implicit operator MessageBody(ModelAsStruct model)
         {
-            return RequestBody.Create(model, ModelReaderWriterOptions.DefaultWireOptions);
+            return MessageBody.Create(model, ModelReaderWriterOptions.DefaultWireOptions);
         }
 
         ModelAsStruct IModel<ModelAsStruct>.Read(BinaryData data, ModelReaderWriterOptions options)
