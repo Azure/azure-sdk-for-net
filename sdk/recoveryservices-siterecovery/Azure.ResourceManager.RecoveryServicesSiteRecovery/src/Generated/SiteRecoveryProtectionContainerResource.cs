@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> An object representing collection of SiteRecoveryMigrationItemResources and their operations over a SiteRecoveryMigrationItemResource. </returns>
         public virtual SiteRecoveryMigrationItemCollection GetSiteRecoveryMigrationItems()
         {
-            return GetCachedClient(Client => new SiteRecoveryMigrationItemCollection(Client, Id));
+            return GetCachedClient(client => new SiteRecoveryMigrationItemCollection(client, Id));
         }
 
         /// <summary>
@@ -114,8 +114,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </summary>
         /// <param name="migrationItemName"> Migration item name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="migrationItemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="migrationItemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="migrationItemName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteRecoveryMigrationItemResource>> GetSiteRecoveryMigrationItemAsync(string migrationItemName, CancellationToken cancellationToken = default)
         {
@@ -137,8 +137,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </summary>
         /// <param name="migrationItemName"> Migration item name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="migrationItemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="migrationItemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="migrationItemName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SiteRecoveryMigrationItemResource> GetSiteRecoveryMigrationItem(string migrationItemName, CancellationToken cancellationToken = default)
         {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> An object representing collection of SiteRecoveryProtectableItemResources and their operations over a SiteRecoveryProtectableItemResource. </returns>
         public virtual SiteRecoveryProtectableItemCollection GetSiteRecoveryProtectableItems()
         {
-            return GetCachedClient(Client => new SiteRecoveryProtectableItemCollection(Client, Id));
+            return GetCachedClient(client => new SiteRecoveryProtectableItemCollection(client, Id));
         }
 
         /// <summary>
@@ -167,8 +167,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </summary>
         /// <param name="protectableItemName"> Protectable item name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="protectableItemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="protectableItemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="protectableItemName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteRecoveryProtectableItemResource>> GetSiteRecoveryProtectableItemAsync(string protectableItemName, CancellationToken cancellationToken = default)
         {
@@ -190,8 +190,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </summary>
         /// <param name="protectableItemName"> Protectable item name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="protectableItemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="protectableItemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="protectableItemName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SiteRecoveryProtectableItemResource> GetSiteRecoveryProtectableItem(string protectableItemName, CancellationToken cancellationToken = default)
         {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> An object representing collection of ReplicationProtectedItemResources and their operations over a ReplicationProtectedItemResource. </returns>
         public virtual ReplicationProtectedItemCollection GetReplicationProtectedItems()
         {
-            return GetCachedClient(Client => new ReplicationProtectedItemCollection(Client, Id));
+            return GetCachedClient(client => new ReplicationProtectedItemCollection(client, Id));
         }
 
         /// <summary>
@@ -220,8 +220,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </summary>
         /// <param name="replicatedProtectedItemName"> Replication protected item name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="replicatedProtectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="replicatedProtectedItemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="replicatedProtectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ReplicationProtectedItemResource>> GetReplicationProtectedItemAsync(string replicatedProtectedItemName, CancellationToken cancellationToken = default)
         {
@@ -243,8 +243,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </summary>
         /// <param name="replicatedProtectedItemName"> Replication protected item name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="replicatedProtectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="replicatedProtectedItemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="replicatedProtectedItemName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ReplicationProtectedItemResource> GetReplicationProtectedItem(string replicatedProtectedItemName, CancellationToken cancellationToken = default)
         {
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <returns> An object representing collection of ProtectionContainerMappingResources and their operations over a ProtectionContainerMappingResource. </returns>
         public virtual ProtectionContainerMappingCollection GetProtectionContainerMappings()
         {
-            return GetCachedClient(Client => new ProtectionContainerMappingCollection(Client, Id));
+            return GetCachedClient(client => new ProtectionContainerMappingCollection(client, Id));
         }
 
         /// <summary>
@@ -273,8 +273,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </summary>
         /// <param name="mappingName"> Protection Container mapping name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="mappingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="mappingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="mappingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ProtectionContainerMappingResource>> GetProtectionContainerMappingAsync(string mappingName, CancellationToken cancellationToken = default)
         {
@@ -296,8 +296,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// </summary>
         /// <param name="mappingName"> Protection Container mapping name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="mappingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="mappingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="mappingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ProtectionContainerMappingResource> GetProtectionContainerMapping(string mappingName, CancellationToken cancellationToken = default)
         {

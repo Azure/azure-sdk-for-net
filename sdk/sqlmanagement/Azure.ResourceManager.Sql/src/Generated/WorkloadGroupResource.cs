@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of WorkloadClassifierResources and their operations over a WorkloadClassifierResource. </returns>
         public virtual WorkloadClassifierCollection GetWorkloadClassifiers()
         {
-            return GetCachedClient(Client => new WorkloadClassifierCollection(Client, Id));
+            return GetCachedClient(client => new WorkloadClassifierCollection(client, Id));
         }
 
         /// <summary>
@@ -113,8 +113,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="workloadClassifierName"> The name of the workload classifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workloadClassifierName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workloadClassifierName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workloadClassifierName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<WorkloadClassifierResource>> GetWorkloadClassifierAsync(string workloadClassifierName, CancellationToken cancellationToken = default)
         {
@@ -136,8 +136,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="workloadClassifierName"> The name of the workload classifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workloadClassifierName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workloadClassifierName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workloadClassifierName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<WorkloadClassifierResource> GetWorkloadClassifier(string workloadClassifierName, CancellationToken cancellationToken = default)
         {

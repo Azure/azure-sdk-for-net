@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// <returns> An object representing collection of MoverResources and their operations over a MoverResource. </returns>
         public virtual MoverResourceCollection GetMoverResources()
         {
-            return GetCachedClient(Client => new MoverResourceCollection(Client, Id));
+            return GetCachedClient(client => new MoverResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -119,8 +119,8 @@ namespace Azure.ResourceManager.ResourceMover
         /// </summary>
         /// <param name="moverResourceName"> The Move Resource Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="moverResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="moverResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="moverResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MoverResource>> GetMoverResourceAsync(string moverResourceName, CancellationToken cancellationToken = default)
         {
@@ -142,8 +142,8 @@ namespace Azure.ResourceManager.ResourceMover
         /// </summary>
         /// <param name="moverResourceName"> The Move Resource Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="moverResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="moverResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="moverResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MoverResource> GetMoverResource(string moverResourceName, CancellationToken cancellationToken = default)
         {

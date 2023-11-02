@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Sphere
         /// <returns> An object representing collection of SphereDeviceGroupResources and their operations over a SphereDeviceGroupResource. </returns>
         public virtual SphereDeviceGroupCollection GetSphereDeviceGroups()
         {
-            return GetCachedClient(Client => new SphereDeviceGroupCollection(Client, Id));
+            return GetCachedClient(client => new SphereDeviceGroupCollection(client, Id));
         }
 
         /// <summary>
@@ -114,8 +114,8 @@ namespace Azure.ResourceManager.Sphere
         /// </summary>
         /// <param name="deviceGroupName"> Name of device group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SphereDeviceGroupResource>> GetSphereDeviceGroupAsync(string deviceGroupName, CancellationToken cancellationToken = default)
         {
@@ -137,8 +137,8 @@ namespace Azure.ResourceManager.Sphere
         /// </summary>
         /// <param name="deviceGroupName"> Name of device group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deviceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deviceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SphereDeviceGroupResource> GetSphereDeviceGroup(string deviceGroupName, CancellationToken cancellationToken = default)
         {

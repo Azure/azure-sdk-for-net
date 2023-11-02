@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <returns> An object representing collection of DataReplicationDraResources and their operations over a DataReplicationDraResource. </returns>
         public virtual DataReplicationDraCollection GetDataReplicationDras()
         {
-            return GetCachedClient(Client => new DataReplicationDraCollection(Client, Id));
+            return GetCachedClient(client => new DataReplicationDraCollection(client, Id));
         }
 
         /// <summary>
@@ -114,8 +114,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </summary>
         /// <param name="fabricAgentName"> The fabric agent (Dra) name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fabricAgentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fabricAgentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fabricAgentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataReplicationDraResource>> GetDataReplicationDraAsync(string fabricAgentName, CancellationToken cancellationToken = default)
         {
@@ -137,8 +137,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </summary>
         /// <param name="fabricAgentName"> The fabric agent (Dra) name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fabricAgentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fabricAgentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fabricAgentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataReplicationDraResource> GetDataReplicationDra(string fabricAgentName, CancellationToken cancellationToken = default)
         {

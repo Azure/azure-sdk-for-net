@@ -9,8 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ResourceGraph.Mocking;
 using Azure.ResourceManager.ResourceGraph.Models;
 using Azure.ResourceManager.Resources;
 
@@ -19,20 +19,9 @@ namespace Azure.ResourceManager.ResourceGraph
     /// <summary> A class to add extension methods to Azure.ResourceManager.ResourceGraph. </summary>
     public static partial class ResourceGraphExtensions
     {
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
+        private static MockableResourceGraphTenantResource GetMockableResourceGraphTenantResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new TenantResourceExtensionClient(client, resource.Id);
-            });
-        }
-
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new TenantResourceExtensionClient(client, scope);
-            });
+            return resource.GetCachedClient(client => new MockableResourceGraphTenantResource(client, resource.Id));
         }
 
         /// <summary>
@@ -47,6 +36,10 @@ namespace Azure.ResourceManager.ResourceGraph
         /// <description>Resources</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableResourceGraphTenantResource.GetResources(ResourceQueryContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="content"> Request specifying query and its options. </param>
@@ -54,9 +47,7 @@ namespace Azure.ResourceManager.ResourceGraph
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<ResourceQueryResult>> GetResourcesAsync(this TenantResource tenantResource, ResourceQueryContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetTenantResourceExtensionClient(tenantResource).GetResourcesAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableResourceGraphTenantResource(tenantResource).GetResourcesAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -71,6 +62,10 @@ namespace Azure.ResourceManager.ResourceGraph
         /// <description>Resources</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableResourceGraphTenantResource.GetResources(ResourceQueryContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="content"> Request specifying query and its options. </param>
@@ -78,9 +73,7 @@ namespace Azure.ResourceManager.ResourceGraph
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<ResourceQueryResult> GetResources(this TenantResource tenantResource, ResourceQueryContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetResources(content, cancellationToken);
+            return GetMockableResourceGraphTenantResource(tenantResource).GetResources(content, cancellationToken);
         }
 
         /// <summary>
@@ -95,6 +88,10 @@ namespace Azure.ResourceManager.ResourceGraph
         /// <description>ResourcesHistory</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableResourceGraphTenantResource.GetResourceHistory(ResourcesHistoryContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="content"> Request specifying the query and its options. </param>
@@ -102,9 +99,7 @@ namespace Azure.ResourceManager.ResourceGraph
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<BinaryData>> GetResourceHistoryAsync(this TenantResource tenantResource, ResourcesHistoryContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return await GetTenantResourceExtensionClient(tenantResource).GetResourceHistoryAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableResourceGraphTenantResource(tenantResource).GetResourceHistoryAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -119,6 +114,10 @@ namespace Azure.ResourceManager.ResourceGraph
         /// <description>ResourcesHistory</description>
         /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableResourceGraphTenantResource.GetResourceHistory(ResourcesHistoryContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="content"> Request specifying the query and its options. </param>
@@ -126,9 +125,7 @@ namespace Azure.ResourceManager.ResourceGraph
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<BinaryData> GetResourceHistory(this TenantResource tenantResource, ResourcesHistoryContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            return GetTenantResourceExtensionClient(tenantResource).GetResourceHistory(content, cancellationToken);
+            return GetMockableResourceGraphTenantResource(tenantResource).GetResourceHistory(content, cancellationToken);
         }
     }
 }
