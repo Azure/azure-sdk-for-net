@@ -3,7 +3,6 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ConnectedVMwarevSphere.Models;
@@ -11,7 +10,7 @@ using Azure.ResourceManager.Resources.Models;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests.tests.Tests
+namespace Azure.ResourceManager.ConnectedVMwarevSphere.Tests
 {
     public partial class Test_VirtualMachineInstanceResource
     {
