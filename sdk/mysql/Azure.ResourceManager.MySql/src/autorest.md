@@ -249,7 +249,7 @@ rename-mapping:
   MaintenanceWindow: MySqlFlexibleServerMaintenanceWindow
   Backup: MySqlFlexibleServerBackupProperties
   Storage: MySqlFlexibleServerStorage
-  Sku: MySqlFlexibleServerSku
+  Sku: MySqlServerSku
   Network: MySqlFlexibleServerNetwork
   HighAvailability: MySqlFlexibleServerHighAvailability
   HighAvailabilityMode: MySqlFlexibleServerHighAvailabilityMode

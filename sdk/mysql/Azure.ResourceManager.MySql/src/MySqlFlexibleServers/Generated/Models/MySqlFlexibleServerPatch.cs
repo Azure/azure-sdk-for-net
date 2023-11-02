@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <summary> The cmk identity for the server. Current supported identity types: UserAssigned. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The SKU (pricing tier) of the server. </summary>
-        public MySQLServerSku Sku { get; set; }
+        public MySqlFlexibleServerSku Sku { get; set; }
         /// <summary> Application-specific metadata in the form of key-value pairs. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The password of the administrator login. </summary>

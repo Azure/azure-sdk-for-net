@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 return null;
             }
             Optional<ManagedServiceIdentity> identity = default;
-            Optional<MySQLServerSku> sku = default;
+            Optional<MySqlFlexibleServerSku> sku = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                     {
                         continue;
                     }
-                    sku = MySQLServerSku.DeserializeMySQLServerSku(property.Value);
+                    sku = MySqlFlexibleServerSku.DeserializeMySqlFlexibleServerSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
