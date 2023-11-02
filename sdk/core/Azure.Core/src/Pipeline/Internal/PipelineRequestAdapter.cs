@@ -26,7 +26,7 @@ namespace Azure.Core
             set => _request.Uri.Reset(value);
         }
 
-        public override MessageBody? Body
+        public override RequestBody? Body
         {
             get => _request.Content;
             set

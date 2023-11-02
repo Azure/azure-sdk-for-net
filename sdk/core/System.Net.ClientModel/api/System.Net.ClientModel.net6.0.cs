@@ -119,15 +119,6 @@ namespace System.Net.ClientModel.Core
         public override void Process(System.Net.ClientModel.Core.ClientMessage message, System.Net.ClientModel.Core.PipelineEnumerator pipeline) { }
         public override System.Threading.Tasks.ValueTask ProcessAsync(System.Net.ClientModel.Core.ClientMessage message, System.Net.ClientModel.Core.PipelineEnumerator pipeline) { throw null; }
     }
-    public abstract partial class MessageBody
-    {
-        protected MessageBody() { }
-        public static System.Net.ClientModel.Core.MessageBody Create(System.BinaryData value) { throw null; }
-        public static System.Net.ClientModel.Core.MessageBody Create(System.Net.ClientModel.Core.IModel<object> model, System.Net.ClientModel.ModelReaderWriterOptions? options = null) { throw null; }
-        public abstract bool TryComputeLength(out long length);
-        public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken);
-        public abstract System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken);
-    }
     public partial class MessageClassifier
     {
         protected internal MessageClassifier() { }
@@ -156,7 +147,7 @@ namespace System.Net.ClientModel.Core
     public abstract partial class MessageRequest : System.IDisposable
     {
         protected MessageRequest() { }
-        public abstract System.Net.ClientModel.Core.MessageBody? Body { get; set; }
+        public abstract System.Net.ClientModel.Core.RequestBody? Body { get; set; }
         public abstract System.Net.ClientModel.Core.MessageHeaders Headers { get; }
         public abstract string Method { get; set; }
         public abstract System.Uri Uri { get; set; }
@@ -223,6 +214,15 @@ namespace System.Net.ClientModel.Core
         public override void Process(System.Net.ClientModel.Core.ClientMessage message, System.Net.ClientModel.Core.PipelineEnumerator pipeline) { }
         public abstract System.Threading.Tasks.ValueTask ProcessAsync(System.Net.ClientModel.Core.ClientMessage message);
         public override System.Threading.Tasks.ValueTask ProcessAsync(System.Net.ClientModel.Core.ClientMessage message, System.Net.ClientModel.Core.PipelineEnumerator pipeline) { throw null; }
+    }
+    public abstract partial class RequestBody
+    {
+        protected RequestBody() { }
+        public static System.Net.ClientModel.Core.RequestBody Create(System.BinaryData value) { throw null; }
+        public static System.Net.ClientModel.Core.RequestBody Create(System.Net.ClientModel.Core.IModel<object> model, System.Net.ClientModel.ModelReaderWriterOptions? options = null) { throw null; }
+        public abstract bool TryComputeLength(out long length);
+        public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken);
+        public abstract System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken);
     }
     public partial class ResponseBufferingPolicy : System.Net.ClientModel.Core.PipelinePolicy
     {
@@ -386,7 +386,7 @@ namespace System.Net.ClientModel.Internal.Core
     public partial class HttpMessageRequest : System.Net.ClientModel.Core.MessageRequest, System.IDisposable
     {
         protected internal HttpMessageRequest() { }
-        public override System.Net.ClientModel.Core.MessageBody? Body { get { throw null; } set { } }
+        public override System.Net.ClientModel.Core.RequestBody? Body { get { throw null; } set { } }
         public override System.Net.ClientModel.Core.MessageHeaders Headers { get { throw null; } }
         public override string Method { get { throw null; } set { } }
         public override System.Uri Uri { get { throw null; } set { } }

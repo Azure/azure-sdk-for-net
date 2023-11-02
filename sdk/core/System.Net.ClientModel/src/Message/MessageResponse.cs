@@ -22,7 +22,7 @@ public abstract class MessageResponse : IDisposable
             if (ContentStream == null)
             {
                 // TODO: move EmptyBinaryData somewhere reasonable.
-                return MessageBody.EmptyBinaryData;
+                return RequestBody.EmptyBinaryData;
             }
 
             // TODO: Keep this?

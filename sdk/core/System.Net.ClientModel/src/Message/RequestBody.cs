@@ -8,28 +8,26 @@ using System.Threading.Tasks;
 
 namespace System.Net.ClientModel.Core
 {
-    // I wish we could have the name MessageContent, but there is already
-    // Azure.Messaging.MessageContent.
-    public abstract class MessageBody
+    public abstract class RequestBody
     {
         // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
         internal static readonly BinaryData EmptyBinaryData = new(Array.Empty<byte>());
-        internal static MessageBody Empty = Create(EmptyBinaryData);
+        internal static RequestBody Empty = Create(EmptyBinaryData);
 
         /// <summary>
-        /// Creates an instance of <see cref="MessageBody"/> that wraps a <see cref="BinaryData"/>.
+        /// Creates an instance of <see cref="RequestBody"/> that wraps a <see cref="BinaryData"/>.
         /// </summary>
         /// <param name="value">The <see cref="BinaryData"/> to use.</param>
-        /// <returns>An instance of <see cref="MessageBody"/> that wraps a <see cref="BinaryData"/>.</returns>
-        public static MessageBody Create(BinaryData value) => new BinaryDataMessageBody(value.ToMemory());
+        /// <returns>An instance of <see cref="RequestBody"/> that wraps a <see cref="BinaryData"/>.</returns>
+        public static RequestBody Create(BinaryData value) => new BinaryDataMessageBody(value.ToMemory());
 
         /// <summary>
-        /// Creates an instance of <see cref="MessageBody"/> that wraps a <see cref="IModel{T}"/>.
+        /// Creates an instance of <see cref="RequestBody"/> that wraps a <see cref="IModel{T}"/>.
         /// </summary>
         /// <param name="model">The <see cref="IModel{T}"/> to write.</param>
         /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
-        /// <returns>An instance of <see cref="MessageBody"/> that wraps a <see cref="IModel{T}"/>.</returns>
-        public static MessageBody Create(IModel<object> model, ModelReaderWriterOptions? options = default)
+        /// <returns>An instance of <see cref="RequestBody"/> that wraps a <see cref="IModel{T}"/>.</returns>
+        public static RequestBody Create(IModel<object> model, ModelReaderWriterOptions? options = default)
             => new ModelMessageBody(model, options ?? ModelReaderWriterOptions.DefaultWireOptions);
 
         /// <summary>
@@ -54,7 +52,7 @@ namespace System.Net.ClientModel.Core
 
         internal virtual bool IsBuffered { get; }
 
-        private sealed class ModelMessageBody : MessageBody, IDisposable
+        private sealed class ModelMessageBody : RequestBody, IDisposable
         {
             private readonly IModel<object> _model;
             private readonly ModelReaderWriterOptions _options;
@@ -152,7 +150,7 @@ namespace System.Net.ClientModel.Core
 
         // BinaryData holds ReadOnlyMemory<byte> so this is the type that works
         // with BinaryData in an optimized way.
-        private sealed class BinaryDataMessageBody : MessageBody
+        private sealed class BinaryDataMessageBody : RequestBody
         {
             private readonly ReadOnlyMemory<byte> _bytes;
 
