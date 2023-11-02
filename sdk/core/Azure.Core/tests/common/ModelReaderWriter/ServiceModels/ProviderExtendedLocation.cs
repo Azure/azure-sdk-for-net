@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 
-namespace Azure.Core.Tests.ResourceManager.Resources.Models
+namespace Azure.Core.Tests.Models.ResourceManager.Resources
 {
     /// <summary> The provider extended location. </summary>
     public partial class ProviderExtendedLocation

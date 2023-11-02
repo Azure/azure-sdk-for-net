@@ -61,7 +61,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests
         [TestCase("J")]
         [TestCase("W")]
         public void RoundTripWithModelInterfaceNonGeneric(string format)
-            => RoundTripTest(format, new ModelInterfaceNonGenericStrategy<T>());
+            => RoundTripTest(format, new ModelInterfaceAsObjectStrategy<T>());
 
         [Test]
         public void RoundTripWithCast()

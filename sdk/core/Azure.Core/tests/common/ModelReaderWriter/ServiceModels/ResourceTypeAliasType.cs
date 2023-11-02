@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Core.Tests.ResourceManager.Resources.Models
+namespace Azure.Core.Tests.Models.ResourceManager.Resources
 {
     /// <summary> The type of the alias. </summary>
     public enum ResourceTypeAliasType

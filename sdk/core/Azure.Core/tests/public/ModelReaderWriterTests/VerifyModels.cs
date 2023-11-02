@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Net.ClientModel;
-using System.Net.ClientModel.Core;
 using Azure.Core.Tests.Public.ModelReaderWriterTests.Models;
 using NUnit.Framework;
 

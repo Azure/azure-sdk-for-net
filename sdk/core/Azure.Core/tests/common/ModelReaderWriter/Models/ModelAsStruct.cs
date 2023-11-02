@@ -61,7 +61,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
         {
             ModelReaderWriterHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
 
-            return ModelReaderWriter.WriteCore(this, options);
+            return ModelReaderWriter.Write(this, options);
         }
 
         public static implicit operator RequestContent(ModelAsStruct model)
@@ -129,7 +129,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
         {
             ModelReaderWriterHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
 
-            return ModelReaderWriter.WriteCore(this, options);
+            return ModelReaderWriter.Write(this, options);
         }
 
         object IModel<object>.Read(BinaryData data, ModelReaderWriterOptions options)
@@ -139,5 +139,9 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
             using var doc = JsonDocument.Parse(data);
             return DeserializeInputAdditionalPropertiesModelStruct(doc.RootElement, options);
         }
+
+        ModelReaderWriterFormat IModel<object>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+
+        ModelReaderWriterFormat IModel<ModelAsStruct>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

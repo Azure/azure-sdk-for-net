@@ -136,7 +136,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
             if (options.Format == ModelReaderWriterFormat.Json)
             {
-                return ModelReaderWriter.WriteCore(this, options);
+                return ModelReaderWriter.Write(this, options);
             }
             else
             {
@@ -227,5 +227,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
         }
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => Serialize(writer, ModelReaderWriterOptions.DefaultWireOptions);
+
+        ModelReaderWriterFormat IModel<ModelXml>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Xml;
     }
 }

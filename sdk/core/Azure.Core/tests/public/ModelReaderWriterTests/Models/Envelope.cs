@@ -180,8 +180,10 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
-            return ModelReaderWriter.WriteCore(this, options);
+            return ModelReaderWriter.Write(this, options);
         }
+
+        ModelReaderWriterFormat IModel<Envelope<T>>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
         #endregion
     }
 }

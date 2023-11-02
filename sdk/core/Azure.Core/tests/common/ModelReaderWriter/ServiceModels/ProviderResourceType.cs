@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 
-namespace Azure.Core.Tests.ResourceManager.Resources.Models
+namespace Azure.Core.Tests.Models.ResourceManager.Resources
 {
     /// <summary> Resource type managed by the resource provider. </summary>
     public partial class ProviderResourceType
