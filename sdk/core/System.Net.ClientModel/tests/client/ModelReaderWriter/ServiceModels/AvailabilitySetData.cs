@@ -22,21 +22,21 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Compute
     {
         internal AvailabilitySetData() { }
 
-        public static implicit operator MessageBody(AvailabilitySetData availabilitySetData)
+        public static implicit operator RequestBody(AvailabilitySetData availabilitySetData)
         {
             if (availabilitySetData is null)
             {
                 return null;
             }
 
-            return MessageBody.Create(availabilitySetData, ModelReaderWriterOptions.DefaultWireOptions);
+            return RequestBody.Create(availabilitySetData, ModelReaderWriterOptions.DefaultWireOptions);
         }
 
         public static explicit operator AvailabilitySetData(Result result)
         {
             ClientUtilities.AssertNotNull(result, nameof(result));
 
-            using JsonDocument jsonDocument = JsonDocument.Parse((BinaryData)result.GetRawResponse().Body);
+            using JsonDocument jsonDocument = JsonDocument.Parse(result.GetRawResponse().Body);
             return DeserializeAvailabilitySetData(jsonDocument.RootElement, ModelReaderWriterOptions.DefaultWireOptions);
         }
 

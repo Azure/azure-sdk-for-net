@@ -38,13 +38,6 @@ namespace Azure.Core.Pipeline
             }
 
             public string ClientRequestId { get; internal set; }
-
-            internal void SetContentStream(Stream stream)
-            {
-                ClientUtilities.AssertNotNull(stream, nameof(stream));
-
-                Body = MessageBody.Create(stream);
-            }
         }
 
         private sealed class ResponseAdapter : Response
@@ -62,31 +55,16 @@ namespace Azure.Core.Pipeline
 
             public override string ReasonPhrase => _pipelineResponse.ReasonPhrase;
 
-            public override Stream? ContentStream
-            {
-                get
-                {
-                    if (_pipelineResponse.Body is null)
-                    {
-                        return null;
-                    }
-
-                    return (Stream)_pipelineResponse.Body;
-                }
-
-                set
-                {
-                    if (value is not null)
-                    {
-                        _pipelineResponse.SetContentStream(value);
-                    }
-                }
-            }
-
             public override string ClientRequestId
             {
                 get => _pipelineResponse.ClientRequestId;
                 set => _pipelineResponse.ClientRequestId = value;
+            }
+
+            public override Stream? ContentStream
+            {
+                get => _pipelineResponse.ContentStream;
+                set => _pipelineResponse.ContentStream = value;
             }
 
             protected internal override bool ContainsHeader(string name)

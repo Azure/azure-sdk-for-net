@@ -1,8 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Buffers;
 using System.IO;
 using System.Net.ClientModel.Internal;
+using System.Net.ClientModel.Internal.Core;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -86,43 +88,37 @@ public class ResponseBufferingPolicy : PipelinePolicy
             return;
         }
 
-        MessageBody? responseContent = message.Response.Body;
-        if (responseContent is null || responseContent.IsBuffered)
+        Stream? responseContentStream = message.Response.ContentStream;
+        if (responseContentStream == null || responseContentStream.CanSeek)
         {
+            // There is either no content on the response, or the content has already
+            // been buffered.
+            // TODO: there is a bug here if a user overrides the default transport.
             return;
         }
 
-        // If cancellation is possible (whether due to network timeout or a user cancellation
-        // token being passed), then register callback to dispose the content stream on cancellation.
+        // If cancellation is possible (whether due to network timeout or a user cancellation token being passed), then
+        // register callback to dispose the stream on cancellation.
         if (invocationNetworkTimeout != Timeout.InfiniteTimeSpan || oldToken.CanBeCanceled)
         {
-            Action<object?> callback = content => ((MessageBody?)content)?.Dispose();
-            cts.Token.Register(callback, responseContent);
+            cts.Token.Register(state => ((Stream?)state)?.Dispose(), responseContentStream);
         }
 
         try
         {
-            Stream bufferedStream = new MemoryStream();
-
-            // Set network timeout before starting to buffer
-            cts.CancelAfter(invocationNetworkTimeout);
-
+            var bufferedStream = new MemoryStream();
             if (async)
             {
-                await responseContent.WriteToAsync(bufferedStream, cts.Token).ConfigureAwait(false);
+                await CopyToAsync(responseContentStream, bufferedStream, invocationNetworkTimeout, cts).ConfigureAwait(false);
             }
             else
             {
-                responseContent.WriteTo(bufferedStream, cts.Token);
+                CopyTo(responseContentStream, bufferedStream, invocationNetworkTimeout, cts);
             }
 
-            // Reset timeout after buffering is complete.
-            cts.CancelAfter(Timeout.InfiniteTimeSpan);
-
-            responseContent.Dispose();
+            responseContentStream.Dispose();
             bufferedStream.Position = 0;
-            MessageBody bufferedContent = MessageBody.Create(bufferedStream);
-            message.Response.Body = bufferedContent;
+            message.Response.ContentStream = bufferedStream;
         }
         // We dispose stream on timeout or user cancellation so catch and check if cancellation token was cancelled
         catch (Exception ex)
@@ -133,6 +129,48 @@ public class ResponseBufferingPolicy : PipelinePolicy
         {
             ThrowIfCancellationRequestedOrTimeout(oldToken, cts.Token, ex, invocationNetworkTimeout);
             throw;
+        }
+    }
+
+    private async Task CopyToAsync(Stream source, Stream destination, TimeSpan networkTimeout, CancellationTokenSource cancellationTokenSource)
+    {
+        byte[] buffer = ArrayPool<byte>.Shared.Rent(DefaultCopyBufferSize);
+        try
+        {
+            while (true)
+            {
+                cancellationTokenSource.CancelAfter(networkTimeout);
+#pragma warning disable CA1835 // ReadAsync(Memory<>) overload is not available in all targets
+                int bytesRead = await source.ReadAsync(buffer, 0, buffer.Length, cancellationTokenSource.Token).ConfigureAwait(false);
+#pragma warning restore // ReadAsync(Memory<>) overload is not available in all targets
+                if (bytesRead == 0) break;
+                await destination.WriteAsync(new ReadOnlyMemory<byte>(buffer, 0, bytesRead), cancellationTokenSource.Token).ConfigureAwait(false);
+            }
+        }
+        finally
+        {
+            cancellationTokenSource.CancelAfter(Timeout.InfiniteTimeSpan);
+            ArrayPool<byte>.Shared.Return(buffer);
+        }
+    }
+
+    private void CopyTo(Stream source, Stream destination, TimeSpan networkTimeout, CancellationTokenSource cancellationTokenSource)
+    {
+        byte[] buffer = ArrayPool<byte>.Shared.Rent(DefaultCopyBufferSize);
+        try
+        {
+            int read;
+            while ((read = source.Read(buffer, 0, buffer.Length)) != 0)
+            {
+                cancellationTokenSource.Token.ThrowIfCancellationRequested();
+                cancellationTokenSource.CancelAfter(networkTimeout);
+                destination.Write(buffer, 0, read);
+            }
+        }
+        finally
+        {
+            cancellationTokenSource.CancelAfter(Timeout.InfiniteTimeSpan);
+            ArrayPool<byte>.Shared.Return(buffer);
         }
     }
 

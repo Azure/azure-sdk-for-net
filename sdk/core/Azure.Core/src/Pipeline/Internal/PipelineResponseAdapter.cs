@@ -21,29 +21,14 @@ namespace Azure.Core
 
         public override string ReasonPhrase => _response.ReasonPhrase;
 
-        public override MessageBody? Body
-        {
-            get
-            {
-                if (_response.ContentStream is null)
-                {
-                    return null;
-                }
-
-                return new ResponseContent(_response);
-            }
-
-            protected set
-            {
-                if (value is not null)
-                {
-                    _response.ContentStream = (Stream)value;
-                }
-            }
-        }
-
         // TODO: implement
         public override MessageHeaders Headers => throw new NotSupportedException();
+
+        public override Stream? ContentStream
+        {
+            get => _response.ContentStream;
+            set => _response.ContentStream = value;
+        }
 
         public override void Dispose()
         {

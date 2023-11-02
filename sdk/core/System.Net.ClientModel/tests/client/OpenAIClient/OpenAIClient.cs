@@ -52,7 +52,7 @@ public class OpenAIClient
         return Result.FromValue(completions, response);
     }
 
-    public virtual Result GetCompletions(string deploymentId, MessageBody content, RequestOptions options = null)
+    public virtual Result GetCompletions(string deploymentId, RequestBody content, RequestOptions options = null)
     {
         ClientUtilities.AssertNotNullOrEmpty(deploymentId, nameof(deploymentId));
         ClientUtilities.AssertNotNull(content, nameof(content));
@@ -67,7 +67,7 @@ public class OpenAIClient
         return result;
     }
 
-    internal ClientMessage CreateGetCompletionsRequest(string deploymentId, MessageBody content, RequestOptions options)
+    internal ClientMessage CreateGetCompletionsRequest(string deploymentId, RequestBody content, RequestOptions options)
     {
         ClientMessage message = _pipeline.CreateMessage();
         options.Apply(message);
