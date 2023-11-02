@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.DevCenter
     public partial class ProjectDevBoxDefinitionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ProjectDevBoxDefinitionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="projectName"> The projectName. </param>
+        /// <param name="devBoxDefinitionName"> The devBoxDefinitionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string projectName, string devBoxDefinitionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/devboxdefinitions/{devBoxDefinitionName}";

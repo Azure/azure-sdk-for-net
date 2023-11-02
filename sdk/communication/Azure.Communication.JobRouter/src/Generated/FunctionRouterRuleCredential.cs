@@ -11,6 +11,11 @@ namespace Azure.Communication.JobRouter
     public partial class FunctionRouterRuleCredential
     {
         /// <summary> Initializes a new instance of FunctionRouterRuleCredential. </summary>
+        internal FunctionRouterRuleCredential()
+        {
+        }
+
+        /// <summary> Initializes a new instance of FunctionRouterRuleCredential. </summary>
         /// <param name="functionKey"> (Optional) Access key scoped to a particular function. </param>
         /// <param name="appKey">
         /// (Optional) Access key scoped to a Azure Function app.

@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.Confluent
     public partial class ConfluentOrganizationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ConfluentOrganizationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="organizationName"> The organizationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string organizationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations/{organizationName}";

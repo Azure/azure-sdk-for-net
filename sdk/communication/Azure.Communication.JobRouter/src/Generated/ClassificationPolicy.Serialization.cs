@@ -20,14 +20,20 @@ namespace Azure.Communication.JobRouter
             {
                 return null;
             }
+            string etag = default;
             string id = default;
             Optional<string> name = default;
             Optional<string> fallbackQueueId = default;
-            Optional<IList<QueueSelectorAttachment>> queueSelectors = default;
+            Optional<IList<QueueSelectorAttachment>> queueSelectorAttachments = default;
             Optional<RouterRule> prioritizationRule = default;
-            Optional<IList<WorkerSelectorAttachment>> workerSelectors = default;
+            Optional<IList<WorkerSelectorAttachment>> workerSelectorAttachments = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("etag"u8))
+                {
+                    etag = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
@@ -43,7 +49,7 @@ namespace Azure.Communication.JobRouter
                     fallbackQueueId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("queueSelectors"u8))
+                if (property.NameEquals("queueSelectorAttachments"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -54,7 +60,7 @@ namespace Azure.Communication.JobRouter
                     {
                         array.Add(QueueSelectorAttachment.DeserializeQueueSelectorAttachment(item));
                     }
-                    queueSelectors = array;
+                    queueSelectorAttachments = array;
                     continue;
                 }
                 if (property.NameEquals("prioritizationRule"u8))
@@ -66,7 +72,7 @@ namespace Azure.Communication.JobRouter
                     prioritizationRule = RouterRule.DeserializeRouterRule(property.Value);
                     continue;
                 }
-                if (property.NameEquals("workerSelectors"u8))
+                if (property.NameEquals("workerSelectorAttachments"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
@@ -77,11 +83,11 @@ namespace Azure.Communication.JobRouter
                     {
                         array.Add(WorkerSelectorAttachment.DeserializeWorkerSelectorAttachment(item));
                     }
-                    workerSelectors = array;
+                    workerSelectorAttachments = array;
                     continue;
                 }
             }
-            return new ClassificationPolicy(id, name.Value, fallbackQueueId.Value, Optional.ToList(queueSelectors), prioritizationRule.Value, Optional.ToList(workerSelectors));
+            return new ClassificationPolicy(etag, id, name.Value, fallbackQueueId.Value, Optional.ToList(queueSelectorAttachments), prioritizationRule.Value, Optional.ToList(workerSelectorAttachments));
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

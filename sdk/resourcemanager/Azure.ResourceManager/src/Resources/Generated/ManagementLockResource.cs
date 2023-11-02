@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.Resources
     public partial class ManagementLockResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagementLockResource"/> instance. </summary>
+        /// <param name="scope"> The scope. </param>
+        /// <param name="lockName"> The lockName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string lockName)
         {
             var resourceId = $"{scope}/providers/Microsoft.Authorization/locks/{lockName}";

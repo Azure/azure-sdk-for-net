@@ -17,15 +17,16 @@ namespace Azure.Communication.JobRouter
     public partial class ManualReclassifyExceptionAction : ExceptionAction
     {
         /// <summary> Initializes a new instance of ManualReclassifyExceptionAction. </summary>
-        /// <param name="kind"> Discriminator. </param>
+        /// <param name="id"> Unique Id of the exception action. </param>
+        /// <param name="kind"> The type discriminator describing a sub-type of ExceptionAction. </param>
         /// <param name="queueId"> Updated QueueId. </param>
         /// <param name="priority"> Updated Priority. </param>
         /// <param name="workerSelectors"> Updated WorkerSelectors. </param>
-        internal ManualReclassifyExceptionAction(string kind, string queueId, int? priority, IReadOnlyList<RouterWorkerSelector> workerSelectors) : base(kind)
+        internal ManualReclassifyExceptionAction(string id, string kind, string queueId, int? priority, IList<RouterWorkerSelector> workerSelectors) : base(id, kind)
         {
             QueueId = queueId;
             Priority = priority;
-            _workerSelectors = workerSelectors;
+            WorkerSelectors = workerSelectors;
         }
     }
 }

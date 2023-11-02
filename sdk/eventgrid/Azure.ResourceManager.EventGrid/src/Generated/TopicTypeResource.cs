@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.EventGrid
     public partial class TopicTypeResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="TopicTypeResource"/> instance. </summary>
+        /// <param name="topicTypeName"> The topicTypeName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string topicTypeName)
         {
             var resourceId = $"/providers/Microsoft.EventGrid/topicTypes/{topicTypeName}";

@@ -6,6 +6,7 @@
     <PackageId>Azure.ResourceManager.PostgreSql</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.DBforPostgreSQL.</Description>
     <PackageTags>azure;management;arm;resource manager;postgresql</PackageTags>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <UseDefaultNamespaceAndOutputFolder>false</UseDefaultNamespaceAndOutputFolder>
   </PropertyGroup>
 </Project>

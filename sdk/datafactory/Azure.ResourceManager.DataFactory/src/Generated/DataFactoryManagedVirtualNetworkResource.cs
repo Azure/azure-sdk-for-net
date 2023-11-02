@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.DataFactory
     public partial class DataFactoryManagedVirtualNetworkResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DataFactoryManagedVirtualNetworkResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="factoryName"> The factoryName. </param>
+        /// <param name="managedVirtualNetworkName"> The managedVirtualNetworkName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string factoryName, string managedVirtualNetworkName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}/managedVirtualNetworks/{managedVirtualNetworkName}";

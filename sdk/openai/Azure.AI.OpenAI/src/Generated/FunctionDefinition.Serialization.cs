@@ -28,7 +28,10 @@ namespace Azure.AI.OpenAI
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Parameters);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Parameters.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(Parameters))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();

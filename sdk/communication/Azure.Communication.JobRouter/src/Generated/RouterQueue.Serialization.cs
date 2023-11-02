@@ -20,6 +20,7 @@ namespace Azure.Communication.JobRouter
             {
                 return null;
             }
+            string etag = default;
             string id = default;
             Optional<string> name = default;
             Optional<string> distributionPolicyId = default;
@@ -27,6 +28,11 @@ namespace Azure.Communication.JobRouter
             Optional<string> exceptionPolicyId = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("etag"u8))
+                {
+                    etag = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
@@ -69,7 +75,7 @@ namespace Azure.Communication.JobRouter
                     continue;
                 }
             }
-            return new RouterQueue(id, name.Value, distributionPolicyId.Value, Optional.ToDictionary(labels), exceptionPolicyId.Value);
+            return new RouterQueue(etag, id, name.Value, distributionPolicyId.Value, Optional.ToDictionary(labels), exceptionPolicyId.Value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

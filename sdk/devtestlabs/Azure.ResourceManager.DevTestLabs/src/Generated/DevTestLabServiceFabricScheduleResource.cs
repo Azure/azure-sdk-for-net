@@ -27,6 +27,12 @@ namespace Azure.ResourceManager.DevTestLabs
     public partial class DevTestLabServiceFabricScheduleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DevTestLabServiceFabricScheduleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="labName"> The labName. </param>
+        /// <param name="userName"> The userName. </param>
+        /// <param name="serviceFabricName"> The serviceFabricName. </param>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string labName, string userName, string serviceFabricName, string name)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/servicefabrics/{serviceFabricName}/schedules/{name}";

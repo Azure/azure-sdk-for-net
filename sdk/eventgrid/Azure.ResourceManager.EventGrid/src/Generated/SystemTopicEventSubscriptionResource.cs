@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.EventGrid
     public partial class SystemTopicEventSubscriptionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SystemTopicEventSubscriptionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="systemTopicName"> The systemTopicName. </param>
+        /// <param name="eventSubscriptionName"> The eventSubscriptionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string systemTopicName, string eventSubscriptionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/systemTopics/{systemTopicName}/eventSubscriptions/{eventSubscriptionName}";

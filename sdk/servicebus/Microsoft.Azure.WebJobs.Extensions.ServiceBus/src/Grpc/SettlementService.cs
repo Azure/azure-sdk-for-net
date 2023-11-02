@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 #if NET6_0_OR_GREATER
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.Amqp.Shared;
@@ -31,54 +32,98 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Grpc
 
         public override async Task<Empty> Complete(CompleteRequest request, ServerCallContext context)
         {
-            if (_provider.ActionsCache.TryGetValue(request.Locktoken, out var tuple))
+            try
             {
-                await tuple.Actions.CompleteMessageAsync(
-                    tuple.Message,
-                    context.CancellationToken).ConfigureAwait(false);
-                return new Empty();
+                if (_provider.ActionsCache.TryGetValue(request.Locktoken, out var tuple))
+                {
+                    await tuple.Actions.CompleteMessageAsync(
+                        tuple.Message,
+                        context.CancellationToken).ConfigureAwait(false);
+                    return new Empty();
+                }
             }
+            catch (Exception ex)
+            {
+                throw new RpcException(new Status(StatusCode.Unknown, ex.ToString()));
+            }
+
             throw new RpcException (new Status(StatusCode.FailedPrecondition, $"LockToken {request.Locktoken} not found."));
         }
 
         public override async Task<Empty> Abandon(AbandonRequest request, ServerCallContext context)
         {
-            if (_provider.ActionsCache.TryGetValue(request.Locktoken, out var tuple))
+            try
             {
-                await tuple.Actions.AbandonMessageAsync(
-                    tuple.Message,
-                    DeserializeAmqpMap(request.PropertiesToModify),
-                    context.CancellationToken).ConfigureAwait(false);
-                return new Empty();
+                if (_provider.ActionsCache.TryGetValue(request.Locktoken, out var tuple))
+                {
+                    await tuple.Actions.AbandonMessageAsync(
+                        tuple.Message,
+                        DeserializeAmqpMap(request.PropertiesToModify),
+                        context.CancellationToken).ConfigureAwait(false);
+                    return new Empty();
+                }
             }
+            catch (Exception ex)
+            {
+                throw new RpcException(new Status(StatusCode.Unknown, ex.ToString()));
+            }
+
             throw new RpcException (new Status(StatusCode.FailedPrecondition, $"LockToken {request.Locktoken} not found."));
         }
 
         public override async Task<Empty> Defer(DeferRequest request, ServerCallContext context)
         {
-            if (_provider.ActionsCache.TryGetValue(request.Locktoken, out var tuple))
+            try
             {
-                await tuple.Actions.DeferMessageAsync(
-                    tuple.Message,
-                    DeserializeAmqpMap(request.PropertiesToModify),
-                    context.CancellationToken).ConfigureAwait(false);
-                return new Empty();
+                if (_provider.ActionsCache.TryGetValue(request.Locktoken, out var tuple))
+                {
+                    await tuple.Actions.DeferMessageAsync(
+                        tuple.Message,
+                        DeserializeAmqpMap(request.PropertiesToModify),
+                        context.CancellationToken).ConfigureAwait(false);
+                    return new Empty();
+                }
             }
+            catch (Exception ex)
+            {
+                throw new RpcException(new Status(StatusCode.Unknown, ex.ToString()));
+            }
+
             throw new RpcException (new Status(StatusCode.FailedPrecondition, $"LockToken {request.Locktoken} not found."));
         }
 
         public override async Task<Empty> Deadletter(DeadletterRequest request, ServerCallContext context)
         {
-            if (_provider.ActionsCache.TryGetValue(request.Locktoken, out var tuple))
+            try
             {
-                await tuple.Actions.DeadLetterMessageAsync(
-                    tuple.Message,
-                    DeserializeAmqpMap(request.PropertiesToModify),
-                    request.DeadletterReason,
-                    request.DeadletterErrorDescription,
-                    context.CancellationToken).ConfigureAwait(false);
-                return new Empty();
+                if (_provider.ActionsCache.TryGetValue(request.Locktoken, out var tuple))
+                {
+                    if (request.PropertiesToModify == null || request.PropertiesToModify == ByteString.Empty)
+                    {
+                        await tuple.Actions.DeadLetterMessageAsync(
+                            tuple.Message,
+                            request.DeadletterReason,
+                            request.DeadletterErrorDescription,
+                            context.CancellationToken).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        await tuple.Actions.DeadLetterMessageAsync(
+                            tuple.Message,
+                            DeserializeAmqpMap(request.PropertiesToModify),
+                            request.DeadletterReason,
+                            request.DeadletterErrorDescription,
+                            context.CancellationToken).ConfigureAwait(false);
+                    }
+
+                    return new Empty();
+                }
             }
+            catch (Exception ex)
+            {
+                throw new RpcException(new Status(StatusCode.Unknown, ex.ToString()));
+            }
+
             throw new RpcException (new Status(StatusCode.FailedPrecondition, $"LockToken {request.Locktoken} not found."));
         }
 

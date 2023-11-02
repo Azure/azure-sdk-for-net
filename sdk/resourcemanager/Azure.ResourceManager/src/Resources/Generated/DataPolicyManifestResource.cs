@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.Resources
     public partial class DataPolicyManifestResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DataPolicyManifestResource"/> instance. </summary>
+        /// <param name="policyMode"> The policyMode. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string policyMode)
         {
             var resourceId = $"/providers/Microsoft.Authorization/dataPolicyManifests/{policyMode}";

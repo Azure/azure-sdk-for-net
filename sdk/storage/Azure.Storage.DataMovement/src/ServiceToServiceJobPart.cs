@@ -89,7 +89,7 @@ namespace Azure.Storage.DataMovement
         {
             // Create Job Part file as we're initializing the job part
             ServiceToServiceJobPart part = new ServiceToServiceJobPart(job, partNumber);
-            await part.AddJobPartToCheckpointerAsync(1).ConfigureAwait(false); // For now we only store 1 chunk
+            await part.AddJobPartToCheckpointerAsync().ConfigureAwait(false);
             return part;
         }
 
@@ -112,7 +112,7 @@ namespace Azure.Storage.DataMovement
                 length: length);
             if (!partPlanFileExists)
             {
-                await part.AddJobPartToCheckpointerAsync(1).ConfigureAwait(false); // For now we only store 1 chunk
+                await part.AddJobPartToCheckpointerAsync().ConfigureAwait(false);
             }
             return part;
         }
@@ -207,6 +207,12 @@ namespace Azure.Storage.DataMovement
             catch (RequestFailedException exception)
                 when (_createMode == StorageResourceCreationPreference.SkipIfExists
                  && exception.ErrorCode == "BlobAlreadyExists")
+            {
+                await InvokeSkippedArg().ConfigureAwait(false);
+            }
+            catch (InvalidOperationException ex)
+            when (_createMode == StorageResourceCreationPreference.SkipIfExists
+                && ex.Message.Contains("Cannot overwrite file."))
             {
                 await InvokeSkippedArg().ConfigureAwait(false);
             }

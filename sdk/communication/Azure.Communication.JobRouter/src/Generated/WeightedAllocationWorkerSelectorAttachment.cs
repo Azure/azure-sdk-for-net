@@ -19,18 +19,7 @@ namespace Azure.Communication.JobRouter
     public partial class WeightedAllocationWorkerSelectorAttachment : WorkerSelectorAttachment
     {
         /// <summary> Initializes a new instance of WeightedAllocationWorkerSelectorAttachment. </summary>
-        /// <param name="allocations"> A collection of percentage based weighted allocations. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="allocations"/> is null. </exception>
-        internal WeightedAllocationWorkerSelectorAttachment(IEnumerable<WorkerWeightedAllocation> allocations)
-        {
-            Argument.AssertNotNull(allocations, nameof(allocations));
-
-            Kind = "weighted-allocation-worker-selector";
-            Allocations = allocations.ToList();
-        }
-
-        /// <summary> Initializes a new instance of WeightedAllocationWorkerSelectorAttachment. </summary>
-        /// <param name="kind"> Discriminator. </param>
+        /// <param name="kind"> The type discriminator describing a sub-type of WorkerSelectorAttachment. </param>
         /// <param name="allocations"> A collection of percentage based weighted allocations. </param>
         internal WeightedAllocationWorkerSelectorAttachment(string kind, IReadOnlyList<WorkerWeightedAllocation> allocations) : base(kind)
         {

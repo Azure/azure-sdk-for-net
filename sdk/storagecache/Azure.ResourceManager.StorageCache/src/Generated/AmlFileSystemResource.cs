@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.StorageCache
     public partial class AmlFileSystemResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AmlFileSystemResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="amlFileSystemName"> The amlFileSystemName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string amlFileSystemName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageCache/amlFilesystems/{amlFileSystemName}";

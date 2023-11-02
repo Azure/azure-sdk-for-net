@@ -66,6 +66,16 @@ namespace Azure.ResourceManager.MobileNetwork
             }
             writer.WritePropertyName("controlPlaneAccessInterface"u8);
             writer.WriteObjectValue(ControlPlaneAccessInterface);
+            if (Optional.IsCollectionDefined(ControlPlaneAccessVirtualIPv4Addresses))
+            {
+                writer.WritePropertyName("controlPlaneAccessVirtualIpv4Addresses"u8);
+                writer.WriteStartArray();
+                foreach (var item in ControlPlaneAccessVirtualIPv4Addresses)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WritePropertyName("sku"u8);
             writer.WriteStringValue(Sku.ToString());
             if (Optional.IsDefined(UeMtu))
@@ -80,13 +90,26 @@ namespace Azure.ResourceManager.MobileNetwork
                 writer.WritePropertyName("diagnosticsUpload"u8);
                 writer.WriteObjectValue(DiagnosticsUpload);
             }
+            if (Optional.IsDefined(EventHub))
+            {
+                writer.WritePropertyName("eventHub"u8);
+                writer.WriteObjectValue(EventHub);
+            }
+            if (Optional.IsDefined(Signaling))
+            {
+                writer.WritePropertyName("signaling"u8);
+                writer.WriteObjectValue(Signaling);
+            }
             if (Optional.IsDefined(InteropSettings))
             {
                 writer.WritePropertyName("interopSettings"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(InteropSettings);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(InteropSettings.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(InteropSettings))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
@@ -115,10 +138,13 @@ namespace Azure.ResourceManager.MobileNetwork
             Optional<string> installedVersion = default;
             Optional<string> rollbackVersion = default;
             MobileNetworkInterfaceProperties controlPlaneAccessInterface = default;
+            Optional<IList<string>> controlPlaneAccessVirtualIPv4Addresses = default;
             MobileNetworkBillingSku sku = default;
             Optional<int> ueMtu = default;
             MobileNetworkLocalDiagnosticsAccessConfiguration localDiagnosticsAccess = default;
             Optional<DiagnosticsUploadConfiguration> diagnosticsUpload = default;
+            Optional<MobileNetworkEventHubConfiguration> eventHub = default;
+            Optional<SignalingConfiguration> signaling = default;
             Optional<BinaryData> interopSettings = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -245,6 +271,20 @@ namespace Azure.ResourceManager.MobileNetwork
                             controlPlaneAccessInterface = MobileNetworkInterfaceProperties.DeserializeMobileNetworkInterfaceProperties(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("controlPlaneAccessVirtualIpv4Addresses"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            controlPlaneAccessVirtualIPv4Addresses = array;
+                            continue;
+                        }
                         if (property0.NameEquals("sku"u8))
                         {
                             sku = new MobileNetworkBillingSku(property0.Value.GetString());
@@ -273,6 +313,24 @@ namespace Azure.ResourceManager.MobileNetwork
                             diagnosticsUpload = DiagnosticsUploadConfiguration.DeserializeDiagnosticsUploadConfiguration(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("eventHub"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            eventHub = MobileNetworkEventHubConfiguration.DeserializeMobileNetworkEventHubConfiguration(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("signaling"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            signaling = SignalingConfiguration.DeserializeSignalingConfiguration(property0.Value);
+                            continue;
+                        }
                         if (property0.NameEquals("interopSettings"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -286,7 +344,7 @@ namespace Azure.ResourceManager.MobileNetwork
                     continue;
                 }
             }
-            return new PacketCoreControlPlaneData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity.Value, Optional.ToNullable(provisioningState), installation.Value, sites, platform, Optional.ToNullable(coreNetworkTechnology), version.Value, installedVersion.Value, rollbackVersion.Value, controlPlaneAccessInterface, sku, Optional.ToNullable(ueMtu), localDiagnosticsAccess, diagnosticsUpload.Value, interopSettings.Value);
+            return new PacketCoreControlPlaneData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity.Value, Optional.ToNullable(provisioningState), installation.Value, sites, platform, Optional.ToNullable(coreNetworkTechnology), version.Value, installedVersion.Value, rollbackVersion.Value, controlPlaneAccessInterface, Optional.ToList(controlPlaneAccessVirtualIPv4Addresses), sku, Optional.ToNullable(ueMtu), localDiagnosticsAccess, diagnosticsUpload.Value, eventHub.Value, signaling.Value, interopSettings.Value);
         }
     }
 }
