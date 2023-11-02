@@ -63,8 +63,8 @@ namespace Azure.Core.Pipeline
 
             public override Stream? ContentStream
             {
-                get => _pipelineResponse.Body.ToStream();
-                set => throw new InvalidOperationException("Shouldn't set ContentStream on MessageResponse.");
+                get => _pipelineResponse.ContentStream;
+                set => _pipelineResponse.ContentStream = value;
             }
 
             protected internal override bool ContainsHeader(string name)
