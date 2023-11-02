@@ -142,7 +142,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             {
                 UnauthorizedAccessException => RequestStatusType.TokenInvalid,
                 ValidationException => RequestStatusType.ValidationError,
-                RequestValidationException => RequestStatusType.ValidationError,
+                AuthenticationEventTriggerRequestValidationException => RequestStatusType.ValidationError,
                 _ => RequestStatusType.Failed,
             };
 
@@ -252,7 +252,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             }
             catch (JsonException ex)
             {
-                throw new RequestValidationException($"{AuthenticationEventResource.Ex_Invalid_JsonPayload}: {ex.Message}", ex.InnerException);
+                throw new AuthenticationEventTriggerRequestValidationException($"{AuthenticationEventResource.Ex_Invalid_JsonPayload}: {ex.Message}", ex.InnerException);
             }
 
             return AuthenticationEventMetadataLoader.GetEventMetadata(body);
