@@ -89,7 +89,7 @@ namespace Azure.Storage.DataMovement.Tests
             foreach ((string filePath, long size) in fileSizes)
             {
                 string currRelPath = "";
-                string[] pathSegments = filePath.Split('/');
+                string[] pathSegments = filePath.Split('/', '\\');
                 if (pathSegments.Length < 1)
                 {
                     continue;
@@ -295,7 +295,7 @@ namespace Azure.Storage.DataMovement.Tests
             await transfer.WaitForCompletionAsync(cancellationToken);
 
             // check if expected files exist, but not necessarily for contents
-            await testEventsRaised.AssertContainerCompletedWithFailedCheckContinue(1);
+            await testEventsRaised.AssertContainerCompletedWithSkippedCheck(preexistingFileCount);
 
             // Verify all files exist, meaning files without conflict were transferred.
             List<string> localFiles = (await TransferValidator.GetLocalFileLister(disposingLocalDirectory.DirectoryPath)
@@ -381,7 +381,7 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(5)]
         public async Task UploadEmpty(int folderDepth)
         {
-            const int waitTimeInSec = 5;
+            const int waitTimeInSec = 10;
             // Arrange
             using DisposingLocalDirectory disposingLocalDirectory = DisposingLocalDirectory.GetTestDirectory();
             await using IDisposingContainer<TContainerClient> test = await GetDisposingContainerAsync();
@@ -440,7 +440,7 @@ namespace Azure.Storage.DataMovement.Tests
             await UploadDirectoryAndVerifyAsync(
                 disposingLocalDirectory.DirectoryPath,
                 test.Container,
-                expectedTransfers: 0,
+                expectedTransfers: 1 << folderDepth,
                 cancellationToken: cancellationToken);
         }
 
