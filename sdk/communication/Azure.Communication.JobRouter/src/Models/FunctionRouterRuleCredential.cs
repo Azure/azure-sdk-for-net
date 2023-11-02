@@ -7,8 +7,6 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    [CodeGenModel("FunctionRouterRuleCredential")]
-    [CodeGenSuppress("FunctionRouterRuleCredential")]
     public partial class FunctionRouterRuleCredential : IUtf8JsonSerializable
     {
         /// <summary> Initializes a new instance of AzureFunctionRuleCredential. </summary>
@@ -54,7 +52,7 @@ namespace Azure.Communication.JobRouter
         /// (Optional) Client id, when AppKey is provided
         /// In context of Azure function, this is usually the name of the key
         /// </summary>
-        public string ClientId { get; internal set; }
+        internal string ClientId { get; }
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

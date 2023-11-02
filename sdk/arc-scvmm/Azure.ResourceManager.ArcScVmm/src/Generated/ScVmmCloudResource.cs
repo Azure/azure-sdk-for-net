@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.ArcScVmm
     public partial class ScVmmCloudResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ScVmmCloudResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="cloudName"> The cloudName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string cloudName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/clouds/{cloudName}";

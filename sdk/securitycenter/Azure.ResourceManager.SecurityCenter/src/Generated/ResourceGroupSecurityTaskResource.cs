@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.SecurityCenter
     public partial class ResourceGroupSecurityTaskResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ResourceGroupSecurityTaskResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="ascLocation"> The ascLocation. </param>
+        /// <param name="taskName"> The taskName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, AzureLocation ascLocation, string taskName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}";

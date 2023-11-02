@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.SelfHelp
     public partial class SolutionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SolutionResource"/> instance. </summary>
+        /// <param name="scope"> The scope. </param>
+        /// <param name="solutionResourceName"> The solutionResourceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string solutionResourceName)
         {
             var resourceId = $"{scope}/providers/Microsoft.Help/solutions/{solutionResourceName}";

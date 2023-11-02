@@ -68,7 +68,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
                 new CreateClassificationPolicyOptions(GenerateUniqueId($"Cp-StaticLabels-{IdPrefix}"))
                 {
                     QueueSelectorAttachments = {
-                        new StaticQueueSelectorAttachment(new RouterQueueSelector(key: "Id", LabelOperator.Equal, new LabelValue(queueResponse.Value.Id)))
+                        new StaticQueueSelectorAttachment(new RouterQueueSelector(key: "Id", LabelOperator.Equal, new RouterValue(queueResponse.Value.Id)))
                     }
                 });
 
@@ -104,7 +104,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
                 new CreateClassificationPolicyOptions(GenerateUniqueId($"Cp-default_Q-{IdPrefix}"))
                 {
                     QueueSelectorAttachments = {
-                        new StaticQueueSelectorAttachment(new RouterQueueSelector(key: "Id", LabelOperator.Equal, new LabelValue("QueueIdDoesNotExist")))
+                        new StaticQueueSelectorAttachment(new RouterQueueSelector(key: "Id", LabelOperator.Equal, new RouterValue("QueueIdDoesNotExist")))
                     },
                     FallbackQueueId = fallbackQueueResponse.Value.Id,
                 });
@@ -150,7 +150,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
                             condition: new ExpressionRouterRule("If(job.Product = \"O365\", true, false)"),
                             queueSelectors: new List<RouterQueueSelector>()
                             {
-                                new RouterQueueSelector("Id", LabelOperator.Equal, new LabelValue(queueResponse.Value.Id))
+                                new RouterQueueSelector("Id", LabelOperator.Equal, new RouterValue(queueResponse.Value.Id))
                             })
                     },
                     FallbackQueueId = fallbackQueueResponse.Value.Id,
@@ -159,7 +159,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
             var createJob = await client.CreateJobWithClassificationPolicyAsync(
                 new CreateJobWithClassificationPolicyOptions(GenerateUniqueId($"{IdPrefix}-{ScenarioPrefix}"), channelResponse, classificationPolicyResponse.Value.Id)
                 {
-                    Labels = { ["Product"] = new LabelValue("O365") },
+                    Labels = { ["Product"] = new RouterValue("O365") },
                 });
 
             var job = await Poll(async () => await client.GetJobAsync(createJob.Value.Id),
@@ -189,9 +189,9 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
                 {
                     Name = "test",
                     Labels = {
-                        ["Region"] = new LabelValue($"{uniquePrefix}NA"),
-                        ["Language"] = new LabelValue($"{uniquePrefix}EN"),
-                        ["Product"] = new LabelValue($"{uniquePrefix}O365")
+                        ["Region"] = new RouterValue($"{uniquePrefix}NA"),
+                        ["Language"] = new RouterValue($"{uniquePrefix}EN"),
+                        ["Product"] = new RouterValue($"{uniquePrefix}O365")
                     }
                 });
             var fallbackQueueResponse = await administrationClient.CreateQueueAsync(
@@ -208,7 +208,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
                         new PassThroughQueueSelectorAttachment("Region", LabelOperator.Equal),
                         new PassThroughQueueSelectorAttachment("Language", LabelOperator.Equal),
                         new PassThroughQueueSelectorAttachment("Product", LabelOperator.Equal),
-                        new StaticQueueSelectorAttachment(new RouterQueueSelector("Id", LabelOperator.Equal, new LabelValue(uniquePrefix))),
+                        new StaticQueueSelectorAttachment(new RouterQueueSelector("Id", LabelOperator.Equal, new RouterValue(uniquePrefix))),
                     },
                     FallbackQueueId = fallbackQueueResponse.Value.Id,
                 });
@@ -220,9 +220,9 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
                     classificationPolicyResponse.Value.Id)
                 {
                     Labels = {
-                        ["Product"] = new LabelValue($"{uniquePrefix}O365"),
-                        ["Region"] = new LabelValue($"{uniquePrefix}NA"),
-                        ["Language"] = new LabelValue($"{uniquePrefix}EN")
+                        ["Product"] = new RouterValue($"{uniquePrefix}O365"),
+                        ["Region"] = new RouterValue($"{uniquePrefix}NA"),
+                        ["Language"] = new RouterValue($"{uniquePrefix}EN")
                     },
                 });
 
@@ -252,10 +252,10 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
                 {
                     Name = "test",
                     Labels = {
-                        ["Region"] = new LabelValue($"{uniquePrefix}NA"),
-                        ["Language"] = new LabelValue($"{uniquePrefix}en"),
-                        ["Product"] = new LabelValue($"{uniquePrefix}O365"),
-                        ["UniquePrefix"] = new LabelValue(uniquePrefix),
+                        ["Region"] = new RouterValue($"{uniquePrefix}NA"),
+                        ["Language"] = new RouterValue($"{uniquePrefix}en"),
+                        ["Product"] = new RouterValue($"{uniquePrefix}O365"),
+                        ["UniquePrefix"] = new RouterValue(uniquePrefix),
                     },
                 });
 
@@ -264,10 +264,10 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
                 {
                     Name = "test",
                     Labels = {
-                        ["Region"] = new LabelValue($"{uniquePrefix}NA"),
-                        ["Language"] = new LabelValue($"{uniquePrefix}fr"),
-                        ["Product"] = new LabelValue($"{uniquePrefix}O365"),
-                        ["UniquePrefix"] = new LabelValue(uniquePrefix),
+                        ["Region"] = new RouterValue($"{uniquePrefix}NA"),
+                        ["Language"] = new RouterValue($"{uniquePrefix}fr"),
+                        ["Product"] = new RouterValue($"{uniquePrefix}O365"),
+                        ["UniquePrefix"] = new RouterValue(uniquePrefix),
                     },
                 });
 
@@ -287,15 +287,15 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
                             condition: new ExpressionRouterRule($"If(job.Lang = \"{uniquePrefix}EN\", true, false)"),
                             queueSelectors: new List<RouterQueueSelector>()
                             {
-                                new RouterQueueSelector("Language", LabelOperator.Equal, new LabelValue($"{uniquePrefix}en"))
+                                new RouterQueueSelector("Language", LabelOperator.Equal, new RouterValue($"{uniquePrefix}en"))
                             }),
                         new ConditionalQueueSelectorAttachment(
                             condition: new ExpressionRouterRule($"If(job.Lang = \"{uniquePrefix}FR\", true, false)"),
                             queueSelectors: new List<RouterQueueSelector>()
                             {
-                                new RouterQueueSelector("Language", LabelOperator.Equal, new LabelValue($"{uniquePrefix}fr"))
+                                new RouterQueueSelector("Language", LabelOperator.Equal, new RouterValue($"{uniquePrefix}fr"))
                             }),
-                        new StaticQueueSelectorAttachment(new RouterQueueSelector("UniquePrefix", LabelOperator.Equal, new LabelValue(uniquePrefix)))
+                        new StaticQueueSelectorAttachment(new RouterQueueSelector("UniquePrefix", LabelOperator.Equal, new RouterValue(uniquePrefix)))
                     },
                     FallbackQueueId = fallbackQueueResponse.Value.Id,
                 });
@@ -307,9 +307,9 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
                     classificationPolicyResponse.Value.Id)
                 {
                     Labels = {
-                        ["Product"] = new LabelValue($"{uniquePrefix}O365"),
-                        ["Region"] = new LabelValue($"{uniquePrefix}NA"),
-                        ["Lang"] = new LabelValue($"{uniquePrefix}EN")
+                        ["Product"] = new RouterValue($"{uniquePrefix}O365"),
+                        ["Region"] = new RouterValue($"{uniquePrefix}NA"),
+                        ["Lang"] = new RouterValue($"{uniquePrefix}EN")
                     }
                 });
 
@@ -317,7 +317,7 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
                 x => x.Value.Status == RouterJobStatus.Queued,
                 TimeSpan.FromSeconds(10));
 
-            var job2Labels = new Dictionary<string, LabelValue>()
+            var job2Labels = new Dictionary<string, RouterValue>()
             ;
             var createJob2 = await client.CreateJobWithClassificationPolicyAsync(
                 new CreateJobWithClassificationPolicyOptions(
@@ -326,9 +326,9 @@ namespace Azure.Communication.JobRouter.Tests.Scenarios
                     classificationPolicyResponse.Value.Id)
                 {
                     Labels = {
-                        ["Product"] = new LabelValue($"{uniquePrefix}O365"),
-                        ["Region"] = new LabelValue($"{uniquePrefix}NA"),
-                        ["Lang"] = new LabelValue($"{uniquePrefix}FR")
+                        ["Product"] = new RouterValue($"{uniquePrefix}O365"),
+                        ["Region"] = new RouterValue($"{uniquePrefix}NA"),
+                        ["Lang"] = new RouterValue($"{uniquePrefix}FR")
                     }
                 });
 

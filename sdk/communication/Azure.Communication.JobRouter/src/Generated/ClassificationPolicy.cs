@@ -44,7 +44,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="workerSelectorAttachments"> The worker selector attachments used to attach worker selectors to a given job. </param>
         internal ClassificationPolicy(string etag, string id, string name, string fallbackQueueId, IList<QueueSelectorAttachment> queueSelectorAttachments, RouterRule prioritizationRule, IList<WorkerSelectorAttachment> workerSelectorAttachments)
         {
-            Etag = etag;
+            _etag = etag;
             Id = id;
             Name = name;
             FallbackQueueId = fallbackQueueId;
@@ -52,9 +52,6 @@ namespace Azure.Communication.JobRouter
             PrioritizationRule = prioritizationRule;
             WorkerSelectorAttachments = workerSelectorAttachments;
         }
-
-        /// <summary> Concurrency Token. </summary>
-        public string Etag { get; }
         /// <summary> Unique identifier of this policy. </summary>
         public string Id { get; }
     }

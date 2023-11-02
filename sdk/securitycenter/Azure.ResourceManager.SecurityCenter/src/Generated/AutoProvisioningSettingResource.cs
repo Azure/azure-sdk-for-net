@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.SecurityCenter
     public partial class AutoProvisioningSettingResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AutoProvisioningSettingResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="settingName"> The settingName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string settingName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Security/autoProvisioningSettings/{settingName}";

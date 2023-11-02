@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.DnsResolver
     public partial class VirtualNetworkDnsResolverResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="VirtualNetworkDnsResolverResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="virtualNetworkName"> The virtualNetworkName. </param>
         internal static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string virtualNetworkName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}";

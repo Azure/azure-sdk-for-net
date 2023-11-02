@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
     }
     public partial class OperationalizationClusterData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public OperationalizationClusterData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public OperationalizationClusterData(Azure.Core.AzureLocation location) { }
         public string AppInsightsResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningCompute.Models.ClusterType? ClusterType { get { throw null; } set { } }
         public string ContainerRegistryResourceId { get { throw null; } set { } }
@@ -68,6 +68,33 @@ namespace Azure.ResourceManager.MachineLearningCompute
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningCompute.OperationalizationClusterResource>> UpdateAsync(Azure.ResourceManager.MachineLearningCompute.Models.OperationalizationClusterPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningCompute.Models.UpdateSystemServicesResponse> UpdateSystemServices(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningCompute.Models.UpdateSystemServicesResponse>> UpdateSystemServicesAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
+namespace Azure.ResourceManager.MachineLearningCompute.Mocking
+{
+    public partial class MockableMachineLearningComputeArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableMachineLearningComputeArmClient() { }
+        public virtual Azure.ResourceManager.MachineLearningCompute.OperationalizationClusterResource GetOperationalizationClusterResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableMachineLearningComputeResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableMachineLearningComputeResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningCompute.OperationalizationClusterResource> GetOperationalizationCluster(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningCompute.OperationalizationClusterResource>> GetOperationalizationClusterAsync(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.MachineLearningCompute.OperationalizationClusterCollection GetOperationalizationClusters() { throw null; }
+    }
+    public partial class MockableMachineLearningComputeSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableMachineLearningComputeSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningCompute.OperationalizationClusterResource> GetOperationalizationClusters(string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningCompute.OperationalizationClusterResource> GetOperationalizationClustersAsync(string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class MockableMachineLearningComputeTenantResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableMachineLearningComputeTenantResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningCompute.Models.ResourceOperation> GetAvailableOperationsMachineLearningComputes(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningCompute.Models.ResourceOperation> GetAvailableOperationsMachineLearningComputesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.MachineLearningCompute.Models

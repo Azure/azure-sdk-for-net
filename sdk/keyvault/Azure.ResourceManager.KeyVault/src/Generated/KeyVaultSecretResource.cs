@@ -26,6 +26,10 @@ namespace Azure.ResourceManager.KeyVault
     public partial class KeyVaultSecretResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="KeyVaultSecretResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="vaultName"> The vaultName. </param>
+        /// <param name="secretName"> The secretName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName, string secretName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{vaultName}/secrets/{secretName}";
