@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
@@ -23,8 +22,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
         public void SetEnvironmentVariable(string key, string value) => environmentVariables.Add(key, value);
 
         public string? GetEnvironmentVariable(string name) => environmentVariables.TryGetValue(name, out var value) ? value : null;
-
-        public IDictionary GetEnvironmentVariables() => environmentVariables;
 
         public string GetOSPlatformName() => OSPlatformName;
 
