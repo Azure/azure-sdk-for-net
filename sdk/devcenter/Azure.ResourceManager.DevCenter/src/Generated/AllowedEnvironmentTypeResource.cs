@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.DevCenter
     public partial class AllowedEnvironmentTypeResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AllowedEnvironmentTypeResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="projectName"> The projectName. </param>
+        /// <param name="environmentTypeName"> The environmentTypeName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string projectName, string environmentTypeName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/allowedEnvironmentTypes/{environmentTypeName}";

@@ -7,12 +7,10 @@
 
 using System.Collections.Generic;
 using System.Net.ClientModel.Core;
-using System.Net.ClientModel.Tests.Client.ResourceManager.Compute.Models;
-using System.Net.ClientModel.Tests.Client.ResourceManager.Models;
-using System.Net.ClientModel.Tests.Client.ResourceManager.Resources.Models;
+using System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources;
 using System.Text.Json;
 
-namespace System.Net.ClientModel.Tests.Client.ResourceManager.Compute
+namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Compute
 {
     public partial class AvailabilitySetData : IJsonModel<AvailabilitySetData>
     {
@@ -271,7 +269,9 @@ namespace System.Net.ClientModel.Tests.Client.ResourceManager.Compute
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
-            return ModelReaderWriter.WriteCore(this, options);
+            return ModelReaderWriter.Write(this, options);
         }
+
+        ModelReaderWriterFormat IModel<AvailabilitySetData>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

@@ -12,7 +12,7 @@ using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core.Tests.Common;
 
-namespace Azure.Core.Tests.ResourceManager.Compute.Models
+namespace Azure.Core.Tests.Models.ResourceManager.Compute
 {
     public partial class InstanceViewStatus : IUtf8JsonSerializable, IJsonModel<InstanceViewStatus>
     {
@@ -168,7 +168,9 @@ namespace Azure.Core.Tests.ResourceManager.Compute.Models
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
-            return ModelReaderWriter.WriteCore(this, options);
+            return ModelReaderWriter.Write(this, options);
         }
+
+        ModelReaderWriterFormat IModel<InstanceViewStatus>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

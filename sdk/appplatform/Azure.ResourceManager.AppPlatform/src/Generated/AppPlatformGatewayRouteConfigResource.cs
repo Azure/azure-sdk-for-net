@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.AppPlatform
     public partial class AppPlatformGatewayRouteConfigResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AppPlatformGatewayRouteConfigResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="gatewayName"> The gatewayName. </param>
+        /// <param name="routeConfigName"> The routeConfigName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string gatewayName, string routeConfigName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/gateways/{gatewayName}/routeConfigs/{routeConfigName}";

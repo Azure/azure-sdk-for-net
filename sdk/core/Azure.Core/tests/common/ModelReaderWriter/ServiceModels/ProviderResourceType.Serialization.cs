@@ -12,7 +12,7 @@ using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core.Tests.Common;
 
-namespace Azure.Core.Tests.ResourceManager.Resources.Models
+namespace Azure.Core.Tests.Models.ResourceManager.Resources
 {
     public partial class ProviderResourceType : IUtf8JsonSerializable, IJsonModel<ProviderResourceType>
     {
@@ -279,7 +279,9 @@ namespace Azure.Core.Tests.ResourceManager.Resources.Models
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
-            return ModelReaderWriter.WriteCore(this, options);
+            return ModelReaderWriter.Write(this, options);
         }
+
+        ModelReaderWriterFormat IModel<ProviderResourceType>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

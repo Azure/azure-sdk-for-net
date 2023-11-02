@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace System.Net.ClientModel.Tests.Client.ResourceManager.Resources.Models
+namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
 {
     /// <summary> The type of the pattern for an alias path. </summary>
     public partial class ResourceTypeAliasPattern

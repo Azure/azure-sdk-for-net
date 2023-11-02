@@ -140,8 +140,10 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
-            return ModelReaderWriter.WriteCore(this, options);
+            return ModelReaderWriter.Write(this, options);
         }
+
+        ModelReaderWriterFormat IModel<Animal>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
 
         #endregion
     }

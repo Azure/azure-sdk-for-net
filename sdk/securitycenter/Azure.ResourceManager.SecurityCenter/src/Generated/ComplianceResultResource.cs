@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.SecurityCenter
     public partial class ComplianceResultResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ComplianceResultResource"/> instance. </summary>
+        /// <param name="resourceId"> The resourceId. </param>
+        /// <param name="complianceResultName"> The complianceResultName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string resourceId, string complianceResultName)
         {
             var resourceId0 = $"{resourceId}/providers/Microsoft.Security/complianceResults/{complianceResultName}";

@@ -19,9 +19,15 @@ namespace System.Net.ClientModel
         /// <summary>
         /// Default options for writing models into the format the serivce is expecting.
         /// </summary>
-        public static readonly ModelReaderWriterOptions DefaultWireOptions = _singletonMap[ModelReaderWriterFormat.Wire];
+        public static ModelReaderWriterOptions DefaultWireOptions { get; } = _singletonMap[ModelReaderWriterFormat.Wire];
 
-        public static ModelReaderWriterOptions GetOptions(ModelReaderWriterFormat format)
+        /// <summary>
+        /// Gets the cached <see cref="ModelReaderWriterOptions"/> for the specified <see cref="ModelReaderWriterFormat"/>.
+        /// The <see cref="ModelReaderWriterOptions"/> are cached to avoid unnecessary allocations.
+        /// The <see cref="ModelReaderWriterOptions"/> are frozen to avoid accidental modification.
+        /// </summary>
+        /// <param name="format">The <see cref="ModelReaderWriterFormat"/> the options should represent.</param>
+        internal static ModelReaderWriterOptions GetOptions(ModelReaderWriterFormat format)
             => _singletonMap.TryGetValue(format, out ModelReaderWriterOptions? options) ? options! : new ModelReaderWriterOptions(format);
 
         private bool _isFrozen;

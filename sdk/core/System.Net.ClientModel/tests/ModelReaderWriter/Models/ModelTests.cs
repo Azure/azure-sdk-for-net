@@ -58,7 +58,7 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests.Models
         [TestCase("J")]
         [TestCase("W")]
         public void RoundTripWithModelInterfaceNonGeneric(string format)
-            => RoundTripTest(format, new ModelInterfaceNonGenericStrategy<T>());
+            => RoundTripTest(format, new ModelInterfaceAsObjectStrategy<T>());
 
         protected void RoundTripTest(ModelReaderWriterFormat format, RoundTripStrategy<T> strategy)
         {

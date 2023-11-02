@@ -11,9 +11,8 @@ using System.Net.ClientModel;
 using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core.Tests.Common;
-using Azure.Core.Tests.ResourceManager.Resources.Models;
 
-namespace Azure.Core.Tests.ResourceManager.Resources
+namespace Azure.Core.Tests.Models.ResourceManager.Resources
 {
     public partial class ResourceProviderData : IUtf8JsonSerializable, IJsonModel<ResourceProviderData>
     {
@@ -167,7 +166,9 @@ namespace Azure.Core.Tests.ResourceManager.Resources
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
-            return ModelReaderWriter.WriteCore(this, options);
+            return ModelReaderWriter.Write(this, options);
         }
+
+        ModelReaderWriterFormat IModel<ResourceProviderData>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.Marketplace
     public partial class MarketplaceApprovalRequestResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MarketplaceApprovalRequestResource"/> instance. </summary>
+        /// <param name="privateStoreId"> The privateStoreId. </param>
+        /// <param name="requestApprovalId"> The requestApprovalId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(Guid privateStoreId, string requestApprovalId)
         {
             var resourceId = $"/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/requestApprovals/{requestApprovalId}";

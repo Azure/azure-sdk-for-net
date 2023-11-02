@@ -7,7 +7,6 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    [CodeGenModel("PassThroughQueueSelectorAttachment")]
     public partial class PassThroughQueueSelectorAttachment : IUtf8JsonSerializable
     {
         /// <summary> Describes how the value of the label is compared to the value pass through. </summary>
@@ -19,7 +18,8 @@ namespace Azure.Communication.JobRouter
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public PassThroughQueueSelectorAttachment(string key, LabelOperator labelOperator): this("pass-through", key, labelOperator)
         {
-            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNullOrWhiteSpace(key, nameof(key));
+            Argument.AssertNotNull(labelOperator, nameof(labelOperator));
         }
 
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)

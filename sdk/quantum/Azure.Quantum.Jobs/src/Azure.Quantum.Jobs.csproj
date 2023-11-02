@@ -4,6 +4,7 @@
     <AssemblyTitle>Azure Quantum Jobs</AssemblyTitle>
     <Version>1.0.0-beta.4</Version>
     <PackageTags>Azure;Quantum;Quantum Jobs</PackageTags>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);AZC0001</NoWarn> <!-- TODO Namespace not approved yet for public types -->
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>

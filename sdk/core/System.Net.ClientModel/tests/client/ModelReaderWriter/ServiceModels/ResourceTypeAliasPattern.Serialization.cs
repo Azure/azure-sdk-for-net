@@ -8,7 +8,7 @@
 using System.Net.ClientModel.Core;
 using System.Text.Json;
 
-namespace System.Net.ClientModel.Tests.Client.ResourceManager.Resources.Models
+namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
 {
     public partial class ResourceTypeAliasPattern : IJsonModel<ResourceTypeAliasPattern>
     {
@@ -120,7 +120,9 @@ namespace System.Net.ClientModel.Tests.Client.ResourceManager.Resources.Models
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
-            return ModelReaderWriter.WriteCore(this, options);
+            return ModelReaderWriter.Write(this, options);
         }
+
+        ModelReaderWriterFormat IModel<ResourceTypeAliasPattern>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

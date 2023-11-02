@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Net.ClientModel.Core;
 using System.Text.Json;
 
-namespace System.Net.ClientModel.Tests.Client.ResourceManager.Resources.Models
+namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
 {
     public partial class ProviderExtendedLocation : IJsonModel<ProviderExtendedLocation>
     {
@@ -109,7 +109,9 @@ namespace System.Net.ClientModel.Tests.Client.ResourceManager.Resources.Models
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
-            return ModelReaderWriter.WriteCore(this, options);
+            return ModelReaderWriter.Write(this, options);
         }
+
+        ModelReaderWriterFormat IModel<ProviderExtendedLocation>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

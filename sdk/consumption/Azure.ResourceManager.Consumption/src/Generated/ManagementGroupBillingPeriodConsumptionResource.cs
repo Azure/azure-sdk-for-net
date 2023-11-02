@@ -24,6 +24,8 @@ namespace Azure.ResourceManager.Consumption
     public partial class ManagementGroupBillingPeriodConsumptionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagementGroupBillingPeriodConsumptionResource"/> instance. </summary>
+        /// <param name="managementGroupId"> The managementGroupId. </param>
+        /// <param name="billingPeriodName"> The billingPeriodName. </param>
         internal static ResourceIdentifier CreateResourceIdentifier(string managementGroupId, string billingPeriodName)
         {
             var resourceId = $"/providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}";

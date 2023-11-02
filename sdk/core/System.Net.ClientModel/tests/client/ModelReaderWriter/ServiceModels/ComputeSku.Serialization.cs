@@ -8,7 +8,7 @@
 using System.Net.ClientModel.Core;
 using System.Text.Json;
 
-namespace System.Net.ClientModel.Tests.Client.ResourceManager.Compute.Models
+namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Compute
 {
     public partial class ComputeSku : IJsonModel<ComputeSku>
     {
@@ -120,7 +120,9 @@ namespace System.Net.ClientModel.Tests.Client.ResourceManager.Compute.Models
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
-            return ModelReaderWriter.WriteCore(this, options);
+            return ModelReaderWriter.Write(this, options);
         }
+
+        ModelReaderWriterFormat IModel<ComputeSku>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

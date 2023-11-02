@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.GuestConfiguration
     public partial class GuestConfigurationVmAssignmentResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="GuestConfigurationVmAssignmentResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="vmName"> The vmName. </param>
+        /// <param name="guestConfigurationAssignmentName"> The guestConfigurationAssignmentName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vmName, string guestConfigurationAssignmentName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{guestConfigurationAssignmentName}";

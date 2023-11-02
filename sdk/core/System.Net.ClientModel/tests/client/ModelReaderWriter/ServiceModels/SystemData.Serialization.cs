@@ -10,7 +10,7 @@ using System.Net.ClientModel.Core;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace System.Net.ClientModel.Tests.Client.ResourceManager.Models
+namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager
 {
     [JsonConverter(typeof(SystemDataConverter))]
     public partial class SystemData : IJsonModel<SystemData>
@@ -175,7 +175,9 @@ namespace System.Net.ClientModel.Tests.Client.ResourceManager.Models
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
-            return ModelReaderWriter.WriteCore(this, options);
+            return ModelReaderWriter.Write(this, options);
         }
+
+        ModelReaderWriterFormat IModel<SystemData>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

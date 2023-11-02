@@ -7,10 +7,9 @@
 
 using System.Collections.Generic;
 using System.Net.ClientModel.Core;
-using System.Net.ClientModel.Tests.Client.ResourceManager.Resources.Models;
 using System.Text.Json;
 
-namespace System.Net.ClientModel.Tests.Client.ResourceManager.Resources
+namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
 {
     public partial class ResourceProviderData : IJsonModel<ResourceProviderData>
     {
@@ -159,7 +158,9 @@ namespace System.Net.ClientModel.Tests.Client.ResourceManager.Resources
         {
             ModelSerializerHelper.ValidateFormat(this, options.Format);
 
-            return ModelReaderWriter.WriteCore(this, options);
+            return ModelReaderWriter.Write(this, options);
         }
+
+        ModelReaderWriterFormat IModel<ResourceProviderData>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

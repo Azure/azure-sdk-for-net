@@ -7,7 +7,7 @@
 
 using System.ComponentModel;
 
-namespace System.Net.ClientModel.Tests.Client.ResourceManager.Resources.Models
+namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
 {
     /// <summary> The attributes of the token that the alias path is referring to. </summary>
     public readonly partial struct ResourceTypeAliasPathAttributes : IEquatable<ResourceTypeAliasPathAttributes>

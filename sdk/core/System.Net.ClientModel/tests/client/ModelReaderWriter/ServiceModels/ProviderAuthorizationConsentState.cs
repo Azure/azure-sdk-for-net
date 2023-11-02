@@ -7,7 +7,7 @@
 
 using System.ComponentModel;
 
-namespace System.Net.ClientModel.Tests.Client.ResourceManager.Resources.Models
+namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
 {
     /// <summary> The provider authorization consent state. </summary>
     public readonly partial struct ProviderAuthorizationConsentState : IEquatable<ProviderAuthorizationConsentState>

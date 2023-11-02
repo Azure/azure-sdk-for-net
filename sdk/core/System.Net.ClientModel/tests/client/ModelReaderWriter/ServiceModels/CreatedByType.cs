@@ -7,7 +7,7 @@
 
 using System.ComponentModel;
 
-namespace System.Net.ClientModel.Tests.Client.ResourceManager.Models
+namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager
 {
     /// <summary> The type of identity that created the resource. </summary>
     public readonly partial struct CreatedByType : IEquatable<CreatedByType>

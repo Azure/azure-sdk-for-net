@@ -4,7 +4,7 @@
 using NUnit.Framework;
 using System.IO;
 using System.Net.ClientModel.Tests.Client;
-using System.Net.ClientModel.Tests.Client.ResourceManager.Resources;
+using System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources;
 
 namespace System.Net.ClientModel.Tests.ModelReaderWriterTests.Models
 {

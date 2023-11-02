@@ -15,6 +15,22 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests.Models
         public abstract BinaryData Write(T model, ModelReaderWriterOptions options);
         public abstract bool IsExplicitJsonWrite { get; }
         public abstract bool IsExplicitJsonRead { get; }
+
+        protected BinaryData WriteWithJsonInterface<U>(IJsonModel<U> model, ModelReaderWriterOptions options)
+        {
+            using MemoryStream stream = new MemoryStream();
+            using Utf8JsonWriter writer = new Utf8JsonWriter(stream);
+            model.Write(writer, options);
+            writer.Flush();
+            if (stream.Position > int.MaxValue)
+            {
+                return BinaryData.FromStream(stream);
+            }
+            else
+            {
+                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
+            }
+        }
     }
 
     public class ModelReaderWriterStrategy<T> : RoundTripStrategy<T> where T : IModel<T>
@@ -79,7 +95,7 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests.Models
         }
     }
 
-    public class ModelInterfaceNonGenericStrategy<T> : RoundTripStrategy<T> where T : IModel<T>
+    public class ModelInterfaceAsObjectStrategy<T> : RoundTripStrategy<T> where T : IModel<T>
     {
         public override bool IsExplicitJsonWrite => false;
         public override bool IsExplicitJsonRead => false;
@@ -102,18 +118,7 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests.Models
 
         public override BinaryData Write(T model, ModelReaderWriterOptions options)
         {
-            using MemoryStream stream = new MemoryStream();
-            using Utf8JsonWriter writer = new Utf8JsonWriter(stream);
-            model.Write(writer, options);
-            writer.Flush();
-            if (stream.Position > int.MaxValue)
-            {
-                return BinaryData.FromStream(stream);
-            }
-            else
-            {
-                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
-            }
+            return WriteWithJsonInterface(model, options);
         }
 
         public override object Read(string payload, object model, ModelReaderWriterOptions options)
@@ -122,30 +127,14 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests.Models
         }
     }
 
-    public class JsonModelWriterStrategy<T> : RoundTripStrategy<T> where T : IJsonModel<object>
+    public class JsonInterfaceAsObjectStrategy<T> : RoundTripStrategy<T> where T : IJsonModel<T>
     {
         public override bool IsExplicitJsonWrite => true;
         public override bool IsExplicitJsonRead => false;
 
         public override BinaryData Write(T model, ModelReaderWriterOptions options)
         {
-            return ModelReaderWriter.WriteCore(model, options);
-        }
-
-        public override object Read(string payload, object model, ModelReaderWriterOptions options)
-        {
-            return ((IJsonModel<object>)model).Read(new BinaryData(Encoding.UTF8.GetBytes(payload)), options);
-        }
-    }
-
-    public class JsonInterfaceNonGenericStrategy<T> : RoundTripStrategy<T> where T : IJsonModel<T>
-    {
-        public override bool IsExplicitJsonWrite => true;
-        public override bool IsExplicitJsonRead => false;
-
-        public override BinaryData Write(T model, ModelReaderWriterOptions options)
-        {
-            return ModelReaderWriter.WriteCore((IJsonModel<object>)model, options);
+            return WriteWithJsonInterface((IJsonModel<object>)model, options);
         }
 
         public override object Read(string payload, object model, ModelReaderWriterOptions options)
@@ -161,18 +150,7 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests.Models
 
         public override BinaryData Write(T model, ModelReaderWriterOptions options)
         {
-            using MemoryStream stream = new MemoryStream();
-            using Utf8JsonWriter writer = new Utf8JsonWriter(stream);
-            model.Write(writer, options);
-            writer.Flush();
-            if (stream.Position > int.MaxValue)
-            {
-                return BinaryData.FromStream(stream);
-            }
-            else
-            {
-                return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
-            }
+            return WriteWithJsonInterface(model, options);
         }
 
         public override object Read(string payload, object model, ModelReaderWriterOptions options)
@@ -182,14 +160,14 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests.Models
         }
     }
 
-    public class JsonInterfaceUtf8ReaderNonGenericStrategy<T> : RoundTripStrategy<T> where T : IJsonModel<T>
+    public class JsonInterfaceUtf8ReaderAsObjectStrategy<T> : RoundTripStrategy<T> where T : IJsonModel<T>
     {
         public override bool IsExplicitJsonWrite => true;
         public override bool IsExplicitJsonRead => true;
 
         public override BinaryData Write(T model, ModelReaderWriterOptions options)
         {
-            return ModelReaderWriter.WriteCore((IJsonModel<object>)model, options);
+            return WriteWithJsonInterface((IJsonModel<object>)model, options);
         }
 
         public override object Read(string payload, object model, ModelReaderWriterOptions options)

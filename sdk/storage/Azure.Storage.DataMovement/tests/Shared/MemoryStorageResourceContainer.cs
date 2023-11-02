@@ -54,12 +54,12 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        public override StorageResourceCheckpointData GetDestinationCheckpointData()
+        protected internal override StorageResourceCheckpointData GetDestinationCheckpointData()
         {
             throw new NotImplementedException();
         }
 
-        public override StorageResourceCheckpointData GetSourceCheckpointData()
+        protected internal override StorageResourceCheckpointData GetSourceCheckpointData()
         {
             throw new NotImplementedException();
         }
@@ -92,6 +92,16 @@ namespace Azure.Storage.DataMovement.Tests
                     }
                 }
             }
+        }
+
+        protected internal override Task CreateIfNotExistsAsync(CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected internal override StorageResourceContainer GetChildStorageResourceContainer(string path)
+        {
+            throw new NotImplementedException();
         }
     }
 }

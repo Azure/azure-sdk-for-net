@@ -27,7 +27,16 @@ namespace System.Net.ClientModel
 
             options ??= ModelReaderWriterOptions.DefaultWireOptions;
 
-            return model.Write(options);
+            if (model is IJsonModel<T> jsonModel &&
+                (options.Format == ModelReaderWriterFormat.Json || (options.Format == ModelReaderWriterFormat.Wire && model.GetWireFormat(options) == ModelReaderWriterFormat.Json)))
+            {
+                using ModelWriter<T> writer = new ModelWriter<T>(jsonModel, options);
+                return writer.ToBinaryData();
+            }
+            else
+            {
+                return model.Write(options);
+            }
         }
 
         /// <summary>
@@ -65,7 +74,16 @@ namespace System.Net.ClientModel
                 throw new InvalidOperationException($"{model.GetType().Name} does not implement {nameof(IModel<object>)}");
             }
 
-            return iModel.Write(options);
+            if (iModel is IJsonModel<object> jsonObject &&
+                (options.Format == ModelReaderWriterFormat.Json || (options.Format == ModelReaderWriterFormat.Wire && iModel.GetWireFormat(options) == ModelReaderWriterFormat.Json)))
+            {
+                using ModelWriter writer = new ModelWriter(jsonObject, options);
+                return writer.ToBinaryData();
+            }
+            else
+            {
+                return iModel.Write(options);
+            }
         }
 
         /// <summary>
@@ -148,24 +166,6 @@ namespace System.Net.ClientModel
         /// <exception cref="ArgumentNullException">If <paramref name="data"/> or <paramref name="returnType"/> are null.</exception>
         public static object? Read(BinaryData data, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type returnType, ModelReaderWriterFormat format)
             => Read(data, returnType, ModelReaderWriterOptions.GetOptions(format));
-
-        /// <summary>
-        /// Converts the value of a model into a <see cref="BinaryData"/>.
-        /// </summary>
-        /// <param name="model">The model to convert.</param>
-        /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
-        /// <returns>A <see cref="BinaryData"/> representation of the model in the <see cref="ModelReaderWriterFormat"/> specified by the <paramref name="options"/>.</returns>
-        /// <exception cref="ArgumentNullException">If <paramref name="model"/> or <paramref name="options"/> are null.</exception>
-        public static BinaryData WriteCore(IJsonModel<object> model, ModelReaderWriterOptions options)
-        {
-            if (model is null)
-                throw new ArgumentNullException(nameof(model));
-            if (options is null)
-                throw new ArgumentNullException(nameof(options));
-
-            using ModelWriter writer = new ModelWriter(model, options);
-            return writer.ToBinaryData();
-        }
 
         private static IModel<object> GetInstance([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type returnType)
         {

@@ -102,7 +102,7 @@ namespace Azure.Storage.DataMovement.Tests
             };
 
             CancellationTokenSource cts = new();
-            cts.CancelAfter(waitInSec);
+            cts.CancelAfter(TimeSpan.FromSeconds(waitInSec));
             await DownloadBlobDirectoryAndVerify(
                 test.Container,
                 sourceBlobDirectoryName,
@@ -201,9 +201,9 @@ namespace Azure.Storage.DataMovement.Tests
             string fullSourceFolderPath = CreateRandomDirectory(tempFolder, blobDirectoryName);
             List<string> blobNames = new()
             {
-                Path.Combine(fullSourceFolderPath, "bar", GetNewBlobName()),
-                Path.Combine(fullSourceFolderPath, "rul", GetNewBlobName()),
-                Path.Combine(fullSourceFolderPath, "pik", GetNewBlobName()),
+                Path.Combine(blobDirectoryName, "bar", GetNewBlobName()),
+                Path.Combine(blobDirectoryName, "rul", GetNewBlobName()),
+                Path.Combine(blobDirectoryName, "pik", GetNewBlobName()),
             };
 
             await DownloadBlobDirectoryAndVerify(

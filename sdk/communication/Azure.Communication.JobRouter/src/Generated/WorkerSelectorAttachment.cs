@@ -20,13 +20,10 @@ namespace Azure.Communication.JobRouter
         }
 
         /// <summary> Initializes a new instance of WorkerSelectorAttachment. </summary>
-        /// <param name="kind"> Discriminator. </param>
+        /// <param name="kind"> The type discriminator describing a sub-type of WorkerSelectorAttachment. </param>
         internal WorkerSelectorAttachment(string kind)
         {
             Kind = kind;
         }
-
-        /// <summary> Discriminator. </summary>
-        internal string Kind { get; set; }
     }
 }

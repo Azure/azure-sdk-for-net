@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.PolicyInsights
     public partial class PolicyAttestationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PolicyAttestationResource"/> instance. </summary>
+        /// <param name="resourceId"> The resourceId. </param>
+        /// <param name="attestationName"> The attestationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string resourceId, string attestationName)
         {
             var resourceId0 = $"{resourceId}/providers/Microsoft.PolicyInsights/attestations/{attestationName}";

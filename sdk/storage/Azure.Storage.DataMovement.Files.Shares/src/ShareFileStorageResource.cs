@@ -116,7 +116,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 sourceUri: sourceResource.Uri,
                 range: range,
                 sourceRange: range,
-                options: _options.ToShareFileUploadRangeFromUriOptions(),
+                options: _options.ToShareFileUploadRangeFromUriOptions(options?.SourceAuthentication),
                 cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
@@ -165,7 +165,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
                     sourceUri: sourceResource.Uri,
                     range: new HttpRange(0, completeLength),
                     sourceRange: new HttpRange(0, completeLength),
-                    options: _options.ToShareFileUploadRangeFromUriOptions(),
+                    options: _options.ToShareFileUploadRangeFromUriOptions(options?.SourceAuthentication),
                     cancellationToken: cancellationToken).ConfigureAwait(false);
             }
         }
@@ -204,14 +204,14 @@ namespace Azure.Storage.DataMovement.Files.Shares
             return response.Value.ToStorageResourceReadStreamResult();
         }
 
-        public override StorageResourceCheckpointData GetSourceCheckpointData()
+        protected override StorageResourceCheckpointData GetSourceCheckpointData()
         {
             return new ShareFileSourceCheckpointData();
         }
 
-        public override StorageResourceCheckpointData GetDestinationCheckpointData()
+        protected override StorageResourceCheckpointData GetDestinationCheckpointData()
         {
-            return new ShareFileDestinationCheckpointData();
+            return new ShareFileDestinationCheckpointData(null, null);
         }
     }
 

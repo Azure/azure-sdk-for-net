@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 
-namespace System.Net.ClientModel.Tests.Client.ResourceManager.Resources.Models
+namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
 {
     /// <summary> The alias type. </summary>
     public partial class ResourceTypeAlias

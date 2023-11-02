@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Core.Tests.ResourceManager.Resources.Models
+namespace Azure.Core.Tests.Models.ResourceManager.Resources
 {
     /// <summary> The attributes of the token that the alias path is referring to. </summary>
     public readonly partial struct ResourceTypeAliasPathAttributes : IEquatable<ResourceTypeAliasPathAttributes>

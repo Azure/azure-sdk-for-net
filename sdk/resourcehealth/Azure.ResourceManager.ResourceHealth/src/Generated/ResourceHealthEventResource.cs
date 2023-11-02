@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.ResourceHealth
     public partial class ResourceHealthEventResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ResourceHealthEventResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="eventTrackingId"> The eventTrackingId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string eventTrackingId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.ResourceHealth/events/{eventTrackingId}";

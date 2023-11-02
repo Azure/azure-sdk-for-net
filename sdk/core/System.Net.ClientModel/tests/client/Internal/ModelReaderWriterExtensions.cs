@@ -185,15 +185,7 @@ namespace System.Net.ClientModel.Tests.Client
                     writer.WriteNullValue();
                     break;
                 case IJsonModel<object> writeable:
-                    var data = ModelReaderWriter.WriteCore(writeable, ModelReaderWriterOptions.DefaultWireOptions);
-#if NETFRAMEWORK
-                    using (var doc = JsonDocument.Parse(data))
-                    {
-                        JsonSerializer.Serialize(writer, doc.RootElement);
-                    }
-#else
-                    writer.WriteRawValue(data);
-#endif
+                    writeable.Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
                     break;
                 case byte[] bytes:
                     writer.WriteBase64StringValue(bytes);

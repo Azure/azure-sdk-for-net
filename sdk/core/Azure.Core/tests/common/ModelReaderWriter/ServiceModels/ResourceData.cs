@@ -3,7 +3,7 @@
 
 #nullable disable
 
-namespace Azure.Core.Tests.ResourceManager.Models
+namespace Azure.Core.Tests.Models.ResourceManager
 {
     /// <summary> Common fields that are returned in the response for all Azure Resource Manager resources. </summary>
     public abstract partial class ResourceData

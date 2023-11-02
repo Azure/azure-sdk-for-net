@@ -3,7 +3,7 @@
 
 using Azure.Core;
 
-namespace Azure.Core.Tests.ResourceManager.Resources.Models
+namespace Azure.Core.Tests.Models.ResourceManager.Resources
 {
     /// <summary>
     /// A class representing a sub-resource that contains only the ID.

@@ -26,6 +26,8 @@ namespace Azure.ResourceManager.CostManagement
     public partial class CostManagementAlertResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CostManagementAlertResource"/> instance. </summary>
+        /// <param name="scope"> The scope. </param>
+        /// <param name="alertId"> The alertId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string alertId)
         {
             var resourceId = $"{scope}/providers/Microsoft.CostManagement/alerts/{alertId}";

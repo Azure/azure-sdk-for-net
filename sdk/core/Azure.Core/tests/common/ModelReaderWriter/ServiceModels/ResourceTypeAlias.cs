@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 
-namespace Azure.Core.Tests.ResourceManager.Resources.Models
+namespace Azure.Core.Tests.Models.ResourceManager.Resources
 {
     /// <summary> The alias type. </summary>
     public partial class ResourceTypeAlias
