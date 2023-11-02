@@ -89,7 +89,7 @@ namespace Azure
 
             public override int Status => _status;
 
-            public override MessageBody? Body
+            public override RequestBody? Body
             {
                 get => throw new NotSupportedException();
                 protected set => throw new NotSupportedException();

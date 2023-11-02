@@ -109,10 +109,10 @@ public partial class CompletionsOptions : IUtf8JsonContentWriteable
     }
 
     /// <summary> Convert to a message content that can be used on a request. </summary>
-    internal virtual MessageBody ToRequestContent()
+    internal virtual RequestBody ToRequestContent()
     {
         using Utf8JsonContentWriter writer = new();
         writer.Write(this);
-        return MessageBody.Create(writer.WrittenContent);
+        return RequestBody.Create(writer.WrittenContent);
     }
 }

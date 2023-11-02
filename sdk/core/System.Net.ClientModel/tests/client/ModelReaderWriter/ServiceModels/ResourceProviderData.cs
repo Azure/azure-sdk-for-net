@@ -18,14 +18,14 @@ namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources
     /// </summary>
     public partial class ResourceProviderData
     {
-        public static implicit operator MessageBody(ResourceProviderData resourceProviderData)
+        public static implicit operator RequestBody(ResourceProviderData resourceProviderData)
         {
             if (resourceProviderData == null)
             {
                 return null;
             }
 
-            return MessageBody.Create(resourceProviderData, ModelReaderWriterOptions.DefaultWireOptions);
+            return RequestBody.Create(resourceProviderData, ModelReaderWriterOptions.DefaultWireOptions);
         }
 
         public static explicit operator ResourceProviderData(Result result)

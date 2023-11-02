@@ -11,7 +11,7 @@ public abstract class MessageResponse : IDisposable
 
     public abstract MessageHeaders Headers { get; }
 
-    public abstract MessageBody? Body { get; protected internal set; }
+    public abstract RequestBody? Body { get; protected internal set; }
 
     #region Meta-data properties set by the pipeline.
 

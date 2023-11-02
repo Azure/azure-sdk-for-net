@@ -9,7 +9,7 @@ public abstract class MessageRequest : IDisposable
 
     public abstract Uri Uri { get; set; }
 
-    public abstract MessageBody? Body { get; set; }
+    public abstract RequestBody? Body { get; set; }
 
     public abstract MessageHeaders Headers { get; }
 

@@ -13,14 +13,14 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
     {
         private Dictionary<string, BinaryData> _rawData;
 
-        public static implicit operator MessageBody(BaseModel baseModel)
+        public static implicit operator RequestBody(BaseModel baseModel)
         {
             if (baseModel == null)
             {
                 return null;
             }
 
-            return MessageBody.Create(baseModel, ModelReaderWriterOptions.DefaultWireOptions);
+            return RequestBody.Create(baseModel, ModelReaderWriterOptions.DefaultWireOptions);
         }
 
         public static explicit operator BaseModel(Result result)

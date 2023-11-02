@@ -21,7 +21,7 @@ namespace Azure.Core
 
         public override string ReasonPhrase => _response.ReasonPhrase;
 
-        public override MessageBody? Body
+        public override RequestBody? Body
         {
             get
             {

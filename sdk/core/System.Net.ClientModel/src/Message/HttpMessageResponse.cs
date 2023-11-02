@@ -17,7 +17,7 @@ public class HttpMessageResponse : MessageResponse, IDisposable
     // references to network resources.
     private readonly HttpContent _httpResponseContent;
 
-    private MessageBody? _content;
+    private RequestBody? _content;
 
     private bool _disposed;
 
@@ -35,11 +35,11 @@ public class HttpMessageResponse : MessageResponse, IDisposable
     public override MessageHeaders Headers
         => new MessageResponseHeaders(_httpResponse, _httpResponseContent);
 
-    public override MessageBody? Body
+    public override RequestBody? Body
     {
         get
         {
-            _content ??= MessageBody.Empty;
+            _content ??= RequestBody.Empty;
             return _content;
         }
 
