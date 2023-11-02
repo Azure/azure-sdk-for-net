@@ -9,7 +9,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
     /// <summary>
     /// Root exception for AuthenticationEventTrigger.
     /// </summary>
-    public abstract class AuthenticationEventTriggerException : Exception
+    internal abstract class AuthenticationEventTriggerException : Exception
     {
         /// <summary>
         /// Status code when exception is thrown.

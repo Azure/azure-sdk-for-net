@@ -8,7 +8,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
     /// <summary>
     /// Root exception for AuthenticationEventTriggerValidation.
     /// </summary>
-    public abstract class AuthenticationEventTriggerValidationException : AuthenticationEventTriggerException
+    internal abstract class AuthenticationEventTriggerValidationException : AuthenticationEventTriggerException
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AuthenticationEventTriggerValidationException"/> class.

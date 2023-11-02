@@ -9,7 +9,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
     /// <summary>
     /// Exception class for request validations.
     /// </summary>
-    public class AuthenticationEventTriggerRequestValidationException : AuthenticationEventTriggerValidationException
+    internal class AuthenticationEventTriggerRequestValidationException : AuthenticationEventTriggerValidationException
     {
         /// <inheritdoc/>
         public override HttpStatusCode ExceptionStatusCode => HttpStatusCode.InternalServerError;
