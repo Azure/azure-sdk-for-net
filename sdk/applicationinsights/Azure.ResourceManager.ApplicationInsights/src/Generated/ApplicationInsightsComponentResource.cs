@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> An object representing collection of ComponentLinkedStorageAccountResources and their operations over a ComponentLinkedStorageAccountResource. </returns>
         public virtual ComponentLinkedStorageAccountCollection GetComponentLinkedStorageAccounts()
         {
-            return GetCachedClient(Client => new ComponentLinkedStorageAccountCollection(Client, Id));
+            return GetCachedClient(client => new ComponentLinkedStorageAccountCollection(client, Id));
         }
 
         /// <summary>
