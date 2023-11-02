@@ -94,5 +94,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
                 return new BinaryData(stream.GetBuffer().AsMemory(0, (int)stream.Position));
             }
         }
+
+        ModelReaderWriterFormat IModel<ChildModelXmlOnly>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Xml;
     }
 }

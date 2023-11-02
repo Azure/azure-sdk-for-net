@@ -8,17 +8,13 @@
 using System.Collections.Generic;
 using System.Net.ClientModel.Core;
 using System.Net.ClientModel.Internal;
-using System.Net.ClientModel.Tests.Client.ResourceManager.Compute.Models;
-using System.Net.ClientModel.Tests.Client.ResourceManager.Models;
-using System.Net.ClientModel.Tests.Client.ResourceManager.Resources.Models;
+using System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources;
 using System.Text.Json;
 
-namespace System.Net.ClientModel.Tests.Client.ResourceManager.Compute
+namespace System.Net.ClientModel.Tests.Client.Models.ResourceManager.Compute
 {
-    public partial class AvailabilitySetData : IUtf8JsonContentWriteable, IJsonModel<AvailabilitySetData>
+    public partial class AvailabilitySetData : IJsonModel<AvailabilitySetData>
     {
-        void IUtf8JsonContentWriteable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvailabilitySetData>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
-
         void IJsonModel<AvailabilitySetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
@@ -246,9 +242,6 @@ namespace System.Net.ClientModel.Tests.Client.ResourceManager.Compute
             return DeserializeAvailabilitySetData(doc.RootElement, options);
         }
 
-        // only used for public access to internal serialize
-        public void Serialize(Utf8JsonWriter writer) => ((IUtf8JsonContentWriteable)this).Write(writer);
-
         private struct AvailabilitySetDataProperties
         {
             public OptionalProperty<ComputeSku> Sku { get; set; }
@@ -277,7 +270,9 @@ namespace System.Net.ClientModel.Tests.Client.ResourceManager.Compute
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
-            return ModelReaderWriter.WriteCore(this, options);
+            return ModelReaderWriter.Write(this, options);
         }
+
+        ModelReaderWriterFormat IModel<AvailabilitySetData>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

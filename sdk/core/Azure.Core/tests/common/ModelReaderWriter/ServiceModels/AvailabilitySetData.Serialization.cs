@@ -11,11 +11,9 @@ using System.Net.ClientModel;
 using System.Net.ClientModel.Core;
 using System.Net.ClientModel.Internal;
 using System.Text.Json;
-using Azure.Core.Tests.ResourceManager.Compute.Models;
-using Azure.Core.Tests.ResourceManager.Models;
-using Azure.Core.Tests.ResourceManager.Resources.Models;
+using Azure.Core.Tests.Models.ResourceManager.Resources;
 
-namespace Azure.Core.Tests.ResourceManager.Compute
+namespace Azure.Core.Tests.Models.ResourceManager.Compute
 {
     public partial class AvailabilitySetData : IUtf8JsonSerializable, IJsonModel<AvailabilitySetData>
     {
@@ -279,7 +277,9 @@ namespace Azure.Core.Tests.ResourceManager.Compute
         {
             ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
-            return ModelReaderWriter.WriteCore(this, options);
+            return ModelReaderWriter.Write(this, options);
         }
+
+        ModelReaderWriterFormat IModel<AvailabilitySetData>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }

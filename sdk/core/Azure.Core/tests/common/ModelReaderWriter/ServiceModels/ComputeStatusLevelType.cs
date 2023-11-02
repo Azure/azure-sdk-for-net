@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Core.Tests.ResourceManager.Compute.Models
+namespace Azure.Core.Tests.Models.ResourceManager.Compute
 {
     /// <summary> The level code. </summary>
     public enum ComputeStatusLevelType

@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Core.Tests.ResourceManager.Compute.Models
+namespace Azure.Core.Tests.Models.ResourceManager.Compute
 {
     internal static partial class ComputeStatusLevelTypeExtensions
     {

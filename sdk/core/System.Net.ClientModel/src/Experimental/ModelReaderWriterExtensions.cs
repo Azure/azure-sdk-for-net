@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 
 namespace System.Net.ClientModel.Internal
@@ -181,8 +182,8 @@ namespace System.Net.ClientModel.Internal
                 case null:
                     writer.WriteNullValue();
                     break;
-                case IUtf8JsonContentWriteable writeable:
-                    writeable.Write(writer);
+                case IJsonModel<object> writeable:
+                    writeable.Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
                     break;
                 case byte[] bytes:
                     writer.WriteBase64StringValue(bytes);
@@ -190,7 +191,7 @@ namespace System.Net.ClientModel.Internal
                 case BinaryData bytes:
                     writer.WriteBase64StringValue(bytes);
                     break;
-                case System.Text.Json.JsonElement json:
+                case JsonElement json:
                     json.WriteTo(writer);
                     break;
                 case int i:

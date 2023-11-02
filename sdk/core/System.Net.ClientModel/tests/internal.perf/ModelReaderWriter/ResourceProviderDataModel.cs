@@ -2,8 +2,7 @@
 // Licensed under the MIT License.
 
 using BenchmarkDotNet.Attributes;
-using System.Net.ClientModel.Core;
-using System.Net.ClientModel.Tests.Client.ResourceManager.Resources;
+using System.Net.ClientModel.Tests.Client.Models.ResourceManager.Resources;
 using System.Text.Json;
 
 namespace System.Net.ClientModel.Tests.Internal.Perf
@@ -13,13 +12,7 @@ namespace System.Net.ClientModel.Tests.Internal.Perf
     {
         protected override string JsonFileName => "ResourceProviderData/ResourceProviderData.json";
 
-        protected override ResourceProviderData CastFromResponse() => (ResourceProviderData)_result;
-
-        protected override MessageBody CastToPipelineContent() => _model;
-
         protected override ResourceProviderData Read(JsonElement jsonElement)
             => ResourceProviderData.DeserializeResourceProviderData(jsonElement, _options);
-
-        protected override void Write(Utf8JsonWriter writer) => _model.Serialize(writer);
     }
 }

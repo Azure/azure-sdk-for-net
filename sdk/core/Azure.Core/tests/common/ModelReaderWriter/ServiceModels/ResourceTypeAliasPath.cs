@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 
-namespace Azure.Core.Tests.ResourceManager.Resources.Models
+namespace Azure.Core.Tests.Models.ResourceManager.Resources
 {
     /// <summary> The type of the paths for alias. </summary>
     public partial class ResourceTypeAliasPath

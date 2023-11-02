@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.Core.Tests.ResourceManager.Resources.Models
+namespace Azure.Core.Tests.Models.ResourceManager.Resources
 {
     internal static partial class ResourceTypeAliasPatternTypeExtensions
     {

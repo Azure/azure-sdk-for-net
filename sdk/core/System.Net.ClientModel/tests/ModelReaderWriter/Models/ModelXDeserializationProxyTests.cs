@@ -2,11 +2,10 @@
 // Licensed under the MIT License.
 
 using NUnit.Framework;
-using System.Net.ClientModel.Core;
 using System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
 using System.Text;
 
-namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
+namespace System.Net.ClientModel.Tests.ModelReaderWriterTests.Models
 {
     internal class ModelXDeserializationProxyTests
     {
@@ -16,7 +15,7 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
         {
             ModelReaderWriterOptions options = new ModelReaderWriterOptions(format);
             BinaryData data = new BinaryData(Encoding.UTF8.GetBytes("{\"kind\":\"X\",\"name\":\"xmodel\",\"xProperty\":100,\"extra\":\"stuff\"}"));
-            object? modelX = ModelReaderWriter.Read(data, typeof(ModelXDeserializationProxy), options);
+            object? modelX = ClientModel.ModelReaderWriter.Read(data, typeof(ModelXDeserializationProxy), options);
             Assert.IsNotNull(modelX);
             Assert.IsInstanceOf<ModelX>(modelX);
             Assert.AreEqual("X", ((ModelX)modelX!).Kind);

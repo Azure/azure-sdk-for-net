@@ -2,8 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Text.Json;
-using System.Net.ClientModel.Tests.Client.ResourceManager.Compute;
-using System.Net.ClientModel.Core;
+using System.Net.ClientModel.Tests.Client.Models.ResourceManager.Compute;
 
 namespace System.Net.ClientModel.Tests.Internal.Perf
 {
@@ -11,12 +10,6 @@ namespace System.Net.ClientModel.Tests.Internal.Perf
     {
         protected override AvailabilitySetData Read(JsonElement jsonElement)
             => AvailabilitySetData.DeserializeAvailabilitySetData(jsonElement, _options);
-
-        protected override void Write(Utf8JsonWriter writer) => _model.Serialize(writer);
-
-        protected override MessageBody CastToPipelineContent() => _model;
-
-        protected override AvailabilitySetData CastFromResponse() => (AvailabilitySetData)_result;
 
         protected override string JsonFileName => "AvailabilitySetData/AvailabilitySetData.json";
     }

@@ -5,7 +5,7 @@
 
 using System.Collections.Generic;
 
-namespace Azure.Core.Tests.ResourceManager.Models
+namespace Azure.Core.Tests.Models.ResourceManager
 {
     /// <summary> The resource model definition for an Azure Resource Manager tracked top level resource which has &apos;tags&apos; and a &apos;location&apos;. </summary>
     public abstract partial class TrackedResourceData : ResourceData

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Core.Tests.ResourceManager.Resources.Models
+namespace Azure.Core.Tests.Models.ResourceManager.Resources
 {
     /// <summary> The ResourceTypeAliasPathMetadata. </summary>
     public partial class ResourceTypeAliasPathMetadata

@@ -2,20 +2,15 @@
 // Licensed under the MIT License.
 
 using NUnit.Framework;
-using System.Net.ClientModel.Core;
 using System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
 
-namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
+namespace System.Net.ClientModel.Tests.ModelReaderWriterTests.Models
 {
     internal class ModelAsStructTests : ModelJsonTests<ModelAsStruct>
     {
         protected override string JsonPayload => WirePayload;
 
         protected override string WirePayload => "{\"id\":5,\"extra\":\"stuff\"}";
-
-        protected override Func<ModelAsStruct, MessageBody> ToPipelineContent => model => model;
-
-        protected override Func<Result?, ModelAsStruct> FromResult => response => (ModelAsStruct)response;
 
         protected override void CompareModels(ModelAsStruct model, ModelAsStruct model2, ModelReaderWriterFormat format)
         {

@@ -3,21 +3,16 @@
 
 using NUnit.Framework;
 using System.IO;
-using System.Net.ClientModel.Core;
 using System.Net.ClientModel.Tests.Client;
 using System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
 
-namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
+namespace System.Net.ClientModel.Tests.ModelReaderWriterTests.Models
 {
     internal class ModelXTests : ModelJsonTests<ModelX>
     {
         protected override string JsonPayload => WirePayload;
 
         protected override string WirePayload => File.ReadAllText(TestData.GetLocation("ModelX/ModelXWireFormat.json")).TrimEnd();
-
-        protected override Func<ModelX?, MessageBody> ToPipelineContent => model => model;
-
-        protected override Func<Result?, ModelX> FromResult => response => (ModelX)response;
 
         protected override void CompareModels(ModelX model, ModelX model2, ModelReaderWriterFormat format)
         {

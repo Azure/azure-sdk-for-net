@@ -6,7 +6,7 @@ using System.IO;
 using System.Net.ClientModel;
 using System.Net.ClientModel.Core;
 using Azure.Core.Tests.Common;
-using Azure.Core.Tests.ResourceManager.Resources;
+using Azure.Core.Tests.Models.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests.Public.ModelReaderWriterTests

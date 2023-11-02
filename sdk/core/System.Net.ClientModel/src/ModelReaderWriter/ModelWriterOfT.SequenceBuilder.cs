@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace System.Net.ClientModel.Core
 {
-    internal sealed partial class ModelWriter : IDisposable
+    internal partial class ModelWriter<T> : IDisposable
     {
         private sealed class SequenceBuilder : IBufferWriter<byte>, IDisposable
         {
@@ -133,7 +133,6 @@ namespace System.Net.ClientModel.Core
                 }
             }
 
-            /// <inheritdoc cref="MessageBody.TryComputeLength(out long)"/>
             public bool TryComputeLength(out long length)
             {
                 length = 0;
@@ -144,7 +143,6 @@ namespace System.Net.ClientModel.Core
                 return true;
             }
 
-            /// <inheritdoc cref="MessageBody.WriteTo(Stream, CancellationToken)"/>
             public void CopyTo(Stream stream, CancellationToken cancellation)
             {
                 for (int i = 0; i < _count; i++)
@@ -154,7 +152,6 @@ namespace System.Net.ClientModel.Core
                 }
             }
 
-            /// <inheritdoc cref="MessageBody.WriteToAsync(Stream, CancellationToken)"/>
             public async Task CopyToAsync(Stream stream, CancellationToken cancellation)
             {
                 for (int i = 0; i < _count; i++)

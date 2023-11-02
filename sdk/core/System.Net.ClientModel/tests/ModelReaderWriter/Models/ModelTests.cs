@@ -8,7 +8,7 @@ using System.Net.ClientModel.Core;
 using System.Reflection;
 using System.Text.Json;
 
-namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
+namespace System.Net.ClientModel.Tests.ModelReaderWriterTests.Models
 {
     public abstract class ModelTests<T> where T : IModel<T>
     {
@@ -30,8 +30,6 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
         protected abstract void CompareModels(T model, T model2, ModelReaderWriterFormat format);
         protected abstract string JsonPayload { get; }
         protected abstract string WirePayload { get; }
-        protected abstract Func<T?, MessageBody> ToPipelineContent { get; }
-        protected abstract Func<Result?, T> FromResult { get; }
 
         [TestCase("J")]
         [TestCase("W")]
@@ -60,15 +58,7 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
         [TestCase("J")]
         [TestCase("W")]
         public void RoundTripWithModelInterfaceNonGeneric(string format)
-            => RoundTripTest(format, new ModelInterfaceNonGenericStrategy<T>());
-
-        [Test]
-        public void RoundTripWithCast()
-        {
-            //cast does not work without options
-            if (!typeof(T).IsGenericType)
-                RoundTripTest(ModelReaderWriterFormat.Wire, new CastStrategy<T>(ToPipelineContent, FromResult));
-        }
+            => RoundTripTest(format, new ModelInterfaceAsObjectStrategy<T>());
 
         protected void RoundTripTest(ModelReaderWriterFormat format, RoundTripStrategy<T> strategy)
         {
@@ -144,11 +134,11 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
         public void ThrowsIfUnknownFormat()
         {
             ModelReaderWriterOptions options = new ModelReaderWriterOptions("x");
-            Assert.Throws<FormatException>(() => ModelReaderWriter.Write(ModelInstance, options));
-            Assert.Throws<FormatException>(() => ModelReaderWriter.Read<T>(new BinaryData("x"), options));
+            Assert.Throws<FormatException>(() => ClientModel.ModelReaderWriter.Write(ModelInstance, options));
+            Assert.Throws<FormatException>(() => ClientModel.ModelReaderWriter.Read<T>(new BinaryData("x"), options));
 
-            Assert.Throws<FormatException>(() => ModelReaderWriter.Write((IModel<object>)ModelInstance, options));
-            Assert.Throws<FormatException>(() => ModelReaderWriter.Read(new BinaryData("x"), typeof(T), options));
+            Assert.Throws<FormatException>(() => ClientModel.ModelReaderWriter.Write((IModel<object>)ModelInstance, options));
+            Assert.Throws<FormatException>(() => ClientModel.ModelReaderWriter.Read(new BinaryData("x"), typeof(T), options));
             if (ModelInstance is IJsonModel<T> jsonModel)
             {
                 Assert.Throws<FormatException>(() => jsonModel.Write(new Utf8JsonWriter(new MemoryStream()), options));
@@ -203,26 +193,6 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
                 }
                 Assert.IsTrue(exceptionCaught, "Expected InvalidOperationException to be thrown when deserializing wire format as json");
             }
-        }
-
-        [Test]
-        public void CastNull()
-        {
-            if (typeof(T).IsClass)
-            {
-                T? model = default;
-                MessageBody content = ToPipelineContent(model);
-                Assert.IsNull(content);
-            }
-            else
-            {
-                T? model = default;
-                MessageBody content = ToPipelineContent(model);
-                Assert.IsNotNull(content);
-            }
-
-            Result? result = null;
-            Assert.Throws<ArgumentNullException>(() => FromResult(result));
         }
     }
 }

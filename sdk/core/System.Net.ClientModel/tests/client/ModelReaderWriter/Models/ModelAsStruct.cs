@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 {
     /// <summary> The InputAdditionalPropertiesModelStruct. </summary>
-    public readonly partial struct ModelAsStruct : IUtf8JsonContentWriteable, IJsonModel<ModelAsStruct>, IJsonModel<object>
+    public readonly partial struct ModelAsStruct : IJsonModel<ModelAsStruct>, IJsonModel<object>
     {
         private readonly Dictionary<string, BinaryData> _rawData;
 
@@ -29,8 +29,6 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
         /// <summary> Gets the id. </summary>
         public int Id { get; }
-
-        void IUtf8JsonContentWriteable.Write(Utf8JsonWriter writer) => ((IJsonModel<ModelAsStruct>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);
 
         void IJsonModel<ModelAsStruct>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => Serialize(writer, options);
 
@@ -60,7 +58,7 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
         {
             ModelReaderWriterHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
 
-            return ModelReaderWriter.WriteCore(this, options);
+            return ModelReaderWriter.Write(this, options);
         }
 
         public static implicit operator MessageBody(ModelAsStruct model)
@@ -128,7 +126,7 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
         {
             ModelReaderWriterHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
 
-            return ModelReaderWriter.WriteCore(this, options);
+            return ModelReaderWriter.Write(this, options);
         }
 
         object IModel<object>.Read(BinaryData data, ModelReaderWriterOptions options)
@@ -138,5 +136,9 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             using var doc = JsonDocument.Parse(data);
             return DeserializeInputAdditionalPropertiesModelStruct(doc.RootElement, options);
         }
+
+        ModelReaderWriterFormat IModel<object>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
+
+        ModelReaderWriterFormat IModel<ModelAsStruct>.GetWireFormat(ModelReaderWriterOptions options) => ModelReaderWriterFormat.Json;
     }
 }
