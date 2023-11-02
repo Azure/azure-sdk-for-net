@@ -20,12 +20,12 @@ namespace AnalyzeFromStreamUsingCustomModel
                 Environment.Exit(1);
             }
 
-            // Create a synchronous Image Analysis client.
+            // Create an Image Analysis client.
             ImageAnalysisClient client = new ImageAnalysisClient(new Uri(endpoint), new AzureKeyCredential(key));
 
             try
             {
-                // Analyze all visual features from an image stream. This is a synchronous (blocking) call.
+                // Analyze the custom model from an image stream. This is an asynchronous call.
                 using FileStream stream = File.OpenRead("sample.jpg");
                 ImageAnalysisResult result = client.AnalyzeAsync(
                     BinaryData.FromStream(stream), // imageContent: the image file loaded into memory as BinaryData

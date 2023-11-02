@@ -19,12 +19,12 @@ namespace AnalyzeAsyncFromUrl
                 Environment.Exit(1);
             }
 
-            // Create an asynchronous Image Analysis client.
+            // Create an Image Analysis client.
             ImageAnalysisClient client = new ImageAnalysisClient(new Uri(endpoint), new AzureKeyCredential(key));
 
             try
             {
-                // Analyze all visual features from an image stream. This is an asynchronous call. Here we block until the result is ready.
+                // Analyze visual features from an image stream. This is an asynchronous call. Here we block until the result is ready.
                 ImageAnalysisResult result = client.AnalyzeAsync(
                     new ImageUrl(new Uri("https://aka.ms/azai/vision/image-analysis-sample.jpg")), // imageContent: the URL of the image to analyze
                     new VisualFeatures[] { VisualFeatures.Tags }, // visualFeatures: Select one or more visual features to analyze.

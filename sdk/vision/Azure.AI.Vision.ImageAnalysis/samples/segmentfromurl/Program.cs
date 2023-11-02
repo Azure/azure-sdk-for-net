@@ -19,7 +19,7 @@ namespace SegmentFromUrl
                 Environment.Exit(1);
             }
 
-            // Create a synchronous Image Analysis client.
+            // Create a Image Analysis client.
             ImageAnalysisClient client = new ImageAnalysisClient(new Uri(endpoint), new AzureKeyCredential(key));
 
             try

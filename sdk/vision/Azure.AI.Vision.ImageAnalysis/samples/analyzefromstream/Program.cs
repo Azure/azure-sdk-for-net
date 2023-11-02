@@ -20,7 +20,7 @@ namespace AnalyzeFromStream
                 Environment.Exit(1);
             }
 
-            // Create a synchronous Image Analysis client.
+            // Create an Image Analysis client.
             ImageAnalysisClient client = new ImageAnalysisClient(new Uri(endpoint), new AzureKeyCredential(key));
 
             try
