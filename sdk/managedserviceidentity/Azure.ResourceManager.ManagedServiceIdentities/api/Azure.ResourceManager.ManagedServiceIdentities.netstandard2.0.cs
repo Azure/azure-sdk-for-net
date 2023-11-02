@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
     }
     public partial class SystemAssignedIdentityData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public SystemAssignedIdentityData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public SystemAssignedIdentityData(Azure.Core.AzureLocation location) { }
         public System.Guid? ClientId { get { throw null; } }
         public System.Uri ClientSecretUri { get { throw null; } }
         public System.Guid? PrincipalId { get { throw null; } }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
     }
     public partial class UserAssignedIdentityData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public UserAssignedIdentityData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public UserAssignedIdentityData(Azure.Core.AzureLocation location) { }
         public System.Guid? ClientId { get { throw null; } }
         public System.Guid? PrincipalId { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } }
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
     }
     public partial class UserAssignedIdentityPatch : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public UserAssignedIdentityPatch(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public UserAssignedIdentityPatch(Azure.Core.AzureLocation location) { }
         public System.Guid? ClientId { get { throw null; } }
         public System.Guid? PrincipalId { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } }

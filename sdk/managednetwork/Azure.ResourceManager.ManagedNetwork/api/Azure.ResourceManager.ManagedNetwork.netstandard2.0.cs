@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ManagedNetwork
     }
     public partial class ManagedNetworkData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ManagedNetworkData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ManagedNetworkData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.ManagedNetwork.Models.ConnectivityCollection Connectivity { get { throw null; } }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.ManagedNetwork.Models.ProvisioningState? ProvisioningState { get { throw null; } }

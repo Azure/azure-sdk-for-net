@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataBoxEdge
     }
     public partial class DataBoxEdgeDeviceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DataBoxEdgeDeviceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public DataBoxEdgeDeviceData(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeRoleType> ConfiguredRoleTypes { get { throw null; } }
         public string Culture { get { throw null; } }
         public Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDeviceStatus? DataBoxEdgeDeviceStatus { get { throw null; } }

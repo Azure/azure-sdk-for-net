@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServices
     }
     public partial class RecoveryServicesVaultData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public RecoveryServicesVaultData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public RecoveryServicesVaultData(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesVaultProperties Properties { get { throw null; } set { } }
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     }
     public partial class RecoveryServicesVaultPatch : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public RecoveryServicesVaultPatch(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public RecoveryServicesVaultPatch(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesVaultProperties Properties { get { throw null; } set { } }

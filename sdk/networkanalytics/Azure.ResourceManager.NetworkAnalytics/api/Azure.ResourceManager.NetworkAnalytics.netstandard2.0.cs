@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
     }
     public partial class DataProductData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DataProductData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public DataProductData(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IReadOnlyList<string> AvailableMinorVersions { get { throw null; } }
         public Azure.ResourceManager.NetworkAnalytics.Models.ConsumptionEndpointsProperties ConsumptionEndpoints { get { throw null; } }
         public string CurrentMinorVersion { get { throw null; } set { } }

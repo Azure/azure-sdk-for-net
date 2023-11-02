@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Dynatrace
     }
     public partial class DynatraceMonitorData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DynatraceMonitorData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public DynatraceMonitorData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Dynatrace.Models.DynatraceEnvironmentProperties DynatraceEnvironmentProperties { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Dynatrace.Models.LiftrResourceCategory? LiftrResourceCategory { get { throw null; } }

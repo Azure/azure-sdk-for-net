@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Orbital
     }
     public partial class OrbitalContactProfileData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public OrbitalContactProfileData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public OrbitalContactProfileData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Orbital.Models.AutoTrackingConfiguration? AutoTrackingConfiguration { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
         public System.Uri EventHubUri { get { throw null; } set { } }
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Orbital
     }
     public partial class OrbitalSpacecraftData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public OrbitalSpacecraftData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public OrbitalSpacecraftData(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Orbital.Models.OrbitalSpacecraftLink> Links { get { throw null; } }
         public string NoradId { get { throw null; } set { } }

@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.Dns
     }
     public partial class DnsZoneData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DnsZoneData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public DnsZoneData(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public long? MaxNumberOfRecords { get { throw null; } }
         public long? MaxNumberOfRecordsPerRecord { get { throw null; } }

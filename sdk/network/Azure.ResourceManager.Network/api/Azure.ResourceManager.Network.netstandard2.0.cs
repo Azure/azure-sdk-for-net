@@ -817,7 +817,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class DdosProtectionPlanData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DdosProtectionPlanData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public DdosProtectionPlanData(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Network.Models.NetworkProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WritableSubResource> PublicIPAddresses { get { throw null; } }
@@ -1557,7 +1557,7 @@ namespace Azure.ResourceManager.Network
     }
     public partial class ExpressRouteProviderPortData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ExpressRouteProviderPortData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ExpressRouteProviderPortData(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } }
         public int? OverprovisionFactor { get { throw null; } set { } }
         public string PeeringLocation { get { throw null; } set { } }

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
     }
     public partial class ContainerServiceFleetData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ContainerServiceFleetData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ContainerServiceFleetData(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerServiceFleet.Models.FleetProvisioningState? ProvisioningState { get { throw null; } }

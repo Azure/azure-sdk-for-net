@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.NetworkFunction
     }
     public partial class AzureTrafficCollectorData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public AzureTrafficCollectorData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public AzureTrafficCollectorData(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> CollectorPolicies { get { throw null; } }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.NetworkFunction.Models.CollectorProvisioningState? ProvisioningState { get { throw null; } }
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.NetworkFunction
     }
     public partial class CollectorPolicyData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public CollectorPolicyData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public CollectorPolicyData(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.NetworkFunction.Models.EmissionPoliciesPropertiesFormat> EmissionPolicies { get { throw null; } }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.NetworkFunction.Models.IngestionPolicyPropertiesFormat IngestionPolicy { get { throw null; } set { } }

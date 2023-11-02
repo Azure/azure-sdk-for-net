@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Automanage
     }
     public partial class AutomanageConfigurationProfileData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public AutomanageConfigurationProfileData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public AutomanageConfigurationProfileData(Azure.Core.AzureLocation location) { }
         public System.BinaryData Configuration { get { throw null; } set { } }
     }
     public partial class AutomanageConfigurationProfileResource : Azure.ResourceManager.ArmResource

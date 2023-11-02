@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Peering
     }
     public partial class PeeringData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public PeeringData(Azure.Core.AzureLocation location, Azure.ResourceManager.Peering.Models.PeeringSku sku, Azure.ResourceManager.Peering.Models.PeeringKind kind) : base (default(Azure.Core.AzureLocation)) { }
+        public PeeringData(Azure.Core.AzureLocation location, Azure.ResourceManager.Peering.Models.PeeringSku sku, Azure.ResourceManager.Peering.Models.PeeringKind kind) { }
         public Azure.ResourceManager.Peering.Models.DirectPeeringProperties Direct { get { throw null; } set { } }
         public Azure.ResourceManager.Peering.Models.ExchangePeeringProperties Exchange { get { throw null; } set { } }
         public Azure.ResourceManager.Peering.Models.PeeringKind Kind { get { throw null; } set { } }
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Peering
     }
     public partial class PeeringServiceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public PeeringServiceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public PeeringServiceData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Peering.Models.PeeringLogAnalyticsWorkspaceProperties LogAnalyticsWorkspaceProperties { get { throw null; } set { } }
         public string PeeringServiceLocation { get { throw null; } set { } }
         public string PeeringServiceProvider { get { throw null; } set { } }

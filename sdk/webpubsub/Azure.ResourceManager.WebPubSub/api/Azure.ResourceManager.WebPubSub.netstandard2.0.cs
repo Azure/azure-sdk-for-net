@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.WebPubSub
     }
     public partial class WebPubSubData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public WebPubSubData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public WebPubSubData(Azure.Core.AzureLocation location) { }
         public string ExternalIP { get { throw null; } }
         public string HostName { get { throw null; } }
         public string HostNamePrefix { get { throw null; } }

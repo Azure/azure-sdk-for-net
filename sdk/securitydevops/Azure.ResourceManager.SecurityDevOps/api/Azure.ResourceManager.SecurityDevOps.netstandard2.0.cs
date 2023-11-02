@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SecurityDevOps
     }
     public partial class AzureDevOpsConnectorData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public AzureDevOpsConnectorData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public AzureDevOpsConnectorData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.SecurityDevOps.Models.AzureDevOpsConnectorProperties Properties { get { throw null; } set { } }
     }
     public partial class AzureDevOpsConnectorResource : Azure.ResourceManager.ArmResource
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.SecurityDevOps
     }
     public partial class GitHubConnectorData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public GitHubConnectorData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public GitHubConnectorData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.SecurityDevOps.Models.GitHubConnectorProperties Properties { get { throw null; } set { } }
     }
     public partial class GitHubConnectorResource : Azure.ResourceManager.ArmResource

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DigitalTwins
     }
     public partial class DigitalTwinsDescriptionData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DigitalTwinsDescriptionData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public DigitalTwinsDescriptionData(Azure.Core.AzureLocation location) { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string HostName { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }

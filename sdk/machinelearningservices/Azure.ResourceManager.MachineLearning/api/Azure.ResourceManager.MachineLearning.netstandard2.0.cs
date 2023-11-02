@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.MachineLearning
     }
     public partial class MachineLearningBatchDeploymentData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public MachineLearningBatchDeploymentData(Azure.Core.AzureLocation location, Azure.ResourceManager.MachineLearning.Models.MachineLearningBatchDeploymentProperties properties) : base (default(Azure.Core.AzureLocation)) { }
+        public MachineLearningBatchDeploymentData(Azure.Core.AzureLocation location, Azure.ResourceManager.MachineLearning.Models.MachineLearningBatchDeploymentProperties properties) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearning.Models.MachineLearningBatchDeploymentProperties Properties { get { throw null; } set { } }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearning
     }
     public partial class MachineLearningBatchEndpointData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public MachineLearningBatchEndpointData(Azure.Core.AzureLocation location, Azure.ResourceManager.MachineLearning.Models.MachineLearningBatchEndpointProperties properties) : base (default(Azure.Core.AzureLocation)) { }
+        public MachineLearningBatchEndpointData(Azure.Core.AzureLocation location, Azure.ResourceManager.MachineLearning.Models.MachineLearningBatchEndpointProperties properties) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearning.Models.MachineLearningBatchEndpointProperties Properties { get { throw null; } set { } }
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.MachineLearning
     }
     public partial class MachineLearningComputeData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public MachineLearningComputeData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public MachineLearningComputeData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearning.Models.MachineLearningComputeProperties Properties { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearning.Models.MachineLearningSku Sku { get { throw null; } set { } }
@@ -942,7 +942,7 @@ namespace Azure.ResourceManager.MachineLearning
     }
     public partial class MachineLearningOnlineDeploymentData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public MachineLearningOnlineDeploymentData(Azure.Core.AzureLocation location, Azure.ResourceManager.MachineLearning.Models.MachineLearningOnlineDeploymentProperties properties) : base (default(Azure.Core.AzureLocation)) { }
+        public MachineLearningOnlineDeploymentData(Azure.Core.AzureLocation location, Azure.ResourceManager.MachineLearning.Models.MachineLearningOnlineDeploymentProperties properties) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearning.Models.MachineLearningOnlineDeploymentProperties Properties { get { throw null; } set { } }
@@ -993,7 +993,7 @@ namespace Azure.ResourceManager.MachineLearning
     }
     public partial class MachineLearningOnlineEndpointData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public MachineLearningOnlineEndpointData(Azure.Core.AzureLocation location, Azure.ResourceManager.MachineLearning.Models.MachineLearningOnlineEndpointProperties properties) : base (default(Azure.Core.AzureLocation)) { }
+        public MachineLearningOnlineEndpointData(Azure.Core.AzureLocation location, Azure.ResourceManager.MachineLearning.Models.MachineLearningOnlineEndpointProperties properties) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearning.Models.MachineLearningOnlineEndpointProperties Properties { get { throw null; } set { } }
@@ -1083,7 +1083,7 @@ namespace Azure.ResourceManager.MachineLearning
     }
     public partial class MachineLearningPrivateEndpointConnectionData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public MachineLearningPrivateEndpointConnectionData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public MachineLearningPrivateEndpointConnectionData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.MachineLearning.Models.MachineLearningPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearning.Models.MachineLearningPrivateEndpoint PrivateEndpoint { get { throw null; } set { } }
@@ -1196,7 +1196,7 @@ namespace Azure.ResourceManager.MachineLearning
     }
     public partial class MachineLearningRegistryData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public MachineLearningRegistryData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public MachineLearningRegistryData(Azure.Core.AzureLocation location) { }
         public System.Uri DiscoveryUri { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public string IntellectualPropertyPublisher { get { throw null; } set { } }
@@ -1547,7 +1547,7 @@ namespace Azure.ResourceManager.MachineLearning
     }
     public partial class MachineLearningWorkspaceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public MachineLearningWorkspaceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public MachineLearningWorkspaceData(Azure.Core.AzureLocation location) { }
         public bool? AllowPublicAccessWhenBehindVnet { get { throw null; } set { } }
         public string ApplicationInsights { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> AssociatedWorkspaces { get { throw null; } }
@@ -5734,7 +5734,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     }
     public partial class MachineLearningPrivateLinkResource : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public MachineLearningPrivateLinkResource(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public MachineLearningPrivateLinkResource(Azure.Core.AzureLocation location) { }
         public string GroupId { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }

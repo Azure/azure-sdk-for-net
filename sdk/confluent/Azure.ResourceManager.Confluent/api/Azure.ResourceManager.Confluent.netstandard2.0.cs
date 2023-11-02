@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Confluent
     }
     public partial class ConfluentOrganizationData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ConfluentOrganizationData(Azure.Core.AzureLocation location, Azure.ResourceManager.Confluent.Models.ConfluentOfferDetail offerDetail, Azure.ResourceManager.Confluent.Models.ConfluentUserDetail userDetail) : base (default(Azure.Core.AzureLocation)) { }
+        public ConfluentOrganizationData(Azure.Core.AzureLocation location, Azure.ResourceManager.Confluent.Models.ConfluentOfferDetail offerDetail, Azure.ResourceManager.Confluent.Models.ConfluentUserDetail userDetail) { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.ResourceManager.Confluent.Models.ConfluentOfferDetail OfferDetail { get { throw null; } set { } }
         public System.Guid? OrganizationId { get { throw null; } }

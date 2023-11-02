@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class AvailabilitySetData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public AvailabilitySetData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public AvailabilitySetData(Azure.Core.AzureLocation location) { }
         public int? PlatformFaultDomainCount { get { throw null; } set { } }
         public int? PlatformUpdateDomainCount { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ProximityPlacementGroupId { get { throw null; } set { } }
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class CapacityReservationData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public CapacityReservationData(Azure.Core.AzureLocation location, Azure.ResourceManager.Compute.Models.ComputeSku sku) : base (default(Azure.Core.AzureLocation)) { }
+        public CapacityReservationData(Azure.Core.AzureLocation location, Azure.ResourceManager.Compute.Models.ComputeSku sku) { }
         public Azure.ResourceManager.Compute.Models.CapacityReservationInstanceView InstanceView { get { throw null; } }
         public int? PlatformFaultDomainCount { get { throw null; } }
         public System.DateTimeOffset? ProvisioningOn { get { throw null; } }
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class CapacityReservationGroupData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public CapacityReservationGroupData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public CapacityReservationGroupData(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> CapacityReservations { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.CapacityReservationInstanceViewWithName> InstanceViewCapacityReservations { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> VirtualMachinesAssociated { get { throw null; } }
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class CloudServiceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public CloudServiceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public CloudServiceData(Azure.Core.AzureLocation location) { }
         public bool? AllowModelOverride { get { throw null; } set { } }
         public string Configuration { get { throw null; } set { } }
         public System.Uri ConfigurationUri { get { throw null; } set { } }
@@ -746,7 +746,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class DedicatedHostData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DedicatedHostData(Azure.Core.AzureLocation location, Azure.ResourceManager.Compute.Models.ComputeSku sku) : base (default(Azure.Core.AzureLocation)) { }
+        public DedicatedHostData(Azure.Core.AzureLocation location, Azure.ResourceManager.Compute.Models.ComputeSku sku) { }
         public bool? AutoReplaceOnFailure { get { throw null; } set { } }
         public string HostId { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.DedicatedHostInstanceView InstanceView { get { throw null; } }
@@ -777,7 +777,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class DedicatedHostGroupData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DedicatedHostGroupData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public DedicatedHostGroupData(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> DedicatedHosts { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.DedicatedHostInstanceViewWithName> InstanceViewHosts { get { throw null; } }
         public int? PlatformFaultDomainCount { get { throw null; } set { } }
@@ -851,7 +851,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class DiskAccessData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DiskAccessData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public DiskAccessData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.ComputePrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
@@ -901,7 +901,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class DiskEncryptionSetData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DiskEncryptionSetData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public DiskEncryptionSetData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Compute.Models.KeyForDiskEncryptionSet ActiveKey { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ComputeApiError AutoKeyRotationError { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.DiskEncryptionSetType? EncryptionType { get { throw null; } set { } }
@@ -953,7 +953,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class DiskImageData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DiskImageData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public DiskImageData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.HyperVGeneration? HyperVGeneration { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
@@ -1049,7 +1049,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class GalleryApplicationData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public GalleryApplicationData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public GalleryApplicationData(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.GalleryApplicationCustomAction> CustomActions { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public System.DateTimeOffset? EndOfLifeOn { get { throw null; } set { } }
@@ -1100,7 +1100,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class GalleryApplicationVersionData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public GalleryApplicationVersionData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public GalleryApplicationVersionData(Azure.Core.AzureLocation location) { }
         public bool? AllowDeletionOfReplicatedLocations { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.GalleryProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.GalleryApplicationVersionPublishingProfile PublishingProfile { get { throw null; } set { } }
@@ -1145,7 +1145,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class GalleryData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public GalleryData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public GalleryData(Azure.Core.AzureLocation location) { }
         public string Description { get { throw null; } set { } }
         public string IdentifierUniqueName { get { throw null; } }
         public bool? IsSoftDeleteEnabled { get { throw null; } set { } }
@@ -1172,7 +1172,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class GalleryImageData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public GalleryImageData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public GalleryImageData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Compute.Models.ArchitectureType? Architecture { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> DisallowedDiskTypes { get { throw null; } }
@@ -1231,7 +1231,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class GalleryImageVersionData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public GalleryImageVersionData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public GalleryImageVersionData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Compute.Models.GalleryProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.GalleryImageVersionPublishingProfile PublishingProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.ReplicationStatus ReplicationStatus { get { throw null; } }
@@ -1305,7 +1305,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class ManagedDiskData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ManagedDiskData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ManagedDiskData(Azure.Core.AzureLocation location) { }
         public bool? BurstingEnabled { get { throw null; } set { } }
         public System.DateTimeOffset? BurstingEnabledOn { get { throw null; } }
         public float? CompletionPercent { get { throw null; } set { } }
@@ -1387,7 +1387,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class ProximityPlacementGroupData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ProximityPlacementGroupData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ProximityPlacementGroupData(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.Models.ComputeSubResourceDataWithColocationStatus> AvailabilitySets { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.InstanceViewStatus ColocationStatus { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> IntentVmSizes { get { throw null; } }
@@ -1458,7 +1458,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class RestorePointGroupData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public RestorePointGroupData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public RestorePointGroupData(Azure.Core.AzureLocation location) { }
         public string ProvisioningState { get { throw null; } }
         public string RestorePointGroupId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Compute.RestorePointData> RestorePoints { get { throw null; } }
@@ -1637,7 +1637,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class SnapshotData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public SnapshotData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public SnapshotData(Azure.Core.AzureLocation location) { }
         public float? CompletionPercent { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.CopyCompletionError CopyCompletionError { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.DiskCreationData CreationData { get { throw null; } set { } }
@@ -1708,7 +1708,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class SshPublicKeyData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public SshPublicKeyData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public SshPublicKeyData(Azure.Core.AzureLocation location) { }
         public string PublicKey { get { throw null; } set { } }
     }
     public partial class SshPublicKeyResource : Azure.ResourceManager.ArmResource
@@ -1756,7 +1756,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public VirtualMachineData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public VirtualMachineData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Compute.Models.AdditionalCapabilities AdditionalCapabilities { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier AvailabilitySetId { get { throw null; } set { } }
         public double? BillingMaxPrice { get { throw null; } set { } }
@@ -1810,7 +1810,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineExtensionData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public VirtualMachineExtensionData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public VirtualMachineExtensionData(Azure.Core.AzureLocation location) { }
         public bool? AutoUpgradeMinorVersion { get { throw null; } set { } }
         public bool? EnableAutomaticUpgrade { get { throw null; } set { } }
         public string ExtensionType { get { throw null; } set { } }
@@ -1846,7 +1846,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineExtensionImageData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public VirtualMachineExtensionImageData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public VirtualMachineExtensionImageData(Azure.Core.AzureLocation location) { }
         public string ComputeRole { get { throw null; } set { } }
         public string HandlerSchema { get { throw null; } set { } }
         public string OperatingSystem { get { throw null; } set { } }
@@ -1982,7 +1982,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineRunCommandData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public VirtualMachineRunCommandData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public VirtualMachineRunCommandData(Azure.Core.AzureLocation location) { }
         public bool? AsyncExecution { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.RunCommandManagedIdentity ErrorBlobManagedIdentity { get { throw null; } set { } }
         public System.Uri ErrorBlobUri { get { throw null; } set { } }
@@ -2037,7 +2037,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineScaleSetData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public VirtualMachineScaleSetData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public VirtualMachineScaleSetData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Compute.Models.AdditionalCapabilities AdditionalCapabilities { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.AutomaticRepairsPolicy AutomaticRepairsPolicy { get { throw null; } set { } }
         public bool? DoNotRunExtensionsOnOverprovisionedVms { get { throw null; } set { } }
@@ -2186,7 +2186,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineScaleSetRollingUpgradeData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public VirtualMachineScaleSetRollingUpgradeData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public VirtualMachineScaleSetRollingUpgradeData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Compute.Models.ComputeApiError Error { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.RollingUpgradePolicy Policy { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.RollingUpgradeProgressInfo Progress { get { throw null; } }
@@ -2239,7 +2239,7 @@ namespace Azure.ResourceManager.Compute
     }
     public partial class VirtualMachineScaleSetVmData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public VirtualMachineScaleSetVmData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public VirtualMachineScaleSetVmData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Compute.Models.AdditionalCapabilities AdditionalCapabilities { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier AvailabilitySetId { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.BootDiagnostics BootDiagnostics { get { throw null; } set { } }

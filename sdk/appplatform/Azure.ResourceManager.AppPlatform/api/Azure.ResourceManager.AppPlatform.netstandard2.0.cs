@@ -773,7 +773,7 @@ namespace Azure.ResourceManager.AppPlatform
     }
     public partial class AppPlatformServiceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public AppPlatformServiceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public AppPlatformServiceData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.AppPlatform.Models.AppPlatformServiceProperties Properties { get { throw null; } set { } }
         public Azure.ResourceManager.AppPlatform.Models.AppPlatformSku Sku { get { throw null; } set { } }
     }

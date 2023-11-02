@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.IotHub
     }
     public partial class IotHubDescriptionData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public IotHubDescriptionData(Azure.Core.AzureLocation location, Azure.ResourceManager.IotHub.Models.IotHubSkuInfo sku) : base (default(Azure.Core.AzureLocation)) { }
+        public IotHubDescriptionData(Azure.Core.AzureLocation location, Azure.ResourceManager.IotHub.Models.IotHubSkuInfo sku) { }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.IotHub.Models.IotHubProperties Properties { get { throw null; } set { } }

@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
     }
     public partial class FirmwareWorkspaceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public FirmwareWorkspaceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public FirmwareWorkspaceData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.IotFirmwareDefense.Models.ProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class FirmwareWorkspaceResource : Azure.ResourceManager.ArmResource

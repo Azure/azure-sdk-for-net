@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DataMigration
     }
     public partial class DataMigrationServiceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DataMigrationServiceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public DataMigrationServiceData(Azure.Core.AzureLocation location) { }
         public string AutoStopDelay { get { throw null; } set { } }
         public bool? DeleteResourcesOnStop { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } set { } }
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.DataMigration
     }
     public partial class ProjectData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ProjectData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ProjectData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.DataMigration.Models.AzureActiveDirectoryApp AzureAuthenticationInfo { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataMigration.Models.DatabaseInfo> DatabasesInfo { get { throw null; } }
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.DataMigration
     }
     public partial class SqlMigrationServiceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public SqlMigrationServiceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public SqlMigrationServiceData(Azure.Core.AzureLocation location) { }
         public string IntegrationRuntimeState { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
     }

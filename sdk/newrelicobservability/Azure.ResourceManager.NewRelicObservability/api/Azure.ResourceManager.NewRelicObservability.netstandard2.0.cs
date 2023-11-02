@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.NewRelicObservability
     }
     public partial class NewRelicMonitorResourceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NewRelicMonitorResourceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public NewRelicMonitorResourceData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.NewRelicObservability.Models.NewRelicObservabilityAccountCreationSource? AccountCreationSource { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.NewRelicObservability.Models.NewRelicLiftrResourceCategory? LiftrResourceCategory { get { throw null; } }

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Qumulo
     }
     public partial class QumuloFileSystemResourceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public QumuloFileSystemResourceData(Azure.Core.AzureLocation location, Azure.ResourceManager.Qumulo.Models.MarketplaceDetails marketplaceDetails, Azure.ResourceManager.Qumulo.Models.StorageSku storageSku, Azure.ResourceManager.Qumulo.Models.QumuloUserDetails userDetails, string delegatedSubnetId, string adminPassword, int initialCapacity) : base (default(Azure.Core.AzureLocation)) { }
+        public QumuloFileSystemResourceData(Azure.Core.AzureLocation location, Azure.ResourceManager.Qumulo.Models.MarketplaceDetails marketplaceDetails, Azure.ResourceManager.Qumulo.Models.StorageSku storageSku, Azure.ResourceManager.Qumulo.Models.QumuloUserDetails userDetails, string delegatedSubnetId, string adminPassword, int initialCapacity) { }
         public string AdminPassword { get { throw null; } set { } }
         public string AvailabilityZone { get { throw null; } set { } }
         public System.Uri ClusterLoginUri { get { throw null; } set { } }

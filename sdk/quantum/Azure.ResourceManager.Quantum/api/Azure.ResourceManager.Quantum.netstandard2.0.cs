@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Quantum
     }
     public partial class QuantumWorkspaceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public QuantumWorkspaceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public QuantumWorkspaceData(Azure.Core.AzureLocation location) { }
         public System.Uri EndpointUri { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Quantum.Models.Provider> Providers { get { throw null; } }

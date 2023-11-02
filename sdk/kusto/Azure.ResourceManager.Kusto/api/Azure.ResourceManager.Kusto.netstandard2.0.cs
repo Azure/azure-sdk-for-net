@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Kusto
     }
     public partial class KustoClusterData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public KustoClusterData(Azure.Core.AzureLocation location, Azure.ResourceManager.Kusto.Models.KustoSku sku) : base (default(Azure.Core.AzureLocation)) { }
+        public KustoClusterData(Azure.Core.AzureLocation location, Azure.ResourceManager.Kusto.Models.KustoSku sku) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Kusto.Models.AcceptedAudience> AcceptedAudiences { get { throw null; } }
         public System.Collections.Generic.IList<string> AllowedFqdnList { get { throw null; } }
         public System.Collections.Generic.IList<string> AllowedIPRangeList { get { throw null; } }
@@ -834,7 +834,7 @@ namespace Azure.ResourceManager.Kusto.Models
     }
     public partial class KustoClusterPatch : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public KustoClusterPatch(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public KustoClusterPatch(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Kusto.Models.AcceptedAudience> AcceptedAudiences { get { throw null; } }
         public System.Collections.Generic.IList<string> AllowedFqdnList { get { throw null; } }
         public System.Collections.Generic.IList<string> AllowedIPRangeList { get { throw null; } }

@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.HybridCompute
     }
     public partial class HybridComputeMachineData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public HybridComputeMachineData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public HybridComputeMachineData(Azure.Core.AzureLocation location) { }
         public string AdFqdn { get { throw null; } }
         public Azure.ResourceManager.HybridCompute.Models.AgentConfiguration AgentConfiguration { get { throw null; } }
         public Azure.ResourceManager.HybridCompute.Models.AgentUpgrade AgentUpgrade { get { throw null; } set { } }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.HybridCompute
     }
     public partial class HybridComputeMachineExtensionData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public HybridComputeMachineExtensionData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public HybridComputeMachineExtensionData(Azure.Core.AzureLocation location) { }
         public bool? AutoUpgradeMinorVersion { get { throw null; } set { } }
         public bool? EnableAutomaticUpgrade { get { throw null; } set { } }
         public string ForceUpdateTag { get { throw null; } set { } }
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.HybridCompute
     }
     public partial class HybridComputePrivateLinkScopeData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public HybridComputePrivateLinkScopeData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public HybridComputePrivateLinkScopeData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkScopeProperties Properties { get { throw null; } set { } }
     }
     public partial class HybridComputePrivateLinkScopeResource : Azure.ResourceManager.ArmResource

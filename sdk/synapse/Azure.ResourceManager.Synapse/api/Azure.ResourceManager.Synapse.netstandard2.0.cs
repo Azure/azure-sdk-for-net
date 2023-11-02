@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Synapse
     }
     public partial class SynapseBigDataPoolInfoData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public SynapseBigDataPoolInfoData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public SynapseBigDataPoolInfoData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Synapse.Models.BigDataPoolAutoPauseProperties AutoPause { get { throw null; } set { } }
         public Azure.ResourceManager.Synapse.Models.BigDataPoolAutoScaleProperties AutoScale { get { throw null; } set { } }
         public int? CacheSize { get { throw null; } set { } }
@@ -828,7 +828,7 @@ namespace Azure.ResourceManager.Synapse
     }
     public partial class SynapseKustoPoolData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public SynapseKustoPoolData(Azure.Core.AzureLocation location, Azure.ResourceManager.Synapse.Models.SynapseDataSourceSku sku) : base (default(Azure.Core.AzureLocation)) { }
+        public SynapseKustoPoolData(Azure.Core.AzureLocation location, Azure.ResourceManager.Synapse.Models.SynapseDataSourceSku sku) { }
         public System.Uri DataIngestionUri { get { throw null; } }
         public bool? EnablePurge { get { throw null; } set { } }
         public bool? EnableStreamingIngest { get { throw null; } set { } }
@@ -1090,7 +1090,7 @@ namespace Azure.ResourceManager.Synapse
     }
     public partial class SynapsePrivateLinkHubData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public SynapsePrivateLinkHubData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public SynapsePrivateLinkHubData(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Synapse.Models.PrivateEndpointConnectionForPrivateLinkHubBasic> PrivateEndpointConnections { get { throw null; } }
         public string ProvisioningState { get { throw null; } set { } }
     }
@@ -1612,7 +1612,7 @@ namespace Azure.ResourceManager.Synapse
     }
     public partial class SynapseSqlPoolData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public SynapseSqlPoolData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public SynapseSqlPoolData(Azure.Core.AzureLocation location) { }
         public string Collation { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.ResourceManager.Synapse.Models.SqlPoolCreateMode? CreateMode { get { throw null; } set { } }
@@ -2089,7 +2089,7 @@ namespace Azure.ResourceManager.Synapse
     }
     public partial class SynapseWorkspaceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public SynapseWorkspaceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public SynapseWorkspaceData(Azure.Core.AzureLocation location) { }
         public Azure.Core.ResourceIdentifier AdlaResourceId { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> ConnectivityEndpoints { get { throw null; } }
         public Azure.ResourceManager.Synapse.Models.SynapseDataLakeStorageAccountDetails DefaultDataLakeStorage { get { throw null; } set { } }

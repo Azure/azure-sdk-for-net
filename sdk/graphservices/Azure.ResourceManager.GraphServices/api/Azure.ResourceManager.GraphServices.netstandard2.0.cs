@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.GraphServices
     }
     public partial class GraphServicesAccountResourceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public GraphServicesAccountResourceData(Azure.Core.AzureLocation location, Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourceProperties properties) : base (default(Azure.Core.AzureLocation)) { }
+        public GraphServicesAccountResourceData(Azure.Core.AzureLocation location, Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourceProperties properties) { }
         public Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourceProperties Properties { get { throw null; } set { } }
     }
     public static partial class GraphServicesExtensions

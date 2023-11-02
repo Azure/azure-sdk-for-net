@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CognitiveServices
     }
     public partial class CognitiveServicesAccountData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public CognitiveServicesAccountData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public CognitiveServicesAccountData(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }

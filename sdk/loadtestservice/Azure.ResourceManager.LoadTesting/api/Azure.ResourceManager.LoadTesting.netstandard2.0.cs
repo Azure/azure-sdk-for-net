@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.LoadTesting
     }
     public partial class LoadTestingResourceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public LoadTestingResourceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public LoadTestingResourceData(Azure.Core.AzureLocation location) { }
         public string DataPlaneUri { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.LoadTesting.Models.LoadTestingCmkEncryptionProperties Encryption { get { throw null; } set { } }

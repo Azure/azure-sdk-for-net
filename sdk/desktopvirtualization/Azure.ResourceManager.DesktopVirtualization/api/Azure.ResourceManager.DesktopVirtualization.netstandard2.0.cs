@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
     }
     public partial class HostPoolData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public HostPoolData(Azure.Core.AzureLocation location, Azure.ResourceManager.DesktopVirtualization.Models.HostPoolType hostPoolType, Azure.ResourceManager.DesktopVirtualization.Models.HostPoolLoadBalancerType loadBalancerType, Azure.ResourceManager.DesktopVirtualization.Models.PreferredAppGroupType preferredAppGroupType) : base (default(Azure.Core.AzureLocation)) { }
+        public HostPoolData(Azure.Core.AzureLocation location, Azure.ResourceManager.DesktopVirtualization.Models.HostPoolType hostPoolType, Azure.ResourceManager.DesktopVirtualization.Models.HostPoolLoadBalancerType loadBalancerType, Azure.ResourceManager.DesktopVirtualization.Models.PreferredAppGroupType preferredAppGroupType) { }
         public Azure.ResourceManager.DesktopVirtualization.Models.SessionHostAgentUpdateProperties AgentUpdate { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> ApplicationGroupReferences { get { throw null; } }
         public string CustomRdpProperty { get { throw null; } set { } }
@@ -258,8 +258,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
     public partial class ScalingPlanData : Azure.ResourceManager.Models.TrackedResourceData
     {
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public ScalingPlanData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public ScalingPlanData(Azure.Core.AzureLocation location, string timeZone) : base (default(Azure.Core.AzureLocation)) { }
+        public ScalingPlanData(Azure.Core.AzureLocation location) { }
+        public ScalingPlanData(Azure.Core.AzureLocation location, string timeZone) { }
         public string Description { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
         public string ExclusionTag { get { throw null; } set { } }
@@ -585,7 +585,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
     }
     public partial class VirtualApplicationGroupData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public VirtualApplicationGroupData(Azure.Core.AzureLocation location, Azure.Core.ResourceIdentifier hostPoolId, Azure.ResourceManager.DesktopVirtualization.Models.VirtualApplicationGroupType applicationGroupType) : base (default(Azure.Core.AzureLocation)) { }
+        public VirtualApplicationGroupData(Azure.Core.AzureLocation location, Azure.Core.ResourceIdentifier hostPoolId, Azure.ResourceManager.DesktopVirtualization.Models.VirtualApplicationGroupType applicationGroupType) { }
         public Azure.ResourceManager.DesktopVirtualization.Models.VirtualApplicationGroupType ApplicationGroupType { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
@@ -713,7 +713,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
     }
     public partial class VirtualWorkspaceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public VirtualWorkspaceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public VirtualWorkspaceData(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IList<string> ApplicationGroupReferences { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }

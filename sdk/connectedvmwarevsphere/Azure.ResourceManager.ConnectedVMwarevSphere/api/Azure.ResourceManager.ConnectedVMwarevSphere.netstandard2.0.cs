@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     }
     public partial class MachineExtensionData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public MachineExtensionData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public MachineExtensionData(Azure.Core.AzureLocation location) { }
         public bool? AutoUpgradeMinorVersion { get { throw null; } set { } }
         public string ForceUpdateTag { get { throw null; } set { } }
         public Azure.ResourceManager.ConnectedVMwarevSphere.Models.MachineExtensionPropertiesInstanceView InstanceView { get { throw null; } set { } }
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     }
     public partial class ResourcePoolData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ResourcePoolData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ResourcePoolData(Azure.Core.AzureLocation location) { }
         public long? CpuLimitMHz { get { throw null; } }
         public long? CpuReservationMHz { get { throw null; } }
         public string CpuSharesLevel { get { throw null; } }
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     }
     public partial class VCenterData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public VCenterData(Azure.Core.AzureLocation location, string fqdn) : base (default(Azure.Core.AzureLocation)) { }
+        public VCenterData(Azure.Core.AzureLocation location, string fqdn) { }
         public string ConnectionStatus { get { throw null; } }
         public Azure.ResourceManager.ConnectedVMwarevSphere.Models.VICredential Credentials { get { throw null; } set { } }
         public string CustomResourceName { get { throw null; } }
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     }
     public partial class VirtualMachineData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public VirtualMachineData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public VirtualMachineData(Azure.Core.AzureLocation location) { }
         public string CustomResourceName { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.ResourceManager.ConnectedVMwarevSphere.Models.FirmwareType? FirmwareType { get { throw null; } set { } }
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     }
     public partial class VirtualMachineTemplateData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public VirtualMachineTemplateData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public VirtualMachineTemplateData(Azure.Core.AzureLocation location) { }
         public string CustomResourceName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VirtualDisk> Disks { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     }
     public partial class VirtualNetworkData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public VirtualNetworkData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public VirtualNetworkData(Azure.Core.AzureLocation location) { }
         public string CustomResourceName { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public string InventoryItemId { get { throw null; } set { } }
@@ -553,7 +553,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     }
     public partial class VMwareClusterData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public VMwareClusterData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public VMwareClusterData(Azure.Core.AzureLocation location) { }
         public string CustomResourceName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> DatastoreIds { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     }
     public partial class VMwareDatastoreData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public VMwareDatastoreData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public VMwareDatastoreData(Azure.Core.AzureLocation location) { }
         public string CustomResourceName { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public string InventoryItemId { get { throw null; } set { } }
@@ -657,7 +657,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     }
     public partial class VMwareHostData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public VMwareHostData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public VMwareHostData(Azure.Core.AzureLocation location) { }
         public string CustomResourceName { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public string InventoryItemId { get { throw null; } set { } }

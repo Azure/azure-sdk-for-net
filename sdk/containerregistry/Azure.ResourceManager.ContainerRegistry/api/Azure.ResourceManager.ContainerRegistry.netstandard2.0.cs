@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ContainerRegistry
     }
     public partial class ContainerRegistryAgentPoolData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ContainerRegistryAgentPoolData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ContainerRegistryAgentPoolData(Azure.Core.AzureLocation location) { }
         public int? Count { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryOS? OS { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState? ProvisioningState { get { throw null; } }
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ContainerRegistry
     }
     public partial class ContainerRegistryData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ContainerRegistryData(Azure.Core.AzureLocation location, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySku sku) : base (default(Azure.Core.AzureLocation)) { }
+        public ContainerRegistryData(Azure.Core.AzureLocation location, Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistrySku sku) { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> DataEndpointHostNames { get { throw null; } }
         public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryEncryption Encryption { get { throw null; } set { } }
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.ContainerRegistry
     }
     public partial class ContainerRegistryReplicationData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ContainerRegistryReplicationData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ContainerRegistryReplicationData(Azure.Core.AzureLocation location) { }
         public bool? IsRegionEndpointEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryResourceStatus Status { get { throw null; } }
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.ContainerRegistry
     }
     public partial class ContainerRegistryTaskData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ContainerRegistryTaskData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ContainerRegistryTaskData(Azure.Core.AzureLocation location) { }
         public int? AgentCpu { get { throw null; } set { } }
         public string AgentPoolName { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.ContainerRegistry
     }
     public partial class ContainerRegistryWebhookData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ContainerRegistryWebhookData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ContainerRegistryWebhookData(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryWebhookAction> Actions { get { throw null; } }
         public Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryProvisioningState? ProvisioningState { get { throw null; } }
         public string Scope { get { throw null; } set { } }

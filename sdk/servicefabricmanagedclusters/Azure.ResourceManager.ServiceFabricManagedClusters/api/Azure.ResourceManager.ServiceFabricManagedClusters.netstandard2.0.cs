@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
     }
     public partial class ServiceFabricManagedApplicationData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ServiceFabricManagedApplicationData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ServiceFabricManagedApplicationData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ApplicationUserAssignedIdentityInfo> ManagedIdentities { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Parameters { get { throw null; } }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
     }
     public partial class ServiceFabricManagedApplicationTypeData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ServiceFabricManagedApplicationTypeData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ServiceFabricManagedApplicationTypeData(Azure.Core.AzureLocation location) { }
         public string ProvisioningState { get { throw null; } }
     }
     public partial class ServiceFabricManagedApplicationTypeResource : Azure.ResourceManager.ArmResource
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
     }
     public partial class ServiceFabricManagedApplicationTypeVersionData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ServiceFabricManagedApplicationTypeVersionData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ServiceFabricManagedApplicationTypeVersionData(Azure.Core.AzureLocation location) { }
         public System.Uri AppPackageUri { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
     }
@@ -157,8 +157,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
     }
     public partial class ServiceFabricManagedClusterData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ServiceFabricManagedClusterData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public ServiceFabricManagedClusterData(Azure.Core.AzureLocation location, Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClustersSku sku) : base (default(Azure.Core.AzureLocation)) { }
+        public ServiceFabricManagedClusterData(Azure.Core.AzureLocation location) { }
+        public ServiceFabricManagedClusterData(Azure.Core.AzureLocation location, Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClustersSku sku) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterAddOnFeature> AddOnFeatures { get { throw null; } }
         public string AdminPassword { get { throw null; } set { } }
         public string AdminUserName { get { throw null; } set { } }
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
     }
     public partial class ServiceFabricManagedServiceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ServiceFabricManagedServiceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ServiceFabricManagedServiceData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceProperties Properties { get { throw null; } set { } }
     }
     public partial class ServiceFabricManagedServiceResource : Azure.ResourceManager.ArmResource

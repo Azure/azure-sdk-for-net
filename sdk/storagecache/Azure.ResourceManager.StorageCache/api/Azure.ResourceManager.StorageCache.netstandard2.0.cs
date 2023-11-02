@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.StorageCache
     }
     public partial class AmlFileSystemData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public AmlFileSystemData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public AmlFileSystemData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.StorageCache.Models.AmlFileSystemClientInfo ClientInfo { get { throw null; } }
         public string FilesystemSubnet { get { throw null; } set { } }
         public Azure.ResourceManager.StorageCache.Models.AmlFileSystemHealth Health { get { throw null; } }
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.StorageCache
     }
     public partial class StorageCacheData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public StorageCacheData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public StorageCacheData(Azure.Core.AzureLocation location) { }
         public int? CacheSizeGB { get { throw null; } set { } }
         public Azure.ResourceManager.StorageCache.Models.StorageCacheDirectorySettings DirectoryServicesSettings { get { throw null; } set { } }
         public Azure.ResourceManager.StorageCache.Models.StorageCacheEncryptionSettings EncryptionSettings { get { throw null; } set { } }

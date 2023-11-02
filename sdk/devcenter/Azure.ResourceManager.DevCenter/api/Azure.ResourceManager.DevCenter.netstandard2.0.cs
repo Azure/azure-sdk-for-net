@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DevCenter
     }
     public partial class DevBoxDefinitionData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DevBoxDefinitionData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public DevBoxDefinitionData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.DevCenter.Models.DevCenterImageReference ActiveImageReference { get { throw null; } }
         public Azure.ResourceManager.DevCenter.Models.DevCenterHibernateSupport? HibernateSupport { get { throw null; } set { } }
         public Azure.ResourceManager.DevCenter.Models.DevCenterImageReference ImageReference { get { throw null; } set { } }
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.DevCenter
     }
     public partial class DevCenterData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DevCenterData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public DevCenterData(Azure.Core.AzureLocation location) { }
         public System.Uri DevCenterUri { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? ProvisioningState { get { throw null; } }
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.DevCenter
     }
     public partial class DevCenterNetworkConnectionData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DevCenterNetworkConnectionData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public DevCenterNetworkConnectionData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.DevCenter.Models.DomainJoinType? DomainJoinType { get { throw null; } set { } }
         public string DomainName { get { throw null; } set { } }
         public string DomainPassword { get { throw null; } set { } }
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.DevCenter
     }
     public partial class DevCenterPoolData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DevCenterPoolData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public DevCenterPoolData(Azure.Core.AzureLocation location) { }
         public string DevBoxDefinitionName { get { throw null; } set { } }
         public Azure.ResourceManager.DevCenter.Models.DevCenterHealthStatus? HealthStatus { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DevCenter.Models.DevCenterHealthStatusDetail> HealthStatusDetails { get { throw null; } }
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.DevCenter
     }
     public partial class DevCenterProjectData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DevCenterProjectData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public DevCenterProjectData(Azure.Core.AzureLocation location) { }
         public string Description { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier DevCenterId { get { throw null; } set { } }
         public System.Uri DevCenterUri { get { throw null; } }
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.DevCenter
     }
     public partial class DevCenterProjectEnvironmentData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DevCenterProjectEnvironmentData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public DevCenterProjectEnvironmentData(Azure.Core.AzureLocation location) { }
         public Azure.Core.ResourceIdentifier DeploymentTargetId { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.DevCenter.Models.DevCenterProvisioningState? ProvisioningState { get { throw null; } }

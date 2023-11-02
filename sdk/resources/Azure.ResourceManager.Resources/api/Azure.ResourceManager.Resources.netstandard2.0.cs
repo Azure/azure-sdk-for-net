@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Resources
     }
     public partial class JitRequestData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public JitRequestData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public JitRequestData(Azure.Core.AzureLocation location) { }
         public string ApplicationResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ArmApplicationDetails CreatedBy { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.JitAuthorizationPolicies> JitAuthorizationPolicies { get { throw null; } }
@@ -700,7 +700,7 @@ namespace Azure.ResourceManager.Resources.Models
     }
     public partial class ArmApplicationResourceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ArmApplicationResourceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ArmApplicationResourceData(Azure.Core.AzureLocation location) { }
         public string ManagedBy { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ArmApplicationSku Sku { get { throw null; } set { } }
     }

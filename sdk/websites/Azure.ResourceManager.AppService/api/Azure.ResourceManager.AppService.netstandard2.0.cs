@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppService
     }
     public partial class AppCertificateData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public AppCertificateData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public AppCertificateData(Azure.Core.AzureLocation location) { }
         public string CanonicalName { get { throw null; } set { } }
         public byte[] CerBlob { get { throw null; } }
         public string DomainValidationMethod { get { throw null; } set { } }
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AppService
     }
     public partial class AppServiceCertificateData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public AppServiceCertificateData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public AppServiceCertificateData(Azure.Core.AzureLocation location) { }
         public Azure.Core.ResourceIdentifier KeyVaultId { get { throw null; } set { } }
         public string KeyVaultSecretName { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppService
     }
     public partial class AppServiceCertificateOrderData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public AppServiceCertificateOrderData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public AppServiceCertificateOrderData(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.AppServiceCertificateNotRenewableReason> AppServiceCertificateNotRenewableReasons { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.AppService.Models.AppServiceCertificateProperties> Certificates { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.CertificateOrderContact Contact { get { throw null; } }
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.AppService
     }
     public partial class AppServiceDomainData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public AppServiceDomainData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public AppServiceDomainData(Azure.Core.AzureLocation location) { }
         public string AuthCode { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.DomainPurchaseConsent Consent { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.RegistrationContactInfo ContactAdmin { get { throw null; } set { } }
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.AppService
     }
     public partial class AppServiceEnvironmentData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public AppServiceEnvironmentData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public AppServiceEnvironmentData(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.AppServiceNameValuePair> ClusterSettings { get { throw null; } }
         public int? DedicatedHostCount { get { throw null; } set { } }
         public string DnsSuffix { get { throw null; } set { } }
@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.AppService
     }
     public partial class AppServicePlanData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public AppServicePlanData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public AppServicePlanData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public System.DateTimeOffset? FreeOfferExpireOn { get { throw null; } set { } }
         public string GeoRegion { get { throw null; } }
@@ -1213,7 +1213,7 @@ namespace Azure.ResourceManager.AppService
     }
     public partial class KubeEnvironmentData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public KubeEnvironmentData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public KubeEnvironmentData(Azure.Core.AzureLocation location) { }
         public Azure.Core.ResourceIdentifier AksResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.AppLogsConfiguration AppLogsConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.ArcConfiguration ArcConfiguration { get { throw null; } set { } }
@@ -1322,7 +1322,7 @@ namespace Azure.ResourceManager.AppService
     }
     public partial class PremierAddOnData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public PremierAddOnData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public PremierAddOnData(Azure.Core.AzureLocation location) { }
         public string Kind { get { throw null; } set { } }
         public string MarketplaceOffer { get { throw null; } set { } }
         public string MarketplacePublisher { get { throw null; } set { } }
@@ -3066,7 +3066,7 @@ namespace Azure.ResourceManager.AppService
     }
     public partial class StaticSiteData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public StaticSiteData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public StaticSiteData(Azure.Core.AzureLocation location) { }
         public bool? AllowConfigFileUpdates { get { throw null; } set { } }
         public string Branch { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.StaticSiteBuildProperties BuildProperties { get { throw null; } set { } }
@@ -3417,7 +3417,7 @@ namespace Azure.ResourceManager.AppService
     }
     public partial class WebSiteData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public WebSiteData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public WebSiteData(Azure.Core.AzureLocation location) { }
         public Azure.Core.ResourceIdentifier AppServicePlanId { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.WebSiteAvailabilityState? AvailabilityState { get { throw null; } }
         public string ClientCertExclusionPaths { get { throw null; } set { } }

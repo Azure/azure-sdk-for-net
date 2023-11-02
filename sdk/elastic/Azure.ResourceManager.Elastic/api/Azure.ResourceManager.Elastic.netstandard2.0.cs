@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Elastic
     }
     public partial class ElasticMonitorResourceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ElasticMonitorResourceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ElasticMonitorResourceData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Elastic.Models.MonitorProperties Properties { get { throw null; } set { } }
         public string SkuName { get { throw null; } set { } }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     }
     public partial class BackupEngineData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public BackupEngineData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public BackupEngineData(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.BackupGenericEngine Properties { get { throw null; } set { } }
     }
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     }
     public partial class BackupJobData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public BackupJobData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public BackupJobData(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.BackupGenericJob Properties { get { throw null; } set { } }
     }
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     }
     public partial class BackupPrivateEndpointConnectionData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public BackupPrivateEndpointConnectionData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public BackupPrivateEndpointConnectionData(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.BackupPrivateEndpointConnectionProperties Properties { get { throw null; } set { } }
     }
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     }
     public partial class BackupProtectedItemData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public BackupProtectedItemData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public BackupProtectedItemData(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.BackupGenericProtectedItem Properties { get { throw null; } set { } }
     }
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     }
     public partial class BackupProtectionContainerData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public BackupProtectionContainerData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public BackupProtectionContainerData(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.BackupGenericProtectionContainer Properties { get { throw null; } set { } }
     }
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     }
     public partial class BackupProtectionIntentData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public BackupProtectionIntentData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public BackupProtectionIntentData(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.BackupGenericProtectionIntent Properties { get { throw null; } set { } }
     }
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     }
     public partial class BackupProtectionPolicyData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public BackupProtectionPolicyData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public BackupProtectionPolicyData(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.BackupGenericProtectionPolicy Properties { get { throw null; } set { } }
     }
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     }
     public partial class BackupRecoveryPointData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public BackupRecoveryPointData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public BackupRecoveryPointData(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.BackupGenericRecoveryPoint Properties { get { throw null; } set { } }
     }
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     }
     public partial class BackupResourceConfigData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public BackupResourceConfigData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public BackupResourceConfigData(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.BackupResourceConfigProperties Properties { get { throw null; } set { } }
     }
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     }
     public partial class BackupResourceEncryptionConfigExtendedData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public BackupResourceEncryptionConfigExtendedData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public BackupResourceEncryptionConfigExtendedData(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.BackupResourceEncryptionConfigExtendedProperties Properties { get { throw null; } set { } }
     }
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     }
     public partial class BackupResourceVaultConfigData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public BackupResourceVaultConfigData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public BackupResourceVaultConfigData(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.BackupResourceVaultConfigProperties Properties { get { throw null; } set { } }
     }
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     }
     public partial class ResourceGuardProxyData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ResourceGuardProxyData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ResourceGuardProxyData(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.ResourceGuardProxyProperties Properties { get { throw null; } set { } }
     }
@@ -1130,7 +1130,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     }
     public partial class BackupResourceEncryptionConfigExtendedCreateOrUpdateContent : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public BackupResourceEncryptionConfigExtendedCreateOrUpdateContent(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public BackupResourceEncryptionConfigExtendedCreateOrUpdateContent(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.BackupResourceEncryptionConfig Properties { get { throw null; } set { } }
     }
@@ -2278,7 +2278,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     }
     public partial class ProtectableContainerResource : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ProtectableContainerResource(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ProtectableContainerResource(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.ProtectableContainer Properties { get { throw null; } set { } }
     }
@@ -2307,7 +2307,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     }
     public partial class ProvisionIlrConnectionContent : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ProvisionIlrConnectionContent(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ProvisionIlrConnectionContent(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.IlrContent Properties { get { throw null; } set { } }
     }
@@ -2815,7 +2815,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     }
     public partial class TriggerBackupContent : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public TriggerBackupContent(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public TriggerBackupContent(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.BackupContent Properties { get { throw null; } set { } }
     }
@@ -2831,7 +2831,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     }
     public partial class TriggerRestoreContent : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public TriggerRestoreContent(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public TriggerRestoreContent(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.RestoreContent Properties { get { throw null; } set { } }
     }
@@ -3221,7 +3221,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     }
     public partial class WorkloadItemResource : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public WorkloadItemResource(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public WorkloadItemResource(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.WorkloadItem Properties { get { throw null; } set { } }
     }
@@ -3288,7 +3288,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     }
     public partial class WorkloadProtectableItemResource : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public WorkloadProtectableItemResource(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public WorkloadProtectableItemResource(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.WorkloadProtectableItem Properties { get { throw null; } set { } }
     }

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.HealthcareApis
     }
     public partial class DicomServiceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DicomServiceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public DicomServiceData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.HealthcareApis.Models.DicomServiceAuthenticationConfiguration AuthenticationConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.HealthcareApis.Models.DicomServiceCorsConfiguration CorsConfiguration { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } set { } }
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.HealthcareApis
     }
     public partial class FhirServiceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public FhirServiceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public FhirServiceData(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.HealthcareApis.Models.FhirServiceAccessPolicyEntry> AccessPolicies { get { throw null; } }
         public Azure.ResourceManager.HealthcareApis.Models.FhirServiceAcrConfiguration AcrConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.HealthcareApis.Models.FhirServiceAuthenticationConfiguration AuthenticationConfiguration { get { throw null; } set { } }
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.HealthcareApis
     }
     public partial class HealthcareApisIotConnectorData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public HealthcareApisIotConnectorData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public HealthcareApisIotConnectorData(Azure.Core.AzureLocation location) { }
         public System.BinaryData DeviceMappingContent { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.HealthcareApis
     }
     public partial class HealthcareApisServiceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public HealthcareApisServiceData(Azure.Core.AzureLocation location, Azure.ResourceManager.HealthcareApis.Models.HealthcareApisKind kind) : base (default(Azure.Core.AzureLocation)) { }
+        public HealthcareApisServiceData(Azure.Core.AzureLocation location, Azure.ResourceManager.HealthcareApis.Models.HealthcareApisKind kind) { }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.HealthcareApis.Models.HealthcareApisKind Kind { get { throw null; } set { } }
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.HealthcareApis
     }
     public partial class HealthcareApisWorkspaceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public HealthcareApisWorkspaceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public HealthcareApisWorkspaceData(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.HealthcareApis.Models.HealthcareApisWorkspaceProperties Properties { get { throw null; } set { } }
     }

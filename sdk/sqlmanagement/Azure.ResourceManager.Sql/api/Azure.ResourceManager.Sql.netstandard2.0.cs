@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class ElasticPoolData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ElasticPoolData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ElasticPoolData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Sql.Models.SqlAvailabilityZoneType? AvailabilityZone { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public int? HighAvailabilityReplicaCount { get { throw null; } set { } }
@@ -631,7 +631,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class InstancePoolData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public InstancePoolData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public InstancePoolData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Sql.Models.InstancePoolLicenseType? LicenseType { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.SqlSku Sku { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
@@ -976,7 +976,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class ManagedDatabaseData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ManagedDatabaseData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ManagedDatabaseData(Azure.Core.AzureLocation location) { }
         public bool? AllowAutoCompleteRestore { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.CatalogCollationType? CatalogCollation { get { throw null; } set { } }
         public string Collation { get { throw null; } set { } }
@@ -1470,7 +1470,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class ManagedInstanceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ManagedInstanceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ManagedInstanceData(Azure.Core.AzureLocation location) { }
         public string AdministratorLogin { get { throw null; } set { } }
         public string AdministratorLoginPassword { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.ManagedInstanceExternalAdministrator Administrators { get { throw null; } set { } }
@@ -2463,7 +2463,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class RestorableDroppedDatabaseData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public RestorableDroppedDatabaseData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public RestorableDroppedDatabaseData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Sql.Models.SqlBackupStorageRedundancy? BackupStorageRedundancy { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string DatabaseName { get { throw null; } }
@@ -2522,7 +2522,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class RestorableDroppedManagedDatabaseData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public RestorableDroppedManagedDatabaseData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public RestorableDroppedManagedDatabaseData(Azure.Core.AzureLocation location) { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string DatabaseName { get { throw null; } }
         public System.DateTimeOffset? DeletedOn { get { throw null; } }
@@ -2830,7 +2830,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class SqlDatabaseData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public SqlDatabaseData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public SqlDatabaseData(Azure.Core.AzureLocation location) { }
         public int? AutoPauseDelay { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.SqlAvailabilityZoneType? AvailabilityZone { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.CatalogCollationType? CatalogCollation { get { throw null; } set { } }
@@ -3974,7 +3974,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class SqlServerData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public SqlServerData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public SqlServerData(Azure.Core.AzureLocation location) { }
         public string AdministratorLogin { get { throw null; } set { } }
         public string AdministratorLoginPassword { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.ServerExternalAdministrator Administrators { get { throw null; } set { } }
@@ -4172,7 +4172,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class SqlServerJobAgentData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public SqlServerJobAgentData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public SqlServerJobAgentData(Azure.Core.AzureLocation location) { }
         public Azure.Core.ResourceIdentifier DatabaseId { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.SqlSku Sku { get { throw null; } set { } }
         public Azure.ResourceManager.Sql.Models.JobAgentState? State { get { throw null; } }
@@ -5375,7 +5375,7 @@ namespace Azure.ResourceManager.Sql
     }
     public partial class VirtualClusterData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public VirtualClusterData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public VirtualClusterData(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IReadOnlyList<string> ChildResources { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release", false)]

@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
     }
     public partial class LocalRulestackData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public LocalRulestackData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public LocalRulestackData(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IList<string> AssociatedSubscriptions { get { throw null; } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RuleCreationDefaultMode? DefaultMode { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
     }
     public partial class PaloAltoNetworksFirewallData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public PaloAltoNetworksFirewallData(Azure.Core.AzureLocation location, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallNetworkProfile networkProfile, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallDnsSettings dnsSettings, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBillingPlanInfo planData, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PanFirewallMarketplaceDetails marketplaceDetails) : base (default(Azure.Core.AzureLocation)) { }
+        public PaloAltoNetworksFirewallData(Azure.Core.AzureLocation location, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallNetworkProfile networkProfile, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallDnsSettings dnsSettings, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallBillingPlanInfo planData, Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.PanFirewallMarketplaceDetails marketplaceDetails) { }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.RulestackDetails AssociatedRulestack { get { throw null; } set { } }
         public Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallDnsSettings DnsSettings { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models.FirewallFrontendSetting> FrontEndSettings { get { throw null; } }

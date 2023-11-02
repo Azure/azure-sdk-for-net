@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DevSpaces
     }
     public partial class ControllerData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ControllerData(Azure.Core.AzureLocation location, Azure.ResourceManager.DevSpaces.Models.DevSpacesSku sku, string targetContainerHostResourceId, string targetContainerHostCredentialsBase64) : base (default(Azure.Core.AzureLocation)) { }
+        public ControllerData(Azure.Core.AzureLocation location, Azure.ResourceManager.DevSpaces.Models.DevSpacesSku sku, string targetContainerHostResourceId, string targetContainerHostCredentialsBase64) { }
         public string DataPlaneFqdn { get { throw null; } }
         public string HostSuffix { get { throw null; } }
         public Azure.ResourceManager.DevSpaces.Models.ProvisioningState? ProvisioningState { get { throw null; } }

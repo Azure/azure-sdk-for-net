@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
     }
     public partial class CosmosDBForPostgreSqlClusterData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public CosmosDBForPostgreSqlClusterData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public CosmosDBForPostgreSqlClusterData(Azure.Core.AzureLocation location) { }
         public string AdministratorLogin { get { throw null; } }
         public string AdministratorLoginPassword { get { throw null; } set { } }
         public string CitusVersion { get { throw null; } set { } }

@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Relay
     }
     public partial class RelayNamespaceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public RelayNamespaceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public RelayNamespaceData(Azure.Core.AzureLocation location) { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string MetricId { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Relay.RelayPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }

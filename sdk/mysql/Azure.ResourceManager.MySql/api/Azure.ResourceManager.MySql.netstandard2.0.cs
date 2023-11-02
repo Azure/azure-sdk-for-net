@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.MySql
     }
     public partial class MySqlServerData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public MySqlServerData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public MySqlServerData(Azure.Core.AzureLocation location) { }
         public string AdministratorLogin { get { throw null; } set { } }
         public string ByokEnforcement { get { throw null; } }
         public System.DateTimeOffset? EarliestRestoreOn { get { throw null; } set { } }
@@ -805,7 +805,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
     }
     public partial class MySqlFlexibleServerData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public MySqlFlexibleServerData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public MySqlFlexibleServerData(Azure.Core.AzureLocation location) { }
         public string AdministratorLogin { get { throw null; } set { } }
         public string AdministratorLoginPassword { get { throw null; } set { } }
         public string AvailabilityZone { get { throw null; } set { } }

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ServiceFabric
     }
     public partial class ServiceFabricApplicationData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ServiceFabricApplicationData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ServiceFabricApplicationData(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ServiceFabric.Models.ApplicationUserAssignedIdentity> ManagedIdentities { get { throw null; } }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ServiceFabric
     }
     public partial class ServiceFabricApplicationTypeData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ServiceFabricApplicationTypeData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ServiceFabricApplicationTypeData(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ServiceFabric
     }
     public partial class ServiceFabricApplicationTypeVersionData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ServiceFabricApplicationTypeVersionData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ServiceFabricApplicationTypeVersionData(Azure.Core.AzureLocation location) { }
         public System.Uri AppPackageUri { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> DefaultParameterList { get { throw null; } }
         public Azure.ETag? ETag { get { throw null; } }
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ServiceFabric
     }
     public partial class ServiceFabricClusterData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ServiceFabricClusterData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ServiceFabricClusterData(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.ServiceFabric.Models.ClusterAddOnFeature> AddOnFeatures { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ServiceFabric.Models.ClusterVersionDetails> AvailableClusterVersions { get { throw null; } }
         public Azure.ResourceManager.ServiceFabric.Models.ClusterAadSetting AzureActiveDirectory { get { throw null; } set { } }
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.ServiceFabric
     }
     public partial class ServiceFabricServiceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ServiceFabricServiceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ServiceFabricServiceData(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.ServiceFabric.Models.ServiceCorrelationDescription> CorrelationScheme { get { throw null; } }
         public Azure.ResourceManager.ServiceFabric.Models.ApplicationMoveCost? DefaultMoveCost { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
@@ -862,7 +862,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     }
     public partial class ServiceFabricApplicationPatch : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ServiceFabricApplicationPatch(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ServiceFabricApplicationPatch(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ServiceFabric.Models.ApplicationUserAssignedIdentity> ManagedIdentities { get { throw null; } }
         public long? MaximumNodes { get { throw null; } set { } }
@@ -948,7 +948,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
     }
     public partial class ServiceFabricServicePatch : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ServiceFabricServicePatch(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ServiceFabricServicePatch(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.ServiceFabric.Models.ServiceCorrelationDescription> CorrelationScheme { get { throw null; } }
         public Azure.ResourceManager.ServiceFabric.Models.ApplicationMoveCost? DefaultMoveCost { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }

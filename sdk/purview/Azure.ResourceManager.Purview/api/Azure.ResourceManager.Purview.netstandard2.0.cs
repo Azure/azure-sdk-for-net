@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Purview
     }
     public partial class PurviewAccountData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public PurviewAccountData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public PurviewAccountData(Azure.Core.AzureLocation location) { }
         public string CloudConnectorsAwsExternalId { get { throw null; } }
         public string CreatedBy { get { throw null; } }
         public string CreatedByObjectId { get { throw null; } }

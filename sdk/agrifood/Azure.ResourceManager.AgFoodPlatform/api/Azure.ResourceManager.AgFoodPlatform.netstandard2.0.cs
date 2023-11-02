@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
     }
     public partial class FarmBeatData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public FarmBeatData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public FarmBeatData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Uri InstanceUri { get { throw null; } }
         public Azure.ResourceManager.AgFoodPlatform.AgFoodPlatformPrivateEndpointConnectionData PrivateEndpointConnections { get { throw null; } }

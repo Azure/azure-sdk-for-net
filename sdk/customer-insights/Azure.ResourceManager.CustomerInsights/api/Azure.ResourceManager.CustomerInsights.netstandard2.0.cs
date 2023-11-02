@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.CustomerInsights
     }
     public partial class HubData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public HubData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public HubData(Azure.Core.AzureLocation location) { }
         public string ApiEndpoint { get { throw null; } }
         public Azure.ResourceManager.CustomerInsights.Models.HubBillingInfoFormat HubBillingInfo { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }

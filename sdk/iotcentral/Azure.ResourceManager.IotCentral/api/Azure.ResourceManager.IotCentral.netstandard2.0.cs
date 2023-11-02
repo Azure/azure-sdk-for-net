@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.IotCentral
     }
     public partial class IotCentralAppData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public IotCentralAppData(Azure.Core.AzureLocation location, Azure.ResourceManager.IotCentral.Models.IotCentralAppSkuInfo sku) : base (default(Azure.Core.AzureLocation)) { }
+        public IotCentralAppData(Azure.Core.AzureLocation location, Azure.ResourceManager.IotCentral.Models.IotCentralAppSkuInfo sku) { }
         public System.Guid? ApplicationId { get { throw null; } }
         public string DisplayName { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }

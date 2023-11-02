@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Nginx
     }
     public partial class NginxCertificateData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NginxCertificateData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public NginxCertificateData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Nginx.Models.NginxCertificateProperties Properties { get { throw null; } set { } }
     }
     public partial class NginxCertificateResource : Azure.ResourceManager.ArmResource
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Nginx
     }
     public partial class NginxConfigurationData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NginxConfigurationData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public NginxConfigurationData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Nginx.Models.NginxConfigurationProperties Properties { get { throw null; } set { } }
     }
     public partial class NginxConfigurationResource : Azure.ResourceManager.ArmResource
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Nginx
     }
     public partial class NginxDeploymentData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NginxDeploymentData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public NginxDeploymentData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Nginx.Models.NginxDeploymentProperties Properties { get { throw null; } set { } }
         public string SkuName { get { throw null; } set { } }

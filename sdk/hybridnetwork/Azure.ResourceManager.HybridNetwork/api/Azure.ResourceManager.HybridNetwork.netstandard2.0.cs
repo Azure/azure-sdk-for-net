@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.HybridNetwork
     }
     public partial class ArtifactManifestData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ArtifactManifestData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ArtifactManifestData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.HybridNetwork.Models.ArtifactManifestPropertiesFormat Properties { get { throw null; } set { } }
     }
     public partial class ArtifactManifestResource : Azure.ResourceManager.ArmResource
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.HybridNetwork
     }
     public partial class ArtifactStoreData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ArtifactStoreData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ArtifactStoreData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.HybridNetwork.Models.ArtifactStorePropertiesFormat Properties { get { throw null; } set { } }
     }
     public partial class ArtifactStoreResource : Azure.ResourceManager.ArmResource
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.HybridNetwork
     }
     public partial class ConfigurationGroupSchemaData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ConfigurationGroupSchemaData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ConfigurationGroupSchemaData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.HybridNetwork.Models.ConfigurationGroupSchemaPropertiesFormat Properties { get { throw null; } set { } }
     }
     public partial class ConfigurationGroupSchemaResource : Azure.ResourceManager.ArmResource
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.HybridNetwork
     }
     public partial class ConfigurationGroupValueData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ConfigurationGroupValueData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ConfigurationGroupValueData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.HybridNetwork.Models.ConfigurationGroupValuePropertiesFormat Properties { get { throw null; } set { } }
     }
     public partial class ConfigurationGroupValueResource : Azure.ResourceManager.ArmResource
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.HybridNetwork
     }
     public partial class NetworkFunctionData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NetworkFunctionData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public NetworkFunctionData(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.HybridNetwork.Models.NetworkFunctionPropertiesFormat Properties { get { throw null; } set { } }
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.HybridNetwork
     }
     public partial class NetworkFunctionDefinitionGroupData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NetworkFunctionDefinitionGroupData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public NetworkFunctionDefinitionGroupData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.HybridNetwork.Models.NetworkFunctionDefinitionGroupPropertiesFormat Properties { get { throw null; } set { } }
     }
     public partial class NetworkFunctionDefinitionGroupResource : Azure.ResourceManager.ArmResource
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.HybridNetwork
     }
     public partial class NetworkFunctionDefinitionVersionData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NetworkFunctionDefinitionVersionData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public NetworkFunctionDefinitionVersionData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.HybridNetwork.Models.NetworkFunctionDefinitionVersionPropertiesFormat Properties { get { throw null; } set { } }
     }
     public partial class NetworkFunctionDefinitionVersionResource : Azure.ResourceManager.ArmResource
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.HybridNetwork
     }
     public partial class NetworkServiceDesignGroupData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NetworkServiceDesignGroupData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public NetworkServiceDesignGroupData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.HybridNetwork.Models.NetworkServiceDesignGroupPropertiesFormat Properties { get { throw null; } set { } }
     }
     public partial class NetworkServiceDesignGroupResource : Azure.ResourceManager.ArmResource
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.HybridNetwork
     }
     public partial class NetworkServiceDesignVersionData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NetworkServiceDesignVersionData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public NetworkServiceDesignVersionData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.HybridNetwork.Models.NetworkServiceDesignVersionPropertiesFormat Properties { get { throw null; } set { } }
     }
     public partial class NetworkServiceDesignVersionResource : Azure.ResourceManager.ArmResource
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.HybridNetwork
     }
     public partial class PublisherData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public PublisherData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public PublisherData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.HybridNetwork.Models.PublisherPropertiesFormat Properties { get { throw null; } set { } }
     }
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.HybridNetwork
     }
     public partial class SiteData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public SiteData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public SiteData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.HybridNetwork.Models.SitePropertiesFormat Properties { get { throw null; } set { } }
     }
     public partial class SiteNetworkServiceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridNetwork.SiteNetworkServiceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridNetwork.SiteNetworkServiceResource>, System.Collections.IEnumerable
@@ -577,7 +577,7 @@ namespace Azure.ResourceManager.HybridNetwork
     }
     public partial class SiteNetworkServiceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public SiteNetworkServiceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public SiteNetworkServiceData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.HybridNetwork.Models.SiteNetworkServicePropertiesFormat Properties { get { throw null; } set { } }
         public Azure.ResourceManager.HybridNetwork.Models.HybridNetworkSku Sku { get { throw null; } set { } }

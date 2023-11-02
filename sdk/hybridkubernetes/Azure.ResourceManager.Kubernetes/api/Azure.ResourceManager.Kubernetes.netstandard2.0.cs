@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Kubernetes
     }
     public partial class ConnectedClusterData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ConnectedClusterData(Azure.Core.AzureLocation location, Azure.ResourceManager.Models.ManagedServiceIdentity identity, string agentPublicKeyCertificate) : base (default(Azure.Core.AzureLocation)) { }
+        public ConnectedClusterData(Azure.Core.AzureLocation location, Azure.ResourceManager.Models.ManagedServiceIdentity identity, string agentPublicKeyCertificate) { }
         public string AgentPublicKeyCertificate { get { throw null; } set { } }
         public string AgentVersion { get { throw null; } }
         public Azure.ResourceManager.Kubernetes.Models.ConnectivityStatus? ConnectivityStatus { get { throw null; } }

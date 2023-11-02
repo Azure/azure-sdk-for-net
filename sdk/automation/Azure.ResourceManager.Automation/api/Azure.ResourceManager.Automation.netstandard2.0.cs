@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Automation
     }
     public partial class AutomationAccountData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public AutomationAccountData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public AutomationAccountData(Azure.Core.AzureLocation location) { }
         public System.Uri AutomationHybridServiceUri { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Description { get { throw null; } set { } }
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.Automation
     }
     public partial class AutomationModuleData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public AutomationModuleData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public AutomationModuleData(Azure.Core.AzureLocation location) { }
         public int? ActivityCount { get { throw null; } set { } }
         public Azure.ResourceManager.Automation.Models.AutomationContentLink ContentLink { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } set { } }
@@ -603,7 +603,7 @@ namespace Azure.ResourceManager.Automation
     }
     public partial class AutomationRunbookData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public AutomationRunbookData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public AutomationRunbookData(Azure.Core.AzureLocation location) { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.Automation.Models.AutomationRunbookDraft Draft { get { throw null; } set { } }
@@ -829,7 +829,7 @@ namespace Azure.ResourceManager.Automation
     }
     public partial class AutomationWatcherData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public AutomationWatcherData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public AutomationWatcherData(Azure.Core.AzureLocation location) { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } set { } }
@@ -971,7 +971,7 @@ namespace Azure.ResourceManager.Automation
     }
     public partial class DscConfigurationData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DscConfigurationData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public DscConfigurationData(Azure.Core.AzureLocation location) { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } set { } }

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
     }
     public partial class ConfidentialLedgerData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ConfidentialLedgerData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ConfidentialLedgerData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.ConfidentialLedger.Models.ConfidentialLedgerProperties Properties { get { throw null; } set { } }
     }
     public static partial class ConfidentialLedgerExtensions
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
     }
     public partial class ManagedCcfData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ManagedCcfData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ManagedCcfData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.ConfidentialLedger.Models.ManagedCcfProperties Properties { get { throw null; } set { } }
     }
     public partial class ManagedCcfResource : Azure.ResourceManager.ArmResource

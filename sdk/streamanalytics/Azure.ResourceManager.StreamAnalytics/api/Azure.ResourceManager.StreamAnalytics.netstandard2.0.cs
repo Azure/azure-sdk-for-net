@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.StreamAnalytics
     }
     public partial class StreamAnalyticsClusterData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public StreamAnalyticsClusterData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public StreamAnalyticsClusterData(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsClusterProperties Properties { get { throw null; } set { } }
         public Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsClusterSku Sku { get { throw null; } set { } }
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.StreamAnalytics
     }
     public partial class StreamingJobData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public StreamingJobData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public StreamingJobData(Azure.Core.AzureLocation location) { }
         public Azure.Core.ResourceIdentifier ClusterId { get { throw null; } set { } }
         public Azure.ResourceManager.StreamAnalytics.Models.StreamingJobCompatibilityLevel? CompatibilityLevel { get { throw null; } set { } }
         public Azure.ResourceManager.StreamAnalytics.Models.StreamingJobContentStoragePolicy? ContentStoragePolicy { get { throw null; } set { } }

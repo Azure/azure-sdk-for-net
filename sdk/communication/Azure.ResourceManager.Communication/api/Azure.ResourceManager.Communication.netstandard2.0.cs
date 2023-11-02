@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Communication
     }
     public partial class CommunicationDomainResourceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public CommunicationDomainResourceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public CommunicationDomainResourceData(Azure.Core.AzureLocation location) { }
         public string DataLocation { get { throw null; } }
         public Azure.ResourceManager.Communication.Models.DomainManagement? DomainManagement { get { throw null; } set { } }
         public string FromSenderDomain { get { throw null; } }
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Communication
     }
     public partial class CommunicationServiceResourceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public CommunicationServiceResourceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public CommunicationServiceResourceData(Azure.Core.AzureLocation location) { }
         public string DataLocation { get { throw null; } set { } }
         public string HostName { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Communication
     }
     public partial class EmailServiceResourceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public EmailServiceResourceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public EmailServiceResourceData(Azure.Core.AzureLocation location) { }
         public string DataLocation { get { throw null; } set { } }
         public Azure.ResourceManager.Communication.Models.EmailServicesProvisioningState? ProvisioningState { get { throw null; } }
     }

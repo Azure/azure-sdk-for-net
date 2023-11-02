@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.EventGrid
     }
     public partial class EventGridDomainData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public EventGridDomainData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public EventGridDomainData(Azure.Core.AzureLocation location) { }
         public bool? AutoCreateTopicWithFirstSubscription { get { throw null; } set { } }
         public bool? AutoDeleteTopicWithLastSubscription { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.DataResidencyBoundary? DataResidencyBoundary { get { throw null; } set { } }
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.EventGrid
     }
     public partial class EventGridNamespaceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public EventGridNamespaceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public EventGridNamespaceData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.EventGrid.Models.EventGridInboundIPRule> InboundIPRules { get { throw null; } }
         public bool? IsZoneRedundant { get { throw null; } set { } }
@@ -655,7 +655,7 @@ namespace Azure.ResourceManager.EventGrid
     }
     public partial class EventGridTopicData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public EventGridTopicData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public EventGridTopicData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.EventGrid.Models.DataResidencyBoundary? DataResidencyBoundary { get { throw null; } set { } }
         public System.Uri Endpoint { get { throw null; } }
         public Azure.ResourceManager.EventGrid.Models.PartnerTopicEventTypeInfo EventTypeInfo { get { throw null; } set { } }
@@ -900,7 +900,7 @@ namespace Azure.ResourceManager.EventGrid
     }
     public partial class PartnerConfigurationData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public PartnerConfigurationData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public PartnerConfigurationData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.EventGrid.Models.PartnerAuthorization PartnerAuthorization { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.PartnerConfigurationProvisioningState? ProvisioningState { get { throw null; } set { } }
     }
@@ -949,7 +949,7 @@ namespace Azure.ResourceManager.EventGrid
     }
     public partial class PartnerDestinationData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public PartnerDestinationData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public PartnerDestinationData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.EventGrid.Models.PartnerDestinationActivationState? ActivationState { get { throw null; } set { } }
         public System.Uri EndpointBaseUri { get { throw null; } set { } }
         public string EndpointServiceContext { get { throw null; } set { } }
@@ -1043,7 +1043,7 @@ namespace Azure.ResourceManager.EventGrid
     }
     public partial class PartnerNamespaceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public PartnerNamespaceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public PartnerNamespaceData(Azure.Core.AzureLocation location) { }
         public System.Uri Endpoint { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.EventGrid.Models.EventGridInboundIPRule> InboundIPRules { get { throw null; } }
         public bool? IsLocalAuthDisabled { get { throw null; } set { } }
@@ -1131,7 +1131,7 @@ namespace Azure.ResourceManager.EventGrid
     }
     public partial class PartnerRegistrationData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public PartnerRegistrationData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public PartnerRegistrationData(Azure.Core.AzureLocation location) { }
         public System.Guid? PartnerRegistrationImmutableId { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.PartnerRegistrationProvisioningState? ProvisioningState { get { throw null; } }
     }
@@ -1174,7 +1174,7 @@ namespace Azure.ResourceManager.EventGrid
     }
     public partial class PartnerTopicData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public PartnerTopicData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public PartnerTopicData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.EventGrid.Models.PartnerTopicActivationState? ActivationState { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.PartnerTopicEventTypeInfo EventTypeInfo { get { throw null; } set { } }
         public System.DateTimeOffset? ExpireOnIfNotActivated { get { throw null; } set { } }
@@ -1266,7 +1266,7 @@ namespace Azure.ResourceManager.EventGrid
     }
     public partial class SystemTopicData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public SystemTopicData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public SystemTopicData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Guid? MetricResourceId { get { throw null; } }
         public Azure.ResourceManager.EventGrid.Models.EventGridResourceProvisioningState? ProvisioningState { get { throw null; } }

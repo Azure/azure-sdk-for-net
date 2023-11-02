@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ServiceBus
     }
     public partial class ServiceBusNamespaceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ServiceBusNamespaceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ServiceBusNamespaceData(Azure.Core.AzureLocation location) { }
         public string AlternateName { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public bool? DisableLocalAuth { get { throw null; } set { } }
@@ -844,7 +844,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
     }
     public partial class ServiceBusNamespacePatch : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ServiceBusNamespacePatch(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ServiceBusNamespacePatch(Azure.Core.AzureLocation location) { }
         public string AlternateName { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public bool? DisableLocalAuth { get { throw null; } set { } }

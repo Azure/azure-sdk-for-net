@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Maps
     }
     public partial class MapsAccountData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public MapsAccountData(Azure.Core.AzureLocation location, Azure.ResourceManager.Maps.Models.MapsSku sku) : base (default(Azure.Core.AzureLocation)) { }
+        public MapsAccountData(Azure.Core.AzureLocation location, Azure.ResourceManager.Maps.Models.MapsSku sku) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Maps.Models.MapsAccountKind? Kind { get { throw null; } set { } }
         public Azure.ResourceManager.Maps.Models.MapsAccountProperties Properties { get { throw null; } set { } }
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Maps
     }
     public partial class MapsCreatorData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public MapsCreatorData(Azure.Core.AzureLocation location, Azure.ResourceManager.Maps.Models.MapsCreatorProperties properties) : base (default(Azure.Core.AzureLocation)) { }
+        public MapsCreatorData(Azure.Core.AzureLocation location, Azure.ResourceManager.Maps.Models.MapsCreatorProperties properties) { }
         public Azure.ResourceManager.Maps.Models.MapsCreatorProperties Properties { get { throw null; } set { } }
     }
     public partial class MapsCreatorResource : Azure.ResourceManager.ArmResource

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Workloads
     }
     public partial class SapApplicationServerInstanceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public SapApplicationServerInstanceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public SapApplicationServerInstanceData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Workloads.Models.SapVirtualInstanceErrorDetail ErrorsProperties { get { throw null; } }
         public long? GatewayPort { get { throw null; } }
         public Azure.ResourceManager.Workloads.Models.SapHealthState? Health { get { throw null; } }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Workloads
     }
     public partial class SapCentralServerInstanceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public SapCentralServerInstanceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public SapCentralServerInstanceData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Workloads.Models.EnqueueReplicationServerProperties EnqueueReplicationServerProperties { get { throw null; } set { } }
         public Azure.ResourceManager.Workloads.Models.EnqueueServerProperties EnqueueServerProperties { get { throw null; } set { } }
         public Azure.ResourceManager.Workloads.Models.SapVirtualInstanceErrorDetail ErrorsProperties { get { throw null; } }
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Workloads
     }
     public partial class SapDatabaseInstanceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public SapDatabaseInstanceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public SapDatabaseInstanceData(Azure.Core.AzureLocation location) { }
         public string DatabaseSid { get { throw null; } }
         public string DatabaseType { get { throw null; } }
         public Azure.ResourceManager.Workloads.Models.SapVirtualInstanceErrorDetail ErrorsProperties { get { throw null; } }
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Workloads
     }
     public partial class SapMonitorData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public SapMonitorData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public SapMonitorData(Azure.Core.AzureLocation location) { }
         public Azure.Core.AzureLocation? AppLocation { get { throw null; } set { } }
         public Azure.ResponseError Errors { get { throw null; } }
         public Azure.ResourceManager.Workloads.Models.UserAssignedServiceIdentity Identity { get { throw null; } set { } }
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Workloads
     }
     public partial class SapVirtualInstanceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public SapVirtualInstanceData(Azure.Core.AzureLocation location, Azure.ResourceManager.Workloads.Models.SapEnvironmentType environment, Azure.ResourceManager.Workloads.Models.SapProductType sapProduct, Azure.ResourceManager.Workloads.Models.SapConfiguration configuration) : base (default(Azure.Core.AzureLocation)) { }
+        public SapVirtualInstanceData(Azure.Core.AzureLocation location, Azure.ResourceManager.Workloads.Models.SapEnvironmentType environment, Azure.ResourceManager.Workloads.Models.SapProductType sapProduct, Azure.ResourceManager.Workloads.Models.SapConfiguration configuration) { }
         public Azure.ResourceManager.Workloads.Models.SapConfiguration Configuration { get { throw null; } set { } }
         public Azure.ResourceManager.Workloads.Models.SapEnvironmentType Environment { get { throw null; } set { } }
         public Azure.ResourceManager.Workloads.Models.SapVirtualInstanceErrorDetail ErrorsProperties { get { throw null; } }

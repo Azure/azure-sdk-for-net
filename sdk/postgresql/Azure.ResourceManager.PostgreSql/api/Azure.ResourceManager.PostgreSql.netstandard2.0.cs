@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.PostgreSql
     }
     public partial class PostgreSqlServerData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public PostgreSqlServerData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public PostgreSqlServerData(Azure.Core.AzureLocation location) { }
         public string AdministratorLogin { get { throw null; } set { } }
         public string ByokEnforcement { get { throw null; } }
         public System.DateTimeOffset? EarliestRestoreOn { get { throw null; } set { } }
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
     }
     public partial class PostgreSqlFlexibleServerData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public PostgreSqlFlexibleServerData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public PostgreSqlFlexibleServerData(Azure.Core.AzureLocation location) { }
         public string AdministratorLogin { get { throw null; } set { } }
         public string AdministratorLoginPassword { get { throw null; } set { } }
         public Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerAuthConfig AuthConfig { get { throw null; } set { } }
@@ -816,7 +816,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
     }
     public partial class PostgreSqlMigrationData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public PostgreSqlMigrationData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public PostgreSqlMigrationData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlMigrationCancel? Cancel { get { throw null; } set { } }
         public Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlMigrationStatus CurrentStatus { get { throw null; } }
         public System.Collections.Generic.IList<string> DbsToCancelMigrationOn { get { throw null; } }

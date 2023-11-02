@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DefenderEasm
     }
     public partial class EasmWorkspaceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public EasmWorkspaceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public EasmWorkspaceData(Azure.Core.AzureLocation location) { }
         public string DataPlaneEndpoint { get { throw null; } }
         public Azure.ResourceManager.DefenderEasm.Models.EasmResourceProvisioningState? ProvisioningState { get { throw null; } }
     }

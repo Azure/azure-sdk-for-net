@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.LabServices
     }
     public partial class LabData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public LabData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public LabData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.LabServices.Models.LabAutoShutdownProfile AutoShutdownProfile { get { throw null; } set { } }
         public Azure.ResourceManager.LabServices.Models.LabConnectionProfile ConnectionProfile { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.LabServices
     }
     public partial class LabPlanData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public LabPlanData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public LabPlanData(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IList<Azure.Core.AzureLocation> AllowedRegions { get { throw null; } }
         public Azure.ResourceManager.LabServices.Models.LabAutoShutdownProfile DefaultAutoShutdownProfile { get { throw null; } set { } }
         public Azure.ResourceManager.LabServices.Models.LabConnectionProfile DefaultConnectionProfile { get { throw null; } set { } }

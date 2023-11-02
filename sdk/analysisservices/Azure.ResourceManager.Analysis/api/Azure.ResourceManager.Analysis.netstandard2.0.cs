@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Analysis
     }
     public partial class AnalysisServerData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public AnalysisServerData(Azure.Core.AzureLocation location, Azure.ResourceManager.Analysis.Models.AnalysisResourceSku analysisSku) : base (default(Azure.Core.AzureLocation)) { }
+        public AnalysisServerData(Azure.Core.AzureLocation location, Azure.ResourceManager.Analysis.Models.AnalysisResourceSku analysisSku) { }
         public Azure.ResourceManager.Analysis.Models.AnalysisResourceSku AnalysisServerSku { get { throw null; } set { } }
         public Azure.ResourceManager.Analysis.Models.AnalysisResourceSku AnalysisSku { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> AsAdministratorIdentities { get { throw null; } }

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ResourceConnector
     }
     public partial class ResourceConnectorApplianceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ResourceConnectorApplianceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ResourceConnectorApplianceData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.ResourceConnector.Models.ResourceConnectorDistro? Distro { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.ResourceConnector.Models.ApplianceProvider? InfrastructureConfigProvider { get { throw null; } set { } }

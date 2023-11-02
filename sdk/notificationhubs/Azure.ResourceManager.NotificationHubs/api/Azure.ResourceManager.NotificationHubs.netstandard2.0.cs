@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.NotificationHubs
     }
     public partial class NotificationHubAuthorizationRuleData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NotificationHubAuthorizationRuleData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public NotificationHubAuthorizationRuleData(Azure.Core.AzureLocation location) { }
         public string ClaimType { get { throw null; } }
         public string ClaimValue { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.NotificationHubs
     }
     public partial class NotificationHubData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NotificationHubData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public NotificationHubData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.NotificationHubs.Models.NotificationHubAdmCredential AdmCredential { get { throw null; } set { } }
         public Azure.ResourceManager.NotificationHubs.Models.NotificationHubApnsCredential ApnsCredential { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.NotificationHubs.Models.SharedAccessAuthorizationRuleProperties> AuthorizationRules { get { throw null; } }
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.NotificationHubs
     }
     public partial class NotificationHubNamespaceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NotificationHubNamespaceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public NotificationHubNamespaceData(Azure.Core.AzureLocation location) { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } set { } }
         public string DataCenter { get { throw null; } set { } }
         public bool? IsCritical { get { throw null; } set { } }
@@ -293,13 +293,13 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     }
     public partial class NotificationHubAvailabilityContent : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NotificationHubAvailabilityContent(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public NotificationHubAvailabilityContent(Azure.Core.AzureLocation location) { }
         public bool? IsAvailiable { get { throw null; } set { } }
         public Azure.ResourceManager.NotificationHubs.Models.NotificationHubSku Sku { get { throw null; } set { } }
     }
     public partial class NotificationHubAvailabilityResult : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NotificationHubAvailabilityResult(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public NotificationHubAvailabilityResult(Azure.Core.AzureLocation location) { }
         public bool? IsAvailiable { get { throw null; } set { } }
         public Azure.ResourceManager.NotificationHubs.Models.NotificationHubSku Sku { get { throw null; } set { } }
     }
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     }
     public partial class NotificationHubCreateOrUpdateContent : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NotificationHubCreateOrUpdateContent(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public NotificationHubCreateOrUpdateContent(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.NotificationHubs.Models.NotificationHubAdmCredential AdmCredential { get { throw null; } set { } }
         public Azure.ResourceManager.NotificationHubs.Models.NotificationHubApnsCredential ApnsCredential { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.NotificationHubs.Models.SharedAccessAuthorizationRuleProperties> AuthorizationRules { get { throw null; } }
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     }
     public partial class NotificationHubNamespaceCreateOrUpdateContent : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NotificationHubNamespaceCreateOrUpdateContent(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public NotificationHubNamespaceCreateOrUpdateContent(Azure.Core.AzureLocation location) { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } set { } }
         public string DataCenter { get { throw null; } set { } }
         public bool? IsCritical { get { throw null; } set { } }
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     }
     public partial class NotificationHubPatch : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NotificationHubPatch(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public NotificationHubPatch(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.NotificationHubs.Models.NotificationHubAdmCredential AdmCredential { get { throw null; } set { } }
         public Azure.ResourceManager.NotificationHubs.Models.NotificationHubApnsCredential ApnsCredential { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.NotificationHubs.Models.SharedAccessAuthorizationRuleProperties> AuthorizationRules { get { throw null; } }
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     }
     public partial class NotificationHubPnsCredentials : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NotificationHubPnsCredentials(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public NotificationHubPnsCredentials(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.NotificationHubs.Models.NotificationHubAdmCredential AdmCredential { get { throw null; } set { } }
         public Azure.ResourceManager.NotificationHubs.Models.NotificationHubApnsCredential ApnsCredential { get { throw null; } set { } }
         public Azure.ResourceManager.NotificationHubs.Models.NotificationHubBaiduCredential BaiduCredential { get { throw null; } set { } }
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     }
     public partial class NotificationHubTestSendResult : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NotificationHubTestSendResult(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public NotificationHubTestSendResult(Azure.Core.AzureLocation location) { }
         public int? Failure { get { throw null; } set { } }
         public System.BinaryData Results { get { throw null; } set { } }
         public Azure.ResourceManager.NotificationHubs.Models.NotificationHubSku Sku { get { throw null; } set { } }

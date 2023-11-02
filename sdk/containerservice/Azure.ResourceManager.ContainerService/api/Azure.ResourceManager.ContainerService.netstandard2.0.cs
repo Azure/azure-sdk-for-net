@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ContainerService
     }
     public partial class AgentPoolSnapshotData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public AgentPoolSnapshotData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public AgentPoolSnapshotData(Azure.Core.AzureLocation location) { }
         public Azure.Core.ResourceIdentifier CreationDataSourceResourceId { get { throw null; } set { } }
         public bool? EnableFips { get { throw null; } }
         public string KubernetesVersion { get { throw null; } }
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.ContainerService
     }
     public partial class ContainerServiceFleetData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ContainerServiceFleetData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ContainerServiceFleetData(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.ContainerService.Models.ContainerServiceFleetHubProfile HubProfile { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerService.Models.ContainerServiceFleetProvisioningState? ProvisioningState { get { throw null; } }
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.ContainerService
     }
     public partial class ContainerServiceManagedClusterData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ContainerServiceManagedClusterData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ContainerServiceManagedClusterData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.ContainerService.Models.ManagedClusterAadProfile AadProfile { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.ContainerService.Models.ManagedClusterAddonProfile> AddonProfiles { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ContainerService.Models.ManagedClusterAgentPoolProfile> AgentPoolProfiles { get { throw null; } }
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.ContainerService
     }
     public partial class ManagedClusterSnapshotData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ManagedClusterSnapshotData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ManagedClusterSnapshotData(Azure.Core.AzureLocation location) { }
         public Azure.Core.ResourceIdentifier CreationDataSourceResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerService.Models.ManagedClusterPropertiesForSnapshot ManagedClusterPropertiesReadOnly { get { throw null; } }
         public Azure.ResourceManager.ContainerService.Models.SnapshotType? SnapshotType { get { throw null; } set { } }
@@ -1557,7 +1557,7 @@ namespace Azure.ResourceManager.ContainerService.Models
     }
     public partial class ManagedClusterAccessProfile : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ManagedClusterAccessProfile(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ManagedClusterAccessProfile(Azure.Core.AzureLocation location) { }
         public byte[] KubeConfig { get { throw null; } set { } }
     }
     public partial class ManagedClusterAddonProfile

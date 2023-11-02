@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Grafana
     }
     public partial class ManagedGrafanaData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ManagedGrafanaData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ManagedGrafanaData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Grafana.Models.ManagedGrafanaProperties Properties { get { throw null; } set { } }
         public string SkuName { get { throw null; } set { } }

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.EnergyServices
     }
     public partial class EnergyServiceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public EnergyServiceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public EnergyServiceData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.EnergyServices.Models.EnergyServiceProperties Properties { get { throw null; } set { } }
     }
     public partial class EnergyServiceResource : Azure.ResourceManager.ArmResource

@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
     }
     public partial class DataReplicationFabricData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DataReplicationFabricData(Azure.Core.AzureLocation location, Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationFabricProperties properties) : base (default(Azure.Core.AzureLocation)) { }
+        public DataReplicationFabricData(Azure.Core.AzureLocation location, Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationFabricProperties properties) { }
         public Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationFabricProperties Properties { get { throw null; } set { } }
     }
     public partial class DataReplicationFabricResource : Azure.ResourceManager.ArmResource
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
     }
     public partial class DataReplicationVaultData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DataReplicationVaultData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public DataReplicationVaultData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.RecoveryServicesDataReplication.Models.DataReplicationVaultProperties Properties { get { throw null; } set { } }
     }
     public partial class DataReplicationVaultResource : Azure.ResourceManager.ArmResource

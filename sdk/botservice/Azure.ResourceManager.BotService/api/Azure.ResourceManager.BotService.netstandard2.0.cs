@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.BotService
     }
     public partial class BotChannelData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public BotChannelData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public BotChannelData(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.BotService.Models.BotServiceKind? Kind { get { throw null; } set { } }
         public Azure.ResourceManager.BotService.Models.BotChannelProperties Properties { get { throw null; } set { } }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.BotService
     }
     public partial class BotConnectionSettingData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public BotConnectionSettingData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public BotConnectionSettingData(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.BotService.Models.BotServiceKind? Kind { get { throw null; } set { } }
         public Azure.ResourceManager.BotService.Models.BotConnectionSettingProperties Properties { get { throw null; } set { } }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.BotService
     }
     public partial class BotData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public BotData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public BotData(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.BotService.Models.BotServiceKind? Kind { get { throw null; } set { } }
         public Azure.ResourceManager.BotService.Models.BotProperties Properties { get { throw null; } set { } }
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.BotService.Models
     }
     public partial class BotChannelGetWithKeysResult : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public BotChannelGetWithKeysResult(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public BotChannelGetWithKeysResult(Azure.Core.AzureLocation location) { }
         public string ChangedTime { get { throw null; } set { } }
         public string EntityTag { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } set { } }

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ExtendedLocations
     }
     public partial class CustomLocationData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public CustomLocationData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public CustomLocationData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.ExtendedLocations.Models.CustomLocationAuthentication Authentication { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> ClusterExtensionIds { get { throw null; } }
         public string DisplayName { get { throw null; } set { } }

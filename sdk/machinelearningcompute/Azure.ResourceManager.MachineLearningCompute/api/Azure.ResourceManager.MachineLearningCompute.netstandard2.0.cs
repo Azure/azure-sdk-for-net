@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
     }
     public partial class OperationalizationClusterData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public OperationalizationClusterData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public OperationalizationClusterData(Azure.Core.AzureLocation location) { }
         public string AppInsightsResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningCompute.Models.ClusterType? ClusterType { get { throw null; } set { } }
         public string ContainerRegistryResourceId { get { throw null; } set { } }

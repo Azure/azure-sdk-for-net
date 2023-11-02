@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.NetApp
     }
     public partial class CapacityPoolData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public CapacityPoolData(Azure.Core.AzureLocation location, long size, Azure.ResourceManager.NetApp.Models.NetAppFileServiceLevel serviceLevel) : base (default(Azure.Core.AzureLocation)) { }
+        public CapacityPoolData(Azure.Core.AzureLocation location, long size, Azure.ResourceManager.NetApp.Models.NetAppFileServiceLevel serviceLevel) { }
         public Azure.ResourceManager.NetApp.Models.CapacityPoolEncryptionType? EncryptionType { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
         public bool? IsCoolAccessEnabled { get { throw null; } set { } }
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.NetApp
     }
     public partial class NetAppAccountData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NetAppAccountData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public NetAppAccountData(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.NetApp.Models.NetAppAccountActiveDirectory> ActiveDirectories { get { throw null; } }
         public bool? DisableShowmount { get { throw null; } }
         public Azure.ResourceManager.NetApp.Models.NetAppAccountEncryption Encryption { get { throw null; } set { } }
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.NetApp
     }
     public partial class NetAppBackupPolicyData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NetAppBackupPolicyData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public NetAppBackupPolicyData(Azure.Core.AzureLocation location) { }
         public Azure.Core.ResourceIdentifier BackupPolicyId { get { throw null; } }
         public int? DailyBackupsToKeep { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.NetApp
     }
     public partial class NetAppVolumeData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NetAppVolumeData(Azure.Core.AzureLocation location, string creationToken, long usageThreshold, Azure.Core.ResourceIdentifier subnetId) : base (default(Azure.Core.AzureLocation)) { }
+        public NetAppVolumeData(Azure.Core.AzureLocation location, string creationToken, long usageThreshold, Azure.Core.ResourceIdentifier subnetId) { }
         public float? ActualThroughputMibps { get { throw null; } }
         public Azure.ResourceManager.NetApp.Models.NetAppAvsDataStore? AvsDataStore { get { throw null; } set { } }
         public string BackupId { get { throw null; } set { } }
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.NetApp
     }
     public partial class NetAppVolumeQuotaRuleData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NetAppVolumeQuotaRuleData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public NetAppVolumeQuotaRuleData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.NetApp.Models.NetAppProvisioningState? ProvisioningState { get { throw null; } }
         public long? QuotaSizeInKiBs { get { throw null; } set { } }
         public string QuotaTarget { get { throw null; } set { } }
@@ -635,7 +635,7 @@ namespace Azure.ResourceManager.NetApp
     }
     public partial class SnapshotPolicyData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public SnapshotPolicyData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public SnapshotPolicyData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.NetApp.Models.SnapshotPolicyDailySchedule DailySchedule { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.NetApp.Models.SnapshotPolicyHourlySchedule HourlySchedule { get { throw null; } set { } }
@@ -785,7 +785,7 @@ namespace Azure.ResourceManager.NetApp.Models
     }
     public partial class CapacityPoolPatch : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public CapacityPoolPatch(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public CapacityPoolPatch(Azure.Core.AzureLocation location) { }
         public bool? IsCoolAccessEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.CapacityPoolQosType? QosType { get { throw null; } set { } }
         public long? Size { get { throw null; } set { } }
@@ -912,7 +912,7 @@ namespace Azure.ResourceManager.NetApp.Models
     }
     public partial class NetAppAccountPatch : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NetAppAccountPatch(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public NetAppAccountPatch(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.NetApp.Models.NetAppAccountActiveDirectory> ActiveDirectories { get { throw null; } }
         public bool? DisableShowmount { get { throw null; } }
         public Azure.ResourceManager.NetApp.Models.NetAppAccountEncryption Encryption { get { throw null; } set { } }
@@ -957,7 +957,7 @@ namespace Azure.ResourceManager.NetApp.Models
     }
     public partial class NetAppBackupPolicyPatch : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NetAppBackupPolicyPatch(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public NetAppBackupPolicyPatch(Azure.Core.AzureLocation location) { }
         public Azure.Core.ResourceIdentifier BackupPolicyId { get { throw null; } }
         public int? DailyBackupsToKeep { get { throw null; } set { } }
         public bool? IsEnabled { get { throw null; } set { } }
@@ -1556,7 +1556,7 @@ namespace Azure.ResourceManager.NetApp.Models
     }
     public partial class NetAppVolumePatch : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NetAppVolumePatch(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public NetAppVolumePatch(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.NetApp.Models.CoolAccessRetrievalPolicy? CoolAccessRetrievalPolicy { get { throw null; } set { } }
         public int? CoolnessPeriod { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -1832,7 +1832,7 @@ namespace Azure.ResourceManager.NetApp.Models
     }
     public partial class SnapshotPolicyPatch : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public SnapshotPolicyPatch(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public SnapshotPolicyPatch(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.NetApp.Models.SnapshotPolicyDailySchedule DailySchedule { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.SnapshotPolicyHourlySchedule HourlySchedule { get { throw null; } set { } }
         public bool? IsEnabled { get { throw null; } set { } }

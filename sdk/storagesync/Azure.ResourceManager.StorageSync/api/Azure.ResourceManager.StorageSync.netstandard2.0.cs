@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.StorageSync
     }
     public partial class StorageSyncServiceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public StorageSyncServiceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public StorageSyncServiceData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.StorageSync.Models.IncomingTrafficPolicy? IncomingTrafficPolicy { get { throw null; } set { } }
         public string LastOperationName { get { throw null; } }
         public string LastWorkflowId { get { throw null; } }

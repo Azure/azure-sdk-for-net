@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppContainers
     }
     public partial class ContainerAppCertificateData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ContainerAppCertificateData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ContainerAppCertificateData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppCertificateProperties Properties { get { throw null; } set { } }
     }
     public partial class ContainerAppCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppContainers.ContainerAppResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppContainers.ContainerAppResource>, System.Collections.IEnumerable
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppContainers
     }
     public partial class ContainerAppConnectedEnvironmentData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ContainerAppConnectedEnvironmentData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ContainerAppConnectedEnvironmentData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppCustomDomainConfiguration CustomDomainConfiguration { get { throw null; } set { } }
         public string DaprAIConnectionString { get { throw null; } set { } }
         public string DefaultDomain { get { throw null; } }
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.AppContainers
     }
     public partial class ContainerAppData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ContainerAppData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ContainerAppData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppConfiguration Configuration { get { throw null; } set { } }
         public string CustomDomainVerificationId { get { throw null; } }
         public Azure.Core.ResourceIdentifier EnvironmentId { get { throw null; } set { } }
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.AppContainers
     }
     public partial class ContainerAppJobData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ContainerAppJobData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ContainerAppJobData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppJobConfiguration Configuration { get { throw null; } set { } }
         public string EnvironmentId { get { throw null; } set { } }
         public string EventStreamEndpoint { get { throw null; } }
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.AppContainers
     }
     public partial class ContainerAppManagedCertificateData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ContainerAppManagedCertificateData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ContainerAppManagedCertificateData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.AppContainers.Models.ManagedCertificateProperties Properties { get { throw null; } set { } }
     }
     public partial class ContainerAppManagedCertificateResource : Azure.ResourceManager.ArmResource
@@ -594,7 +594,7 @@ namespace Azure.ResourceManager.AppContainers
     }
     public partial class ContainerAppManagedEnvironmentData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ContainerAppManagedEnvironmentData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ContainerAppManagedEnvironmentData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppLogsConfiguration AppLogsConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppCustomDomainConfiguration CustomDomainConfiguration { get { throw null; } set { } }
         public string DaprAIConnectionString { get { throw null; } set { } }
@@ -1103,7 +1103,7 @@ namespace Azure.ResourceManager.AppContainers.Models
     }
     public partial class ContainerAppAuthToken : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ContainerAppAuthToken(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ContainerAppAuthToken(Azure.Core.AzureLocation location) { }
         public System.DateTimeOffset? ExpireOn { get { throw null; } }
         public string Token { get { throw null; } }
     }
@@ -1581,7 +1581,7 @@ namespace Azure.ResourceManager.AppContainers.Models
     }
     public partial class ContainerAppEnvironmentAuthToken : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ContainerAppEnvironmentAuthToken(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ContainerAppEnvironmentAuthToken(Azure.Core.AzureLocation location) { }
         public System.DateTimeOffset? ExpireOn { get { throw null; } }
         public string Token { get { throw null; } }
     }

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AlertsManagement
     }
     public partial class AlertProcessingRuleData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public AlertProcessingRuleData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public AlertProcessingRuleData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleProperties Properties { get { throw null; } set { } }
     }
     public partial class AlertProcessingRuleResource : Azure.ResourceManager.ArmResource

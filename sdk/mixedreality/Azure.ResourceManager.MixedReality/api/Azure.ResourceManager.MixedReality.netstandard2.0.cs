@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MixedReality
     }
     public partial class RemoteRenderingAccountData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public RemoteRenderingAccountData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public RemoteRenderingAccountData(Azure.Core.AzureLocation location) { }
         public string AccountDomain { get { throw null; } }
         public System.Guid? AccountId { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.MixedReality
     }
     public partial class SpatialAnchorsAccountData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public SpatialAnchorsAccountData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public SpatialAnchorsAccountData(Azure.Core.AzureLocation location) { }
         public string AccountDomain { get { throw null; } }
         public System.Guid? AccountId { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }

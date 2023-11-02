@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.OperationalInsights
     }
     public partial class LogAnalyticsQueryPackData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public LogAnalyticsQueryPackData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public LogAnalyticsQueryPackData(Azure.Core.AzureLocation location) { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public System.DateTimeOffset? ModifiedOn { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.OperationalInsights
     }
     public partial class OperationalInsightsClusterData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public OperationalInsightsClusterData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public OperationalInsightsClusterData(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsClusterAssociatedWorkspace> AssociatedWorkspaces { get { throw null; } }
         public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsBillingType? BillingType { get { throw null; } set { } }
         public Azure.ResourceManager.OperationalInsights.Models.OperationalInsightsCapacityReservationProperties CapacityReservationProperties { get { throw null; } set { } }
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.OperationalInsights
     }
     public partial class OperationalInsightsWorkspaceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public OperationalInsightsWorkspaceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public OperationalInsightsWorkspaceData(Azure.Core.AzureLocation location) { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public System.Guid? CustomerId { get { throw null; } }
         public Azure.Core.ResourceIdentifier DefaultDataCollectionRuleResourceId { get { throw null; } set { } }

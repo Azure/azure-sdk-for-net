@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ArcScVmm
     }
     public partial class ScVmmAvailabilitySetData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ScVmmAvailabilitySetData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ScVmmAvailabilitySetData(Azure.Core.AzureLocation location) { }
         public string AvailabilitySetName { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ArcScVmm
     }
     public partial class ScVmmCloudData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ScVmmCloudData(Azure.Core.AzureLocation location, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation) : base (default(Azure.Core.AzureLocation)) { }
+        public ScVmmCloudData(Azure.Core.AzureLocation location, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation) { }
         public Azure.ResourceManager.ArcScVmm.Models.CloudCapacity CloudCapacity { get { throw null; } }
         public string CloudName { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.ArcScVmm
     }
     public partial class ScVmmServerData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ScVmmServerData(Azure.Core.AzureLocation location, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation, string fqdn) : base (default(Azure.Core.AzureLocation)) { }
+        public ScVmmServerData(Azure.Core.AzureLocation location, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation, string fqdn) { }
         public string ConnectionStatus { get { throw null; } }
         public Azure.ResourceManager.ArcScVmm.Models.VmmServerPropertiesCredentials Credentials { get { throw null; } set { } }
         public string ErrorMessage { get { throw null; } }
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ArcScVmm
     }
     public partial class ScVmmVirtualMachineData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ScVmmVirtualMachineData(Azure.Core.AzureLocation location, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation) : base (default(Azure.Core.AzureLocation)) { }
+        public ScVmmVirtualMachineData(Azure.Core.AzureLocation location, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.ArcScVmm.Models.AvailabilitySetListItem> AvailabilitySets { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ArcScVmm.Models.Checkpoint> Checkpoints { get { throw null; } }
         public string CheckpointType { get { throw null; } set { } }
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.ArcScVmm
     }
     public partial class ScVmmVirtualMachineTemplateData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ScVmmVirtualMachineTemplateData(Azure.Core.AzureLocation location, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation) : base (default(Azure.Core.AzureLocation)) { }
+        public ScVmmVirtualMachineTemplateData(Azure.Core.AzureLocation location, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation) { }
         public string ComputerName { get { throw null; } }
         public int? CpuCount { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ArcScVmm.Models.VirtualDisk> Disks { get { throw null; } }
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.ArcScVmm
     }
     public partial class ScVmmVirtualNetworkData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ScVmmVirtualNetworkData(Azure.Core.AzureLocation location, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation) : base (default(Azure.Core.AzureLocation)) { }
+        public ScVmmVirtualNetworkData(Azure.Core.AzureLocation location, Azure.ResourceManager.Resources.Models.ExtendedLocation extendedLocation) { }
         public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public string InventoryItemId { get { throw null; } set { } }
         public string NetworkName { get { throw null; } }

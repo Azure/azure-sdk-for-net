@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.HybridContainerService
     }
     public partial class HybridContainerServiceAgentPoolData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public HybridContainerServiceAgentPoolData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public HybridContainerServiceAgentPoolData(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IList<string> AvailabilityZones { get { throw null; } }
         public Azure.ResourceManager.HybridContainerService.Models.CloudProviderProfile CloudProviderProfile { get { throw null; } set { } }
         public int? Count { get { throw null; } set { } }
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.HybridContainerService
     }
     public partial class HybridContainerServiceVirtualNetworkData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public HybridContainerServiceVirtualNetworkData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public HybridContainerServiceVirtualNetworkData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.HybridContainerService.Models.VirtualNetworksExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.ResourceManager.HybridContainerService.Models.VirtualNetworksProperties Properties { get { throw null; } set { } }
     }
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.HybridContainerService
     }
     public partial class ProvisionedClusterData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ProvisionedClusterData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ProvisionedClusterData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.HybridContainerService.Models.ProvisionedClustersResponseExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.HybridContainerService.Models.ProvisionedClustersResponseProperties Properties { get { throw null; } set { } }
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.HybridContainerService
     }
     public partial class StorageSpaceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public StorageSpaceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public StorageSpaceData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.HybridContainerService.Models.StorageSpacesExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.ResourceManager.HybridContainerService.Models.StorageSpacesProperties Properties { get { throw null; } set { } }
     }
@@ -695,7 +695,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     }
     public partial class ProvisionedClusterCreateOrUpdateContent : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ProvisionedClusterCreateOrUpdateContent(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ProvisionedClusterCreateOrUpdateContent(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.HybridContainerService.Models.ProvisionedClustersExtendedLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.HybridContainerService.Models.ProvisionedClustersAllProperties Properties { get { throw null; } set { } }

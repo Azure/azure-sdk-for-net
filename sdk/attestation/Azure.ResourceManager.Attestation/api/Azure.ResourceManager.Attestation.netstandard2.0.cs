@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Attestation
     }
     public partial class AttestationProviderData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public AttestationProviderData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public AttestationProviderData(Azure.Core.AzureLocation location) { }
         public System.Uri AttestUri { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Attestation.AttestationPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.Attestation.Models.PublicNetworkAccessType? PublicNetworkAccess { get { throw null; } set { } }

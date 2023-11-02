@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataFactory
     }
     public partial class DataFactoryData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DataFactoryData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public DataFactoryData(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.ResourceManager.DataFactory.Models.DataFactoryEncryptionConfiguration Encryption { get { throw null; } set { } }

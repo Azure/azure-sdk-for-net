@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SignalR
     }
     public partial class SignalRData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public SignalRData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public SignalRData(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IList<string> CorsAllowedOrigins { get { throw null; } }
         public bool? DisableAadAuth { get { throw null; } set { } }
         public bool? DisableLocalAuth { get { throw null; } set { } }

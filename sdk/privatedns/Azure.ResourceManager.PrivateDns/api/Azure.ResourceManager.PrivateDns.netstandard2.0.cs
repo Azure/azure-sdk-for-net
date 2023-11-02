@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.PrivateDns
     }
     public partial class PrivateDnsZoneData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public PrivateDnsZoneData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public PrivateDnsZoneData(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public string InternalId { get { throw null; } }
         public long? MaxNumberOfRecords { get { throw null; } }
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.PrivateDns
     }
     public partial class VirtualNetworkLinkData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public VirtualNetworkLinkData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public VirtualNetworkLinkData(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.PrivateDns.Models.PrivateDnsProvisioningState? PrivateDnsProvisioningState { get { throw null; } }
         public bool? RegistrationEnabled { get { throw null; } set { } }

@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ApiCenter
     }
     public partial class ApiCenterServiceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ApiCenterServiceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ApiCenterServiceData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.ApiCenter.Models.ApiCenterProvisioningState? ProvisioningState { get { throw null; } }
     }

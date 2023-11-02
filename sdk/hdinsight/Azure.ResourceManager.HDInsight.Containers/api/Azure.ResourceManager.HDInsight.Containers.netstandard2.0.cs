@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
     }
     public partial class HDInsightClusterData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public HDInsightClusterData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public HDInsightClusterData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.HDInsight.Containers.Models.ClusterProfile ClusterProfile { get { throw null; } set { } }
         public string ClusterType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Containers.Models.ClusterComputeNodeProfile> ComputeNodes { get { throw null; } set { } }
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
     }
     public partial class HDInsightClusterPoolData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public HDInsightClusterPoolData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public HDInsightClusterPoolData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.HDInsight.Containers.Models.AksClusterProfile AksClusterProfile { get { throw null; } }
         public string AksManagedResourceGroupName { get { throw null; } }
         public string ClusterPoolVersion { get { throw null; } set { } }
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     }
     public partial class ClusterResizeContent : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ClusterResizeContent(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ClusterResizeContent(Azure.Core.AzureLocation location) { }
         public int? TargetWorkerNodeCount { get { throw null; } set { } }
     }
     public partial class ClusterSecretReference
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     }
     public partial class HDInsightClusterPatch : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public HDInsightClusterPatch(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public HDInsightClusterPatch(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.HDInsight.Containers.Models.UpdatableClusterProfile ClusterProfile { get { throw null; } set { } }
     }
     public partial class HDInsightClusterPoolPatch

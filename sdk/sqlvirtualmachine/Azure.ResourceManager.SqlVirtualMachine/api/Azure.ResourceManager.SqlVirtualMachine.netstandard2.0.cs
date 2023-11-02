@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
     }
     public partial class SqlVmData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public SqlVmData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public SqlVmData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmAssessmentSettings AssessmentSettings { get { throw null; } set { } }
         public Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmAutoBackupSettings AutoBackupSettings { get { throw null; } set { } }
         public Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmAutoPatchingSettings AutoPatchingSettings { get { throw null; } set { } }
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
     }
     public partial class SqlVmGroupData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public SqlVmGroupData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public SqlVmGroupData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmClusterConfiguration? ClusterConfiguration { get { throw null; } }
         public Azure.ResourceManager.SqlVirtualMachine.Models.SqlVmClusterManagerType? ClusterManagerType { get { throw null; } }
         public string ProvisioningState { get { throw null; } }

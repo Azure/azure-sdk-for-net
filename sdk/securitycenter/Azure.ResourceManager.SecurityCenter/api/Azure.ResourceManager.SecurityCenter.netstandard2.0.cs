@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.SecurityCenter
     }
     public partial class IotSecuritySolutionData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public IotSecuritySolutionData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public IotSecuritySolutionData(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.AdditionalWorkspacesProperties> AdditionalWorkspaces { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> AutoDiscoveredResources { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.IotSecuritySolutionDataSource> DisabledDataSources { get { throw null; } }
@@ -979,7 +979,7 @@ namespace Azure.ResourceManager.SecurityCenter
     }
     public partial class SecurityAutomationData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public SecurityAutomationData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public SecurityAutomationData(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.SecurityCenter.Models.SecurityAutomationAction> Actions { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } set { } }
@@ -1443,7 +1443,7 @@ namespace Azure.ResourceManager.SecurityCenter
     }
     public partial class SecurityConnectorData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public SecurityConnectorData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public SecurityConnectorData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.SecurityCenter.Models.SecurityConnectorEnvironment EnvironmentData { get { throw null; } set { } }
         public Azure.ResourceManager.SecurityCenter.Models.SecurityCenterCloudName? EnvironmentName { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } set { } }

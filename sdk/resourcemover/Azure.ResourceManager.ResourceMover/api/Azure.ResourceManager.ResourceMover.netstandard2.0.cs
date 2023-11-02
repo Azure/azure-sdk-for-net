@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ResourceMover
     }
     public partial class MoverResourceSetData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public MoverResourceSetData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public MoverResourceSetData(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.ResourceMover.Models.MoverResourceSetProperties Properties { get { throw null; } set { } }

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.HealthBot
     }
     public partial class HealthBotData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public HealthBotData(Azure.Core.AzureLocation location, Azure.ResourceManager.HealthBot.Models.HealthBotSku sku) : base (default(Azure.Core.AzureLocation)) { }
+        public HealthBotData(Azure.Core.AzureLocation location, Azure.ResourceManager.HealthBot.Models.HealthBotSku sku) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.HealthBot.Models.HealthBotProperties Properties { get { throw null; } set { } }
         public Azure.ResourceManager.HealthBot.Models.HealthBotSkuName? SkuName { get { throw null; } set { } }

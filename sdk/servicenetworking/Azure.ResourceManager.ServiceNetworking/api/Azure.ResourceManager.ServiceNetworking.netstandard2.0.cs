@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ServiceNetworking
     }
     public partial class AssociationData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public AssociationData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public AssociationData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.ServiceNetworking.Models.AssociationType? AssociationType { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceNetworking.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ServiceNetworking
     }
     public partial class FrontendData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public FrontendData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public FrontendData(Azure.Core.AzureLocation location) { }
         public string Fqdn { get { throw null; } }
         public Azure.ResourceManager.ServiceNetworking.Models.ProvisioningState? ProvisioningState { get { throw null; } }
     }
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ServiceNetworking
     }
     public partial class TrafficControllerData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public TrafficControllerData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public TrafficControllerData(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> Associations { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> ConfigurationEndpoints { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> Frontends { get { throw null; } }

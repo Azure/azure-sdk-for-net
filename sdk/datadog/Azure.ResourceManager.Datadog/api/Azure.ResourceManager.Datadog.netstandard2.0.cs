@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Datadog
     }
     public partial class DatadogMonitorResourceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DatadogMonitorResourceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public DatadogMonitorResourceData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Datadog.Models.MonitorProperties Properties { get { throw null; } set { } }
         public string SkuName { get { throw null; } set { } }

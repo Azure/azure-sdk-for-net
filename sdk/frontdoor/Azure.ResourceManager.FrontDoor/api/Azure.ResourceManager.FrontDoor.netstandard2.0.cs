@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.FrontDoor
     }
     public partial class FrontDoorData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public FrontDoorData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public FrontDoorData(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.FrontDoorBackendPool> BackendPools { get { throw null; } }
         public Azure.ResourceManager.FrontDoor.Models.BackendPoolsSettings BackendPoolsSettings { get { throw null; } set { } }
         public string Cname { get { throw null; } }
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.FrontDoor
     }
     public partial class FrontDoorExperimentData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public FrontDoorExperimentData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public FrontDoorExperimentData(Azure.Core.AzureLocation location) { }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentState? EnabledState { get { throw null; } set { } }
         public Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentEndpointProperties ExperimentEndpointA { get { throw null; } set { } }
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.FrontDoor
     }
     public partial class FrontDoorNetworkExperimentProfileData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public FrontDoorNetworkExperimentProfileData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public FrontDoorNetworkExperimentProfileData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentState? EnabledState { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.FrontDoor.Models.NetworkExperimentResourceState? ResourceState { get { throw null; } }
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.FrontDoor
     }
     public partial class FrontDoorWebApplicationFirewallPolicyData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public FrontDoorWebApplicationFirewallPolicyData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public FrontDoorWebApplicationFirewallPolicyData(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> FrontendEndpointLinks { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.ManagedRuleSet> ManagedRuleSets { get { throw null; } }
@@ -933,7 +933,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
     }
     public partial class FrontDoorTimeSeriesInfo : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public FrontDoorTimeSeriesInfo(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public FrontDoorTimeSeriesInfo(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesInfoAggregationInterval? AggregationInterval { get { throw null; } set { } }
         public string Country { get { throw null; } set { } }
         public System.DateTimeOffset? EndOn { get { throw null; } set { } }
@@ -1145,7 +1145,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
     }
     public partial class LatencyScorecard : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public LatencyScorecard(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public LatencyScorecard(Azure.Core.AzureLocation location) { }
         public string Country { get { throw null; } }
         public string Description { get { throw null; } }
         public System.DateTimeOffset? EndOn { get { throw null; } }
@@ -1302,7 +1302,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
     }
     public partial class ManagedRuleSetDefinition : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ManagedRuleSetDefinition(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ManagedRuleSetDefinition(Azure.Core.AzureLocation location) { }
         public string ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.FrontDoor.Models.ManagedRuleGroupDefinition> RuleGroups { get { throw null; } }
         public string RuleSetId { get { throw null; } }
@@ -1387,7 +1387,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
     }
     public partial class PreconfiguredEndpoint : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public PreconfiguredEndpoint(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public PreconfiguredEndpoint(Azure.Core.AzureLocation location) { }
         public string Backend { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public string Endpoint { get { throw null; } set { } }

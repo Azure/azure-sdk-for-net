@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.StorageMover
     }
     public partial class StorageMoverData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public StorageMoverData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public StorageMoverData(Azure.Core.AzureLocation location) { }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState? ProvisioningState { get { throw null; } }
     }

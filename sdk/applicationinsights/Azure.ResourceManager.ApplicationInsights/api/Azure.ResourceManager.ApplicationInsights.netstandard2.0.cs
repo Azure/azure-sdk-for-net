@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ApplicationInsights
     }
     public partial class ApplicationInsightsComponentData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ApplicationInsightsComponentData(Azure.Core.AzureLocation location, string kind) : base (default(Azure.Core.AzureLocation)) { }
+        public ApplicationInsightsComponentData(Azure.Core.AzureLocation location, string kind) { }
         public string AppId { get { throw null; } }
         public string ApplicationId { get { throw null; } }
         public Azure.ResourceManager.ApplicationInsights.Models.ApplicationType? ApplicationType { get { throw null; } set { } }
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.ApplicationInsights
     }
     public partial class WebTestData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public WebTestData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public WebTestData(Azure.Core.AzureLocation location) { }
         public string Description { get { throw null; } set { } }
         public int? FrequencyInSeconds { get { throw null; } set { } }
         public bool? IsEnabled { get { throw null; } set { } }
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.ApplicationInsights
     }
     public partial class WorkbookData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public WorkbookData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public WorkbookData(Azure.Core.AzureLocation location) { }
         public string Category { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.ApplicationInsights
     }
     public partial class WorkbookTemplateData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public WorkbookTemplateData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public WorkbookTemplateData(Azure.Core.AzureLocation location) { }
         public string Author { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ApplicationInsights.Models.WorkbookTemplateGallery> Galleries { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<Azure.ResourceManager.ApplicationInsights.Models.WorkbookTemplateLocalizedGallery>> LocalizedGalleries { get { throw null; } }

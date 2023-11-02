@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Sphere
     }
     public partial class SphereCatalogData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public SphereCatalogData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public SphereCatalogData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Sphere.Models.SphereProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class SphereCatalogResource : Azure.ResourceManager.ArmResource

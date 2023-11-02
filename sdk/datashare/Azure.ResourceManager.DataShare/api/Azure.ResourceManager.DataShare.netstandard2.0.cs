@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataShare
     }
     public partial class DataShareAccountData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public DataShareAccountData(Azure.Core.AzureLocation location, Azure.ResourceManager.Models.ManagedServiceIdentity identity) : base (default(Azure.Core.AzureLocation)) { }
+        public DataShareAccountData(Azure.Core.AzureLocation location, Azure.ResourceManager.Models.ManagedServiceIdentity identity) { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.DataShare.Models.DataShareProvisioningState? ProvisioningState { get { throw null; } }

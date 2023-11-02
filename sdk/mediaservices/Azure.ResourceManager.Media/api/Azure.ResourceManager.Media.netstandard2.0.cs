@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Media
     }
     public partial class MediaLiveEventData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public MediaLiveEventData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public MediaLiveEventData(Azure.Core.AzureLocation location) { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.ResourceManager.Media.Models.CrossSiteAccessPolicies CrossSiteAccessPolicies { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.Media
     }
     public partial class MediaServicesAccountData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public MediaServicesAccountData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public MediaServicesAccountData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Media.Models.AccountEncryption Encryption { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.MediaAccessControl KeyDeliveryAccessControl { get { throw null; } set { } }
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.Media
     }
     public partial class StreamingEndpointData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public StreamingEndpointData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public StreamingEndpointData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Media.Models.StreamingEndpointAccessControl AccessControl { get { throw null; } set { } }
         public string AvailabilitySetName { get { throw null; } set { } }
         public string CdnProfile { get { throw null; } set { } }

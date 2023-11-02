@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.AppConfiguration
     }
     public partial class AppConfigurationStoreData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public AppConfigurationStoreData(Azure.Core.AzureLocation location, Azure.ResourceManager.AppConfiguration.Models.AppConfigurationSku sku) : base (default(Azure.Core.AzureLocation)) { }
+        public AppConfigurationStoreData(Azure.Core.AzureLocation location, Azure.ResourceManager.AppConfiguration.Models.AppConfigurationSku sku) { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.ResourceManager.AppConfiguration.Models.AppConfigurationCreateMode? CreateMode { get { throw null; } set { } }
         public bool? DisableLocalAuth { get { throw null; } set { } }

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Maintenance
     }
     public partial class MaintenanceConfigurationData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public MaintenanceConfigurationData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public MaintenanceConfigurationData(Azure.Core.AzureLocation location) { }
         public System.TimeSpan? Duration { get { throw null; } set { } }
         public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> ExtensionProperties { get { throw null; } }

@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.FluidRelay
     }
     public partial class FluidRelayServerData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public FluidRelayServerData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public FluidRelayServerData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.FluidRelay.Models.CmkEncryptionProperties CustomerManagedKeyEncryption { get { throw null; } set { } }
         public Azure.ResourceManager.FluidRelay.Models.FluidRelayEndpoints FluidRelayEndpoints { get { throw null; } }
         public System.Guid? FrsTenantId { get { throw null; } }

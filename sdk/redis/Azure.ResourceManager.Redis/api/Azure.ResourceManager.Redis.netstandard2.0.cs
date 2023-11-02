@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Redis
     }
     public partial class RedisData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public RedisData(Azure.Core.AzureLocation location, Azure.ResourceManager.Redis.Models.RedisSku sku) : base (default(Azure.Core.AzureLocation)) { }
+        public RedisData(Azure.Core.AzureLocation location, Azure.ResourceManager.Redis.Models.RedisSku sku) { }
         public Azure.ResourceManager.Redis.Models.RedisAccessKeys AccessKeys { get { throw null; } }
         public bool? EnableNonSslPort { get { throw null; } set { } }
         public string HostName { get { throw null; } }
