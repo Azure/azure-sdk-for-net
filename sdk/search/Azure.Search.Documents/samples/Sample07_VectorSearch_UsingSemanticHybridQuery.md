@@ -152,7 +152,7 @@ Let's query the index and make sure everything works as implemented. You can als
 
 In the context of vector search, the `Queries` collection contains the vectors that represent the query input. The `Fields` property specifies which vector fields should be searched. The `KNearestNeighborsCount` property determines the number of nearest neighbors to retrieve as the top hits.
 
-For semantic search, we will specify `SemanticSearch.SemanticConfigurationName` as `SearchQueryType.Semantic`. We will use the same `SemanticConfigurationName` that we defined when creating the index. Additionally, we have enabled `SemanticSearch.QueryCaption` and `SemanticSearch.QueryAnswer` in the `SearchOptions` to obtain the caption and answer in the response. With these configurations in place, we are prepared to execute a vector semantic hybrid query.
+For semantic search, we will specify `SemanticSearch.SemanticConfigurationName` as `SearchQueryType.Semantic` in the `SearchOptions`. We will use the same `SemanticConfigurationName` that we defined when creating the index. Additionally, we have enabled `SemanticSearch.QueryCaption` and `SemanticSearch.QueryAnswer` in the `SearchOptions` to obtain the caption and answer in the response. With these configurations in place, we are prepared to execute a vector semantic hybrid query.
 
 With these settings in place, we're ready to execute a vector semantic hybrid query:
 

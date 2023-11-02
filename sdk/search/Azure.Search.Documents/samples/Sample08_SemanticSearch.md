@@ -110,7 +110,7 @@ await searchClient.IndexDocumentsAsync(IndexDocumentsBatch.Upload(hotelDocuments
 
 ## Querying Data
 
-To perform a semantic search query, we'll specify `SemanticSearch.SemanticConfigurationName` as `SearchQueryType.Semantic`. We'll use the same `SemanticConfigurationName` that we defined when creating the index. Additionally, we've enabled `SemanticSearch.QueryCaption` and `SemanticSearch.QueryAnswer` in the `SearchOptions` to retrieve the caption and answer in the response. With these settings in place, we're ready to execute a semantic search query.
+To perform a semantic search query, we'll specify `SemanticSearch.SemanticConfigurationName` as `SearchQueryType.Semantic` in the `SearchOptions`. We'll use the same `SemanticConfigurationName` that we defined when creating the index. Additionally, we've enabled `SemanticSearch.QueryCaption` and `SemanticSearch.QueryAnswer` in the `SearchOptions` to retrieve the caption and answer in the response. With these settings in place, we're ready to execute a semantic search query.
 
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample08_Semantic_Search_Query
 SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(

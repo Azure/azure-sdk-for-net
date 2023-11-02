@@ -1,6 +1,6 @@
 # Vector Search Using Vectorized Query
 
-This sample demonstrates how to create a vector fields index, upload data into the index, and perform various types of vector searches using raw vector queries.
+This sample demonstrates how to create a vector fields index, upload data into the index, and perform various types of vector searches using vectorized queries.
 
 ## Create a Vector Index
 
