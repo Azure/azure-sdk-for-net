@@ -26,6 +26,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
     public partial class CapabilityResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CapabilityResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="locationName"> The locationName. </param>
+        /// <param name="capabilitySetName"> The capabilitySetName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation locationName, string capabilitySetName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.DBforMySQL/locations/{locationName}/capabilitySets/{capabilitySetName}";
