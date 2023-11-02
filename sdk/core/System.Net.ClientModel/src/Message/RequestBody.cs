@@ -55,9 +55,21 @@ namespace System.Net.ClientModel.Core
         {
             private readonly IModel<object> _model;
             private readonly ModelReaderWriterOptions _options;
+            private readonly ModelReaderWriterFormat _wireFormat;
 
             // Used when _model is an IJsonModel
             private ModelWriter? _writer;
+
+            // Used when _model is an IModel
+            private BinaryData? _data;
+
+            public ModelMessageBody(IModel<object> model, ModelReaderWriterOptions options)
+            {
+                _model = model;
+                _options = options;
+                _wireFormat = model.GetWireFormat(options);
+            }
+
             private ModelWriter Writer
             {
                 get
@@ -72,13 +84,11 @@ namespace System.Net.ClientModel.Core
                 }
             }
 
-            // Used when _model is an IModel
-            private BinaryData? _data;
             private BinaryData Data
             {
                 get
                 {
-                    if (_model is IJsonModel<object>)
+                    if (_model is IJsonModel<object> && _wireFormat == ModelReaderWriterFormat.Json)
                     {
                         throw new InvalidOperationException("Should use ModelWriter instead of _model.Write with IJsonModel.");
                     }
@@ -88,15 +98,9 @@ namespace System.Net.ClientModel.Core
                 }
             }
 
-            public ModelMessageBody(IModel<object> model, ModelReaderWriterOptions options)
-            {
-                _model = model;
-                _options = options;
-            }
-
             public override bool TryComputeLength(out long length)
             {
-                if (_model is IJsonModel<object>)
+                if (_model is IJsonModel<object> && _wireFormat == ModelReaderWriterFormat.Json)
                 {
                     return Writer.TryComputeLength(out length);
                 }
@@ -112,7 +116,7 @@ namespace System.Net.ClientModel.Core
 
             public override void WriteTo(Stream stream, CancellationToken cancellation)
             {
-                if (_model is IJsonModel<object>)
+                if (_model is IJsonModel<object> && _wireFormat == ModelReaderWriterFormat.Json)
                 {
                     Writer.CopyTo(stream, cancellation);
                     return;
@@ -127,7 +131,7 @@ namespace System.Net.ClientModel.Core
 
             public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
             {
-                if (_model is IJsonModel<object>)
+                if (_model is IJsonModel<object> && _wireFormat == ModelReaderWriterFormat.Json)
                 {
                     await Writer.CopyToAsync(stream, cancellation).ConfigureAwait(false);
                     return;
