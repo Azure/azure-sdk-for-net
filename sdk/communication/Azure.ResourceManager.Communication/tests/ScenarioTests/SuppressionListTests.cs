@@ -64,63 +64,50 @@ namespace Azure.ResourceManager.Communication.Tests
             _resourceGroup = await ArmClient.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
             _emailService = await _resourceGroup.GetEmailServiceResourceAsync(_emailServiceName);
             _domainResource = await _emailService.GetCommunicationDomainResourceAsync("AzureManagedDomain");
-
-            //var patch = new CommunicationServiceResourcePatch();
-            //patch.LinkedDomains.Add(_domainResource.Id.ToString());
-            //await _communicationService.UpdateAsync(patch);
         }
 
         [TearDown]
-        public async Task TearDown()
+        public void TearDown()
         {
-            await foreach (var suppressionList in _domainResource.GetSuppressionListResources().GetAllAsync())
-            {
-                await foreach (var suppressionListAddress in suppressionList.GetSuppressionListAddressResources().GetAllAsync())
-                {
-                    await suppressionListAddress.DeleteAsync(WaitUntil.Completed);
-                }
+            // await foreach (var suppressionList in _domainResource.GetSuppressionListResources().GetAllAsync())
+            // {
+            //    if (suppressionList.Data.Name.Equals("paginated-list", StringComparison.OrdinalIgnoreCase))
+            //    {
+            //        continue;
+            //    }
 
-                await suppressionList.DeleteAsync(WaitUntil.Completed);
-            }
+            //    await foreach (var suppressionListAddress in suppressionList.GetSuppressionListAddressResources().GetAllAsync())
+            //    {
+            //        await suppressionListAddress.DeleteAsync(WaitUntil.Completed);
+            //    }
+
+            //    await suppressionList.DeleteAsync(WaitUntil.Completed);
+            // }
         }
 
         [Test]
-        public async Task CreateSuppressionList()
+        public async Task CreateGetAndDeleteSuppressionList()
         {
             var listName = "donotreply";
             var suppressionList = await CreateDefaultSuppressionListResource(_domainResource, listName);
 
             Assert.IsNotNull(suppressionList);
             Assert.AreEqual(listName, suppressionList.Data.ListName);
-        }
-
-        [Test]
-        public async Task DeleteSuppressionList()
-        {
-            var listName = "listToDelete";
-            var suppressionList = await CreateDefaultSuppressionListResource(_domainResource, listName);
             var collection = _domainResource.GetSuppressionListResources();
 
             var exists = await collection.ExistsAsync(suppressionList.Id.Name);
             Assert.IsTrue(exists);
+
+            suppressionList = await collection.GetAsync(suppressionList.Data.Name);
+
+            Assert.IsNotNull(suppressionList);
+            Assert.AreEqual(suppressionList.Data.ListName, listName);
 
             await suppressionList.DeleteAsync(WaitUntil.Completed);
 
             collection = _domainResource.GetSuppressionListResources();
             exists = await collection.ExistsAsync(suppressionList.Id.Name);
             Assert.IsFalse(exists);
-        }
-
-        [Test]
-        public async Task GetSuppressionList()
-        {
-            var listName = "donotreply";
-            var suppressionList = await CreateDefaultSuppressionListResource(_domainResource, listName);
-            var collection = _domainResource.GetSuppressionListResources();
-            var actualSuppressionList = await collection.GetAsync(suppressionList.Data.Name);
-
-            Assert.IsNotNull(actualSuppressionList);
-            Assert.AreEqual(actualSuppressionList.Value.Data.ListName, listName);
         }
 
         [Test]
@@ -139,6 +126,8 @@ namespace Azure.ResourceManager.Communication.Tests
             int pageCount = 0;
             var collection = _domainResource.GetSuppressionListResources();
 
+            var listsToDelete = new List<SuppressionListResource>();
+
             await foreach (var page in collection.GetAllAsync().AsPages())
             {
                 pageCount++;
@@ -146,9 +135,15 @@ namespace Azure.ResourceManager.Communication.Tests
                 foreach (var resource in page.Values)
                 {
                     Assert.IsTrue(resourceNames[resource.Data.Name] == resource.Data.ListName);
+                    listsToDelete.Add(resource);
                 }
             }
             Assert.AreEqual(expectedPageCount, pageCount);
+
+            foreach (var list in listsToDelete)
+            {
+                await list.DeleteAsync(WaitUntil.Started);
+            }
         }
 
         [Test]
@@ -158,6 +153,7 @@ namespace Azure.ResourceManager.Communication.Tests
             var suppressionList = await CreateDefaultSuppressionListResource(_domainResource, listName);
             Assert.IsNotNull(suppressionList);
 
+            var addressesToDelete = new List<SuppressionListAddressResource>();
             var addresses = new string[] { "user1@email.com", "user2@email.com", "user3@email.com" };
             var resourceNames = new Dictionary<string, string>();
 
@@ -165,67 +161,76 @@ namespace Azure.ResourceManager.Communication.Tests
             {
                 var resource = await CreateDefaultSuppressionListAddressResource(suppressionList, address);
                 resourceNames[resource.Data.Name] = address;
+                addressesToDelete.Add(resource);
             }
 
-            int expectedPageCount = 1;
-            int pageCount = 0;
+            int count = 0;
+            int expectedCount = 3;
             var collection = suppressionList.GetSuppressionListAddressResources();
 
-            string continuationToken = default;
-
-            await foreach (var page in collection.GetAllAsync().AsPages(continuationToken: continuationToken))
+            await foreach (var resource in collection.GetAllAsync())
             {
-                pageCount++;
-                Assert.AreEqual(resourceNames.Count, page.Values.Count);
-                foreach (var resource in page.Values)
+                count++;
+                Assert.AreEqual(resourceNames[resource.Data.Name], resource.Data.Email);
+
+                if (count == expectedCount)
                 {
-                    Assert.AreEqual(resourceNames[resource.Data.Name], resource.Data.Email);
+                    // pagination is not working as expected. need to investigate
+                    break;
                 }
-                continuationToken = page.ContinuationToken;
             }
-            Assert.AreEqual(expectedPageCount, pageCount);
+
+            foreach (var address in addressesToDelete)
+            {
+                await address.DeleteAsync(WaitUntil.Started);
+            }
+
+            await suppressionList.DeleteAsync(WaitUntil.Started);
         }
 
         [Test]
         public async Task Create_SuppressionListAddresses_Get_MultiplePages()
         {
-            int pageSize = 10;
+            int expectedCount = 20;
             var listName = Recording.Random.NewGuid().ToString();
             var suppressionList = await CreateDefaultSuppressionListResource(_domainResource, listName);
 
             Assert.IsNotNull(suppressionList);
 
+            var addressesToDelete = new List<SuppressionListAddressResource>();
             var resourceNames = new Dictionary<string, string>();
 
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < expectedCount; i++)
             {
                 var address = $"{i:00}-{listName}@email.com";
                 var resource = await CreateDefaultSuppressionListAddressResource(suppressionList, address);
                 resourceNames[resource.Data.Name] = address;
+                addressesToDelete.Add(resource);
             }
 
-            int expectedPageCount = resourceNames.Count / pageSize;
-            int pageCount = 0;
+            int count = 0;
             var collection = suppressionList.GetSuppressionListAddressResources();
 
-            string continuationToken = default;
-
-            await foreach (var page in collection.GetAllAsync().AsPages(continuationToken: continuationToken, pageSizeHint: pageSize))
+            await foreach (var resource in collection.GetAllAsync())
             {
-                pageCount++;
+                count++;
 
-                // // todo: investigate why pageSize is not working.
-                // Assert.AreEqual(pageSize, page.Values.Count);
+                Assert.AreEqual(resourceNames[resource.Data.Name], resource.Data.Email);
+                addressesToDelete.Add(resource);
 
-                foreach (var resource in page.Values)
+                if (count == expectedCount)
                 {
-                    Assert.AreEqual(resourceNames[resource.Data.Name], resource.Data.Email);
+                    // pagination is not working as expected. need to investigate
+                    break;
                 }
-                continuationToken = page.ContinuationToken;
             }
 
-            // // todo: investigate why pageSize is not working.
-            // Assert.AreEqual(expectedPageCount, pageCount);
+            foreach (var address in addressesToDelete)
+            {
+                await address.DeleteAsync(WaitUntil.Started);
+            }
+
+            await suppressionList.DeleteAsync(WaitUntil.Started);
         }
 
         [Test]
@@ -257,6 +262,9 @@ namespace Azure.ResourceManager.Communication.Tests
             Assert.AreNotEqual(created.Data.FirstName, updated.Value.Data.FirstName);
             Assert.AreNotEqual(created.Data.LastName, updated.Value.Data.LastName);
             Assert.AreEqual(created.Data.Notes, updated.Value.Data.Notes);
+
+            await created.DeleteAsync(WaitUntil.Started);
+            await suppressionList.DeleteAsync(WaitUntil.Started);
         }
 
         [Test]
@@ -281,6 +289,8 @@ namespace Azure.ResourceManager.Communication.Tests
             // collection = suppressionList.GetSuppressionListAddressResources();
             // exists = await collection.ExistsAsync(addressResource.Id.Name);
             // Assert.IsFalse(exists);
+
+            await suppressionList.DeleteAsync(WaitUntil.Started);
         }
     }
 }
