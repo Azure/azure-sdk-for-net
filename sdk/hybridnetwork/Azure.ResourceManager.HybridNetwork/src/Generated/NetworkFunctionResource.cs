@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.HybridNetwork
     public partial class NetworkFunctionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkFunctionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="networkFunctionName"> The networkFunctionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkFunctionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/networkFunctions/{networkFunctionName}";

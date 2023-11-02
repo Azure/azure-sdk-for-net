@@ -27,6 +27,11 @@ namespace Azure.ResourceManager.HybridNetwork
     public partial class NetworkServiceDesignVersionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkServiceDesignVersionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="publisherName"> The publisherName. </param>
+        /// <param name="networkServiceDesignGroupName"> The networkServiceDesignGroupName. </param>
+        /// <param name="networkServiceDesignVersionName"> The networkServiceDesignVersionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string publisherName, string networkServiceDesignGroupName, string networkServiceDesignVersionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/networkServiceDesignGroups/{networkServiceDesignGroupName}/networkServiceDesignVersions/{networkServiceDesignVersionName}";
