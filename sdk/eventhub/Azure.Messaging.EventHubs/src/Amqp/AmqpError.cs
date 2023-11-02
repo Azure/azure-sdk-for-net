@@ -27,13 +27,13 @@ namespace Azure.Messaging.EventHubs
         ///   Indicates that a timeout occurred on the link.
         /// </summary>
         ///
-        public static AmqpSymbol TimeoutError { get; } = AmqpConstants.Vendor + ":entity-disabled";
+        public static AmqpSymbol TimeoutError { get; } = AmqpConstants.Vendor + ":timeout";
 
         /// <summary>
         ///   Indicates that an entity was disabled.
         /// </summary>
         ///
-        public static AmqpSymbol DisabledError { get; } = AmqpConstants.Vendor + ":timeout";
+        public static AmqpSymbol DisabledError { get; } = AmqpConstants.Vendor + ":entity-disabled";
 
         /// <summary>
         ///   Indicates that the server was busy and could not allow the requested operation.
