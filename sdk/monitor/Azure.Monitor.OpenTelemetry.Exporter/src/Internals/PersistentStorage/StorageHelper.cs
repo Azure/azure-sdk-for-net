@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections;
 using System.IO;
 using System.Runtime.InteropServices;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
@@ -30,19 +29,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage
         internal static string? GetDefaultStorageDirectory(IPlatform platform)
         {
             string? dirPath;
-            IDictionary environmentVars = platform.GetEnvironmentVariables();
 
             if (platform.IsOSPlatform(OSPlatform.Windows))
             {
-                if (TryCreateTelemetryDirectory(platform: platform, path: environmentVars[EnvironmentVariableConstants.LOCALAPPDATA]?.ToString(), createdDirectoryPath: out dirPath)
-                    || TryCreateTelemetryDirectory(platform: platform, path: environmentVars[EnvironmentVariableConstants.TEMP]?.ToString(), createdDirectoryPath: out dirPath))
+                if (TryCreateTelemetryDirectory(platform: platform, path: platform.GetEnvironmentVariable(EnvironmentVariableConstants.LOCALAPPDATA), createdDirectoryPath: out dirPath)
+                    || TryCreateTelemetryDirectory(platform: platform, path: platform.GetEnvironmentVariable(EnvironmentVariableConstants.TEMP), createdDirectoryPath: out dirPath))
                 {
                     return dirPath;
                 }
             }
             else
             {
-                if (TryCreateTelemetryDirectory(platform: platform, path: environmentVars[EnvironmentVariableConstants.TMPDIR]?.ToString(), createdDirectoryPath: out dirPath)
+                if (TryCreateTelemetryDirectory(platform: platform, path: platform.GetEnvironmentVariable(EnvironmentVariableConstants.TMPDIR), createdDirectoryPath: out dirPath)
                     || TryCreateTelemetryDirectory(platform: platform, path: "/var/tmp/", createdDirectoryPath: out dirPath)
                     || TryCreateTelemetryDirectory(platform: platform, path: "/tmp/", createdDirectoryPath: out dirPath))
                 {
