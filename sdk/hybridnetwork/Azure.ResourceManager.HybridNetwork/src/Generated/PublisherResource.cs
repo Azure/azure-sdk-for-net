@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> An object representing collection of ConfigurationGroupSchemaResources and their operations over a ConfigurationGroupSchemaResource. </returns>
         public virtual ConfigurationGroupSchemaCollection GetConfigurationGroupSchemas()
         {
-            return GetCachedClient(Client => new ConfigurationGroupSchemaCollection(Client, Id));
+            return GetCachedClient(client => new ConfigurationGroupSchemaCollection(client, Id));
         }
 
         /// <summary>
@@ -114,8 +114,8 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </summary>
         /// <param name="configurationGroupSchemaName"> The name of the configuration group schema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationGroupSchemaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationGroupSchemaName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationGroupSchemaName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ConfigurationGroupSchemaResource>> GetConfigurationGroupSchemaAsync(string configurationGroupSchemaName, CancellationToken cancellationToken = default)
         {
@@ -137,8 +137,8 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </summary>
         /// <param name="configurationGroupSchemaName"> The name of the configuration group schema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationGroupSchemaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationGroupSchemaName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationGroupSchemaName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ConfigurationGroupSchemaResource> GetConfigurationGroupSchema(string configurationGroupSchemaName, CancellationToken cancellationToken = default)
         {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> An object representing collection of NetworkFunctionDefinitionGroupResources and their operations over a NetworkFunctionDefinitionGroupResource. </returns>
         public virtual NetworkFunctionDefinitionGroupCollection GetNetworkFunctionDefinitionGroups()
         {
-            return GetCachedClient(Client => new NetworkFunctionDefinitionGroupCollection(Client, Id));
+            return GetCachedClient(client => new NetworkFunctionDefinitionGroupCollection(client, Id));
         }
 
         /// <summary>
@@ -167,8 +167,8 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </summary>
         /// <param name="networkFunctionDefinitionGroupName"> The name of the network function definition group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkFunctionDefinitionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionDefinitionGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkFunctionDefinitionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkFunctionDefinitionGroupResource>> GetNetworkFunctionDefinitionGroupAsync(string networkFunctionDefinitionGroupName, CancellationToken cancellationToken = default)
         {
@@ -190,8 +190,8 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </summary>
         /// <param name="networkFunctionDefinitionGroupName"> The name of the network function definition group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkFunctionDefinitionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionDefinitionGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkFunctionDefinitionGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkFunctionDefinitionGroupResource> GetNetworkFunctionDefinitionGroup(string networkFunctionDefinitionGroupName, CancellationToken cancellationToken = default)
         {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> An object representing collection of NetworkServiceDesignGroupResources and their operations over a NetworkServiceDesignGroupResource. </returns>
         public virtual NetworkServiceDesignGroupCollection GetNetworkServiceDesignGroups()
         {
-            return GetCachedClient(Client => new NetworkServiceDesignGroupCollection(Client, Id));
+            return GetCachedClient(client => new NetworkServiceDesignGroupCollection(client, Id));
         }
 
         /// <summary>
@@ -220,8 +220,8 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </summary>
         /// <param name="networkServiceDesignGroupName"> The name of the network service design group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkServiceDesignGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkServiceDesignGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkServiceDesignGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkServiceDesignGroupResource>> GetNetworkServiceDesignGroupAsync(string networkServiceDesignGroupName, CancellationToken cancellationToken = default)
         {
@@ -243,8 +243,8 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </summary>
         /// <param name="networkServiceDesignGroupName"> The name of the network service design group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkServiceDesignGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkServiceDesignGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkServiceDesignGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkServiceDesignGroupResource> GetNetworkServiceDesignGroup(string networkServiceDesignGroupName, CancellationToken cancellationToken = default)
         {
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> An object representing collection of ArtifactStoreResources and their operations over a ArtifactStoreResource. </returns>
         public virtual ArtifactStoreCollection GetArtifactStores()
         {
-            return GetCachedClient(Client => new ArtifactStoreCollection(Client, Id));
+            return GetCachedClient(client => new ArtifactStoreCollection(client, Id));
         }
 
         /// <summary>
@@ -273,8 +273,8 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </summary>
         /// <param name="artifactStoreName"> The name of the artifact store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="artifactStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="artifactStoreName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="artifactStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ArtifactStoreResource>> GetArtifactStoreAsync(string artifactStoreName, CancellationToken cancellationToken = default)
         {
@@ -296,8 +296,8 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </summary>
         /// <param name="artifactStoreName"> The name of the artifact store. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="artifactStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="artifactStoreName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="artifactStoreName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ArtifactStoreResource> GetArtifactStore(string artifactStoreName, CancellationToken cancellationToken = default)
         {
