@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 return null;
             }
             string name = default;
-            MySqlFlexibleMySqlFlexibleServerSkuTier tier = default;
+            MySqlFlexibleServerSkuTier tier = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
