@@ -14,7 +14,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
 
         public string OSPlatformName { get; set; } = "UnitTest";
         public Func<OSPlatform, bool> IsOsPlatformFunc { get; set; } = (OSPlatform) => false;
-        public Func<string, bool> CreateDirectoryFunc { get; set; } = (path) => true;
+        public Action<string> CreateDirectoryFunc { get; set; } = (path) => { };
         public string UserName { get; set; } = "UnitTestUser";
         public string ProcessName { get; set; } = "UnitTestProcess";
         public string ApplicationBaseDirectory { get; set; } = "UnitTestDirectory";
@@ -27,7 +27,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
 
         public bool IsOSPlatform(OSPlatform osPlatform) => IsOsPlatformFunc(osPlatform);
 
-        public bool CreateDirectory(string path) => CreateDirectoryFunc(path);
+        public void CreateDirectory(string path) => CreateDirectoryFunc(path);
 
         public string GetEnvironmentUserName() => UserName;
 
