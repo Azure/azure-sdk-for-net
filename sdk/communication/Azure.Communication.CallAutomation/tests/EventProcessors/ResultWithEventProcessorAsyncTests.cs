@@ -550,6 +550,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             Assert.IsNull(returnedResult.DialogLanguageChangeEvent);
             Assert.IsNull(returnedResult.DialogSensitivityUpdateEvent);
             Assert.IsNull(returnedResult.DialogTransferSuccessEvent);
+            Assert.IsNull(returnedResult.DialogUpdatedEvent);
             Assert.IsNull(returnedResult.FailureResult);
             Assert.AreEqual(typeof(DialogStarted), returnedResult.DialogStartedSuccessEvent.GetType());
             Assert.AreEqual(CallConnectionId, returnedResult.DialogStartedSuccessEvent.CallConnectionId);
@@ -588,6 +589,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             Assert.IsNull(returnedResult.DialogLanguageChangeEvent);
             Assert.IsNull(returnedResult.DialogSensitivityUpdateEvent);
             Assert.IsNull(returnedResult.DialogTransferSuccessEvent);
+            Assert.IsNull(returnedResult.DialogUpdatedEvent);
             Assert.NotNull(returnedResult.FailureResult);
             Assert.AreEqual(typeof(DialogFailed), returnedResult.FailureResult.GetType());
             Assert.AreEqual(CallConnectionId, returnedResult.FailureResult.CallConnectionId);
