@@ -59,6 +59,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform
 
         public bool IsOSPlatform(OSPlatform osPlatform) => RuntimeInformation.IsOSPlatform(osPlatform);
 
+        /// <summary>
+        /// Creates all directories and subdirectories in the specified path unless they already exist.
+        /// </summary>
+        /// <exception>This method does not catch any exceptions thrown by <see cref="Directory.CreateDirectory(string)"/>.</exception>
+        /// <param name="path">The directory to create</param>
         public void CreateDirectory(string path) => Directory.CreateDirectory(path);
 
         public string GetEnvironmentUserName() => Environment.UserName;
