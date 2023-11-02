@@ -14,7 +14,7 @@ namespace System.Net.ClientModel.Core
     public abstract class MessageBody
     {
         // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
-        private static readonly BinaryData EmptyBinaryData = new(Array.Empty<byte>());
+        internal static readonly BinaryData EmptyBinaryData = new(Array.Empty<byte>());
         internal static MessageBody Empty = Create(EmptyBinaryData);
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace System.Net.ClientModel.Core
             return stream;
         }
 
-        private sealed class ModelMessageBody : MessageBody
+        private sealed class ModelMessageBody : MessageBody, IDisposable
         {
             private readonly IModel<object> _model;
             private readonly ModelReaderWriterOptions _options;
@@ -235,7 +235,7 @@ namespace System.Net.ClientModel.Core
                 await stream.WriteAsync(Data.ToMemory(), cancellation).ConfigureAwait(false);
             }
 
-            public override void Dispose()
+            public void Dispose()
             {
                 var writer = _writer;
                 if (writer != null)
@@ -246,7 +246,7 @@ namespace System.Net.ClientModel.Core
             }
         }
 
-        private sealed class StreamMessageBody : MessageBody
+        private sealed class StreamMessageBody : MessageBody, IDisposable
         {
             private const int CopyToBufferSize = 81920;
             private readonly Stream _stream;
@@ -304,7 +304,7 @@ namespace System.Net.ClientModel.Core
             protected override Stream ToStream(CancellationToken cancellationToken = default)
                 => _stream;
 
-            public override void Dispose()
+            public void Dispose()
             {
                 var stream = _stream;
                 stream?.Dispose();
@@ -341,11 +341,6 @@ namespace System.Net.ClientModel.Core
 
             protected override BinaryData ToBinaryData(CancellationToken cancellationToken = default)
                 => BinaryData.FromBytes(_bytes);
-
-            public override void Dispose() { }
         }
-
-        /// <inheritdoc/>
-        public abstract void Dispose();
     }
 }

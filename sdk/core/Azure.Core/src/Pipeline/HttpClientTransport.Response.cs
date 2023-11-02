@@ -43,7 +43,8 @@ namespace Azure.Core.Pipeline
             {
                 ClientUtilities.AssertNotNull(stream, nameof(stream));
 
-                Body = MessageBody.Create(stream);
+                ContentStream = stream;
+                //Body = MessageBody.Create(stream);
             }
         }
 
@@ -62,32 +63,35 @@ namespace Azure.Core.Pipeline
 
             public override string ReasonPhrase => _pipelineResponse.ReasonPhrase;
 
-            public override Stream? ContentStream
-            {
-                get
-                {
-                    if (_pipelineResponse.Body is null)
-                    {
-                        return null;
-                    }
+            //public override Stream? ContentStream
+            //{
+            //    get
+            //    {
+            //        if (_pipelineResponse.Body is null)
+            //        {
+            //            return null;
+            //        }
 
-                    return (Stream)_pipelineResponse.Body;
-                }
+            //        return (Stream)_pipelineResponse.Body;
+            //    }
 
-                set
-                {
-                    if (value is not null)
-                    {
-                        _pipelineResponse.SetContentStream(value);
-                    }
-                }
-            }
+            //    set
+            //    {
+            //        if (value is not null)
+            //        {
+            //            _pipelineResponse.SetContentStream(value);
+            //        }
+            //    }
+            //}
 
             public override string ClientRequestId
             {
                 get => _pipelineResponse.ClientRequestId;
                 set => _pipelineResponse.ClientRequestId = value;
             }
+            public override Stream? ContentStream {
+                get => _pipelineResponse?.ContentStream;
+                set => _pipelineResponse.ContentStream = value; }
 
             protected internal override bool ContainsHeader(string name)
                 => _pipelineResponse.Headers.TryGetValue(name, out _);

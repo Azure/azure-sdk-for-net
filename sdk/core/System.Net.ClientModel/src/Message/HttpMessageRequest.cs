@@ -158,12 +158,12 @@ public class HttpMessageRequest : MessageRequest, IDisposable
 
     public override void Dispose()
     {
-        var content = _content;
-        if (content != null)
-        {
-            _content = null;
-            content.Dispose();
-        }
+        //var content = _content;
+        //if (content != null)
+        //{
+        //    _content = null;
+        //    content.Dispose();
+        //}
 
         GC.SuppressFinalize(this);
     }

@@ -150,6 +150,11 @@ namespace Azure.Core
         /// <param name="content">The <see cref="DynamicData"/> to use.</param>
         public static implicit operator RequestContent(DynamicData content) => Create(content);
 
+        /// <summary>
+        /// Frees resources held by the <see cref="RequestContent"/> object.
+        /// </summary>
+        public abstract void Dispose();
+
         private sealed class MessageBodyContent : RequestContent
         {
             private readonly MessageBody _content;
@@ -160,7 +165,8 @@ namespace Azure.Core
 
             public override void Dispose()
             {
-                _content?.Dispose();
+                // TODO: figure out what to do here.
+                //_content?.Dispose();
             }
 
             public override bool TryComputeLength(out long length)

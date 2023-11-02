@@ -125,7 +125,6 @@ namespace System.Net.ClientModel.Core
         public static System.Net.ClientModel.Core.MessageBody Create(System.BinaryData value) { throw null; }
         public static System.Net.ClientModel.Core.MessageBody Create(System.IO.Stream stream) { throw null; }
         public static System.Net.ClientModel.Core.MessageBody Create(System.Net.ClientModel.Core.IModel<object> model, System.Net.ClientModel.ModelReaderWriterOptions? options = null) { throw null; }
-        public abstract void Dispose();
         public static explicit operator System.BinaryData (System.Net.ClientModel.Core.MessageBody body) { throw null; }
         public static explicit operator System.IO.Stream (System.Net.ClientModel.Core.MessageBody body) { throw null; }
         protected virtual System.BinaryData ToBinaryData(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -171,7 +170,8 @@ namespace System.Net.ClientModel.Core
     public abstract partial class MessageResponse : System.IDisposable
     {
         protected MessageResponse() { }
-        public abstract System.Net.ClientModel.Core.MessageBody? Body { get; protected internal set; }
+        public virtual System.BinaryData Content { get { throw null; } }
+        public abstract System.IO.Stream? ContentStream { get; set; }
         public abstract System.Net.ClientModel.Core.MessageHeaders Headers { get; }
         public bool IsError { get { throw null; } }
         public abstract string ReasonPhrase { get; }
@@ -399,7 +399,7 @@ namespace System.Net.ClientModel.Internal.Core
     public partial class HttpMessageResponse : System.Net.ClientModel.Core.MessageResponse, System.IDisposable
     {
         protected internal HttpMessageResponse(System.Net.Http.HttpResponseMessage httpResponse) { }
-        public override System.Net.ClientModel.Core.MessageBody? Body { get { throw null; } protected internal set { } }
+        public override System.IO.Stream? ContentStream { get { throw null; } set { } }
         public override System.Net.ClientModel.Core.MessageHeaders Headers { get { throw null; } }
         public override string ReasonPhrase { get { throw null; } }
         public override int Status { get { throw null; } }

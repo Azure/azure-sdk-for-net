@@ -89,15 +89,21 @@ namespace Azure
 
             public override int Status => _status;
 
-            public override MessageBody? Body
-            {
-                get => throw new NotSupportedException();
-                protected set => throw new NotSupportedException();
-            }
+            //public override MessageBody? Body
+            //{
+            //    get => throw new NotSupportedException();
+            //    protected set => throw new NotSupportedException();
+            //}
 
             public override string ReasonPhrase => throw new NotSupportedException();
 
             public override MessageHeaders Headers => throw new NotSupportedException();
+
+            public override Stream? ContentStream
+            {
+                get => throw new NotImplementedException();
+                set => throw new NotImplementedException();
+            }
 
             public override void Dispose() => throw new NotSupportedException();
         }

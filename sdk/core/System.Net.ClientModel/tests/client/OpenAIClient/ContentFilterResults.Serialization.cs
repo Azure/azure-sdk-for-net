@@ -70,7 +70,7 @@ public partial class ContentFilterResults
     /// <param name="response"> The response to deserialize the model from. </param>
     internal static ContentFilterResults FromResponse(MessageResponse response)
     {
-        using var document = JsonDocument.Parse((BinaryData)response.Body);
+        using var document = JsonDocument.Parse(response.Content);
         return DeserializeContentFilterResults(document.RootElement);
     }
 }
