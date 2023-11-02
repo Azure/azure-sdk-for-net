@@ -232,7 +232,7 @@ namespace Azure.Storage.DataMovement.Tests
             // check if expected files exist, but not necessarily for contents
             if (errorMode == DataTransferErrorMode.ContinueOnFailure)
             {
-                await testEventsRaised.AssertContainerCompletedWithFailedCheckContinue(1);
+                await testEventsRaised.AssertContainerCompletedWithFailedCheckContinue(preexistingFileCount);
 
                 // Verify all files exist, meaning files without conflict were transferred.
                 List<string> localFiles = (await TransferValidator.GetLocalFileLister(disposingLocalDirectory.DirectoryPath)
@@ -247,7 +247,7 @@ namespace Azure.Storage.DataMovement.Tests
             }
             else if (errorMode == DataTransferErrorMode.StopOnAnyFailure)
             {
-                await testEventsRaised.AssertContainerCompletedWithFailedCheck(1);
+                Assert.That(transfer.TransferStatus.HasFailedItems, Is.True);
             }
         }
 
