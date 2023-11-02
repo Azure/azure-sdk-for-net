@@ -27,6 +27,10 @@ namespace Azure.ResourceManager.HybridNetwork
     public partial class NetworkServiceDesignGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkServiceDesignGroupResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="publisherName"> The publisherName. </param>
+        /// <param name="networkServiceDesignGroupName"> The networkServiceDesignGroupName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string publisherName, string networkServiceDesignGroupName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/publishers/{publisherName}/networkServiceDesignGroups/{networkServiceDesignGroupName}";
@@ -92,7 +96,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> An object representing collection of NetworkServiceDesignVersionResources and their operations over a NetworkServiceDesignVersionResource. </returns>
         public virtual NetworkServiceDesignVersionCollection GetNetworkServiceDesignVersions()
         {
-            return GetCachedClient(Client => new NetworkServiceDesignVersionCollection(Client, Id));
+            return GetCachedClient(client => new NetworkServiceDesignVersionCollection(client, Id));
         }
 
         /// <summary>
@@ -110,8 +114,8 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </summary>
         /// <param name="networkServiceDesignVersionName"> The name of the network service design version. The name should conform to the SemVer 2.0.0 specification: https://semver.org/spec/v2.0.0.html. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkServiceDesignVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkServiceDesignVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkServiceDesignVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkServiceDesignVersionResource>> GetNetworkServiceDesignVersionAsync(string networkServiceDesignVersionName, CancellationToken cancellationToken = default)
         {
@@ -133,8 +137,8 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </summary>
         /// <param name="networkServiceDesignVersionName"> The name of the network service design version. The name should conform to the SemVer 2.0.0 specification: https://semver.org/spec/v2.0.0.html. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkServiceDesignVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkServiceDesignVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkServiceDesignVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkServiceDesignVersionResource> GetNetworkServiceDesignVersion(string networkServiceDesignVersionName, CancellationToken cancellationToken = default)
         {

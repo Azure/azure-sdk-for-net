@@ -11,11 +11,12 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.HybridNetwork;
 
-namespace Azure.ResourceManager.HybridNetwork
+namespace Azure.ResourceManager.HybridNetwork.Mocking
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    internal partial class SubscriptionResourceExtensionClient : ArmResource
+    public partial class MockableHybridNetworkSubscriptionResource : ArmResource
     {
         private ClientDiagnostics _configurationGroupValueClientDiagnostics;
         private ConfigurationGroupValuesRestOperations _configurationGroupValueRestClient;
@@ -28,15 +29,15 @@ namespace Azure.ResourceManager.HybridNetwork
         private ClientDiagnostics _siteNetworkServiceClientDiagnostics;
         private SiteNetworkServicesRestOperations _siteNetworkServiceRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
-        protected SubscriptionResourceExtensionClient()
+        /// <summary> Initializes a new instance of the <see cref="MockableHybridNetworkSubscriptionResource"/> class for mocking. </summary>
+        protected MockableHybridNetworkSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="MockableHybridNetworkSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MockableHybridNetworkSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationGroupValueRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ConfigurationGroupValueRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConfigurationGroupValueResource(Client, ConfigurationGroupValueData.DeserializeConfigurationGroupValueData(e)), ConfigurationGroupValueClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConfigurationGroupValues", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ConfigurationGroupValueResource(Client, ConfigurationGroupValueData.DeserializeConfigurationGroupValueData(e)), ConfigurationGroupValueClientDiagnostics, Pipeline, "MockableHybridNetworkSubscriptionResource.GetConfigurationGroupValues", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -98,7 +99,7 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationGroupValueRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ConfigurationGroupValueRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConfigurationGroupValueResource(Client, ConfigurationGroupValueData.DeserializeConfigurationGroupValueData(e)), ConfigurationGroupValueClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetConfigurationGroupValues", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ConfigurationGroupValueResource(Client, ConfigurationGroupValueData.DeserializeConfigurationGroupValueData(e)), ConfigurationGroupValueClientDiagnostics, Pipeline, "MockableHybridNetworkSubscriptionResource.GetConfigurationGroupValues", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -120,7 +121,7 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkFunctionRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkFunctionRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFunctionResource(Client, NetworkFunctionData.DeserializeNetworkFunctionData(e)), NetworkFunctionClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkFunctions", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetworkFunctionResource(Client, NetworkFunctionData.DeserializeNetworkFunctionData(e)), NetworkFunctionClientDiagnostics, Pipeline, "MockableHybridNetworkSubscriptionResource.GetNetworkFunctions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -142,7 +143,7 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetworkFunctionRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => NetworkFunctionRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFunctionResource(Client, NetworkFunctionData.DeserializeNetworkFunctionData(e)), NetworkFunctionClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetNetworkFunctions", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetworkFunctionResource(Client, NetworkFunctionData.DeserializeNetworkFunctionData(e)), NetworkFunctionClientDiagnostics, Pipeline, "MockableHybridNetworkSubscriptionResource.GetNetworkFunctions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -164,7 +165,7 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PublisherRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PublisherRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PublisherResource(Client, PublisherData.DeserializePublisherData(e)), PublisherClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPublishers", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PublisherResource(Client, PublisherData.DeserializePublisherData(e)), PublisherClientDiagnostics, Pipeline, "MockableHybridNetworkSubscriptionResource.GetPublishers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -186,7 +187,7 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PublisherRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PublisherRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PublisherResource(Client, PublisherData.DeserializePublisherData(e)), PublisherClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetPublishers", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PublisherResource(Client, PublisherData.DeserializePublisherData(e)), PublisherClientDiagnostics, Pipeline, "MockableHybridNetworkSubscriptionResource.GetPublishers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -208,7 +209,7 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SiteRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SiteRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteResource(Client, SiteData.DeserializeSiteData(e)), SiteClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSites", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteResource(Client, SiteData.DeserializeSiteData(e)), SiteClientDiagnostics, Pipeline, "MockableHybridNetworkSubscriptionResource.GetSites", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -230,7 +231,7 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SiteRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SiteRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteResource(Client, SiteData.DeserializeSiteData(e)), SiteClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSites", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteResource(Client, SiteData.DeserializeSiteData(e)), SiteClientDiagnostics, Pipeline, "MockableHybridNetworkSubscriptionResource.GetSites", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -252,7 +253,7 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SiteNetworkServiceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SiteNetworkServiceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteNetworkServiceResource(Client, SiteNetworkServiceData.DeserializeSiteNetworkServiceData(e)), SiteNetworkServiceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSiteNetworkServices", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SiteNetworkServiceResource(Client, SiteNetworkServiceData.DeserializeSiteNetworkServiceData(e)), SiteNetworkServiceClientDiagnostics, Pipeline, "MockableHybridNetworkSubscriptionResource.GetSiteNetworkServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -274,7 +275,7 @@ namespace Azure.ResourceManager.HybridNetwork
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SiteNetworkServiceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SiteNetworkServiceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteNetworkServiceResource(Client, SiteNetworkServiceData.DeserializeSiteNetworkServiceData(e)), SiteNetworkServiceClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetSiteNetworkServices", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SiteNetworkServiceResource(Client, SiteNetworkServiceData.DeserializeSiteNetworkServiceData(e)), SiteNetworkServiceClientDiagnostics, Pipeline, "MockableHybridNetworkSubscriptionResource.GetSiteNetworkServices", "value", "nextLink", cancellationToken);
         }
     }
 }
