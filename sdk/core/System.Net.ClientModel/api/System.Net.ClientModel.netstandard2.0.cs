@@ -156,7 +156,7 @@ namespace System.Net.ClientModel.Core
     public abstract partial class MessageResponse : System.IDisposable
     {
         protected MessageResponse() { }
-        public virtual System.BinaryData Content { get { throw null; } }
+        public virtual System.BinaryData Body { get { throw null; } }
         public abstract System.IO.Stream? ContentStream { get; set; }
         public abstract System.Net.ClientModel.Core.MessageHeaders Headers { get; }
         public bool IsError { get { throw null; } }

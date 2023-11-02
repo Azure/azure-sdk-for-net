@@ -61,7 +61,7 @@ public class IPAddressCountryPair : IJsonModel<IPAddressCountryPair>
 
     internal static IPAddressCountryPair FromResponse(MessageResponse response)
     {
-        using var document = JsonDocument.Parse(response.Content);
+        using var document = JsonDocument.Parse(response.Body);
         return FromJson(document.RootElement);
     }
 

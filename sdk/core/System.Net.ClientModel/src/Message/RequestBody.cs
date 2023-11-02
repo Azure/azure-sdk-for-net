@@ -50,8 +50,6 @@ namespace System.Net.ClientModel.Core
         /// <param name="cancellationToken">To cancellation token to use.</param>
         public abstract void WriteTo(Stream stream, CancellationToken cancellationToken);
 
-        internal virtual bool IsBuffered { get; }
-
         private sealed class ModelMessageBody : RequestBody, IDisposable
         {
             private readonly IModel<object> _model;
@@ -148,8 +146,6 @@ namespace System.Net.ClientModel.Core
             }
         }
 
-        // BinaryData holds ReadOnlyMemory<byte> so this is the type that works
-        // with BinaryData in an optimized way.
         private sealed class BinaryDataMessageBody : RequestBody
         {
             private readonly ReadOnlyMemory<byte> _bytes;
@@ -158,8 +154,6 @@ namespace System.Net.ClientModel.Core
             {
                 _bytes = bytes;
             }
-
-            internal override bool IsBuffered => true;
 
             public override bool TryComputeLength(out long length)
             {

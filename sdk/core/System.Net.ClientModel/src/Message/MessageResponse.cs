@@ -13,9 +13,7 @@ public abstract class MessageResponse : IDisposable
 
     public abstract MessageHeaders Headers { get; }
 
-    //public abstract MessageBody? Body { get; protected internal set; }
-
-    public virtual BinaryData Content
+    public virtual BinaryData Body
     {
         get
         {
