@@ -7,10 +7,10 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    [CodeGenModel("CustomContext")]
-    internal partial class CustomContextInternal
+    [CodeGenModel("CustomCallingContext")]
+    internal partial class CustomCallingContextInternal
     {
-        public CustomContextInternal(IDictionary<string, string> sipHeaders, IDictionary<string, string> voipHeaders)
+        public CustomCallingContextInternal(IDictionary<string, string> sipHeaders, IDictionary<string, string> voipHeaders)
         {
             SipHeaders = sipHeaders;
             VoipHeaders = voipHeaders;

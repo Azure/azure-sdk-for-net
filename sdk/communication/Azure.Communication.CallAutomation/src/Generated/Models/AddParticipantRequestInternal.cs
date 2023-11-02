@@ -48,7 +48,7 @@ namespace Azure.Communication.CallAutomation
         /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
         /// </summary>
         public string OperationCallbackUri { get; set; }
-        /// <summary> Used by customer to send custom context to targets. </summary>
-        public CustomContextInternal CustomContext { get; set; }
+        /// <summary> Used by customer to send custom calling context to targets. </summary>
+        public CustomCallingContextInternal CustomCallingContext { get; set; }
     }
 }

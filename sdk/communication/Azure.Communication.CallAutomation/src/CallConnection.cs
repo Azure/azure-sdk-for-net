@@ -276,7 +276,7 @@ namespace Azure.Communication.CallAutomation
         {
             TransferToParticipantRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(options.Target))
             {
-            	CustomContext = new CustomContextInternal(
+                CustomCallingContext = new CustomCallingContextInternal(
                 options.CustomContext?.SipHeaders ?? new ChangeTrackingDictionary<string, string>(),
                 options.CustomContext?.VoipHeaders ?? new ChangeTrackingDictionary<string, string>()),
                 OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext,
@@ -378,7 +378,7 @@ namespace Azure.Communication.CallAutomation
 
             AddParticipantRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(options.ParticipantToAdd.Target))
             {
-            	CustomContext = new CustomContextInternal(
+                CustomCallingContext = new CustomCallingContextInternal(
                     options.ParticipantToAdd.CustomContext?.SipHeaders ?? new ChangeTrackingDictionary<string, string>(),
                     options.ParticipantToAdd.CustomContext?.VoipHeaders ?? new ChangeTrackingDictionary<string, string>()
                     ),

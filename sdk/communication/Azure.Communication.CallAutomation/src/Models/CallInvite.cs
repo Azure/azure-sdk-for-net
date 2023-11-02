@@ -19,7 +19,7 @@ namespace Azure.Communication.CallAutomation
         {
             Target = targetPhoneNumberIdentity;
             SourceCallerIdNumber = callerIdNumber;
-            CustomContext = new CustomContext(sipHeaders: new Dictionary<string, string>(), voipHeaders: null);
+            CustomContext = new CustomCallingContext(sipHeaders: new Dictionary<string, string>(), voipHeaders: null);
         }
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace Azure.Communication.CallAutomation
         public CallInvite(CommunicationUserIdentifier targetIdentity)
         {
             Target = targetIdentity;
-            CustomContext = new CustomContext(sipHeaders: null, voipHeaders: new Dictionary<string, string>());
+            CustomContext = new CustomCallingContext(sipHeaders: null, voipHeaders: new Dictionary<string, string>());
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Azure.Communication.CallAutomation
         public CallInvite(MicrosoftTeamsUserIdentifier targetIdentity)
         {
             Target = targetIdentity;
-            CustomContext = new CustomContext(sipHeaders: null, voipHeaders: new Dictionary<string, string>());
+            CustomContext = new CustomCallingContext(sipHeaders: null, voipHeaders: new Dictionary<string, string>());
         }
 
         /// <summary>
@@ -63,6 +63,6 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// The Custom Context which contains SIP and voip headers
         /// </summary>
-        public CustomContext CustomContext { get; }
+        public CustomCallingContext CustomContext { get; }
     }
 }
