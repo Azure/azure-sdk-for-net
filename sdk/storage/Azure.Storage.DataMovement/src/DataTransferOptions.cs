@@ -16,10 +16,10 @@ namespace Azure.Storage.DataMovement
         /// The maximum size to use for each chunk when transferring data in chunks.
         /// The default value is 4 MiB.
         /// <para/>
-        /// This value may be clamped to the maximum allowed for the particular transfer/resource type.
+        /// When resuming a transfer, the default value will be the value specified
+        /// when the transfer was first started.
         /// <para/>
-        /// This value is ignored when resuming a transfer as the value used when initially
-        /// starting the transfer will be used.
+        /// This value may be clamped to the maximum allowed for the particular transfer/resource type.
         /// </summary>
         public long? MaximumTransferChunkSize { get; set; }
 
@@ -30,10 +30,10 @@ namespace Azure.Storage.DataMovement
         /// <see cref="MaximumTransferChunkSize"/>.
         /// The default value is 32 MiB.
         /// <para/>
-        /// This value may be clamped to the maximum allowed for the particular transfer/resource type.
+        /// When resuming a transfer, the default value will be the value specified
+        /// when the transfer was first started.
         /// <para/>
-        /// This value is ignored when resuming a transfer as the value used when initially
-        /// starting the transfer will be used.
+        /// This value may be clamped to the maximum allowed for the particular transfer/resource type.
         /// </summary>
         public long? InitialTransferSize { get; set; }
 
