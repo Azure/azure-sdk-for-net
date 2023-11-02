@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> An object representing collection of ImageVersionResources and their operations over a ImageVersionResource. </returns>
         public virtual ImageVersionCollection GetImageVersions()
         {
-            return GetCachedClient(Client => new ImageVersionCollection(Client, Id));
+            return GetCachedClient(client => new ImageVersionCollection(client, Id));
         }
 
         /// <summary>
@@ -113,8 +113,8 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="versionName"> The version of the image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ImageVersionResource>> GetImageVersionAsync(string versionName, CancellationToken cancellationToken = default)
         {
@@ -136,8 +136,8 @@ namespace Azure.ResourceManager.DevCenter
         /// </summary>
         /// <param name="versionName"> The version of the image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ImageVersionResource> GetImageVersion(string versionName, CancellationToken cancellationToken = default)
         {

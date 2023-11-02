@@ -654,6 +654,32 @@ namespace Azure.ResourceManager.SecurityInsights
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SecurityInsights.SecurityMLAnalyticsSettingResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SecurityInsights.SecurityMLAnalyticsSettingData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.SecurityInsights.Mocking
+{
+    public partial class MockableSecurityInsightsArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableSecurityInsightsArmClient() { }
+        public virtual Azure.ResourceManager.SecurityInsights.OperationalInsightsWorkspaceSecurityInsightsResource GetOperationalInsightsWorkspaceSecurityInsightsResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleActionResource GetSecurityInsightsAlertRuleActionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleResource GetSecurityInsightsAlertRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleTemplateResource GetSecurityInsightsAlertRuleTemplateResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.SecurityInsights.SecurityInsightsAutomationRuleResource GetSecurityInsightsAutomationRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.SecurityInsights.SecurityInsightsBookmarkResource GetSecurityInsightsBookmarkResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.SecurityInsights.SecurityInsightsDataConnectorResource GetSecurityInsightsDataConnectorResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentCommentResource GetSecurityInsightsIncidentCommentResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentRelationResource GetSecurityInsightsIncidentRelationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.SecurityInsights.SecurityInsightsIncidentResource GetSecurityInsightsIncidentResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.SecurityInsights.SecurityInsightsSentinelOnboardingStateResource GetSecurityInsightsSentinelOnboardingStateResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.SecurityInsights.SecurityInsightsThreatIntelligenceIndicatorResource GetSecurityInsightsThreatIntelligenceIndicatorResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.SecurityInsights.SecurityInsightsWatchlistItemResource GetSecurityInsightsWatchlistItemResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.SecurityInsights.SecurityInsightsWatchlistResource GetSecurityInsightsWatchlistResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.SecurityInsights.SecurityMLAnalyticsSettingResource GetSecurityMLAnalyticsSettingResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableSecurityInsightsResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableSecurityInsightsResourceGroupResource() { }
+    }
+}
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     public partial class AlertRuleTemplateDataSource

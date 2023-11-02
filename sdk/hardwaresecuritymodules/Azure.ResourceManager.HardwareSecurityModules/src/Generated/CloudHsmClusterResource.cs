@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <returns> An object representing collection of HardwareSecurityModulesPrivateEndpointConnectionResources and their operations over a HardwareSecurityModulesPrivateEndpointConnectionResource. </returns>
         public virtual HardwareSecurityModulesPrivateEndpointConnectionCollection GetHardwareSecurityModulesPrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new HardwareSecurityModulesPrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new HardwareSecurityModulesPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -119,8 +119,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </summary>
         /// <param name="peConnectionName"> Name of the private endpoint connection associated with the Cloud HSM Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<HardwareSecurityModulesPrivateEndpointConnectionResource>> GetHardwareSecurityModulesPrivateEndpointConnectionAsync(string peConnectionName, CancellationToken cancellationToken = default)
         {
@@ -142,8 +142,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </summary>
         /// <param name="peConnectionName"> Name of the private endpoint connection associated with the Cloud HSM Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="peConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<HardwareSecurityModulesPrivateEndpointConnectionResource> GetHardwareSecurityModulesPrivateEndpointConnection(string peConnectionName, CancellationToken cancellationToken = default)
         {

@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.IotCentral
         /// <returns> An object representing collection of IotCentralPrivateEndpointConnectionResources and their operations over a IotCentralPrivateEndpointConnectionResource. </returns>
         public virtual IotCentralPrivateEndpointConnectionCollection GetIotCentralPrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new IotCentralPrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new IotCentralPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -114,8 +114,8 @@ namespace Azure.ResourceManager.IotCentral
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The private endpoint connection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<IotCentralPrivateEndpointConnectionResource>> GetIotCentralPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -137,8 +137,8 @@ namespace Azure.ResourceManager.IotCentral
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The private endpoint connection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<IotCentralPrivateEndpointConnectionResource> GetIotCentralPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.IotCentral
         /// <returns> An object representing collection of IotCentralPrivateLinkResources and their operations over a IotCentralPrivateLinkResource. </returns>
         public virtual IotCentralPrivateLinkResourceCollection GetIotCentralPrivateLinkResources()
         {
-            return GetCachedClient(Client => new IotCentralPrivateLinkResourceCollection(Client, Id));
+            return GetCachedClient(client => new IotCentralPrivateLinkResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -167,8 +167,8 @@ namespace Azure.ResourceManager.IotCentral
         /// </summary>
         /// <param name="groupId"> The private link resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<IotCentralPrivateLinkResource>> GetIotCentralPrivateLinkResourceAsync(string groupId, CancellationToken cancellationToken = default)
         {
@@ -190,8 +190,8 @@ namespace Azure.ResourceManager.IotCentral
         /// </summary>
         /// <param name="groupId"> The private link resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<IotCentralPrivateLinkResource> GetIotCentralPrivateLinkResource(string groupId, CancellationToken cancellationToken = default)
         {

@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of RecommendedActionResources and their operations over a RecommendedActionResource. </returns>
         public virtual RecommendedActionCollection GetRecommendedActions()
         {
-            return GetCachedClient(Client => new RecommendedActionCollection(Client, Id));
+            return GetCachedClient(client => new RecommendedActionCollection(client, Id));
         }
 
         /// <summary>
@@ -113,8 +113,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="recommendedActionName"> The name of Database Recommended Action. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="recommendedActionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recommendedActionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recommendedActionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<RecommendedActionResource>> GetRecommendedActionAsync(string recommendedActionName, CancellationToken cancellationToken = default)
         {
@@ -136,8 +136,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="recommendedActionName"> The name of Database Recommended Action. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="recommendedActionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recommendedActionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="recommendedActionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<RecommendedActionResource> GetRecommendedAction(string recommendedActionName, CancellationToken cancellationToken = default)
         {

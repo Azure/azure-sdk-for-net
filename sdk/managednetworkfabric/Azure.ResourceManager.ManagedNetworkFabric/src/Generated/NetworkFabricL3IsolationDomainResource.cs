@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An object representing collection of NetworkFabricInternalNetworkResources and their operations over a NetworkFabricInternalNetworkResource. </returns>
         public virtual NetworkFabricInternalNetworkCollection GetNetworkFabricInternalNetworks()
         {
-            return GetCachedClient(Client => new NetworkFabricInternalNetworkCollection(Client, Id));
+            return GetCachedClient(client => new NetworkFabricInternalNetworkCollection(client, Id));
         }
 
         /// <summary>
@@ -114,8 +114,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="internalNetworkName"> Name of the Internal Network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="internalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="internalNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="internalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkFabricInternalNetworkResource>> GetNetworkFabricInternalNetworkAsync(string internalNetworkName, CancellationToken cancellationToken = default)
         {
@@ -137,8 +137,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="internalNetworkName"> Name of the Internal Network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="internalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="internalNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="internalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkFabricInternalNetworkResource> GetNetworkFabricInternalNetwork(string internalNetworkName, CancellationToken cancellationToken = default)
         {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <returns> An object representing collection of NetworkFabricExternalNetworkResources and their operations over a NetworkFabricExternalNetworkResource. </returns>
         public virtual NetworkFabricExternalNetworkCollection GetNetworkFabricExternalNetworks()
         {
-            return GetCachedClient(Client => new NetworkFabricExternalNetworkCollection(Client, Id));
+            return GetCachedClient(client => new NetworkFabricExternalNetworkCollection(client, Id));
         }
 
         /// <summary>
@@ -167,8 +167,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="externalNetworkName"> Name of the External Network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="externalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="externalNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="externalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkFabricExternalNetworkResource>> GetNetworkFabricExternalNetworkAsync(string externalNetworkName, CancellationToken cancellationToken = default)
         {
@@ -190,8 +190,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </summary>
         /// <param name="externalNetworkName"> Name of the External Network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="externalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="externalNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="externalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkFabricExternalNetworkResource> GetNetworkFabricExternalNetwork(string externalNetworkName, CancellationToken cancellationToken = default)
         {

@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <returns> An object representing collection of CosmosDBForPostgreSqlClusterServerResources and their operations over a CosmosDBForPostgreSqlClusterServerResource. </returns>
         public virtual CosmosDBForPostgreSqlClusterServerCollection GetCosmosDBForPostgreSqlClusterServers()
         {
-            return GetCachedClient(Client => new CosmosDBForPostgreSqlClusterServerCollection(Client, Id));
+            return GetCachedClient(client => new CosmosDBForPostgreSqlClusterServerCollection(client, Id));
         }
 
         /// <summary>
@@ -114,8 +114,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </summary>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<CosmosDBForPostgreSqlClusterServerResource>> GetCosmosDBForPostgreSqlClusterServerAsync(string serverName, CancellationToken cancellationToken = default)
         {
@@ -137,8 +137,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </summary>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<CosmosDBForPostgreSqlClusterServerResource> GetCosmosDBForPostgreSqlClusterServer(string serverName, CancellationToken cancellationToken = default)
         {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <returns> An object representing collection of CosmosDBForPostgreSqlConfigurationResources and their operations over a CosmosDBForPostgreSqlConfigurationResource. </returns>
         public virtual CosmosDBForPostgreSqlConfigurationCollection GetCosmosDBForPostgreSqlConfigurations()
         {
-            return GetCachedClient(Client => new CosmosDBForPostgreSqlConfigurationCollection(Client, Id));
+            return GetCachedClient(client => new CosmosDBForPostgreSqlConfigurationCollection(client, Id));
         }
 
         /// <summary>
@@ -167,8 +167,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </summary>
         /// <param name="configurationName"> The name of the cluster configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<CosmosDBForPostgreSqlConfigurationResource>> GetCosmosDBForPostgreSqlConfigurationAsync(string configurationName, CancellationToken cancellationToken = default)
         {
@@ -190,8 +190,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </summary>
         /// <param name="configurationName"> The name of the cluster configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<CosmosDBForPostgreSqlConfigurationResource> GetCosmosDBForPostgreSqlConfiguration(string configurationName, CancellationToken cancellationToken = default)
         {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <returns> An object representing collection of CosmosDBForPostgreSqlCoordinatorConfigurationResources and their operations over a CosmosDBForPostgreSqlCoordinatorConfigurationResource. </returns>
         public virtual CosmosDBForPostgreSqlCoordinatorConfigurationCollection GetCosmosDBForPostgreSqlCoordinatorConfigurations()
         {
-            return GetCachedClient(Client => new CosmosDBForPostgreSqlCoordinatorConfigurationCollection(Client, Id));
+            return GetCachedClient(client => new CosmosDBForPostgreSqlCoordinatorConfigurationCollection(client, Id));
         }
 
         /// <summary>
@@ -220,8 +220,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </summary>
         /// <param name="configurationName"> The name of the cluster configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<CosmosDBForPostgreSqlCoordinatorConfigurationResource>> GetCosmosDBForPostgreSqlCoordinatorConfigurationAsync(string configurationName, CancellationToken cancellationToken = default)
         {
@@ -243,8 +243,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </summary>
         /// <param name="configurationName"> The name of the cluster configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<CosmosDBForPostgreSqlCoordinatorConfigurationResource> GetCosmosDBForPostgreSqlCoordinatorConfiguration(string configurationName, CancellationToken cancellationToken = default)
         {
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <returns> An object representing collection of CosmosDBForPostgreSqlNodeConfigurationResources and their operations over a CosmosDBForPostgreSqlNodeConfigurationResource. </returns>
         public virtual CosmosDBForPostgreSqlNodeConfigurationCollection GetCosmosDBForPostgreSqlNodeConfigurations()
         {
-            return GetCachedClient(Client => new CosmosDBForPostgreSqlNodeConfigurationCollection(Client, Id));
+            return GetCachedClient(client => new CosmosDBForPostgreSqlNodeConfigurationCollection(client, Id));
         }
 
         /// <summary>
@@ -273,8 +273,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </summary>
         /// <param name="configurationName"> The name of the cluster configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<CosmosDBForPostgreSqlNodeConfigurationResource>> GetCosmosDBForPostgreSqlNodeConfigurationAsync(string configurationName, CancellationToken cancellationToken = default)
         {
@@ -296,8 +296,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </summary>
         /// <param name="configurationName"> The name of the cluster configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<CosmosDBForPostgreSqlNodeConfigurationResource> GetCosmosDBForPostgreSqlNodeConfiguration(string configurationName, CancellationToken cancellationToken = default)
         {
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <returns> An object representing collection of CosmosDBForPostgreSqlFirewallRuleResources and their operations over a CosmosDBForPostgreSqlFirewallRuleResource. </returns>
         public virtual CosmosDBForPostgreSqlFirewallRuleCollection GetCosmosDBForPostgreSqlFirewallRules()
         {
-            return GetCachedClient(Client => new CosmosDBForPostgreSqlFirewallRuleCollection(Client, Id));
+            return GetCachedClient(client => new CosmosDBForPostgreSqlFirewallRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -326,8 +326,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </summary>
         /// <param name="firewallRuleName"> The name of the cluster firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<CosmosDBForPostgreSqlFirewallRuleResource>> GetCosmosDBForPostgreSqlFirewallRuleAsync(string firewallRuleName, CancellationToken cancellationToken = default)
         {
@@ -349,8 +349,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </summary>
         /// <param name="firewallRuleName"> The name of the cluster firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<CosmosDBForPostgreSqlFirewallRuleResource> GetCosmosDBForPostgreSqlFirewallRule(string firewallRuleName, CancellationToken cancellationToken = default)
         {
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <returns> An object representing collection of CosmosDBForPostgreSqlRoleResources and their operations over a CosmosDBForPostgreSqlRoleResource. </returns>
         public virtual CosmosDBForPostgreSqlRoleCollection GetCosmosDBForPostgreSqlRoles()
         {
-            return GetCachedClient(Client => new CosmosDBForPostgreSqlRoleCollection(Client, Id));
+            return GetCachedClient(client => new CosmosDBForPostgreSqlRoleCollection(client, Id));
         }
 
         /// <summary>
@@ -379,8 +379,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </summary>
         /// <param name="roleName"> The name of the cluster role. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<CosmosDBForPostgreSqlRoleResource>> GetCosmosDBForPostgreSqlRoleAsync(string roleName, CancellationToken cancellationToken = default)
         {
@@ -402,8 +402,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </summary>
         /// <param name="roleName"> The name of the cluster role. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="roleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="roleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<CosmosDBForPostgreSqlRoleResource> GetCosmosDBForPostgreSqlRole(string roleName, CancellationToken cancellationToken = default)
         {
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <returns> An object representing collection of CosmosDBForPostgreSqlPrivateEndpointConnectionResources and their operations over a CosmosDBForPostgreSqlPrivateEndpointConnectionResource. </returns>
         public virtual CosmosDBForPostgreSqlPrivateEndpointConnectionCollection GetCosmosDBForPostgreSqlPrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new CosmosDBForPostgreSqlPrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new CosmosDBForPostgreSqlPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -432,8 +432,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<CosmosDBForPostgreSqlPrivateEndpointConnectionResource>> GetCosmosDBForPostgreSqlPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -455,8 +455,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<CosmosDBForPostgreSqlPrivateEndpointConnectionResource> GetCosmosDBForPostgreSqlPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <returns> An object representing collection of CosmosDBForPostgreSqlPrivateLinkResources and their operations over a CosmosDBForPostgreSqlPrivateLinkResource. </returns>
         public virtual CosmosDBForPostgreSqlPrivateLinkResourceCollection GetCosmosDBForPostgreSqlPrivateLinkResources()
         {
-            return GetCachedClient(Client => new CosmosDBForPostgreSqlPrivateLinkResourceCollection(Client, Id));
+            return GetCachedClient(client => new CosmosDBForPostgreSqlPrivateLinkResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -485,8 +485,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </summary>
         /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<CosmosDBForPostgreSqlPrivateLinkResource>> GetCosmosDBForPostgreSqlPrivateLinkResourceAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
@@ -508,8 +508,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// </summary>
         /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<CosmosDBForPostgreSqlPrivateLinkResource> GetCosmosDBForPostgreSqlPrivateLinkResource(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {

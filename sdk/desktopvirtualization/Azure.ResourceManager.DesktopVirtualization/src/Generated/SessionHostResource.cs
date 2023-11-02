@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> An object representing collection of UserSessionResources and their operations over a UserSessionResource. </returns>
         public virtual UserSessionCollection GetUserSessions()
         {
-            return GetCachedClient(Client => new UserSessionCollection(Client, Id));
+            return GetCachedClient(client => new UserSessionCollection(client, Id));
         }
 
         /// <summary>
@@ -113,8 +113,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="userSessionId"> The name of the user session within the specified session host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="userSessionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="userSessionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userSessionId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<UserSessionResource>> GetUserSessionAsync(string userSessionId, CancellationToken cancellationToken = default)
         {
@@ -136,8 +136,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </summary>
         /// <param name="userSessionId"> The name of the user session within the specified session host. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="userSessionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="userSessionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="userSessionId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<UserSessionResource> GetUserSession(string userSessionId, CancellationToken cancellationToken = default)
         {
