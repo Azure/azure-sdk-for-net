@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> An object representing collection of ServiceProjectTaskResources and their operations over a ServiceProjectTaskResource. </returns>
         public virtual ServiceProjectTaskCollection GetServiceProjectTasks()
         {
-            return GetCachedClient(Client => new ServiceProjectTaskCollection(Client, Id));
+            return GetCachedClient(client => new ServiceProjectTaskCollection(client, Id));
         }
 
         /// <summary>
@@ -114,8 +114,8 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="taskName"> Name of the Task. </param>
         /// <param name="expand"> Expand the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ServiceProjectTaskResource>> GetServiceProjectTaskAsync(string taskName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -138,8 +138,8 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="taskName"> Name of the Task. </param>
         /// <param name="expand"> Expand the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ServiceProjectTaskResource> GetServiceProjectTask(string taskName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <returns> An object representing collection of ProjectFileResources and their operations over a ProjectFileResource. </returns>
         public virtual ProjectFileCollection GetProjectFiles()
         {
-            return GetCachedClient(Client => new ProjectFileCollection(Client, Id));
+            return GetCachedClient(client => new ProjectFileCollection(client, Id));
         }
 
         /// <summary>
@@ -168,8 +168,8 @@ namespace Azure.ResourceManager.DataMigration
         /// </summary>
         /// <param name="fileName"> Name of the File. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ProjectFileResource>> GetProjectFileAsync(string fileName, CancellationToken cancellationToken = default)
         {
@@ -191,8 +191,8 @@ namespace Azure.ResourceManager.DataMigration
         /// </summary>
         /// <param name="fileName"> Name of the File. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fileName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ProjectFileResource> GetProjectFile(string fileName, CancellationToken cancellationToken = default)
         {

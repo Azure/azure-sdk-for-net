@@ -1,6 +1,6 @@
 {
   "main": "dist/src/index.js",
   "dependencies": {
-    "@azure-tools/typespec-csharp": "0.2.0-beta.20231101.1"
+    "@azure-tools/typespec-csharp": "0.2.0-beta.20231102.2"
   }
 }

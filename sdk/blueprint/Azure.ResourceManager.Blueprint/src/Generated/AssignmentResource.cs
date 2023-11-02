@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Blueprint
         /// <returns> An object representing collection of AssignmentOperationResources and their operations over a AssignmentOperationResource. </returns>
         public virtual AssignmentOperationCollection GetAssignmentOperations()
         {
-            return GetCachedClient(Client => new AssignmentOperationCollection(Client, Id));
+            return GetCachedClient(client => new AssignmentOperationCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.Blueprint
         /// </summary>
         /// <param name="assignmentOperationName"> Name of the blueprint assignment operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="assignmentOperationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentOperationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assignmentOperationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AssignmentOperationResource>> GetAssignmentOperationAsync(string assignmentOperationName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +134,8 @@ namespace Azure.ResourceManager.Blueprint
         /// </summary>
         /// <param name="assignmentOperationName"> Name of the blueprint assignment operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="assignmentOperationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentOperationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assignmentOperationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AssignmentOperationResource> GetAssignmentOperation(string assignmentOperationName, CancellationToken cancellationToken = default)
         {

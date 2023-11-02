@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> An object representing collection of AutomanageConfigurationProfileVersionResources and their operations over a AutomanageConfigurationProfileVersionResource. </returns>
         public virtual AutomanageConfigurationProfileVersionCollection GetAutomanageConfigurationProfileVersions()
         {
-            return GetCachedClient(Client => new AutomanageConfigurationProfileVersionCollection(Client, Id));
+            return GetCachedClient(client => new AutomanageConfigurationProfileVersionCollection(client, Id));
         }
 
         /// <summary>
@@ -114,8 +114,8 @@ namespace Azure.ResourceManager.Automanage
         /// </summary>
         /// <param name="versionName"> The configuration profile version name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AutomanageConfigurationProfileVersionResource>> GetAutomanageConfigurationProfileVersionAsync(string versionName, CancellationToken cancellationToken = default)
         {
@@ -137,8 +137,8 @@ namespace Azure.ResourceManager.Automanage
         /// </summary>
         /// <param name="versionName"> The configuration profile version name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AutomanageConfigurationProfileVersionResource> GetAutomanageConfigurationProfileVersion(string versionName, CancellationToken cancellationToken = default)
         {

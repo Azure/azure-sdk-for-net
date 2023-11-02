@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> An object representing collection of ConnectorMappingResourceFormatResources and their operations over a ConnectorMappingResourceFormatResource. </returns>
         public virtual ConnectorMappingResourceFormatCollection GetConnectorMappingResourceFormats()
         {
-            return GetCachedClient(Client => new ConnectorMappingResourceFormatCollection(Client, Id));
+            return GetCachedClient(client => new ConnectorMappingResourceFormatCollection(client, Id));
         }
 
         /// <summary>
@@ -112,8 +112,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// </summary>
         /// <param name="mappingName"> The name of the connector mapping. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="mappingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="mappingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="mappingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ConnectorMappingResourceFormatResource>> GetConnectorMappingResourceFormatAsync(string mappingName, CancellationToken cancellationToken = default)
         {
@@ -135,8 +135,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// </summary>
         /// <param name="mappingName"> The name of the connector mapping. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="mappingName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="mappingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="mappingName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ConnectorMappingResourceFormatResource> GetConnectorMappingResourceFormat(string mappingName, CancellationToken cancellationToken = default)
         {

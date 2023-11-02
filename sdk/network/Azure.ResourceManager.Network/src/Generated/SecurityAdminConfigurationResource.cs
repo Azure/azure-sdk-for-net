@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of AdminRuleGroupResources and their operations over a AdminRuleGroupResource. </returns>
         public virtual AdminRuleGroupCollection GetAdminRuleGroups()
         {
-            return GetCachedClient(Client => new AdminRuleGroupCollection(Client, Id));
+            return GetCachedClient(client => new AdminRuleGroupCollection(client, Id));
         }
 
         /// <summary>
@@ -112,8 +112,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="ruleCollectionName"> The name of the network manager security Configuration rule collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AdminRuleGroupResource>> GetAdminRuleGroupAsync(string ruleCollectionName, CancellationToken cancellationToken = default)
         {
@@ -135,8 +135,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="ruleCollectionName"> The name of the network manager security Configuration rule collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleCollectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleCollectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AdminRuleGroupResource> GetAdminRuleGroup(string ruleCollectionName, CancellationToken cancellationToken = default)
         {
