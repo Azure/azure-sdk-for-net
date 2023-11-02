@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ArcVm.Tests
             string publisher = "microsoftwindowsserver";
             string offer = "windowsserver";
             string sku = "2022-datacenter-azure-edition-core";
-            string version = "20348.1850.230906";
+            string version = "20348.2031.231006";
 
             var data = new MarketplaceGalleryImageData(Location)
             {
@@ -209,26 +209,15 @@ namespace Azure.ResourceManager.ArcVm.Tests
 
         protected async Task<VirtualMachineInstanceResource> CreateVirtualMachineInstanceAsync()
         {
-            string virtualMachineInstanceNamePrefix = "hci-dotnet-vm-";
-            string virtualMachineInstanceName = Recording.GenerateAssetName(virtualMachineInstanceNamePrefix);
             var extendedLocation = new ExtendedLocation()
             {
                 Name = CustomLocationId,
                 ExtendedLocationType = ExtendedLocationType.CustomLocation,
             };
 
-            // creation of hybridcompute machine required as a prereq
-            HybridComputeMachineData hcData = new HybridComputeMachineData(Location)
-            {
-                Identity = new ResourceManager.Models.ManagedServiceIdentity("SystemAssigned"),
-                LocationData = new LocationData("Redmond"),
-                VmId = Guid.NewGuid(),
-                ClientPublicKey = "string",
-            };
-
-            await ResourceGroup.GetHybridComputeMachines().CreateOrUpdateAsync(WaitUntil.Completed, virtualMachineInstanceName, hcData);
-
-            // creation of nic, galleryimage, and storagepath as a prereq
+            // creation of hybridcompute machine assumed as a prereq since creation not allowed in sdk
+            // as a result the vm will use the same rg as the hybridcompute machine
+            // creation of nic and galleryimage as a prereq
             var lnet = await CreateLogicalNetworkAsync();
             await RetryUntilSuccessOrTimeout(() => ProvisioningStateSucceeded(lnet), TimeSpan.FromSeconds(100));
             Assert.AreEqual(lnet.Data.ProvisioningState, ProvisioningStateEnum.Succeeded);
@@ -241,23 +230,18 @@ namespace Azure.ResourceManager.ArcVm.Tests
             await RetryUntilSuccessOrTimeout(() => ProvisioningStateSucceeded(image), TimeSpan.FromSeconds(3000));
             Assert.AreEqual(image.Data.ProvisioningState, ProvisioningStateEnum.Succeeded);
 
-            var sc = await CreateStorageContainerAsync();
-            await RetryUntilSuccessOrTimeout(() => ProvisioningStateSucceeded(sc), TimeSpan.FromSeconds(100));
-            Assert.AreEqual(sc.Data.ProvisioningState, ProvisioningStateEnum.Succeeded);
-
             var data = new VirtualMachineInstanceData()
             {
                 ExtendedLocation = extendedLocation,
                 OSProfile = new VirtualMachineInstancePropertiesOSProfile()
                 {
-                    AdminPassword = "password",
-                    AdminUsername = "localadmin",
+                    AdminPassword = TestEnvironment.VmPass,
+                    AdminUsername = TestEnvironment.VmUsername,
                     ComputerName = "dotnetvm",
                 },
                 StorageProfile = new VirtualMachineInstancePropertiesStorageProfile()
                 {
                     ImageReferenceId = image.Id,
-                    VmConfigStoragePathId = sc.Id,
                 },
                 NetworkProfile = new VirtualMachineInstancePropertiesNetworkProfile(),
                 HardwareProfile = new VirtualMachineInstancePropertiesHardwareProfile()
@@ -275,10 +259,12 @@ namespace Azure.ResourceManager.ArcVm.Tests
                 Id = nic.Id,
             });
 
-            string resourceUri = $"/subscriptions/{DefaultSubscription}/resourceGroups/{ResourceGroup.Id}/Microsoft.HybridCompute/machines/{virtualMachineInstanceName}";
+            string resourceUri = $"{DefaultSubscription.Id.ToString()}/resourceGroups/hci-dotnet-test-rg/Microsoft.HybridCompute/machines/{TestEnvironment.MachineName}";
             ResourceIdentifier virtualMachineInstanceResourceId = VirtualMachineInstanceResource.CreateResourceIdentifier(resourceUri);
-            VirtualMachineInstanceResource virtualMachineInstance = Client.GetVirtualMachineInstanceResource(virtualMachineInstanceResourceId);
-            var lro = await virtualMachineInstance.CreateOrUpdateAsync(WaitUntil.Completed, data);
+            Console.WriteLine(virtualMachineInstanceResourceId.ResourceType);
+            Console.WriteLine(resourceUri);
+            VirtualMachineInstanceResource virtualMachineInstanceResource = new VirtualMachineInstanceResource(Client, virtualMachineInstanceResourceId);
+            var lro = await virtualMachineInstanceResource.CreateOrUpdateAsync(WaitUntil.Completed, data);
             return lro.Value;
         }
 
