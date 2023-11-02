@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <returns> An object representing collection of HybridComputeMachineExtensionResources and their operations over a HybridComputeMachineExtensionResource. </returns>
         public virtual HybridComputeMachineExtensionCollection GetHybridComputeMachineExtensions()
         {
-            return GetCachedClient(Client => new HybridComputeMachineExtensionCollection(Client, Id));
+            return GetCachedClient(client => new HybridComputeMachineExtensionCollection(client, Id));
         }
 
         /// <summary>
@@ -127,8 +127,8 @@ namespace Azure.ResourceManager.HybridCompute
         /// </summary>
         /// <param name="extensionName"> The name of the machine extension. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<HybridComputeMachineExtensionResource>> GetHybridComputeMachineExtensionAsync(string extensionName, CancellationToken cancellationToken = default)
         {
@@ -150,8 +150,8 @@ namespace Azure.ResourceManager.HybridCompute
         /// </summary>
         /// <param name="extensionName"> The name of the machine extension. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="extensionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<HybridComputeMachineExtensionResource> GetHybridComputeMachineExtension(string extensionName, CancellationToken cancellationToken = default)
         {

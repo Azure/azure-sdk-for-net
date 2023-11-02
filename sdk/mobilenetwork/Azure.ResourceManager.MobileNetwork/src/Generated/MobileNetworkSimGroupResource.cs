@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> An object representing collection of MobileNetworkSimResources and their operations over a MobileNetworkSimResource. </returns>
         public virtual MobileNetworkSimCollection GetMobileNetworkSims()
         {
-            return GetCachedClient(Client => new MobileNetworkSimCollection(Client, Id));
+            return GetCachedClient(client => new MobileNetworkSimCollection(client, Id));
         }
 
         /// <summary>
@@ -119,8 +119,8 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </summary>
         /// <param name="simName"> The name of the SIM. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="simName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="simName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="simName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MobileNetworkSimResource>> GetMobileNetworkSimAsync(string simName, CancellationToken cancellationToken = default)
         {
@@ -142,8 +142,8 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </summary>
         /// <param name="simName"> The name of the SIM. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="simName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="simName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="simName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MobileNetworkSimResource> GetMobileNetworkSim(string simName, CancellationToken cancellationToken = default)
         {

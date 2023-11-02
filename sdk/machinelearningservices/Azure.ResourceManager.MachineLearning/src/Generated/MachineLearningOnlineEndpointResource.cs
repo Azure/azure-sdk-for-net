@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// <returns> An object representing collection of MachineLearningOnlineDeploymentResources and their operations over a MachineLearningOnlineDeploymentResource. </returns>
         public virtual MachineLearningOnlineDeploymentCollection GetMachineLearningOnlineDeployments()
         {
-            return GetCachedClient(Client => new MachineLearningOnlineDeploymentCollection(Client, Id));
+            return GetCachedClient(client => new MachineLearningOnlineDeploymentCollection(client, Id));
         }
 
         /// <summary>
@@ -114,8 +114,8 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="deploymentName"> Inference Endpoint Deployment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<MachineLearningOnlineDeploymentResource>> GetMachineLearningOnlineDeploymentAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
@@ -137,8 +137,8 @@ namespace Azure.ResourceManager.MachineLearning
         /// </summary>
         /// <param name="deploymentName"> Inference Endpoint Deployment name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<MachineLearningOnlineDeploymentResource> GetMachineLearningOnlineDeployment(string deploymentName, CancellationToken cancellationToken = default)
         {

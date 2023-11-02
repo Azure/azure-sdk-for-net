@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of NetworkInterfaceIPConfigurationResources and their operations over a NetworkInterfaceIPConfigurationResource. </returns>
         public virtual NetworkInterfaceIPConfigurationCollection GetNetworkInterfaceIPConfigurations()
         {
-            return GetCachedClient(Client => new NetworkInterfaceIPConfigurationCollection(Client, Id));
+            return GetCachedClient(client => new NetworkInterfaceIPConfigurationCollection(client, Id));
         }
 
         /// <summary>
@@ -119,8 +119,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="ipConfigurationName"> The name of the ip configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkInterfaceIPConfigurationResource>> GetNetworkInterfaceIPConfigurationAsync(string ipConfigurationName, CancellationToken cancellationToken = default)
         {
@@ -142,8 +142,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="ipConfigurationName"> The name of the ip configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ipConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ipConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkInterfaceIPConfigurationResource> GetNetworkInterfaceIPConfiguration(string ipConfigurationName, CancellationToken cancellationToken = default)
         {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of NetworkInterfaceTapConfigurationResources and their operations over a NetworkInterfaceTapConfigurationResource. </returns>
         public virtual NetworkInterfaceTapConfigurationCollection GetNetworkInterfaceTapConfigurations()
         {
-            return GetCachedClient(Client => new NetworkInterfaceTapConfigurationCollection(Client, Id));
+            return GetCachedClient(client => new NetworkInterfaceTapConfigurationCollection(client, Id));
         }
 
         /// <summary>
@@ -172,8 +172,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="tapConfigurationName"> The name of the tap configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="tapConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tapConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tapConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkInterfaceTapConfigurationResource>> GetNetworkInterfaceTapConfigurationAsync(string tapConfigurationName, CancellationToken cancellationToken = default)
         {
@@ -195,8 +195,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="tapConfigurationName"> The name of the tap configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="tapConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="tapConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="tapConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkInterfaceTapConfigurationResource> GetNetworkInterfaceTapConfiguration(string tapConfigurationName, CancellationToken cancellationToken = default)
         {

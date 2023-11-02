@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <returns> An object representing collection of NetworkFunctionDefinitionVersionResources and their operations over a NetworkFunctionDefinitionVersionResource. </returns>
         public virtual NetworkFunctionDefinitionVersionCollection GetNetworkFunctionDefinitionVersions()
         {
-            return GetCachedClient(Client => new NetworkFunctionDefinitionVersionCollection(Client, Id));
+            return GetCachedClient(client => new NetworkFunctionDefinitionVersionCollection(client, Id));
         }
 
         /// <summary>
@@ -114,8 +114,8 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </summary>
         /// <param name="networkFunctionDefinitionVersionName"> The name of the network function definition version. The name should conform to the SemVer 2.0.0 specification: https://semver.org/spec/v2.0.0.html. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkFunctionDefinitionVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionDefinitionVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkFunctionDefinitionVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<NetworkFunctionDefinitionVersionResource>> GetNetworkFunctionDefinitionVersionAsync(string networkFunctionDefinitionVersionName, CancellationToken cancellationToken = default)
         {
@@ -137,8 +137,8 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </summary>
         /// <param name="networkFunctionDefinitionVersionName"> The name of the network function definition version. The name should conform to the SemVer 2.0.0 specification: https://semver.org/spec/v2.0.0.html. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="networkFunctionDefinitionVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionDefinitionVersionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkFunctionDefinitionVersionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<NetworkFunctionDefinitionVersionResource> GetNetworkFunctionDefinitionVersion(string networkFunctionDefinitionVersionName, CancellationToken cancellationToken = default)
         {

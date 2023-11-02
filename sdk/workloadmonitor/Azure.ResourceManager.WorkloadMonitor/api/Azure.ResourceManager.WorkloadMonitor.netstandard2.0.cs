@@ -90,6 +90,22 @@ namespace Azure.ResourceManager.WorkloadMonitor
         public static Azure.ResourceManager.WorkloadMonitor.HealthMonitorStateChangeResource GetHealthMonitorStateChangeResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
     }
 }
+namespace Azure.ResourceManager.WorkloadMonitor.Mocking
+{
+    public partial class MockableWorkloadMonitorArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableWorkloadMonitorArmClient() { }
+        public virtual Azure.ResourceManager.WorkloadMonitor.HealthMonitorResource GetHealthMonitorResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.WorkloadMonitor.HealthMonitorStateChangeResource GetHealthMonitorStateChangeResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableWorkloadMonitorResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableWorkloadMonitorResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.WorkloadMonitor.HealthMonitorResource> GetHealthMonitor(string providerName, string resourceCollectionName, string resourceName, string monitorId, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.WorkloadMonitor.HealthMonitorResource>> GetHealthMonitorAsync(string providerName, string resourceCollectionName, string resourceName, string monitorId, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.WorkloadMonitor.HealthMonitorCollection GetHealthMonitors(string providerName, string resourceCollectionName, string resourceName) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.WorkloadMonitor.Models
 {
     public static partial class ArmWorkloadMonitorModelFactory

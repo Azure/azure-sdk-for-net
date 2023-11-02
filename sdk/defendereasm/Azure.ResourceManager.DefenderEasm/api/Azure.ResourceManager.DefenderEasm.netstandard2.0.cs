@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DefenderEasm
     }
     public partial class EasmWorkspaceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public EasmWorkspaceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public EasmWorkspaceData(Azure.Core.AzureLocation location) { }
         public string DataPlaneEndpoint { get { throw null; } }
         public Azure.ResourceManager.DefenderEasm.Models.EasmResourceProvisioningState? ProvisioningState { get { throw null; } }
     }
@@ -95,6 +95,28 @@ namespace Azure.ResourceManager.DefenderEasm
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DefenderEasm.EasmWorkspaceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DefenderEasm.EasmWorkspaceResource> Update(Azure.ResourceManager.DefenderEasm.Models.EasmWorkspacePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DefenderEasm.EasmWorkspaceResource>> UpdateAsync(Azure.ResourceManager.DefenderEasm.Models.EasmWorkspacePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
+namespace Azure.ResourceManager.DefenderEasm.Mocking
+{
+    public partial class MockableDefenderEasmArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableDefenderEasmArmClient() { }
+        public virtual Azure.ResourceManager.DefenderEasm.EasmLabelResource GetEasmLabelResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.DefenderEasm.EasmWorkspaceResource GetEasmWorkspaceResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableDefenderEasmResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableDefenderEasmResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.DefenderEasm.EasmWorkspaceResource> GetEasmWorkspace(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DefenderEasm.EasmWorkspaceResource>> GetEasmWorkspaceAsync(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DefenderEasm.EasmWorkspaceCollection GetEasmWorkspaces() { throw null; }
+    }
+    public partial class MockableDefenderEasmSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableDefenderEasmSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.DefenderEasm.EasmWorkspaceResource> GetEasmWorkspaces(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DefenderEasm.EasmWorkspaceResource> GetEasmWorkspacesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.DefenderEasm.Models

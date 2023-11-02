@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An object representing collection of AutomationPrivateEndpointConnectionResources and their operations over a AutomationPrivateEndpointConnectionResource. </returns>
         public virtual AutomationPrivateEndpointConnectionCollection GetAutomationPrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new AutomationPrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new AutomationPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -173,8 +173,8 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AutomationPrivateEndpointConnectionResource>> GetAutomationPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -196,8 +196,8 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AutomationPrivateEndpointConnectionResource> GetAutomationPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An object representing collection of AutomationAccountPython2PackageResources and their operations over a AutomationAccountPython2PackageResource. </returns>
         public virtual AutomationAccountPython2PackageCollection GetAutomationAccountPython2Packages()
         {
-            return GetCachedClient(Client => new AutomationAccountPython2PackageCollection(Client, Id));
+            return GetCachedClient(client => new AutomationAccountPython2PackageCollection(client, Id));
         }
 
         /// <summary>
@@ -226,8 +226,8 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="packageName"> The python package name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="packageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="packageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="packageName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AutomationAccountPython2PackageResource>> GetAutomationAccountPython2PackageAsync(string packageName, CancellationToken cancellationToken = default)
         {
@@ -249,8 +249,8 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="packageName"> The python package name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="packageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="packageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="packageName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AutomationAccountPython2PackageResource> GetAutomationAccountPython2Package(string packageName, CancellationToken cancellationToken = default)
         {
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An object representing collection of AutomationAccountModuleResources and their operations over a AutomationAccountModuleResource. </returns>
         public virtual AutomationAccountModuleCollection GetAutomationAccountModules()
         {
-            return GetCachedClient(Client => new AutomationAccountModuleCollection(Client, Id));
+            return GetCachedClient(client => new AutomationAccountModuleCollection(client, Id));
         }
 
         /// <summary>
@@ -279,8 +279,8 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="moduleName"> The module name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="moduleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="moduleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="moduleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AutomationAccountModuleResource>> GetAutomationAccountModuleAsync(string moduleName, CancellationToken cancellationToken = default)
         {
@@ -302,8 +302,8 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="moduleName"> The module name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="moduleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="moduleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="moduleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AutomationAccountModuleResource> GetAutomationAccountModule(string moduleName, CancellationToken cancellationToken = default)
         {
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An object representing collection of DscNodeResources and their operations over a DscNodeResource. </returns>
         public virtual DscNodeCollection GetDscNodes()
         {
-            return GetCachedClient(Client => new DscNodeCollection(Client, Id));
+            return GetCachedClient(client => new DscNodeCollection(client, Id));
         }
 
         /// <summary>
@@ -332,8 +332,8 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="nodeId"> The node id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="nodeId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DscNodeResource>> GetDscNodeAsync(string nodeId, CancellationToken cancellationToken = default)
         {
@@ -355,8 +355,8 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="nodeId"> The node id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="nodeId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DscNodeResource> GetDscNode(string nodeId, CancellationToken cancellationToken = default)
         {
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An object representing collection of DscNodeConfigurationResources and their operations over a DscNodeConfigurationResource. </returns>
         public virtual DscNodeConfigurationCollection GetDscNodeConfigurations()
         {
-            return GetCachedClient(Client => new DscNodeConfigurationCollection(Client, Id));
+            return GetCachedClient(client => new DscNodeConfigurationCollection(client, Id));
         }
 
         /// <summary>
@@ -385,8 +385,8 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="nodeConfigurationName"> The Dsc node configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="nodeConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="nodeConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="nodeConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DscNodeConfigurationResource>> GetDscNodeConfigurationAsync(string nodeConfigurationName, CancellationToken cancellationToken = default)
         {
@@ -408,8 +408,8 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="nodeConfigurationName"> The Dsc node configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="nodeConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="nodeConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="nodeConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DscNodeConfigurationResource> GetDscNodeConfiguration(string nodeConfigurationName, CancellationToken cancellationToken = default)
         {
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An object representing collection of DscCompilationJobResources and their operations over a DscCompilationJobResource. </returns>
         public virtual DscCompilationJobCollection GetDscCompilationJobs()
         {
-            return GetCachedClient(Client => new DscCompilationJobCollection(Client, Id));
+            return GetCachedClient(client => new DscCompilationJobCollection(client, Id));
         }
 
         /// <summary>
@@ -438,8 +438,8 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="compilationJobName"> The DSC configuration Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="compilationJobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="compilationJobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="compilationJobName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DscCompilationJobResource>> GetDscCompilationJobAsync(string compilationJobName, CancellationToken cancellationToken = default)
         {
@@ -461,8 +461,8 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="compilationJobName"> The DSC configuration Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="compilationJobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="compilationJobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="compilationJobName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DscCompilationJobResource> GetDscCompilationJob(string compilationJobName, CancellationToken cancellationToken = default)
         {
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An object representing collection of AutomationSourceControlResources and their operations over a AutomationSourceControlResource. </returns>
         public virtual AutomationSourceControlCollection GetAutomationSourceControls()
         {
-            return GetCachedClient(Client => new AutomationSourceControlCollection(Client, Id));
+            return GetCachedClient(client => new AutomationSourceControlCollection(client, Id));
         }
 
         /// <summary>
@@ -491,8 +491,8 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="sourceControlName"> The name of source control. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sourceControlName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceControlName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AutomationSourceControlResource>> GetAutomationSourceControlAsync(string sourceControlName, CancellationToken cancellationToken = default)
         {
@@ -514,8 +514,8 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="sourceControlName"> The name of source control. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sourceControlName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceControlName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceControlName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AutomationSourceControlResource> GetAutomationSourceControl(string sourceControlName, CancellationToken cancellationToken = default)
         {
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An object representing collection of AutomationCertificateResources and their operations over a AutomationCertificateResource. </returns>
         public virtual AutomationCertificateCollection GetAutomationCertificates()
         {
-            return GetCachedClient(Client => new AutomationCertificateCollection(Client, Id));
+            return GetCachedClient(client => new AutomationCertificateCollection(client, Id));
         }
 
         /// <summary>
@@ -544,8 +544,8 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="certificateName"> The name of certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AutomationCertificateResource>> GetAutomationCertificateAsync(string certificateName, CancellationToken cancellationToken = default)
         {
@@ -567,8 +567,8 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="certificateName"> The name of certificate. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AutomationCertificateResource> GetAutomationCertificate(string certificateName, CancellationToken cancellationToken = default)
         {
@@ -579,7 +579,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An object representing collection of AutomationConnectionResources and their operations over a AutomationConnectionResource. </returns>
         public virtual AutomationConnectionCollection GetAutomationConnections()
         {
-            return GetCachedClient(Client => new AutomationConnectionCollection(Client, Id));
+            return GetCachedClient(client => new AutomationConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -597,8 +597,8 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="connectionName"> The name of connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AutomationConnectionResource>> GetAutomationConnectionAsync(string connectionName, CancellationToken cancellationToken = default)
         {
@@ -620,8 +620,8 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="connectionName"> The name of connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AutomationConnectionResource> GetAutomationConnection(string connectionName, CancellationToken cancellationToken = default)
         {
@@ -632,7 +632,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An object representing collection of AutomationConnectionTypeResources and their operations over a AutomationConnectionTypeResource. </returns>
         public virtual AutomationConnectionTypeCollection GetAutomationConnectionTypes()
         {
-            return GetCachedClient(Client => new AutomationConnectionTypeCollection(Client, Id));
+            return GetCachedClient(client => new AutomationConnectionTypeCollection(client, Id));
         }
 
         /// <summary>
@@ -650,8 +650,8 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="connectionTypeName"> The name of connection type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionTypeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AutomationConnectionTypeResource>> GetAutomationConnectionTypeAsync(string connectionTypeName, CancellationToken cancellationToken = default)
         {
@@ -673,8 +673,8 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="connectionTypeName"> The name of connection type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionTypeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AutomationConnectionTypeResource> GetAutomationConnectionType(string connectionTypeName, CancellationToken cancellationToken = default)
         {
@@ -685,7 +685,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An object representing collection of AutomationCredentialResources and their operations over a AutomationCredentialResource. </returns>
         public virtual AutomationCredentialCollection GetAutomationCredentials()
         {
-            return GetCachedClient(Client => new AutomationCredentialCollection(Client, Id));
+            return GetCachedClient(client => new AutomationCredentialCollection(client, Id));
         }
 
         /// <summary>
@@ -703,8 +703,8 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="credentialName"> The name of credential. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AutomationCredentialResource>> GetAutomationCredentialAsync(string credentialName, CancellationToken cancellationToken = default)
         {
@@ -726,8 +726,8 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="credentialName"> The name of credential. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AutomationCredentialResource> GetAutomationCredential(string credentialName, CancellationToken cancellationToken = default)
         {
@@ -738,7 +738,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An object representing collection of AutomationJobScheduleResources and their operations over a AutomationJobScheduleResource. </returns>
         public virtual AutomationJobScheduleCollection GetAutomationJobSchedules()
         {
-            return GetCachedClient(Client => new AutomationJobScheduleCollection(Client, Id));
+            return GetCachedClient(client => new AutomationJobScheduleCollection(client, Id));
         }
 
         /// <summary>
@@ -787,7 +787,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An object representing collection of AutomationScheduleResources and their operations over a AutomationScheduleResource. </returns>
         public virtual AutomationScheduleCollection GetAutomationSchedules()
         {
-            return GetCachedClient(Client => new AutomationScheduleCollection(Client, Id));
+            return GetCachedClient(client => new AutomationScheduleCollection(client, Id));
         }
 
         /// <summary>
@@ -805,8 +805,8 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="scheduleName"> The schedule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AutomationScheduleResource>> GetAutomationScheduleAsync(string scheduleName, CancellationToken cancellationToken = default)
         {
@@ -828,8 +828,8 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="scheduleName"> The schedule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AutomationScheduleResource> GetAutomationSchedule(string scheduleName, CancellationToken cancellationToken = default)
         {
@@ -840,7 +840,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An object representing collection of AutomationVariableResources and their operations over a AutomationVariableResource. </returns>
         public virtual AutomationVariableCollection GetAutomationVariables()
         {
-            return GetCachedClient(Client => new AutomationVariableCollection(Client, Id));
+            return GetCachedClient(client => new AutomationVariableCollection(client, Id));
         }
 
         /// <summary>
@@ -858,8 +858,8 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="variableName"> The name of variable. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="variableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="variableName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="variableName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AutomationVariableResource>> GetAutomationVariableAsync(string variableName, CancellationToken cancellationToken = default)
         {
@@ -881,8 +881,8 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="variableName"> The name of variable. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="variableName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="variableName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="variableName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AutomationVariableResource> GetAutomationVariable(string variableName, CancellationToken cancellationToken = default)
         {
@@ -893,7 +893,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An object representing collection of AutomationWatcherResources and their operations over a AutomationWatcherResource. </returns>
         public virtual AutomationWatcherCollection GetAutomationWatchers()
         {
-            return GetCachedClient(Client => new AutomationWatcherCollection(Client, Id));
+            return GetCachedClient(client => new AutomationWatcherCollection(client, Id));
         }
 
         /// <summary>
@@ -911,8 +911,8 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="watcherName"> The watcher name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="watcherName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="watcherName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="watcherName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AutomationWatcherResource>> GetAutomationWatcherAsync(string watcherName, CancellationToken cancellationToken = default)
         {
@@ -934,8 +934,8 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="watcherName"> The watcher name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="watcherName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="watcherName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="watcherName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AutomationWatcherResource> GetAutomationWatcher(string watcherName, CancellationToken cancellationToken = default)
         {
@@ -946,7 +946,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An object representing collection of DscConfigurationResources and their operations over a DscConfigurationResource. </returns>
         public virtual DscConfigurationCollection GetDscConfigurations()
         {
-            return GetCachedClient(Client => new DscConfigurationCollection(Client, Id));
+            return GetCachedClient(client => new DscConfigurationCollection(client, Id));
         }
 
         /// <summary>
@@ -964,8 +964,8 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="configurationName"> The configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DscConfigurationResource>> GetDscConfigurationAsync(string configurationName, CancellationToken cancellationToken = default)
         {
@@ -987,8 +987,8 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="configurationName"> The configuration name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DscConfigurationResource> GetDscConfiguration(string configurationName, CancellationToken cancellationToken = default)
         {
@@ -999,7 +999,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An object representing collection of AutomationJobResources and their operations over a AutomationJobResource. </returns>
         public virtual AutomationJobCollection GetAutomationJobs()
         {
-            return GetCachedClient(Client => new AutomationJobCollection(Client, Id));
+            return GetCachedClient(client => new AutomationJobCollection(client, Id));
         }
 
         /// <summary>
@@ -1018,8 +1018,8 @@ namespace Azure.ResourceManager.Automation
         /// <param name="jobName"> The job name. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AutomationJobResource>> GetAutomationJobAsync(string jobName, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
@@ -1042,8 +1042,8 @@ namespace Azure.ResourceManager.Automation
         /// <param name="jobName"> The job name. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AutomationJobResource> GetAutomationJob(string jobName, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
@@ -1054,7 +1054,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An object representing collection of SoftwareUpdateConfigurationResources and their operations over a SoftwareUpdateConfigurationResource. </returns>
         public virtual SoftwareUpdateConfigurationCollection GetSoftwareUpdateConfigurations()
         {
-            return GetCachedClient(Client => new SoftwareUpdateConfigurationCollection(Client, Id));
+            return GetCachedClient(client => new SoftwareUpdateConfigurationCollection(client, Id));
         }
 
         /// <summary>
@@ -1073,8 +1073,8 @@ namespace Azure.ResourceManager.Automation
         /// <param name="softwareUpdateConfigurationName"> The name of the software update configuration to be created. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="softwareUpdateConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="softwareUpdateConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="softwareUpdateConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SoftwareUpdateConfigurationResource>> GetSoftwareUpdateConfigurationAsync(string softwareUpdateConfigurationName, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
@@ -1097,8 +1097,8 @@ namespace Azure.ResourceManager.Automation
         /// <param name="softwareUpdateConfigurationName"> The name of the software update configuration to be created. </param>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="softwareUpdateConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="softwareUpdateConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="softwareUpdateConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SoftwareUpdateConfigurationResource> GetSoftwareUpdateConfiguration(string softwareUpdateConfigurationName, string clientRequestId = null, CancellationToken cancellationToken = default)
         {
@@ -1109,7 +1109,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An object representing collection of AutomationRunbookResources and their operations over a AutomationRunbookResource. </returns>
         public virtual AutomationRunbookCollection GetAutomationRunbooks()
         {
-            return GetCachedClient(Client => new AutomationRunbookCollection(Client, Id));
+            return GetCachedClient(client => new AutomationRunbookCollection(client, Id));
         }
 
         /// <summary>
@@ -1127,8 +1127,8 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="runbookName"> The runbook name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="runbookName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="runbookName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runbookName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AutomationRunbookResource>> GetAutomationRunbookAsync(string runbookName, CancellationToken cancellationToken = default)
         {
@@ -1150,8 +1150,8 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="runbookName"> The runbook name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="runbookName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="runbookName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runbookName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AutomationRunbookResource> GetAutomationRunbook(string runbookName, CancellationToken cancellationToken = default)
         {
@@ -1162,7 +1162,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An object representing collection of AutomationWebhookResources and their operations over a AutomationWebhookResource. </returns>
         public virtual AutomationWebhookCollection GetAutomationWebhooks()
         {
-            return GetCachedClient(Client => new AutomationWebhookCollection(Client, Id));
+            return GetCachedClient(client => new AutomationWebhookCollection(client, Id));
         }
 
         /// <summary>
@@ -1180,8 +1180,8 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="webhookName"> The webhook name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="webhookName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webhookName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="webhookName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AutomationWebhookResource>> GetAutomationWebhookAsync(string webhookName, CancellationToken cancellationToken = default)
         {
@@ -1203,8 +1203,8 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="webhookName"> The webhook name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="webhookName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webhookName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="webhookName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AutomationWebhookResource> GetAutomationWebhook(string webhookName, CancellationToken cancellationToken = default)
         {
@@ -1215,7 +1215,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An object representing collection of HybridRunbookWorkerGroupResources and their operations over a HybridRunbookWorkerGroupResource. </returns>
         public virtual HybridRunbookWorkerGroupCollection GetHybridRunbookWorkerGroups()
         {
-            return GetCachedClient(Client => new HybridRunbookWorkerGroupCollection(Client, Id));
+            return GetCachedClient(client => new HybridRunbookWorkerGroupCollection(client, Id));
         }
 
         /// <summary>
@@ -1233,8 +1233,8 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="hybridRunbookWorkerGroupName"> The hybrid runbook worker group name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="hybridRunbookWorkerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hybridRunbookWorkerGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hybridRunbookWorkerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<HybridRunbookWorkerGroupResource>> GetHybridRunbookWorkerGroupAsync(string hybridRunbookWorkerGroupName, CancellationToken cancellationToken = default)
         {
@@ -1256,8 +1256,8 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="hybridRunbookWorkerGroupName"> The hybrid runbook worker group name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="hybridRunbookWorkerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hybridRunbookWorkerGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hybridRunbookWorkerGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<HybridRunbookWorkerGroupResource> GetHybridRunbookWorkerGroup(string hybridRunbookWorkerGroupName, CancellationToken cancellationToken = default)
         {

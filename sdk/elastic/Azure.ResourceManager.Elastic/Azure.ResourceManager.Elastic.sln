@@ -1,21 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30309.148
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{CF15992E-0B89-4C12-9866-84C16E81B1D9}") = "Azure.ResourceManager.Elastic", "src\Azure.ResourceManager.Elastic.csproj", "{7FFB8DE0-AA63-4F2D-A036-A6CF24BA851B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Elastic", "src\Azure.ResourceManager.Elastic.csproj", "{7FFB8DE0-AA63-4F2D-A036-A6CF24BA851B}"
 EndProject
-Project("{CF15992E-0B89-4C12-9866-84C16E81B1D9}") = "Azure.ResourceManager.Elastic.Tests", "tests\Azure.ResourceManager.Elastic.Tests.csproj", "{03BA0CB5-79DE-4A8F-83F3-70DC902FBFCA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Elastic.Tests", "tests\Azure.ResourceManager.Elastic.Tests.csproj", "{03BA0CB5-79DE-4A8F-83F3-70DC902FBFCA}"
 EndProject
-Project("{CF15992E-0B89-4C12-9866-84C16E81B1D9}") = "Azure.ResourceManager.Elastic.Samples", "samples\Azure.ResourceManager.Elastic.Samples.csproj", "{E65DD774-6C98-482A-8808-1EC19199225A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Elastic.Samples", "samples\Azure.ResourceManager.Elastic.Samples.csproj", "{E65DD774-6C98-482A-8808-1EC19199225A}"
 EndProject
 Global
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {7D52573B-E3D6-402A-BB8E-A2753AA70BA1}
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
@@ -49,5 +43,23 @@ Global
 		{03BA0CB5-79DE-4A8F-83F3-70DC902FBFCA}.Release|x64.Build.0 = Release|Any CPU
 		{03BA0CB5-79DE-4A8F-83F3-70DC902FBFCA}.Release|x86.ActiveCfg = Release|Any CPU
 		{03BA0CB5-79DE-4A8F-83F3-70DC902FBFCA}.Release|x86.Build.0 = Release|Any CPU
+		{E65DD774-6C98-482A-8808-1EC19199225A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E65DD774-6C98-482A-8808-1EC19199225A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E65DD774-6C98-482A-8808-1EC19199225A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E65DD774-6C98-482A-8808-1EC19199225A}.Debug|x64.Build.0 = Debug|Any CPU
+		{E65DD774-6C98-482A-8808-1EC19199225A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E65DD774-6C98-482A-8808-1EC19199225A}.Debug|x86.Build.0 = Debug|Any CPU
+		{E65DD774-6C98-482A-8808-1EC19199225A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E65DD774-6C98-482A-8808-1EC19199225A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E65DD774-6C98-482A-8808-1EC19199225A}.Release|x64.ActiveCfg = Release|Any CPU
+		{E65DD774-6C98-482A-8808-1EC19199225A}.Release|x64.Build.0 = Release|Any CPU
+		{E65DD774-6C98-482A-8808-1EC19199225A}.Release|x86.ActiveCfg = Release|Any CPU
+		{E65DD774-6C98-482A-8808-1EC19199225A}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7D52573B-E3D6-402A-BB8E-A2753AA70BA1}
 	EndGlobalSection
 EndGlobal
