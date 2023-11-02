@@ -1,12 +1,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.TestFramework;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
@@ -28,19 +30,19 @@ namespace Azure.Storage.DataMovement.Tests
     {
         private const long DefaultObjectSize = Constants.KB;
 
-        private readonly string _generatedResourceNamePrefix;
-        private readonly string _expectedOverwriteExceptionMessage;
+        //private readonly string _generatedResourceNamePrefix;
+        //private readonly string _expectedOverwriteExceptionMessage;
 
         public ClientBuilder<TServiceClient, TClientOptions> ClientBuilder { get; protected set; }
 
         public LocalFilesStorageResourceProvider LocalResourceProvider { get; } = new();
 
-        public StartTransferUploadDirectoryTestBase(bool async)
-            : base(async, null /* RecordedTestMode.Record /* to re-record */)
+        public StartTransferUploadDirectoryTestBase(bool async, RecordedTestMode? mode = null)
+            : base(async, mode)
         { }
 
         protected string GetNewObjectName()
-            => _generatedResourceNamePrefix + ClientBuilder.Recording.Random.NewGuid();
+            => /*_generatedResourceNamePrefix +*/ ClientBuilder.Recording.Random.NewGuid().ToString();
 
         #region Service-Specific Implementations
         /// <summary>
@@ -94,7 +96,7 @@ namespace Azure.Storage.DataMovement.Tests
                 }
                 foreach (string directoryName in pathSegments.Take(pathSegments.Length - 1))
                 {
-                    currRelPath += directoryName;
+                    currRelPath = string.Join("/", currRelPath, directoryName).Trim('/');
                     string currAbsPath = Path.Combine(directoryPath, currRelPath);
                     if (!Directory.Exists(currAbsPath))
                     {
@@ -169,6 +171,7 @@ namespace Azure.Storage.DataMovement.Tests
                 GetNewObjectName(),
                 GetNewObjectName(),
             };
+            Console.WriteLine($"files: {string.Join(", ", files)}");
 
             CancellationToken cancellationToken = TestHelper.GetTimeoutToken(waitTimeInSec);
             await SetupDirectoryAsync(
@@ -452,7 +455,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             List<string> files = new()
             {
-                string.Join('/', Enumerable.Range(0, folderDepth).Select(_ => GetNewObjectName()).ToList())
+                string.Join("/", Enumerable.Range(0, folderDepth).Select(_ => GetNewObjectName()).ToList())
             };
 
             CancellationToken cancellationToken = TestHelper.GetTimeoutToken(waitTimeInSec);
@@ -463,7 +466,7 @@ namespace Azure.Storage.DataMovement.Tests
             await UploadDirectoryAndVerifyAsync(
                 disposingLocalDirectory.DirectoryPath,
                 test.Container,
-                expectedTransfers: 0,
+                expectedTransfers: 1,
                 cancellationToken: cancellationToken);
         }
     }
