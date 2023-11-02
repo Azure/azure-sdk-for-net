@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Buffers;
 using System.IO;
 using System.Net.ClientModel.Internal;
 using System.Threading;
@@ -53,55 +52,7 @@ namespace System.Net.ClientModel.Core
         /// <param name="cancellationToken">To cancellation token to use.</param>
         public abstract void WriteTo(Stream stream, CancellationToken cancellationToken);
 
-        public static explicit operator BinaryData(MessageBody body)
-            => body.ToBinaryData();
-
         internal virtual bool IsBuffered { get; }
-
-        // This is virtual so we don't break the contract by adding an abstract method
-        // but the default implementation can be optimized, so inheriting types should
-        // override this if they can provide a better implementation.
-        protected virtual BinaryData ToBinaryData(CancellationToken cancellationToken = default)
-#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
-            => ToBinaryDataSyncOrAsync(cancellationToken, async: false).GetAwaiter().GetResult();
-#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
-
-        private async Task<BinaryData> ToBinaryDataSyncOrAsync(CancellationToken cancellationToken, bool async)
-        {
-            MemoryStream stream;
-
-            if (TryComputeLength(out long length))
-            {
-                if (length >= int.MaxValue)
-                {
-                    throw new InvalidOperationException("Cannot create BinaryData from body with length > int.MaxLength.");
-                }
-
-                if (length == 0)
-                {
-                    return EmptyBinaryData;
-                }
-
-                stream = new MemoryStream((int)length);
-            }
-            else
-            {
-                stream = new MemoryStream();
-            }
-
-            if (async)
-            {
-                await WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
-            }
-            else
-            {
-                WriteTo(stream, cancellationToken);
-            }
-
-            stream.Position = 0;
-
-            return BinaryData.FromStream(stream);
-        }
 
         private sealed class ModelMessageBody : MessageBody, IDisposable
         {
@@ -226,9 +177,6 @@ namespace System.Net.ClientModel.Core
 
             public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
                 => await stream.WriteAsync(_bytes, cancellation).ConfigureAwait(false);
-
-            protected override BinaryData ToBinaryData(CancellationToken cancellationToken = default)
-                => BinaryData.FromBytes(_bytes);
         }
     }
 }

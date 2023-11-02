@@ -124,8 +124,6 @@ namespace System.Net.ClientModel.Core
         protected MessageBody() { }
         public static System.Net.ClientModel.Core.MessageBody Create(System.BinaryData value) { throw null; }
         public static System.Net.ClientModel.Core.MessageBody Create(System.Net.ClientModel.Core.IModel<object> model, System.Net.ClientModel.ModelReaderWriterOptions? options = null) { throw null; }
-        public static explicit operator System.BinaryData (System.Net.ClientModel.Core.MessageBody body) { throw null; }
-        protected virtual System.BinaryData ToBinaryData(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public abstract bool TryComputeLength(out long length);
         public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken);
         public abstract System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken);
