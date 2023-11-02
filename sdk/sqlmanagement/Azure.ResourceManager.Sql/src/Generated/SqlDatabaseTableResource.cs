@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of SqlDatabaseColumnResources and their operations over a SqlDatabaseColumnResource. </returns>
         public virtual SqlDatabaseColumnCollection GetSqlDatabaseColumns()
         {
-            return GetCachedClient(Client => new SqlDatabaseColumnCollection(Client, Id));
+            return GetCachedClient(client => new SqlDatabaseColumnCollection(client, Id));
         }
 
         /// <summary>
@@ -114,8 +114,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="columnName"> The name of the column. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="columnName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SqlDatabaseColumnResource>> GetSqlDatabaseColumnAsync(string columnName, CancellationToken cancellationToken = default)
         {
@@ -137,8 +137,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="columnName"> The name of the column. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="columnName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SqlDatabaseColumnResource> GetSqlDatabaseColumn(string columnName, CancellationToken cancellationToken = default)
         {

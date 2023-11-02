@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of SqlDatabaseSensitivityLabelResources and their operations over a SqlDatabaseSensitivityLabelResource. </returns>
         public virtual SqlDatabaseSensitivityLabelCollection GetSqlDatabaseSensitivityLabels()
         {
-            return GetCachedClient(Client => new SqlDatabaseSensitivityLabelCollection(Client, Id));
+            return GetCachedClient(client => new SqlDatabaseSensitivityLabelCollection(client, Id));
         }
 
         /// <summary>

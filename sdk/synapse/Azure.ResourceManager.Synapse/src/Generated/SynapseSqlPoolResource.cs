@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An object representing collection of SynapseGeoBackupPolicyResources and their operations over a SynapseGeoBackupPolicyResource. </returns>
         public virtual SynapseGeoBackupPolicyCollection GetSynapseGeoBackupPolicies()
         {
-            return GetCachedClient(Client => new SynapseGeoBackupPolicyCollection(Client, Id));
+            return GetCachedClient(client => new SynapseGeoBackupPolicyCollection(client, Id));
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An object representing collection of SynapseDataWarehouseUserActivityResources and their operations over a SynapseDataWarehouseUserActivityResource. </returns>
         public virtual SynapseDataWarehouseUserActivityCollection GetSynapseDataWarehouseUserActivities()
         {
-            return GetCachedClient(Client => new SynapseDataWarehouseUserActivityCollection(Client, Id));
+            return GetCachedClient(client => new SynapseDataWarehouseUserActivityCollection(client, Id));
         }
 
         /// <summary>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An object representing collection of SynapseRestorePointResources and their operations over a SynapseRestorePointResource. </returns>
         public virtual SynapseRestorePointCollection GetSynapseRestorePoints()
         {
-            return GetCachedClient(Client => new SynapseRestorePointCollection(Client, Id));
+            return GetCachedClient(client => new SynapseRestorePointCollection(client, Id));
         }
 
         /// <summary>
@@ -238,8 +238,8 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="restorePointName"> The name of the restore point. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SynapseRestorePointResource>> GetSynapseRestorePointAsync(string restorePointName, CancellationToken cancellationToken = default)
         {
@@ -261,8 +261,8 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="restorePointName"> The name of the restore point. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SynapseRestorePointResource> GetSynapseRestorePoint(string restorePointName, CancellationToken cancellationToken = default)
         {
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An object representing collection of SynapseReplicationLinkResources and their operations over a SynapseReplicationLinkResource. </returns>
         public virtual SynapseReplicationLinkCollection GetSynapseReplicationLinks()
         {
-            return GetCachedClient(Client => new SynapseReplicationLinkCollection(Client, Id));
+            return GetCachedClient(client => new SynapseReplicationLinkCollection(client, Id));
         }
 
         /// <summary>
@@ -291,8 +291,8 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="linkId"> The ID of the replication link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SynapseReplicationLinkResource>> GetSynapseReplicationLinkAsync(string linkId, CancellationToken cancellationToken = default)
         {
@@ -314,8 +314,8 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="linkId"> The ID of the replication link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SynapseReplicationLinkResource> GetSynapseReplicationLink(string linkId, CancellationToken cancellationToken = default)
         {
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An object representing collection of SynapseTransparentDataEncryptionResources and their operations over a SynapseTransparentDataEncryptionResource. </returns>
         public virtual SynapseTransparentDataEncryptionCollection GetSynapseTransparentDataEncryptions()
         {
-            return GetCachedClient(Client => new SynapseTransparentDataEncryptionCollection(Client, Id));
+            return GetCachedClient(client => new SynapseTransparentDataEncryptionCollection(client, Id));
         }
 
         /// <summary>
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An object representing collection of SynapseSqlPoolSchemaResources and their operations over a SynapseSqlPoolSchemaResource. </returns>
         public virtual SynapseSqlPoolSchemaCollection GetSynapseSqlPoolSchemas()
         {
-            return GetCachedClient(Client => new SynapseSqlPoolSchemaCollection(Client, Id));
+            return GetCachedClient(client => new SynapseSqlPoolSchemaCollection(client, Id));
         }
 
         /// <summary>
@@ -414,8 +414,8 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="schemaName"> The name of the schema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SynapseSqlPoolSchemaResource>> GetSynapseSqlPoolSchemaAsync(string schemaName, CancellationToken cancellationToken = default)
         {
@@ -437,8 +437,8 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="schemaName"> The name of the schema. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SynapseSqlPoolSchemaResource> GetSynapseSqlPoolSchema(string schemaName, CancellationToken cancellationToken = default)
         {
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An object representing collection of SynapseSqlPoolConnectionPolicyResources and their operations over a SynapseSqlPoolConnectionPolicyResource. </returns>
         public virtual SynapseSqlPoolConnectionPolicyCollection GetSynapseSqlPoolConnectionPolicies()
         {
-            return GetCachedClient(Client => new SynapseSqlPoolConnectionPolicyCollection(Client, Id));
+            return GetCachedClient(client => new SynapseSqlPoolConnectionPolicyCollection(client, Id));
         }
 
         /// <summary>
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An object representing collection of SynapseSqlPoolVulnerabilityAssessmentResources and their operations over a SynapseSqlPoolVulnerabilityAssessmentResource. </returns>
         public virtual SynapseSqlPoolVulnerabilityAssessmentCollection GetSynapseSqlPoolVulnerabilityAssessments()
         {
-            return GetCachedClient(Client => new SynapseSqlPoolVulnerabilityAssessmentCollection(Client, Id));
+            return GetCachedClient(client => new SynapseSqlPoolVulnerabilityAssessmentCollection(client, Id));
         }
 
         /// <summary>
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An object representing collection of SynapseSqlPoolSecurityAlertPolicyResources and their operations over a SynapseSqlPoolSecurityAlertPolicyResource. </returns>
         public virtual SynapseSqlPoolSecurityAlertPolicyCollection GetSynapseSqlPoolSecurityAlertPolicies()
         {
-            return GetCachedClient(Client => new SynapseSqlPoolSecurityAlertPolicyCollection(Client, Id));
+            return GetCachedClient(client => new SynapseSqlPoolSecurityAlertPolicyCollection(client, Id));
         }
 
         /// <summary>
@@ -610,7 +610,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An object representing collection of SynapseWorkloadGroupResources and their operations over a SynapseWorkloadGroupResource. </returns>
         public virtual SynapseWorkloadGroupCollection GetSynapseWorkloadGroups()
         {
-            return GetCachedClient(Client => new SynapseWorkloadGroupCollection(Client, Id));
+            return GetCachedClient(client => new SynapseWorkloadGroupCollection(client, Id));
         }
 
         /// <summary>
@@ -628,8 +628,8 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="workloadGroupName"> The name of the workload group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workloadGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workloadGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workloadGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SynapseWorkloadGroupResource>> GetSynapseWorkloadGroupAsync(string workloadGroupName, CancellationToken cancellationToken = default)
         {
@@ -651,8 +651,8 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="workloadGroupName"> The name of the workload group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workloadGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workloadGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workloadGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SynapseWorkloadGroupResource> GetSynapseWorkloadGroup(string workloadGroupName, CancellationToken cancellationToken = default)
         {

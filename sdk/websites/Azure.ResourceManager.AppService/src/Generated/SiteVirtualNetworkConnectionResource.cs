@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteVirtualNetworkConnectionGatewayResources and their operations over a SiteVirtualNetworkConnectionGatewayResource. </returns>
         public virtual SiteVirtualNetworkConnectionGatewayCollection GetSiteVirtualNetworkConnectionGateways()
         {
-            return GetCachedClient(Client => new SiteVirtualNetworkConnectionGatewayCollection(Client, Id));
+            return GetCachedClient(client => new SiteVirtualNetworkConnectionGatewayCollection(client, Id));
         }
 
         /// <summary>
@@ -112,8 +112,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is "primary". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteVirtualNetworkConnectionGatewayResource>> GetSiteVirtualNetworkConnectionGatewayAsync(string gatewayName, CancellationToken cancellationToken = default)
         {
@@ -135,8 +135,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="gatewayName"> Name of the gateway. Currently, the only supported string is "primary". </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gatewayName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="gatewayName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SiteVirtualNetworkConnectionGatewayResource> GetSiteVirtualNetworkConnectionGateway(string gatewayName, CancellationToken cancellationToken = default)
         {

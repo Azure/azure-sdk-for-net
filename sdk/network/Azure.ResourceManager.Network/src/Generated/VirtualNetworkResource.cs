@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of SubnetResources and their operations over a SubnetResource. </returns>
         public virtual SubnetCollection GetSubnets()
         {
-            return GetCachedClient(Client => new SubnetCollection(Client, Id));
+            return GetCachedClient(client => new SubnetCollection(client, Id));
         }
 
         /// <summary>
@@ -121,8 +121,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="subnetName"> The name of the subnet. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="subnetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subnetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subnetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SubnetResource>> GetSubnetAsync(string subnetName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -145,8 +145,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="subnetName"> The name of the subnet. </param>
         /// <param name="expand"> Expands referenced resources. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="subnetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subnetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subnetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SubnetResource> GetSubnet(string subnetName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of VirtualNetworkPeeringResources and their operations over a VirtualNetworkPeeringResource. </returns>
         public virtual VirtualNetworkPeeringCollection GetVirtualNetworkPeerings()
         {
-            return GetCachedClient(Client => new VirtualNetworkPeeringCollection(Client, Id));
+            return GetCachedClient(client => new VirtualNetworkPeeringCollection(client, Id));
         }
 
         /// <summary>
@@ -175,8 +175,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="virtualNetworkPeeringName"> The name of the virtual network peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkPeeringName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkPeeringName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkPeeringName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<VirtualNetworkPeeringResource>> GetVirtualNetworkPeeringAsync(string virtualNetworkPeeringName, CancellationToken cancellationToken = default)
         {
@@ -198,8 +198,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="virtualNetworkPeeringName"> The name of the virtual network peering. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkPeeringName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkPeeringName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkPeeringName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<VirtualNetworkPeeringResource> GetVirtualNetworkPeering(string virtualNetworkPeeringName, CancellationToken cancellationToken = default)
         {

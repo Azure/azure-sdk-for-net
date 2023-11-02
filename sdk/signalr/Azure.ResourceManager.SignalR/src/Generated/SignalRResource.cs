@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.SignalR
         /// <returns> An object representing collection of SignalRCustomCertificateResources and their operations over a SignalRCustomCertificateResource. </returns>
         public virtual SignalRCustomCertificateCollection GetSignalRCustomCertificates()
         {
-            return GetCachedClient(Client => new SignalRCustomCertificateCollection(Client, Id));
+            return GetCachedClient(client => new SignalRCustomCertificateCollection(client, Id));
         }
 
         /// <summary>
@@ -119,8 +119,8 @@ namespace Azure.ResourceManager.SignalR
         /// </summary>
         /// <param name="certificateName"> Custom certificate name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SignalRCustomCertificateResource>> GetSignalRCustomCertificateAsync(string certificateName, CancellationToken cancellationToken = default)
         {
@@ -142,8 +142,8 @@ namespace Azure.ResourceManager.SignalR
         /// </summary>
         /// <param name="certificateName"> Custom certificate name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SignalRCustomCertificateResource> GetSignalRCustomCertificate(string certificateName, CancellationToken cancellationToken = default)
         {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.SignalR
         /// <returns> An object representing collection of SignalRCustomDomainResources and their operations over a SignalRCustomDomainResource. </returns>
         public virtual SignalRCustomDomainCollection GetSignalRCustomDomains()
         {
-            return GetCachedClient(Client => new SignalRCustomDomainCollection(Client, Id));
+            return GetCachedClient(client => new SignalRCustomDomainCollection(client, Id));
         }
 
         /// <summary>
@@ -172,8 +172,8 @@ namespace Azure.ResourceManager.SignalR
         /// </summary>
         /// <param name="name"> Custom domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SignalRCustomDomainResource>> GetSignalRCustomDomainAsync(string name, CancellationToken cancellationToken = default)
         {
@@ -195,8 +195,8 @@ namespace Azure.ResourceManager.SignalR
         /// </summary>
         /// <param name="name"> Custom domain name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SignalRCustomDomainResource> GetSignalRCustomDomain(string name, CancellationToken cancellationToken = default)
         {
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.SignalR
         /// <returns> An object representing collection of SignalRPrivateEndpointConnectionResources and their operations over a SignalRPrivateEndpointConnectionResource. </returns>
         public virtual SignalRPrivateEndpointConnectionCollection GetSignalRPrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new SignalRPrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new SignalRPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -225,8 +225,8 @@ namespace Azure.ResourceManager.SignalR
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SignalRPrivateEndpointConnectionResource>> GetSignalRPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -248,8 +248,8 @@ namespace Azure.ResourceManager.SignalR
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SignalRPrivateEndpointConnectionResource> GetSignalRPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.SignalR
         /// <returns> An object representing collection of SignalRSharedPrivateLinkResources and their operations over a SignalRSharedPrivateLinkResource. </returns>
         public virtual SignalRSharedPrivateLinkResourceCollection GetSignalRSharedPrivateLinkResources()
         {
-            return GetCachedClient(Client => new SignalRSharedPrivateLinkResourceCollection(Client, Id));
+            return GetCachedClient(client => new SignalRSharedPrivateLinkResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -278,8 +278,8 @@ namespace Azure.ResourceManager.SignalR
         /// </summary>
         /// <param name="sharedPrivateLinkResourceName"> The name of the shared private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SignalRSharedPrivateLinkResource>> GetSignalRSharedPrivateLinkResourceAsync(string sharedPrivateLinkResourceName, CancellationToken cancellationToken = default)
         {
@@ -301,8 +301,8 @@ namespace Azure.ResourceManager.SignalR
         /// </summary>
         /// <param name="sharedPrivateLinkResourceName"> The name of the shared private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sharedPrivateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SignalRSharedPrivateLinkResource> GetSignalRSharedPrivateLinkResource(string sharedPrivateLinkResourceName, CancellationToken cancellationToken = default)
         {

@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An object representing collection of FrontDoorOriginResources and their operations over a FrontDoorOriginResource. </returns>
         public virtual FrontDoorOriginCollection GetFrontDoorOrigins()
         {
-            return GetCachedClient(Client => new FrontDoorOriginCollection(Client, Id));
+            return GetCachedClient(client => new FrontDoorOriginCollection(client, Id));
         }
 
         /// <summary>
@@ -114,8 +114,8 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="originName"> Name of the origin which is unique within the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="originName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="originName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<FrontDoorOriginResource>> GetFrontDoorOriginAsync(string originName, CancellationToken cancellationToken = default)
         {
@@ -137,8 +137,8 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="originName"> Name of the origin which is unique within the profile. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="originName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="originName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<FrontDoorOriginResource> GetFrontDoorOrigin(string originName, CancellationToken cancellationToken = default)
         {

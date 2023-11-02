@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <returns> An object representing collection of AppConfigurationPrivateEndpointConnectionResources and their operations over a AppConfigurationPrivateEndpointConnectionResource. </returns>
         public virtual AppConfigurationPrivateEndpointConnectionCollection GetAppConfigurationPrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new AppConfigurationPrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new AppConfigurationPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -115,8 +115,8 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </summary>
         /// <param name="privateEndpointConnectionName"> Private endpoint connection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AppConfigurationPrivateEndpointConnectionResource>> GetAppConfigurationPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -138,8 +138,8 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </summary>
         /// <param name="privateEndpointConnectionName"> Private endpoint connection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AppConfigurationPrivateEndpointConnectionResource> GetAppConfigurationPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <returns> An object representing collection of AppConfigurationPrivateLinkResources and their operations over a AppConfigurationPrivateLinkResource. </returns>
         public virtual AppConfigurationPrivateLinkResourceCollection GetAppConfigurationPrivateLinkResources()
         {
-            return GetCachedClient(Client => new AppConfigurationPrivateLinkResourceCollection(Client, Id));
+            return GetCachedClient(client => new AppConfigurationPrivateLinkResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -168,8 +168,8 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </summary>
         /// <param name="groupName"> The name of the private link resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AppConfigurationPrivateLinkResource>> GetAppConfigurationPrivateLinkResourceAsync(string groupName, CancellationToken cancellationToken = default)
         {
@@ -191,8 +191,8 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </summary>
         /// <param name="groupName"> The name of the private link resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AppConfigurationPrivateLinkResource> GetAppConfigurationPrivateLinkResource(string groupName, CancellationToken cancellationToken = default)
         {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <returns> An object representing collection of AppConfigurationKeyValueResources and their operations over a AppConfigurationKeyValueResource. </returns>
         public virtual AppConfigurationKeyValueCollection GetAppConfigurationKeyValues()
         {
-            return GetCachedClient(Client => new AppConfigurationKeyValueCollection(Client, Id));
+            return GetCachedClient(client => new AppConfigurationKeyValueCollection(client, Id));
         }
 
         /// <summary>
@@ -221,8 +221,8 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </summary>
         /// <param name="keyValueName"> Identifier of key and label combination. Key and label are joined by $ character. Label is optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyValueName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AppConfigurationKeyValueResource>> GetAppConfigurationKeyValueAsync(string keyValueName, CancellationToken cancellationToken = default)
         {
@@ -244,8 +244,8 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </summary>
         /// <param name="keyValueName"> Identifier of key and label combination. Key and label are joined by $ character. Label is optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyValueName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AppConfigurationKeyValueResource> GetAppConfigurationKeyValue(string keyValueName, CancellationToken cancellationToken = default)
         {

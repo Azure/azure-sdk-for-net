@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An object representing collection of CommunityGalleryImageResources and their operations over a CommunityGalleryImageResource. </returns>
         public virtual CommunityGalleryImageCollection GetCommunityGalleryImages()
         {
-            return GetCachedClient(Client => new CommunityGalleryImageCollection(Client, Id));
+            return GetCachedClient(client => new CommunityGalleryImageCollection(client, Id));
         }
 
         /// <summary>
@@ -112,8 +112,8 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="galleryImageName"> The name of the community gallery image definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<CommunityGalleryImageResource>> GetCommunityGalleryImageAsync(string galleryImageName, CancellationToken cancellationToken = default)
         {
@@ -135,8 +135,8 @@ namespace Azure.ResourceManager.Compute
         /// </summary>
         /// <param name="galleryImageName"> The name of the community gallery image definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="galleryImageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="galleryImageName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<CommunityGalleryImageResource> GetCommunityGalleryImage(string galleryImageName, CancellationToken cancellationToken = default)
         {

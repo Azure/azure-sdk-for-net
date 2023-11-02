@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Purview
         /// <returns> An object representing collection of PurviewPrivateEndpointConnectionResources and their operations over a PurviewPrivateEndpointConnectionResource. </returns>
         public virtual PurviewPrivateEndpointConnectionCollection GetPurviewPrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new PurviewPrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new PurviewPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -114,8 +114,8 @@ namespace Azure.ResourceManager.Purview
         /// </summary>
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<PurviewPrivateEndpointConnectionResource>> GetPurviewPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -137,8 +137,8 @@ namespace Azure.ResourceManager.Purview
         /// </summary>
         /// <param name="privateEndpointConnectionName"> Name of the private endpoint connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<PurviewPrivateEndpointConnectionResource> GetPurviewPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Purview
         /// <returns> An object representing collection of PurviewPrivateLinkResources and their operations over a PurviewPrivateLinkResource. </returns>
         public virtual PurviewPrivateLinkResourceCollection GetPurviewPrivateLinkResources()
         {
-            return GetCachedClient(Client => new PurviewPrivateLinkResourceCollection(Client, Id));
+            return GetCachedClient(client => new PurviewPrivateLinkResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -167,8 +167,8 @@ namespace Azure.ResourceManager.Purview
         /// </summary>
         /// <param name="groupId"> The group identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<PurviewPrivateLinkResource>> GetPurviewPrivateLinkResourceAsync(string groupId, CancellationToken cancellationToken = default)
         {
@@ -190,8 +190,8 @@ namespace Azure.ResourceManager.Purview
         /// </summary>
         /// <param name="groupId"> The group identifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<PurviewPrivateLinkResource> GetPurviewPrivateLinkResource(string groupId, CancellationToken cancellationToken = default)
         {

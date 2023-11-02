@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of ExpressRouteCircuitConnectionResources and their operations over a ExpressRouteCircuitConnectionResource. </returns>
         public virtual ExpressRouteCircuitConnectionCollection GetExpressRouteCircuitConnections()
         {
-            return GetCachedClient(Client => new ExpressRouteCircuitConnectionCollection(Client, Id));
+            return GetCachedClient(client => new ExpressRouteCircuitConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -118,8 +118,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="connectionName"> The name of the express route circuit connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ExpressRouteCircuitConnectionResource>> GetExpressRouteCircuitConnectionAsync(string connectionName, CancellationToken cancellationToken = default)
         {
@@ -141,8 +141,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="connectionName"> The name of the express route circuit connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ExpressRouteCircuitConnectionResource> GetExpressRouteCircuitConnection(string connectionName, CancellationToken cancellationToken = default)
         {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of PeerExpressRouteCircuitConnectionResources and their operations over a PeerExpressRouteCircuitConnectionResource. </returns>
         public virtual PeerExpressRouteCircuitConnectionCollection GetPeerExpressRouteCircuitConnections()
         {
-            return GetCachedClient(Client => new PeerExpressRouteCircuitConnectionCollection(Client, Id));
+            return GetCachedClient(client => new PeerExpressRouteCircuitConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -171,8 +171,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="connectionName"> The name of the peer express route circuit connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<PeerExpressRouteCircuitConnectionResource>> GetPeerExpressRouteCircuitConnectionAsync(string connectionName, CancellationToken cancellationToken = default)
         {
@@ -194,8 +194,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="connectionName"> The name of the peer express route circuit connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<PeerExpressRouteCircuitConnectionResource> GetPeerExpressRouteCircuitConnection(string connectionName, CancellationToken cancellationToken = default)
         {

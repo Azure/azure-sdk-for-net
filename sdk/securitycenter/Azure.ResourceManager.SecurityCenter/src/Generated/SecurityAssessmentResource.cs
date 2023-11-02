@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An object representing collection of SecuritySubAssessmentResources and their operations over a SecuritySubAssessmentResource. </returns>
         public virtual SecuritySubAssessmentCollection GetSecuritySubAssessments()
         {
-            return GetCachedClient(Client => new SecuritySubAssessmentCollection(Client, Id));
+            return GetCachedClient(client => new SecuritySubAssessmentCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="subAssessmentName"> The Sub-Assessment Key - Unique key for the sub-assessment type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="subAssessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subAssessmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subAssessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SecuritySubAssessmentResource>> GetSecuritySubAssessmentAsync(string subAssessmentName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +134,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="subAssessmentName"> The Sub-Assessment Key - Unique key for the sub-assessment type. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="subAssessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subAssessmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subAssessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SecuritySubAssessmentResource> GetSecuritySubAssessment(string subAssessmentName, CancellationToken cancellationToken = default)
         {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An object representing collection of GovernanceAssignmentResources and their operations over a GovernanceAssignmentResource. </returns>
         public virtual GovernanceAssignmentCollection GetGovernanceAssignments()
         {
-            return GetCachedClient(Client => new GovernanceAssignmentCollection(Client, Id));
+            return GetCachedClient(client => new GovernanceAssignmentCollection(client, Id));
         }
 
         /// <summary>
@@ -164,8 +164,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="assignmentKey"> The governance assignment key - the assessment key of the required governance assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="assignmentKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentKey"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assignmentKey"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<GovernanceAssignmentResource>> GetGovernanceAssignmentAsync(string assignmentKey, CancellationToken cancellationToken = default)
         {
@@ -187,8 +187,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="assignmentKey"> The governance assignment key - the assessment key of the required governance assignment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="assignmentKey"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="assignmentKey"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="assignmentKey"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<GovernanceAssignmentResource> GetGovernanceAssignment(string assignmentKey, CancellationToken cancellationToken = default)
         {

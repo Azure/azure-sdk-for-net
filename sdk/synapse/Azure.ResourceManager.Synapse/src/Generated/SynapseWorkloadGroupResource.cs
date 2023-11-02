@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An object representing collection of SynapseWorkloadClassifierResources and their operations over a SynapseWorkloadClassifierResource. </returns>
         public virtual SynapseWorkloadClassifierCollection GetSynapseWorkloadClassifiers()
         {
-            return GetCachedClient(Client => new SynapseWorkloadClassifierCollection(Client, Id));
+            return GetCachedClient(client => new SynapseWorkloadClassifierCollection(client, Id));
         }
 
         /// <summary>
@@ -113,8 +113,8 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="workloadClassifierName"> The name of the workload classifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workloadClassifierName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workloadClassifierName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workloadClassifierName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SynapseWorkloadClassifierResource>> GetSynapseWorkloadClassifierAsync(string workloadClassifierName, CancellationToken cancellationToken = default)
         {
@@ -136,8 +136,8 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="workloadClassifierName"> The name of the workload classifier. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="workloadClassifierName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workloadClassifierName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workloadClassifierName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SynapseWorkloadClassifierResource> GetSynapseWorkloadClassifier(string workloadClassifierName, CancellationToken cancellationToken = default)
         {

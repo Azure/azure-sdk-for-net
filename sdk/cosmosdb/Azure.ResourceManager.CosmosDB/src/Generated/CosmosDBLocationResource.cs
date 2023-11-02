@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An object representing collection of RestorableCosmosDBAccountResources and their operations over a RestorableCosmosDBAccountResource. </returns>
         public virtual RestorableCosmosDBAccountCollection GetRestorableCosmosDBAccounts()
         {
-            return GetCachedClient(Client => new RestorableCosmosDBAccountCollection(Client, Id));
+            return GetCachedClient(client => new RestorableCosmosDBAccountCollection(client, Id));
         }
 
         /// <summary>

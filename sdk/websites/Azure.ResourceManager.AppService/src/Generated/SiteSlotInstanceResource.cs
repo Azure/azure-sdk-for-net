@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An object representing collection of SiteSlotInstanceProcessResources and their operations over a SiteSlotInstanceProcessResource. </returns>
         public virtual SiteSlotInstanceProcessCollection GetSiteSlotInstanceProcesses()
         {
-            return GetCachedClient(Client => new SiteSlotInstanceProcessCollection(Client, Id));
+            return GetCachedClient(client => new SiteSlotInstanceProcessCollection(client, Id));
         }
 
         /// <summary>
@@ -120,8 +120,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="processId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="processId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SiteSlotInstanceProcessResource>> GetSiteSlotInstanceProcessAsync(string processId, CancellationToken cancellationToken = default)
         {
@@ -143,8 +143,8 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="processId"> PID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="processId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="processId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="processId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SiteSlotInstanceProcessResource> GetSiteSlotInstanceProcess(string processId, CancellationToken cancellationToken = default)
         {
