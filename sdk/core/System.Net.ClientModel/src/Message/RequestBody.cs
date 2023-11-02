@@ -9,14 +9,8 @@ using System.Threading.Tasks;
 
 namespace System.Net.ClientModel.Core
 {
-    // I wish we could have the name MessageContent, but there is already
-    // Azure.Messaging.MessageContent.
     public abstract class RequestBody : IDisposable
     {
-        // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
-        private static BinaryData EmptyBinaryData = new(Array.Empty<byte>());
-        internal static RequestBody Empty = Create(EmptyBinaryData);
-
         /// <summary>
         /// Creates an instance of <see cref="RequestBody"/> that wraps a <see cref="Stream"/>.
         /// </summary>
@@ -75,8 +69,6 @@ namespace System.Net.ClientModel.Core
         public static explicit operator Stream(RequestBody body)
             => body.ToStream();
 
-        internal virtual bool IsBuffered { get; }
-
         // This is virtual so we don't break the contract by adding an abstract method
         // but the default implementation can be optimized, so inheriting types should
         // override this if they can provide a better implementation.
@@ -98,7 +90,7 @@ namespace System.Net.ClientModel.Core
 
                 if (length == 0)
                 {
-                    return EmptyBinaryData;
+                    return ClientMessage.EmptyBinaryData;
                 }
 
                 stream = new MemoryStream((int)length);
@@ -226,8 +218,6 @@ namespace System.Net.ClientModel.Core
                 _stream = stream;
             }
 
-            internal override bool IsBuffered => _stream is MemoryStream;
-
             public override bool TryComputeLength(out long length)
             {
                 if (_stream.CanSeek)
@@ -291,8 +281,6 @@ namespace System.Net.ClientModel.Core
             {
                 _bytes = bytes;
             }
-
-            internal override bool IsBuffered => true;
 
             public override bool TryComputeLength(out long length)
             {

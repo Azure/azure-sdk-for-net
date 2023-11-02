@@ -8,6 +8,9 @@ namespace System.Net.ClientModel.Core;
 
 public class ClientMessage : IDisposable
 {
+    // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
+    internal static BinaryData EmptyBinaryData = new(Array.Empty<byte>());
+
     private MessageResponse? _response;
     private bool _disposed;
 
