@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Support
         /// <returns> An object representing collection of ProblemClassificationResources and their operations over a ProblemClassificationResource. </returns>
         public virtual ProblemClassificationCollection GetProblemClassifications()
         {
-            return GetCachedClient(Client => new ProblemClassificationCollection(Client, Id));
+            return GetCachedClient(client => new ProblemClassificationCollection(client, Id));
         }
 
         /// <summary>
@@ -110,8 +110,8 @@ namespace Azure.ResourceManager.Support
         /// </summary>
         /// <param name="problemClassificationName"> Name of problem classification. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="problemClassificationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="problemClassificationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="problemClassificationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ProblemClassificationResource>> GetProblemClassificationAsync(string problemClassificationName, CancellationToken cancellationToken = default)
         {
@@ -133,8 +133,8 @@ namespace Azure.ResourceManager.Support
         /// </summary>
         /// <param name="problemClassificationName"> Name of problem classification. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="problemClassificationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="problemClassificationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="problemClassificationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ProblemClassificationResource> GetProblemClassification(string problemClassificationName, CancellationToken cancellationToken = default)
         {
