@@ -151,7 +151,7 @@ namespace Azure.Storage.DataMovement
         protected StorageResourceItem() { }
         protected internal override bool IsContainer { get { throw null; } }
         protected internal abstract long? Length { get; }
-        protected internal abstract long MaxChunkSize { get; }
+        protected internal abstract long MaxSupportedChunkSize { get; }
         protected internal abstract string ResourceId { get; }
         protected internal abstract Azure.Storage.DataMovement.DataTransferOrder TransferType { get; }
         protected internal abstract System.Threading.Tasks.Task CompleteTransferAsync(bool overwrite, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
