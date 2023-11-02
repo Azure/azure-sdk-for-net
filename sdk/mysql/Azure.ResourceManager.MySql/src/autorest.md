@@ -282,7 +282,7 @@ rename-mapping:
   NameAvailability: MySqlFlexibleServerNameAvailabilityResult
   CreateMode: MySqlFlexibleServerCreateMode
   DataEncryptionType: MySqlFlexibleServerDataEncryptionType
-  SkuTier: MySqlFlexibleServerSkuTier
+  SkuTier: MySqlFlexibleMySqlFlexibleServerSkuTier
   IsReadOnly: MySqlFlexibleServerConfigReadOnlyState
   IsDynamicConfig: MySqlFlexibleServerConfigDynamicState
   IsConfigPendingRestart: MySqlFlexibleServerConfigPendingRestartState
