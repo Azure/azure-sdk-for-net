@@ -147,7 +147,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
             if (options.Format == ModelReaderWriterFormat.Json)
             {
-                return ModelReaderWriter.WriteCore(this, options);
+                return ModelReaderWriter.Write(this, options);
             }
             else
             {
