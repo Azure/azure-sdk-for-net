@@ -10,10 +10,6 @@ namespace System.Net.ClientModel.Core
 {
     public abstract class RequestBody : IDisposable
     {
-        // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
-        internal static readonly BinaryData EmptyBinaryData = new(Array.Empty<byte>());
-        internal static RequestBody Empty = Create(EmptyBinaryData);
-
         /// <summary>
         /// Creates an instance of <see cref="RequestBody"/> that wraps a <see cref="BinaryData"/>.
         /// </summary>

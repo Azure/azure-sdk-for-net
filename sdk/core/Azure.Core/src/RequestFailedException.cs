@@ -92,7 +92,7 @@ namespace Azure
             public override Stream? ContentStream
             {
                 get => throw new NotImplementedException();
-                set => throw new NotImplementedException();
+                protected set => throw new NotImplementedException();
             }
 
             public override string ReasonPhrase => throw new NotSupportedException();

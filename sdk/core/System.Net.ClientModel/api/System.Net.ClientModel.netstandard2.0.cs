@@ -157,7 +157,7 @@ namespace System.Net.ClientModel.Core
     {
         protected MessageResponse() { }
         public System.BinaryData Body { get { throw null; } }
-        public abstract System.IO.Stream? ContentStream { get; set; }
+        public abstract System.IO.Stream? ContentStream { get; protected internal set; }
         public abstract System.Net.ClientModel.Core.MessageHeaders Headers { get; }
         public bool IsError { get { throw null; } }
         public abstract string ReasonPhrase { get; }
@@ -395,7 +395,7 @@ namespace System.Net.ClientModel.Internal.Core
     public partial class HttpMessageResponse : System.Net.ClientModel.Core.MessageResponse, System.IDisposable
     {
         protected internal HttpMessageResponse(System.Net.Http.HttpResponseMessage httpResponse) { }
-        public override System.IO.Stream? ContentStream { get { throw null; } set { } }
+        public override System.IO.Stream? ContentStream { get { throw null; } protected internal set { } }
         public override System.Net.ClientModel.Core.MessageHeaders Headers { get { throw null; } }
         public override string ReasonPhrase { get { throw null; } }
         public override int Status { get { throw null; } }

@@ -38,6 +38,11 @@ namespace Azure.Core.Pipeline
             }
 
             public string ClientRequestId { get; internal set; }
+
+            internal void SetContentStream(Stream? stream)
+            {
+                ContentStream = stream;
+            }
         }
 
         private sealed class ResponseAdapter : Response
@@ -64,7 +69,7 @@ namespace Azure.Core.Pipeline
             public override Stream? ContentStream
             {
                 get => _pipelineResponse.ContentStream;
-                set => _pipelineResponse.ContentStream = value;
+                set => _pipelineResponse.SetContentStream(value);
             }
 
             protected internal override bool ContainsHeader(string name)

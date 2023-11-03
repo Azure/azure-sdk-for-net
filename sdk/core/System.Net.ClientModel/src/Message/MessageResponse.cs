@@ -7,6 +7,9 @@ namespace System.Net.ClientModel.Core;
 
 public abstract class MessageResponse : IDisposable
 {
+    // TODO(matell): The .NET Framework team plans to add BinaryData.Empty in dotnet/runtime#49670, and we can use it then.
+    private static readonly BinaryData s_emptyBinaryData = new(Array.Empty<byte>());
+
     public abstract int Status { get; }
 
     public abstract string ReasonPhrase {  get; }
@@ -19,8 +22,7 @@ public abstract class MessageResponse : IDisposable
         {
             if (ContentStream == null)
             {
-                // TODO: move EmptyBinaryData somewhere reasonable.
-                return RequestBody.EmptyBinaryData;
+                return s_emptyBinaryData;
             }
 
             // TODO: Keep this?
@@ -40,7 +42,7 @@ public abstract class MessageResponse : IDisposable
         }
     }
 
-    public abstract Stream? ContentStream { get; set; }
+    public abstract Stream? ContentStream { get; protected internal set; }
 
     #region Meta-data properties set by the pipeline.
 
