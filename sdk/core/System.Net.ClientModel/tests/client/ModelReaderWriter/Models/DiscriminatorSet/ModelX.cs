@@ -33,21 +33,21 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
         public int? NullProperty = null;
         public IDictionary<string, string> KeyValuePairs { get; }
 
-        public static implicit operator RequestBody(ModelX modelX)
+        public static implicit operator RequestBodyContent(ModelX modelX)
         {
             if (modelX == null)
             {
                 return null;
             }
 
-            return RequestBody.Create(modelX, ModelReaderWriterOptions.DefaultWireOptions);
+            return RequestBodyContent.Create(modelX, ModelReaderWriterOptions.DefaultWireOptions);
         }
 
         public static explicit operator ModelX(Result result)
         {
             ClientUtilities.AssertNotNull(result, nameof(result));
 
-            using JsonDocument jsonDocument = JsonDocument.Parse(result.GetRawResponse().Body);
+            using JsonDocument jsonDocument = JsonDocument.Parse(result.GetRawResponse().Content);
             return DeserializeModelX(jsonDocument.RootElement, ModelReaderWriterOptions.DefaultWireOptions);
         }
 

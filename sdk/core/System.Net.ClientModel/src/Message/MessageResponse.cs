@@ -16,7 +16,7 @@ public abstract class MessageResponse : IDisposable
 
     public abstract MessageHeaders Headers { get; }
 
-    public BinaryData Body
+    public BinaryData Content
     {
         get
         {

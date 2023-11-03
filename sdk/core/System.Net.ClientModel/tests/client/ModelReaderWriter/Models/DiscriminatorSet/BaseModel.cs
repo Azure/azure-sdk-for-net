@@ -13,21 +13,21 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
     {
         private Dictionary<string, BinaryData> _rawData;
 
-        public static implicit operator RequestBody(BaseModel baseModel)
+        public static implicit operator RequestBodyContent(BaseModel baseModel)
         {
             if (baseModel == null)
             {
                 return null;
             }
 
-            return RequestBody.Create(baseModel, ModelReaderWriterOptions.DefaultWireOptions);
+            return RequestBodyContent.Create(baseModel, ModelReaderWriterOptions.DefaultWireOptions);
         }
 
         public static explicit operator BaseModel(Result result)
         {
             ClientUtilities.AssertNotNull(result, nameof(result));
 
-            using JsonDocument jsonDocument = JsonDocument.Parse(result.GetRawResponse().Body);
+            using JsonDocument jsonDocument = JsonDocument.Parse(result.GetRawResponse().Content);
             return DeserializeBaseModel(jsonDocument.RootElement, ModelReaderWriterOptions.DefaultWireOptions);
         }
 

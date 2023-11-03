@@ -75,7 +75,7 @@ public partial class Completions
     /// <param name="response"> The response to deserialize the model from. </param>
     internal static Completions FromResponse(MessageResponse response)
     {
-        using var document = JsonDocument.Parse(response.Body);
+        using var document = JsonDocument.Parse(response.Content);
         return DeserializeCompletions(document.RootElement);
     }
 }
