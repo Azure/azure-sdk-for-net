@@ -1236,6 +1236,15 @@
       "words": [
         "resourceid"
       ]
+    },
+    {
+      "filename": "**/sdk/hybridnetwork/**/*.cs",
+      "words": [
+        "Nfvi",
+        "nfvi",
+        "NFVIs",
+        "nfvis"
+      ]
     }
   ],
   "allowCompoundWords": true
