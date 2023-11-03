@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <summary> Initializes a new instance of CapabilitySetsList. </summary>
         internal CapabilitySetsList()
         {
-            Value = new ChangeTrackingList<CapabilityData>();
+            Value = new ChangeTrackingList<MySqlFlexibleServersCapabilityData>();
         }
 
         /// <summary> Initializes a new instance of CapabilitySetsList. </summary>
         /// <param name="value"> A list of supported capability sets. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
-        internal CapabilitySetsList(IReadOnlyList<CapabilityData> value, string nextLink)
+        internal CapabilitySetsList(IReadOnlyList<MySqlFlexibleServersCapabilityData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of supported capability sets. </summary>
-        public IReadOnlyList<CapabilityData> Value { get; }
+        public IReadOnlyList<MySqlFlexibleServersCapabilityData> Value { get; }
         /// <summary> Link to retrieve next page of results. </summary>
         public string NextLink { get; }
     }

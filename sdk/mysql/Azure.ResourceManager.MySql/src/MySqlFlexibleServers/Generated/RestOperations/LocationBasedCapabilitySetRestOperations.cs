@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="capabilitySetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="capabilitySetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CapabilityData>> GetAsync(string subscriptionId, AzureLocation locationName, string capabilitySetName, CancellationToken cancellationToken = default)
+        public async Task<Response<MySqlFlexibleServersCapabilityData>> GetAsync(string subscriptionId, AzureLocation locationName, string capabilitySetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(capabilitySetName, nameof(capabilitySetName));
@@ -146,13 +146,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 case 200:
                     {
-                        CapabilityData value = default;
+                        MySqlFlexibleServersCapabilityData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CapabilityData.DeserializeCapabilityData(document.RootElement);
+                        value = MySqlFlexibleServersCapabilityData.DeserializeMySqlFlexibleServersCapabilityData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((CapabilityData)null, message.Response);
+                    return Response.FromValue((MySqlFlexibleServersCapabilityData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="capabilitySetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="capabilitySetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CapabilityData> Get(string subscriptionId, AzureLocation locationName, string capabilitySetName, CancellationToken cancellationToken = default)
+        public Response<MySqlFlexibleServersCapabilityData> Get(string subscriptionId, AzureLocation locationName, string capabilitySetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(capabilitySetName, nameof(capabilitySetName));
@@ -176,13 +176,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             {
                 case 200:
                     {
-                        CapabilityData value = default;
+                        MySqlFlexibleServersCapabilityData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CapabilityData.DeserializeCapabilityData(document.RootElement);
+                        value = MySqlFlexibleServersCapabilityData.DeserializeMySqlFlexibleServersCapabilityData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((CapabilityData)null, message.Response);
+                    return Response.FromValue((MySqlFlexibleServersCapabilityData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

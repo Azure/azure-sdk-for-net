@@ -16,7 +16,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
 {
-    public partial class Sample_CapabilityCollection
+    public partial class Sample_MySqlFlexibleServersCapabilityCollection
     {
         // CapabilitySetsResult
         [NUnit.Framework.Test]
@@ -37,16 +37,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this CapabilityResource
+            // get the collection of this MySqlFlexibleServersCapabilityResource
             AzureLocation locationName = new AzureLocation("WestUS");
-            CapabilityCollection collection = subscriptionResource.GetCapabilities(locationName);
+            MySqlFlexibleServersCapabilityCollection collection = subscriptionResource.GetMySqlFlexibleServersCapabilities(locationName);
 
             // invoke the operation and iterate over the result
-            await foreach (CapabilityResource item in collection.GetAllAsync())
+            await foreach (MySqlFlexibleServersCapabilityResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                CapabilityData resourceData = item.Data;
+                MySqlFlexibleServersCapabilityData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -73,17 +73,17 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this CapabilityResource
+            // get the collection of this MySqlFlexibleServersCapabilityResource
             AzureLocation locationName = new AzureLocation("WestUS");
-            CapabilityCollection collection = subscriptionResource.GetCapabilities(locationName);
+            MySqlFlexibleServersCapabilityCollection collection = subscriptionResource.GetMySqlFlexibleServersCapabilities(locationName);
 
             // invoke the operation
             string capabilitySetName = "default";
-            CapabilityResource result = await collection.GetAsync(capabilitySetName);
+            MySqlFlexibleServersCapabilityResource result = await collection.GetAsync(capabilitySetName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            CapabilityData resourceData = result.Data;
+            MySqlFlexibleServersCapabilityData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -107,9 +107,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this CapabilityResource
+            // get the collection of this MySqlFlexibleServersCapabilityResource
             AzureLocation locationName = new AzureLocation("WestUS");
-            CapabilityCollection collection = subscriptionResource.GetCapabilities(locationName);
+            MySqlFlexibleServersCapabilityCollection collection = subscriptionResource.GetMySqlFlexibleServersCapabilities(locationName);
 
             // invoke the operation
             string capabilitySetName = "default";
@@ -137,14 +137,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this CapabilityResource
+            // get the collection of this MySqlFlexibleServersCapabilityResource
             AzureLocation locationName = new AzureLocation("WestUS");
-            CapabilityCollection collection = subscriptionResource.GetCapabilities(locationName);
+            MySqlFlexibleServersCapabilityCollection collection = subscriptionResource.GetMySqlFlexibleServersCapabilities(locationName);
 
             // invoke the operation
             string capabilitySetName = "default";
-            NullableResponse<CapabilityResource> response = await collection.GetIfExistsAsync(capabilitySetName);
-            CapabilityResource result = response.HasValue ? response.Value : null;
+            NullableResponse<MySqlFlexibleServersCapabilityResource> response = await collection.GetIfExistsAsync(capabilitySetName);
+            MySqlFlexibleServersCapabilityResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                CapabilityData resourceData = result.Data;
+                MySqlFlexibleServersCapabilityData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

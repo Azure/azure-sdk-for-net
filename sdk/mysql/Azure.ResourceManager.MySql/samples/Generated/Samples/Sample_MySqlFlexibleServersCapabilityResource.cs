@@ -14,7 +14,7 @@ using Azure.ResourceManager.MySql.FlexibleServers;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
 {
-    public partial class Sample_CapabilityResource
+    public partial class Sample_MySqlFlexibleServersCapabilityResource
     {
         // CapabilityResult
         [NUnit.Framework.Test]
@@ -29,20 +29,20 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this CapabilityResource created on azure
-            // for more information of creating CapabilityResource, please refer to the document of CapabilityResource
+            // this example assumes you already have this MySqlFlexibleServersCapabilityResource created on azure
+            // for more information of creating MySqlFlexibleServersCapabilityResource, please refer to the document of MySqlFlexibleServersCapabilityResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             AzureLocation locationName = new AzureLocation("WestUS");
             string capabilitySetName = "default";
-            ResourceIdentifier capabilityResourceId = CapabilityResource.CreateResourceIdentifier(subscriptionId, locationName, capabilitySetName);
-            CapabilityResource capability = client.GetCapabilityResource(capabilityResourceId);
+            ResourceIdentifier mySqlFlexibleServersCapabilityResourceId = MySqlFlexibleServersCapabilityResource.CreateResourceIdentifier(subscriptionId, locationName, capabilitySetName);
+            MySqlFlexibleServersCapabilityResource mySqlFlexibleServersCapability = client.GetMySqlFlexibleServersCapabilityResource(mySqlFlexibleServersCapabilityResourceId);
 
             // invoke the operation
-            CapabilityResource result = await capability.GetAsync();
+            MySqlFlexibleServersCapabilityResource result = await mySqlFlexibleServersCapability.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            CapabilityData resourceData = result.Data;
+            MySqlFlexibleServersCapabilityData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

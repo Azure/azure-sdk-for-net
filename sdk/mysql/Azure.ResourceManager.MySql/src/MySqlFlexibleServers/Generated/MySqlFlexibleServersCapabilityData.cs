@@ -13,20 +13,20 @@ using Azure.ResourceManager.MySql.FlexibleServers.Models;
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
     /// <summary>
-    /// A class representing the Capability data model.
+    /// A class representing the MySqlFlexibleServersCapability data model.
     /// Represents a location capability set.
     /// </summary>
-    public partial class CapabilityData : ResourceData
+    public partial class MySqlFlexibleServersCapabilityData : ResourceData
     {
-        /// <summary> Initializes a new instance of CapabilityData. </summary>
-        public CapabilityData()
+        /// <summary> Initializes a new instance of MySqlFlexibleServersCapabilityData. </summary>
+        public MySqlFlexibleServersCapabilityData()
         {
             SupportedGeoBackupRegions = new ChangeTrackingList<string>();
             SupportedFlexibleServerEditions = new ChangeTrackingList<ServerEditionCapabilityV2>();
             SupportedServerVersions = new ChangeTrackingList<ServerVersionCapabilityV2>();
         }
 
-        /// <summary> Initializes a new instance of CapabilityData. </summary>
+        /// <summary> Initializes a new instance of MySqlFlexibleServersCapabilityData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <param name="supportedGeoBackupRegions"> supported geo backup regions. </param>
         /// <param name="supportedFlexibleServerEditions"> A list of supported flexible server editions. </param>
         /// <param name="supportedServerVersions"> A list of supported server versions. </param>
-        internal CapabilityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<string> supportedGeoBackupRegions, IReadOnlyList<ServerEditionCapabilityV2> supportedFlexibleServerEditions, IReadOnlyList<ServerVersionCapabilityV2> supportedServerVersions) : base(id, name, resourceType, systemData)
+        internal MySqlFlexibleServersCapabilityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IReadOnlyList<string> supportedGeoBackupRegions, IReadOnlyList<ServerEditionCapabilityV2> supportedFlexibleServerEditions, IReadOnlyList<ServerVersionCapabilityV2> supportedServerVersions) : base(id, name, resourceType, systemData)
         {
             SupportedGeoBackupRegions = supportedGeoBackupRegions;
             SupportedFlexibleServerEditions = supportedFlexibleServerEditions;

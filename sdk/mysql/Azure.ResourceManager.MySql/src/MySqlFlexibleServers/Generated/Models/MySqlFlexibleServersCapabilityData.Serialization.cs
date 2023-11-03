@@ -13,7 +13,7 @@ using Azure.ResourceManager.MySql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
-    public partial class CapabilityData : IUtf8JsonSerializable
+    public partial class MySqlFlexibleServersCapabilityData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             writer.WriteEndObject();
         }
 
-        internal static CapabilityData DeserializeCapabilityData(JsonElement element)
+        internal static MySqlFlexibleServersCapabilityData DeserializeMySqlFlexibleServersCapabilityData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                     continue;
                 }
             }
-            return new CapabilityData(id, name, type, systemData.Value, Optional.ToList(supportedGeoBackupRegions), Optional.ToList(supportedFlexibleServerEditions), Optional.ToList(supportedServerVersions));
+            return new MySqlFlexibleServersCapabilityData(id, name, type, systemData.Value, Optional.ToList(supportedGeoBackupRegions), Optional.ToList(supportedFlexibleServerEditions), Optional.ToList(supportedServerVersions));
         }
     }
 }

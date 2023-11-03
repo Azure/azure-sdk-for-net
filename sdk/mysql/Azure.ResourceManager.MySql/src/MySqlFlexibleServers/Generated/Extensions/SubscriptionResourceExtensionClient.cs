@@ -64,12 +64,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of CapabilityResources in the SubscriptionResource. </summary>
+        /// <summary> Gets a collection of MySqlFlexibleServersCapabilityResources in the SubscriptionResource. </summary>
         /// <param name="locationName"> The name of the location. </param>
-        /// <returns> An object representing collection of CapabilityResources and their operations over a CapabilityResource. </returns>
-        public virtual CapabilityCollection GetCapabilities(AzureLocation locationName)
+        /// <returns> An object representing collection of MySqlFlexibleServersCapabilityResources and their operations over a MySqlFlexibleServersCapabilityResource. </returns>
+        public virtual MySqlFlexibleServersCapabilityCollection GetMySqlFlexibleServersCapabilities(AzureLocation locationName)
         {
-            return new CapabilityCollection(Client, Id, locationName);
+            return new MySqlFlexibleServersCapabilityCollection(Client, Id, locationName);
         }
 
         /// <summary>

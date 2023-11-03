@@ -70,6 +70,7 @@ acronym-mapping:
 
 prepend-rp-prefix:
   - Advisor
+  - Capability
   - Configuration
   - Database
   - FirewallRule

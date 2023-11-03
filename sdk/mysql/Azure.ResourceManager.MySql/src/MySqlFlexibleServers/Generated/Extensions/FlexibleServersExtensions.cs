@@ -180,20 +180,20 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         }
         #endregion
 
-        #region CapabilityResource
+        #region MySqlFlexibleServersCapabilityResource
         /// <summary>
-        /// Gets an object representing a <see cref="CapabilityResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CapabilityResource.CreateResourceIdentifier" /> to create a <see cref="CapabilityResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MySqlFlexibleServersCapabilityResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MySqlFlexibleServersCapabilityResource.CreateResourceIdentifier" /> to create a <see cref="MySqlFlexibleServersCapabilityResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CapabilityResource" /> object. </returns>
-        public static CapabilityResource GetCapabilityResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MySqlFlexibleServersCapabilityResource" /> object. </returns>
+        public static MySqlFlexibleServersCapabilityResource GetMySqlFlexibleServersCapabilityResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                CapabilityResource.ValidateResourceId(id);
-                return new CapabilityResource(client, id);
+                MySqlFlexibleServersCapabilityResource.ValidateResourceId(id);
+                return new MySqlFlexibleServersCapabilityResource(client, id);
             }
             );
         }
@@ -255,13 +255,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             return resourceGroupResource.GetMySqlFlexibleServers().Get(serverName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CapabilityResources in the SubscriptionResource. </summary>
+        /// <summary> Gets a collection of MySqlFlexibleServersCapabilityResources in the SubscriptionResource. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locationName"> The name of the location. </param>
-        /// <returns> An object representing collection of CapabilityResources and their operations over a CapabilityResource. </returns>
-        public static CapabilityCollection GetCapabilities(this SubscriptionResource subscriptionResource, AzureLocation locationName)
+        /// <returns> An object representing collection of MySqlFlexibleServersCapabilityResources and their operations over a MySqlFlexibleServersCapabilityResource. </returns>
+        public static MySqlFlexibleServersCapabilityCollection GetMySqlFlexibleServersCapabilities(this SubscriptionResource subscriptionResource, AzureLocation locationName)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCapabilities(locationName);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMySqlFlexibleServersCapabilities(locationName);
         }
 
         /// <summary>
@@ -284,9 +284,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <exception cref="ArgumentException"> <paramref name="capabilitySetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="capabilitySetName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<CapabilityResource>> GetCapabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, string capabilitySetName, CancellationToken cancellationToken = default)
+        public static async Task<Response<MySqlFlexibleServersCapabilityResource>> GetMySqlFlexibleServersCapabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, string capabilitySetName, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetCapabilities(locationName).GetAsync(capabilitySetName, cancellationToken).ConfigureAwait(false);
+            return await subscriptionResource.GetMySqlFlexibleServersCapabilities(locationName).GetAsync(capabilitySetName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -309,9 +309,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <exception cref="ArgumentException"> <paramref name="capabilitySetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="capabilitySetName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<CapabilityResource> GetCapability(this SubscriptionResource subscriptionResource, AzureLocation locationName, string capabilitySetName, CancellationToken cancellationToken = default)
+        public static Response<MySqlFlexibleServersCapabilityResource> GetMySqlFlexibleServersCapability(this SubscriptionResource subscriptionResource, AzureLocation locationName, string capabilitySetName, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetCapabilities(locationName).Get(capabilitySetName, cancellationToken);
+            return subscriptionResource.GetMySqlFlexibleServersCapabilities(locationName).Get(capabilitySetName, cancellationToken);
         }
 
         /// <summary>
