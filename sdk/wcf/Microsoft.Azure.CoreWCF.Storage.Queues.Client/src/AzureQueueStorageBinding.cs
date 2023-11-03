@@ -17,7 +17,7 @@ namespace Azure.Storage.WCF
         private TextMessageEncodingBindingElement _textMessageEncodingBindingElement;
         private BinaryMessageEncodingBindingElement _binaryMessageEncodingBindingElement;
         private bool _isInitialized;
-        private string _connectionString;
+        private readonly string _connectionString;
 
         /// <summary>
         /// Initializes a new instance of the AzureQueueStorageBinding class with the specified parameters.
@@ -52,21 +52,21 @@ namespace Azure.Storage.WCF
         {
             _transport.ConnectionString = _connectionString;
 
-            BindingElementCollection elements = new BindingElementCollection();
+            BindingElementCollection elements = new();
 
             switch (MessageEncoding)
             {
                 case AzureQueueStorageMessageEncoding.Binary:
                     elements.Add(_binaryMessageEncodingBindingElement);
-                    _transport.QueueMessageEncoding = Azure.Storage.Queues.QueueMessageEncoding.Base64;
+                    _transport.QueueMessageEncoding = Queues.QueueMessageEncoding.Base64;
                     break;
                 case AzureQueueStorageMessageEncoding.Text:
                     elements.Add(_textMessageEncodingBindingElement);
-                    _transport.QueueMessageEncoding = Azure.Storage.Queues.QueueMessageEncoding.None;
+                    _transport.QueueMessageEncoding = Queues.QueueMessageEncoding.None;
                     break;
                 default:
                     elements.Add(_textMessageEncodingBindingElement);
-                    _transport.QueueMessageEncoding = Azure.Storage.Queues.QueueMessageEncoding.None;
+                    _transport.QueueMessageEncoding = Queues.QueueMessageEncoding.None;
                     break;
             }
             elements.Add(_transport);

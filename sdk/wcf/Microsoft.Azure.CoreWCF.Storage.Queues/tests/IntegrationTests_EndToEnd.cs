@@ -36,12 +36,16 @@ namespace CoreWCF
             var queueName = "azure-queue";
             var azuriteFixture = AzuriteNUnitFixture.Instance;
             var connectionString = azuriteFixture.GetAzureAccount().ConnectionString;
-            var endpointUriBuilder = new UriBuilder(azuriteFixture.GetAzureAccount().QueueEndpoint + "/" + queueName);
-            endpointUriBuilder.Scheme = "net.aqs";
+            var endpointUriBuilder = new UriBuilder(azuriteFixture.GetAzureAccount().QueueEndpoint + "/" + queueName)
+            {
+                Scheme = "net.aqs"
+            };
             var endpointUrlString = endpointUriBuilder.Uri.AbsoluteUri;
 
-            Azure.Storage.WCF.AzureQueueStorageBinding azureQueueStorageBinding = new Azure.Storage.WCF.AzureQueueStorageBinding(connectionString, Azure.Storage.WCF.AzureQueueStorageMessageEncoding.Text);
-            var channelFactory = new System.ServiceModel.ChannelFactory<ITestContract_EndToEndTest>(azureQueueStorageBinding, new System.ServiceModel.EndpointAddress(endpointUrlString));
+            Azure.Storage.WCF.AzureQueueStorageBinding azureQueueStorageBinding = new(connectionString, Azure.Storage.WCF.AzureQueueStorageMessageEncoding.Text);
+            var channelFactory = new System.ServiceModel.ChannelFactory<ITestContract_EndToEndTest>(
+                azureQueueStorageBinding,
+                new System.ServiceModel.EndpointAddress(endpointUrlString));
 
             channelFactory.Credentials.ServiceCertificate.SslCertificateAuthentication = new System.ServiceModel.Security.X509ServiceCertificateAuthentication
             {
@@ -53,7 +57,7 @@ namespace CoreWCF
             channel.Create("TestService_EndToEnd");
 
             var testService = host.Services.GetRequiredService<TestService_EndToEnd>();
-            Assert.True(testService.ManualResetEvent.Wait(System.TimeSpan.FromSeconds(5)));
+            Assert.True(testService.ManualResetEvent.Wait(TimeSpan.FromSeconds(5)));
             Assert.AreEqual("TestService_EndToEnd", testService.ReceivedName);
         }
     }

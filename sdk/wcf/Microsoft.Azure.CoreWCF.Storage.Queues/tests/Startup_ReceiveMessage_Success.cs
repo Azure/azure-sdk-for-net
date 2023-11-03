@@ -1,6 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-#if NET6_0_OR_GREATER
+
 using Azure.Storage.CoreWCF;
 using Azure.Storage.Queues;
 using Contracts;
@@ -13,17 +13,17 @@ using System.Net.Http;
 
 namespace CoreWCF.AzureQueueStorage.Tests
 {
-    public class Startup_EndToEnd
+    public class Startup_ReceiveMessage_Success
     {
-        private readonly string queueName = "azure-queue";
+        private readonly string queueName = "queue-name";
         private readonly string deadLetterQueueName = "deadletter-queue-name";
         private string connectionString = null;
         private string endpointUrlString = null;
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<TestService_EndToEnd>();
-            TestHelper.ConfigureService(services, typeof(TestService_EndToEnd).FullName, queueName, out connectionString, out endpointUrlString);
+            services.AddSingleton<TestService>();
+            TestHelper.ConfigureService(services, typeof(TestService).FullName, queueName, out connectionString, out endpointUrlString);
         }
 
         public void Configure(IApplicationBuilder app)
@@ -32,11 +32,10 @@ namespace CoreWCF.AzureQueueStorage.Tests
 
             app.UseServiceModel(services =>
             {
-                services.AddService<TestService_EndToEnd>();
-                services.AddServiceEndpoint<TestService_EndToEnd, ITestContract_EndToEndTest>(new AzureQueueStorageBinding(connectionString, deadLetterQueueName),
+                services.AddService<TestService>();
+                services.AddServiceEndpoint<TestService, ITestContract>(new AzureQueueStorageBinding(connectionString, deadLetterQueueName),
                 endpointUrlString);
             });
         }
     }
 }
-#endif

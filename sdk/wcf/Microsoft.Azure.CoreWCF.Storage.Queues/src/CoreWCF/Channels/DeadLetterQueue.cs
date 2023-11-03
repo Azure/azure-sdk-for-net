@@ -40,7 +40,7 @@ namespace Azure.Storage.CoreWCF.Channels
             _client = new QueueClient(queueUri, queueClientOptions);
         }
 
-        public QueueClient queueClient { get => _client; set => _client = value; }
+        public QueueClient QueueClient { get => _client; set => _client = value; }
 
         public Task<Response> DeleteMessageAsync(
             string messageId,

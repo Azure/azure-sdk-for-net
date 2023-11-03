@@ -16,8 +16,8 @@ namespace Azure.Storage.CoreWCF
         private AzureQueueStorageTransportBindingElement _transport;
         private BinaryMessageEncodingBindingElement _binaryMessageEncodingBindingElement;
         private bool _isInitialized;
-        private string _connectionString;
-        private string _deadLetterQueueName;
+        private readonly string _connectionString;
+        private readonly string _deadLetterQueueName;
 
         /// <summary>
         /// Initializes a new instance of the AzureQueueStorageBinding class with the provided Azure Storage Queue

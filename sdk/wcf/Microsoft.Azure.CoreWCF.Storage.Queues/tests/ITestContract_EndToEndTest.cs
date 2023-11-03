@@ -3,7 +3,6 @@
 #if NET6_0_OR_GREATER
 using System.ServiceModel;
 using System.Threading;
-//using CoreWCF;
 
 namespace Contracts
 {

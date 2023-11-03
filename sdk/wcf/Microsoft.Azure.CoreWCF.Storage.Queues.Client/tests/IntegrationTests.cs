@@ -35,7 +35,7 @@ namespace WCF.AzureQueueStorage.Tests
             var m = queueClient.ReceiveMessageAsync().Result;
             Assert.AreEqual(m.Value.MessageText, "test");
 
-            AzureQueueStorageBinding azureQueueStorageBinding = new AzureQueueStorageBinding(connectionString, AzureQueueStorageMessageEncoding.Text);
+            AzureQueueStorageBinding azureQueueStorageBinding = new(connectionString, AzureQueueStorageMessageEncoding.Text);
             var channelFactory = new ChannelFactory<ITestContract>(azureQueueStorageBinding, new EndpointAddress(endpointUrlString));
 
             channelFactory.Credentials.ServiceCertificate.SslCertificateAuthentication = new X509ServiceCertificateAuthentication

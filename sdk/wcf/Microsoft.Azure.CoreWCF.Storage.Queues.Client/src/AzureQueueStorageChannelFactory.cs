@@ -30,7 +30,9 @@ namespace Azure.Storage.WCF.Channels
         private const string RequirementNamespace = "http://schemas.microsoft.com/ws/2006/05/servicemodel/securitytokenrequirement";
         private const string PreferSslCertificateAuthenticatorProperty = RequirementNamespace + "/PreferSslCertificateAuthenticator";
 
-        public AzureQueueStorageChannelFactory(AzureQueueStorageTransportBindingElement bindingElement, BindingContext context)
+        public AzureQueueStorageChannelFactory(
+            AzureQueueStorageTransportBindingElement bindingElement,
+            BindingContext context)
             : base(context.Binding)
         {
             _azureQueueStorageTransportBindingElement = bindingElement;
@@ -45,7 +47,7 @@ namespace Azure.Storage.WCF.Channels
             var securityCredentialsManager = context.BindingParameters.Find<SecurityCredentialsManager>() ?? new ClientCredentials();
 
             var securityTokenManager = securityCredentialsManager.CreateSecurityTokenManager();
-            InitiatorServiceModelSecurityTokenRequirement serverCertRequirement = new InitiatorServiceModelSecurityTokenRequirement
+            InitiatorServiceModelSecurityTokenRequirement serverCertRequirement = new()
             {
                 TokenType = X509CertificateTokenType,
                 RequireCryptographicToken = true,
@@ -117,10 +119,14 @@ namespace Azure.Storage.WCF.Channels
         protected override void OnClosed()
         {
             base.OnClosed();
-            this.BufferManager.Clear();
+            BufferManager.Clear();
         }
 
-        private bool RemoteCertificateValidationCallback(HttpRequestMessage sender, X509Certificate2 certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
+        private bool RemoteCertificateValidationCallback(
+            HttpRequestMessage sender,
+            X509Certificate2 certificate,
+            X509Chain chain,
+            SslPolicyErrors sslPolicyErrors)
         {
             Debug.Assert(SecurityTokenAuthenticator != null, "SecurityTokenAuthenticator is null");
 

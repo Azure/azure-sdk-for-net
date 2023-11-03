@@ -13,7 +13,7 @@ using System.Net.Http;
 
 namespace CoreWCF.AzureQueueStorage.Tests
 {
-    public class Startup
+    public class Startup_QueueConfigurationWithEmptyUri
     {
         private readonly string queueName = "queue-name";
         private readonly string deadLetterQueueName = "deadletter-queue-name";
@@ -23,26 +23,8 @@ namespace CoreWCF.AzureQueueStorage.Tests
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<TestService>();
-            services.AddServiceModelServices();
-            services.AddQueueTransport();
-            services.AddHttpClient(typeof(TestService).FullName)
-                .ConfigurePrimaryHttpMessageHandler(() =>
-                {
-                    return new HttpClientHandler()
-                    {
-                        ServerCertificateCustomValidationCallback = (_, _, _, _) => true
-                    };
-                });
-
-            var azuriteFixture = AzuriteNUnitFixture.Instance;
-            var transport = azuriteFixture.GetTransport();
-            connectionString = azuriteFixture.GetAzureAccount().ConnectionString;
-            var endpointUriBuilder = new UriBuilder(azuriteFixture.GetAzureAccount().QueueEndpoint + "/" + queueName);
-            endpointUriBuilder.Scheme = "net.aqs";
-            endpointUrlString = endpointUriBuilder.Uri.AbsoluteUri;
-            var queueClient = new QueueClient(connectionString, queueName, new QueueClientOptions { Transport = transport });
-            queueClient.CreateIfNotExists();
-            services.AddSingleton(queueClient);
+            TestHelper.ConfigureService(services, typeof(TestService).FullName, queueName, out connectionString, out endpointUrlString);
+            endpointUrlString = "";
         }
 
         public void Configure(IApplicationBuilder app)

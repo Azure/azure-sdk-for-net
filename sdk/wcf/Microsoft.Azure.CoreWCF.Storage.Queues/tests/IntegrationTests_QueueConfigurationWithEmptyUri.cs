@@ -11,14 +11,14 @@ using System.Threading.Tasks;
 
 namespace CoreWCF.AzureQueueStorage.Tests
 {
-    public class IntegrationTests1
+    public class IntegrationTests_QueueConfigurationWithEmptyUri
     {
         private IWebHost host;
 
         [SetUp]
         public void Setup()
         {
-            host = ServiceHelper.CreateWebHostBuilder<Startup1>().Build();
+            host = ServiceHelper.CreateWebHostBuilder<Startup_QueueConfigurationWithEmptyUri>().Build();
             host.Start();
         }
 
