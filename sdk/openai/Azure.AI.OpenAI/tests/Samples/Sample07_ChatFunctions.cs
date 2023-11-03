@@ -54,16 +54,17 @@ namespace Azure.AI.OpenAI.Tests.Samples
                 new(ChatRole.User, "What is the weather like in Boston?"),
             };
 
-            var chatCompletionsOptions = new ChatCompletionsOptions();
+            var chatCompletionsOptions = new ChatCompletionsOptions()
+            {
+                DeploymentName = "gpt-35-turbo-0613",
+            };
             foreach (ChatMessage chatMessage in conversationMessages)
             {
                 chatCompletionsOptions.Messages.Add(chatMessage);
             }
             chatCompletionsOptions.Functions.Add(getWeatherFuntionDefinition);
 
-            Response<ChatCompletions> response = await client.GetChatCompletionsAsync(
-                "gpt-35-turbo-0613",
-                chatCompletionsOptions);
+            Response<ChatCompletions> response = await client.GetChatCompletionsAsync(chatCompletionsOptions);
             #endregion
 
             #region Snippet:ChatFunctions:HandleFunctionCall

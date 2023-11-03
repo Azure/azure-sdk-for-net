@@ -84,14 +84,14 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An object representing collection of GenericResources and their operations over a GenericResource. </returns>
         public virtual GenericResourceCollection GetGenericResources()
         {
-            return GetCachedClient(Client => new GenericResourceCollection(Client, Id));
+            return GetCachedClient(client => new GenericResourceCollection(client, Id));
         }
 
         /// <summary> Gets a collection of TenantPolicyDefinitionResources in the Tenant. </summary>
         /// <returns> An object representing collection of TenantPolicyDefinitionResources and their operations over a TenantPolicyDefinitionResource. </returns>
         public virtual TenantPolicyDefinitionCollection GetTenantPolicyDefinitions()
         {
-            return GetCachedClient(Client => new TenantPolicyDefinitionCollection(Client, Id));
+            return GetCachedClient(client => new TenantPolicyDefinitionCollection(client, Id));
         }
 
         /// <summary>
@@ -109,8 +109,8 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="policyDefinitionName"> The name of the built-in policy definition to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<TenantPolicyDefinitionResource>> GetTenantPolicyDefinitionAsync(string policyDefinitionName, CancellationToken cancellationToken = default)
         {
@@ -132,8 +132,8 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="policyDefinitionName"> The name of the built-in policy definition to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<TenantPolicyDefinitionResource> GetTenantPolicyDefinition(string policyDefinitionName, CancellationToken cancellationToken = default)
         {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An object representing collection of TenantPolicySetDefinitionResources and their operations over a TenantPolicySetDefinitionResource. </returns>
         public virtual TenantPolicySetDefinitionCollection GetTenantPolicySetDefinitions()
         {
-            return GetCachedClient(Client => new TenantPolicySetDefinitionCollection(Client, Id));
+            return GetCachedClient(client => new TenantPolicySetDefinitionCollection(client, Id));
         }
 
         /// <summary>
@@ -162,8 +162,8 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<TenantPolicySetDefinitionResource>> GetTenantPolicySetDefinitionAsync(string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
@@ -185,8 +185,8 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<TenantPolicySetDefinitionResource> GetTenantPolicySetDefinition(string policySetDefinitionName, CancellationToken cancellationToken = default)
         {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An object representing collection of DataPolicyManifestResources and their operations over a DataPolicyManifestResource. </returns>
         public virtual DataPolicyManifestCollection GetDataPolicyManifests()
         {
-            return GetCachedClient(Client => new DataPolicyManifestCollection(Client, Id));
+            return GetCachedClient(client => new DataPolicyManifestCollection(client, Id));
         }
 
         /// <summary>
@@ -215,8 +215,8 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="policyMode"> The policy mode of the data policy manifest to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyMode"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyMode"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyMode"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataPolicyManifestResource>> GetDataPolicyManifestAsync(string policyMode, CancellationToken cancellationToken = default)
         {
@@ -238,8 +238,8 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="policyMode"> The policy mode of the data policy manifest to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyMode"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyMode"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyMode"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataPolicyManifestResource> GetDataPolicyManifest(string policyMode, CancellationToken cancellationToken = default)
         {
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An object representing collection of SubscriptionResources and their operations over a SubscriptionResource. </returns>
         public virtual SubscriptionCollection GetSubscriptions()
         {
-            return GetCachedClient(Client => new SubscriptionCollection(Client, Id));
+            return GetCachedClient(client => new SubscriptionCollection(client, Id));
         }
 
         /// <summary>
@@ -268,8 +268,8 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SubscriptionResource>> GetSubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
@@ -291,8 +291,8 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SubscriptionResource> GetSubscription(string subscriptionId, CancellationToken cancellationToken = default)
         {

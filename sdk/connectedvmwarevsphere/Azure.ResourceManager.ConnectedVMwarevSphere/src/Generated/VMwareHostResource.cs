@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
     public partial class VMwareHostResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="VMwareHostResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="hostName"> The hostName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string hostName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConnectedVMwarevSphere/hosts/{hostName}";

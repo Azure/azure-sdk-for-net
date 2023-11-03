@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.Synapse
     public partial class SynapsePrivateLinkHubResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SynapsePrivateLinkHubResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="privateLinkHubName"> The privateLinkHubName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateLinkHubName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/privateLinkHubs/{privateLinkHubName}";
@@ -93,7 +96,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An object representing collection of SynapsePrivateLinkResources and their operations over a SynapsePrivateLinkResource. </returns>
         public virtual SynapsePrivateLinkResourceCollection GetSynapsePrivateLinkResources()
         {
-            return GetCachedClient(Client => new SynapsePrivateLinkResourceCollection(Client, Id));
+            return GetCachedClient(client => new SynapsePrivateLinkResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +114,8 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SynapsePrivateLinkResource>> GetSynapsePrivateLinkResourceAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +137,8 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SynapsePrivateLinkResource> GetSynapsePrivateLinkResource(string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
@@ -146,7 +149,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An object representing collection of SynapsePrivateEndpointConnectionForPrivateLinkHubResources and their operations over a SynapsePrivateEndpointConnectionForPrivateLinkHubResource. </returns>
         public virtual SynapsePrivateEndpointConnectionForPrivateLinkHubCollection GetSynapsePrivateEndpointConnectionForPrivateLinkHubs()
         {
-            return GetCachedClient(Client => new SynapsePrivateEndpointConnectionForPrivateLinkHubCollection(Client, Id));
+            return GetCachedClient(client => new SynapsePrivateEndpointConnectionForPrivateLinkHubCollection(client, Id));
         }
 
         /// <summary>
@@ -164,8 +167,8 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="privateEndpointConnectionName"> Name of the privateEndpointConnection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SynapsePrivateEndpointConnectionForPrivateLinkHubResource>> GetSynapsePrivateEndpointConnectionForPrivateLinkHubAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -187,8 +190,8 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="privateEndpointConnectionName"> Name of the privateEndpointConnection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SynapsePrivateEndpointConnectionForPrivateLinkHubResource> GetSynapsePrivateEndpointConnectionForPrivateLinkHub(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {

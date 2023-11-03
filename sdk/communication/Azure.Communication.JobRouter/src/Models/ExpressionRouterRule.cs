@@ -7,8 +7,6 @@ using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    [CodeGenModel("ExpressionRouterRule")]
-    [CodeGenSuppress("ExpressionRouterRule", typeof(string), typeof(string))]
     public partial class ExpressionRouterRule : IUtf8JsonSerializable
     {
         /// <summary> The available expression languages that can be configured. </summary>

@@ -25,6 +25,11 @@ namespace Azure.ResourceManager.Hci
     public partial class UpdateRunResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="UpdateRunResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="clusterName"> The clusterName. </param>
+        /// <param name="updateName"> The updateName. </param>
+        /// <param name="updateRunName"> The updateRunName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string updateName, string updateRunName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/updates/{updateName}/updateRuns/{updateRunName}";

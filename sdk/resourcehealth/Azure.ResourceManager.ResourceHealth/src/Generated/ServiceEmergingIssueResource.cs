@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.ResourceHealth
     public partial class ServiceEmergingIssueResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ServiceEmergingIssueResource"/> instance. </summary>
+        /// <param name="issueName"> The issueName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(EmergingIssueNameContent issueName)
         {
             var resourceId = $"/providers/Microsoft.ResourceHealth/emergingIssues/{issueName}";

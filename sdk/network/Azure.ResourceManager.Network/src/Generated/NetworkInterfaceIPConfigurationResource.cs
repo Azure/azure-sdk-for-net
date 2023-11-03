@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.Network
     public partial class NetworkInterfaceIPConfigurationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkInterfaceIPConfigurationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="networkInterfaceName"> The networkInterfaceName. </param>
+        /// <param name="ipConfigurationName"> The ipConfigurationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkInterfaceName, string ipConfigurationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkInterfaces/{networkInterfaceName}/ipConfigurations/{ipConfigurationName}";

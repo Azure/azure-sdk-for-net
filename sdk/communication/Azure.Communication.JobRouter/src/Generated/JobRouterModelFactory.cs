@@ -8,9 +8,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Communication.JobRouter;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
     /// <summary> Model factory for models. </summary>
     public static partial class JobRouterModelFactory
@@ -48,37 +47,6 @@ namespace Azure.Communication.JobRouter.Models
         public static WebhookRouterRule WebhookRouterRule(Uri authorizationServerUri = null, OAuth2WebhookClientCredential clientCredential = null, Uri webhookUri = null)
         {
             return new WebhookRouterRule("webhook-rule", authorizationServerUri, clientCredential, webhookUri);
-        }
-
-        /// <summary> Initializes a new instance of ClassificationPolicy. </summary>
-        /// <param name="etag"> Concurrency Token. </param>
-        /// <param name="id"> Unique identifier of this policy. </param>
-        /// <param name="name"> Friendly name of this policy. </param>
-        /// <param name="fallbackQueueId"> The fallback queue to select if the queue selector doesn't find a match. </param>
-        /// <param name="queueSelectorAttachments"> The queue selector attachments used to resolve a queue for a given job. </param>
-        /// <param name="prioritizationRule">
-        /// A rule of one of the following types:
-        ///
-        /// StaticRule:  A rule
-        /// providing static rules that always return the same result, regardless of
-        /// input.
-        /// DirectMapRule:  A rule that return the same labels as the input
-        /// labels.
-        /// ExpressionRule: A rule providing inline expression
-        /// rules.
-        /// FunctionRule: A rule providing a binding to an HTTP Triggered Azure
-        /// Function.
-        /// WebhookRule: A rule providing a binding to a webserver following
-        /// OAuth2.0 authentication protocol.
-        /// </param>
-        /// <param name="workerSelectorAttachments"> The worker selector attachments used to attach worker selectors to a given job. </param>
-        /// <returns> A new <see cref="JobRouter.ClassificationPolicy"/> instance for mocking. </returns>
-        public static ClassificationPolicy ClassificationPolicy(string etag = null, string id = null, string name = null, string fallbackQueueId = null, IEnumerable<QueueSelectorAttachment> queueSelectorAttachments = null, RouterRule prioritizationRule = null, IEnumerable<WorkerSelectorAttachment> workerSelectorAttachments = null)
-        {
-            queueSelectorAttachments ??= new List<QueueSelectorAttachment>();
-            workerSelectorAttachments ??= new List<WorkerSelectorAttachment>();
-
-            return new ClassificationPolicy(etag, id, name, fallbackQueueId, queueSelectorAttachments?.ToList(), prioritizationRule, workerSelectorAttachments?.ToList());
         }
 
         /// <summary> Initializes a new instance of ConditionalQueueSelectorAttachment. </summary>
@@ -254,19 +222,6 @@ namespace Azure.Communication.JobRouter.Models
             return new WorkerWeightedAllocation(weight, workerSelectors?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ExceptionPolicy. </summary>
-        /// <param name="etag"> Concurrency Token. </param>
-        /// <param name="id"> The Id of the exception policy. </param>
-        /// <param name="name"> (Optional) The name of the exception policy. </param>
-        /// <param name="exceptionRules"> (Optional) A collection of exception rules on the exception policy. </param>
-        /// <returns> A new <see cref="JobRouter.ExceptionPolicy"/> instance for mocking. </returns>
-        public static ExceptionPolicy ExceptionPolicy(string etag = null, string id = null, string name = null, IEnumerable<ExceptionRule> exceptionRules = null)
-        {
-            exceptionRules ??= new List<ExceptionRule>();
-
-            return new ExceptionPolicy(etag, id, name, exceptionRules?.ToList());
-        }
-
         /// <summary> Initializes a new instance of ExceptionRule. </summary>
         /// <param name="id"> Id of the exception rule. </param>
         /// <param name="trigger"> The trigger for this exception rule. </param>
@@ -391,22 +346,6 @@ namespace Azure.Communication.JobRouter.Models
             }
 
             return new AcceptJobOfferResult(assignmentId, jobId, workerId);
-        }
-
-        /// <summary> Initializes a new instance of RouterQueueStatistics. </summary>
-        /// <param name="queueId"> Id of the queue these details are about. </param>
-        /// <param name="length"> Length of the queue: total number of enqueued jobs. </param>
-        /// <param name="estimatedWaitTimeMinutes">
-        /// The estimated wait time of this queue rounded up to the nearest minute, grouped
-        /// by job priority
-        /// </param>
-        /// <param name="longestJobWaitTimeMinutes"> The wait time of the job that has been enqueued in this queue for the longest. </param>
-        /// <returns> A new <see cref="JobRouter.RouterQueueStatistics"/> instance for mocking. </returns>
-        public static RouterQueueStatistics RouterQueueStatistics(string queueId = null, int length = default, IReadOnlyDictionary<string, double> estimatedWaitTimeMinutes = null, double? longestJobWaitTimeMinutes = null)
-        {
-            estimatedWaitTimeMinutes ??= new Dictionary<string, double>();
-
-            return new RouterQueueStatistics(queueId, length, estimatedWaitTimeMinutes, longestJobWaitTimeMinutes);
         }
 
         /// <summary> Initializes a new instance of RouterChannel. </summary>

@@ -28,6 +28,9 @@ namespace Azure.ResourceManager.Network
     public partial class NetworkProfileResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkProfileResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="networkProfileName"> The networkProfileName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkProfileName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkProfiles/{networkProfileName}";

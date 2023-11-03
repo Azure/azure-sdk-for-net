@@ -315,12 +315,12 @@ namespace Azure.Communication.JobRouter.Samples
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             JobRouterClient client = new JobRouterClient(endpoint);
 
-            CancelJobOptions cancelJobOptions = new CancelJobOptions
+            CancelJobOptions options = new CancelJobOptions
             {
                 Note = "<note>",
                 DispositionCode = "<dispositionCode>",
             };
-            Response response = client.CancelJob("<jobId>", cancelJobOptions: cancelJobOptions);
+            Response response = client.CancelJob("<jobId>", options: options);
         }
 
         [Test]
@@ -330,12 +330,12 @@ namespace Azure.Communication.JobRouter.Samples
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             JobRouterClient client = new JobRouterClient(endpoint);
 
-            CancelJobOptions cancelJobOptions = new CancelJobOptions
+            CancelJobOptions options = new CancelJobOptions
             {
                 Note = "<note>",
                 DispositionCode = "<dispositionCode>",
             };
-            Response response = await client.CancelJobAsync("<jobId>", cancelJobOptions: cancelJobOptions);
+            Response response = await client.CancelJobAsync("<jobId>", options: options);
         }
 
         [Test]
@@ -377,8 +377,8 @@ namespace Azure.Communication.JobRouter.Samples
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             JobRouterClient client = new JobRouterClient(endpoint);
 
-            CompleteJobOptions completeJobOptions = new CompleteJobOptions("<assignmentId>");
-            Response response = client.CompleteJob("<jobId>", completeJobOptions);
+            CompleteJobOptions options = new CompleteJobOptions("<assignmentId>");
+            Response response = client.CompleteJob("<jobId>", options);
         }
 
         [Test]
@@ -388,8 +388,8 @@ namespace Azure.Communication.JobRouter.Samples
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             JobRouterClient client = new JobRouterClient(endpoint);
 
-            CompleteJobOptions completeJobOptions = new CompleteJobOptions("<assignmentId>");
-            Response response = await client.CompleteJobAsync("<jobId>", completeJobOptions);
+            CompleteJobOptions options = new CompleteJobOptions("<assignmentId>");
+            Response response = await client.CompleteJobAsync("<jobId>", options);
         }
 
         [Test]
@@ -433,11 +433,11 @@ namespace Azure.Communication.JobRouter.Samples
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             JobRouterClient client = new JobRouterClient(endpoint);
 
-            CompleteJobOptions completeJobOptions = new CompleteJobOptions("<assignmentId>")
+            CompleteJobOptions options = new CompleteJobOptions("<assignmentId>")
             {
                 Note = "<note>",
             };
-            Response response = client.CompleteJob("<jobId>", completeJobOptions);
+            Response response = client.CompleteJob("<jobId>", options);
         }
 
         [Test]
@@ -447,11 +447,11 @@ namespace Azure.Communication.JobRouter.Samples
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             JobRouterClient client = new JobRouterClient(endpoint);
 
-            CompleteJobOptions completeJobOptions = new CompleteJobOptions("<assignmentId>")
+            CompleteJobOptions options = new CompleteJobOptions("<assignmentId>")
             {
                 Note = "<note>",
             };
-            Response response = await client.CompleteJobAsync("<jobId>", completeJobOptions);
+            Response response = await client.CompleteJobAsync("<jobId>", options);
         }
 
         [Test]
@@ -493,8 +493,8 @@ namespace Azure.Communication.JobRouter.Samples
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             JobRouterClient client = new JobRouterClient(endpoint);
 
-            CloseJobOptions closeJobOptions = new CloseJobOptions("<assignmentId>");
-            Response response = client.CloseJob("<jobId>", closeJobOptions);
+            CloseJobOptions options = new CloseJobOptions("<assignmentId>");
+            Response response = client.CloseJob("<jobId>", options);
         }
 
         [Test]
@@ -504,8 +504,8 @@ namespace Azure.Communication.JobRouter.Samples
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             JobRouterClient client = new JobRouterClient(endpoint);
 
-            CloseJobOptions closeJobOptions = new CloseJobOptions("<assignmentId>");
-            Response response = await client.CloseJobAsync("<jobId>", closeJobOptions);
+            CloseJobOptions options = new CloseJobOptions("<assignmentId>");
+            Response response = await client.CloseJobAsync("<jobId>", options);
         }
 
         [Test]
@@ -553,13 +553,13 @@ namespace Azure.Communication.JobRouter.Samples
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             JobRouterClient client = new JobRouterClient(endpoint);
 
-            CloseJobOptions closeJobOptions = new CloseJobOptions("<assignmentId>")
+            CloseJobOptions options = new CloseJobOptions("<assignmentId>")
             {
                 DispositionCode = "<dispositionCode>",
                 CloseAt = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
                 Note = "<note>",
             };
-            Response response = client.CloseJob("<jobId>", closeJobOptions);
+            Response response = client.CloseJob("<jobId>", options);
         }
 
         [Test]
@@ -569,13 +569,13 @@ namespace Azure.Communication.JobRouter.Samples
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             JobRouterClient client = new JobRouterClient(endpoint);
 
-            CloseJobOptions closeJobOptions = new CloseJobOptions("<assignmentId>")
+            CloseJobOptions options = new CloseJobOptions("<assignmentId>")
             {
                 DispositionCode = "<dispositionCode>",
                 CloseAt = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
                 Note = "<note>",
             };
-            Response response = await client.CloseJobAsync("<jobId>", closeJobOptions);
+            Response response = await client.CloseJobAsync("<jobId>", options);
         }
 
         [Test]
@@ -779,11 +779,11 @@ namespace Azure.Communication.JobRouter.Samples
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             JobRouterClient client = new JobRouterClient(endpoint);
 
-            UnassignJobOptions unassignJobOptions = new UnassignJobOptions
+            UnassignJobOptions options = new UnassignJobOptions
             {
                 SuspendMatching = true,
             };
-            Response<UnassignJobResult> response = client.UnassignJob("<jobId>", "<assignmentId>", unassignJobOptions: unassignJobOptions);
+            Response<UnassignJobResult> response = client.UnassignJob("<jobId>", "<assignmentId>", options: options);
         }
 
         [Test]
@@ -793,11 +793,11 @@ namespace Azure.Communication.JobRouter.Samples
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             JobRouterClient client = new JobRouterClient(endpoint);
 
-            UnassignJobOptions unassignJobOptions = new UnassignJobOptions
+            UnassignJobOptions options = new UnassignJobOptions
             {
                 SuspendMatching = true,
             };
-            Response<UnassignJobResult> response = await client.UnassignJobAsync("<jobId>", "<assignmentId>", unassignJobOptions: unassignJobOptions);
+            Response<UnassignJobResult> response = await client.UnassignJobAsync("<jobId>", "<assignmentId>", options: options);
         }
 
         [Test]
@@ -985,11 +985,11 @@ namespace Azure.Communication.JobRouter.Samples
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             JobRouterClient client = new JobRouterClient(endpoint);
 
-            DeclineJobOfferOptions declineJobOfferOptions = new DeclineJobOfferOptions
+            DeclineJobOfferOptions options = new DeclineJobOfferOptions
             {
                 RetryOfferAt = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
             };
-            Response response = client.DeclineJobOffer("<workerId>", "<offerId>", declineJobOfferOptions: declineJobOfferOptions);
+            Response response = client.DeclineJobOffer("<workerId>", "<offerId>", options: options);
         }
 
         [Test]
@@ -999,11 +999,11 @@ namespace Azure.Communication.JobRouter.Samples
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             JobRouterClient client = new JobRouterClient(endpoint);
 
-            DeclineJobOfferOptions declineJobOfferOptions = new DeclineJobOfferOptions
+            DeclineJobOfferOptions options = new DeclineJobOfferOptions
             {
                 RetryOfferAt = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
             };
-            Response response = await client.DeclineJobOfferAsync("<workerId>", "<offerId>", declineJobOfferOptions: declineJobOfferOptions);
+            Response response = await client.DeclineJobOfferAsync("<workerId>", "<offerId>", options: options);
         }
 
         [Test]

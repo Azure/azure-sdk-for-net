@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SecurityDevOps
     }
     public partial class AzureDevOpsConnectorData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public AzureDevOpsConnectorData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public AzureDevOpsConnectorData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.SecurityDevOps.Models.AzureDevOpsConnectorProperties Properties { get { throw null; } set { } }
     }
     public partial class AzureDevOpsConnectorResource : Azure.ResourceManager.ArmResource
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.SecurityDevOps
     }
     public partial class GitHubConnectorData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public GitHubConnectorData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public GitHubConnectorData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.SecurityDevOps.Models.GitHubConnectorProperties Properties { get { throw null; } set { } }
     }
     public partial class GitHubConnectorResource : Azure.ResourceManager.ArmResource
@@ -296,6 +296,38 @@ namespace Azure.ResourceManager.SecurityDevOps
         public static Azure.AsyncPageable<Azure.ResourceManager.SecurityDevOps.GitHubConnectorResource> GetGitHubConnectorsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.SecurityDevOps.GitHubOwnerResource GetGitHubOwnerResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.SecurityDevOps.GitHubRepoResource GetGitHubRepoResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+}
+namespace Azure.ResourceManager.SecurityDevOps.Mocking
+{
+    public partial class MockableSecurityDevOpsArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableSecurityDevOpsArmClient() { }
+        public virtual Azure.ResourceManager.SecurityDevOps.AzureDevOpsConnectorResource GetAzureDevOpsConnectorResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.SecurityDevOps.AzureDevOpsOrgResource GetAzureDevOpsOrgResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.SecurityDevOps.AzureDevOpsProjectResource GetAzureDevOpsProjectResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.SecurityDevOps.AzureDevOpsRepoResource GetAzureDevOpsRepoResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.SecurityDevOps.GitHubConnectorResource GetGitHubConnectorResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.SecurityDevOps.GitHubOwnerResource GetGitHubOwnerResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.SecurityDevOps.GitHubRepoResource GetGitHubRepoResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableSecurityDevOpsResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableSecurityDevOpsResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityDevOps.AzureDevOpsConnectorResource> GetAzureDevOpsConnector(string azureDevOpsConnectorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityDevOps.AzureDevOpsConnectorResource>> GetAzureDevOpsConnectorAsync(string azureDevOpsConnectorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.SecurityDevOps.AzureDevOpsConnectorCollection GetAzureDevOpsConnectors() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.SecurityDevOps.GitHubConnectorResource> GetGitHubConnector(string gitHubConnectorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SecurityDevOps.GitHubConnectorResource>> GetGitHubConnectorAsync(string gitHubConnectorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.SecurityDevOps.GitHubConnectorCollection GetGitHubConnectors() { throw null; }
+    }
+    public partial class MockableSecurityDevOpsSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableSecurityDevOpsSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.SecurityDevOps.AzureDevOpsConnectorResource> GetAzureDevOpsConnectors(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityDevOps.AzureDevOpsConnectorResource> GetAzureDevOpsConnectorsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.SecurityDevOps.GitHubConnectorResource> GetGitHubConnectors(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.SecurityDevOps.GitHubConnectorResource> GetGitHubConnectorsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.SecurityDevOps.Models

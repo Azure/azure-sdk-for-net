@@ -48,9 +48,9 @@ Response<ClassificationPolicy> classificationPolicy = await routerAdministration
         QueueSelectorAttachments =
         {
             new StaticQueueSelectorAttachment(new RouterQueueSelector("Id", LabelOperator.Equal,
-                new LabelValue(jobQueue.Value.Id))),
+                new RouterValue(jobQueue.Value.Id))),
         },
-        PrioritizationRule = new StaticRouterRule(new LabelValue(10))
+        PrioritizationRule = new StaticRouterRule(new RouterValue(10))
     });
 
 string jobWithCpId = "job-with-cp-id";
